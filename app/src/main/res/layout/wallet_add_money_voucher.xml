@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/solidwhite_shape"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme"
+    tools:context=".activities.wallet.WalletHomeActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_add_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:text="@string/addmoney"
+            android:theme="@style/HeaderTheme"/>
+        <ImageView
+            android:id="@+id/wallet_deposit_close"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight=".9"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:src="@drawable/close" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/background_home"
+        android:paddingRight="@dimen/dimen_20dp"
+        android:paddingLeft="@dimen/dimen_20dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/wallet_deposit" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="0.2"
+                    android:text="Withdraw Money"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/transfer_money" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="0.2"
+                    android:text="Transfer Money"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/text_view_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Wrong Code!"
+                android:textColor="@color/device_problem"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:text="Voucher Code"
+                    android:fontFamily="@font/josefin_sans" />
+
+                <EditText
+                    android:id="@+id/wallet_add_money_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="@dimen/dimen_10dp"
+                    android:background="@drawable/edittext_corner"
+                    android:hint="Enter.."
+                    android:inputType="text"
+                    android:paddingLeft="2dp"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_button"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/button_add_money"
+                    style="@style/Button_DW"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:backgroundTint="@color/textColor"
+                    android:text="@string/submit"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+                <ImageView
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="10dip"
+                    android:src="@drawable/ic_right_arrow">
+
+                </ImageView>
+
+            </FrameLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

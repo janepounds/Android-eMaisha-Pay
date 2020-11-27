@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_5dp"
+    android:background="@color/colorAccentLight">
+
+
+    <LinearLayout
+        android:id="@+id/layout_statement_card"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen_10dp"
+        android:paddingLeft="@dimen/dimen_10dp"
+        android:paddingRight="@dimen/dimen_10dp"
+        android:background="@drawable/solidwhite_shape"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_loan_application_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nov 20, 2020"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/card_layout_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_debit_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="Loan Number"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_application_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="REF 001212"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_home_credit_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="Amount"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_application_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+ UGX 0"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="Due on"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_application_due_on"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="29/10/2019"
+                        android:fontFamily="@font/josefin_sans"
+                        android:textColor="@color/black"
+                        />
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Status"
+                    android:fontFamily="@font/josefin_sans"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/text_view_loan_application_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pending Correction"
+                    android:fontFamily="@font/josefin_sans"
+                    android:textColor="@color/black"
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

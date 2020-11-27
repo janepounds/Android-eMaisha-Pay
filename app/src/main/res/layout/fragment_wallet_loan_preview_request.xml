@@ -1,0 +1,439 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cabral.emaishapay.fragments.WalletLoanPreviewRequestFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_wallet_loan_preview_request"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccentLight"
+        tools:context=".activities.wallet.WalletLoanPreviewRequest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccentLight"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_10"
+            android:layout_marginTop="?actionBarSize"
+            android:paddingTop="10dp"
+            android:paddingRight="@dimen/margin_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_sans"
+                android:gravity="left"
+                android:paddingLeft="5dp"
+                android:text="Confirm Details"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dimen_20dp"
+                android:textStyle="bold" />
+
+            <com.kofigyan.stateprogressbar.StateProgressBar
+                android:id="@+id/loan_preview_request_progress_bar_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:spb_animateToCurrentProgressState="true"
+                app:spb_checkStateCompleted="true"
+                app:spb_animationDuration="500"
+                app:spb_currentStateDescriptionColor="@color/colorPrimary"
+                app:spb_currentStateNumber="three"
+                app:spb_maxStateNumber="four"
+                app:spb_stateBackgroundColor="#BDBDBD"
+                app:spb_stateDescriptionColor="#808080"
+                app:spb_stateForegroundColor="@color/colorPrimary"
+                app:spb_stateNumberBackgroundColor="#808080"
+                app:spb_stateNumberForegroundColor="#eeeeee"
+                app:spb_stateLineThickness="4dp" />
+
+            <TextView
+                android:id="@+id/text_view_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Insufficient Funds!"
+                android:textColor="@color/device_problem"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20dp">
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Loan Amount"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_preview_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="UGX 80,000"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout1"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Loan Purpose"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/loan_purpose_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Fertilizers, Seeds"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/layout2"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Interest Rate"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_preview_interest_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="8%"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/layout3"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Payment Schedule"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/loan_type_or_schedule_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Monthly"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout4"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Loan Duration"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_preview_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="3 Weeks"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout5"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Due Date"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_preview_due_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="29/10/2020"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout6"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Amount Due"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text=":"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_loan_preview_due_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="UGX 96400"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout7"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/dimen_5dp"
+                        android:background="@drawable/round_corners_button_darkgray"
+                        android:layout_marginRight="@dimen/dimen_5dp">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_chevron_left"/>
+                        <Button
+
+                            android:id="@+id/previous_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:paddingStart="8dp"
+                            android:background="@color/transparent"
+                            android:text="@string/previous"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/button_text_size"
+                            android:paddingLeft="8dp" />
+
+
+
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dimen_5dp"
+                        android:background="@drawable/rounded_corners_button"
+                        android:layout_marginLeft="@dimen/dimen_5dp">
+
+                        <Button
+                            android:id="@+id/btn_loan_next_step"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:paddingEnd="8dp"
+                            android:background="@color/transparent"
+                            android:text="@string/label_confirm"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/button_text_size"
+                            android:paddingRight="8dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_chevron_right">
+
+                        </ImageView>
+                    </FrameLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

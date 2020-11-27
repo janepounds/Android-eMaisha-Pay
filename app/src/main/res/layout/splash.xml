@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center_vertical"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <ImageView
+        android:alpha=".7"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_splash"
+        android:layout_width="match_parent"
+        android:paddingBottom="@dimen/dimen_20dp"
+        android:layout_height="match_parent" />
+
+
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:paddingBottom="100dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_above="@id/sponsors"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/progressBar"
+                android:indeterminateTint="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+
+            <TextView
+                android:id="@+id/sponsors"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:text="@string/sponsors" />
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

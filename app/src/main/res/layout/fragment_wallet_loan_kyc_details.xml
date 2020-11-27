@@ -1,0 +1,716 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackgroundDark"
+    tools:context="com.cabral.emaishapay.fragments.WalletLoanKycDetailsFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_wallet_loan_app_photos"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/layout_statement_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:layout_marginRight="@dimen/dimen_10dp"
+            android:layout_marginBottom="@dimen/dimen_10dp"
+            android:clickable="true"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-9dp">
+
+            <TextView
+                android:id="@+id/text_view_loan_photos_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_sans"
+                android:gravity="left"
+                android:text="Enter KYC Details"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.kofigyan.stateprogressbar.StateProgressBar
+                android:id="@+id/loan_app_photos_progress_bar_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:spb_animateToCurrentProgressState="true"
+                app:spb_checkStateCompleted="true"
+                app:spb_animationDuration="500"
+                app:spb_currentStateDescriptionColor="@color/colorPrimary"
+                app:spb_currentStateNumber="four"
+                app:spb_maxStateNumber="four"
+                app:spb_stateBackgroundColor="#BDBDBD"
+                app:spb_stateDescriptionColor="#808080"
+                app:spb_stateForegroundColor="@color/colorPrimary"
+                app:spb_stateNumberBackgroundColor="#808080"
+                app:spb_stateNumberForegroundColor="#eeeeee"
+                app:spb_stateLineThickness="4dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="Upload National ID Front :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/front_id_photo_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="@dimen/dimen_10dp"
+                            android:background="@android:color/transparent"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:id="@+id/front_id_photo_browse_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_right_corners_green"
+                            android:textColor="@color/white"
+                            android:text="Browse"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_weight="0.4" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="Upload National ID Back :"
+                            android:textColor="@color/textColor"
+                            android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_corner"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/back_id_photo_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="numberDecimal" />
+
+                            <TextView
+                                android:id="@+id/back_id_photo_browse_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edittext_right_corners_green"
+                                android:textColor="@color/white"
+                                android:text="Browse"
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:layout_weight="0.4" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="Upload Photo holding ID :"
+                            android:textColor="@color/textColor"
+                            android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_corner"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/selfie_id_photo_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="numberDecimal" />
+
+                            <TextView
+                                android:id="@+id/selfie_id_photo_browse_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edittext_right_corners_green"
+                                android:textColor="@color/white"
+                                android:text="Browse"
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:layout_weight="0.4" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="Upload Your Farm Photo :"
+                            android:textColor="@color/textColor"
+                            android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_corner"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/farm_photo_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="numberDecimal" />
+
+                            <TextView
+                                android:id="@+id/farm_photo_browse_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/edittext_right_corners_green"
+                                android:textColor="@color/white"
+                                android:text="Browse"
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:layout_weight="0.4" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="First Loan Guarantor"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginRight="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="@string/first_name" />
+
+                            <EditText
+                                android:id="@+id/first_name_edt1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/edittext_corner"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="Second Name" />
+
+                            <EditText
+                                android:id="@+id/last_name_edt1"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/edittext_corner"
+                                android:fontFamily="@font/josefin_sans"
+                                android:inputType="text"
+                                android:paddingStart="10dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black"
+                                android:paddingLeft="10dp"
+                                android:gravity="start" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginRight="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Relationship" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:background="@drawable/edittext_corner"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <Spinner
+                                    android:id="@+id/guarantor_relationship_spn1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:entries="@array/next_of_kin_relation"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/ic_chevron_down" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="Contact" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_alignParentTop="true"
+                                android:background="@drawable/edittext_corner"
+                                android:orientation="horizontal">
+                                <TextView
+                                     android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:background="@drawable/edittext_left_corners_green"
+                                    android:gravity="center"
+                                    android:text="+256"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+                                <EditText
+                                    android:id="@+id/guarantor_contact_edt1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/josefin_sans"
+                                    android:inputType="phone"
+                                    android:paddingStart="@dimen/dimen_10dp"
+                                    android:tag="+256 "
+                                    android:maxLength="9"
+                                    android:layout_weight="0.7"
+                                    android:background="@android:color/transparent"
+                                    android:textAlignment="viewStart"
+                                    android:textColor="@android:color/black"
+                                    android:textColorHint="@android:color/black"
+                                    android:paddingLeft="@dimen/dimen_10dp"
+                                    android:gravity="start" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Second Loan Guarantor"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginRight="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="@string/first_name" />
+
+                            <EditText
+                                android:id="@+id/first_name_edt2"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/edittext_corner"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="Second Name" />
+
+                            <EditText
+                                android:id="@+id/last_name_edt2"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/edittext_corner"
+                                android:fontFamily="@font/josefin_sans"
+                                android:inputType="text"
+                                android:paddingStart="10dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black"
+                                android:paddingLeft="10dp"
+                                android:gravity="start" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginRight="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Relationship" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_weight="1"
+                                android:background="@drawable/edittext_corner"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <Spinner
+                                    android:id="@+id/guarantor_relationship_spn2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:entries="@array/next_of_kin_relation"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                   android:src="@drawable/ic_chevron_down" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="Contact" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_alignParentTop="true"
+                                android:background="@drawable/edittext_corner"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:background="@drawable/edittext_left_corners_green"
+                                    android:gravity="center"
+                                    android:text="+256"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+                                <EditText
+                                    android:id="@+id/guarantor_contact_edt2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/josefin_sans"
+                                    android:inputType="phone"
+                                    android:paddingStart="@dimen/dimen_10dp"
+                                    android:tag="+256 "
+                                    android:maxLength="9"
+                                    android:layout_weight="0.7"
+                                    android:background="@android:color/transparent"
+                                    android:textAlignment="viewStart"
+                                    android:textColor="@android:color/black"
+                                    android:textColorHint="@android:color/black"
+                                    android:paddingLeft="@dimen/dimen_10dp"
+                                    android:gravity="start" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/text_view_error_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Insufficient Funds!"
+                        android:textColor="@color/device_problem"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="@dimen/dimen_5dp"
+                            android:background="@drawable/round_corners_button_darkgray"
+                            android:layout_marginRight="@dimen/dimen_5dp">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ic_chevron_left"/>
+                            <Button
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:text="@string/previous"
+                                android:paddingStart="6dp"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/button_text_size"
+                                android:paddingLeft="6dp" />
+
+
+
+                        </FrameLayout>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/dimen_5dp"
+                            android:background="@drawable/rounded_corners_button"
+                            android:layout_marginLeft="@dimen/dimen_5dp">
+
+                            <Button
+                                android:id="@+id/btn_loan_app_photos_next_step"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:paddingStart="30dp"
+                                android:paddingEnd="4dp"
+                                android:text="@string/submit"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/button_text_size"
+                                android:paddingLeft="30dp"
+                                android:paddingRight="4dp" />
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="end|center_vertical"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ic_chevron_right">
+
+                            </ImageView>
+                        </FrameLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

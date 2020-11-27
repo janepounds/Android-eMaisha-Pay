@@ -1,0 +1,216 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccentGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="fontFamily">@font/josefin_sans</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="Button" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="backgroundTint">@color/buttonColor</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+
+
+
+    <style name="MyPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:listPreferredItemHeightSmall">30dp</item>
+    </style>
+
+
+    <style name="HeaderThemeWhite" parent="AppTheme">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <!-- Custom Preference Theme inherits from the v14 support library Material Theme -->
+
+    <!-- Style for an Preference Entry -->
+
+    <!--Youtube List Style-->
+
+    <style name="textAppearance_view_pager" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/background_custom_dialog</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+
+    <style name="AppDrawableTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorAccentGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="MySplashScreen" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+
+    </style>
+
+
+    <style name="ButtonBorder" parent="Widget.AppCompat.Button.Colored" />
+
+    <style name="ButtonBorder.Primary">
+        <item name="android:background">@color/colorAccentGreen</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+
+    <style name="MyToolbar" parent="AppTheme">
+        <item name="android:background">@color/colorAccentGreen</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="MyToolbarPopUp" parent="AppTheme">
+        <item name="android:background">@color/colorAccentGreen</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+
+    <style name="HeaderTheme" parent="AppTheme">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <!-- Custom Preference Theme inherits from the v14 support library Material Theme -->
+    <style name="AppPreferenceTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceStyle">@style/AppPreference</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <!-- Style for an Preference Entry -->
+    <style name="AppPreference" parent="@style/Preference.Material">
+        <item name="android:layout">@layout/preference_material</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <!--Youtube List Style-->
+    <style name="listStyleNoPadding">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogFullscreen" parent="@style/Preference.Material">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slideup_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+
+    <style name="myFullscreenAlertDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textColorSecondary">@color/gray</item>
+    </style>
+
+
+
+    <!-- Wallet plugin Style-->
+    <style name="AppTheme0" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextAppearance">@style/MyMenuTextAppearance</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="MyMenuTextAppearance" parent="android:TextAppearance.Holo.Widget.ActionBar.Menu">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TabTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionMenuTextAppearance">@style/MyMenuTextAppearance</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Button_DW" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+    </style>
+
+    <style name="textAppearance_general">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="HeaderThemeActivity">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+    </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/dividerDark</item>
+        <item name="colorControlActivated">#FFAC41</item>
+    </style>
+</resources>

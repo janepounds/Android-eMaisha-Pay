@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "4529494170",
+    "firebase_url": "https://emaishapay.firebaseio.com",
+    "project_id": "emaishapay",
+    "storage_bucket": "emaishapay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4529494170:android:8e34711e8f550af575e723",
+        "android_client_info": {
+          "package_name": "com.cabral.emaishapay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4529494170-ft8mmb3n6rf6fc0p02q1c8ujr2g8q2rc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabral.emaishapay",
+            "certificate_hash": "554f18c61331ff4dc6bd8518281d435eb8423306"
+          }
+        },
+        {
+          "client_id": "4529494170-3l7su023ncu7915cnstv3m4hippr2ucn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADkVQzKjSNoZq1g_mG7lbZ1iC4mBOuB0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4529494170-3l7su023ncu7915cnstv3m4hippr2ucn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

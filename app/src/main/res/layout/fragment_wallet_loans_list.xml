@@ -1,0 +1,168 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cabral.emaishapay.fragments.WalletLoansListFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_wallet_loans_list"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccentLight"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/back_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:gravity="center_vertical"
+                android:text="Loans"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/windowBackgroundDark"
+        android:padding="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@+id/parent_constraintLayout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <FrameLayout
+                    android:id="@+id/wallet_pay_loan_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/rectangular_green_border"
+                    android:gravity="start"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="@dimen/dimen_10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/dimen_10dp"
+                    android:layout_alignParentLeft="true">
+
+                    <Button
+                        android:id="@+id/wallet_pay_loan_btn"
+                        style="@style/Button_DW"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:text="Pay Loan"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/button_text_size" />
+
+
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/wallet_apply_loan_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/rectangular_green_border"
+                    android:gravity="end"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="@dimen/dimen_10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="@dimen/dimen_10dp"
+                    android:layout_alignParentRight="true">
+
+                    <Button
+                        android:id="@+id/wallet_apply_loan_btn"
+                        style="@style/Button_DW"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:text="Apply for Loan"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/button_text_size" />
+
+
+                </FrameLayout>
+
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/loans_list_recycler_view"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

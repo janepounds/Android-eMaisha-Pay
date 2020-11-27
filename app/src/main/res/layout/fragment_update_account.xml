@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_marginBottom="?attr/actionBarSize"
+    android:background="@color/windowBackgroundLight">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <RelativeLayout
+                android:id="@+id/layout_my_addresses"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <com.cabral.emaishapay.customs.CircularImageView
+                    android:id="@+id/update_account_user_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/profile"
+                    app:border_color="@color/white"
+                    app:border_overlay="true"
+                    app:border_width="2dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/update_account_user_photo_edit_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="0dp"
+                    android:src="@drawable/ic_edit_profile"
+                    android:tint="@color/white"
+                    android:translationZ="0dp"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/colorAccentBlue"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:pressedTranslationZ="0dp"
+                    app:rippleColor="@color/colorAccentBlue"
+                    app:useCompatPadding="true" />
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:cardCornerRadius="@dimen/dimen_10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rounded_corners_edittext_white"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip">
+
+                        <ImageView
+                            android:id="@+id/iv_profile"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_profile" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/iv_profile"
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@id/iv_profile">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:text="@string/first_name"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/first_name_update_account_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/input_field_height"
+                                android:background="@drawable/rounded_corners_edittext_white"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:hint="@string/first_name"
+                                android:inputType="text"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="@color/grey">
+
+                    </View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip">
+
+                        <ImageView
+                            android:id="@+id/iv_profile_lastname"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_profile" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/iv_profile_lastname"
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@id/iv_profile_lastname">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:text="@string/last_name"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/last_name_update_account_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/input_field_height"
+                                android:background="@drawable/rounded_corners_edittext_white"
+                                android:drawablePadding="15dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:hint="@string/last_name"
+                                android:inputType="text"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="@color/grey">
+
+                    </View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip">
+
+                        <ImageView
+                            android:id="@+id/iv_emil"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_email" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/iv_emil"
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@id/iv_emil">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:text="@string/email_address"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/email_update_account_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/input_field_height"
+                                android:layout_toRightOf="@+id/iv_emil"
+                                android:background="@color/transparent"
+                                android:drawablePadding="15dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:hint="yourname@email.com"
+                                android:inputType="textEmailAddress|textNoSuggestions"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="@color/grey">
+
+                    </View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip">
+
+                        <ImageView
+                            android:id="@+id/iv_password"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_calendar" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/iv_password"
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@id/iv_password">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:text="@string/date_of_birth"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/dob_fragment_update_account"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/input_field_height"
+                                android:background="@color/transparent"
+                                android:drawableEnd="@drawable/ic_chevron_down"
+                                android:drawablePadding="15dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:hint="@string/date_of_birth"
+                                android:inputType="date"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black"
+                                android:drawableRight="@drawable/ic_chevron_down" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="@color/grey">
+
+                    </View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip">
+
+                        <ImageView
+                            android:id="@+id/iv_confirm_password"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_surface" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/iv_confirm_password"
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@id/iv_confirm_password">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:text="@string/contact_no"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/contact_update_account_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/input_field_height"
+                                android:background="@color/transparent"
+                                android:drawablePadding="15dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="start|center_vertical"
+                                android:hint="@string/contact_no"
+                                android:inputType="phone"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/black" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/updateInfoForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/input_field_margin"
+                android:orientation="vertical">
+
+                <!--
+                <EditText
+                    android:id="@+id/current_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_field_height"
+                    android:hint="@string/current_password"
+                    android:inputType="textPassword|textNoSuggestions"
+                    android:textColor="@color/textColorSecondary"
+                    android:textColorHint="@color/textColorPrimaryDark"
+                    android:drawableStart="@drawable/ic_lock"
+                    android:drawablePadding="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textAlignment="viewStart"
+                    android:gravity="start|center_vertical"
+                    android:layout_marginTop="@dimen/input_field_margin"
+                    android:background="@drawable/rounded_corners_edittext_dark" />
+                <EditText
+                    android:id="@+id/new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_field_height"
+                    android:hint="@string/new_password"
+                    android:inputType="textPassword|textNoSuggestions"
+                    android:textColor="@color/textColorSecondary"
+                    android:textColorHint="@color/textColorPrimaryDark"
+                    android:drawableStart="@drawable/ic_lock"
+                    android:drawablePadding="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textAlignment="viewStart"
+                    android:gravity="start|center_vertical"
+                    android:layout_marginTop="@dimen/input_field_margin"
+                    android:background="@drawable/rounded_corners_edittext_dark" />
+-->
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/update_account_info_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccentGreen"
+        android:fontFamily="@font/josefin_sans"
+        android:text="@string/save_changes"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size" />
+
+</RelativeLayout>

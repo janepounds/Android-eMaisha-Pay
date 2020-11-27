@@ -1,0 +1,295 @@
+package com.cabral.emaishapay.network;
+
+
+import com.cabral.emaishapay.models.address_model.AddressData;
+import com.cabral.emaishapay.models.address_model.Countries;
+import com.cabral.emaishapay.models.address_model.Regions;
+import com.cabral.emaishapay.models.address_model.Zones;
+import com.cabral.emaishapay.models.coupons_model.CouponsData;
+import com.cabral.emaishapay.models.BalanceResponse;
+import com.cabral.emaishapay.models.InitiateTransferResponse;
+import com.cabral.emaishapay.models.LoanListResponse;
+import com.cabral.emaishapay.models.LoanPayResponse;
+import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.models.RequestLoanresponse;
+import com.cabral.emaishapay.models.TokenResponse;
+import com.cabral.emaishapay.models.WalletAuthentication;
+import com.cabral.emaishapay.models.WalletLoanAddPicResponse;
+import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
+import com.cabral.emaishapay.models.WalletPurchaseResponse;
+import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.models.WalletUserRegistration;
+import com.cabral.emaishapay.models.pages_model.PagesData;
+import com.cabral.emaishapay.models.user_model.UserData;
+import com.cabral.emaishapay.models.WalletTransaction;
+
+import org.json.JSONObject;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+
+
+/**
+ * APIRequests contains all the Network Request Methods with relevant API Endpoints
+ **/
+
+public interface APIRequests {
+    //******************** News Data ********************//
+
+
+    //Update User
+    @POST("update/{id}/{oldPassword}")
+    Call<UserData> update(@Field("id") String id,
+                          @Field("firstname") String firstname,
+                          @Field("lastname") String lastname,
+                          @Field("country") String country,
+                          @Field("addressCountry") String addressCountry,
+                          @Field("addressStreet") String addressStreet,
+                          @Field("addressCityOrTown") String addressCityOrTown,
+                          @Field("email") String email,
+                          @Field("farmname") String farmname,
+                          @Field("countryCode") String countryCode,
+                          @Field("oldPassword") String oldPassword,
+                          @Field("latitude") String latitude,
+                          @Field("longitude") String longitude,
+                          @Field("password") String password
+    );
+
+    /**************  WALLET REQUESTS *******************************/
+    @FormUrlEncoded
+    @POST("user/check_account")
+    Call<TokenResponse> checkWalletAccount(@Field("email") String email, @Field("phoneNumber") String phonenumber);
+
+    //wallet authentication
+    @FormUrlEncoded
+    @POST("emaishawallet/user/authenticate")
+    Call<WalletAuthentication> authenticate(@Field("email") String email,
+                                            @Field("password") String password
+    );
+
+    //wallet registration
+    @FormUrlEncoded
+    @POST("emaishawallet/user/create")
+    Call<WalletUserRegistration> create(@Field("firstname") String firstname,
+                                        @Field("lastname") String lastname,
+                                        @Field("email") String email,
+                                        @Field("password") String password,
+                                        @Field("phoneNumber") String phoneNumber,
+                                        @Field("addressStreet") String addressStreet,
+                                        @Field("addressCityOrTown") String addressCityOrTown
+
+    );
+
+    //refresh token
+    @FormUrlEncoded
+    @POST("wallet/token/get")
+    Call<TokenResponse> getToken(
+            @Field("email") String email,
+            @Field("password") String password
+
+
+    );
+
+    //request balance
+
+    @GET("wallet/balance/request")
+    Call<BalanceResponse> requestBalance(@Header("Authorization") String token
+
+    );
+
+    //initiate transfer
+    @FormUrlEncoded
+    @POST("wallet/transfer/initiate")
+    Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
+                                                    @Field("amount") Double amount,
+                                                    @Field("receiverPhoneNumber") String receiverPhoneNumber
+
+
+    );
+
+    //wallet transaction list
+    @GET("wallet/transactions/list")
+    Call<WalletTransactionResponse> transactionList(@Header("Authorization") String token);
+
+    //make transaction
+    @FormUrlEncoded
+    @Headers({"Accept: application/json"})
+    @POST("wallet/payments/merchant")
+    Call<WalletPurchaseResponse> makeTransaction(@Header("Authorization") String token,
+                                                 @Field("merchantId") int merchantId,
+                                                 @Field("amount") Double amount,
+                                                 @Field("coupon") String coupon
+
+    );
+
+    //confirm payment
+    @FormUrlEncoded
+    @POST("wallet/payments/comfirm_paymerchant")
+    Call<WalletPurchaseConfirmResponse> confirmPayment(
+            @Field("merchantId") int merchantId,
+            @Field("amount") double amount,
+            @Field("coupon") String coupon
+
+
+    );
+
+    //get merchant information
+    @GET("wallet/merchant/{merchantId}")
+    Call<MerchantInfoResponse> getMerchant(@Header("Authorization") String token,
+                                           @Path("merchantId") int merchantId
+    );
+
+    //get merchant information
+    @GET("wallet/user/get/receiver_by_phone/{phonenumber}")
+    Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
+                                           @Path("phonenumber") String phonenumber
+    );
+
+
+    //get merchant receipt
+    @GET("wallet/payments/receipt/{referenceNumber}")
+    Call<WalletTransactionReceiptResponse> getReceipt(@Header("Authorization") String token,
+                                                      @Path("referenceNumber") String referenceNumber
+    );
+
+    //get user loans
+    @GET("wallet/loan/user/loans")
+    Call<LoanListResponse> getUserLoans(@Query("userId") String userId
+            /*@Header("Authorization") String token*/
+    );
+    @POST("wallet/loan/comfirmRequest")
+    Call<RequestLoanresponse> comfirmLoanApplication(@Header("Authorization") String token,
+                                           @Query("userId") String userId,
+                                           @Query("amount") double amount,
+                                           @Query("duration") int duration,
+                                           @Query("interest") double interest,
+                                           @Query("loanType") String loanType
+    );
+    //request loans
+    @POST("wallet/loan/user/request")
+    Call<RequestLoanresponse> requestLoans(@Header("Authorization") String token,
+                                           @Body JSONObject object
+    );
+
+
+    //add loan photos
+    @POST("wallet/loan/user/photos/add")
+    Call<WalletLoanAddPicResponse> addLoanPhotos(@Header("Authorization") String token,
+                                                 JSONObject object
+
+    );
+
+    //get wallet user by phone
+    @GET("wallet/user/get/receiver_by_phone/{phoneNumber}")
+    Call<UserData> getWalletUser(@Path("phoneNumber") String phoneNumber
+
+    );
+
+    //create user credit
+    @FormUrlEncoded
+    @POST("wallet/flutter/payment/credituser")
+    Call<WalletTransaction> creditUser(@Header("Authorization") String token,
+                                       @Field("email") String email,
+                                       @Field("amount") Double amount,
+                                       @Field("referenceNumber") String referenceNumber
+
+    );
+
+    //voucher deposit
+    @FormUrlEncoded
+    @POST("wallet/payment/voucherdeposit")
+    Call<CouponsData> voucherDeposit(@Header("Authorization") String token,
+                                     @Field("email") String email,
+                                     @Field("phoneNumber") String phoneNumber,
+                                     @Field("codeEntered") String codeEntered
+    );
+
+    //loan pay
+    @FormUrlEncoded
+    @Headers({"Accept: application/json"})
+    @POST("wallet/payments/loanpay")
+    Call<LoanPayResponse> loanPay(@Header("Authorization") String token,
+                                  @Field("amount") double amount,
+                                  @Field("userId") String userId);
+
+    @Multipart
+    @POST("processregistration")
+    Call<UserData> processRegistration(
+            @Part("customers_firstname") RequestBody firstName,
+            @Part("customers_lastname") RequestBody lastName,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+            @Part("country_code") RequestBody countryCode,
+            @Part("customers_telephone") RequestBody phoneNumber,
+            @Part("addressStreet") RequestBody addressStreet,
+            @Part("addressCityOrTown") RequestBody addressCityOrTown,
+            @Part("address_district") RequestBody addressDistrict);
+
+    @FormUrlEncoded
+    @POST("registerdevices")
+    Call<UserData> registerDeviceToFCM(@Field("device_id") String device_id,
+                                       @Field("device_type") String device_type,
+                                       @Field("ram") String ram,
+                                       @Field("processor") String processor,
+                                       @Field("device_os") String device_os,
+                                       @Field("location") String location,
+                                       @Field("device_model") String device_model,
+                                       @Field("manufacturer") String manufacturer,
+                                       @Field("customers_id") String customers_id);
+
+
+    @FormUrlEncoded
+    @POST("processlogin")
+    Call<UserData> processLogin(@Field("email") String customers_email_address,
+                                @Field("password") String customers_password);
+
+
+    @FormUrlEncoded
+    @POST("processforgotpassword")
+    Call<UserData> processForgotPassword(@Field("email") String customers_email_address);
+
+    @FormUrlEncoded
+    @POST("updatecustomerinfo")
+    Call<UserData> updateCustomerInfo(@Field("customers_id") String customers_id,
+                                      @Field("customers_firstname") String customers_firstname,
+                                      @Field("customers_lastname") String customers_lastname,
+                                      @Field("customers_gender") String customers_gender,
+                                      @Field("customers_telephone") String customers_telephone,
+                                      @Field("customers_dob") String customers_dob,
+                                      @Field("image_id") String image_id);
+
+    //******************** Address Data ********************//
+    @POST("getcountries")
+    Call<Countries> getCountries();
+
+    @FormUrlEncoded
+    @POST("getzones")
+    Call<Zones> getZones(@Field("zone_country_id") String zone_country_id);
+
+    @FormUrlEncoded
+    @POST("getalladdress")
+    Call<AddressData> getAllAddress(@Field("customers_id") String customers_id);
+
+    @FormUrlEncoded
+    @POST("getregions")
+    Call<Regions> getAllRegions(@Field("latest_id") int latest_id);
+
+
+    //******************** Static Pages Data ********************//
+
+    @FormUrlEncoded
+    @POST("getallpages")
+    Call<PagesData> getStaticPages(@Field("language_id") int language_id);
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/walletHomeFragment">
+    <fragment
+        android:id="@+id/walletHomeFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletHomeFragment"
+        android:label="@string/my_wallet"
+        tools:layout="@layout/fragment_wallet_home">
+        <action
+            android:id="@+id/action_walletHomeFragment_to_walletTransactionsListFragment"
+            app:destination="@id/walletTransactionsListFragment" />
+        <action
+            android:id="@+id/action_walletHomeFragment_to_walletLoansListFragment"
+            app:destination="@id/walletLoansListFragment" />
+        <action
+            android:id="@+id/action_walletHomeFragment_to_depositPayments"
+            app:destination="@id/depositPayments" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletTransactionsListFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletTransactionsListFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_wallet_transactions_list" />
+    <fragment
+        android:id="@+id/walletLoansListFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoansListFragment"
+        android:label="Loans"
+        tools:layout="@layout/fragment_wallet_loans_list">
+        <action
+            android:id="@+id/action_walletLoansListFragment_to_walletLoanAppInitiateFragment"
+            app:destination="@id/walletLoanAppInitiateFragment" />
+        <action
+            android:id="@+id/action_walletLoansListFragment_to_walletLoanStatusPreview"
+            app:destination="@id/walletLoanStatusPreview" />
+        <action
+            android:id="@+id/action_walletLoansListFragment_to_payLoan"
+            app:destination="@id/payLoan" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletLoanAppInitiateFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoanDetailsFragment"
+        android:label="Apply for Loan"
+        tools:layout="@layout/fragment_wallet_loan_details">
+        <action
+            android:id="@+id/action_walletLoanAppInitiateFragment_to_walletLoanFarmingDetailsFragment"
+            app:destination="@id/walletLoanFarmingDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletLoanPreviewRequestFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoanPreviewRequestFragment"
+        android:label="Loan Preview"
+        tools:layout="@layout/fragment_wallet_loan_preview_request">
+        <action
+            android:id="@+id/action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment"
+            app:destination="@id/walletLoanAppPhotosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletLoanAppPhotosFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoanKycDetailsFragment"
+        android:label="KYC Details"
+        tools:layout="@layout/fragment_wallet_loan_kyc_details">
+        <action
+            android:id="@+id/action_walletLoanAppPhotosFragment_to_walletLoansListFragment"
+            app:destination="@id/walletLoansListFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/payLoan"
+        android:name="com.cabral.emaishapay.DailogFragments.wallet.PayLoan"
+        tools:layout="@layout/wallet_pay_loan" />
+
+    <dialog
+        android:id="@+id/depositPayments"
+        android:name="com.cabral.emaishapay.DailogFragments.wallet.DepositPayments"
+        tools:layout="@layout/wallet_payment_methods" />
+    <fragment
+        android:id="@+id/walletLoanStatusPreview"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoanStatusPreview"
+        android:label="Loan Status Preview"
+        tools:layout="@layout/wallet_loanstatus_preview" />
+    <fragment
+        android:id="@+id/walletLoanFarmingDetailsFragment"
+        android:name="com.cabral.emaishapay.fragments.wallet.WalletLoanFarmingDetailsFragment"
+        android:label="Farming Details"
+        tools:layout="@layout/fragment_wallet_loan_farming_details" >
+        <action
+            android:id="@+id/action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment"
+            app:destination="@id/walletLoanPreviewRequestFragment" />
+    </fragment>
+</navigation>

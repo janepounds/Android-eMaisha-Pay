@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/solidwhite_shape"
+    android:orientation="vertical"
+    tools:context=".activities.wallet.WalletHomeActivity" >
+
+    <LinearLayout
+        android:id="@+id/layout_add_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:text="Pay Loan"
+            android:theme="@style/HeaderTheme" />
+        <ImageView
+            android:id="@+id/wallet_transfer_money_close"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight=".9"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:src="@drawable/close" />
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen_20dp"
+            android:paddingRight="@dimen/dimen_20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/discount"
+                        android:layout_weight="0.4"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/gray"
+                        android:layout_weight="0.3"
+                        android:orientation="horizontal">
+
+
+                        <EditText
+                            android:id="@+id/txt_crop_bill_discount_percentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.9"
+                            android:background="@drawable/input_shapes"
+                            android:ems="3"
+                            android:hint="Enter.."
+
+                            android:inputType="numberDecimal"
+                            android:textSize="14sp"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:text="%"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+
+
+                            android:gravity="center_horizontal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_crop_bill_discount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="@string/default_numeric_value"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Merchant ID"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter.."
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="2dp"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Amount (UGX)"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txt_loan_bill_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="e.g 40,000"
+                        android:background="@drawable/edittext_corner"
+                        android:textSize="14dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="@dimen/dimen_15sp"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/error_message_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Eorror Please Try again later!"
+                    android:textColor="@color/device_problem"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_button"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_10dp">
+
+            <Button
+                android:id="@+id/btn_pay"
+                style="@style/Button_DW"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:backgroundTint="@color/textColor"
+                android:text="Pay"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size" />
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="10dip"
+                android:src="@drawable/ic_right_arrow">
+
+            </ImageView>
+
+        </FrameLayout>
+
+        </LinearLayout>
+
+</LinearLayout>

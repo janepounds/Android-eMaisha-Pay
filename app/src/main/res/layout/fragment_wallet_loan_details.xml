@@ -1,0 +1,414 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cabral.emaishapay.fragments.WalletLoanDetailsFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_wallet_loan_app_initiate"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccentLight"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_statement_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?actionBarSize"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefin_sans"
+            android:gravity="left"
+            android:paddingLeft="5dp"
+            android:text="Enter Loan Details"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dimen_20dp"
+            android:textStyle="bold" />
+
+        <com.kofigyan.stateprogressbar.StateProgressBar
+            android:id="@+id/loan_progress_bar_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            app:spb_animateToCurrentProgressState="true"
+            app:spb_checkStateCompleted="true"
+            app:spb_animationDuration="500"
+            app:spb_currentStateDescriptionColor="@color/colorPrimary"
+            app:spb_currentStateNumber="one"
+            app:spb_maxStateNumber="four"
+            app:spb_stateBackgroundColor="#BDBDBD"
+            app:spb_stateDescriptionColor="#808080"
+            app:spb_stateForegroundColor="@color/colorPrimary"
+            app:spb_stateNumberBackgroundColor="#808080"
+            app:spb_stateNumberForegroundColor="#eeeeee"
+            app:spb_stateLineThickness="4dp"/>
+
+        <TextView
+            android:id="@+id/text_view_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Insufficient Funds!"
+            android:textColor="@color/device_problem"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="Maximum Amount"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:autoSizeTextType="uniform" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_weight="0.5"
+                    android:gravity="end"
+                    android:text="UGX 80,000"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:text="Loan Amount"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/edittext_corner"
+                    android:orientation="horizontal">
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edittext_left_corners_green"
+                        android:textColor="@color/white"
+                        android:text="@string/currency"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_weight="0.1" />
+
+                    <EditText
+                        android:id="@+id/txt_loan_application_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/dimen_10dp"
+                        android:gravity="start|center_vertical"
+                        android:inputType="number"
+                        android:background="@android:color/transparent"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/textColorPrimaryDark"/>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Payment Schedule"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_loan_application_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/loan_durations"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_chevron_down" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Amount"
+                        android:layout_marginBottom="4dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+
+                        <EditText
+                            android:id="@+id/loanpayments_edtxt"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="@dimen/dimen_10dp"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/textColor"
+                            android:background="@android:color/transparent"
+                            android:inputType="numberDecimal" />
+
+                        <TextView
+                            android:id="@+id/loanpaymentfrequency"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_right_corners_green"
+                            android:textColor="@color/white"
+                            android:text="Per Unit"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_weight="0.4" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="vertical"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="4dp"
+                        android:text="Amount Due"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_left_corners_green"
+                            android:textColor="@color/white"
+                            android:text="@string/currency"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_weight="0.3" />
+
+                        <TextView
+                            android:id="@+id/amount_due_txtview"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:padding="@dimen/dimen_10dp"
+                            android:gravity="start|center_vertical"
+                            android:inputType="number"
+                            android:background="@android:color/transparent"
+                            android:textSize="16sp"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/textColorPrimaryDark"/>
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:text="Loan Duration"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/edittext_corner"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/txt_loan_application_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:paddingLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:background="@android:color/transparent"
+                        android:inputType="numberDecimal" />
+
+                    <TextView
+                        android:id="@+id/loanpayment_duration_units"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edittext_right_corners_green"
+                        android:textColor="@color/white"
+                        android:text="months"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_weight="0.4" />
+
+                </LinearLayout>
+            </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/dimen_30dp"
+
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_corners_button">
+
+                <Button
+                    android:id="@+id/btn_loan_next_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:text="@string/next"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_chevron_right">
+
+                </ImageView>
+            </FrameLayout>
+        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

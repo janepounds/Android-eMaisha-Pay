@@ -1,0 +1,376 @@
+<resources>
+    <string name="app_name">emaishaPay</string>
+    <string name="welcome_please_login_to_your_account">Welcome, Please Login to your Account</string>
+    <string name="forgot_pass">Forgot password</string>
+    <string name="don_t_have_an_account_yet">Don’t have an account yet?</string>
+    <string name="create_a_new_account">Create a New Account.</string>
+    <string name="sign_up">Sign up</string>
+    <string name="district">District</string>
+    <string name="sub_county">Sub County</string>
+    <string name="village">Village</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="title_livestock_records">Livestock Records</string>
+    <string name="filter_by">Filter By :</string>
+
+
+    <string name="lorem_ipsum">
+        No Minimum Order - Order in for yourself or for the group, with no restrictions.
+        Deliveries made in a flash. Anytime, anywhere.
+        The quickest way to get anything delivered in your city.
+        One-stop solution to all your delivery needs.
+    </string>
+
+    <!--  Form Strings -->
+    <string name="full_name"> Full Name </string>
+    <string name="first_name"> First Name </string>
+    <string name="last_name"> Last Name </string>
+    <string name="email"> Email </string>
+    <string name="email_address"> Email Address </string>
+    <string name="dob"> Date of Birth </string>
+    <string name="gender"> Gender </string>
+    <string name="male"> Male </string>
+    <string name="female"> Female </string>
+    <string name="fax"> Fax </string>
+    <string name="mobile"> Mobile </string>
+    <string name="contact_no"> Contact </string>
+    <string name="contact_format" translatable="false">xxxxxxxxx</string>
+    <string name="location">Location</string>
+    <string name="address"> Address </string>
+    <string name="country"> Country </string>
+    <string name="zone"> Zone </string>
+    <string name="state"> State </string>
+    <string name="city"> City </string>
+    <string name="post_code"> Post Code </string>
+    <string name="suburb"> Suburb </string>
+    <string name="password"> Password </string>
+    <string name="confirm_password"> Confirm Password </string>
+    <string name="new_password"> New Password </string>
+    <string name="current_password"> Current Password </string>
+    <string name="new_address"> New Address </string>
+    <string name="update_address"> Update Address </string>
+    <string name="edit_profile"> Edit Profile </string>
+    <string name="subscribe_newsletter"> Subscribe Newsletter </string>
+
+
+
+    <!--  Messages Strings -->
+    <string name="thank_you"> Thank You </string>
+    <string name="add_coupon"> Add Coupon? </string>
+    <string name="your_message"> Your Message </string>
+    <string name="empty_cart"> Your Cart is Empty </string>
+    <string name="record_not_found"> No Record Found </string>
+    <string name="item_added_to_cart"> Item Added to Cart </string>
+    <string name="item_removed_from_cart"> Removed from Cart </string>
+    <string name="something_went_wrong"> Something went Wrong! </string>
+    <string name="added_to_favourites"> Added to Favourites </string>
+    <string name="removed_from_favourites"> Removed from Favourites </string>
+    <string name="not_a_member"> Not a Member? </string>
+    <string name="login_or_signup"> Login &amp; Register </string>
+    <string name="login_or_create_account"> Please Login or create Account </string>
+    <string name="thank_you_for_shopping"> Thank You for shopping with us! </string>
+    <string name="coupon_removes_other_coupons"> This coupon may remove all other coupons! </string>
+
+    <string name="forgot_your_password"> Forgot Your Password? </string>
+    <string name="forgot_password"> I\'ve forgotten my password? </string>
+    <string name="already_have_account"> Already have an account? </string>
+    <string name="search_product_by_name"> Type Something to Search </string>
+    <string name="default_shipping"> Same as Delivery Address </string>
+    <string name="select_payment_method"> Select Payment Method </string>
+
+    <string name="order_dialog_prompt"> Do you really want to cancel the order? </string>
+
+    <string name="processing"> Processing... </string>
+    <string name="please_wait"> Please Wait... </string>
+    <string name="invalid_address"> Invalid Address </string>
+    <string name="no_internet"> Internet Connection is not Available </string>
+
+    <string name="permission_rejected"> Permission not Granted! </string>
+    <string name="permission_camera_storage"> Need Camera and Storage Permissions! </string>
+    <string name="permission_camera_storage_needed"> This app needs camera and storage permissions to take pictures from the gallery or with the camera. </string>
+
+    <string name="rate_now"> Rate It! </string>
+    <string name="not_now"> Not Now </string>
+    <string name="rate_app_msg"> If you enjoy using this app, it would be great to take a moment to rate it. </string>
+
+    <string name="veryfynumbertxt"> Please enter verification code sent in your text message. </string>
+
+    <string name="report_now" translatable="false"> WhatsApp Now! </string>
+    <string name="cancel_now" translatable="false"> Cancel </string>
+    <string name="whats_app_msg" translatable="false"> Connect to CdmKart Customer Support! Feel Free to Chat/Call with Us! </string>
+
+    <string name="partner_now" translatable="false"> Join Now! </string>
+    <string name="partner_msg" translatable="false"> Does your business need on-demand, hyperlocal deliveries? CdmKart for Business is the one-stop solution you’re looking for. </string>
+
+    <string name="book_now" translatable="false"> Book Now! </string>
+    <string name="booking_msg" translatable="false"> Now Book your Appointment Fast and Easily and Get your Appointment Token Number! </string>
+    <string name="reviews_ratings" translatable="false"> Ratings and Reviews </string>
+
+
+
+    <!--  Other Strings -->
+    <string name="ok"> OK </string>
+    <string name="and"> and </string>
+    <string name="NEW"> NEW </string>
+    <string name="OFF"> OFF </string>
+    <string name="save"> Save </string>
+    <string name="send"> Send </string>
+    <string name="next"> Next </string>
+    <string name="skip"> Skip </string>
+    <string name="grant"> Grant </string>
+    <string name="title"> Title </string>
+    <string name="start"> Start </string>
+    <string name="retry"> Retry </string>
+    <string name="apply"> Apply </string>
+    <string name="search"> Search </string>
+    <string name="clear"> Clear </string>
+    <string name="login"> Login </string>
+    <string name="signup"> Signup </string>
+    <string name="cancel"> Cancel </string>
+    <string name="welcome"> Welcome </string>
+    <string name="explore"> Explore </string>
+    <string name="checkoutFinal"> Checkout </string>
+    <string name="register"> Sign Up </string>
+    <string name="drawerOpen"> DrawerOpen </string>
+    <string name="drawerClose"> DrawerClose </string>
+    <string name="phone_number">Phone Number</string>
+
+
+    <string name="app_terms_services">By creating an account, you agree to our</string>
+
+    <string name="ugandan_code" translatable="false">+256 </string>
+    <string name="actionHome"> HOME </string>
+    <string name="actionCategory"> CATEGORY </string>
+    <string name="description">Description</string>
+
+
+    <!--  App Settings Strings -->
+    <string name="select_language"> Select Language </string>
+    <string name="official_web"> Official Website </string>
+    <string name="share_app"> Share App </string>
+    <string name="rate_app"> Rate App </string>
+    <string name="whats_app" translatable="false"> WhatsApp Customer Support </string>
+    <string name="privacy_policy"> Privacy Policy </string>
+    <string name="refund_policy"> Refund Policy </string>
+    <string name="service_terms"> Terms of Service </string>
+    <string name="ad_banner"> Banner Ad </string>
+    <string name="ad_interstitial"> Interstitial Ad </string>
+
+    <!--  Errors Message Strings -->
+    <string name="enter_name"> Enter Your Name </string>
+    <string name="enter_city"> Enter Your City </string>
+    <string name="enter_address"> Enter Your Address </string>
+    <string name="enter_message"> Enter Your Message </string>
+    <string name="select_zone"> Select Your Zone </string>
+    <string name="select_country"> Select Your Country </string>
+    <string name="invalid_first_name"> Invalid First Name </string>
+    <string name="invalid_last_name"> Invalid Last Name </string>
+    <string name="invalid_email"> Invalid Email Address </string>
+    <string name="invalid_password"> Invalid Password </string>
+    <string name="invalid_password_length" translatable="false"> Password length must between 6 - 24 </string>
+    <string name="invalid_contact"> Invalid Contact No. </string>
+    <string name="invalid_post_code"> Invalid Postal Code </string>
+    <string name="invalid_credit_card"> Invalid Credit Card Number </string>
+    <string name="invalid_card_cvv"> Invalid Card CVV </string>
+    <string name="expired_card"> Card has been Expired </string>
+    <string name="invalid_payment_token"> Invalid Payment Token </string>
+    <string name="select_card_expiry"> Select your Card Expiry Date </string>
+    <string name="unexpected_response"> Unexpected Server Response </string>
+    <string name="cannot_get_payment_methods"> Error Getting Payment Methods </string>
+    <string name="cannot_initialize_braintree"> Error initializing Braintree Fragment </string>
+
+
+    <string name="sendemail">SEND EMAIL</string>
+    <string name="forgot_title">Enter the email address you used to create your account and we will email you a link to reset your password</string>
+
+
+    <string name="select">Select</string>
+    <string name="estimated_revenue">Estimated Revenue</string>
+    <string name="pesticides">Pesticides</string>
+    <string name="yeildperarea">Yeild Per Area</string>
+    <string name="variableexpenses">Variable Expenses</string>
+    <string name="other_income">Other Income</string>
+    <string name="label_capital_investment">Capital Investiment</string>
+    <string name="fixed_expenses">Fixed Expenses</string>
+    <string name="power">Power</string>
+    <string name="salary">Salary</string>
+    <string name="number">Number</string>
+    <string name="employee">employees</string>
+    <string name="currency">UGX</string>
+    <string name="per_day">per day</string>
+    <string name="per_week">per week</string>
+    <string name="per_year">per year</string>
+    <string name="label_building_investiment">Buildings</string>
+    <string name="label_report_results">Report Results</string>
+    <string name="calculate">calculate</string>
+    <string name="area">Area</string>
+    <string name="acres">Acres</string>
+
+    <!--    Arrays to test Sign Up with District, Sub-County and Village-->
+    <string-array name="spinner_district">
+        <item>District</item>
+        <item>Kampala</item>
+        <item>Wakiso</item>
+    </string-array>
+
+    <string-array name="spinner_sub_county">
+        <item>Sub County</item>
+        <item>Nakawa</item>
+        <item>Kololo</item>
+    </string-array>
+
+    <string-array name="spinner_village">
+        <item>Village</item>
+        <item>Village One</item>
+        <item>Village Two</item>
+    </string-array>
+
+    <string-array name="next_of_kin_relation">
+        <item>Select</item>
+        <item>Sister</item>
+        <item>Brother</item>
+        <item>Friend</item>
+        <item>Mother</item>
+        <item>Father</item>
+        <item>Guardian</item>
+        <item>Wife</item>
+    </string-array>
+
+    <string-array name="loan_farming_details_crops_list">
+        <item>Select</item>
+        <item>Beans</item>
+        <item>Tomatoes</item>
+        <item>Maize</item>
+        <item>Cassava</item>
+        <item>Matooke</item>
+        <item>Sweet Potatoes</item>
+        <item>Coffee</item>
+        <item>Ground nuts</item>
+        <item>Soy beans</item>
+        <item>Garlic</item>
+        <item>Onions</item>
+        <item>Pepper</item>
+        <item>Sorghum</item>
+    </string-array>
+    <string-array name="loan_farm_insurance">
+        <item>Select</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string name="default_shipping_method">Boda Boda</string>
+    <string name="cash_on_delivery">Cash on delivery</string>
+    <string name="visa_card">Visa / Master Card</string>
+    <string name="mobile_money">Mobile Money</string>
+    <string name="emaisha_card">eMaisha Card</string>
+    <string name="btn_continue_payment">Continue Payment</string>
+    <string name="payment_methods">Payment Methods</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="default_old_price"><strike>UGX 45.00</strike></string>
+    <string name="review_list">Review List</string>
+    <string name="payMerchant">Pay Merchant</string>
+    <string name="per_month">per month</string>
+    <string name="per_after3months">after 3 months</string>
+    <string name="per_after6months">after 6 months</string>
+    <string name="days">days</string>
+    <string name="weeks">weeks</string>
+    <string name="months">months</string>
+    <string name="quarteryear">quarter years</string>
+    <string name="halfyear">half years</string>
+    <string name="default_crop_area_units">Acres</string>
+    <string name="crop_protection">Pesticides/Crop Protection</string>
+    <string name="equipments">Equipment</string>
+    <string name="units">Units</string>
+    <string name="per_unit">/ Unit</string>
+    <string name="save_changes">Save</string>
+
+
+    <string name="transfer">Transfer</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="add_money">Add Money</string>
+    <string name="authenticate">Authenticate</string>
+
+    <string name="harvest_units">Harvest Units</string>
+    <string name="field_size">Field Size</string>
+    <string name="title_activity_loan_status_preview" translatable="false">My Loan</string>
+
+    <string-array name="loan_durations">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>After 3 months</item>
+        <item>After 6 months</item>
+    </string-array>
+
+    <string-array name="crop_havest_units">
+        <item>Select</item>
+        <item>Boxes</item>
+        <item>Kg</item>
+        <item>Tonnes</item>
+        <item>Bushels</item>
+        <item>Bags</item>
+        <item>Bunches</item>
+    </string-array>
+
+    <string name="expected_yield">Expected Yield</string>
+    <string name="expected_yield_per_ha">Expected Yield/ha</string>
+    <string name="my_wallet" translatable="false">eMaisha Pay</string>
+    <string name="deposit" translatable="false">Deposit</string>
+    <string name="addmoney" translatable="false">ADD MONEY</string>
+    <string name="current_balance_label" translatable="false">Wallet Balance</string>
+    <string name="comfirm_purchase" translatable="false">Confirm Payment</string>
+    <string name="pin" translatable="false">PIN</string>
+
+    <string name="previous">Previous</string>
+    <string name="submit">Submit</string>
+    <string name="label_wallet">Wallet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_marketplace">Market Place</string>
+    <string name="label_services">Services</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="visibility">Visibility</string>
+    <string name="rain">Rain</string>
+    <string name="humidity_default">48% Max</string>
+    <string name="rain_default">No</string>
+    <string name="visibility_default">25Km</string>
+    <string name="wind_default">12m/h</string>
+    <string name="humidity_default2">30.9% Min</string>
+    <string name="day">Wednesday</string>
+    <string name="temp_max">32.6&#xb0;C Max</string>
+    <string name="temp_min">16.8&#xb0;C Min</string>
+    <string name="crop">Crop</string>
+    <string name="label_confirm">Comfirm</string>
+
+
+    <string name="sponsors" translatable="false">Cabral Tech Ltd</string>
+
+
+    <string name="tax"> Tax </string>
+    <string name="shipping"> Exp.Delivery Charge</string>
+    <string name="discount"> Discount </string>
+    <string name="subtotal"> Subtotal </string>
+    <string name="total"> Total </string>
+    <string name="coupon"> Coupon </string>
+    <string name="coupon_code"> Coupon Code </string>
+    <string name="coupon_amount"> Coupon Amount </string>
+    <string name="coupon_discount"> Coupon Discount </string>
+    <string name="coupon_type"> Coupon Type </string>
+    <string name="sample_coupons"> Sample Coupon Codes </string>
+    <string name="payment_method"> Payment Method </string>
+    <string name="payment_details"> Payment Details </string>
+    <string name="card_number"> Card Number </string>
+    <string name="expiry_month"> Expiry Month </string>
+    <string name="expiry_year"> Expiry Year </string>
+    <string name="card_expiry"> Card Expiry </string>
+    <string name="card_cvv"> Card CVV </string>
+    <string name="payPal"> PayPal </string>
+    <string name="billing_address"> Billing Address </string>
+    <string name="shipping_address"> Delivery Address </string>
+    <string name="shipping_method"> Delivery Method </string>
+    <string name="default_numeric_value">0</string>
+    <string name="fertilizer_title">Fertilizer</string>
+    <string name="seeds">Seeds</string>
+
+
+</resources>
