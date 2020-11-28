@@ -716,7 +716,7 @@ public class SignUp extends AppCompatActivity {
         RequestBody addressCityOrTown = RequestBody.create(MediaType.parse("text/plain"), subCounty.getText().toString());
         RequestBody addressDistrict = RequestBody.create(MediaType.parse("text/plain"), district.getText().toString());
 
-        Call<UserData> call = APIClient.getInstance()
+        Call<UserData> call = APIClient.getWalletInstance()
                 .processRegistration
                         (
                                 fName, lName, email, password, countryCode, customersTelephone, addressStreet, addressCityOrTown, addressDistrict

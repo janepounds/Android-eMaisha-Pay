@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cabral.emaishapay.database.BuyInputsDB_Handler;
+import com.cabral.emaishapay.database.BuyInputsDB_Manager;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +44,7 @@ public class StartAppRequests {
     private static final String TAG = "StartAppRequests";
     private List<Regions> dataList = new ArrayList<>();
     private DbHandlerSingleton dbHandler;
+    private static BuyInputsDB_Handler db_handler;
     private Context context;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
@@ -49,6 +52,9 @@ public class StartAppRequests {
 
     public StartAppRequests(Context context) {
         emaishaPayApp = ((EmaishaPayApp) context.getApplicationContext());
+        db_handler = new BuyInputsDB_Handler();
+        dbHandler =DbHandlerSingleton.getHandlerInstance(context);
+        BuyInputsDB_Manager.initializeInstance(db_handler);
         this.context = context;
     }
 
@@ -68,7 +74,7 @@ public class StartAppRequests {
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
         int regionId =dbHandler.getMaxRegionId();
         Log.d(TAG, "RequestAllRegions: "+ regionId);
-        Call<Regions> call = APIClient.getInstance()
+        Call<Regions> call = ExternalAPIClient.getInstance()
                 .getAllRegions(regionId);
         try {
             Response<Regions> response = call.execute();
@@ -118,7 +124,7 @@ public class StartAppRequests {
                 public void onSuccess(InstanceIdResult instanceIdResult) {
                     String deviceID =instanceIdResult.getToken();
 
-                    Call<UserData> call = APIClient.getInstance()
+                    Call<UserData> call = ExternalAPIClient.getInstance()
                             .registerDeviceToFCM
                                     (
                                             deviceID,
@@ -174,7 +180,7 @@ public class StartAppRequests {
         ConstantValues.REFUND_POLICY = emaishaPayApp.getString(R.string.lorem_ipsum);
         ConstantValues.A_Z = emaishaPayApp.getString(R.string.lorem_ipsum);
 
-        Call<PagesData> call = APIClient.getInstance()
+        Call<PagesData> call = ExternalAPIClient.getInstance()
                 .getStaticPages
                         (
                                 ConstantValues.LANGUAGE_ID

@@ -238,25 +238,6 @@ public interface APIRequests {
             @Part("address_district") RequestBody addressDistrict);
 
     @FormUrlEncoded
-    @POST("registerdevices")
-    Call<UserData> registerDeviceToFCM(@Field("device_id") String device_id,
-                                       @Field("device_type") String device_type,
-                                       @Field("ram") String ram,
-                                       @Field("processor") String processor,
-                                       @Field("device_os") String device_os,
-                                       @Field("location") String location,
-                                       @Field("device_model") String device_model,
-                                       @Field("manufacturer") String manufacturer,
-                                       @Field("customers_id") String customers_id);
-
-
-    @FormUrlEncoded
-    @POST("processlogin")
-    Call<UserData> processLogin(@Field("email") String customers_email_address,
-                                @Field("password") String customers_password);
-
-
-    @FormUrlEncoded
     @POST("processforgotpassword")
     Call<UserData> processForgotPassword(@Field("email") String customers_email_address);
 

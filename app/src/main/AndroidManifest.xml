@@ -19,8 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         android:name=".app.EmaishaPayApp"
-        tools:replace="android:theme">
+        tools:replace="android:usesCleartextTraffic,android:theme">
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

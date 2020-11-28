@@ -115,7 +115,6 @@ public class WalletHomeFragment extends Fragment {
         toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
 
         Bundle bundle = new Bundle();
-        assert getArguments() != null;
         bundle.putDouble("balance", balance);
 
         btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));

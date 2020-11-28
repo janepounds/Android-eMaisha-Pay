@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.user_model.UserDetails;
 
 
@@ -11,7 +12,7 @@ import com.cabral.emaishapay.models.user_model.UserDetails;
  * User_Info_DB creates the table User_Record and handles all CRUD operations relevant to User_Record
  **/
 
-public class User_Info_BuyInputsDB {
+public class User_Info_DB {
 
     SQLiteDatabase db;
 
@@ -50,21 +51,21 @@ public class User_Info_BuyInputsDB {
     }
 
     //*********** Insert New User Data ********//
-    public void insertUserData(UserDetails user){
+    public void insertUserData(WalletAuthentication.UserData  user, String password){
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
         db = BuyInputsDB_Manager.getInstance().openDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(CUSTOMERS_ID,              user.getId());
-        values.put(CUSTOMERS_FIRSTNAME,       user.getFirstName());
-        values.put(CUSTOMERS_LASTNAME,        user.getLastName());
+        values.put(CUSTOMERS_FIRSTNAME,       user.getFirstname());
+        values.put(CUSTOMERS_LASTNAME,        user.getLastname());
         values.put(CUSTOMERS_EMAIL_ADDRESS,   user.getEmail());
-        values.put(CUSTOMERS_PASSWORD,        user.getPassword());
-        values.put(CUSTOMERS_DOB,             user.getDob());
-        values.put(CUSTOMERS_TELEPHONE,       user.getPhone());
-        values.put(CUSTOMERS_GENDER,          user.getGender());
-        values.put(CUSTOMERS_PICTURE,         user.getAvatar());
+        values.put(CUSTOMERS_PASSWORD,        password);
+        //values.put(CUSTOMERS_DOB,             user.getDob());
+        values.put(CUSTOMERS_TELEPHONE,       user.getPhoneNumber());
+        //values.put(CUSTOMERS_GENDER,          user.getGender());
+        values.put(CUSTOMERS_PICTURE,         user.getPictrure());
 
         db.insert(TABLE_USER_INFO, null, values);
 
@@ -113,21 +114,21 @@ public class User_Info_BuyInputsDB {
 
     //*********** Update the Details of existing User ********//
 
-    public void updateUserData(UserDetails user){
+    public void updateUserData(WalletAuthentication.UserData user, String password){
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
         db = BuyInputsDB_Manager.getInstance().openDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(CUSTOMERS_ID,              user.getId());
-        values.put(CUSTOMERS_FIRSTNAME,       user.getFirstName());
-        values.put(CUSTOMERS_LASTNAME,        user.getLastName());
+        values.put(CUSTOMERS_FIRSTNAME,       user.getFirstname());
+        values.put(CUSTOMERS_LASTNAME,        user.getLastname());
         values.put(CUSTOMERS_EMAIL_ADDRESS,   user.getEmail());
-        values.put(CUSTOMERS_PASSWORD,        user.getPassword());
-        values.put(CUSTOMERS_DOB,             user.getDob());
-        values.put(CUSTOMERS_TELEPHONE,       user.getPhone());
-        values.put(CUSTOMERS_GENDER,          user.getGender());
-        values.put(CUSTOMERS_PICTURE,         user.getAvatar());
+        values.put(CUSTOMERS_PASSWORD,        password);
+        //values.put(CUSTOMERS_DOB,             user.getDob());
+        values.put(CUSTOMERS_TELEPHONE,       user.getPhoneNumber());
+        //values.put(CUSTOMERS_GENDER,          user.getGender());
+        values.put(CUSTOMERS_PICTURE,         user.getPictrure());
 
         db.update(TABLE_USER_INFO, values, CUSTOMERS_EMAIL_ADDRESS +" = ?", new String[]{user.getEmail()});
 
