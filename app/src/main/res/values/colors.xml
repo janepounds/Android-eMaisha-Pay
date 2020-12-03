@@ -4,7 +4,7 @@
     <color name="colorPrimaryLight">#000</color>
     <color name="textColor">#515C6F</color>
     <color name="buttonColor">#557f5f</color>
-    <color name="colorPrimaryDark">#161f2b</color>
+    <color name="colorPrimaryDark">#557f5f</color>
     <color name="colorAccent">#557f5f</color>
     <color name="White">#ffffff</color>
     <color name="opaqueWhite">#8CFFFFFF</color>
