@@ -21,7 +21,6 @@ import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
 
-
 /**
  * SplashScreen activity, appears on App Startup
  **/

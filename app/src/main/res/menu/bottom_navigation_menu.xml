@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/walletHomeFragment"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/walletTransactionsFragment"
+        android:enabled="true"
+        android:icon="@drawable/transaction"
+        android:title="Transactions"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/walletCouponsFragment"
+        android:enabled="true"
+        android:icon="@drawable/coupon"
+        android:title="Coupons"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/walletAccountFragment"
+        android:enabled="true"
+        android:icon="@drawable/user"
+        android:title="Account"
+        app:showAsAction="ifRoom" />
+</menu>

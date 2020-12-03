@@ -45,7 +45,6 @@ import retrofit2.Response;
  * Login activity handles User's Email, Facebook and Google Login
  **/
 
-
 public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
 
@@ -57,13 +56,12 @@ public class Login extends AppCompatActivity {
     TextView forgotPasswordText, signupText;
     Button loginBtn;
 
-
     User_Info_DB userInfoDB;
     DialogLoader dialogLoader;
     APIRequests apiRequests;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
-static final int RC_SIGN_IN = 100;
+    static final int RC_SIGN_IN = 100;
 
     private WalletAuthentication.UserData userDetails;
 
@@ -140,13 +138,7 @@ static final int RC_SIGN_IN = 100;
                 processLogin();
             }
         });
-
-
-
-
     }
-
-
 
     //*********** Proceed Login with User Email and Password ********//
 
@@ -168,7 +160,7 @@ static final int RC_SIGN_IN = 100;
 
                 if (response.isSuccessful()) {
 
-                    if (response.body().getStatus()==1 || response.body().getStatus()==2) {
+                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
                         // Get the User Details from Response
                         userDetails = response.body().getData();
 
@@ -181,9 +173,9 @@ static final int RC_SIGN_IN = 100;
                         Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
 
                         TEMP_USER_TYPE = 0; // 0 for Simple Login.
-                        loginUser(userDetails,user_password.getText().toString().trim());
+                        loginUser(userDetails, user_password.getText().toString().trim());
                         WalletAuthActivity.getLoginToken(user_password.getText().toString().trim(), userDetails.getEmail(), userDetails.getPhoneNumber(), Login.this);
-                    } else if (response.body().getStatus()==0) {
+                    } else if (response.body().getStatus() == 0) {
                         // Get the Error Message from Response
                         String message = response.body().getMessage();
                         Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT).show();
@@ -205,20 +197,19 @@ static final int RC_SIGN_IN = 100;
         });
     }
 
-
     private void loginUser(WalletAuthentication.UserData userDetails, String password) {
         // Save User Data to Local Databases
-        if (userInfoDB.getUserData(userDetails.getId()+"") != null) {
+        if (userInfoDB.getUserData(userDetails.getId() + "") != null) {
             // User already exists
-            userInfoDB.updateUserData(userDetails,password);
+            userInfoDB.updateUserData(userDetails, password);
         } else {
             // Insert Details of New User
             userInfoDB.insertUserData(userDetails, password);
         }
-        Log.e("USERID", userDetails.getId()+"");
+        Log.e("USERID", userDetails.getId() + "");
         // Save necessary details in SharedPrefs
         editor = sharedPreferences.edit();
-        editor.putString(WalletHomeActivity.PREFERENCES_USER_ID, userDetails.getId()+"");
+        editor.putString(WalletHomeActivity.PREFERENCES_USER_ID, userDetails.getId() + "");
         editor.putString(WalletHomeActivity.PREFERENCES_USER_EMAIL, userDetails.getEmail());
         editor.putString(WalletHomeActivity.PREFERENCES_FIRST_NAME, userDetails.getFirstname());
         editor.putString(WalletHomeActivity.PREFERENCES_LAST_NAME, userDetails.getLastname());
@@ -232,7 +223,7 @@ static final int RC_SIGN_IN = 100;
 
         editor.putBoolean("isLogged_in", true);
         editor.apply();
-        WalletAuthActivity.WALLET_ACCESS_TOKEN=null;
+        WalletAuthActivity.WALLET_ACCESS_TOKEN = null;
         // Set UserLoggedIn in MyAppPrefsManager
         MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(com.cabral.emaishapay.activities.Login.this);
         myAppPrefsManager.logInUser();
@@ -240,7 +231,7 @@ static final int RC_SIGN_IN = 100;
         // Set isLogged_in of ConstantValues
         ConstantValues.IS_USER_LOGGED_IN = myAppPrefsManager.isUserLoggedIn();
         StartAppRequests.RegisterDeviceForFCM(com.cabral.emaishapay.activities.Login.this);
-        EmaishaPayApp.checkWalletAccount(userDetails.getEmail(),userDetails.getPhoneNumber());
+        EmaishaPayApp.checkWalletAccount(userDetails.getEmail(), userDetails.getPhoneNumber());
         // Navigate back to MainActivity
         Intent i = new Intent(com.cabral.emaishapay.activities.Login.this, WalletHomeActivity.class);
         startActivity(i);
@@ -252,7 +243,7 @@ static final int RC_SIGN_IN = 100;
 
         dialogLoader.showProgressDialog();
 
-        Call<UserData> call =apiRequests
+        Call<UserData> call = apiRequests
                 .processForgotPassword
                         (
                                 email
@@ -282,7 +273,6 @@ static final int RC_SIGN_IN = 100;
             }
         });
     }
-
 
     //*********** Validate Login Form Inputs ********//
 

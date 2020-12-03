@@ -63,45 +63,45 @@ public class WalletHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wallet_home, container, false);
 
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
-
-        toolbar = view.findViewById(R.id.toolbar_wallet_home);
-        walletBalance = view.findViewById(R.id.wallet_balance);
-        usernameWalletHome = view.findViewById(R.id.username_wallet_home);
-        btnWalletDeposit = view.findViewById(R.id.btn_wallet_deposit);
-        layoutWalletTransfer = view.findViewById(R.id.layout_wallet_transfer);
-        layoutWalletTransactions = view.findViewById(R.id.layout_wallet_transactions);
-        layoutWalletLoans = view.findViewById(R.id.layout_wallet_loans);
-        layoutWalletCoupons = view.findViewById(R.id.layout_wallet_coupons);
-        layoutWalletBuy = view.findViewById(R.id.layout_wallet_buy);
-        btnWalletTransfer = view.findViewById(R.id.btn_wallet_transfer);
-        btnWalletTransactions = view.findViewById(R.id.btn_wallet_transactions);
-        btnWalletLoans = view.findViewById(R.id.btn_wallet_loans);
-        btnWalletCoupons = view.findViewById(R.id.btn_wallet_coupons);
-        btnWalletBuy = view.findViewById(R.id.btn_wallet_buy);
-
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
-
-        actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle(getResources().getString(R.string.my_wallet));
-
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        fm = requireActivity().getSupportFragmentManager();
-
-        walletBalance.setText("UGX " + NumberFormat.getInstance().format(balance));
-
-        updateBalance();
-
-        usernameWalletHome.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
-
-        Log.d(TAG, "onCreateView: Name = " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
+//        progressDialog = new ProgressDialog(context);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Please Wait..");
+//        progressDialog.setCancelable(false);
+//
+//        toolbar = view.findViewById(R.id.toolbar_wallet_home);
+//        walletBalance = view.findViewById(R.id.wallet_balance);
+//        usernameWalletHome = view.findViewById(R.id.username_wallet_home);
+//        btnWalletDeposit = view.findViewById(R.id.btn_wallet_deposit);
+//        layoutWalletTransfer = view.findViewById(R.id.layout_wallet_transfer);
+//        layoutWalletTransactions = view.findViewById(R.id.layout_wallet_transactions);
+//        layoutWalletLoans = view.findViewById(R.id.layout_wallet_loans);
+//        layoutWalletCoupons = view.findViewById(R.id.layout_wallet_coupons);
+//        layoutWalletBuy = view.findViewById(R.id.layout_wallet_buy);
+//        btnWalletTransfer = view.findViewById(R.id.btn_wallet_transfer);
+//        btnWalletTransactions = view.findViewById(R.id.btn_wallet_transactions);
+//        btnWalletLoans = view.findViewById(R.id.btn_wallet_loans);
+//        btnWalletCoupons = view.findViewById(R.id.btn_wallet_coupons);
+//        btnWalletBuy = view.findViewById(R.id.btn_wallet_buy);
+//
+//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+//        setHasOptionsMenu(true);
+//
+//        actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+//        assert actionBar != null;
+//        actionBar.setTitle(getResources().getString(R.string.my_wallet));
+//
+//        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//
+//        fm = requireActivity().getSupportFragmentManager();
+//
+//        walletBalance.setText("UGX " + NumberFormat.getInstance().format(balance));
+//
+//        updateBalance();
+//
+//        usernameWalletHome.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
+//
+//        Log.d(TAG, "onCreateView: Name = " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
 
         // return view;
         return view;
@@ -112,23 +112,23 @@ public class WalletHomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-        toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
-
-        Bundle bundle = new Bundle();
-        bundle.putDouble("balance", balance);
-
-        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
-        layoutWalletTransfer.setOnClickListener(view110 -> openTransfer());
-        layoutWalletTransactions.setOnClickListener(view111 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
-        layoutWalletLoans.setOnClickListener(view112 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
-        layoutWalletCoupons.setOnClickListener(view18 -> comingSoon());
-        layoutWalletBuy.setOnClickListener(view17 -> openBuy());
-        btnWalletDeposit.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
-        btnWalletTransfer.setOnClickListener(view15 -> openTransfer());
-        btnWalletTransactions.setOnClickListener(view14 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
-        btnWalletLoans.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
-        btnWalletCoupons.setOnClickListener(view12 -> comingSoon());
-        btnWalletBuy.setOnClickListener(view1 -> openBuy());
+//        toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putDouble("balance", balance);
+//
+//        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
+//        layoutWalletTransfer.setOnClickListener(view110 -> openTransfer());
+//        layoutWalletTransactions.setOnClickListener(view111 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
+//        layoutWalletLoans.setOnClickListener(view112 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
+//        layoutWalletCoupons.setOnClickListener(view18 -> comingSoon());
+//        layoutWalletBuy.setOnClickListener(view17 -> openBuy());
+//        btnWalletDeposit.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
+//        btnWalletTransfer.setOnClickListener(view15 -> openTransfer());
+//        btnWalletTransactions.setOnClickListener(view14 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
+//        btnWalletLoans.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
+//        btnWalletCoupons.setOnClickListener(view12 -> comingSoon());
+//        btnWalletBuy.setOnClickListener(view1 -> openBuy());
     }
 
     @Override
@@ -143,7 +143,6 @@ public class WalletHomeFragment extends Fragment {
 
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
-
 
     public void openTransfer() {
         FragmentTransaction ft = fm.beginTransaction();
