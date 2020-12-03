@@ -92,4 +92,19 @@
             android:id="@+id/action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment"
             app:destination="@id/walletLoanPreviewRequestFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/walletTransactionsFragment"
+        android:name="com.cabral.emaishapay.fragments.WalletTransactionsFragment"
+        android:label="fragment_wallet_transactions"
+        tools:layout="@layout/fragment_wallet_transactions" />
+    <fragment
+        android:id="@+id/walletCouponsFragment"
+        android:name="com.cabral.emaishapay.fragments.WalletCouponsFragment"
+        android:label="fragment_wallet_coupons"
+        tools:layout="@layout/fragment_wallet_coupons" />
+    <fragment
+        android:id="@+id/walletAccountFragment"
+        android:name="com.cabral.emaishapay.fragments.WalletAccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_wallet_account" />
 </navigation>

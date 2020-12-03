@@ -4,14 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
@@ -20,17 +27,14 @@ import com.cabral.emaishapay.fragments.WalletTransactionsListFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class WalletHomeActivity extends AppCompatActivity {
     private static final String TAG = "WalletHomeActivity";
     private Context context;
-    public WalletHomeFragment homeFragment;
-    public WalletLoansListFragment loansListFragment;
-    public WalletTransactionsListFragment transactionsListFragment;
     public static FragmentManager fm;
 
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
@@ -54,6 +58,9 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCES_USER_BACKED_UP = "userBackedUp";
     public static final String PREFERENCES_USER_PASSWORD = "password";
 
+    private boolean doubleBackToExitPressedOnce = false;
+    private Toast backToast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +68,17 @@ public class WalletHomeActivity extends AppCompatActivity {
 
         context = getApplicationContext();
         fm = getSupportFragmentManager();
+
+        setUpNavigation();
     }
 
-
-
+    public void setUpNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setItemIconTintList(null);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
+        NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
+    }
 
     public static void startHome(Context context) {
         try {
@@ -134,11 +148,16 @@ public class WalletHomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            backToast.cancel();
+            finishAffinity();
+        } else {
+            this.doubleBackToExitPressedOnce = true;
+            backToast = Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
 
-        Intent intent = new Intent(this, WalletHomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-        finish();
+            new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+        }
     }
 }

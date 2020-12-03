@@ -52,7 +52,6 @@
     <string name="subscribe_newsletter"> Subscribe Newsletter </string>
 
 
-
     <!--  Messages Strings -->
     <string name="thank_you"> Thank You </string>
     <string name="add_coupon"> Add Coupon? </string>
@@ -104,7 +103,6 @@
     <string name="book_now" translatable="false"> Book Now! </string>
     <string name="booking_msg" translatable="false"> Now Book your Appointment Fast and Easily and Get your Appointment Token Number! </string>
     <string name="reviews_ratings" translatable="false"> Ratings and Reviews </string>
-
 
 
     <!--  Other Strings -->
