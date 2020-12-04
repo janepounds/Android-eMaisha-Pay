@@ -56,7 +56,7 @@ public class WalletLoginHelper extends AppCompatActivity {
                         editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userobject.getString("id"));
                         editor.apply();
 
-                        Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context) );
+                        Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
                         WalletAuthActivity.getLoginToken(rawpassword, email, phoneNumber, context);
                     } catch (Exception e) {
                         Log.e("response", response.toString());
@@ -109,7 +109,7 @@ public class WalletLoginHelper extends AppCompatActivity {
         Call<WalletUserRegistration> call = apiRequests.create(firstname, lastname, email, rawPassword, phoneNumber, addressStreet, addressCityOrTown);
         call.enqueue(new Callback<WalletUserRegistration>() {
             @Override
-            public void onResponse(Call<WalletUserRegistration> call, Response<WalletUserRegistration> response) {
+            public void onResponse(@NotNull Call<WalletUserRegistration> call, @NotNull Response<WalletUserRegistration> response) {
                 if (response.code() == 200) {
                     try {
                         //get user data
@@ -119,7 +119,7 @@ public class WalletLoginHelper extends AppCompatActivity {
                         JSONObject object = new JSONObject(user);
                         Toast.makeText(context, "Successfully Logged in..", Toast.LENGTH_SHORT).show();
 
-                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID,object.getString("id"),context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, object.getString("id"), context);
                         WalletAuthActivity.getLoginToken(rawPassword, email, null, context);
 
                     } catch (JSONException e) {
@@ -130,7 +130,9 @@ public class WalletLoginHelper extends AppCompatActivity {
                     }
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    if (response.body().getMessage() != null) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }

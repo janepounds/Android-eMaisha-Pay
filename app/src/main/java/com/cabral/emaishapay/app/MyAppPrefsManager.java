@@ -3,7 +3,6 @@ package com.cabral.emaishapay.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 /**
  * MyAppPrefsManager handles some Prefs of AndroidShopApp Application
  **/
