@@ -9,16 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 public class WalletAccountFragment extends Fragment {
+    private static final String TAG = "WalletAccountFragment";
     private FragmentWalletAccountBinding binding;
     private NavController navController = null;
 
@@ -35,5 +38,23 @@ public class WalletAccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+        binding.logout.setOnClickListener(v -> logoutUser());
+    }
+
+    private void logoutUser() {
+        // Initialise SharedPreference manager class
+        MyAppPrefsManager prefsManager = new MyAppPrefsManager(requireContext());
+
+        // change the login status to false
+        prefsManager.logOutUser();
+
+        // check if has been changed to false
+        if (!prefsManager.isUserLoggedIn()) {
+            Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
+
+            // exit the app
+            requireActivity().finishAffinity();
+        }
     }
 }

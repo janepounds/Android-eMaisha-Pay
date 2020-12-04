@@ -23,13 +23,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="370dp"
                 android:background="@drawable/home_bg_gradient">
+
                 <ImageView
+                    android:background="@color/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/bg"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"/>
+
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/layout_user"
                 android:layout_width="wrap_content"
@@ -40,6 +44,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
             <LinearLayout
                 android:id="@+id/layout_balance"
                 android:layout_width="match_parent"
@@ -49,6 +54,7 @@
                 android:orientation="vertical"
                 android:layout_below="@id/layout_user"
                 android:background="@drawable/background_round_white">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,6 +62,7 @@
                     android:text="Your Balance"
                     android:textColor="#101436"
                     android:textSize="10sp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,12 +71,14 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="25sp"
                     android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,11 +109,14 @@
                         android:fontFamily="@font/josefin_sans"
                         android:textStyle="bold"
                         android:autoSizeTextType="uniform" />
+
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="#DDDDDD"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -138,7 +150,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout2"
                 android:layout_width="match_parent"
@@ -147,6 +161,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_below="@id/layout_balance" >
+
                 <LinearLayout
                     android:id="@+id/layout_cash_in"
                     android:layout_width="match_parent"
@@ -163,22 +178,24 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="@dimen/dimen_10dp">
 
-
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/cashin"/>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -228,16 +245,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/cashout"/>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -264,7 +284,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_weather_2"
                 android:layout_width="match_parent"
@@ -296,6 +318,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/label_topup"/>
+
                     <TextView
                         android:id="@+id/label_topup"
                         android:layout_width="match_parent"
@@ -312,6 +335,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_transfer"
                     android:layout_width="wrap_content"
@@ -320,6 +344,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/layout_pay">
+
                     <ImageView
                         android:id="@+id/image_transfer"
                         android:layout_width="wrap_content"
@@ -330,6 +355,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/label_transfer"/>
+
                     <TextView
                         android:id="@+id/label_transfer"
                         android:layout_width="wrap_content"
@@ -384,6 +410,7 @@
                         app:layout_constraintTop_toBottomOf="@id/image_pay" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_loan"
                     android:layout_width="wrap_content"
@@ -403,6 +430,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/label_loan"/>
+
                     <TextView
                         android:id="@+id/label_loan"
                         android:layout_width="wrap_content"
@@ -443,6 +471,7 @@
                 android:layout_below="@id/label_transactions"/>
 
         </RelativeLayout>
+
     </ScrollView>
 
 </RelativeLayout>

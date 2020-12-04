@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -61,7 +62,7 @@ public class SplashScreen extends AppCompatActivity {
         ConstantValues.IS_LOCAL_NOTIFICATIONS_ENABLED = myAppPrefsManager.isLocalNotificationsEnabled();
 
         // Start MyTask after 3 seconds
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             myTask = new MyTask();
             myTask.execute();
         }, 3000);
@@ -183,18 +184,15 @@ public class SplashScreen extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
                 String email=sharedPreferences.getString(WalletHomeActivity.PREFERENCES_USER_EMAIL, "");
-                String phonenumber=sharedPreferences.getString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, "");
+                String phoneNumber=sharedPreferences.getString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, "");
 
-                EmaishaPayApp.checkWalletAccount(email, phonenumber);
+                EmaishaPayApp.checkWalletAccount(email, phoneNumber);
                 startActivity(new Intent(getBaseContext(), WalletHomeActivity.class));
             }
 
             finish();
         }
     }
-
-
-
 }
 
 
