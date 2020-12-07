@@ -38,231 +38,238 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginEnd="@dimen/dimen_20dp"
-                android:layout_marginBottom="@dimen/dimen_20dp"
-                android:padding="15dp"
-                android:orientation="vertical"
-                android:background="@color/white">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:text="Date of Birth"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner">
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/margin_15"
+                    android:paddingBottom="@dimen/margin_15">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
+                        android:gravity="start"
+                        android:text="Date of Birth"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_calendar"
-                        android:layout_margin="6dp"/>
 
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:gravity="start"
-                    android:text="Gender"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="6dp"
+                            android:src="@drawable/ic_calendar" />
 
-                    <Spinner
+                    </RelativeLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:gravity="start"
+                        android:text="Gender"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:layout_margin="6dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:entries="@string/gender"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner">
 
-
-                        <TextView
+                        <Spinner
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Next of Kin"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="6dp"
+                            android:entries="@array/spinner_gender"
                             android:textColor="@android:color/black"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="@dimen/margin_10"/>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10">
-                    <LinearLayout
-                        android:id="@+id/layout_firstname"
-                        android:layout_width="0dp"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:gravity="center_vertical"
+                        android:text="Next of Kin"
+                        android:textColor="@android:color/black" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="5dp"
-                       app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/layout_lastname">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:inputType="text"
-                            android:hint="First Name"
-                            android:padding="4dp"
-                            android:textSize="14sp"
-                            android:background="@drawable/edittext_corner" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_lastname"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginStart="5dp"
-                        app:layout_constraintStart_toEndOf="@id/layout_firstname"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:inputType="text"
-                            android:textSize="14sp"
-                            android:hint="Last Name"
-                            android:padding="4dp"
-                            android:background="@drawable/edittext_corner" />
-
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Next of Kin Contact"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="10dp"/>
-
-
+                        android:layout_marginTop="@dimen/margin_10">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:background="@drawable/edittext_corner"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="10dp">
-                            <TextView
-                                android:id="@+id/text_country_code"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.3"
-                                android:background="@drawable/edittext_left_corners_green"
-                                android:gravity="center"
-                                android:text="+256"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:textSize="14sp" />
+                            android:id="@+id/layout_firstname"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/layout_lastname"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <EditText
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.7"
-                                android:padding="6dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="phone"
-                                android:textSize="14sp"
-                                android:maxLength="9"/>
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edittext_corner"
+                                android:hint="First Name"
+                                android:inputType="text"
+                                android:padding="4dp"
+                                android:textSize="14sp" />
+
                         </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Upload Profile Photo"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="10dp"/>
 
+                        <LinearLayout
+                            android:id="@+id/layout_lastname"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/layout_firstname"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                <com.cabral.emaishapay.customs.CircularImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/user"
-                    android:layout_gravity="center_horizontal"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-                    <Button
-                        android:layout_weight="1"
-                        android:id="@+id/previous_button"
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edittext_corner"
+                                android:hint="Last Name"
+                                android:inputType="text"
+                                android:padding="4dp"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:background="@drawable/rectangular_green_solid"
-                        android:text="@string/submit" />
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Next of Kin Contact"
+                        android:textColor="@color/black" />
 
-                    <Button
-                        android:layout_weight="1"
-                        android:id="@+id/next_button"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_country_code"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:background="@drawable/edittext_left_corners_green"
+                            android:gravity="center"
+                            android:text="+256"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:background="@android:color/transparent"
+                            android:inputType="phone"
+                            android:maxLength="9"
+                            android:padding="6dp"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/cancel"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:background="@drawable/rectangular_red_solid"/>
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Upload Profile Photo"
+                        android:textColor="@color/black" />
+
+                    <com.cabral.emaishapay.customs.CircularImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/user" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/previous_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rectangular_green_solid"
+                            android:text="@string/submit"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/next_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rectangular_red_solid"
+                            android:text="@string/cancel"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
-
             </ScrollView>
+
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

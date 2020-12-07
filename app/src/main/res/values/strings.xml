@@ -176,10 +176,8 @@
     <string name="cannot_get_payment_methods"> Error Getting Payment Methods </string>
     <string name="cannot_initialize_braintree"> Error initializing Braintree Fragment </string>
 
-
     <string name="sendemail">SEND EMAIL</string>
     <string name="forgot_title">Enter the email address you used to create your account and we will email you a link to reset your password</string>
-
 
     <string name="select">Select</string>
     <string name="estimated_revenue">Estimated Revenue</string>
@@ -204,6 +202,12 @@
     <string name="acres">Acres</string>
 
     <!--    Arrays to test Sign Up with District, Sub-County and Village-->
+    <string-array name="spinner_gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string-array name="spinner_district">
         <item>District</item>
         <item>Kampala</item>
