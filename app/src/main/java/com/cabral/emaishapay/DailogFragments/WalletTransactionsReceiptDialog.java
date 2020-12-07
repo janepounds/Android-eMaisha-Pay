@@ -73,13 +73,13 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
     }
     public void initializeView(View view){
         serviceTextView = view.findViewById(R.id.text_view_purchase_service);
-        receiptNumberTextView = view.findViewById(R.id.text_view_purchase_receipt_number);
-        statusTextView = view.findViewById(R.id.text_view_purchase_status);
+        receiptNumberTextView = view.findViewById(R.id.text_view_expiry_date);
+        statusTextView = view.findViewById(R.id.text_view_id_type);
         totalTextView = view.findViewById(R.id.txt_view_bill_preview_total);
         errorTextView = view.findViewById(R.id.text_view_purchase_preview_error);
         merchantNameTextView = view.findViewById(R.id.text_view_purchase_preview_name);
         dateTextView = view.findViewById(R.id.text_view_purchase_date_time);
-        referenceNoTextView = view.findViewById(R.id.text_view_purchase_reference_number);
+        referenceNoTextView = view.findViewById(R.id.text_view_id_number);
 
         totalTextView.setText( NumberFormat.getInstance().format(WalletTransaction.getInstance().getAmount()));
         dateTextView.setText(WalletTransaction.getInstance().getDate());

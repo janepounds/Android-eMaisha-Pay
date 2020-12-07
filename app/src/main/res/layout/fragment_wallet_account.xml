@@ -137,7 +137,9 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="10dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
 
                                 <TextView
                                     android:id="@+id/security"
@@ -168,15 +170,17 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/password_pin"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="6dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
 
                                 <TextView
                                     android:id="@+id/personal_information"
@@ -201,21 +205,24 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:src="@drawable/ic_chevron_right" />
+                                    android:src="@drawable/ic_chevron_right"
+                                    android:layout_marginBottom="5dp"/>
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/gender_dob_status"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="6dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
 
                                 <TextView
                                     android:id="@+id/id_information"
@@ -246,15 +253,17 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/id_type_number"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="6dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
 
                                 <TextView
                                     android:id="@+id/employment_information"
@@ -285,15 +294,17 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/employee_designation"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="6dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
 
                                 <TextView
                                     android:id="@+id/business_information"
@@ -324,8 +335,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/businessName_tinLicence"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
@@ -383,15 +394,14 @@
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:layout_height="wrap_content">
 
                                 <TextView
                                     android:id="@+id/customer_support"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Customer Support"
-                                    android:textColor="@android:color/black"
+                                    android:textColor="#101436"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
@@ -402,7 +412,7 @@
                                     android:layout_below="@id/customer_support"
                                     android:layout_marginTop="@dimen/dimen_10dp"
                                     android:text="Toll free, Email, LiveChat"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"/>
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -415,8 +425,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_below="@id/tollFree_email_liveChat"
-                                    android:layout_marginTop="@dimen/dimen_20dp"
-                                    android:background="@android:color/darker_gray" />
+                                    android:layout_marginTop="16dp"
+                                    android:background="#F9F7FE" />
 
                             </RelativeLayout>
 
@@ -424,13 +434,13 @@
                                 android:id="@+id/share_app"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Share App"
-                                    android:textColor="@android:color/darker_gray"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
@@ -440,13 +450,13 @@
                                 android:id="@+id/rate_app"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Rate App"
-                                    android:textColor="@android:color/darker_gray"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
@@ -456,13 +466,13 @@
                                 android:id="@+id/logout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Logout"
-                                    android:textColor="@android:color/darker_gray"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
