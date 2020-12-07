@@ -24,16 +24,15 @@
                 <RelativeLayout
                     android:id="@+id/layout_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="370dp"
-                    android:background="@drawable/home_bg_gradient">
+                    android:layout_height="370dp">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/colorPrimary"
                         android:fitsSystemWindows="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_bg" />
 
                 </RelativeLayout>
 
@@ -76,7 +75,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="UGX 0.0"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="#3498DB"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
@@ -114,7 +113,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="@color/colorPrimary"
+                                android:textColor="#3498DB"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
 
@@ -152,7 +151,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="@color/colorPrimary"
+                                android:textColor="#3498DB"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -195,7 +194,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/cashin" />
+                                android:src="@drawable/ic_cashin" />
 
                         </LinearLayout>
 
@@ -222,7 +221,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="@color/colorPrimary"
+                                android:textColor="#3498DB"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 app:autoSizeTextType="uniform" />
@@ -320,7 +319,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:src="@drawable/topup"
+                            android:src="@drawable/ic_topup"
                             app:layout_constraintBottom_toTopOf="@id/label_topup"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -357,7 +356,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:src="@drawable/transfer"
+                            android:src="@drawable/ic_transfer"
                             app:layout_constraintBottom_toTopOf="@id/label_transfer"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -395,7 +394,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:src="@drawable/pay"
+                            android:src="@drawable/ic_pay"
                             app:layout_constraintBottom_toTopOf="@id/label_pay"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
