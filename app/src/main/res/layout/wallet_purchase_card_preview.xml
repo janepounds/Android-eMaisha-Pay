@@ -57,7 +57,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
                     <TextView
-                        android:id="@+id/text_view_purchase_status"
+                        android:id="@+id/text_view_id_type"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -89,7 +89,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
                     <TextView
-                        android:id="@+id/text_view_purchase_reference_number"
+                        android:id="@+id/text_view_id_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -121,7 +121,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
                     <TextView
-                        android:id="@+id/text_view_purchase_receipt_number"
+                        android:id="@+id/text_view_expiry_date"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
