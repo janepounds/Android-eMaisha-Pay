@@ -101,8 +101,8 @@
 
     <fragment
         android:id="@+id/walletTransactionsFragment"
-        android:name="com.cabral.emaishapay.fragments.WalletTransactionsFragment"
-        android:label="fragment_wallet_transactions"
+        android:name="com.cabral.emaishapay.fragments.WalletTransactionsListFragment"
+        android:label="@string/transactions"
         tools:layout="@layout/fragment_wallet_transactions" />
 
     <fragment
