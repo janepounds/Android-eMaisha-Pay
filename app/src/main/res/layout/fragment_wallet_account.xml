@@ -76,6 +76,7 @@
                                 android:id="@+id/user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="John kiwanuka"
                                 android:textColor="@color/colorPrimary"
@@ -87,6 +88,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_10dp"
+                                android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="eng.johnelliot@gmail.com"
                                 android:textSize="@dimen/dimen_14sp"
@@ -97,6 +99,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_10dp"
+                                android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="+256700353769"
                                 android:textSize="@dimen/dimen_14sp"
@@ -689,6 +692,7 @@
                                         android:visibility="gone" />
 
                                     <ImageView
+                                        android:id="@+id/edit_employment_info"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
@@ -952,6 +956,7 @@
                                         android:visibility="gone" />
 
                                     <ImageView
+                                        android:id="@+id/edit_business_info"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"

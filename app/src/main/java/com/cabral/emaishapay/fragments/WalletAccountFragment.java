@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 
@@ -38,6 +39,8 @@ public class WalletAccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+        binding.userName.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, requireContext())) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, requireContext())));
 
         binding.personalInformationLayout.setOnClickListener(view12 -> {
 
@@ -139,6 +142,8 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+        binding.editEmploymentInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_employmentInformationFragment));
+
         binding.businessInformationLayout.setOnClickListener(view12 -> {
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
@@ -171,7 +176,16 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+        binding.editBusinessInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment));
+
         binding.logout.setOnClickListener(v -> logoutUser());
+    }
+
+    private String ucf(String str) {
+        if (str == null || str.length() < 2)
+            return str;
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     private void logoutUser() {
