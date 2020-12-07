@@ -105,6 +105,8 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+        binding.editIdInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_idInformationFragment));
+
         binding.employmentInformationLayout.setOnClickListener(view12 -> {
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {

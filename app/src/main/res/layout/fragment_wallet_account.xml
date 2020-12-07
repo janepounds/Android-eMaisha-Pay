@@ -509,6 +509,7 @@
                                         android:visibility="gone" />
 
                                     <ImageView
+                                        android:id="@+id/edit_id_info"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
