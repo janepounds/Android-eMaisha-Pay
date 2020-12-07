@@ -269,6 +269,7 @@
                     android:backgroundTint="@color/textColor"
                     android:text="@string/deposit"
                     android:textAllCaps="true"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />
 
