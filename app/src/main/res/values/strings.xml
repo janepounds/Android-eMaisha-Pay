@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">emaishaPay</string>
-    <string name="welcome_please_login_to_your_account">Welcome, Please Login to your Account</string>
-    <string name="forgot_pass">Forgot password</string>
-    <string name="don_t_have_an_account_yet">Don’t have an account yet?</string>
-    <string name="create_a_new_account">Create a New Account.</string>
+    <string name="app_name" >eMaisha Pay</string>
+    <string name="welcome_please_login_to_your_account" >Welcome, Please Login to your Account</string>
+    <string name="forgot_pass" >Forgot password</string>
+    <string name="don_t_have_an_account_yet" >Don’t have an account yet?</string>
+    <string name="create_a_new_account" >Create a New Account.</string>
     <string name="sign_up">Sign up</string>
     <string name="district">District</string>
     <string name="sub_county">Sub County</string>
-    <string name="village">Village</string>
-    <string name="image_preview">Image Preview</string>
-    <string name="title_livestock_records">Livestock Records</string>
-    <string name="filter_by">Filter By :</string>
+    <string name="village" >Village</string>
+    <string name="image_preview" >Image Preview</string>
+    <string name="title_livestock_records" >Livestock Records</string>
+    <string name="filter_by" >Filter By :</string>
 
 
     <string name="lorem_ipsum">
@@ -321,7 +321,7 @@
     <string name="previous">Previous</string>
     <string name="submit">Submit</string>
     <string name="label_wallet">Wallet</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_marketplace">Market Place</string>
     <string name="label_services">Services</string>
@@ -369,6 +369,5 @@
     <string name="default_numeric_value">0</string>
     <string name="fertilizer_title">Fertilizer</string>
     <string name="seeds">Seeds</string>
-
-
+    <string name="transactions">Transactions</string>
 </resources>

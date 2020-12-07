@@ -15,22 +15,15 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
-import com.cabral.emaishapay.fragments.WalletLoansListFragment;
-import com.cabral.emaishapay.fragments.WalletTransactionsListFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class WalletHomeActivity extends AppCompatActivity {
     private static final String TAG = "WalletHomeActivity";
