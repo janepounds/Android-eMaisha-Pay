@@ -359,7 +359,6 @@
                         android:textStyle="bold"
                         android:fontFamily="@font/josefin_sans" />
 
-
                 </LinearLayout>
 
                 <LinearLayout

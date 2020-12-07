@@ -1,476 +1,486 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F1F5F8"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:isScrollContainer="true"
-        android:scrollbars="none">
+        android:background="#F1F5F8">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:isScrollContainer="true"
+            android:scrollbars="none">
 
             <RelativeLayout
-                android:id="@+id/layout_logo"
                 android:layout_width="match_parent"
-                android:layout_height="370dp"
-                android:background="@drawable/home_bg_gradient">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:background="@color/colorPrimary"
+                <RelativeLayout
+                    android:id="@+id/layout_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"/>
+                    android:layout_height="370dp"
+                    android:background="@drawable/home_bg_gradient">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg" />
 
-            <TextView
-                android:id="@+id/layout_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:text="Hi, John Kiwanuka"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:id="@+id/layout_balance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:layout_below="@id/layout_user"
-                android:background="@drawable/background_round_white">
+                </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="Your Balance"
-                    android:textColor="#101436"
-                    android:textSize="10sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="UGX 0.0"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Hi, John Kiwanuka"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/layout_balance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Wallet"
-                        android:textColor="#101436"
-                        android:textAllCaps="true"
-                        android:textSize="10sp"
-                        android:gravity="center"
-                        app:autoSizeTextType="uniform"/>
-
-                    <TextView
-                        android:id="@+id/wallet_balance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:gravity="center"
-                        android:paddingBottom="5dp"
-                        android:text="UGX 0"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/josefin_sans"
-                        android:textStyle="bold"
-                        android:autoSizeTextType="uniform" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="#DDDDDD"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Card"
-                            android:textColor="#101436"
-                            android:textAllCaps="true"
-                            android:textSize="10sp"
-                            android:gravity="center"
-                            app:autoSizeTextType="uniform"/>
-
-                        <TextView
-                            android:id="@+id/crad_balance_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:gravity="center"
-                            android:paddingBottom="5dp"
-                            android:text="UGX 0"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp"
-                            android:fontFamily="@font/josefin_sans"
-                            android:textStyle="bold"
-                            android:autoSizeTextType="uniform" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@id/layout_balance" >
-
-                <LinearLayout
-                    android:id="@+id/layout_cash_in"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="@dimen/dimen_10dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@id/username"
+                    android:layout_margin="20dp"
                     android:background="@drawable/background_round_white"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="@dimen/dimen_10dp">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/cashin"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Cash In"
+                        android:layout_marginTop="25dp"
+                        android:text="Your Balance"
                         android:textColor="#101436"
-                        android:textSize="10sp"
-                        android:layout_marginTop="4dp"
-                        app:autoSizeTextType="uniform"/>
+                        android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/wallet_cash_in"
-                        android:layout_width="match_parent"
+                        android:id="@+id/total_balance"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:paddingBottom="5dp"
-                        android:text="UGX 0"
-                        android:textAllCaps="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="UGX 0.0"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/josefin_sans"
-                        android:textStyle="bold"
-                        app:autoSizeTextType="uniform" />
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Wallet"
+                                android:textAllCaps="true"
+                                android:textColor="#101436"
+                                android:textSize="10sp"
+                                app:autoSizeTextType="uniform" />
+
+                            <TextView
+                                android:id="@+id/wallet_balance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:autoSizeTextType="uniform"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:text="UGX 0"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#DDDDDD" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Card"
+                                android:textAllCaps="true"
+                                android:textColor="#101436"
+                                android:textSize="10sp"
+                                app:autoSizeTextType="uniform" />
+
+                            <TextView
+                                android:id="@+id/card_balance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:autoSizeTextType="uniform"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:text="UGX 0"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_cash_out"
+                    android:id="@+id/layout2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_balance"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="@dimen/dimen_10dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/background_round_white"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="@dimen/dimen_10dp">
-
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp">
+                        android:id="@+id/layout_cash_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="@dimen/dimen_10dp"
+                        android:layout_marginRight="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_round_white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
-                        <ImageView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_diagonal_arrow"/>
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/cashin" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Cash In"
+                                android:textColor="#101436"
+                                android:textSize="10sp"
+                                app:autoSizeTextType="uniform" />
+
+                            <TextView
+                                android:id="@+id/wallet_cash_in"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingBottom="5dp"
+                                android:text="UGX 0"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_cash_out"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="@dimen/dimen_10dp"
+                        android:layout_marginRight="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_round_white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
-                        <TextView
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_diagonal_arrow" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Cash Out"
-                            android:textColor="#101436"
-                            android:textSize="10sp"
-                            android:layout_marginTop="4dp"
-                            app:autoSizeTextType="uniform"/>
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/wallet_cash_out"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:paddingBottom="5dp"
-                            android:text="UGX 0"
-                            android:textAllCaps="true"
-                            android:textColor="#C42947"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/josefin_sans"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Cash Out"
+                                android:textColor="#101436"
+                                android:textSize="10sp"
+                                app:autoSizeTextType="uniform" />
+
+                            <TextView
+                                android:id="@+id/wallet_cash_out"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/josefin_sans"
+                                android:paddingBottom="5dp"
+                                android:text="UGX 0"
+                                android:textAllCaps="true"
+                                android:textColor="#C42947"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_weather_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_below="@id/layout2"
-                android:background="@drawable/background_round_white">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_topup"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/layout_weather_2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/layout_transfer">
+                    android:layout_below="@id/layout2"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_round_white"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-                    <ImageView
-                        android:id="@+id/image_topup"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_topUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/topup"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_transfer"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/label_topup"/>
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/label_topup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="TOPUP"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="@font/josefin_sans"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/image_topup"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        <ImageView
+                            android:id="@+id/image_topup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/topup"
+                            app:layout_constraintBottom_toTopOf="@id/label_topup"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/label_topup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="TOPUP"
+                            android:textColor="@android:color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/image_topup" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_transfer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constraintStart_toEndOf="@id/layout_topup"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/layout_pay">
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:id="@+id/image_transfer"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_transfer"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/transfer"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/label_transfer"/>
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_pay"
+                        app:layout_constraintStart_toEndOf="@id/layout_topUp"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/label_transfer"
+                        <ImageView
+                            android:id="@+id/image_transfer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/transfer"
+                            app:layout_constraintBottom_toTopOf="@id/label_transfer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/label_transfer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="@string/transfer"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/image_transfer" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_pay"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/transfer"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="@font/josefin_sans"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textAllCaps="true"
-                        app:layout_constraintTop_toBottomOf="@id/image_transfer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_loan"
+                        app:layout_constraintStart_toEndOf="@id/layout_transfer"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageView
+                            android:id="@+id/image_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/pay"
+                            app:layout_constraintBottom_toTopOf="@id/label_pay"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_pay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/layout_loan"
-                    app:layout_constraintStart_toEndOf="@id/layout_transfer"
-                    app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:id="@+id/label_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="@string/pay"
+                            android:textColor="@android:color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/image_pay" />
 
-                    <ImageView
-                        android:id="@+id/image_pay"
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_loan"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/pay"
-                        app:layout_constraintBottom_toTopOf="@id/label_pay"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/label_pay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="@string/pay"
-                        android:textColor="@android:color/black"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
+                        android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/image_pay" />
+                        app:layout_constraintStart_toEndOf="@id/layout_pay"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/image_loan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_loan_g"
+                            app:layout_constraintBottom_toTopOf="@id/label_loan"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/label_loan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="Loan"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/image_loan" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_loan"
+                <TextView
+                    android:id="@+id/label_transactions"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layout_pay">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_weather_2"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Transaction Records"
+                    android:textColor="#404040"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/image_loan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_loan_g"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/label_loan"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/layout_transactions_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_transactions"
+                    android:layout_margin="20dp" />
 
-                    <TextView
-                        android:id="@+id/label_loan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Loan"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="@font/josefin_sans"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textAllCaps="true"
-                        app:layout_constraintTop_toBottomOf="@id/image_loan"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+            </RelativeLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/label_transactions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:text="Transaction Records"
-                android:textColor="#404040"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_below="@id/layout_weather_2"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/layout_transactions_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_below="@id/label_transactions"/>
-
-        </RelativeLayout>
-
-    </ScrollView>
-
-</RelativeLayout>
+</layout>
