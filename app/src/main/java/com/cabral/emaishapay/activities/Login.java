@@ -91,7 +91,6 @@ public class Login extends AppCompatActivity {
 
         user_email.setText(sharedPreferences.getString("userEmail", null));
 
-
         forgotPasswordText.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(com.cabral.emaishapay.activities.Login.this, R.style.DialogFullscreen);
             View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
