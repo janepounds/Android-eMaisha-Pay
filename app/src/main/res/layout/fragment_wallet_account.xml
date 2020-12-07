@@ -689,6 +689,7 @@
                                         android:visibility="gone" />
 
                                     <ImageView
+                                        android:id="@+id/edit_employment_info"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
@@ -952,6 +953,7 @@
                                         android:visibility="gone" />
 
                                     <ImageView
+                                        android:id="@+id/edit_business_info"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"

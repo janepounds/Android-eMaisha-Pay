@@ -139,6 +139,8 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+        binding.editEmploymentInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_employmentInformationFragment));
+
         binding.businessInformationLayout.setOnClickListener(view12 -> {
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
@@ -170,6 +172,8 @@ public class WalletAccountFragment extends Fragment {
             }
 
         });
+
+        binding.editBusinessInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment));
 
         binding.logout.setOnClickListener(v -> logoutUser());
     }
