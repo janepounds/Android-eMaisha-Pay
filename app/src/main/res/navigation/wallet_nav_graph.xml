@@ -122,6 +122,12 @@
         <action
             android:id="@+id/action_walletAccountFragment_to_idInformationFragment"
             app:destination="@id/idInformationFragment" />
+        <action
+            android:id="@+id/action_walletAccountFragment_to_employmentInformationFragment"
+            app:destination="@id/employmentInformationFragment" />
+        <action
+            android:id="@+id/action_walletAccountFragment_to_businessInformationFragment"
+            app:destination="@id/businessInformationFragment" />
     </fragment>
 
     <fragment
@@ -135,5 +141,17 @@
         android:name="com.cabral.emaishapay.fragments.IdInformationFragment"
         android:label="ID Information"
         tools:layout="@layout/fragment_id_information" />
+
+    <fragment
+        android:id="@+id/employmentInformationFragment"
+        android:name="com.cabral.emaishapay.fragments.EmploymentInformationFragment"
+        android:label="Employment Information"
+        tools:layout="@layout/fragment_employment_information" />
+
+    <fragment
+        android:id="@+id/businessInformationFragment"
+        android:name="com.cabral.emaishapay.fragments.BusinessInformationFragment"
+        android:label="Business Information"
+        tools:layout="@layout/fragment_business_information" />
 
 </navigation>
