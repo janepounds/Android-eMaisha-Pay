@@ -39,6 +39,8 @@ public class WalletAccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
+        binding.personalInformationLayout.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_personalInformationFragment));
+
         binding.logout.setOnClickListener(v -> logoutUser());
     }
 

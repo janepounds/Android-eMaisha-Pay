@@ -87,7 +87,7 @@
         android:id="@+id/walletLoanFarmingDetailsFragment"
         android:name="com.cabral.emaishapay.fragments.WalletLoanFarmingDetailsFragment"
         android:label="Farming Details"
-        tools:layout="@layout/fragment_wallet_loan_farming_details" >
+        tools:layout="@layout/fragment_wallet_loan_farming_details">
         <action
             android:id="@+id/action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment"
             app:destination="@id/walletLoanPreviewRequestFragment" />
@@ -106,5 +106,14 @@
         android:id="@+id/walletAccountFragment"
         android:name="com.cabral.emaishapay.fragments.WalletAccountFragment"
         android:label="My Account"
-        tools:layout="@layout/fragment_wallet_account" />
+        tools:layout="@layout/fragment_wallet_account" >
+        <action
+            android:id="@+id/action_walletAccountFragment_to_personalInformationFragment"
+            app:destination="@id/personalInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalInformationFragment"
+        android:name="com.cabral.emaishapay.fragments.PersonalInformationFragment"
+        android:label="Personal Information"
+        tools:layout="@layout/fragment_personal_information" />
 </navigation>
