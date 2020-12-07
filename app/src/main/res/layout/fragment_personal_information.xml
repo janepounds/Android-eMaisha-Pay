@@ -30,18 +30,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20dp"
-                android:text="Enter personal information and earn \n 2 credit score points"
+                android:text="Enter personal information and earn 2 credit score points"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/dimen_20dp"
-                android:orientation="vertical">
+                android:padding="15dp"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -54,29 +59,35 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
-                    android:background="@drawable/edittext_corner"
-                    android:layout_marginTop="@dimen/dimen_10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:background="@drawable/edittext_corner">
 
                     <TextView
-                        android:layout_centerInParent="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:gravity="center"
-                        android:text="Date of Birth"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_calendar"
+                        android:layout_margin="6dp"/>
 
                 </RelativeLayout>
 
                 <TextView
-                    android:layout_marginTop="@dimen/margin_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:gravity="start"
                     android:text="Gender"
                     android:textColor="@android:color/black"
@@ -85,27 +96,173 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
-                    android:background="@drawable/edittext_corner"
-                    android:layout_marginTop="@dimen/dimen_10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:background="@drawable/edittext_corner">
 
-                    <TextView
-                        android:layout_centerInParent="true"
+                    <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Date of Birth"
+                        android:layout_centerInParent="true"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
+                        android:layout_margin="6dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:entries="@string/gender"/>
 
                 </RelativeLayout>
 
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Next of Kin"
+                            android:textColor="@android:color/black"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="@dimen/margin_10"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10">
+                    <LinearLayout
+                        android:id="@+id/layout_firstname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5dp"
+                       app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_lastname">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:inputType="text"
+                            android:hint="First Name"
+                            android:padding="4dp"
+                            android:textSize="14sp"
+                            android:background="@drawable/edittext_corner" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_lastname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintStart_toEndOf="@id/layout_firstname"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:inputType="text"
+                            android:textSize="14sp"
+                            android:hint="Last Name"
+                            android:padding="4dp"
+                            android:background="@drawable/edittext_corner" />
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Next of Kin Contact"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="10dp"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@drawable/edittext_corner"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                android:id="@+id/text_country_code"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/edittext_left_corners_green"
+                                android:gravity="center"
+                                android:text="+256"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.7"
+                                android:padding="6dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="phone"
+                                android:textSize="14sp"
+                                android:maxLength="9"/>
+                        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Upload Profile Photo"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"/>
+
+
+                <com.cabral.emaishapay.customs.CircularImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/user"
+                    android:layout_gravity="center_horizontal"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_weight="1"
+                        android:id="@+id/previous_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:background="@drawable/rectangular_green_solid"
+                        android:text="@string/submit" />
+
+                    <Button
+                        android:layout_weight="1"
+                        android:id="@+id/next_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/cancel"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:background="@drawable/rectangular_red_solid"/>
+                </LinearLayout>
+
             </LinearLayout>
 
+            </ScrollView>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
