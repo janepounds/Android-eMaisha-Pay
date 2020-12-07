@@ -208,6 +208,7 @@
                     android:background="@color/transparent"
                     android:backgroundTint="@color/textColor"
                     android:text="@string/deposit"
+                    android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />
