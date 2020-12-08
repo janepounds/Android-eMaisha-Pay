@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccentGreen">
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/dialogTitle"
@@ -38,7 +38,6 @@
         android:layout_margin="9dp"
         android:padding="14dp"
         android:hint="OTP Code"
-        android:textColorHint="@color/textColorPrimaryDark"
         android:background="@drawable/outline_primary"
         android:inputType="numberDecimal"
         android:layout_width="match_parent"
@@ -59,7 +58,6 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:drawableTint="@color/colorAccentGreen"
             android:text="Resend" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -70,7 +68,6 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:drawableTint="@color/colorPrimary"
             android:text="Submit" />
 
     </LinearLayout>

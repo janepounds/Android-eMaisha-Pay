@@ -1,9 +1,13 @@
 package com.cabral.emaishapay.fragments;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -13,7 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
@@ -180,6 +186,18 @@ public class WalletAccountFragment extends Fragment {
 
         binding.editBusinessInfo.setOnClickListener(view1 -> navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment));
 
+        binding.shareApp.setOnClickListener(view13 -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        });
+
+        binding.rateApp.setOnClickListener(view13 -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+        });
+
         binding.logout.setOnClickListener(v -> logoutUser());
     }
 
@@ -191,18 +209,27 @@ public class WalletAccountFragment extends Fragment {
     }
 
     private void logoutUser() {
-        // Initialise SharedPreference manager class
-        MyAppPrefsManager prefsManager = new MyAppPrefsManager(requireContext());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
 
-        // change the login status to false
-        prefsManager.logOutUser();
+        alertDialogBuilder.setTitle("Logout");
+        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            // Initialise SharedPreference manager class
+            MyAppPrefsManager prefsManager = new MyAppPrefsManager(requireContext());
 
-        // check if has been changed to false
-        if (!prefsManager.isUserLoggedIn()) {
-            Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
+            // change the login status to false
+            prefsManager.logOutUser();
 
-            // exit the app
-            requireActivity().finishAffinity();
-        }
+            // check if has been changed to false
+            if (!prefsManager.isUserLoggedIn()) {
+                Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
+
+                // exit the app
+                requireActivity().finishAffinity();
+            }
+        }).setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

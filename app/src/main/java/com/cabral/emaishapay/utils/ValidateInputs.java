@@ -86,7 +86,7 @@ public class ValidateInputs {
     //*********** Validate Any Input ********//
 
     public static boolean isValidInput(String input) {
-        String regExpn = "(.*?)?((?:[a-z][a-z]+))";
+        String regex = "(.*?)?((?:[a-z][a-z]+))";
         if (input.equalsIgnoreCase(""))
             return false;
 
@@ -108,6 +108,5 @@ public class ValidateInputs {
 
         return matcher.matches();
     }
-
 }
 
