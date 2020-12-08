@@ -107,8 +107,8 @@
                             android:background="@drawable/edittext_corner"
                             android:inputType="textEmailAddress|textNoSuggestions"
                             android:paddingStart="@dimen/dimen_10dp"
-                            android:textSize="14sp"
-                            android:paddingLeft="@dimen/dimen_10dp" />
+                            android:paddingEnd="@dimen/dimen_10dp"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -133,8 +133,8 @@
                             android:background="@drawable/edittext_corner"
                             android:inputType="textPassword|textNoSuggestions"
                             android:paddingStart="@dimen/dimen_10dp"
-                            android:textSize="14sp"
-                            android:paddingLeft="@dimen/dimen_10dp" />
+                            android:paddingLeft="@dimen/dimen_10dp"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -231,6 +231,7 @@
 
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -260,7 +261,9 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
+
         </RelativeLayout>
+
     </ScrollView>
 
 </RelativeLayout>
