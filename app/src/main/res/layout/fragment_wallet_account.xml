@@ -78,7 +78,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="John kiwanuka"
-                                android:textColor="#3498DB"
+                                android:textColor="#2E84BE"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 

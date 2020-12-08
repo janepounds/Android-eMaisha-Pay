@@ -24,7 +24,7 @@
                 <RelativeLayout
                     android:id="@+id/layout_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="370dp">
+                    android:layout_height="350dp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="UGX 0.0"
-                        android:textColor="#3498DB"
+                        android:textColor="#2E84BE"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="#3498DB"
+                                android:textColor="#2E84BE"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="#3498DB"
+                                android:textColor="#2E84BE"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -221,7 +221,7 @@
                                 android:paddingBottom="5dp"
                                 android:text="UGX 0"
                                 android:textAllCaps="true"
-                                android:textColor="#3498DB"
+                                android:textColor="#2E84BE"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 app:autoSizeTextType="uniform" />
@@ -332,7 +332,7 @@
                             android:layout_margin="5dp"
                             android:fontFamily="@font/josefin_sans"
                             android:text="TOPUP"
-                            android:textColor="@android:color/black"
+                            android:textColor="#31244A"
                             android:textSize="10sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -370,7 +370,7 @@
                             android:fontFamily="@font/josefin_sans"
                             android:text="@string/transfer"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/black"
+                            android:textColor="#31244A"
                             android:textSize="10sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -407,7 +407,7 @@
                             android:layout_margin="5dp"
                             android:fontFamily="@font/josefin_sans"
                             android:text="@string/pay"
-                            android:textColor="@android:color/black"
+                            android:textColor="#31244A"
                             android:textSize="10sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -445,7 +445,7 @@
                             android:fontFamily="@font/josefin_sans"
                             android:text="Loan"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/black"
+                            android:textColor="#31244A"
                             android:textSize="10sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"

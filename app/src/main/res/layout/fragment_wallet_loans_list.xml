@@ -1,62 +1,19 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F5F8"
     tools:context="com.cabral.emaishapay.fragments.WalletLoansListFragment">
-
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_wallet_loans_list"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccentLight"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/colorPrimary">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/back_black_24dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="60dp"
-                android:gravity="center_vertical"
-                android:text="Loans"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-        </RelativeLayout>
-    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/windowBackgroundDark"
+        android:elevation="5dp"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/transparent"
         android:padding="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -88,7 +45,8 @@
                     android:paddingEnd="@dimen/dimen_10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="@dimen/dimen_10dp"
-                    android:layout_alignParentLeft="true">
+                    android:layout_alignParentLeft="true"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/wallet_pay_loan_btn"
@@ -105,7 +63,7 @@
 
 
                 </FrameLayout>
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/wallet_apply_loan_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,7 +71,7 @@
                     android:layout_marginTop="@dimen/margin_10"
                     android:layout_marginRight="@dimen/margin_10"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/rectangular_green_border"
+                    android:background="@drawable/background_round_white"
                     android:gravity="end"
                     android:layout_alignParentEnd="true"
                     android:paddingStart="@dimen/dimen_10dp"
@@ -121,21 +79,30 @@
                     android:paddingRight="10dp"
                     android:paddingLeft="@dimen/dimen_10dp"
                     android:layout_alignParentRight="true">
+                    <ImageView
+                        android:id="@+id/img_apply_for_loan"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_amount"
+                        android:layout_centerVertical="true"/>
 
                     <Button
                         android:id="@+id/wallet_apply_loan_btn"
                         style="@style/Button_DW"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dip"
                         android:layout_weight="1"
+                        android:layout_marginStart="2dp"
                         android:background="@color/transparent"
                         android:text="Apply for Loan"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textAllCaps="false"
+                        android:textColor="#31244A"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_toEndOf="@id/img_apply_for_loan"/>
 
 
-                </FrameLayout>
+                </RelativeLayout>
 
 
 
@@ -164,5 +131,22 @@
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/ic_bg"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_wallet_loans_list"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+</RelativeLayout>

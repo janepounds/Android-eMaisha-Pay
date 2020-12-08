@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/walletLoansListFragment"
         android:name="com.cabral.emaishapay.fragments.WalletLoansListFragment"
-        android:label="Loans"
+        android:label="Loan History"
         tools:layout="@layout/fragment_wallet_loans_list">
         <action
             android:id="@+id/action_walletLoansListFragment_to_walletLoanAppInitiateFragment"
