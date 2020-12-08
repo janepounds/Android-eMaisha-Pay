@@ -40,8 +40,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.databinding.SignupBinding;
 import com.cabral.emaishapay.network.APIClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,6 +67,7 @@ import com.cabral.emaishapay.utils.ImagePicker;
 import com.cabral.emaishapay.utils.LocaleHelper;
 import com.cabral.emaishapay.utils.ValidateInputs;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
@@ -84,7 +87,8 @@ import retrofit2.Callback;
 
 public class SignUp extends AppCompatActivity {
     private static final String TAG = "SignUp";
-    private View parentView;
+    private SignupBinding binding;
+
     private File profileImage;
     private static final int PICK_IMAGE_ID = 360;
     private DbHandlerSingleton dbHandler;
@@ -94,38 +98,34 @@ public class SignUp extends AppCompatActivity {
     ActionBar actionBar;
     DialogLoader dialogLoader;
 
-    //AdView mAdView;
-    Button signupBtn;
-    FrameLayout banner_adView;
-    //  TextView signup_loginText;
-    TextView termsOfService, privacyPolicy, and_text;
-    CircularImageView user_photo;
     //FloatingActionButton user_photo_edit_fab;
-    EditText firstName, lastName, phoneNumber, user_email;
     private AutoCompleteTextView district, subCounty, village;
 
     //Custom Dialog Vies
-    Dialog dialogOTP;
-    EditText ed_otp, userPassword, userConfirmPassword;
+    private Dialog dialogOTP;
+    private EditText ed_otp, userPassword, userConfirmPassword;
 
     // Verification id that will be sent to the user
     private String mVerificationId;
     // Firebase auth object
     private FirebaseAuth mAuth;
     private int pickedDistrictId;
-    private int pickedSubcountyId;
+    private int pickedSubCountyId;
     private ArrayList<CropSpinnerItem> subcountyList = new ArrayList<>();
     private ArrayList<String> villageList = new ArrayList<>();
 
-    public SignUp(Context context){
+    public SignUp(Context context) {
         this.context = context;
     }
-    public SignUp(){
+
+    public SignUp() {
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.signup);
 
         //MobileAds.initialize(this, ConstantValues.ADMOBE_ID);
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(com.cabral.emaishapay.activities.SignUp.this).build();
@@ -135,20 +135,11 @@ public class SignUp extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Binding Layout Views
-        firstName = (EditText) findViewById(R.id.user_firstname);
-        lastName = (EditText) findViewById(R.id.user_lastname);
-        phoneNumber = (EditText) findViewById(R.id.user_mobile);
         district = findViewById(R.id.district_spinner);
         subCounty = findViewById(R.id.sub_county_spinner);
         village = findViewById(R.id.village_spinner);
-
-        user_photo = (CircularImageView) findViewById(R.id.user_photo);
-        user_email = (EditText) findViewById(R.id.user_email);
-        signupBtn = (Button) findViewById(R.id.signUpBtn);
         userPassword = (EditText) findViewById(R.id.user_password);
         userConfirmPassword = (EditText) findViewById(R.id.user_confirm_password);
-        termsOfService = (TextView) findViewById(R.id.text_terms_of_service);
-        privacyPolicy = (TextView) findViewById(R.id.text_privacy_policy);
 
 /*
         if (ConstantValues.IS_ADMOBE_ENABLED) {
@@ -200,8 +191,8 @@ public class SignUp extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "onCreate: "+ districtList + districtList.size());
-        ArrayAdapter<CropSpinnerItem> districtListAdapter = new ArrayAdapter<CropSpinnerItem>(getApplicationContext(),  android.R.layout.simple_dropdown_item_1line, districtList);
+        Log.d(TAG, "onCreate: " + districtList + districtList.size());
+        ArrayAdapter<CropSpinnerItem> districtListAdapter = new ArrayAdapter<CropSpinnerItem>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, districtList);
         district.setThreshold(1);
         district.setAdapter(districtListAdapter);
         district.addTextChangedListener(new TextWatcher() {
@@ -223,11 +214,11 @@ public class SignUp extends AppCompatActivity {
                     if (districtList.get(i).toString().equals(district.getText().toString())) {
                         pickedDistrictId = Integer.parseInt(districtList.get(i).getId());
 
-                        Log.d(TAG, "onCreate: "+ pickedDistrictId);
+                        Log.d(TAG, "onCreate: " + pickedDistrictId);
 
                         subcountyList.clear();
                         try {
-                            for (RegionDetails x : dbHandler.getSubcountyDetails(String.valueOf(pickedDistrictId),"subcounty")) {
+                            for (RegionDetails x : dbHandler.getSubcountyDetails(String.valueOf(pickedDistrictId), "subcounty")) {
                                 subcountyList.add(new CropSpinnerItem() {
                                     @Override
                                     public String getId() {
@@ -249,8 +240,8 @@ public class SignUp extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.d(TAG, "onCreate: "+ subcountyList);
-                        ArrayAdapter<CropSpinnerItem> subcountryListAdapter = new ArrayAdapter<CropSpinnerItem>(getApplicationContext(),  android.R.layout.simple_dropdown_item_1line, subcountyList);
+                        Log.d(TAG, "onCreate: " + subcountyList);
+                        ArrayAdapter<CropSpinnerItem> subcountryListAdapter = new ArrayAdapter<CropSpinnerItem>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, subcountyList);
                         subCounty.setThreshold(1);
                         subCounty.setAdapter(subcountryListAdapter);
                     }
@@ -259,10 +250,6 @@ public class SignUp extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
 
 
         subCounty.addTextChangedListener(new TextWatcher() {
@@ -283,20 +270,20 @@ public class SignUp extends AppCompatActivity {
                 for (int i = 0; i < subcountyList.size(); i++) {
 
                     if (subcountyList.get(i).toString().equals(subCounty.getText().toString())) {
-                        pickedSubcountyId = Integer.parseInt(subcountyList.get(i).getId());
+                        pickedSubCountyId = Integer.parseInt(subcountyList.get(i).getId());
 
-                        Log.d(TAG, "onCreate: "+ pickedSubcountyId);
+                        Log.d(TAG, "onCreate: " + pickedSubCountyId);
 
                         villageList.clear();
                         try {
-                            for (RegionDetails x : dbHandler.getVillageDetails(String.valueOf(pickedSubcountyId),"village")) {
+                            for (RegionDetails x : dbHandler.getVillageDetails(String.valueOf(pickedSubCountyId), "village")) {
                                 villageList.add(x.getRegion());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.d(TAG, "onCreate: "+ villageList);
-                        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_dropdown_item_1line, villageList);
+                        Log.d(TAG, "onCreate: " + villageList);
+                        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, villageList);
                         village.setThreshold(1);
                         village.setAdapter(villageListAdapter);
                     }
@@ -325,7 +312,7 @@ public class SignUp extends AppCompatActivity {
 
         dialogLoader = new DialogLoader(com.cabral.emaishapay.activities.SignUp.this);
 
-        privacyPolicy.setOnClickListener(v -> {
+        binding.textPrivacyPolicy.setOnClickListener(v -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(com.cabral.emaishapay.activities.SignUp.this, android.R.style.Theme_NoTitleBar);
             View dialogView = getLayoutInflater().inflate(R.layout.dialog_webview_fullscreen, null);
             dialog.setView(dialogView);
@@ -409,7 +396,7 @@ public class SignUp extends AppCompatActivity {
 //            alertDialog.show();
 //        });
 
-        termsOfService.setOnClickListener(v -> {
+        binding.textTermsOfService.setOnClickListener(v -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(com.cabral.emaishapay.activities.SignUp.this, android.R.style.Theme_NoTitleBar);
             View dialogView = getLayoutInflater().inflate(R.layout.dialog_webview_fullscreen, null);
             dialog.setView(dialogView);
@@ -461,15 +448,14 @@ public class SignUp extends AppCompatActivity {
         //   });
 
         // Handle Click event of signupBtn Button
-        signupBtn.setOnClickListener(v -> {
+        binding.signUpBtn.setOnClickListener(v -> {
             // Validate Login Form Inputs
             boolean isValidData = validateForm();
 
             if (isValidData) {
-                parentView = v;
                 // Proceed User Registration
 
-                sendVerificationCode(getResources().getString(R.string.ugandan_code)+phoneNumber.getText().toString().trim());
+                sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
 
             }
         });
@@ -514,7 +500,7 @@ public class SignUp extends AppCompatActivity {
                 Bitmap bitmap = ImagePicker.getImageFromResult(com.cabral.emaishapay.activities.SignUp.this, resultCode, data);
 
                 // Upload the Bitmap to ImageView
-                user_photo.setImageBitmap(bitmap);
+                binding.userPhoto.setImageBitmap(bitmap);
 
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 Uri tempUri = getImageUri(getApplicationContext(), bitmap);
@@ -559,7 +545,7 @@ public class SignUp extends AppCompatActivity {
         btn_resend = dialogOTP.findViewById(R.id.btn_resend);
         btn_submit = dialogOTP.findViewById(R.id.btn_submit);
 
-        btn_resend.setOnClickListener(view -> sendVerificationCode(phoneNumber.getText().toString().trim()));
+        btn_resend.setOnClickListener(view -> sendVerificationCode(binding.userMobile.getText().toString().trim()));
 
         btn_submit.setOnClickListener(view -> {
             if (!ed_otp.getText().toString().trim().isEmpty()) {
@@ -706,10 +692,10 @@ public class SignUp extends AppCompatActivity {
 
         dialogLoader.showProgressDialog();
 
-        RequestBody fName = RequestBody.create(MediaType.parse("text/plain"), firstName.getText().toString().trim());
-        RequestBody lName = RequestBody.create(MediaType.parse("text/plain"), lastName.getText().toString().trim());
-        RequestBody customersTelephone = RequestBody.create(MediaType.parse("text/plain"),  "0"+phoneNumber.getText().toString().trim());
-        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), user_email.getText().toString().trim());
+        RequestBody fName = RequestBody.create(MediaType.parse("text/plain"), binding.userFirstname.getText().toString().trim());
+        RequestBody lName = RequestBody.create(MediaType.parse("text/plain"), binding.userLastname.getText().toString().trim());
+        RequestBody customersTelephone = RequestBody.create(MediaType.parse("text/plain"), "0" + binding.userMobile.getText().toString().trim());
+        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), binding.userEmail.getText().toString().trim());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), userPassword.getText().toString().trim());
         RequestBody countryCode = RequestBody.create(MediaType.parse("text/plain"), getResources().getString(R.string.ugandan_code));
         RequestBody addressStreet = RequestBody.create(MediaType.parse("text/plain"), village.getText().toString());
@@ -717,14 +703,11 @@ public class SignUp extends AppCompatActivity {
         RequestBody addressDistrict = RequestBody.create(MediaType.parse("text/plain"), district.getText().toString());
 
         Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration
-                        (
-                                fName, lName, email, password, countryCode, customersTelephone, addressStreet, addressCityOrTown, addressDistrict
-                        );
+                .processRegistration(fName, lName, email, password, countryCode, customersTelephone, addressStreet, addressCityOrTown, addressDistrict);
 
         call.enqueue(new Callback<UserData>() {
             @Override
-            public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
+            public void onResponse(@NotNull Call<UserData> call, @NotNull retrofit2.Response<UserData> response) {
 
                 dialogLoader.hideProgressDialog();
 
@@ -739,11 +722,11 @@ public class SignUp extends AppCompatActivity {
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         // Get the Error Message from Response
                         String message = response.body().getMessage();
-                        Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
 
                     } else {
                         // Unable to get Success status
-                        Toast.makeText(com.cabral.emaishapay.activities.SignUp.this, getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
@@ -755,11 +738,10 @@ public class SignUp extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
+            public void onFailure(@NotNull Call<UserData> call, @NotNull Throwable t) {
                 dialogLoader.hideProgressDialog();
                 String Str = "" + t;
                 Toast.makeText(com.cabral.emaishapay.activities.SignUp.this, "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-
             }
         });
     }
@@ -767,14 +749,14 @@ public class SignUp extends AppCompatActivity {
     //*********** Validate SignUp Form Inputs ********//
 
     private boolean validateForm() {
-        if (!ValidateInputs.isValidName(firstName.getText().toString().trim())) {
-            firstName.setError(getString(R.string.invalid_first_name));
+        if (!ValidateInputs.isValidName(binding.userFirstname.getText().toString().trim())) {
+            binding.userFirstname.setError(getString(R.string.invalid_first_name));
             return false;
-        } else if (!ValidateInputs.isValidName(lastName.getText().toString().trim())) {
-            lastName.setError(getString(R.string.invalid_last_name));
+        } else if (!ValidateInputs.isValidName(binding.userLastname.getText().toString().trim())) {
+            binding.userLastname.setError(getString(R.string.invalid_last_name));
             return false;
-        } else if (!ValidateInputs.isValidNumber(phoneNumber.getText().toString().trim())) {
-            phoneNumber.setError(getString(R.string.invalid_contact));
+        } else if (!ValidateInputs.isValidNumber(binding.userMobile.getText().toString().trim())) {
+            binding.userMobile.setError(getString(R.string.invalid_contact));
             return false;
         } else if (district.getText().toString().equals("District")) {
             Toast.makeText(this, "Please select District", Toast.LENGTH_SHORT).show();
@@ -785,8 +767,8 @@ public class SignUp extends AppCompatActivity {
         } else if (village.getText().toString().equals("Village")) {
             Toast.makeText(this, "Please select Village", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!ValidateInputs.isValidEmail(user_email.getText().toString().trim())) {
-            user_email.setError(getString(R.string.invalid_email));
+        } else if (!ValidateInputs.isValidEmail(binding.userEmail.getText().toString().trim())) {
+            binding.userEmail.setError(getString(R.string.invalid_email));
             return false;
         } else if (userPassword.getText().toString().trim().length() < 6) {
             userPassword.setError(getString(R.string.invalid_password_length));
