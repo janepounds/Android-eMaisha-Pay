@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,7 +58,8 @@ public class WalletLoansListFragment extends Fragment {
     private float interest;
 
     private Toolbar toolbar;
-    private FrameLayout walletPayLoanLayout, walletApplyLoanLayout;
+    private RelativeLayout walletApplyLoanLayout;
+    private FrameLayout walletPayLoanLayout;
     private RecyclerView loansListRecyclerView;
     private Button walletApplyLoanBtn, walletPayLoanBtn;
 

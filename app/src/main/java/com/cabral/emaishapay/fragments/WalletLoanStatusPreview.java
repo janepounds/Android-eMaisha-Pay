@@ -44,7 +44,7 @@ public class WalletLoanStatusPreview extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.wallet_loanstatus_preview, container, false);
+        View view = inflater.inflate(R.layout.loan_preview, container, false);
 
         toolbar = view.findViewById(R.id.toolbar_wallet_loan_status_preview);
         textViewLoanStatusPreviewDueDate = view.findViewById(R.id.text_view_loan_status_preview_due_date);
@@ -96,21 +96,21 @@ public class WalletLoanStatusPreview extends Fragment {
         Glide.with(requireContext()).load(loanApplication.getFarm_photo()).apply(options).into(imageViewLoanStatusPreviewUserPhoto);
         Glide.with(requireContext()).load(loanApplication.getUserPhotoPic()).apply(options).into(imageViewLoanStatusPreviewFarmPhoto);
 
-        textViewLoanStatusEditPhotos.setOnClickListener(v -> {
+//        textViewLoanStatusEditPhotos.setOnClickListener(v -> {
 //                Intent startNext = new Intent(LoanStatusPreviewActivity.this,WalletLoanAppPhotos.class);
 //                startNext.putExtra("loanApplication",loanApplication);
 //                startNext.putExtra("isEdit",true);
 //                startActivity(startNext);
-        });
+//        });
 
         textViewLoanStatusPreviewInterestRate.setText(loanApplication.getInterestRate() + "%");
         textViewLoanStatusPreviewDueAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.computeDueAmount()));
-        textViewLoanStatusPreviewPayments.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getAmountPaid()));
-        textViewLoanStatusPreviewFines.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getTotalFines()));
+//        textViewLoanStatusPreviewPayments.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getAmountPaid()));
+//        textViewLoanStatusPreviewFines.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getTotalFines()));
 
-        if (!loanApplication.isEditable()) {
-            textViewLoanStatusEditPhotos.setVisibility(View.GONE);
-        }
+//        if (!loanApplication.isEditable()) {
+//            textViewLoanStatusEditPhotos.setVisibility(View.GONE);
+//        }
     }
 
     @Override

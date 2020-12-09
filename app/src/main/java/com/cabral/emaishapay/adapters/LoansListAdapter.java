@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_loan_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.loan_card, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -93,7 +94,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
         TextView numberTxt, dateTxt, amountTxt, dueDateTxt, statusTxt;
 
-        LinearLayout Layout;
+        ConstraintLayout Layout;
 
         public MyViewHolder(View v) {
             super(v);
