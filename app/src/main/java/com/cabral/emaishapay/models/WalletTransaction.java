@@ -31,7 +31,6 @@ public class WalletTransaction {
         this.sender = sender;
     }
 
-
     public boolean isPurchase() {
         return isPurchase;
     }
@@ -47,8 +46,6 @@ public class WalletTransaction {
     public void setReferenceNumber(String referenceNumber) {
         this.referenceNumber = referenceNumber;
     }
-
-
 
     public String getType() {
         return type;
@@ -85,7 +82,6 @@ public class WalletTransaction {
     Integer time;
     public WalletTransaction() {
     }
-
 
     public WalletTransaction(String date, String recepient, String type, double debit, String referenceNumber) {
         this.date = date;

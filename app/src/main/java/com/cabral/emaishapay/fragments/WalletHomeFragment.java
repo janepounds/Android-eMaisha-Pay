@@ -19,20 +19,26 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.DailogFragments.Buy;
 import com.cabral.emaishapay.DailogFragments.TransferMoney;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.adapters.WalletTransactionAdapter;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
+import com.cabral.emaishapay.models.TransactionModel;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +71,17 @@ public class WalletHomeFragment extends Fragment {
         updateBalance();
 
         binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
+
+        List<TransactionModel> models = new ArrayList<>();
+        TransactionModel model = new TransactionModel("MJ", "Mutesasira Jovan", String.valueOf(new Date()), "UGX 900");
+        TransactionModel model1 = new TransactionModel("OE", "Onen Emmanuel", String.valueOf(new Date()), "UGX 800");
+        models.add(model);
+        models.add(model1);
+        WalletTransactionAdapter adapter = new WalletTransactionAdapter(models);
+
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recyclerView.setHasFixedSize(true);
 
         return binding.getRoot();
     }

@@ -70,12 +70,10 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
         }
     }
 
-
     public WalletTransactionsListAdapter(List<WalletTransaction> dataList, FragmentManager supportFragmentManager) {
         this.dataList = dataList;
         fm=supportFragmentManager;
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
