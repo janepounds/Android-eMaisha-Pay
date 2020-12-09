@@ -16,14 +16,10 @@
         <item name="android:fontFamily">@font/josefin_sans</item>
     </style>
 
-
-
-
     <style name="MyPopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="android:fontFamily">@font/josefin_sans</item>
         <item name="android:listPreferredItemHeightSmall">30dp</item>
     </style>
-
 
     <style name="HeaderThemeWhite" parent="AppTheme">
         <item name="android:textAllCaps">true</item>
@@ -44,12 +40,10 @@
         <item name="android:fontFamily">@font/josefin_sans</item>
     </style>
 
-
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/background_custom_dialog</item>
         <item name="android:fontFamily">@font/josefin_sans</item>
     </style>
-
 
     <style name="AppDrawableTheme" parent="ThemeOverlay.AppCompat.Dark">
         <!-- Customize your theme here. -->
@@ -62,9 +56,7 @@
     <style name="MySplashScreen" parent="AppTheme">
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/josefin_sans</item>
-
     </style>
-
 
     <style name="ButtonBorder" parent="Widget.AppCompat.Button.Colored" />
 
@@ -76,7 +68,6 @@
         <item name="android:textSize">12sp</item>
         <item name="android:singleLine">true</item>
     </style>
-
 
     <style name="MyToolbar" parent="AppTheme">
         <item name="android:background">@color/colorAccentGreen</item>
@@ -90,7 +81,6 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
     </style>
-
 
     <style name="HeaderTheme" parent="AppTheme">
         <item name="android:textAllCaps">true</item>
@@ -131,7 +121,6 @@
         <item name="android:fontFamily">@font/josefin_sans</item>
     </style>
 
-
     <style name="myFullscreenAlertDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/josefin_sans</item>
@@ -142,8 +131,6 @@
         <item name="android:fontFamily">@font/josefin_sans</item>
         <item name="android:textColorSecondary">@color/gray</item>
     </style>
-
-
 
     <!-- Wallet plugin Style-->
     <style name="AppTheme0" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -213,4 +200,5 @@
         <item name="colorControlNormal">@color/dividerDark</item>
         <item name="colorControlActivated">#FFAC41</item>
     </style>
+
 </resources>
