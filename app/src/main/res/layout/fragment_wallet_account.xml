@@ -279,7 +279,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_request_date" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -322,7 +322,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_gender2" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -365,7 +365,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_leadership" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -408,7 +408,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_agenda" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -552,7 +552,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_id_card" />
 
 
                                     <TextView
@@ -607,7 +607,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_request_date" />
 
                                     <TextView
                                         android:id="@+id/text_view_expiry_date"
