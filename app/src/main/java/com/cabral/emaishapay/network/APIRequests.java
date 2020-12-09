@@ -227,12 +227,12 @@ public interface APIRequests {
     @Multipart
     @POST("processregistration")
     Call<UserData> processRegistration(
-            @Part("customers_firstname") RequestBody firstName,
-            @Part("customers_lastname") RequestBody lastName,
+            @Part("firstname") RequestBody firstName,
+            @Part("lastname") RequestBody lastName,
             @Part("email") RequestBody email,
             @Part("password") RequestBody password,
             @Part("country_code") RequestBody countryCode,
-            @Part("customers_telephone") RequestBody phoneNumber,
+            @Part("phoneNumber") RequestBody phoneNumber,
             @Part("addressStreet") RequestBody addressStreet,
             @Part("addressCityOrTown") RequestBody addressCityOrTown,
             @Part("address_district") RequestBody addressDistrict);

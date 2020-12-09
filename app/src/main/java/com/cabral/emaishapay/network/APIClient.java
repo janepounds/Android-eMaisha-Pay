@@ -29,8 +29,6 @@ public class APIClient {
     private static APIRequests apiRequests;
     private  final String TAG="Retrofit2 Errors";
 
-
-
     // Singleton Instance of APIRequests
     public static APIRequests getWalletInstance() {
         if (apiRequests == null) {

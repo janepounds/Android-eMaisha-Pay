@@ -80,8 +80,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginStart="6dp"
-                        android:layout_marginEnd="6dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginEnd="6dp"
                         android:background="@color/light_gray" />
 
                     <LinearLayout
@@ -103,7 +103,6 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/dimen_10dp"
                                 android:layout_marginEnd="@dimen/dimen_10dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
@@ -134,7 +133,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/dimen_10dp"
-                                android:layout_marginEnd="@dimen/dimen_10dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
@@ -172,7 +170,6 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/dimen_10dp"
                                 android:layout_marginEnd="@dimen/dimen_10dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
@@ -214,7 +211,7 @@
                                         android:inputType="phone"
                                         android:maxLength="9"
                                         android:paddingStart="@dimen/dimen_10dp"
-                                        android:paddingLeft="@dimen/dimen_10dp"
+                                        android:paddingEnd="@dimen/dimen_10dp"
                                         android:tag="+256 "
                                         android:textAlignment="viewStart"
                                         android:textColor="@android:color/black"
