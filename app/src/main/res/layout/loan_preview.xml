@@ -619,8 +619,8 @@
                 android:id="@+id/image_view_loan_status_preview_nid_front"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/add_default_image" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_image__1_" />
 
         </LinearLayout>
 
@@ -647,8 +647,8 @@
                 android:id="@+id/image_view_loan_status_preview_nid_back"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/add_default_image" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_image__1_" />
 
         </LinearLayout>
 
@@ -687,8 +687,8 @@
                 android:id="@+id/image_view_loan_status_preview_user_photo"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/add_default_image" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_image__1_" />
 
         </LinearLayout>
 
@@ -715,8 +715,8 @@
                 android:id="@+id/image_view_loan_status_preview_farm_photo"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/add_default_image" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_image__1_" />
 
         </LinearLayout>
 
