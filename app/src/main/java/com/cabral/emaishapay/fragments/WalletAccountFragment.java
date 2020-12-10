@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
@@ -224,8 +225,9 @@ public class WalletAccountFragment extends Fragment {
             if (!prefsManager.isUserLoggedIn()) {
                 Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
-                // exit the app
-                requireActivity().finishAffinity();
+                // Open login
+                startActivity(new Intent(requireActivity(), Login.class));
+                requireActivity().finish();
             }
         }).setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
 
