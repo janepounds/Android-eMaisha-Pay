@@ -47,8 +47,7 @@
                     android:layout_marginBottom="@dimen/dimen_20dp"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/margin_15"
-                    android:paddingBottom="@dimen/margin_15">
+                    android:padding="@dimen/margin_15">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -63,7 +62,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_corner">
 
                         <TextView
@@ -71,9 +70,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:gravity="center"
                             android:textColor="@android:color/black"
+                            android:background="@android:color/transparent"
                             android:textSize="18sp"
+                            android:padding="12dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_margin="6dp"
+                            android:layout_marginEnd="15dp"
                             android:src="@drawable/ic_calendar" />
 
                     </RelativeLayout>
@@ -102,7 +102,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_corner">
 
                         <Spinner
@@ -131,7 +131,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10">
+                        android:layout_marginTop="5dp">
 
                         <LinearLayout
                             android:id="@+id/layout_firstname"
@@ -148,12 +148,12 @@
                             <EditText
                                 android:id="@+id/next_of_kin_first"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
                                 android:hint="First Name"
                                 android:inputType="text"
-                                android:padding="4dp"
-                                android:textSize="14sp" />
+                                android:padding="12dp"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -172,12 +172,12 @@
                             <EditText
                                 android:id="@+id/next_of_kin_last"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
                                 android:hint="Last Name"
                                 android:inputType="text"
                                 android:padding="4dp"
-                                android:textSize="14sp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -219,7 +219,8 @@
                             android:inputType="phone"
                             android:maxLength="9"
                             android:padding="6dp"
-                            android:textSize="14sp" />
+                            android:hint="4hdh"
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
