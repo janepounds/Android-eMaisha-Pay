@@ -534,6 +534,7 @@
                                     android:id="@+id/img_id_front"
                                     android:layout_width="160dp"
                                     android:layout_height="100dp"
+                                    android:scaleType="centerCrop"
                                     android:src="@drawable/add_default_image"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/view" />
@@ -723,7 +724,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_boss" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -809,7 +810,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_location_pin" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -852,7 +853,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_id_card" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -1029,7 +1030,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_map" />
 
                                     <TextView
                                         android:layout_width="0dp"
