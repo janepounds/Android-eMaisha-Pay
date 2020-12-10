@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.network;
 
 
+import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
@@ -273,4 +274,16 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("getallpages")
     Call<PagesData> getStaticPages(@Field("language_id") int language_id);
+
+
+    //store personal info
+    @FormUrlEncoded
+    @POST("store_personal_info")
+    Call<AccountResponse>storePersonalInfo(
+            @Field("dob") String dob,
+            @Field("gender") String gender,
+            @Field("next_of_kin") String next_of_kin,
+            @Field("next_of_kin_contact") String next_of_kin_contact,
+            @Field("picture") String picture
+    );
 }

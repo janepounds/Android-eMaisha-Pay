@@ -67,6 +67,7 @@
                         android:background="@drawable/edittext_corner">
 
                         <TextView
+                            android:id="@+id/dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -105,6 +106,7 @@
                         android:background="@drawable/edittext_corner">
 
                         <Spinner
+                            android:id="@+id/gender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -144,6 +146,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <EditText
+                                android:id="@+id/next_of_kin_first"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/edittext_corner"
@@ -167,6 +170,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <EditText
+                                android:id="@+id/next_of_kin_last"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/edittext_corner"
@@ -207,6 +211,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:id="@+id/next_of_kin_contact"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
