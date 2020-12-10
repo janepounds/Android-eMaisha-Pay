@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    android:layout_marginBottom="?actionBarSize"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/margin_15">
@@ -213,8 +213,7 @@
                             android:background="@android:color/transparent"
                             android:inputType="phone"
                             android:maxLength="9"
-                            android:padding="6dp"
-                            android:hint="4hdh"
+                            android:padding="12dp"
                             android:textSize="18sp" />
 
                     </LinearLayout>
