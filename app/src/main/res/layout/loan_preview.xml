@@ -620,7 +620,7 @@
                 android:layout_width="180dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_image__1_" />
+                android:src="@drawable/add_default_image" />
 
         </LinearLayout>
 
@@ -648,7 +648,7 @@
                 android:layout_width="180dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_image__1_" />
+                android:src="@drawable/add_default_image" />
 
         </LinearLayout>
 
@@ -688,7 +688,7 @@
                 android:layout_width="180dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_image__1_" />
+                android:src="@drawable/add_default_image" />
 
         </LinearLayout>
 
@@ -716,7 +716,7 @@
                 android:layout_width="180dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_add_image__1_" />
+                android:src="@drawable/add_default_image" />
 
         </LinearLayout>
 
