@@ -219,7 +219,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="@drawable/gradient"
+                    android:background="@drawable/gradient_blue"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="@dimen/dimen_10dp">
 
@@ -262,7 +262,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="@drawable/gradient">
+                    android:background="@drawable/gradient_blue">
 
                     <TextView
                         android:layout_width="match_parent"

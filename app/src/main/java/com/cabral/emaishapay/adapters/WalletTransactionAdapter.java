@@ -1,22 +1,31 @@
 package com.cabral.emaishapay.adapters;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.models.TransactionModel;
 
 import java.util.List;
+import java.util.Random;
 
 public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransactionAdapter.MyViewHolder> {
+    private static final String TAG = "WalletTransaction";
+    private Context context;
     private List<TransactionModel> dataList;
 
-    public WalletTransactionAdapter(List<TransactionModel> dataList) {
+    public WalletTransactionAdapter(Context context, List<TransactionModel> dataList) {
+        this.context = context;
         this.dataList = dataList;
     }
 
@@ -31,10 +40,16 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         TransactionModel model = dataList.get(position);
 
+        Drawable[] drawables = {ContextCompat.getDrawable(context, R.drawable.gradient_blue),
+                ContextCompat.getDrawable(context, R.drawable.gradient_green),
+                ContextCompat.getDrawable(context, R.drawable.gradient_maroon),
+                ContextCompat.getDrawable(context, R.drawable.gradient_yellow)};
+
+        holder.initials.setBackground(drawables[new Random().nextInt(drawables.length)]);
         holder.initials.setText(model.getInitials());
         holder.userName.setText(model.getUserName());
         holder.date.setText(model.getDate());
-        holder.amount.setText(model.getAmount());
+        holder.amount.setText(String.format("UGX %s", model.getAmount()));
     }
 
     @Override

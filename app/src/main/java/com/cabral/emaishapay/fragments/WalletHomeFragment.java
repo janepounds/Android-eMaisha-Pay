@@ -3,6 +3,7 @@ package com.cabral.emaishapay.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -73,11 +75,15 @@ public class WalletHomeFragment extends Fragment {
         binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
 
         List<TransactionModel> models = new ArrayList<>();
-        TransactionModel model = new TransactionModel("MJ", "Mutesasira Jovan", String.valueOf(new Date()), "UGX 900");
-        TransactionModel model1 = new TransactionModel("OE", "Onen Emmanuel", String.valueOf(new Date()), "UGX 800");
+        TransactionModel model = new TransactionModel("MJ", "Mutesasira Jovan", "25 December 2020, 12:14", "900");
+        TransactionModel model1 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "8,000,000");
+        TransactionModel model2 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "800");
+        TransactionModel model3 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "800");
         models.add(model);
         models.add(model1);
-        WalletTransactionAdapter adapter = new WalletTransactionAdapter(models);
+        models.add(model2);
+        models.add(model3);
+        WalletTransactionAdapter adapter = new WalletTransactionAdapter(requireContext(), models);
 
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
