@@ -107,13 +107,9 @@ public class BusinessInformationFragment extends Fragment {
     }
 
     private void chooseImage() {
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, IMAGE_PICK_CODE);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-        startActivityForResult(intent, 1);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 
     @Override

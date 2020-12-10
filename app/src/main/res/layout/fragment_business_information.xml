@@ -195,8 +195,7 @@
                             app:layout_constraintEnd_toStartOf="@+id/guideline9"
                             app:layout_constraintHorizontal_bias="0.53"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="@id/img_id_front"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/registration_certificate"
@@ -204,9 +203,8 @@
                             android:layout_height="120dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/add_default_image"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="10dp"
-                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline9"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_view_front" />
 
@@ -219,8 +217,9 @@
                             android:gravity="center"
                             android:text="Trade License"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/img_id_back"/>
+                            app:layout_constraintHorizontal_bias="0.504"
+                            app:layout_constraintStart_toStartOf="@+id/guideline9"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/trade_license"
@@ -228,11 +227,17 @@
                             android:layout_height="120dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/add_default_image"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/text_view_back" />
+                            app:layout_constraintStart_toStartOf="@+id/guideline9"
+                            app:layout_constraintTop_toBottomOf="@+id/text_view_back" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
