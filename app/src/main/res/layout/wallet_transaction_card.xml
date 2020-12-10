@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:background="@drawable/gradient_blue"
                 android:gravity="center"
                 android:padding="@dimen/margin_10"
-                android:text="JM"
+                tools:text="JM"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Jovan Mutesasira"
+                tools:text="Jovan Mutesasira"
                 android:textColor="#101436"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="25 December 2020, 12:14"
+                tools:text="25 December 2020, 12:14"
                 android:textColor="@color/hintColor"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +107,7 @@
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
-                android:text="UGX 800"
+                tools:text="UGX 800"
                 android:textColor="#101436"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
