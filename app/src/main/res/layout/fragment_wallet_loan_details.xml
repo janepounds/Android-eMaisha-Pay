@@ -396,14 +396,15 @@
                     android:background="@color/transparent"
                     android:text="@string/next"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_chevron_right">
+                    android:src="@drawable/ic_right_chevron">
 
                 </ImageView>
             </FrameLayout>

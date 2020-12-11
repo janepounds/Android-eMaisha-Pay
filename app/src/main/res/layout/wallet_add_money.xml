@@ -113,10 +113,10 @@
                             android:maxLength="9"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
-                            android:textAlignment="viewStart"
+                            android:hint="bdgddg"
                             android:textColor="@android:color/black"
                             android:textColorHint="@android:color/black"
-                            android:gravity="start"
+                            android:gravity="center_vertical"
                             android:paddingLeft="@dimen/dimen_10dp" />
                     </LinearLayout>
 
@@ -146,8 +146,8 @@
                     android:background="@drawable/edittext_corner"
                     android:hint="e.g 40,000"
                     android:inputType="numberDecimal"
-                    android:paddingLeft="@dimen/dimen_15sp"
-                    android:textSize="14dp" />
+                    android:paddingStart="15dp"
+                    android:paddingLeft="@dimen/dimen_15sp" />
             </LinearLayout>
 
             <FrameLayout
