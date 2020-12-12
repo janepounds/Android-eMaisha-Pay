@@ -430,7 +430,7 @@
                             android:id="@+id/image_loan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:src="@drawable/ic_loan_g"
                             app:layout_constraintBottom_toTopOf="@id/label_loan"
                             app:layout_constraintEnd_toEndOf="parent"

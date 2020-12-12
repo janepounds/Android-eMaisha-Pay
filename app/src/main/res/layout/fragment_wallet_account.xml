@@ -225,7 +225,7 @@
                                 android:id="@+id/layout_personal_info"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginEnd="@dimen/dimen_5dp"
+                                android:layout_margin="@dimen/dimen_5dp"
                                 android:padding="@dimen/dimen_5dp"
                                 android:visibility="gone">
 
@@ -488,7 +488,7 @@
                                 android:id="@+id/layout_id_info"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
+                                android:layout_margin="5dp"
                                 android:padding="5dp"
                                 android:visibility="gone">
 
@@ -535,7 +535,8 @@
                                     android:layout_width="160dp"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/add_default_image"
+                                    android:src="@drawable/user"
+                                    android:layout_margin="4dp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/view" />
 
@@ -549,12 +550,12 @@
                                     app:layout_constraintStart_toEndOf="@id/img_id_front"
                                     app:layout_constraintTop_toBottomOf="@id/view">
 
+
                                     <ImageView
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
                                         android:src="@drawable/ic_id_card" />
-
 
                                     <TextView
                                         android:id="@+id/text_view_id_type"
@@ -581,7 +582,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/group_2" />
 
                                     <TextView
                                         android:id="@+id/text_view_id_number"
@@ -669,7 +670,7 @@
                                 android:id="@+id/layout_employment_info"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginEnd="@dimen/dimen_5dp"
+                                android:layout_margin="@dimen/dimen_5dp"
                                 android:padding="@dimen/dimen_5dp"
                                 android:visibility="gone">
 
@@ -767,7 +768,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_hierarchy" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -933,9 +934,9 @@
                                 android:id="@+id/layout_business_info"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginEnd="@dimen/dimen_5dp"
+                                android:layout_margin="@dimen/dimen_5dp"
                                 android:padding="@dimen/dimen_5dp"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <FrameLayout
                                     android:id="@+id/layout_business_info_title"
@@ -987,7 +988,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_business_name" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -1030,7 +1031,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_map" />
+                                        android:src="@drawable/ic_business_location" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -1073,7 +1074,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_registration_no" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -1116,7 +1117,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@android:drawable/ic_menu_my_calendar" />
+                                        android:src="@drawable/ic_license_no" />
 
                                     <TextView
                                         android:layout_width="0dp"
