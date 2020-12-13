@@ -32,10 +32,15 @@ import com.cabral.emaishapay.adapters.WalletTransactionAdapter;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.TransactionModel;
+import com.cabral.emaishapay.models.WalletTransaction;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -52,7 +57,7 @@ public class WalletHomeFragment extends Fragment {
     private Context context;
     private NavController navController = null;
     private ProgressDialog progressDialog;
-
+    private List<TransactionModel> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
 
@@ -68,26 +73,14 @@ public class WalletHomeFragment extends Fragment {
         progressDialog.setCancelable(false);
 
         fm = requireActivity().getSupportFragmentManager();
-
+        getTransactionsData();
         binding.walletBalance.setText("UGX " + NumberFormat.getInstance().format(balance));
         updateBalance();
 
         binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
 
-        List<TransactionModel> models = new ArrayList<>();
-        TransactionModel model = new TransactionModel("MJ", "Mutesasira Jovan", "25 December 2020, 12:14", "900");
-        TransactionModel model1 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "8,000,000");
-        TransactionModel model2 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "800");
-        TransactionModel model3 = new TransactionModel("OE", "Onen Emmanuel", "25 December 2020, 12:14", "800");
-        models.add(model);
-        models.add(model1);
-        models.add(model2);
-        models.add(model3);
-        WalletTransactionAdapter adapter = new WalletTransactionAdapter(requireContext(), models);
 
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.recyclerView.setHasFixedSize(true);
+
 
         return binding.getRoot();
     }
@@ -136,6 +129,110 @@ public class WalletHomeFragment extends Fragment {
         transferDialog.show(ft, "dialog");
     }
 
+
+
+    private void getTransactionsData() {
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("Please Wait..");
+        dialog.setCancelable(false);
+        dialog.show();
+        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+
+        /**********RETROFIT IMPLEMENTATION************/
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<WalletTransactionResponse> call = apiRequests.transactionList(access_token);
+
+        call.enqueue(new Callback<WalletTransactionResponse>() {
+            @Override
+            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
+                if (response.code() == 200) {
+                    try {
+                        WalletTransaction data = null;
+                        WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
+                        List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
+                        for (int i = 0; i < transactions.size(); i++) {
+                            WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
+                            Gson gson = new Gson();
+                            String ress = gson.toJson(res);
+                            JSONObject record = new JSONObject(ress);
+                            //type
+                            if (record.getString("type").equalsIgnoreCase("Charge")) {
+                                models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+                            } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
+                                 models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+
+                            } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
+                                models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "-"+record.getDouble("amount")) );
+
+                                //data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "credit", record.getDouble("amount"), record.getString("referenceNumber"));
+
+                            } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
+                                String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
+
+                                if (userName.equals(record.getString("sender"))) {
+                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+                                } else {
+                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
+                                }
+                            } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
+                                models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+                                //data = new WalletTransaction(, record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
+                            }
+
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        if(models.size()>0){
+                            WalletTransactionAdapter adapter = new WalletTransactionAdapter(requireContext(), models);
+                            binding.recyclerView.setAdapter(adapter);
+                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                            binding.recyclerView.setHasFixedSize(true);
+                        }
+                    }
+
+
+                    dialog.dismiss();
+                } else if (response.code() == 401) {
+
+                    WalletAuthActivity.startAuth(context, true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    private String getNameInitials(String name){
+        if(name.isEmpty())
+            return null;
+        String ini = ""+name.charAt(0);
+        // we use ini to return the output
+        for (int i=0; i<name.length(); i++){
+            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' '){
+                //if i+1==name.length() you will have an indexboundofexception
+                //add the initials
+                ini+=name.charAt(i+1);
+            }
+        }
+        //after getting "ync" => return "YNC"
+        return ini.toUpperCase();
+    }
     public void updateBalance() {
         progressDialog.show();
 
