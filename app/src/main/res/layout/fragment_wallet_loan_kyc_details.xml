@@ -656,7 +656,7 @@
                                 android:layout_height="30dp"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/ic_chevron_left"/>
+                                android:src="@drawable/ic_left_chevron"/>
                             <Button
 
                                 android:layout_width="match_parent"
@@ -668,6 +668,7 @@
                                 android:paddingStart="6dp"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/button_text_size"
+                                android:textStyle="bold"
                                 android:paddingLeft="6dp" />
 
 
@@ -693,6 +694,7 @@
                                 android:text="@string/submit"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/button_text_size"
+                                android:textStyle="bold"
                                 android:paddingLeft="30dp"
                                 android:paddingRight="4dp" />
 
@@ -701,7 +703,7 @@
                                 android:layout_height="30dp"
                                 android:layout_gravity="end|center_vertical"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/ic_chevron_right">
+                                android:src="@drawable/ic_right_chevron">
 
                             </ImageView>
                         </FrameLayout>

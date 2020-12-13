@@ -10,10 +10,12 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary" />
@@ -173,7 +175,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:text="Upload Documents"
@@ -201,8 +203,9 @@
                             android:id="@+id/registration_certificate"
                             android:layout_width="150dp"
                             android:layout_height="120dp"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             android:src="@drawable/add_default_image"
+                            android:layout_marginTop="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline9"
                             app:layout_constraintStart_toStartOf="parent"
@@ -225,8 +228,9 @@
                             android:id="@+id/trade_license"
                             android:layout_width="150dp"
                             android:layout_height="120dp"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitCenter"
                             android:src="@drawable/add_default_image"
+                            android:layout_marginTop="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -237,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.5" />
+                            app:layout_constraintGuide_begin="171dp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
