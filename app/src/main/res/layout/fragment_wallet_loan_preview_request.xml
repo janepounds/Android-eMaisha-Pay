@@ -83,10 +83,15 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -382,7 +387,7 @@
                             android:layout_height="30dp"
                             android:layout_gravity="start|center_vertical"
                             android:layout_margin="10dp"
-                            android:src="@drawable/ic_chevron_left"/>
+                            android:src="@drawable/ic_left_chevron"/>
                         <Button
 
                             android:id="@+id/previous_btn"
@@ -390,12 +395,13 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:paddingStart="8dp"
+                            android:paddingStart="10dp"
                             android:background="@color/transparent"
                             android:text="@string/previous"
                             android:textColor="@color/white"
                             android:textSize="@dimen/button_text_size"
-                            android:paddingLeft="8dp" />
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp" />
 
 
 
@@ -414,25 +420,29 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:paddingEnd="8dp"
                             android:background="@color/transparent"
+                            android:paddingEnd="10dp"
+                            android:paddingRight="10dp"
                             android:text="@string/label_confirm"
                             android:textColor="@color/white"
                             android:textSize="@dimen/button_text_size"
-                            android:paddingRight="8dp" />
+                            android:textStyle="bold"/>
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="end|center_vertical"
                             android:layout_margin="10dp"
-                            android:src="@drawable/ic_chevron_right">
+                            android:src="@drawable/ic_right_chevron">
 
                         </ImageView>
                     </FrameLayout>
                 </LinearLayout>
 
             </RelativeLayout>
+
+            </ScrollView>
+
         </LinearLayout>
     </RelativeLayout>
 

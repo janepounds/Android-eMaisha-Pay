@@ -43,12 +43,16 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         TransactionModel model = dataList.get(position);
 
-        // Generate random ARGB colors
-        Random rnd = new Random();
-        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        if(model.getAmount().charAt(0)=='+'){
+            // Set the generated color as the background for name initials
+            holder.initials.setBackground(context.getResources().getDrawable(R.drawable.gradient_blue));
+        }else{
+            holder.initials.setBackground(context.getResources().getDrawable(R.drawable.gradient_red));
+        }
 
-        // Set the generated color as the background for name initials
-        holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);
+
+
+
         holder.initials.setText(model.getInitials());
         holder.userName.setText(model.getUserName());
         holder.date.setText(model.getDate());

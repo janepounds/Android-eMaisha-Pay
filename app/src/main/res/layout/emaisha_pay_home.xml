@@ -430,7 +430,7 @@
                             android:id="@+id/image_loan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
+                            android:layout_margin="2dp"
                             android:src="@drawable/ic_loan_g"
                             app:layout_constraintBottom_toTopOf="@id/label_loan"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -464,7 +464,7 @@
                     android:layout_below="@id/layout_weather_2"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="Transaction Records"
+                    android:text="Recent Transactions"
                     android:textColor="#404040"
                     android:textSize="20sp"
                     android:textStyle="bold" />
