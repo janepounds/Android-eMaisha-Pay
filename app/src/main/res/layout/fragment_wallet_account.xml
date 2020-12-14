@@ -292,6 +292,7 @@
                                         android:layout_height="match_parent"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
+                                        android:textStyle="bold"
                                         android:text="Date of Birth :"
                                         android:textColor="@color/textColor" />
 
@@ -337,6 +338,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="Gender :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -381,6 +383,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="N.O.K :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -426,6 +429,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="N.O.K Contact :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -581,7 +585,8 @@
                                         android:alpha="1.0"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="ID Type" />
+                                        android:text="ID Type"
+                                        android:textStyle="bold"/>
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -608,7 +613,8 @@
                                         android:alpha="1.0"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="ID Number" />
+                                        android:text="ID Number"
+                                        android:textStyle="bold"/>
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -635,7 +641,8 @@
                                         android:alpha="1.0"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="Expiry Date" />
+                                        android:text="Expiry Date"
+                                        android:textStyle="bold"/>
                                 </LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -729,6 +736,7 @@
                                     android:layout_height="1dp"
                                     android:layout_marginTop="4dp"
                                     android:background="#F9F7FE"
+                                    android:visibility="gone"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/layout_employment_info_title" />
@@ -737,7 +745,7 @@
                                     android:id="@+id/layout_employer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
+                                    android:layout_marginStart="5dp"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/view2">
@@ -749,12 +757,12 @@
                                         android:src="@drawable/ic_boss" />
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight=".6"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="Employer"
+                                        android:text="Employer :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -762,7 +770,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="0.1"
                                         android:text=":"
-                                        android:textSize="18sp" />
+                                        android:textSize="18sp"
+                                        android:visibility="gone"/>
 
                                     <TextView
                                         android:id="@+id/text_view_employer"
@@ -781,6 +790,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
+                                    android:layout_marginStart="5dp"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/layout_employer">
@@ -792,12 +802,12 @@
                                         android:src="@drawable/ic_hierarchy" />
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight=".6"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="Designation"
+                                        android:text="Designation :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -805,7 +815,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="0.1"
                                         android:text=":"
-                                        android:textSize="18sp" />
+                                        android:textSize="18sp"
+                                        android:visibility="gone"/>
 
                                     <TextView
                                         android:id="@+id/text_view_designation"
@@ -824,6 +835,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
+                                    android:layout_marginStart="5dp"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/layout_designation">
@@ -835,12 +847,12 @@
                                         android:src="@drawable/ic_location_pin" />
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight=".6"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="Location"
+                                        android:text="Location :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -848,7 +860,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="0.1"
                                         android:text=":"
-                                        android:textSize="18sp" />
+                                        android:textSize="18sp"
+                                        android:visibility="gone"/>
 
                                     <TextView
                                         android:id="@+id/text_view_location"
@@ -867,6 +880,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
+                                    android:layout_marginStart="5dp"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/layout_location">
@@ -878,12 +892,12 @@
                                         android:src="@drawable/ic_id_card" />
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight=".6"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
-                                        android:text="Employee ID"
+                                        android:text="Employee ID :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -891,7 +905,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="0.1"
                                         android:text=":"
-                                        android:textSize="18sp" />
+                                        android:textSize="18sp"
+                                        android:visibility="gone"/>
 
                                     <TextView
                                         android:id="@+id/text_view_employee_id"
@@ -1023,6 +1038,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="Business Name :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -1066,6 +1082,7 @@
                                         android:layout_height="match_parent"
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
+                                        android:textStyle="bold"
                                         android:text="Business Location :"
                                         android:textColor="@color/textColor" />
 
@@ -1111,6 +1128,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="Registration No. :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
@@ -1155,6 +1173,7 @@
                                         android:gravity="center_vertical"
                                         android:paddingLeft="@dimen/dimen_10dp"
                                         android:text="License No. :"
+                                        android:textStyle="bold"
                                         android:textColor="@color/textColor" />
 
                                     <TextView
