@@ -79,9 +79,6 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
 
-
-
-
         return binding.getRoot();
     }
 
@@ -142,7 +139,7 @@ public class WalletHomeFragment extends Fragment {
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList(access_token);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,5);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override

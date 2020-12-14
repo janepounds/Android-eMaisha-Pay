@@ -44,8 +44,10 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         TransactionModel model = dataList.get(position);
 
         // Generate random ARGB colors
-        Random rnd = new Random();
-        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        int currentColor = Color.argb(0, 255, 0, 0);
+
+        if(model.getAmount().charAt(0)=='+')
+            currentColor = Color.argb(0, 135, 206, 235);
 
         // Set the generated color as the background for name initials
         holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);

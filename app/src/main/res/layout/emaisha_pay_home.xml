@@ -464,7 +464,7 @@
                     android:layout_below="@id/layout_weather_2"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="Transaction Records"
+                    android:text="Recent Transactions"
                     android:textColor="#404040"
                     android:textSize="20sp"
                     android:textStyle="bold" />
