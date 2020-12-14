@@ -1,6 +1,8 @@
 package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,11 +17,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
@@ -28,6 +34,9 @@ import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 import retrofit2.Call;
@@ -40,6 +49,7 @@ public class PersonalInformationFragment extends Fragment {
     private NavController navController = null;
     private String dob, gender, next_of_kin,next_of_kin_contact,picture;
     String mediaPath, encodedImageID = "N/A";
+    private Context context;
 
 
     @Override
@@ -48,6 +58,12 @@ public class PersonalInformationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_personal_information, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -60,6 +76,9 @@ public class PersonalInformationFragment extends Fragment {
     }
 
     public void saveInfo(View view){
+        binding.datepicker.setOnClickListener(v -> addDatePickerImageView(binding.datepicker,binding.dob,context));
+
+
         binding.userPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,5 +139,28 @@ public class PersonalInformationFragment extends Fragment {
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
         return encImage;
+    }
+
+    public static void addDatePickerImageView(final ImageView imageView, final TextView ed_, final Context context) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog mDatePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        int month = selectedmonth + 1;
+                        NumberFormat formatter = new DecimalFormat("00");
+                        ed_.setText(selectedyear + "-" + formatter.format(month) + "-" + formatter.format(selectedday));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.show();
+
+            }
+        });
+        ed_.setInputType(InputType.TYPE_NULL);
     }
 }

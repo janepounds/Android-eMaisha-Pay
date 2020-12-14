@@ -374,4 +374,12 @@
     <string name="fertilizer_title">Fertilizer</string>
     <string name="seeds">Seeds</string>
     <string name="transactions">Transactions</string>
+
+
+    <string-array name="spinner_id_type">
+        <item>Select</item>
+        <item>National Id</item>
+        <item>Passport</item>
+        <item>Driving Permit</item>
+    </string-array>
 </resources>
