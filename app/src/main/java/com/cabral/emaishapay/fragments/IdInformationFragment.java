@@ -49,6 +49,8 @@ public class IdInformationFragment extends Fragment {
     private Context context;
     private String idType,idNumber,expiryDate,frontId,backId;
     String mediaPath, encodedImageID = "N/A";
+    private static final int REQUEST_CODE_ONE =1;
+    private static final int REQUEST_CODE_TWO =2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +87,7 @@ public class IdInformationFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1213);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -96,7 +98,7 @@ public class IdInformationFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1213);
+                startActivityForResult(intent, 2);
             }
         });
         /******************RETROFIT IMPLEMENTATION****************************/
@@ -162,11 +164,16 @@ public class IdInformationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
             Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
             encodedImageID = encodeImage(selectedImage);
             binding.imgIdFront.setImageBitmap(selectedImage);
+
+        }else if(requestCode == 2 && resultCode == Activity.RESULT_OK){
+            String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
+            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+            encodedImageID = encodeImage(selectedImage);
             binding.imgIdBack.setImageBitmap(selectedImage);
         }
     }

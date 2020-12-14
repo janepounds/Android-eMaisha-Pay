@@ -303,4 +303,29 @@ public interface APIRequests {
             @Field("front") String front,
             @Field("back") String back
     );
+
+    //store employment info
+    @FormUrlEncoded
+    @POST("store_user_employment_info")
+    Call<AccountResponse>storeEmploymentInfo(
+            @Field("employer") String employer,
+            @Field("designation") String designation,
+            @Field("location") String location,
+            @Field("contact") String contact,
+            @Field("employee_id") String employee_id
+
+    );
+
+    //store business info
+    @FormUrlEncoded
+    @POST("store_user_business_info")
+    Call<AccountResponse>storeBusinessInfo(
+            @Field("business_name") String business_name,
+            @Field("location") String location,
+            @Field("reg_number") String reg_no,
+            @Field("license_number") String license_number,
+            @Field("reg_certificate") String reg_certificate,
+            @Field("trade_license") String trade_license
+
+    );
 }

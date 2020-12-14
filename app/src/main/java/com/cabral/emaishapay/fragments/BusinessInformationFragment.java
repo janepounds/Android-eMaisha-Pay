@@ -21,6 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +31,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
+import com.cabral.emaishapay.models.AccountResponse;
+import com.cabral.emaishapay.network.APIClient;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BusinessInformationFragment extends Fragment {
     private static final String TAG = "BusinessInformation";
@@ -51,6 +58,7 @@ public class BusinessInformationFragment extends Fragment {
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
     private ImageView imageView;
+    private String business_name,location,regno,license_no,reg_certificate,trade_license;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -104,6 +112,7 @@ public class BusinessInformationFragment extends Fragment {
                 chooseImage();
             }
         });
+        saveInfo();
     }
 
     private void chooseImage() {
@@ -154,6 +163,57 @@ public class BusinessInformationFragment extends Fragment {
             }
 
             Glide.with(requireContext()).load(imageUri).into(imageView);
+        }
+    }
+
+    public void saveInfo(){
+        business_name = binding.businessName.getText().toString();
+        location = binding.businessLocation.getText().toString();
+        regno = binding.registrationNumber.getText().toString();
+        license_no = binding.licenceNumber.getText().toString();
+
+        Call<AccountResponse> call = APIClient.getWalletInstance()
+                .storeBusinessInfo(business_name,location,regno,license_no,encodedRegistrationCertificate,encodedTradeLicence);
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "onResponse: successful");
+                } else {
+
+                    Log.d(TAG, "onResponse: failed" + response.errorBody());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: failed" + t.getMessage());
+
+            }
+        });
+
+
+
+
+    }
+
+    public boolean validateEntries(){
+        if(binding.businessName.getText().toString().isEmpty()){
+
+            return false;
+        } else if(binding.businessLocation.getText().toString().isEmpty()){
+            return false;
+
+
+        }else if(binding.licenceNumber.getText().toString().isEmpty()){
+
+            return false;
+        }
+
+        else {
+            return true;
         }
     }
 }
