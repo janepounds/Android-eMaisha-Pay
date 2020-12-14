@@ -284,6 +284,17 @@ public interface APIRequests {
             @Field("gender") String gender,
             @Field("next_of_kin") String next_of_kin,
             @Field("next_of_kin_contact") String next_of_kin_contact,
-            @Field("picture") String picture
+            @Field("pic") String picture
+    );
+
+    //store id info
+    @FormUrlEncoded
+    @POST("store_user_id_info")
+    Call<AccountResponse>storeIdInfo(
+            @Field("id_type") String id_type,
+            @Field("id_number") String id_number,
+            @Field("expiry_date") String expiry_date,
+            @Field("front") String front,
+            @Field("back") String back
     );
 }
