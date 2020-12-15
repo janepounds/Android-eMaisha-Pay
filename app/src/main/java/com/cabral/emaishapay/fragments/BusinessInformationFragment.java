@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +61,7 @@ public class BusinessInformationFragment extends Fragment {
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
     private ImageView imageView;
-    private String business_name,location,regno,license_no,reg_certificate,trade_license;
+    private String business_name, location, regno, license_no, reg_certificate, trade_license;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -77,138 +80,92 @@ public class BusinessInformationFragment extends Fragment {
 
         binding.registrationCertificate.setOnClickListener(v -> {
             imageView = binding.registrationCertificate;
-            //check runtime permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                    //permission denied
-                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                    //show popup to request runtime permission
-                    requestPermissions(permissions, PERMISSION_CODE);
-                } else {
-                    //permission granted
-                    chooseImage();
-                }
-            } else {
-                //version is less than marshmallow
-                chooseImage();
-            }
+            // Choose Image from camera or gallery
+            chooseImage();
         });
 
         binding.tradeLicense.setOnClickListener(v -> {
             imageView = binding.tradeLicense;
-            //check runtime permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                    //permission denied
-                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                    //show popup to request runtime permission
-                    requestPermissions(permissions, PERMISSION_CODE);
-                } else {
-                    //permission granted
-                    chooseImage();
-                }
-            } else {
-                //version is less than marshmallow
-                chooseImage();
-            }
+            // Choose Image from camera or gallery
+            chooseImage();
         });
-        saveInfo();
+
+        binding.submitButton.setOnClickListener(v -> {
+            if (validateEntries())
+                saveInfo();
+        });
+
+        binding.cancelButton.setOnClickListener(view1 -> navController.popBackStack());
     }
 
     private void chooseImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
+        Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+        intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
+        intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
+        intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
+        startActivityForResult(intent, 1);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                chooseImage();
-            } else {
-                Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            Uri imageUri = null;
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
             Bitmap imageBitmap;
 
-            assert data != null;
-            if (data.getData() != null) {
-                imageUri = data.getData();
+            imageBitmap = BitmapFactory.decodeFile(data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH));
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] b = byteArrayOutputStream.toByteArray();
 
-                try {
-                    imageBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                    byte[] b = byteArrayOutputStream.toByteArray();
-
-                    if (imageView == binding.registrationCertificate) {
-                        encodedRegistrationCertificate = Base64.encodeToString(b, Base64.DEFAULT);
-                    } else if (imageView == binding.tradeLicense) {
-                        encodedTradeLicence = Base64.encodeToString(b, Base64.DEFAULT);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (imageView == binding.registrationCertificate) {
+                encodedRegistrationCertificate = Base64.encodeToString(b, Base64.DEFAULT);
+                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedRegistrationCertificate, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.registrationCertificate);
+            } else if (imageView == binding.tradeLicense) {
+                encodedTradeLicence = Base64.encodeToString(b, Base64.DEFAULT);
+                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedTradeLicence, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.tradeLicense);
             }
-
-            Glide.with(requireContext()).load(imageUri).into(imageView);
         }
     }
 
-    public void saveInfo(){
-        business_name = binding.businessName.getText().toString();
-        location = binding.businessLocation.getText().toString();
-        regno = binding.registrationNumber.getText().toString();
-        license_no = binding.licenceNumber.getText().toString();
-
+    public void saveInfo() {
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storeBusinessInfo(business_name,location,regno,license_no,encodedRegistrationCertificate,encodedTradeLicence);
+                .storeBusinessInfo(binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
+                        binding.licenceNumber.getText().toString(), encodedRegistrationCertificate, encodedTradeLicence);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
-
                     Log.d(TAG, "onResponse: successful");
                 } else {
-
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }
-
             }
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: failed" + t.getMessage());
-
             }
         });
     }
 
-    public boolean validateEntries(){
-        if(binding.businessName.getText().toString().isEmpty()){
-
+    public boolean validateEntries() {
+        if (binding.businessName.getText().toString().isEmpty()) {
+            binding.businessName.setError("Required");
+            binding.businessName.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "Business name is required", Snackbar.LENGTH_LONG).show();
             return false;
-        } else if(binding.businessLocation.getText().toString().isEmpty()){
+        } else if (binding.businessLocation.getText().toString().isEmpty()) {
+            binding.businessLocation.setError("Required");
+            binding.businessLocation.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "Business location is required", Snackbar.LENGTH_LONG).show();
             return false;
-
-
-        }else if(binding.licenceNumber.getText().toString().isEmpty()){
-
+        } else if (binding.licenceNumber.getText().toString().isEmpty()) {
+            binding.licenceNumber.setError("Required");
+            binding.licenceNumber.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "Licence number is required", Snackbar.LENGTH_LONG).show();
             return false;
-        }
-
-        else {
+        } else {
             return true;
         }
     }
