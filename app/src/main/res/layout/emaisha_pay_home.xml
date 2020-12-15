@@ -24,7 +24,7 @@
                 <RelativeLayout
                     android:id="@+id/layout_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp">
+                    android:layout_height="290dp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -464,7 +464,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_weather_2"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:text="Recent Transactions"
                     android:textColor="#404040"
                     android:textSize="20sp"
