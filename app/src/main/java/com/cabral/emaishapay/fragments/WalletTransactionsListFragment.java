@@ -56,7 +56,7 @@ public class WalletTransactionsListFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_wallet_transactions_list, container, false);
+        View view = inflater.inflate(R.layout.transaction_list, container, false);
 
         toolbar = view.findViewById(R.id.toolbar_wallet_transactions_list);
         recyclerView = view.findViewById(R.id.statement_recycler_view);

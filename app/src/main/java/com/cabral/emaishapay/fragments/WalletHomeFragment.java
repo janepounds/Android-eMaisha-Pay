@@ -97,6 +97,7 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
         binding.layoutPay.setOnClickListener(view1 -> openBuy());
+        binding.moreTransactionCards.setOnClickListener(view11 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
     }
 
     @Override
