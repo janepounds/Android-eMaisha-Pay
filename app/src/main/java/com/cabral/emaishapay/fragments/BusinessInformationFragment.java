@@ -176,7 +176,7 @@ public class BusinessInformationFragment extends Fragment {
                 .storeBusinessInfo(business_name,location,regno,license_no,encodedRegistrationCertificate,encodedTradeLicence);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
-            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+            public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
 
                     Log.d(TAG, "onResponse: successful");
@@ -188,15 +188,11 @@ public class BusinessInformationFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<AccountResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: failed" + t.getMessage());
 
             }
         });
-
-
-
-
     }
 
     public boolean validateEntries(){
