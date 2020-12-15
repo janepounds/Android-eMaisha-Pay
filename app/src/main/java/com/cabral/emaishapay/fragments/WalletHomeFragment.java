@@ -139,7 +139,7 @@ public class WalletHomeFragment extends Fragment {
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,5);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,4);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
