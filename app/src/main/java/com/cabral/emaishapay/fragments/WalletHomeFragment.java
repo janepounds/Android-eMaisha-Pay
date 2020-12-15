@@ -57,6 +57,7 @@ public class WalletHomeFragment extends Fragment {
     private Context context;
     private NavController navController = null;
     private ProgressDialog progressDialog;
+    private final int transactions_limit=3;
     private List<TransactionModel> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
@@ -140,17 +141,17 @@ public class WalletHomeFragment extends Fragment {
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,4);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
             public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
                 if (response.code() == 200) {
                     try {
-                        WalletTransaction data = null;
                         WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
                         List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
-                        for (int i = 0; i < transactions.size(); i++) {
+                        models.clear();
+                        for (int i = 0; i < transactions_limit; i++) {
                             WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
                             Gson gson = new Gson();
                             String ress = gson.toJson(res);
