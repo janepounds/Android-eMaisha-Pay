@@ -53,10 +53,11 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         holder.userName.setText(model.getUserName());
         holder.date.setText(model.getDate());
         holder.amount.setText(String.format("UGX %s", model.getAmount()));
-        if(model.getAmount().charAt(0)=='+'){
+
+        if (model.getAmount().charAt(0) == '+') {
             // Set the generated color as the background for name initials
             holder.amount.setTextColor(Color.parseColor("#2E84BE"));
-        }else{
+        } else {
             holder.amount.setTextColor(Color.parseColor("#dc4436"));
         }
     }

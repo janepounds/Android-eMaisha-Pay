@@ -161,7 +161,7 @@ public interface APIRequests {
     //get merchant information
     @GET("wallet/user/get/receiver_by_phone/{phonenumber}")
     Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
-                                           @Path("phonenumber") String phonenumber
+                                                   @Path("phonenumber") String phonenumber
     );
 
 
@@ -176,14 +176,16 @@ public interface APIRequests {
     Call<LoanListResponse> getUserLoans(@Query("userId") String userId
             /*@Header("Authorization") String token*/
     );
+
     @POST("wallet/loan/comfirmRequest")
     Call<RequestLoanresponse> comfirmLoanApplication(@Header("Authorization") String token,
-                                           @Query("userId") String userId,
-                                           @Query("amount") double amount,
-                                           @Query("duration") int duration,
-                                           @Query("interest") double interest,
-                                           @Query("loanType") String loanType
+                                                     @Query("userId") String userId,
+                                                     @Query("amount") double amount,
+                                                     @Query("duration") int duration,
+                                                     @Query("interest") double interest,
+                                                     @Query("loanType") String loanType
     );
+
     //request loans
     @POST("wallet/loan/user/request")
     Call<RequestLoanresponse> requestLoans(@Header("Authorization") String token,
@@ -285,7 +287,7 @@ public interface APIRequests {
     //store personal info
     @FormUrlEncoded
     @POST("store_personal_info")
-    Call<AccountResponse>storePersonalInfo(
+    Call<AccountResponse> storePersonalInfo(
             @Field("dob") String dob,
             @Field("gender") String gender,
             @Field("next_of_kin") String next_of_kin,
@@ -296,7 +298,7 @@ public interface APIRequests {
     //store id info
     @FormUrlEncoded
     @POST("store_user_id_info")
-    Call<AccountResponse>storeIdInfo(
+    Call<AccountResponse> storeIdInfo(
             @Field("id_type") String id_type,
             @Field("id_number") String id_number,
             @Field("expiry_date") String expiry_date,
@@ -307,7 +309,7 @@ public interface APIRequests {
     //store employment info
     @FormUrlEncoded
     @POST("store_user_employment_info")
-    Call<AccountResponse>storeEmploymentInfo(
+    Call<AccountResponse> storeEmploymentInfo(
             @Field("employer") String employer,
             @Field("designation") String designation,
             @Field("location") String location,
@@ -319,7 +321,7 @@ public interface APIRequests {
     //store business info
     @FormUrlEncoded
     @POST("store_user_business_info")
-    Call<AccountResponse>storeBusinessInfo(
+    Call<AccountResponse> storeBusinessInfo(
             @Field("business_name") String business_name,
             @Field("location") String location,
             @Field("reg_number") String reg_no,
