@@ -167,6 +167,7 @@
                     android:layout_below="@id/layout_balance"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -463,7 +464,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_weather_2"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="50dp"
                     android:text="Recent Transactions"
                     android:textColor="#404040"
                     android:textSize="20sp"
