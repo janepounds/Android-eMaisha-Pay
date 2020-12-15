@@ -1,14 +1,9 @@
 package com.cabral.emaishapay.fragments;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,14 +15,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
@@ -39,8 +32,6 @@ import com.google.android.material.snackbar.Snackbar;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 import retrofit2.Call;
@@ -52,16 +43,9 @@ public class BusinessInformationFragment extends Fragment {
     private FragmentBusinessInformationBinding binding;
     private NavController navController = null;
 
-    // image picker code
-    private static final int IMAGE_PICK_CODE = 0;
-    //permission code
-    private static final int PERMISSION_CODE = 1;
-
-    Dialog dialog;
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
     private ImageView imageView;
-    private String business_name, location, regno, license_no, reg_certificate, trade_license;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

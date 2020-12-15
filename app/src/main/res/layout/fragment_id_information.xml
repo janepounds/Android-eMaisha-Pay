@@ -130,7 +130,7 @@
                         android:background="@drawable/edittext_corner">
 
                         <TextView
-                            android:id="@+id/expiry_date_tv"
+                            android:id="@+id/expiry_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -170,13 +170,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Front"
-                            app:layout_constraintBottom_toTopOf="@id/img_id_front"
+                            app:layout_constraintBottom_toTopOf="@id/id_front"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="@id/img_id_front"/>
+                            app:layout_constraintEnd_toEndOf="@id/id_front"/>
 
                         <ImageView
-                            android:id="@+id/img_id_front"
+                            android:id="@+id/id_front"
                             android:layout_width="150dp"
                             android:layout_height="120dp"
                             android:scaleType="fitCenter"
@@ -191,13 +191,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Back"
-                            app:layout_constraintStart_toStartOf="@id/img_id_back"
-                            app:layout_constraintBottom_toTopOf="@id/img_id_back"
+                            app:layout_constraintStart_toStartOf="@id/id_back"
+                            app:layout_constraintBottom_toTopOf="@id/id_back"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/img_id_back"
+                            android:id="@+id/id_back"
                             android:layout_width="150dp"
                             android:layout_height="120dp"
                             android:scaleType="fitCenter"
@@ -229,7 +229,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/next_button"
+                            android:id="@+id/cancel_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
