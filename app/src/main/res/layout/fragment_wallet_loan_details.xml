@@ -99,7 +99,8 @@
                     android:layout_weight="0.5"
                     android:text="Maximum Amount"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -119,7 +120,8 @@
                     android:text="UGX 80,000"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
 
@@ -151,7 +153,7 @@
                         android:text="@string/currency"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:layout_weight="0.1" />
+                        android:layout_weight="0.2" />
 
                     <EditText
                         android:id="@+id/txt_loan_application_amount"
@@ -172,19 +174,13 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dimen_8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -231,8 +227,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -251,7 +246,7 @@
                             android:id="@+id/loanpayments_edtxt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.7"
                             android:paddingLeft="@dimen/dimen_10dp"
                             android:paddingStart="10dp"
                             android:textColor="@color/textColor"
@@ -271,20 +266,14 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dimen_8dp">
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="5dp"
                     android:orientation="vertical"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
 
@@ -308,13 +297,13 @@
                             android:text="@string/currency"
                             android:textSize="14sp"
                             android:gravity="center"
-                            android:layout_weight="0.3" />
+                            android:layout_weight="0.2" />
 
                         <TextView
                             android:id="@+id/amount_due_txtview"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.6"
+                            android:layout_weight="0.5"
                             android:padding="@dimen/dimen_10dp"
                             android:gravity="start|center_vertical"
                             android:inputType="number"
@@ -332,10 +321,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp">
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -356,7 +343,7 @@
                         android:id="@+id/txt_loan_application_duration"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5"
+                        android:layout_weight="0.7"
                         android:paddingLeft="10dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/textColor"
@@ -376,7 +363,6 @@
                         android:layout_weight="0.4" />
 
                 </LinearLayout>
-            </LinearLayout>
             </LinearLayout>
 
             <FrameLayout

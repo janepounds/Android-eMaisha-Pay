@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -17,15 +17,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
@@ -33,6 +30,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,7 +97,10 @@ public class IdInformationFragment extends Fragment {
             chooseImage();
         });
 
-        binding.submitButton.setOnClickListener(v -> saveInfo());
+        binding.submitButton.setOnClickListener(v -> {
+            if (validateEntries())
+                saveInfo();
+        });
 
         binding.cancelButton.setOnClickListener(view1 -> navController.popBackStack());
     }
@@ -154,6 +155,42 @@ public class IdInformationFragment extends Fragment {
                 encodedIdBack = Base64.encodeToString(b, Base64.DEFAULT);
                 Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedIdBack, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.idBack);
             }
+        }
+    }
+
+    public boolean validateEntries() {
+        if (binding.idType.getSelectedItem().toString().equals("Select")) {
+            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_error));
+            binding.idTypeLayout.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID type is required", Snackbar.LENGTH_LONG).show();
+            return false;
+        } else if (binding.idNumber.getText().toString().isEmpty()) {
+            binding.idNumber.setError("Required");
+            binding.idNumber.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID number is required", Snackbar.LENGTH_LONG).show();
+            return false;
+        } else if (binding.expiryDate.getText().toString().isEmpty()) {
+            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_error));
+            binding.expiryDate.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "Expiry date is required", Snackbar.LENGTH_LONG).show();
+            return false;
+        } else if (encodedIdFront == null || encodedIdFront.isEmpty()) {
+            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_error));
+            binding.idFront.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID image is required", Snackbar.LENGTH_LONG).show();
+            return false;
+        } else if (encodedIdBack == null || encodedIdBack.isEmpty()) {
+            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_error));
+            binding.idBack.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID image is required", Snackbar.LENGTH_LONG).show();
+            return false;
+        } else {
+            binding.idNumber.setError(null);
+            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            return true;
         }
     }
 }
