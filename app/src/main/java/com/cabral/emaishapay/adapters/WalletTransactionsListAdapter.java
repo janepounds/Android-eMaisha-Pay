@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,24 +32,26 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textDate, textTime, textCreditAmount, textDebitAmount, textPaidTo,textPaidTo_label, textReceivedFrom, referenceNumberTxtView,receiptTextView;
-        LinearLayout debitLayout, creditLayout;
+        TextView textDate, textCreditAmount, textDebitAmount, textPaidTo,textPaidTo_label, textReceivedFrom;
+        ConstraintLayout debitLayout, creditLayout;
+        ConstraintLayout transactionCardLayout;
         Context context;
 
         public MyViewHolder(View v, FragmentManager fm) {
             super(v);
-            textDate = v.findViewById(R.id.text_view_date_transaction);
-            textTime = v.findViewById(R.id.text_view_time_transaction);
-            textCreditAmount = v.findViewById(R.id.text_view_credit_amount);
-            textDebitAmount = v.findViewById(R.id.text_view_debit_amount);
-            textPaidTo = v.findViewById(R.id.text_view_debit_paid_to);
-            textReceivedFrom = v.findViewById(R.id.text_view_credit_received_from);
-            debitLayout = v.findViewById(R.id.layout_debit_activity);
-            creditLayout = v.findViewById(R.id.layout_home_credit_activity);
-            referenceNumberTxtView = v.findViewById(R.id.text_view_reference_number);
-            textPaidTo_label= v.findViewById(R.id.paid_to_bought_from);
-            receiptTextView = v.findViewById(R.id.text_view_receipt);
-            receiptTextView.setOnClickListener(this);
+            textDate = v.findViewById(R.id.date);
+           // textTime = v.findViewById(R.id.text_view_time_transaction);
+            textCreditAmount = v.findViewById(R.id.amount);
+            textDebitAmount = v.findViewById(R.id.amount);
+            textPaidTo = v.findViewById(R.id.user_name);
+            textReceivedFrom = v.findViewById(R.id.user_name);
+            debitLayout = v.findViewById(R.id.layout_amount);
+            creditLayout = v.findViewById(R.id.layout_amount);
+           // referenceNumberTxtView = v.findViewById(R.id.text_view_reference_number);
+           // textPaidTo_label= v.findViewById(R.id.paid_to_bought_from);
+           // receiptTextView = v.findViewById(R.id.text_view_receipt);
+            transactionCardLayout = v.findViewById(R.id.layout_transaction_list_card);
+            transactionCardLayout.setOnClickListener(this);
       }
 
         @Override
@@ -78,7 +81,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_statement_card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_transaction_card,parent,false);
 
         MyViewHolder holder = new MyViewHolder( view,fm);
         return holder;
@@ -105,8 +108,8 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             if(position!=0)
             prevDate = localFormat1.format(incomingFormat.parse(dataList.get(position-1).getDate()));
 
-            holder.textDate.setText(currentDate);
-            holder.textTime.setText(currentTime);
+            holder.textDate.setText((currentDate) +", "+ (currentTime));
+           // holder.textTime.setText(currentTime);
 
             if(currentDate.equals(prevDate+"")  )
                 holder.textDate.setVisibility(View.GONE);
@@ -114,7 +117,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
                 holder.textDate.setVisibility(View.VISIBLE);
 
             holder.textPaidTo.setText(data.getRecepient());
-            holder.referenceNumberTxtView.setText(data.getReferenceNumber());
+          //  holder.referenceNumberTxtView.setText(data.getReferenceNumber());
             holder.textReceivedFrom.setText(data.getRecepient());
             Log.w("TransactionType",data.getType());
             if(data.getType().equalsIgnoreCase("credit")) {
@@ -128,12 +131,12 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
                 holder.textDebitAmount.setText("- UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
             }
 
-            holder.receiptTextView.setVisibility(View.VISIBLE);
-            if(data.isPurchase()){
-                holder.textPaidTo_label.setText("Purchase From");
-            }else{
-                holder.textPaidTo_label.setText("Transferred To");
-            }
+           // holder.receiptTextView.setVisibility(View.VISIBLE);
+//            if(data.isPurchase()){
+//                holder.textPaidTo_label.setText("Purchase From");
+//            }else{
+//                holder.textPaidTo_label.setText("Transferred To");
+//            }
         } catch (ParseException e) {
             e.printStackTrace();
             Log.e("TransactionError",e.getMessage());
