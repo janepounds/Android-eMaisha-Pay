@@ -6,13 +6,21 @@ import com.google.gson.annotations.SerializedName;
 public class CancelLoanResponse {
     @SerializedName("status")
     @Expose
-    private int Status;
+    private int status;
     @SerializedName("status")
     @Expose
     private String message;
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public String getMessage() {
