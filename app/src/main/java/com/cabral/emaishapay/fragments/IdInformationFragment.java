@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -104,8 +105,10 @@ public class IdInformationFragment extends Fragment {
     }
 
     public void saveInfo() {
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storeIdInfo(binding.idType.getSelectedItem().toString(), binding.idNumber.getText().toString(),
+                .storeIdInfo(userId, binding.idType.getSelectedItem().toString(), binding.idNumber.getText().toString(),
                         binding.expiryDate.getText().toString(), encodedIdFront, encodedIdBack);
         call.enqueue(new Callback<AccountResponse>() {
             @Override

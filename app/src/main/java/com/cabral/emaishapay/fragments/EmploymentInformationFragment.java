@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentEmploymentInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -49,8 +50,10 @@ public class EmploymentInformationFragment extends Fragment {
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
         binding.submitButton.setOnClickListener(v -> {
+            String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
             Call<AccountResponse> call = APIClient.getWalletInstance()
-                    .storeEmploymentInfo(binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
+                    .storeEmploymentInfo(userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
                             "+256 " + binding.contact.getText().toString(), binding.employerId.getText().toString());
             call.enqueue(new Callback<AccountResponse>() {
                 @Override

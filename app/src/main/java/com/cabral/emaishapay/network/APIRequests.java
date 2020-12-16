@@ -280,6 +280,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_id_info")
     Call<AccountResponse> storeIdInfo(
+            @Field("user_id") String user_id,
             @Field("id_type") String id_type,
             @Field("id_number") String id_number,
             @Field("expiry_date") String expiry_date,
@@ -291,6 +292,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_employment_info")
     Call<AccountResponse> storeEmploymentInfo(
+            @Field("user_id") String user_id,
             @Field("employer") String employer,
             @Field("designation") String designation,
             @Field("location") String location,
@@ -302,6 +304,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_business_info")
     Call<AccountResponse> storeBusinessInfo(
+            @Field("user_id") String user_id,
             @Field("business_name") String business_name,
             @Field("location") String location,
             @Field("reg_number") String reg_no,
