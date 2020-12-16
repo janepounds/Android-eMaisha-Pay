@@ -57,7 +57,7 @@ public class WalletHomeFragment extends Fragment {
     private Context context;
     private NavController navController = null;
     private ProgressDialog progressDialog;
-    private final int transactions_limit=3;
+    private final int transactions_limit=4;
     private List<TransactionModel> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;

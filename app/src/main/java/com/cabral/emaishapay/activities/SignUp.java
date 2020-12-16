@@ -697,7 +697,6 @@ public class SignUp extends AppCompatActivity {
 
         super.attachBaseContext(LocaleHelper.wrapLocale(newBase, languageCode));
     }
-
     //*********** Called when the Activity has detected the User pressed the Back key ********//
 
     @Override
