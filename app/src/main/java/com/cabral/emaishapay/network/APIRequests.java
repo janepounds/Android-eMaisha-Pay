@@ -288,6 +288,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_personal_info")
     Call<AccountResponse> storePersonalInfo(
+            @Field("user_id") String user_id,
             @Field("dob") String dob,
             @Field("gender") String gender,
             @Field("next_of_kin") String next_of_kin,
