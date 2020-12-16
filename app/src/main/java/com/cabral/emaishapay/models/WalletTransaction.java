@@ -101,5 +101,6 @@ public class WalletTransaction {
         this.type = type;
         this.amount = debit;
         this.referenceNumber = referenceNumber;
+        this.initials = this.initials;
     }
 }

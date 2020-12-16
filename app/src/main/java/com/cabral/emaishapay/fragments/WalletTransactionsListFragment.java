@@ -128,7 +128,7 @@ public class WalletTransactionsListFragment extends Fragment {
                                     data = new WalletTransaction(record.getString("date"), record.getString("sender"), "credit", record.getDouble("amount"), record.getString("referenceNumber"));
                                 }
                             } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
-                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
+                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber") );
                             }
                             if (data != null) {
                                 dataList.add(data);
