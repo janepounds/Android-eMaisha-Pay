@@ -167,10 +167,10 @@ public class WalletLoansListFragment extends Fragment {
                                             navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
                                 });
 
-                            }else if(possible_action.equalsIgnoreCase("Pay Loan")){
+                            }else if(possible_action.equalsIgnoreCase("Cancel Loan")){
                                 walletApplyLoanBtn.setText(possible_action);
                                 walletApplyLoanBtn.setOnClickListener(view2 -> cancelLoan());
-                            }else if(possible_action.equalsIgnoreCase("Cancel Loan")){
+                            }else if(possible_action.equalsIgnoreCase("Pay Loan")){
                                 walletApplyLoanBtn.setText(possible_action);
                                 walletApplyLoanBtn.setOnClickListener(view2 -> payLoan());
 
@@ -255,6 +255,7 @@ public class WalletLoansListFragment extends Fragment {
 
             }
         });
+        dialog.dismiss();
 
     }
 
