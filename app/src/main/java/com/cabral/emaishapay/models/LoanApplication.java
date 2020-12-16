@@ -120,13 +120,7 @@ public class LoanApplication implements Serializable {
     @Expose
     private com.cabral.emaishapay.models.Referee loan_gaurantor2;
 
-    @SerializedName("application_fee")
-    @Expose
-    private int application_fee;
 
-    @SerializedName("possible_action")
-    @Expose
-    private String possible_action;
 
     public LoanApplication(){
 
@@ -152,8 +146,7 @@ public class LoanApplication implements Serializable {
        setTotalFines((float)loanObject.getDouble("totalFines"));
         setDueAmount((int)loanObject.getDouble("dueAmount"));
         setAmountPaid((double)loanObject.getDouble("totalPayments"));
-        setApplication_fee(Integer.parseInt(loanObject.getString("application_fee")));
-        setPossible_action(loanObject.getString("possible_action"));
+
 
 
     }
@@ -426,21 +419,7 @@ public class LoanApplication implements Serializable {
         }
     }
 
-    public int getApplication_fee() {
-        return application_fee;
-    }
 
-    public void setApplication_fee(int application_fee) {
-        this.application_fee = application_fee;
-    }
-
-    public String getPossible_action() {
-        return possible_action;
-    }
-
-    public void setPossible_action(String possible_action) {
-        this.possible_action = possible_action;
-    }
 
     public boolean isApproved(){
         return generateStatus().equals("Approved");

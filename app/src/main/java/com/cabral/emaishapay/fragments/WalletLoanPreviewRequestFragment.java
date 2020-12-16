@@ -78,6 +78,7 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         if (loanApplication != null) {
             float interest=getArguments().getFloat("interest");
             loanApplication.setInterestRate((float) interest);
+
             initializeActivity();
         }
 
