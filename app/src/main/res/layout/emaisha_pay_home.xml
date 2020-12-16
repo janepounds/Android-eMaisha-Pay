@@ -24,14 +24,13 @@
                 <RelativeLayout
                     android:id="@+id/layout_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp">
-
-                    <ImageView
+                    android:layout_height="300dp">
+                  <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/colorPrimary"
                         android:fitsSystemWindows="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ic_bg" />
 
                 </RelativeLayout>
@@ -464,8 +463,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_weather_2"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="50dp"
-                    android:text="Recent Transactions"
+                    android:layout_marginTop="20dp"
+                   android:text="Recent Transactions"
                     android:textColor="#404040"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -476,6 +475,17 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/label_transactions"
                     android:layout_margin="20dp" />
+                <TextView
+                    android:id="@+id/more_transaction_cards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MORE . . ."
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_below="@id/recycler_view"
+                    android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
 

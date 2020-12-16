@@ -134,7 +134,11 @@
         android:id="@+id/personalInformationFragment"
         android:name="com.cabral.emaishapay.fragments.PersonalInformationFragment"
         android:label="Personal Information"
-        tools:layout="@layout/fragment_personal_information" />
+        tools:layout="@layout/fragment_personal_information" >
+        <action
+            android:id="@+id/action_personalInformationFragment_to_walletAccountFragment"
+            app:destination="@id/walletAccountFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/idInformationFragment"

@@ -8,12 +8,7 @@
         android:title="Home"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/walletTransactionsFragment"
-        android:enabled="true"
-        android:icon="@drawable/transaction"
-        android:title="Transactions"
-        app:showAsAction="ifRoom" />
+
 
     <item
         android:id="@+id/walletCouponsFragment"
