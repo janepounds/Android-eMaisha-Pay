@@ -166,7 +166,7 @@ public interface APIRequests {
 
     //cancel loan
 
-    @GET("wallet/loan/cancelRequest")
+    @POST("wallet/loan/cancelRequest")
     Call<CancelLoanResponse> cancelLoanRequest(@Query("userId") String userId
             /*@Header("Authorization") String token*/
     );
