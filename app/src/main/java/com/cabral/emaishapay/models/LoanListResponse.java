@@ -13,6 +13,14 @@ public class LoanListResponse {
     @Expose
     private double Interest;
 
+    @SerializedName("application_fee")
+    @Expose
+    private int application_fee;
+
+    @SerializedName("possible_action")
+    @Expose
+    private String possible_action;
+
     public List<LoanApplication> getLoans() {
         return loans;
     }
@@ -27,6 +35,22 @@ public class LoanListResponse {
 
     public void setInterest(double interest) {
         Interest = interest;
+    }
+
+    public int getApplication_fee() {
+        return application_fee;
+    }
+
+    public void setApplication_fee(int application_fee) {
+        this.application_fee = application_fee;
+    }
+
+    public String getPossible_action() {
+        return possible_action;
+    }
+
+    public void setPossible_action(String possible_action) {
+        this.possible_action = possible_action;
     }
 
     public class Loans{
@@ -281,5 +305,8 @@ public class LoanListResponse {
         public void setTotalPayments(double totalPayments) {
             this.totalPayments = totalPayments;
         }
+
+
+
     }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
+import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.network.APIClient;
@@ -56,6 +58,8 @@ public class WalletLoansListFragment extends Fragment {
     SharedPreferences sharedPreferences;
     private List<LoanApplication> dataList = new ArrayList<>();
     private float interest;
+    private String possible_action;
+    private  NavController navController;
 
     private Toolbar toolbar;
     private RelativeLayout walletApplyLoanLayout;
@@ -90,7 +94,7 @@ public class WalletLoansListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
+        navController  = Navigation.findNavController(view);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
@@ -101,6 +105,7 @@ public class WalletLoansListFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putFloat("interest", interest);
+                bundle.putString("possible_action", possible_action);
                 navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
             }
         });
@@ -142,17 +147,36 @@ public class WalletLoansListFragment extends Fragment {
                         List<LoanApplication> loans = response.body().getLoans();
 
                         interest = (float) response.body().getInterest();
+                        String possible_action = response.body().getPossible_action();
 
                         for (int i = 0; i < loans.size(); i++) {
 
                             LoanApplication record = loans.get(i);
                             dataList.add(record);
 
-                            String possible_action = record.getPossible_action();
+
                             Log.d(TAG, "onResponse: "+possible_action);
+
+                            //check possible action
+
+                            if(possible_action.equalsIgnoreCase("Apply For Loan")){
+                                walletApplyLoanBtn.setText(possible_action);
+                                walletApplyLoanBtn.setOnClickListener(view2 -> {
+                                            Bundle bundle = new Bundle();
+                                            bundle.putFloat("interest", interest);
+                                            navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
+                                });
+
+                            }else if(possible_action.equalsIgnoreCase("Cancel Loan")){
+                                walletApplyLoanBtn.setText(possible_action);
+                                walletApplyLoanBtn.setOnClickListener(view2 -> cancelLoan());
+                            }else if(possible_action.equalsIgnoreCase("Pay Loan")){
+                                walletApplyLoanBtn.setText(possible_action);
+                                walletApplyLoanBtn.setOnClickListener(view2 -> payLoan());
+
+                            }
                             //set possible action
-                            walletApplyLoanBtn.setText(possible_action);
-                            walletApplyLoanBtn.setOnClickListener(view2 -> payLoan());
+
 
 
                             Log.d(TAG, "onResponse: Data = " + record);
@@ -197,6 +221,42 @@ public class WalletLoansListFragment extends Fragment {
         // Create and show the dialog.
         DialogFragment payLoandialog = new PayLoan(context, fm);
         payLoandialog.show(ft, "dialog");
+    }
+
+    public void cancelLoan(){
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("Please Wait..");
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+        APIRequests apiRequests = APIClient.getWalletInstance();
+
+        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(userId);
+        call.enqueue(new Callback<CancelLoanResponse>() {
+            @Override
+            public void onResponse(Call<CancelLoanResponse> call, Response<CancelLoanResponse> response) {
+                if(response.isSuccessful()){
+                    String message = response.body().getMessage();
+                    Toast.makeText(context,message,Toast.LENGTH_LONG);
+                }else{
+                    Log.d(TAG, "onResponse: failed");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CancelLoanResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage());
+
+            }
+        });
+        dialog.dismiss();
+
     }
 
     @Override

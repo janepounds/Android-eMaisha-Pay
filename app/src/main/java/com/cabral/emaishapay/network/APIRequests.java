@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.network;
 
 import com.cabral.emaishapay.models.AccountResponse;
+import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
@@ -160,6 +161,13 @@ public interface APIRequests {
     //get user loans
     @GET("wallet/loan/user/loans")
     Call<LoanListResponse> getUserLoans(@Query("userId") String userId
+            /*@Header("Authorization") String token*/
+    );
+
+    //cancel loan
+
+    @POST("wallet/loan/cancelRequest")
+    Call<CancelLoanResponse> cancelLoanRequest(@Query("userId") String userId
             /*@Header("Authorization") String token*/
     );
 
