@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
@@ -27,13 +29,16 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
-import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -47,10 +52,7 @@ public class PersonalInformationFragment extends Fragment {
     private static final String TAG = "PersonalInformation";
     private FragmentPersonalInformationBinding binding;
     private NavController navController = null;
-    private String dob, gender, next_of_kin,next_of_kin_contact,picture;
-    String mediaPath, encodedImageID = "N/A";
-    private Context context;
-
+    String encodedImageID = "N/A";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,107 +63,77 @@ public class PersonalInformationFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-        saveInfo(view);
-    }
 
-    public void saveInfo(View view){
-        binding.datepicker.setOnClickListener(v -> addDatePickerImageView(binding.datepicker,binding.dob,context));
+        binding.datePicker.setOnClickListener(v -> {
 
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        binding.userPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
-                intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
-                intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1213);
-            }
+            final DatePickerDialog mDatePicker = new DatePickerDialog(requireContext(), (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                NumberFormat formatter = new DecimalFormat("00");
+                String birthDate = selectedYear + "-" + formatter.format(selectedMonth + 1) + "-" + formatter.format(selectedDay);
+                binding.dob.setText(birthDate);
+            }, year, month, day);
+            mDatePicker.show();
         });
 
-        /******************RETROFIT IMPLEMENTATION****************************/
-        dob = binding.dob.getText().toString();
-        gender = binding.gender.getSelectedItem().toString();
-        next_of_kin = binding.nextOfKinFirst + " " + binding.nextOfKinLast;
-        next_of_kin_contact = "+256 " +binding.nextOfKinContact.getText().toString();
-        picture = encodedImageID;
-        Call<AccountResponse> call = APIClient.getWalletInstance()
-                                .storePersonalInfo(dob,gender,next_of_kin,next_of_kin_contact,picture);
-                                call.enqueue(new Callback<AccountResponse>() {
-                                    @Override
-                                    public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
-                                        if(response.isSuccessful()){
-                                            Log.d(TAG, "onResponse: successful");
-                                        }else {
-                                            Log.d(TAG, "onResponse: failed"+response.errorBody());
-                                        }
+        binding.userPic.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+            intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
+            intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
+            intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
+            startActivityForResult(intent, 1);
+        });
 
-                                    }
+        binding.submitButton.setOnClickListener(v -> saveInfo());
 
-                                    @Override
-                                    public void onFailure(Call<AccountResponse> call, Throwable t) {
-                                        Log.d(TAG, "onFailure: failed"+t.getMessage());
+        binding.cancelButton.setOnClickListener(v -> navController.popBackStack());
+    }
 
-                                    }
-                                });
+    public void saveInfo() {
+        Call<AccountResponse> call = APIClient.getWalletInstance().storePersonalInfo(binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
+                binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256 " + binding.nextOfKinContact.getText().toString(), encodedImageID);
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: successful");
+                } else {
+                    Log.d(TAG, "onResponse: failed" + response.errorBody());
+                }
+            }
 
-
+            @Override
+            public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
+                Log.d(TAG, "onFailure: failed" + t.getMessage());
+            }
+        });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
-            String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            encodedImageID = encodeImage(selectedImage);
-            binding.userPic.setImageBitmap(selectedImage);
 
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+            Bitmap imageBitmap;
+
+            imageBitmap = BitmapFactory.decodeFile(data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH));
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] b = byteArrayOutputStream.toByteArray();
+
+            encodedImageID = Base64.encodeToString(b, Base64.DEFAULT);
+
+            Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedImageID, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.userPic);
         }
-    }
-
-
-    private String encodeImage(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-        return encImage;
-    }
-
-    public static void addDatePickerImageView(final ImageView imageView, final TextView ed_, final Context context) {
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                final DatePickerDialog mDatePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        int month = selectedmonth + 1;
-                        NumberFormat formatter = new DecimalFormat("00");
-                        ed_.setText(selectedyear + "-" + formatter.format(month) + "-" + formatter.format(selectedday));
-                    }
-                }, mYear, mMonth, mDay);
-                mDatePicker.show();
-
-            }
-        });
-        ed_.setInputType(InputType.TYPE_NULL);
     }
 
 

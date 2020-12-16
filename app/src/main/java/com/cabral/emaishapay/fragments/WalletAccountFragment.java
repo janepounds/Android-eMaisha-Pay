@@ -55,30 +55,35 @@ public class WalletAccountFragment extends Fragment {
 
             if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
                 binding.idTypeNumber.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.VISIBLE);
                 binding.layoutIdInfo.setVisibility(View.GONE);
                 binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                 binding.employeeDesignation.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.VISIBLE);
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                 binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
                 binding.layoutBusinessInfo.setVisibility(View.GONE);
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
                 binding.genderDobStatus.setVisibility(View.VISIBLE);
+                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
                 binding.layoutPersonalInfo.setVisibility(View.GONE);
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             } else {
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
                 binding.layoutPersonalInfo.setVisibility(View.VISIBLE);
                 binding.genderDobStatus.setVisibility(View.GONE);
+                binding.viewPersonalInfo.setVisibility(View.GONE);
             }
 
         });
@@ -89,29 +94,34 @@ public class WalletAccountFragment extends Fragment {
 
             if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                 binding.employeeDesignation.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.VISIBLE);
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                 binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
                 binding.layoutBusinessInfo.setVisibility(View.GONE);
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
                 binding.genderDobStatus.setVisibility(View.VISIBLE);
+                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
                 binding.layoutPersonalInfo.setVisibility(View.GONE);
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
                 binding.idTypeNumber.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.VISIBLE);
                 binding.layoutIdInfo.setVisibility(View.GONE);
                 binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             } else {
                 binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
                 binding.layoutIdInfo.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.GONE);
                 binding.idTypeNumber.setVisibility(View.GONE);
             }
 
@@ -123,29 +133,34 @@ public class WalletAccountFragment extends Fragment {
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                 binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
                 binding.layoutBusinessInfo.setVisibility(View.GONE);
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
                 binding.genderDobStatus.setVisibility(View.VISIBLE);
+                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
                 binding.layoutPersonalInfo.setVisibility(View.GONE);
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
                 binding.idTypeNumber.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.VISIBLE);
                 binding.layoutIdInfo.setVisibility(View.GONE);
                 binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                 binding.employeeDesignation.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.VISIBLE);
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             } else {
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
                 binding.layoutEmploymentInfo.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.GONE);
                 binding.employeeDesignation.setVisibility(View.GONE);
             }
 
@@ -157,29 +172,34 @@ public class WalletAccountFragment extends Fragment {
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
                 binding.genderDobStatus.setVisibility(View.VISIBLE);
+                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
                 binding.layoutPersonalInfo.setVisibility(View.GONE);
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
                 binding.idTypeNumber.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.VISIBLE);
                 binding.layoutIdInfo.setVisibility(View.GONE);
                 binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                 binding.employeeDesignation.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.VISIBLE);
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                 binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
                 binding.layoutBusinessInfo.setVisibility(View.GONE);
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             } else {
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
                 binding.layoutBusinessInfo.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.GONE);
                 binding.businessNameTinLicence.setVisibility(View.GONE);
             }
 

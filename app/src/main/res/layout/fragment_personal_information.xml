@@ -81,7 +81,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/datepicker"
+                            android:id="@+id/date_picker"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -262,7 +262,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/next_button"
+                            android:id="@+id/cancel_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
