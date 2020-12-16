@@ -9,7 +9,7 @@
         android:id="@+id/walletHomeFragment"
         android:name="com.cabral.emaishapay.fragments.WalletHomeFragment"
         android:label="@string/my_wallet"
-        tools:layout="@layout/fragment_wallet_home">
+        tools:layout="@layout/emaisha_pay_home">
         <action
             android:id="@+id/action_walletHomeFragment_to_walletTransactionsListFragment"
             app:destination="@id/walletTransactionsListFragment" />
