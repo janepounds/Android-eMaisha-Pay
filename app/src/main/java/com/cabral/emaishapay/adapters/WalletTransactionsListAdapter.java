@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.DailogFragments.WalletTransactionsReceiptDialog;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
+import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -29,21 +32,20 @@ import java.util.Random;
 import java.util.TimeZone;
 
 public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.WalletTransactionsListAdapter.MyViewHolder> {
-     private List<WalletTransaction> dataList;
+     private List<WalletTransactionResponse.TransactionData.Transactions> dataList;
 
     private FragmentManager fm;
+    Context context;
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textDate, textAmount, textPaidTo,textPaidTo_label, textReceivedFrom, initials;
         ConstraintLayout debitLayout, creditLayout;
         ConstraintLayout transactionCardLayout;
-        Context context;
 
         public MyViewHolder(View v, FragmentManager fm) {
             super(v);
             textDate = v.findViewById(R.id.date);
-           // textTime = v.findViewById(R.id.text_view_time_transaction);
             textAmount = v.findViewById(R.id.amount);
 
             textPaidTo = v.findViewById(R.id.user_name);
@@ -51,25 +53,18 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             debitLayout = v.findViewById(R.id.layout_amount);
             creditLayout = v.findViewById(R.id.layout_amount);
             initials = v.findViewById(R.id.initials);
-           // referenceNumberTxtView = v.findViewById(R.id.text_view_reference_number);
-           // textPaidTo_label= v.findViewById(R.id.paid_to_bought_from);
-           // receiptTextView = v.findViewById(R.id.text_view_receipt);
             transactionCardLayout = v.findViewById(R.id.layout_transaction_list_card);
             transactionCardLayout.setOnClickListener(this);
       }
 
         @Override
         public void onClick(View v) {
-            WalletTransaction transaction = dataList.get(getAdapterPosition());
-            Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
+            WalletTransactionResponse.TransactionData.Transactions transaction = dataList.get(getAdapterPosition());
+            //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
             if (fm!=null ){
                 Intent intent = new Intent(v.getContext(), WalletTransactionsReceiptDialog.class);
-                intent.putExtra("referenceNumber",transaction.getReferenceNumber());
-               // v.getContext().startActivity(intent);
-//
-//                FragmentActivity fragmentActivity = (FragmentActivity) context;
-//                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-               WalletTransactionsReceiptDialog walletTransactionsReceiptDialog = new WalletTransactionsReceiptDialog();
+                //intent.putExtra("referenceNumber",transaction.getReferenceNumber());
+                WalletTransactionsReceiptDialog walletTransactionsReceiptDialog = new WalletTransactionsReceiptDialog(transaction);
 
                 walletTransactionsReceiptDialog.show(fm, "walletTransactionsReceiptDialog");
 
@@ -77,7 +72,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
         }
     }
 
-    public WalletTransactionsListAdapter(List<WalletTransaction> dataList, FragmentManager supportFragmentManager) {
+    public WalletTransactionsListAdapter(List<WalletTransactionResponse.TransactionData.Transactions> dataList, FragmentManager supportFragmentManager) {
         this.dataList = dataList;
         fm=supportFragmentManager;
     }
@@ -86,7 +81,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_transaction_card,parent,false);
-
+        context=parent.getContext();
         MyViewHolder holder = new MyViewHolder( view,fm);
         return holder;
     }
@@ -95,14 +90,14 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        WalletTransaction data = dataList.get(position);
+        WalletTransactionResponse.TransactionData.Transactions data = dataList.get(position);
         // Generate random ARGB colors
         Random rnd = new Random();
         int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 
         // Set the generated color as the background for name initials
         holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);
-        holder.initials.setText(data.getInitials());
+
         SimpleDateFormat localFormat1 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         SimpleDateFormat localFormat2 = new SimpleDateFormat("HH:mm a", Locale.ENGLISH);
         localFormat1.setTimeZone(TimeZone.getDefault());
@@ -119,33 +114,31 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             prevDate = localFormat1.format(incomingFormat.parse(dataList.get(position-1).getDate()));
 
             holder.textDate.setText((currentDate) +", "+ (currentTime));
-           // holder.textTime.setText(currentTime);
 
-//            if(currentDate.equals(prevDate+"")  )
-//                holder.textDate.setVisibility(View.GONE);
-//            else
-//                holder.textDate.setVisibility(View.VISIBLE);
 
-            holder.textPaidTo.setText(data.getRecepient());
-          //  holder.referenceNumberTxtView.setText(data.getReferenceNumber());
-            holder.textReceivedFrom.setText(data.getRecepient());
+            holder.textReceivedFrom.setText(data.getReceiver());
+            String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
+
             Log.w("TransactionType",data.getType());
-            if(data.getType().equalsIgnoreCase("credit")) {
+            if(data.getType().equalsIgnoreCase("Deposit") || (data.getType().equalsIgnoreCase("Transfer") && !userName.equalsIgnoreCase( data.getSender() ) ) ) {
                 holder.textAmount.setText("+ UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#2E84BE"));
+                if(data.getSender()!=null){
+                    holder.initials.setText(getNameInitials(data.getSender()));
+                    holder.textPaidTo.setText(data.getSender());
+                }
+                else{
+                    holder.initials.setText(getNameInitials(data.getReceiver()));
+                    holder.textPaidTo.setText(data.getReceiver());
+                }
             }
-            else if(data.getType().equalsIgnoreCase("debit")) {
-
+            else {
                 holder.textAmount.setText("- UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#dc4436"));
+                holder.initials.setText(getNameInitials(data.getReceiver()));
+                holder.textPaidTo.setText(data.getReceiver());
             }
 
-           // holder.receiptTextView.setVisibility(View.VISIBLE);
-//            if(data.isPurchase()){
-//                holder.textPaidTo_label.setText("Purchase From");
-//            }else{
-//                holder.textPaidTo_label.setText("Transferred To");
-//            }
         } catch (ParseException e) {
             e.printStackTrace();
             Log.e("TransactionError",e.getMessage());
@@ -159,5 +152,19 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
         return dataList.size();
     }
 
-
+    private String getNameInitials(String name){
+        if(name==null || name.isEmpty())
+            return "";
+        String ini = ""+name.charAt(0);
+        // we use ini to return the output
+        for (int i=0; i<name.length(); i++){
+            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' '){
+                //if i+1==name.length() you will have an indexboundofexception
+                //add the initials
+                ini+=name.charAt(i+1);
+            }
+        }
+        //after getting "ync" => return "YNC"
+        return ini.toUpperCase();
+    }
 }

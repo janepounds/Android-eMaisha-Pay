@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransactionAdapter.MyViewHolder> {
-    private static final String TAG = "WalletTransaction";
+    private static final String TAG = "Wallet Transaction";
     private Context context;
     private List<TransactionModel> dataList;
 

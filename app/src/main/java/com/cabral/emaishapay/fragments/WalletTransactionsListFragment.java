@@ -19,9 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
@@ -30,8 +28,6 @@ import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +43,7 @@ public class WalletTransactionsListFragment extends Fragment {
     AppBarConfiguration appBarConfiguration;
 
     RecyclerView.Adapter statementAdapter;
-    private List<WalletTransaction> dataList = new ArrayList<>();
+    private List<WalletTransactionResponse.TransactionData.Transactions> dataList = new ArrayList<>();
 
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -60,10 +56,6 @@ public class WalletTransactionsListFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_wallet_transactions_list);
         recyclerView = view.findViewById(R.id.statement_recycler_view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());
-        recyclerView.setAdapter(statementAdapter);
 
         actualStatementData();
 
@@ -102,41 +94,18 @@ public class WalletTransactionsListFragment extends Fragment {
             public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
                 if (response.code() == 200) {
                     try {
-                        WalletTransaction data = null;
                         WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
-                        List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
-                        for (int i = 0; i < transactions.size(); i++) {
-                            WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
-                            Gson gson = new Gson();
-                            String ress = gson.toJson(res);
-                            JSONObject record = new JSONObject(ress);
-                            //type
-                            if (record.getString("type").equalsIgnoreCase("Charge")) {
-                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
-                            } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
-                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
-                                data.setIsPurchase(true);
-                            } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
-                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "credit", record.getDouble("amount"), record.getString("referenceNumber"));
+                        dataList = walletTransactionResponseData.getTransactions();
 
-                            } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
-                                String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
-
-                                if (userName.equals(record.getString("sender"))) {
-                                    data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
-                                } else {
-                                    data = new WalletTransaction(record.getString("date"), record.getString("sender"), "credit", record.getDouble("amount"), record.getString("referenceNumber"));
-                                }
-                            } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
-                                data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber") );
-                            }
-                            if (data != null) {
-                                dataList.add(data);
-                            }
-                        }
-                        statementAdapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                    }finally {
+                        Log.w("TamsactionsList",dataList.size()+"**********");
+
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());
+                        recyclerView.setAdapter(statementAdapter);
+                        statementAdapter.notifyDataSetChanged();
                     }
 
 

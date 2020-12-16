@@ -165,8 +165,6 @@ public class WalletHomeFragment extends Fragment {
                             } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
                                 models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "-"+record.getDouble("amount")) );
 
-                                //data = new WalletTransaction(record.getString("date"), record.getString("receiver"), "credit", record.getDouble("amount"), record.getString("referenceNumber"));
-
                             } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
                                 String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
 
@@ -177,7 +175,7 @@ public class WalletHomeFragment extends Fragment {
                                 }
                             } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
                                 models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                                //data = new WalletTransaction(, record.getString("receiver"), "debit", record.getDouble("amount"), record.getString("referenceNumber"));
+
                             }
 
                         }
@@ -218,7 +216,7 @@ public class WalletHomeFragment extends Fragment {
     }
 
     private String getNameInitials(String name){
-        if(name.isEmpty())
+        if(name==null || name.isEmpty())
             return null;
         String ini = ""+name.charAt(0);
         // we use ini to return the output

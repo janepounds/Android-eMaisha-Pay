@@ -4,13 +4,11 @@ public class WalletTransaction {
 
     String recepient, sender;
     String type;
+    String status;
     double amount;
     String date;
     String referenceNumber;
 
-
-
-    String initials;
 
     boolean isPurchase;
     static com.cabral.emaishapay.models.WalletTransaction transaction = new com.cabral.emaishapay.models.WalletTransaction();
@@ -59,6 +57,14 @@ public class WalletTransaction {
         this.type = type;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -85,22 +91,15 @@ public class WalletTransaction {
 
     Integer time;
 
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
     public WalletTransaction() {
     }
 
-    public WalletTransaction(String date, String recepient, String type, double debit, String referenceNumber) {
+    public WalletTransaction(String date, String recepient, String type, String status, double debit, String referenceNumber) {
         this.date = date;
         this.recepient = recepient;
         this.type = type;
         this.amount = debit;
         this.referenceNumber = referenceNumber;
-        this.initials = this.initials;
+        this.status = status;
     }
 }
