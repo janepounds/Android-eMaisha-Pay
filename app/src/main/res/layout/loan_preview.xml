@@ -729,7 +729,7 @@
         android:layout_below="@id/layout6">
 
         <Button
-            android:id="@+id/previous_button"
+            android:id="@+id/payment_shedule_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
@@ -740,7 +740,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/next_button"
+            android:id="@+id/payment_history_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"

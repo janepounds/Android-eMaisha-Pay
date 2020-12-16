@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class WalletLoanStatusPreview extends Fragment {
             textViewLoanStatusEditPhotos, textViewLoanStatusPreviewInterestRate, textViewLoanStatusPreviewDueAmount, textViewLoanStatusPreviewPayments,
             textViewLoanStatusPreviewFines;
     private ImageView imageViewLoanStatusPreviewNidBack, imageViewLoanStatusPreviewNidFront, imageViewLoanStatusPreviewUserPhoto, imageViewLoanStatusPreviewFarmPhoto;
+    private Button paymentSchedule,paymentHistory;
 
     @Nullable
     @Override
@@ -62,6 +64,8 @@ public class WalletLoanStatusPreview extends Fragment {
         imageViewLoanStatusPreviewNidFront = view.findViewById(R.id.image_view_loan_status_preview_nid_front);
         imageViewLoanStatusPreviewUserPhoto = view.findViewById(R.id.image_view_loan_status_preview_user_photo);
         imageViewLoanStatusPreviewFarmPhoto = view.findViewById(R.id.image_view_loan_status_preview_farm_photo);
+        paymentHistory = view.findViewById(R.id.payment_history_button);
+        paymentSchedule = view.findViewById(R.id.payment_shedule_button);
 
         assert getArguments() != null;
         loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
@@ -111,6 +115,8 @@ public class WalletLoanStatusPreview extends Fragment {
 //        if (!loanApplication.isEditable()) {
 //            textViewLoanStatusEditPhotos.setVisibility(View.GONE);
 //        }
+
+
     }
 
     @Override
@@ -129,6 +135,14 @@ public class WalletLoanStatusPreview extends Fragment {
 //
 //            }
 //        });
+
+        paymentHistory.setOnClickListener(v->{
+            navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentHistory);
+
+        });
+        paymentSchedule.setOnClickListener(v -> {
+            navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentSchedule);
+        });
 
     }
 }

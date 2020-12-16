@@ -104,7 +104,8 @@ public class WalletLoansListFragment extends Fragment {
                 navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
             }
         });
-        walletPayLoanBtn.setOnClickListener(view2 -> payLoan());
+
+
     }
 
     @Override
@@ -146,8 +147,17 @@ public class WalletLoansListFragment extends Fragment {
 
                             LoanApplication record = loans.get(i);
                             dataList.add(record);
+
+                            String possible_action = record.getPossible_action();
+                            Log.d(TAG, "onResponse: "+possible_action);
+                            //set possible action
+                            walletApplyLoanBtn.setText(possible_action);
+                            walletApplyLoanBtn.setOnClickListener(view2 -> payLoan());
+
+
                             Log.d(TAG, "onResponse: Data = " + record);
                         }
+
                         statementAdapter.notifyDataSetChanged();
 
                 }
