@@ -99,6 +99,7 @@ public class PersonalInformationFragment extends Fragment {
     }
 
     public void saveInfo() {
+        // TODO - Work on
         Call<AccountResponse> call = APIClient.getWalletInstance().storePersonalInfo(binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
                 binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256 " + binding.nextOfKinContact.getText().toString(), encodedImageID);
         call.enqueue(new Callback<AccountResponse>() {

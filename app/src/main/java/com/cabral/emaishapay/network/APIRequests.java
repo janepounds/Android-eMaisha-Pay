@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.network;
 
-
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
@@ -41,14 +40,12 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-
 /**
  * APIRequests contains all the Network Request Methods with relevant API Endpoints
  **/
 
 public interface APIRequests {
     //******************** News Data ********************//
-
 
     //Update User
     @POST("update/{id}/{oldPassword}")
@@ -90,7 +87,6 @@ public interface APIRequests {
                                         @Field("phoneNumber") String phoneNumber,
                                         @Field("addressStreet") String addressStreet,
                                         @Field("addressCityOrTown") String addressCityOrTown
-
     );
 
     //refresh token
@@ -99,15 +95,11 @@ public interface APIRequests {
     Call<TokenResponse> getToken(
             @Field("email") String email,
             @Field("password") String password
-
-
     );
 
     //request balance
-
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token
-
     );
 
     //initiate transfer
@@ -116,8 +108,6 @@ public interface APIRequests {
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
                                                     @Field("amount") Double amount,
                                                     @Field("receiverPhoneNumber") String receiverPhoneNumber
-
-
     );
 
     //wallet transaction list
@@ -138,7 +128,6 @@ public interface APIRequests {
                                                  @Field("merchantId") int merchantId,
                                                  @Field("amount") Double amount,
                                                  @Field("coupon") String coupon
-
     );
 
     //confirm payment
@@ -148,8 +137,6 @@ public interface APIRequests {
             @Field("merchantId") int merchantId,
             @Field("amount") double amount,
             @Field("coupon") String coupon
-
-
     );
 
     //get merchant information
@@ -163,7 +150,6 @@ public interface APIRequests {
     Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
                                                    @Path("phonenumber") String phonenumber
     );
-
 
     //get merchant receipt
     @GET("wallet/payments/receipt/{referenceNumber}")
@@ -192,18 +178,15 @@ public interface APIRequests {
                                            @Body JSONObject object
     );
 
-
     //add loan photos
     @POST("wallet/loan/user/photos/add")
     Call<WalletLoanAddPicResponse> addLoanPhotos(@Header("Authorization") String token,
                                                  JSONObject object
-
     );
 
     //get wallet user by phone
     @GET("wallet/user/get/receiver_by_phone/{phoneNumber}")
     Call<UserData> getWalletUser(@Path("phoneNumber") String phoneNumber
-
     );
 
     //create user credit
@@ -213,7 +196,6 @@ public interface APIRequests {
                                        @Field("email") String email,
                                        @Field("amount") Double amount,
                                        @Field("referenceNumber") String referenceNumber
-
     );
 
     //voucher deposit
@@ -278,11 +260,9 @@ public interface APIRequests {
 
 
     //******************** Static Pages Data ********************//
-
     @FormUrlEncoded
     @POST("getallpages")
     Call<PagesData> getStaticPages(@Field("language_id") int language_id);
-
 
     //store personal info
     @FormUrlEncoded
@@ -315,7 +295,6 @@ public interface APIRequests {
             @Field("location") String location,
             @Field("contact") String contact,
             @Field("employee_id") String employee_id
-
     );
 
     //store business info
@@ -328,6 +307,5 @@ public interface APIRequests {
             @Field("license_number") String license_number,
             @Field("reg_certificate") String reg_certificate,
             @Field("trade_license") String trade_license
-
     );
 }
