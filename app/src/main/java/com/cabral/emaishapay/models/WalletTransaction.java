@@ -8,6 +8,10 @@ public class WalletTransaction {
     String date;
     String referenceNumber;
 
+
+
+    String initials;
+
     boolean isPurchase;
     static com.cabral.emaishapay.models.WalletTransaction transaction = new com.cabral.emaishapay.models.WalletTransaction();
 
@@ -80,6 +84,14 @@ public class WalletTransaction {
     }
 
     Integer time;
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
     public WalletTransaction() {
     }
 
