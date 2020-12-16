@@ -163,4 +163,7 @@ public class PersonalInformationFragment extends Fragment {
         });
         ed_.setInputType(InputType.TYPE_NULL);
     }
+
+
+
 }
