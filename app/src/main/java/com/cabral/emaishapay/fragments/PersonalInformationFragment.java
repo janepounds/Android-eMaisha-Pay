@@ -2,11 +2,10 @@ package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,19 +17,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.provider.MediaStore;
-import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -38,10 +34,10 @@ import com.cabral.emaishapay.network.APIClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 import retrofit2.Call;
@@ -52,10 +48,11 @@ public class PersonalInformationFragment extends Fragment {
     private static final String TAG = "PersonalInformation";
     private FragmentPersonalInformationBinding binding;
     private NavController navController = null;
+    private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_personal_information, container, false);
@@ -96,24 +93,38 @@ public class PersonalInformationFragment extends Fragment {
         binding.submitButton.setOnClickListener(v -> saveInfo());
 
         binding.cancelButton.setOnClickListener(v -> navController.popBackStack());
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.setCancelable(false);
     }
 
     public void saveInfo() {
-        Call<AccountResponse> call = APIClient.getWalletInstance().storePersonalInfo(binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
-                binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256 " + binding.nextOfKinContact.getText().toString(), encodedImageID);
+        progressDialog.show();
+
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        Call<AccountResponse> call = APIClient.getWalletInstance()
+                .storePersonalInfo(userId, binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
+                        binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
+                    navController.navigate(R.id.action_personalInformationFragment_to_walletAccountFragment);
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
+                    Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: failed" + t.getMessage());
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
             }
         });
     }
