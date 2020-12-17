@@ -106,7 +106,7 @@ public class PersonalInformationFragment extends Fragment {
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         Call<AccountResponse> call = APIClient.getWalletInstance()
                 .storePersonalInfo(userId, binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
-                        binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
+                        binding.nextOfKinFirst.getText().toString() + " " + binding.nextOfKinLast.getText().toString(), "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
