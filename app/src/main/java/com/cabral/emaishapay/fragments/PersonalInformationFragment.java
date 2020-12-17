@@ -50,6 +50,7 @@ public class PersonalInformationFragment extends Fragment {
     private NavController navController = null;
     private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
+    private String selectedGender;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -103,10 +104,17 @@ public class PersonalInformationFragment extends Fragment {
 
     public void saveInfo() {
         progressDialog.show();
+        String gender = binding.gender.getSelectedItem().toString();
+        if(gender.equalsIgnoreCase("Male")){
+            selectedGender = "M";
+
+        }else{
+            selectedGender ="F";
+        }
 
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storePersonalInfo(userId, binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
+                .storePersonalInfo(userId, binding.dob.getText().toString(), selectedGender,
                         binding.nextOfKinFirst.getText().toString() + " " + binding.nextOfKinLast.getText().toString(), "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
