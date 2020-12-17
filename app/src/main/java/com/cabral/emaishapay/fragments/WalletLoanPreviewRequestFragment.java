@@ -88,7 +88,7 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         btnPrevious.setOnClickListener(view1 -> navController.popBackStack());

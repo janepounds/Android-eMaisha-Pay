@@ -50,6 +50,7 @@ public class PersonalInformationFragment extends Fragment {
     private NavController navController = null;
     private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
+    private String selectedGender;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -69,6 +70,7 @@ public class PersonalInformationFragment extends Fragment {
         binding.datePicker.setOnClickListener(v -> {
 
             Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, -18);
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -102,11 +104,18 @@ public class PersonalInformationFragment extends Fragment {
 
     public void saveInfo() {
         progressDialog.show();
+        String gender = binding.gender.getSelectedItem().toString();
+        if(gender.equalsIgnoreCase("Male")){
+            selectedGender = "M";
+
+        }else{
+            selectedGender ="F";
+        }
 
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storePersonalInfo(userId, binding.dob.getText().toString(), binding.gender.getSelectedItem().toString(),
-                        binding.nextOfKinFirst + " " + binding.nextOfKinLast, "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
+                .storePersonalInfo(userId, binding.dob.getText().toString(), selectedGender,
+                        binding.nextOfKinFirst.getText().toString() + " " + binding.nextOfKinLast.getText().toString(), "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {

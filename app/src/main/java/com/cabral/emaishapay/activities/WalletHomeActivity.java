@@ -51,6 +51,29 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCES_USER_BACKED_UP = "userBackedUp";
     public static final String PREFERENCES_USER_PASSWORD = "password";
 
+    public static final String PREFERENCE_ACCOUNT_PERSONAL_DOB ="dob";
+    public static final String PREFERENCE_ACCOUNT_PERSONAL_GENDER = "gender";
+    public static final String PREFERENCE_ACCOUNT_PERSONAL_NOK ="next_of_kin";
+    public static final String PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT ="next_of_kin_contact";
+
+    public static final String PREFERENCE_ACCOUNT_ID_TYPE ="idtype";
+    public static final String PREFERENCE_ACCOUNT_ID_NUMBER ="idNumber";
+    public static final String PREFERENCE_ACCOUNT_ID_EXPIRY_DATE ="expiryDate";
+
+    public static final String PREFERENCE_ACCOUNT_EMPLOYER ="employer";
+    public static final String PREFERENCE_ACCOUNT_DESIGNATION ="designation";
+    public static final String PREFERENCE_ACCOUNT_LOCATION ="location";
+    public static final String PREFERENCE_ACCOUNT_EMPLOYEE_ID ="employeeId";
+
+    public static final String PREFERENCE_ACCOUNT_BUSINESS_NAME ="business_name";
+    public static final String PREFERENCE_ACCOUNT_BUSINESS_LOCATION ="business_location";
+    public static final String PREFERENCE_ACCOUNT_REG_NO ="regNo";
+    public static final String PREFERENCE_ACCOUNT_LICENSE_NUMBER ="license_number";
+
+
+
+
+
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
 
