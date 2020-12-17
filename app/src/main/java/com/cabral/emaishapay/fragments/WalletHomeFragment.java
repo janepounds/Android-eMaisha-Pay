@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -24,7 +22,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.DailogFragments.Buy;
-import com.cabral.emaishapay.DailogFragments.TransferMoney;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -32,7 +29,6 @@ import com.cabral.emaishapay.adapters.WalletTransactionAdapter;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.TransactionModel;
-import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -44,7 +40,6 @@ import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -94,7 +89,7 @@ public class WalletHomeFragment extends Fragment {
 //        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
 //        layoutWalletTransactions.setOnClickListener(view111 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
 //        btnWalletTransactions.setOnClickListener(view14 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
-        binding.layoutTransfer.setOnClickListener(view110 -> openTransfer());
+        binding.layoutTransfer.setOnClickListener(view110 -> navController.navigate(R.id.action_walletHomeFragment_to_transferMoney));
         binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
         binding.layoutPay.setOnClickListener(view1 -> openBuy());
@@ -122,10 +117,10 @@ public class WalletHomeFragment extends Fragment {
         }
 
         ft.addToBackStack(null);
-
+        navController.navigate(R.id.action_walletHomeFragment_to_transferMoney);
         // Create and show the dialog.
-        DialogFragment transferDialog = new TransferMoney(context, balance, getActivity().getSupportFragmentManager());
-        transferDialog.show(ft, "dialog");
+//        Fragment transferDialog = new TransferMoney(context, balance, getActivity().getSupportFragmentManager());
+//        transferDialog.show(ft, "dialog");
     }
 
 

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_walletHomeFragment_to_depositPayments"
             app:destination="@id/depositPayments" />
+        <action
+            android:id="@+id/action_walletHomeFragment_to_transferMoney"
+            app:destination="@id/transferMoney" />
     </fragment>
 
     <fragment
@@ -186,5 +189,9 @@
         android:name="com.cabral.emaishapay.fragments.WalletLoanPaymentSchedule"
         android:label="WalletLoanPaymentSchedule"
         tools:layout="@layout/payment_schedule"/>
+    <fragment
+        android:id="@+id/transferMoney"
+        android:name="com.cabral.emaishapay.fragments.TransferMoney"
+        android:label="TransferMoney" />
 
 </navigation>
