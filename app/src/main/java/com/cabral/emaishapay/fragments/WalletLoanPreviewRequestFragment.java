@@ -142,73 +142,15 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
         btnPrevious.setOnClickListener(view1 -> navController.popBackStack());
 
-        btnLoanNextStep.setOnClickListener(view -> comfirmLoanApplication());
+        btnLoanNextStep.setOnClickListener(view -> AddPhotos());
     }
 
-    public void comfirmLoanApplication() {
-        /*****************RETROFIT IMPLEMENTATION*******************/
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
-        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
-        float amount = loanApplication.getAmount();
-        int duration = loanApplication.getDuration();
-        String loanType = loanApplication.getLoanType();
-        double interest = loanApplication.getInterestRate();
+    public void AddPhotos() {
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<RequestLoanresponse> call = apiRequests.comfirmLoanApplication(access_token, userId, amount, duration, interest, loanType);
-        call.enqueue(new Callback<RequestLoanresponse>() {
-            @Override
-            public void onResponse(Call<RequestLoanresponse> call, Response<RequestLoanresponse> response) {
-                if (response.code() == 200) {
-                    if( response.body().getData().getStatus().equals("0") ){
-                        Log.e("info 200", new String(String.valueOf(response.toString())) + ", code: " + response.code());
-                        textViewErrorMessage.setText(response.body().getData().getMessage());
-                    }else {
-                        try {
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("loanApplication", loanApplication);
-                            navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
-                        }catch (Exception exception){
-                            exception.printStackTrace();
-                        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("loanApplication", loanApplication);
+        navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
 
-                    }
-
-                } else if (response.code() == 401) {
-                    WalletAuthActivity.startAuth(context, true);
-                } else if (response.code() == 500) {
-                    textViewErrorMessage.setText("Error Occurred Try again later");
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.toString())) + ", code: " + response.code());
-                    textViewErrorMessage.setText(response.body().getData().getMessage());
-                } else if (response.code() == 406) {
-                    textViewErrorMessage.setText(response.errorBody().toString());
-                    Log.e("info 406", new String(String.valueOf(response.toString())) + ", code: " + response.code());
-                } else {
-                    textViewErrorMessage.setText("Error Occurred Try again later");
-                    if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                    } else {
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                }
-                textViewErrorMessage.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-
-
-            @Override
-            public void onFailure(Call<RequestLoanresponse> call, Throwable t) {
-
-                Log.e("info : ", "Something got very very wrong");
-
-                textViewErrorMessage.setText("Error Occurred Try again later");
-                textViewErrorMessage.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-
-            }
-        });
 
     }
 }

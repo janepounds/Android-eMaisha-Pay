@@ -423,7 +423,7 @@
                             android:background="@color/transparent"
                             android:paddingEnd="10dp"
                             android:paddingRight="10dp"
-                            android:text="@string/label_confirm"
+                            android:text="@string/next"
                             android:textColor="@color/white"
                             android:textSize="@dimen/button_text_size"
                             android:textStyle="bold"/>

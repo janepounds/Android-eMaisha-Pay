@@ -171,14 +171,14 @@ public interface APIRequests {
             /*@Header("Authorization") String token*/
     );
 
-    @POST("wallet/loan/comfirmRequest")
-    Call<RequestLoanresponse> comfirmLoanApplication(@Header("Authorization") String token,
-                                                     @Query("userId") String userId,
-                                                     @Query("amount") double amount,
-                                                     @Query("duration") int duration,
-                                                     @Query("interest") double interest,
-                                                     @Query("loanType") String loanType
-    );
+//    @POST("wallet/loan/comfirmRequest")
+//    Call<RequestLoanresponse> comfirmLoanApplication(@Header("Authorization") String token,
+//                                                     @Query("userId") String userId,
+//                                                     @Query("amount") double amount,
+//                                                     @Query("duration") int duration,
+//                                                     @Query("interest") double interest,
+//                                                     @Query("loanType") String loanType
+//    );
 
     //request loans
     @POST("wallet/loan/user/request")
