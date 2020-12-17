@@ -322,8 +322,8 @@ public interface APIRequests {
             @Field("business_name") String business_name,
             @Field("business_location") String location,
             @Field("registration_no") String reg_no,
+            @Field("trade_license") String trade_license,
             @Field("license_no") String license_number,
-            @Field("registration_cert") String reg_certificate,
-            @Field("trade_license") String trade_license
+            @Field("registration_cert") String reg_certificate
     );
 }

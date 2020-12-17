@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
@@ -126,7 +127,7 @@ public class BusinessInformationFragment extends Fragment {
 
         Call<AccountResponse> call = APIClient.getWalletInstance()
                 .storeBusinessInfo(userId, binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
-                        binding.licenceNumber.getText().toString(), encodedRegistrationCertificate, encodedTradeLicence);
+                        encodedTradeLicence, binding.licenceNumber.getText().toString(), encodedRegistrationCertificate);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
@@ -141,7 +142,9 @@ public class BusinessInformationFragment extends Fragment {
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
-                Log.d(TAG, "onFailure: failed" + t.getMessage());
+                Log.w(TAG, "onFailure: failed" + t.getMessage());
+                Toast.makeText(getContext(),"Error Please Try again!",Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
             }
         });
     }
