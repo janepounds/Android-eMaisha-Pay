@@ -284,6 +284,12 @@ public interface APIRequests {
             @Field("pic") String picture
     );
 
+    //getAccount info
+    @GET("user/account_data/{userId}")
+    Call<AccountResponse>getAccountInfo(
+            @Part("userId") String userId
+    );
+
     //store id info
     @FormUrlEncoded
     @POST("store_user_id_info")
@@ -314,10 +320,10 @@ public interface APIRequests {
     Call<AccountResponse> storeBusinessInfo(
             @Field("user_id") String user_id,
             @Field("business_name") String business_name,
-            @Field("location") String location,
-            @Field("reg_number") String reg_no,
-            @Field("license_number") String license_number,
-            @Field("reg_certificate") String reg_certificate,
+            @Field("business_location") String location,
+            @Field("registration_no") String reg_no,
+            @Field("license_no") String license_number,
+            @Field("registration_cert") String reg_certificate,
             @Field("trade_license") String trade_license
     );
 }

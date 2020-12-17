@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class EmploymentInformationFragment extends Fragment {
     private static final String TAG = "EmploymentInformation";
     private FragmentEmploymentInformationBinding binding;
     private NavController navController = null;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -50,7 +52,12 @@ public class EmploymentInformationFragment extends Fragment {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.setCancelable(false);
         binding.submitButton.setOnClickListener(v -> {
+            progressDialog.show();
             String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
             Call<AccountResponse> call = APIClient.getWalletInstance()
@@ -61,11 +68,12 @@ public class EmploymentInformationFragment extends Fragment {
                 public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse: successful");
-                        navController.navigate(R.id.action_personalInformationFragment_to_walletAccountFragment);
+                        navController.navigate(R.id.action_employmentInformationFragment_to_walletAccountFragment);
                     } else {
                         Log.d(TAG, "onResponse: failed" + response.errorBody());
                         Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
                     }
+                    progressDialog.dismiss();
                 }
 
                 @Override
