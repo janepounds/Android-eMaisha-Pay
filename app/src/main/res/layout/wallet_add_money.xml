@@ -113,7 +113,6 @@
                             android:maxLength="9"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
-                            android:hint="bdgddg"
                             android:textColor="@android:color/black"
                             android:textColorHint="@android:color/black"
                             android:gravity="center_vertical"

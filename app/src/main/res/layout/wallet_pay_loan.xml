@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/solidwhite_shape"
-    android:orientation="vertical"
-    tools:context=".activities.wallet.WalletHomeActivity" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layout_add_money"

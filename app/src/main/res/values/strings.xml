@@ -302,6 +302,13 @@
         <item>After 3 months</item>
         <item>After 6 months</item>
     </string-array>
+    <string-array name="transfer_to">
+        <item>Select</item>
+        <item>eMaisha Account</item>
+        <item>eMaisha Card</item>
+        <item>Mobile Number</item>
+        <item>Bank</item>
+    </string-array>
 
     <string-array name="crop_havest_units">
         <item>Select</item>
