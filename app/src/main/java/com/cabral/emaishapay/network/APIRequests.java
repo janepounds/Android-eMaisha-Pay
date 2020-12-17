@@ -304,7 +304,7 @@ public interface APIRequests {
             @Field("employer") String employer,
             @Field("designation") String designation,
             @Field("location") String location,
-            @Field("contact") String contact,
+            @Field("employment_contact") String contact,
             @Field("employee_id") String employee_id
     );
 

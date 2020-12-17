@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -60,8 +61,10 @@ public class EmploymentInformationFragment extends Fragment {
                 public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse: successful");
+                        navController.navigate(R.id.action_personalInformationFragment_to_walletAccountFragment);
                     } else {
                         Log.d(TAG, "onResponse: failed" + response.errorBody());
+                        Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
                     }
                 }
 
