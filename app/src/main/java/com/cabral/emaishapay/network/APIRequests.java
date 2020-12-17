@@ -287,7 +287,7 @@ public interface APIRequests {
     //getAccount info
     @GET("user/account_data/{userId}")
     Call<AccountResponse>getAccountInfo(
-            @Part("userId") String userId
+            @Path("userId") String userId
     );
 
     //store id info
