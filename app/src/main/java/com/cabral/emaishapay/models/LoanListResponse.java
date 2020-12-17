@@ -1,3 +1,4 @@
+
 package com.cabral.emaishapay.models;
 
 import com.google.gson.annotations.Expose;

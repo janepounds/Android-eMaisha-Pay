@@ -42,6 +42,9 @@ public class LoanApplication implements Serializable {
     @Expose
     private String dateApproved;
 
+    @SerializedName("payment_amount_on_schedule")
+    public double payment_amount_on_schedule;
+
 
     @SerializedName("amountPaid")
     @Expose
@@ -146,6 +149,8 @@ public class LoanApplication implements Serializable {
        setTotalFines((float)loanObject.getDouble("totalFines"));
         setDueAmount((int)loanObject.getDouble("dueAmount"));
         setAmountPaid((double)loanObject.getDouble("totalPayments"));
+        setPayment_amount_on_schedule((double)loanObject.getDouble("payment_amount_on_schedule"));
+
 
 
 
@@ -419,7 +424,13 @@ public class LoanApplication implements Serializable {
         }
     }
 
+    public double getPayment_amount_on_schedule() {
+        return payment_amount_on_schedule;
+    }
 
+    public void setPayment_amount_on_schedule(double payment_amount_on_schedule) {
+        this.payment_amount_on_schedule = payment_amount_on_schedule;
+    }
 
     public boolean isApproved(){
         return generateStatus().equals("Approved");
