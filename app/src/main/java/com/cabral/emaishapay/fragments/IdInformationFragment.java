@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -52,6 +53,7 @@ public class IdInformationFragment extends Fragment {
     private String encodedIdFront;
     private String encodedIdBack;
     private ImageView imageView;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -68,6 +70,7 @@ public class IdInformationFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
 
         binding.expiryDatePicker.setOnClickListener(v -> {
 
@@ -103,9 +106,15 @@ public class IdInformationFragment extends Fragment {
         });
 
         binding.cancelButton.setOnClickListener(view1 -> navController.popBackStack());
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.setCancelable(false);
     }
 
     public void saveInfo() {
+        progressDialog.show();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
         Call<AccountResponse> call = APIClient.getWalletInstance()
@@ -116,9 +125,12 @@ public class IdInformationFragment extends Fragment {
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
+                    navController.navigate(R.id.action_idInformationFragment_to_walletAccountFragment);
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }
+
+                progressDialog.dismiss();
             }
 
             @Override
