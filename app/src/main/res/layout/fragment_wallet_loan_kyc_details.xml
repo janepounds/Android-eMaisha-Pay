@@ -334,7 +334,7 @@
                                 android:textColor="@android:color/black"
                                 android:textColorHint="@android:color/black"
                                 android:paddingLeft="10dp"
-                                android:gravity="start" />
+                                android:gravity="start|center_vertical" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -437,7 +437,7 @@
                                     android:textColor="@android:color/black"
                                     android:textColorHint="@android:color/black"
                                     android:paddingLeft="@dimen/dimen_10dp"
-                                    android:gravity="start" />
+                                    android:gravity="start|center_vertical" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -517,7 +517,7 @@
                                 android:textColor="@android:color/black"
                                 android:textColorHint="@android:color/black"
                                 android:paddingLeft="10dp"
-                                android:gravity="start" />
+                                android:gravity="start|center_vertical" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -620,7 +620,7 @@
                                     android:textColor="@android:color/black"
                                     android:textColorHint="@android:color/black"
                                     android:paddingLeft="@dimen/dimen_10dp"
-                                    android:gravity="start" />
+                                    android:gravity="start|center_vertical" />
                             </LinearLayout>
                         </LinearLayout>
 

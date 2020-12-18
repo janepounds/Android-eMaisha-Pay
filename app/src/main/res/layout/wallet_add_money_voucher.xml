@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/solidwhite_shape"
     android:orientation="vertical"
-    android:theme="@style/AppTheme"
-    tools:context=".activities.wallet.WalletHomeActivity">
+    android:theme="@style/AppTheme">
 
     <LinearLayout
         android:id="@+id/layout_add_money"
@@ -38,10 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/background_home"
         android:paddingRight="@dimen/dimen_20dp"
         android:paddingLeft="@dimen/dimen_20dp"
-        >
+        android:background="#F1F5F8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +60,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    app:srcCompat="@drawable/wallet_deposit" />
+                    app:srcCompat="@drawable/wallet_deposit"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,7 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    app:srcCompat="@drawable/transfer_money" />
+                    app:srcCompat="@drawable/transfer_money"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <TextView
                     android:layout_width="match_parent"

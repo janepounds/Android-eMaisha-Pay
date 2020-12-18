@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,6 +70,10 @@ public class PayLoan extends DialogFragment {
         builder.setView(view);
 
         initializeForm( view);
+
+        ImageView close = view.findViewById(R.id.wallet_transfer_money_close);
+        close.setOnClickListener(v -> dismiss());
+
         return builder.create();
 
     }

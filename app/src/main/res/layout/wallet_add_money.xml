@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#f0f1ed"
+    android:background="@drawable/dialog_background"
     android:orientation="vertical"
     tools:context=".activities.WalletHomeActivity">
 
@@ -44,7 +44,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dimen_20dp"
-        android:paddingRight="@dimen/dimen_20dp">
+        android:paddingRight="@dimen/dimen_20dp"
+        android:background="#F1F5F8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -82,12 +83,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     android:padding="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_alignParentTop="true"
                         android:background="@drawable/edittext_corner"
                         android:orientation="horizontal">
@@ -124,10 +125,49 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+
+             <LinearLayout
+                 android:id="@+id/layout_purpose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:fontFamily="@font/josefin_sans"
+                    android:text="Purpose"
+                    android:textSize="@dimen/margin_16" />
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="8dp"
+                     android:padding="8dp"
+                     android:background="@drawable/edittext_corner">
+                     <CheckBox
+                         android:id="@+id/checkbox_savings"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_weight="1"
+                         android:text="Savings"
+                         android:textSize="16sp"/>
+                     <CheckBox
+                         android:id="@+id/checkbox_agric_inputs"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_weight="1"
+                         android:text="Agriculture Inputs"
+                         android:textSize="16sp"/>
+                 </LinearLayout>
+             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -137,16 +177,40 @@
                     android:text="Amount"
                     android:textSize="@dimen/margin_16" />
 
-                <EditText
-                    android:id="@+id/crop_add_money_amount"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_corner"
-                    android:hint="e.g 40,000"
-                    android:inputType="numberDecimal"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="@dimen/dimen_15sp" />
+                    android:orientation="horizontal">
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edittext_left_corners_green"
+                        android:textColor="@color/white"
+                        android:text="@string/currency"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_weight="0.2" />
+
+                    <EditText
+                        android:id="@+id/crop_add_money_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:gravity="start|center_vertical"
+                        android:inputType="number"
+                        android:background="@android:color/transparent"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/textColorPrimaryDark"/>
+
+
+
+                </LinearLayout>
             </LinearLayout>
 
             <FrameLayout

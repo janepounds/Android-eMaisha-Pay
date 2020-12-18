@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:orientation="vertical"
     android:theme="@style/AppTheme">
 
@@ -36,11 +37,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/background_home"
         android:paddingBottom="@dimen/dimen_20dp"
         android:paddingRight="@dimen/dimen_20dp"
         android:paddingLeft="@dimen/dimen_20dp"
-        >
+        android:background="#F1F5F8">
 
 
 
@@ -125,18 +125,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Holder Name"
+                    android:textSize="16sp"
                     android:fontFamily="@font/josefin_sans" />
 
                 <EditText
                     android:id="@+id/add_money_holder_name"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:paddingStart="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
-                    android:hint="Enter.."
-                    android:inputType="text"
-                    android:paddingLeft="2dp"
-                    android:textSize="12sp" />
+                    android:textColor="@color/textColor"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text"/>
 
             </LinearLayout>
 
@@ -151,18 +151,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Card Number"
+                    android:textSize="16sp"
                     android:fontFamily="@font/josefin_sans" />
 
                 <EditText
                     android:id="@+id/add_money_creditCardNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:paddingStart="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
-                    android:hint="Enter.."
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="2dp"
-                    android:textSize="12sp" />
+                    android:inputType="number"
+                    android:textColor="@color/textColor"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,20 +182,20 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Card  Expiry"
+                        android:text="Card Expiry"
+                        android:textSize="16sp"
                         android:fontFamily="@font/josefin_sans" />
 
                     <EditText
                         android:id="@+id/add_money_card_expiry"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
                         android:background="@drawable/edittext_corner"
-                        android:hint="MM/YY"
                         android:inputType="date"
                         android:maxLength="5"
-                        android:paddingLeft="2dp"
-                        android:textSize="12sp" />
+                        android:textColor="@color/textColor"
+                        android:layout_marginTop="5dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -209,22 +209,57 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Card CVV"
+                        android:textSize="16sp"
                         android:fontFamily="@font/josefin_sans" />
 
                     <EditText
                         android:id="@+id/add_money_card_cvv"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
                         android:background="@drawable/edittext_corner"
-                        android:hint="Enter.."
-                        android:inputType="numberDecimal"
-                        android:paddingLeft="2dp"
-                        android:textSize="12sp" />
+                        android:inputType="number"
+                        android:textColor="@color/textColor"
+                        android:layout_marginTop="5dp" />
                 </LinearLayout>
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:fontFamily="@font/josefin_sans"
+                    android:text="Purpose"
+                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="8dp"
+                    android:background="@drawable/edittext_corner">
+                    <CheckBox
+                        android:id="@+id/checkbox_savings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Savings"
+                        android:textSize="16sp"/>
+                    <CheckBox
+                        android:id="@+id/checkbox_agric_inputs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Agriculture Inputs"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -235,25 +270,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Amount"
+                    android:textSize="16sp"
                     android:fontFamily="@font/josefin_sans" />
 
-                <EditText
-                    android:id="@+id/wallet_add_money_amount"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingStart="@dimen/dimen_10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_corner"
-                    android:hint="Enter.."
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="2dp"
-                    android:textSize="12sp" />
+                    android:orientation="horizontal">
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edittext_left_corners_green"
+                        android:textColor="@color/white"
+                        android:text="@string/currency"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_weight="0.2" />
+
+                    <EditText
+                        android:id="@+id/wallet_add_money_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:gravity="start|center_vertical"
+                        android:inputType="number"
+                        android:background="@android:color/transparent"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/textColorPrimaryDark"/>
+
+
+
+                </LinearLayout>
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_corners_button"

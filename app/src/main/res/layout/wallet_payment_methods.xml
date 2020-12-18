@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
     android:layout_gravity="center"
-    android:background="#f0f1ed"
+    android:background="@drawable/dialog_background"
     android:orientation="vertical">
 
 
