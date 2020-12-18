@@ -65,6 +65,19 @@ public class BusinessInformationFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+        if(getArguments()!=null){
+            String business_name = getArguments().getString("biz_name");
+            String business_location =getArguments().getString("biz_location");
+            String reg_no =getArguments().getString("reg_no");
+            String license_no =getArguments().getString("license_no");
+
+            //set edit textviews
+            binding.businessName.setText(business_name);
+            binding.businessLocation.setText(business_location);
+            binding.registrationNumber.setText(reg_no);
+            binding.licenceNumber.setText(license_no);
+
+        }
 
         binding.registrationCertificate.setOnClickListener(v -> {
             imageView = binding.registrationCertificate;

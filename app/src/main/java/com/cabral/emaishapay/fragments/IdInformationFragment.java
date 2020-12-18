@@ -45,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.fragments.PersonalInformationFragment.selectSpinnerItemByValue;
+
 public class IdInformationFragment extends Fragment {
     private static final String TAG = "IdInformationFragment";
     private FragmentIdInformationBinding binding;
@@ -71,6 +73,19 @@ public class IdInformationFragment extends Fragment {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
+        if(getArguments()!=null){
+            String idtype = getArguments().getString("idtype");
+            String idNumber =getArguments().getString("idNumber");
+            String expiryDate =getArguments().getString("expiryDate");
+
+
+            //set edit textviews
+            selectSpinnerItemByValue(binding.idType, idtype);
+            binding.idNumber.setText(idNumber);
+            binding.expiryDate.setText(expiryDate);
+
+
+        }
 
         binding.expiryDatePicker.setOnClickListener(v -> {
 

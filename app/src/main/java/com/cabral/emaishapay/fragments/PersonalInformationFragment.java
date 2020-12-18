@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -66,6 +68,23 @@ public class PersonalInformationFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+        if(getArguments()!=null) {
+            String dob = getArguments().getString("dob");
+            String gender = getArguments().getString("gender");
+            String nok = getArguments().getString("nok");
+            String nok_contact = getArguments().getString("nok_contact");
+
+            String[] nok_split = nok.split("\\\\s+",2);
+
+
+            //set edit textviews
+            binding.dob.setText(dob);
+            selectSpinnerItemByValue(binding.gender, gender);
+            binding.nextOfKinFirst.setText(nok_split[0]);
+            binding.nextOfKinLast.setText(nok_split[1]);
+
+        }
 
         binding.datePicker.setOnClickListener(v -> {
 
@@ -156,6 +175,22 @@ public class PersonalInformationFragment extends Fragment {
         }
     }
 
+    public static void selectSpinnerItemByValue(Spinner spnr, String value) {
 
+        if (value == null) {
+            return;
+        }
+
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spnr.getAdapter();
+        for (int position = 1; position < adapter.getCount(); position++) {
+
+            String item = spnr.getAdapter().getItem(position) + "";
+            if (item.toLowerCase().equals(value.toLowerCase())) {
+                spnr.setSelection(position);
+                return;
+            }
+
+        }
+    }
 
 }
