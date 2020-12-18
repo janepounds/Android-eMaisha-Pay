@@ -22,11 +22,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -34,6 +40,7 @@ import com.cabral.emaishapay.network.APIClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -50,7 +57,8 @@ public class PersonalInformationFragment extends Fragment {
     private NavController navController = null;
     private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
-    private String selectedGender;
+    private String selectedGender,displayGender;
+
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -66,6 +74,46 @@ public class PersonalInformationFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+        if(getArguments()!=null) {
+            String dob = getArguments().getString("dob");
+            String gender = getArguments().getString("gender");
+            String nok = getArguments().getString("nok");
+            String nok_contact = getArguments().getString("nok_contact");
+            String pic = getArguments().getString("picture") ;
+            if(gender.equalsIgnoreCase("F")){
+                displayGender = "Female";
+            }else{
+                displayGender ="Male";
+            }
+
+            String[] nok_split = nok.split(" ");
+
+//            final InputStream imageStream = getContentResolver().openInputStream(pic);
+//
+//            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//
+//            binding.userPic.setImageBitmap(selectedImage);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.user)
+                    .error(R.drawable.user)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+
+
+
+            //set edit textviews
+            binding.dob.setText(dob);
+            selectSpinnerItemByValue(binding.gender, displayGender);
+            binding.nextOfKinFirst.setText(nok_split[0]);
+            binding.nextOfKinLast.setText(nok_split[1]);
+            binding.nextOfKinContact.setText(nok_contact.substring(4));
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +pic).apply(options).into(binding.userPic);
+            Log.d(TAG, "onViewCreated: "+pic +gender);
+
+        }
 
         binding.datePicker.setOnClickListener(v -> {
 
@@ -156,6 +204,22 @@ public class PersonalInformationFragment extends Fragment {
         }
     }
 
+    public static void selectSpinnerItemByValue(Spinner spnr, String value) {
 
+        if (value == null) {
+            return;
+        }
+
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spnr.getAdapter();
+        for (int position = 1; position < adapter.getCount(); position++) {
+
+            String item = spnr.getAdapter().getItem(position) + "";
+            if (item.toLowerCase().equals(value.toLowerCase())) {
+                spnr.setSelection(position);
+                return;
+            }
+
+        }
+    }
 
 }

@@ -191,6 +191,7 @@ public class WalletLoanDetailsFragment extends Fragment {
                 loanApplication.setAmount(Float.valueOf(txtLoanApplicationAmount.getText().toString()));
                 loanApplication.setDuration(Integer.parseInt(txt_loan_application_duration.getText().toString()));
                 loanApplication.setLoanType(spLoanApplicationType.getSelectedItem().toString());
+                loanApplication.setPayment_amount_on_schedule(Double.parseDouble(loanpayments_edtxt.getText().toString()));
 
                 Bundle bundle = new Bundle();
                 assert getArguments() != null;

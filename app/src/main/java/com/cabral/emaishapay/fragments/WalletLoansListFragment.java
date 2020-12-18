@@ -66,6 +66,7 @@ public class WalletLoansListFragment extends Fragment {
     private FrameLayout walletPayLoanLayout;
     private RecyclerView loansListRecyclerView;
     private Button walletApplyLoanBtn, walletPayLoanBtn;
+    ProgressDialog dialog;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -120,7 +121,7 @@ public class WalletLoansListFragment extends Fragment {
     }
 
     private void actualStatementData() {
-        ProgressDialog dialog;
+
         dialog = new ProgressDialog(context);
         dialog.setIndeterminate(true);
         dialog.setMessage("Please Wait..");
@@ -169,7 +170,11 @@ public class WalletLoansListFragment extends Fragment {
 
                             }else if(possible_action.equalsIgnoreCase("Cancel Loan")){
                                 walletApplyLoanBtn.setText(possible_action);
-                                walletApplyLoanBtn.setOnClickListener(view2 -> cancelLoan());
+                                walletApplyLoanBtn.setOnClickListener(view2 ->
+                                        {
+                                            dialog.show();
+                                            cancelLoan() ;
+                                        });
                             }else if(possible_action.equalsIgnoreCase("Pay Loan")){
                                 walletApplyLoanBtn.setText(possible_action);
                                 walletApplyLoanBtn.setOnClickListener(view2 -> payLoan());
@@ -224,13 +229,6 @@ public class WalletLoansListFragment extends Fragment {
     }
 
     public void cancelLoan(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
-
 
         String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
@@ -246,6 +244,7 @@ public class WalletLoansListFragment extends Fragment {
                 }else{
                     Log.d(TAG, "onResponse: failed");
                 }
+                dialog.dismiss();
 
             }
 

@@ -73,12 +73,14 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
             holder.amountTxt.setText("UGX " + NumberFormat.getInstance().format(data.getAmount()));
             holder.statusTxt.setText(data.generateStatus());
 
-            if (data.getDueDate() != null) {
+//            if (data.getDueDate() != null) {
+//
+//                holder.dueDateTxt.setText(data.getDueDate());
+//            } else {
+//                holder.dueDateTxt.setText("N/A");
+//            }
 
-                holder.dueDateTxt.setText(data.getDueDate());
-            } else {
-                holder.dueDateTxt.setText("N/A");
-            }
+            holder.dueDateTxt.setText(data.getInterestRate()+" %");
         } catch (ParseException e) {
             e.printStackTrace();
         }

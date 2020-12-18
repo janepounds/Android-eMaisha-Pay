@@ -26,8 +26,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -45,6 +49,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.fragments.PersonalInformationFragment.selectSpinnerItemByValue;
+
 public class IdInformationFragment extends Fragment {
     private static final String TAG = "IdInformationFragment";
     private FragmentIdInformationBinding binding;
@@ -54,6 +60,7 @@ public class IdInformationFragment extends Fragment {
     private String encodedIdBack;
     private ImageView imageView;
     private ProgressDialog progressDialog;
+
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -71,6 +78,29 @@ public class IdInformationFragment extends Fragment {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
+        if(getArguments()!=null){
+            String idtype = getArguments().getString("idtype");
+            String idNumber =getArguments().getString("idNumber");
+            String expiryDate =getArguments().getString("expiryDate");
+            String front =getArguments().getString("front");
+            String back =getArguments().getString("back");
+            Log.d(TAG, "onViewCreated: "+ ConstantValues.WALLET_DOMAIN+front);
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.add_default_image)
+                    .error(R.drawable.add_default_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+
+            //set edit textviews
+            selectSpinnerItemByValue(binding.idType, idtype);
+            binding.idNumber.setText(idNumber);
+            binding.expiryDate.setText(expiryDate);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+front).apply(options).into(binding.idFront);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+back).apply(options).into(binding.idBack);
+
+
+        }
 
         binding.expiryDatePicker.setOnClickListener(v -> {
 

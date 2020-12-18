@@ -12,6 +12,7 @@ import java.util.Enumeration;
 
 public class ConstantValues {
 
+    public static String WALLET_DOMAIN = "http://emaishawallet.myfarmnow.com";
     private static String TAG = "Consumer_IP";
 
     public static final String CODE_VERSION = "4.0.12";
@@ -67,6 +68,8 @@ public class ConstantValues {
     public static String SHA1;
 
     public static final String PHONE_PATTERN = "^[987]\\d{9}$";
+
+
 
     public static final String getLocalIpAddress() {
         try {

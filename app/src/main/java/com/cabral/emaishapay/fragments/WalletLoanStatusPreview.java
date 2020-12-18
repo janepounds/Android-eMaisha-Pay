@@ -37,7 +37,7 @@ public class WalletLoanStatusPreview extends Fragment {
     private Toolbar toolbar;
     private TextView text_view_loan_status_preview_date, textViewLoanStatusPreviewDueDate, textViewLoanStatusPreviewDuration, textViewLoanStatusPreviewStatus, textViewLoanStatusPreviewAmount,
             textViewLoanStatusEditPhotos, textViewLoanStatusPreviewInterestRate, textViewLoanStatusPreviewDueAmount, textViewLoanStatusPreviewPayments,
-            textViewLoanStatusPreviewFines;
+            textViewLoanStatusPreviewFines,textViewLoanNumber;
     private ImageView imageViewLoanStatusPreviewNidBack, imageViewLoanStatusPreviewNidFront, imageViewLoanStatusPreviewUserPhoto, imageViewLoanStatusPreviewFarmPhoto;
     private Button paymentSchedule,paymentHistory;
 
@@ -66,6 +66,7 @@ public class WalletLoanStatusPreview extends Fragment {
         imageViewLoanStatusPreviewFarmPhoto = view.findViewById(R.id.image_view_loan_status_preview_farm_photo);
         paymentHistory = view.findViewById(R.id.payment_history_button);
         paymentSchedule = view.findViewById(R.id.payment_shedule_button);
+        textViewLoanNumber = view.findViewById(R.id.loan_number);
 
         assert getArguments() != null;
         loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
@@ -82,6 +83,7 @@ public class WalletLoanStatusPreview extends Fragment {
         text_view_loan_status_preview_date.setText(loanApplication.getRequestDate());
         textViewLoanStatusPreviewStatus.setText(loanApplication.getStatus());
         textViewLoanStatusPreviewAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getAmount()));
+        textViewLoanNumber.setText("00"+loanApplication.getId());
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -97,8 +99,8 @@ public class WalletLoanStatusPreview extends Fragment {
 
         Glide.with(requireContext()).load(loanApplication.getNationalIDFrontPic()).apply(options).into(imageViewLoanStatusPreviewNidFront);
         Glide.with(requireContext()).load(loanApplication.getNationalIDBackPic()).apply(options).into(imageViewLoanStatusPreviewNidBack);
-        Glide.with(requireContext()).load(loanApplication.getFarm_photo()).apply(options).into(imageViewLoanStatusPreviewUserPhoto);
-        Glide.with(requireContext()).load(loanApplication.getUserPhotoPic()).apply(options).into(imageViewLoanStatusPreviewFarmPhoto);
+        Glide.with(requireContext()).load(loanApplication.getFarm_photo()).apply(options).into(imageViewLoanStatusPreviewFarmPhoto);
+        Glide.with(requireContext()).load(loanApplication.getUserPhotoPic()).apply(options).into(imageViewLoanStatusPreviewUserPhoto);
 
 //        textViewLoanStatusEditPhotos.setOnClickListener(v -> {
 //                Intent startNext = new Intent(LoanStatusPreviewActivity.this,WalletLoanAppPhotos.class);

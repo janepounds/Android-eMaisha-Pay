@@ -55,10 +55,13 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCE_ACCOUNT_PERSONAL_GENDER = "gender";
     public static final String PREFERENCE_ACCOUNT_PERSONAL_NOK ="next_of_kin";
     public static final String PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT ="next_of_kin_contact";
+    public static final String PREFERENCE_ACCOUNT_PERSONAL_PIC ="pic";
 
     public static final String PREFERENCE_ACCOUNT_ID_TYPE ="idtype";
     public static final String PREFERENCE_ACCOUNT_ID_NUMBER ="idNumber";
     public static final String PREFERENCE_ACCOUNT_ID_EXPIRY_DATE ="expiryDate";
+    public static final String PREFERENCE_ACCOUNT_ID_FRONT ="front";
+    public static final String PREFERENCE_ACCOUNT_ID_BACK ="back";
 
     public static final String PREFERENCE_ACCOUNT_EMPLOYER ="employer";
     public static final String PREFERENCE_ACCOUNT_DESIGNATION ="designation";
@@ -69,6 +72,8 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCE_ACCOUNT_BUSINESS_LOCATION ="business_location";
     public static final String PREFERENCE_ACCOUNT_REG_NO ="regNo";
     public static final String PREFERENCE_ACCOUNT_LICENSE_NUMBER ="license_number";
+    public static final String PREFERENCE_ACCOUNT_TRADE_LICENSE ="trade_license";
+    public static final String PREFERENCE_ACCOUNT_REG_CERTIFICATE ="reg_certificate";
 
 
 

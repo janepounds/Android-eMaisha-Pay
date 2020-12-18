@@ -52,6 +52,20 @@ public class EmploymentInformationFragment extends Fragment {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
+        if(getArguments()!=null){
+            String employer = getArguments().getString("employer");
+            String designation =getArguments().getString("designation");
+            String location =getArguments().getString("location");
+            String employee_id =getArguments().getString("employee_id");
+
+            //set edit textviews
+            binding.employer.setText(employer);
+            binding.designaion.setText(designation);
+            binding.location.setText(location);
+            binding.employerId.setText(employee_id);
+
+        }
+
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Please Wait..");

@@ -25,8 +25,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -51,6 +55,7 @@ public class BusinessInformationFragment extends Fragment {
     private ImageView imageView;
     private ProgressDialog progressDialog;
 
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +70,32 @@ public class BusinessInformationFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+        if(getArguments()!=null){
+            String business_name = getArguments().getString("biz_name");
+            String business_location =getArguments().getString("biz_location");
+            String reg_no =getArguments().getString("reg_no");
+            String license_no =getArguments().getString("license_no");
+            String reg_cert =  getArguments().getString("reg_cert");
+
+            String trade_license =getArguments().getString("trade_license");
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.add_default_image)
+                    .error(R.drawable.add_default_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+
+            //set edit textviews
+            binding.businessName.setText(business_name);
+            binding.businessLocation.setText(business_location);
+            binding.registrationNumber.setText(reg_no);
+            binding.licenceNumber.setText(license_no);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+reg_cert).apply(options).into(binding.registrationCertificate);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+trade_license).apply(options).into(binding.tradeLicense);
+
+
+        }
 
         binding.registrationCertificate.setOnClickListener(v -> {
             imageView = binding.registrationCertificate;

@@ -239,6 +239,9 @@ public class AccountResponse {
         }
     }
     public class PersonalInfoData{
+        @SerializedName("pic")
+        @Expose
+        public String pic;
         @SerializedName("dob")
         @Expose
         public String dob;
@@ -251,6 +254,14 @@ public class AccountResponse {
         @SerializedName("next_of_kin_contact")
         @Expose
         public String next_of_kin_contact;
+
+        public String getPic() {
+            return pic;
+        }
+
+        public void setPic(String pic) {
+            this.pic = pic;
+        }
 
         public String getDob() {
             return dob;
