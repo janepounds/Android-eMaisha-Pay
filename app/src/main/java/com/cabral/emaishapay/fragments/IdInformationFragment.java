@@ -26,6 +26,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
@@ -77,12 +80,21 @@ public class IdInformationFragment extends Fragment {
             String idtype = getArguments().getString("idtype");
             String idNumber =getArguments().getString("idNumber");
             String expiryDate =getArguments().getString("expiryDate");
-
+            String front =getArguments().getString("front");
+            String back =getArguments().getString("back");
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.add_default_image)
+                    .error(R.drawable.add_default_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
 
             //set edit textviews
             selectSpinnerItemByValue(binding.idType, idtype);
             binding.idNumber.setText(idNumber);
             binding.expiryDate.setText(expiryDate);
+            Glide.with(requireContext()).load(front).apply(options).into(binding.idFront);
+            Glide.with(requireContext()).load(back).apply(options).into(binding.idBack);
 
 
         }

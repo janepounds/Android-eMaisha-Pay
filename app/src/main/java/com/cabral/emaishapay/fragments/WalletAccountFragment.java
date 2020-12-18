@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
@@ -64,6 +65,7 @@ public class WalletAccountFragment extends Fragment {
         binding.userName.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, requireContext())) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, requireContext())));
         binding.userEmail.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, requireContext()));
         binding.userPhone.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, requireContext())));
+        Glide.with(requireContext()).load(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context)).into(binding.userImage);
 
         //get account info
         retrieveAccountInfo();
@@ -110,6 +112,7 @@ public class WalletAccountFragment extends Fragment {
                 binding.textViewNokContact.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
 
 
+
             }
 
         });
@@ -120,6 +123,7 @@ public class WalletAccountFragment extends Fragment {
             bundle.putString("gender",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
             bundle.putString("nok",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, context));
             bundle.putString("nok_contact",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
+            bundle.putString("pic",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context));
             navController.navigate(R.id.action_walletAccountFragment_to_personalInformationFragment,bundle);
                 });
 
@@ -162,6 +166,8 @@ public class WalletAccountFragment extends Fragment {
                 binding.textViewIdType.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
                 binding.textViewIdNumber.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
                 binding.textViewExpiryDate.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
+//                Glide.with(requireContext()).load(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).into(binding.idFront);
+
             }
 
         });
@@ -172,6 +178,8 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("idtype",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
                     bundle.putString("idNumber",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
                     bundle.putString("expiryDate",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
+                    bundle.putString("front",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context));
+                    bundle.putString("back",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, context));
 
                     navController.navigate(R.id.action_walletAccountFragment_to_idInformationFragment,bundle);
                 });
@@ -291,6 +299,8 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("biz_location",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
                     bundle.putString("reg_no",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, context));
                     bundle.putString("license_no",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
+                    bundle.putString("reg_cert",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
+                    bundle.putString("trade_license",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
                     navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment,bundle);
                 });
 
@@ -328,6 +338,8 @@ public class WalletAccountFragment extends Fragment {
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, response.body().getBusinessInfo().getBusiness_location(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, response.body().getBusinessInfo().getRegistration_no(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, response.body().getBusinessInfo().getLicense_no(), context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, response.body().getBusinessInfo().getRegistration_cert(), context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, response.body().getBusinessInfo().getTrade_license(), context);
 
 
                     }else if(response.body().getEmployeeInfo()!=null){
@@ -343,11 +355,14 @@ public class WalletAccountFragment extends Fragment {
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, response.body().getProfile().getGender(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, response.body().getProfile().getNext_of_kin(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, response.body().getProfile().getNext_of_kin_contact(), context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, response.body().getProfile().getPic(), context);
 
                     }else if(response.body().getUserIdInfo()!=null){
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, response.body().getUserIdInfo().getId_type(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, response.body().getUserIdInfo().getId_number(), context);
                         WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, response.body().getUserIdInfo().getExpiry_date(), context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, response.body().getUserIdInfo().getFront(), context);
+                        WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, response.body().getUserIdInfo().getBack(), context);
                     }
 
 
