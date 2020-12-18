@@ -32,6 +32,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -58,6 +59,7 @@ public class PersonalInformationFragment extends Fragment {
     String encodedImageID = "N/A";
     private String selectedGender,displayGender;
 
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class PersonalInformationFragment extends Fragment {
             String gender = getArguments().getString("gender");
             String nok = getArguments().getString("nok");
             String nok_contact = getArguments().getString("nok_contact");
-            String pic = getArguments().getString("pic");
+            String pic = getArguments().getString("picture") ;
             if(gender.equalsIgnoreCase("F")){
                 displayGender = "Female";
             }else{
@@ -108,7 +110,7 @@ public class PersonalInformationFragment extends Fragment {
             binding.nextOfKinFirst.setText(nok_split[0]);
             binding.nextOfKinLast.setText(nok_split[1]);
             binding.nextOfKinContact.setText(nok_contact.substring(4));
-            Glide.with(requireContext()).load(pic).apply(options).into(binding.userPic);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +pic).apply(options).into(binding.userPic);
             Log.d(TAG, "onViewCreated: "+pic +gender);
 
         }

@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -60,6 +61,7 @@ public class IdInformationFragment extends Fragment {
     private ImageView imageView;
     private ProgressDialog progressDialog;
 
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class IdInformationFragment extends Fragment {
             String expiryDate =getArguments().getString("expiryDate");
             String front =getArguments().getString("front");
             String back =getArguments().getString("back");
+            Log.d(TAG, "onViewCreated: "+ ConstantValues.WALLET_DOMAIN+front);
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.drawable.add_default_image)
@@ -93,8 +96,8 @@ public class IdInformationFragment extends Fragment {
             selectSpinnerItemByValue(binding.idType, idtype);
             binding.idNumber.setText(idNumber);
             binding.expiryDate.setText(expiryDate);
-            Glide.with(requireContext()).load(front).apply(options).into(binding.idFront);
-            Glide.with(requireContext()).load(back).apply(options).into(binding.idBack);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+front).apply(options).into(binding.idFront);
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+back).apply(options).into(binding.idBack);
 
 
         }
