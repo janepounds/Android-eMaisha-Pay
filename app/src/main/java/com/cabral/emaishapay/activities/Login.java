@@ -36,8 +36,10 @@ import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.LocaleHelper;
 import com.cabral.emaishapay.utils.ValidateInputs;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -139,13 +141,17 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
 
-                dialogLoader.hideProgressDialog();
+
 
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
                         // Get the User Details from Response
                         userDetails = response.body().getData();
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
+                        editor.apply();
 
                         Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
                         Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
@@ -156,7 +162,7 @@ public class Login extends AppCompatActivity {
                         Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
 
                         loginUser(userDetails, binding.userPassword.getText().toString().trim());
-                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getEmail(), userDetails.getPhoneNumber(), Login.this);
+                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
                     } else if (response.body().getStatus() == 0) {
                         // Get the Error Message from Response
                         String message = response.body().getMessage();
@@ -171,6 +177,7 @@ public class Login extends AppCompatActivity {
                         Snackbar.make(findViewById(android.R.id.content), "Incorrect email or password", Snackbar.LENGTH_LONG).show();
                     }
                 }
+                dialogLoader.hideProgressDialog();
             }
 
             @Override

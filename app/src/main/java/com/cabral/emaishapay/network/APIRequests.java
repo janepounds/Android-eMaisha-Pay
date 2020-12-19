@@ -94,7 +94,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/token/get")
     Call<TokenResponse> getToken(
-            @Field("email") String email,
+            @Field("phoneNumber") String phoneNumber,
             @Field("password") String password
     );
 
