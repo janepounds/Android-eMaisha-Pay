@@ -11,7 +11,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@drawable/ic_bg"
+        android:background="@drawable/ic_medium_bg"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -183,7 +183,10 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:padding="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/background_round_white"
         android:gravity="center"
         android:orientation="vertical">
@@ -340,7 +343,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
 
@@ -387,9 +389,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginTop="5dp"
+
                 android:orientation="horizontal"
                 android:layout_gravity="center">
 
@@ -409,7 +411,7 @@
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Status"
                         android:layout_marginBottom="5dp"
@@ -419,7 +421,7 @@
                     <TextView
                         android:id="@+id/text_view_loan_status_preview_status"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Approved"
                         android:textColor="@color/colorPrimary"
@@ -599,7 +601,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_round_white"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="6dp"
             android:padding="6dp"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -627,7 +629,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="6dp"
             android:padding="6dp"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -669,7 +671,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_round_white"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="6dp"
                 android:padding="6dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -697,7 +699,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="6dp"
                 android:padding="6dp"
                 android:layout_weight="1"
                 android:orientation="vertical"

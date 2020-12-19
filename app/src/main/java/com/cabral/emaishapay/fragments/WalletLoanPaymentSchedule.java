@@ -7,7 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +24,9 @@ public class WalletLoanPaymentSchedule extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
     private LoanPaymentScheduleListAdapter loanPaymentScheduleListAdapter;
+    private NavController navController;
+    private Toolbar toolbar;
+    AppBarConfiguration appBarConfiguration;
 
     @Override
     public void onAttach(Context context) {
@@ -36,6 +44,7 @@ public class WalletLoanPaymentSchedule extends Fragment {
         loanPaymentScheduleListAdapter = new LoanPaymentScheduleListAdapter();
         recyclerView.setAdapter(loanPaymentScheduleListAdapter);
 
+        toolbar = view.findViewById(R.id.toolbar_payment_schedule);
 
         return view;
     }
@@ -43,5 +52,9 @@ public class WalletLoanPaymentSchedule extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController  = Navigation.findNavController(view);
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
     }
 }

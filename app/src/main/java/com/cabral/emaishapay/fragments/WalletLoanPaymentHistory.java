@@ -8,7 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +27,10 @@ public class WalletLoanPaymentHistory extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
     private LoanPaymentHistoryListAdapter loanPaymentHistoryListAdapter;
+    private NavController navController;
+    private Toolbar toolbar;
+    AppBarConfiguration appBarConfiguration;
+
 
 
     @Override
@@ -43,6 +52,7 @@ public class WalletLoanPaymentHistory extends Fragment {
         loanPaymentHistoryListAdapter = new LoanPaymentHistoryListAdapter();
         recyclerView.setAdapter(loanPaymentHistoryListAdapter);
 
+        toolbar = view.findViewById(R.id.toolbar_payment_history);
 
 
         return view;
@@ -51,5 +61,10 @@ public class WalletLoanPaymentHistory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController  = Navigation.findNavController(view);
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+
     }
 }
