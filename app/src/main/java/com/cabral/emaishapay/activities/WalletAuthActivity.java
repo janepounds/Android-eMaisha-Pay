@@ -58,17 +58,11 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
                         } else {
                             //login and get token
                             Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, com.cabral.emaishapay.activities.WalletAuthActivity.this));
-                            dialog.show();
-                            try{
 
-                                WalletAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, com.cabral.emaishapay.activities.WalletAuthActivity.this),  context);
 
-                                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-                            }catch (Exception e){
-                                Log.e("Error",e.getMessage());
-                            }finally {
-                                dialog.dismiss();
-                            }
+                            WalletAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, com.cabral.emaishapay.activities.WalletAuthActivity.this),  context,dialog);
+
+                            overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
 
                         }
                         return WalletPass.equals(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, context));
@@ -88,7 +82,9 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
 
     }
 
-    public static void getLoginToken(final String password, String phonenumber, final Context context) {
+    public static void getLoginToken(final String password, String phonenumber, final Context context,ProgressDialog dialog) {
+        if(dialog!=null)
+            dialog.show();
 
         /****RETROFIT IMPLEMENTATION*******/
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -103,8 +99,8 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
                     String accessToken = tokenResponse.getData().getAccess_token();
                     Log.d(TAG, accessToken);
                     WALLET_ACCESS_TOKEN = accessToken;
-
-
+                    if(dialog!=null)
+                        dialog.dismiss();
                     WalletHomeActivity.startHome(context);
                     //now you can go to next wallet page
                 }
@@ -124,12 +120,16 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
                     } else {
                         Log.e(TAG, "Something got very very wrong");
                     }
+                    if(dialog!=null)
+                        dialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<TokenResponse> call, @NotNull Throwable t) {
                 Log.e(TAG, String.valueOf(t.getMessage()));
+                if(dialog!=null)
+                    dialog.dismiss();
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
 
-                dialogLoader.hideProgressDialog();
+
 
                 if (response.isSuccessful()) {
 
@@ -162,7 +162,7 @@ public class Login extends AppCompatActivity {
                         Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
 
                         loginUser(userDetails, binding.userPassword.getText().toString().trim());
-                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
+                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
                     } else if (response.body().getStatus() == 0) {
                         // Get the Error Message from Response
                         String message = response.body().getMessage();
@@ -177,6 +177,7 @@ public class Login extends AppCompatActivity {
                         Snackbar.make(findViewById(android.R.id.content), "Incorrect email or password", Snackbar.LENGTH_LONG).show();
                     }
                 }
+                dialogLoader.hideProgressDialog();
             }
 
             @Override
