@@ -185,12 +185,12 @@
     <fragment
         android:id="@+id/walletLoanPaymentHistory"
         android:name="com.cabral.emaishapay.fragments.WalletLoanPaymentHistory"
-        android:label="WalletLoanPaymentHistory"
+        android:label="Payment History"
         tools:layout="@layout/payment_history"/>
     <fragment
         android:id="@+id/walletLoanPaymentSchedule"
         android:name="com.cabral.emaishapay.fragments.WalletLoanPaymentSchedule"
-        android:label="WalletLoanPaymentSchedule"
+        android:label="Payment Schedule"
         tools:layout="@layout/payment_schedule"/>
     <fragment
         android:id="@+id/transferMoney"

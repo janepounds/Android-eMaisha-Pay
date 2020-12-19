@@ -54,7 +54,7 @@
                         android:background="@android:color/white"
                         android:padding="10dp">
 
-                        <ImageView
+                        <com.cabral.emaishapay.customs.CircularImageView
                             android:id="@+id/user_image"
                             android:layout_width="65dp"
                             android:layout_height="65dp"
