@@ -347,9 +347,9 @@
                         android:text="Farm Insurance"
                         android:textSize="16sp"
                         android:layout_marginBottom="4dp"/>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/edittext_corner"
                         android:orientation="horizontal">
@@ -357,8 +357,8 @@
 
                         <Spinner
                             android:id="@+id/from_insurance_spn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
                             android:layout_weight="0.7"
                             android:paddingLeft="@dimen/dimen_10dp"
                             android:background="@android:color/transparent"
@@ -367,14 +367,14 @@
                             android:entries="@array/loan_farm_insurance" />
 
                         <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:padding="@dimen/dimen_10dp"
-                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
                             android:layout_weight="0.2"
                             android:src="@drawable/ic_chevron_down" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout

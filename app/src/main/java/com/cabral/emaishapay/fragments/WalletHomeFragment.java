@@ -23,7 +23,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cabral.emaishapay.DailogFragments.Buy;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -95,7 +94,7 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutTransfer.setOnClickListener(view110 -> navController.navigate(R.id.action_walletHomeFragment_to_transferMoney));
         binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
-        binding.layoutPay.setOnClickListener(view1 -> openBuy());
+        binding.layoutPay.setOnClickListener(view1 -> navController.navigate(R.id.action_walletHomeFragment_to_payFragment));
         binding.moreTransactionCards.setOnClickListener(view11 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
     }
 
@@ -269,18 +268,18 @@ public class WalletHomeFragment extends Fragment {
         });
     }
 
-    public void openBuy() {
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment buyFoodDialog = new Buy(context, requireActivity().getSupportFragmentManager());
-        buyFoodDialog.show(ft, "dialog");
-    }
+//    public void openBuy() {
+//        FragmentTransaction ft = fm.beginTransaction();
+//        Fragment prev = fm.findFragmentByTag("dialog");
+//        if (prev != null) {
+//            ft.remove(prev);
+//        }
+//        ft.addToBackStack(null);
+//
+//        // Create and show the dialog.
+//        DialogFragment buyFoodDialog = new PayFragment(context, requireActivity().getSupportFragmentManager());
+//        buyFoodDialog.show(ft, "dialog");
+//    }
 
     public void comingSoon() {
         ProgressDialog dialog = new ProgressDialog(context);

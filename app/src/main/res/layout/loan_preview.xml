@@ -38,8 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:padding="5dp"
         android:background="@drawable/background_round_white"
         android:gravity="center"
@@ -109,14 +109,13 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:text="Loan No.  : "
                     android:textColor="#31244A"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:gravity="end"/>
+                    android:maxLines="1"/>
 
                 <TextView
                     android:id="@+id/loan_number"
@@ -149,9 +148,8 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:text="Interest  : "
                     android:textColor="#31244A"
                     android:textSize="14sp"
@@ -183,8 +181,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout1"
         android:layout_marginTop="15dp"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:padding="5dp"
         android:background="@drawable/background_round_white"
         android:gravity="center"
@@ -241,7 +239,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_processing_fee"
                     android:gravity="end"/>
 
@@ -286,7 +284,7 @@
                     android:id="@+id/img_applied_on"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_payment_installment"
                     android:gravity="end"/>
 
@@ -324,8 +322,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout2"
         android:layout_marginTop="15dp"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:padding="5dp"
         android:background="@drawable/background_round_white"
         android:gravity="center"
@@ -351,7 +349,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_loan_duration"
                     android:gravity="end"/>
 
@@ -400,7 +398,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_status"
                     android:gravity="end"/>
 
@@ -457,7 +455,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_request_date"
                     android:gravity="end"/>
 
@@ -506,7 +504,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".4"
                     android:src="@drawable/ic_request_date"
                     android:gravity="end"/>
 
@@ -545,8 +543,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout3"
         android:layout_marginTop="15dp"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/background_round_white"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -559,7 +557,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".2"
             android:layout_gravity="end"
             android:src="@drawable/ic_loan_purpose"/>
 
@@ -592,8 +590,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_below="@id/layout4"
         android:orientation="horizontal">
 
@@ -602,7 +600,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_round_white"
             android:layout_marginEnd="10dp"
-            android:padding="10dp"
+            android:padding="6dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -612,13 +610,14 @@
                 android:text="National ID Front"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
                 android:textColor="#31244A"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/image_view_loan_status_preview_nid_front"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add_default_image" />
@@ -629,7 +628,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:padding="10dp"
+            android:padding="6dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:background="@drawable/background_round_white">
@@ -640,13 +639,14 @@
                 android:text="National ID Back"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
                 android:textColor="#31244A"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/image_view_loan_status_preview_nid_back"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add_default_image" />
@@ -655,73 +655,77 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/layout5"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/layout6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_round_white"
-            android:layout_marginEnd="10dp"
-            android:padding="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_below="@id/layout4"
+            android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Photo Holding ID"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="#31244A"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:background="@drawable/background_round_white"
+                android:layout_marginEnd="10dp"
+                android:padding="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image_view_loan_status_preview_user_photo"
-                android:layout_width="180dp"
-                android:layout_height="120dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add_default_image" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photo Holding ID"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#31244A"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/image_view_loan_status_preview_user_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/add_default_image" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:padding="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/background_round_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Farm Photo        "
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#31244A"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:id="@+id/image_view_loan_status_preview_farm_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/add_default_image" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:padding="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@drawable/background_round_white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Farm Photo"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="#31244A"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/image_view_loan_status_preview_farm_photo"
-                android:layout_width="180dp"
-                android:layout_height="120dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add_default_image" />
-
-        </LinearLayout>
-
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -735,21 +739,29 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:background="@drawable/rectangular_green_solid"
             android:text="Payment Schedule"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/payment_history_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/rectangular_purple_solid"
-            android:text="Payment History"
+            android:text="Payment History "
+            android:textSize="13sp"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"/>
 
     </LinearLayout>
     </LinearLayout>

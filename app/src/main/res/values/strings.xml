@@ -309,6 +309,13 @@
         <item>Mobile Number</item>
         <item>Bank</item>
     </string-array>
+    <string-array name="payment_method">
+        <item>Select</item>
+        <item>Wallet</item>
+        <item>eMaisha Card</item>
+        <item>Mobile Money</item>
+        <item>Bank Cards</item>
+    </string-array>
 
     <string-array name="crop_havest_units">
         <item>Select</item>
