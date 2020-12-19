@@ -109,7 +109,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/edittext_corner"
-                                android:inputType="textEmailAddress|textNoSuggestions"
+                                android:inputType="number"
                                 android:paddingStart="@dimen/dimen_10dp"
                                 android:paddingEnd="@dimen/dimen_10dp"
                                 android:textSize="14sp" />
