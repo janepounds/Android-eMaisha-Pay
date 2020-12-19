@@ -163,32 +163,32 @@ public class Login extends AppCompatActivity {
                     ft.addToBackStack(null);
                     Bundle bundle = new Bundle();
                     bundle.putString("sms_code",response.body().getData().getSms_code());
-
-                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
-                        // Get the User Details from Response
-                        userDetails = response.body().getData();
-
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
-                        editor.apply();
-
-                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-
-                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
-                    } else if (response.body().getStatus() == 0) {
-                        // Get the Error Message from Response
-                        String message = response.body().getMessage();
-                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
-                    }
+//
+//                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
+//                        // Get the User Details from Response
+//                        userDetails = response.body().getData();
+//
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
+//                        editor.apply();
+//
+//                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+//                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+//                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+//                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+//                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+//                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+//                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+//
+//                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
+//                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
+//                    } else if (response.body().getStatus() == 0) {
+//                        // Get the Error Message from Response
+//                        String message = response.body().getMessage();
+//                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
+//                    }
 
                     // Create and show the dialog.
                     DialogFragment payLoandialog = new LoginOtpDialog(getApplicationContext(),fm);
