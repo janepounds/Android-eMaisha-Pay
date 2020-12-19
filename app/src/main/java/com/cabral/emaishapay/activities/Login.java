@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,20 +22,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.LoginBinding;
-import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 
-import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.user_model.UserData;
-import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.LocaleHelper;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.venmo.android.pin.PinFragment;
@@ -57,11 +50,8 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     private static final String TAG = "Login";
     private LoginBinding binding;
 
-    User_Info_DB userInfoDB;
     DialogLoader dialogLoader;
     APIRequests apiRequests;
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
 ;
 
     @SuppressLint("WrongViewCast")
@@ -76,9 +66,6 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
         // Binding Layout Views
         dialogLoader = new DialogLoader(com.cabral.emaishapay.activities.Login.this);
-
-        userInfoDB = new User_Info_DB();
-        sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
 //        binding.userEmail.setText(sharedPreferences.getString("userEmail", null));
 
@@ -134,8 +121,6 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     //*********** Proceed Login with User Email and Password ********//
 
     private void processLogin(String phonenumber) {
-
-
         //call the otp end point
         //********************RETROFIT IMPLEMENTATION*************************//
         Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
@@ -144,32 +129,6 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful()){
 
-//
-//
-//                        // Get the User Details from Response
-//                        userDetails = response.body().getData().getUserData();
-//
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
-//                        editor.apply();
-//
-//                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-//                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-//                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-//                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-//                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-//                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-//                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-
-//                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-//                        TokenAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
-//                    } else if (response.body().getStatus() == 0) {
-//                        // Get the Error Message from Response
-//                        String message = response.body().getMessage();
-//                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
-//                    }
                     //call otp dialog
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
@@ -196,100 +155,8 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             }
         });
 
-//        Call<WalletAuthentication> call = apiRequests.authenticate(binding.userEmail.getText().toString().trim(), binding.userPassword.getText().toString().trim());
-//
-//        call.enqueue(new Callback<WalletAuthentication>() {
-//            @Override
-//            public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
-//
-//                dialogLoader.hideProgressDialog();
-//
-//                if (response.isSuccessful()) {
-//
-//                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
-//                        // Get the User Details from Response
-//                        userDetails = response.body().getData();
-//
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
-//                        editor.apply();
-//
-//                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-//                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-//                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-//                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-//                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-//                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-//                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-//
-//                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-//                        TokenAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
-//                    } else if (response.body().getStatus() == 0) {
-//                        // Get the Error Message from Response
-//                        String message = response.body().getMessage();
-//                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                } else {
-//                    // Show the Error Message
-//                    if (response.message().equals("Bad Request")) {
-//                        Snackbar.make(findViewById(android.R.id.content), "Incorrect email or password", Snackbar.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NotNull Call<WalletAuthentication> call, @NotNull Throwable t) {
-//                dialogLoader.hideProgressDialog();
-//                Snackbar.make(findViewById(android.R.id.content), "Unexpected error, please try again later", Snackbar.LENGTH_LONG).show();
-//            }
-//        });
     }
 
-    private void loginUser(WalletAuthentication.UserData userDetails, String password) {
-        // Save User Data to Local Databases
-        if (userInfoDB.getUserData(userDetails.getId() + "") != null) {
-            // User already exists
-            userInfoDB.updateUserData(userDetails, password);
-        } else {
-            // Insert Details of New User
-            userInfoDB.insertUserData(userDetails, password);
-        }
-        Log.e(TAG, userDetails.getId() + "");
-        // Save necessary details in SharedPrefs
-        editor = sharedPreferences.edit();
-        editor.putString(WalletHomeActivity.PREFERENCES_USER_ID, userDetails.getId() + "");
-        editor.putString(WalletHomeActivity.PREFERENCES_USER_EMAIL, userDetails.getEmail());
-        editor.putString(WalletHomeActivity.PREFERENCES_FIRST_NAME, userDetails.getFirstname());
-        editor.putString(WalletHomeActivity.PREFERENCES_LAST_NAME, userDetails.getLastname());
-        editor.putString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, userDetails.getPhoneNumber());
-
-        editor.putString("addressStreet", userDetails.getAddressStreet());
-        editor.putString("addressCityOrTown", userDetails.getAddressCityOrTown());
-        editor.putString("address_district", userDetails.getAddressCityOrTown());
-        editor.putString("addressCountry", userDetails.getAddressCityOrTown());
-
-        editor.putBoolean("isLogged_in", true);
-        editor.apply();
-        TokenAuthActivity.WALLET_ACCESS_TOKEN = null;
-
-        // Set UserLoggedIn in MyAppPrefsManager
-        MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(this);
-        myAppPrefsManager.logInUser();
-
-        // Set isLogged_in of ConstantValues
-        ConstantValues.IS_USER_LOGGED_IN = myAppPrefsManager.isUserLoggedIn();
-        StartAppRequests.RegisterDeviceForFCM(this);
-        EmaishaPayApp.checkWalletAccount(userDetails.getEmail(), userDetails.getPhoneNumber());
-
-        // Navigate back to MainActivity
-        Intent i = new Intent(com.cabral.emaishapay.activities.Login.this, WalletHomeActivity.class);
-        startActivity(i);
-        finish();
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_out_right);
-    }
 
     private void processForgotPassword(String email) {
         dialogLoader.showProgressDialog();
@@ -322,19 +189,6 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         });
     }
 
-    //*********** Validate Login Form Inputs ********//
-
-//    private boolean validateLogin() {
-//        if (!ValidateInputs.isValidEmail(binding.userEmail.getText().toString().trim())) {
-//            binding.userEmail.setError(getString(R.string.invalid_email));
-//            return false;
-//        } else if (!ValidateInputs.isValidPassword(binding.userPassword.getText().toString().trim())) {
-//            binding.userPassword.setError(getString(R.string.invalid_password));
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
 
     private boolean validateLogin(){
         if(binding.userPhone.getText().toString().isEmpty()) {
@@ -350,7 +204,6 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     }
 
     //*********** Set the Base Context for the ContextWrapper ********//
-
     @Override
     protected void attachBaseContext(Context newBase) {
 

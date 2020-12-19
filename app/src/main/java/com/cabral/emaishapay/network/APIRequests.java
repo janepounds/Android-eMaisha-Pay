@@ -181,14 +181,7 @@ public interface APIRequests {
             /*@Header("Authorization") String token*/
     );
 
-//    @POST("wallet/loan/comfirmRequest")
-//    Call<RequestLoanresponse> comfirmLoanApplication(@Header("Authorization") String token,
-//                                                     @Query("userId") String userId,
-//                                                     @Query("amount") double amount,
-//                                                     @Query("duration") int duration,
-//                                                     @Query("interest") double interest,
-//                                                     @Query("loanType") String loanType
-//    );
+
 
     //request loans
     @POST("wallet/loan/user/request")
@@ -196,16 +189,6 @@ public interface APIRequests {
                                            @Body JSONObject object
     );
 
-    //add loan photos
-    @POST("wallet/loan/user/photos/add")
-    Call<WalletLoanAddPicResponse> addLoanPhotos(@Header("Authorization") String token,
-                                                 JSONObject object
-    );
-
-    //get wallet user by phone
-    @GET("wallet/user/get/receiver_by_phone/{phoneNumber}")
-    Call<UserData> getWalletUser(@Path("phoneNumber") String phoneNumber
-    );
 
     //create user credit
     @FormUrlEncoded

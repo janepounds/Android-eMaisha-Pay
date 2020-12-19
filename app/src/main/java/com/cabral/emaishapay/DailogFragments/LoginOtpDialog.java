@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,22 +83,88 @@ public class LoginOtpDialog extends DialogFragment {
         code4 = view.findViewById(R.id.otp_code4_et);
         btn_submit = view.findViewById(R.id.btn_submit);
 
+        code1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code2.requestFocus();
+            }
+        });
+
+
+        code2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code3.requestFocus();
+            }
+        });
+
+        code3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code4.requestFocus();
+            }
+        });
+
+
+        code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateEnteredCode();
+            }
+        });
+
         btn_submit.setOnClickListener(v -> {
 
-            String code = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString();
-
-
-            String sms_code = getArguments().getString("sms_code");
-            if (sms_code.equalsIgnoreCase(code)) {
-                //fetch session data
-                Auth2Activity.startAuth(context,phonenumber,1);
-            } else {
-                Toast.makeText(context, "Enter valid code", Toast.LENGTH_LONG).show();
-            }
+          validateEnteredCode();
 
         });
 
 
+    }
+
+    private void validateEnteredCode() {
+        String code = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString();
+
+
+        String sms_code = getArguments().getString("sms_code");
+        if (sms_code.equalsIgnoreCase(code)) {
+            //fetch session data
+            Auth2Activity.startAuth(context,phonenumber,1);
+        } else {
+            Toast.makeText(context, "Enter valid code", Toast.LENGTH_LONG).show();
+        }
     }
 
 
