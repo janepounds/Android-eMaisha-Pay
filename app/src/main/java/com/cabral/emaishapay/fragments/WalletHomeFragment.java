@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,7 +23,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionAdapter;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
@@ -41,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,7 +133,7 @@ public class WalletHomeFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
         timerDelayRemoveDialog(20000,dialog);
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -195,7 +192,7 @@ public class WalletHomeFragment extends Fragment {
                     dialog.dismiss();
                 } else if (response.code() == 401) {
 
-                    WalletAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(context, true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -232,7 +229,7 @@ public class WalletHomeFragment extends Fragment {
     public void updateBalance() {
 
 
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<BalanceResponse> call = apiRequests.requestBalance(access_token);
         call.enqueue(new Callback<BalanceResponse>() {
@@ -253,7 +250,7 @@ public class WalletHomeFragment extends Fragment {
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getContext(), WalletAuthActivity.class));
+                    startActivity(new Intent(getContext(), TokenAuthActivity.class));
                     getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
@@ -265,7 +262,7 @@ public class WalletHomeFragment extends Fragment {
                 progressDialog.dismiss();
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
-                WalletAuthActivity.startAuth(context, false);
+                TokenAuthActivity.startAuth(context, false);
             }
         });
     }

@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +20,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
-import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
 
 import java.text.NumberFormat;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WalletLoanPreviewRequestFragment extends Fragment {
     private static final String TAG = "WalletLoanPreviewRequest";

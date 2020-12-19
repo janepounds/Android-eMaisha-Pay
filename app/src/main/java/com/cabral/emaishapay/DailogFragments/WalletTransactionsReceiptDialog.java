@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
-import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
-import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,10 +24,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WalletTransactionsReceiptDialog extends DialogFragment {
 

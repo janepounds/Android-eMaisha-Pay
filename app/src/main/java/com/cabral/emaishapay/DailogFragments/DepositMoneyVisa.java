@@ -39,7 +39,7 @@ import com.flutterwave.raveutils.verification.PinFragment;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
@@ -201,7 +201,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         double amount = Float.parseFloat(amountEntered);
         String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL,this.activity);
         /************RETROFIT IMPLEMENTATION*******************/
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<WalletTransaction> call = apiRequests.creditUser(access_token,email,amount,txRef);
         call.enqueue(new Callback<WalletTransaction>() {
@@ -217,7 +217,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                    WalletAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(activity, true);
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();

@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
@@ -129,7 +129,7 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber);
@@ -151,7 +151,7 @@ public class ConfirmTransfer extends DialogFragment {
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    WalletAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(activity, true);
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));
@@ -182,7 +182,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     public void initiateTransfer(final String phoneNumber, final float amount) {
         ProgressDialog dialog;
-        String access_token =WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
         dialog = new ProgressDialog(activity);
         dialog.setIndeterminate(true);
@@ -221,7 +221,7 @@ public class ConfirmTransfer extends DialogFragment {
 
                 }
                 else if(response.code() == 401) {
-                    WalletAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(activity, true);
                 }
                     else if (response.code() == 500) {
                         errorTextView.setText("Error Occurred Try again later");

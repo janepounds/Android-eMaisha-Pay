@@ -26,7 +26,7 @@
     <string name="last_name"> Last Name </string>
     <string name="email"> Email </string>
     <string name="email_address"> Email Address </string>
-<!--    <string name="phone_number"> Phone Number </string>-->
+    <!--    <string name="phone_number"> Phone Number </string>-->
     <string name="dob"> Date of Birth </string>
     <string name="gender"> Gender </string>
     <string name="male"> Male </string>

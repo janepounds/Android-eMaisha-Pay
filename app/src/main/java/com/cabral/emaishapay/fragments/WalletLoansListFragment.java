@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.DailogFragments.PayLoan;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
 import com.cabral.emaishapay.models.CancelLoanResponse;
@@ -130,7 +130,7 @@ public class WalletLoansListFragment extends Fragment {
 
         /*************RETROFIT IMPLEMENTATION********************/
 
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 
@@ -209,7 +209,7 @@ public class WalletLoansListFragment extends Fragment {
                 Log.e("info : ", "Something got very wrong");
 
                 dialog.dismiss();
-                WalletAuthActivity.startAuth(context, true);
+                TokenAuthActivity.startAuth(context, true);
             }
         });
     }
@@ -230,7 +230,7 @@ public class WalletLoansListFragment extends Fragment {
 
     public void cancelLoan(){
 
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 

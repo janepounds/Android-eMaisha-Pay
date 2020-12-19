@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cabral.emaishapay">
 
-    <uses-permission android:name="com.google.android.providers.gsf.permission.
-   READ_GSERVICES" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.    READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,6 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".app.EmaishaPayApp"
         android:allowBackup="true"
         android:icon="@drawable/emaishapay_logo_icon"
         android:label="@string/app_name"
@@ -20,11 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:name=".app.EmaishaPayApp"
         tools:replace="android:usesCleartextTraffic,android:theme">
+        <activity android:name=".activities.Auth2Activity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
@@ -32,13 +34,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/MySplashScreen"
             tools:ignore="LockedOrientationActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.WalletHomeActivity"
             android:label="@string/app_name"
@@ -51,16 +52,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WalletAuthActivity"
+            android:name=".activities.TokenAuthActivity"
             android:label="Authentication" />
         <activity
             android:name=".activities.SignUp"
             android:label="Sign UP" />
-
         <activity
             android:name=".activities.Login"
             android:label="Sign In" />
-
     </application>
 
 </manifest>

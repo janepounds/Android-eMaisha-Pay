@@ -32,7 +32,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.Referee;
@@ -259,7 +259,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         JSONObject requestObject = new JSONObject();
         try {
@@ -305,7 +305,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                     }
 
                 } else if (response.code() == 401) {
-                    WalletAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(context, true);
                 } else if (response.code() == 500) {
                     textViewErrorMessage.setText("Error Occurred Try again later");
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());

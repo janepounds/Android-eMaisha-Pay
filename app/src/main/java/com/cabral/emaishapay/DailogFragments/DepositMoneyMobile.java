@@ -22,14 +22,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
@@ -200,7 +199,7 @@ public class DepositMoneyMobile extends DialogFragment {
         double amount = Float.parseFloat(amountEntered);
         String referenceNumber = txRef;
         String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, this.activity);
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<WalletTransaction> call = apiRequests.creditUser(access_token,email,amount,referenceNumber);
         call.enqueue(new Callback<WalletTransaction>() {
@@ -216,7 +215,7 @@ public class DepositMoneyMobile extends DialogFragment {
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                        WalletAuthActivity.startAuth(activity, true);
+                        TokenAuthActivity.startAuth(activity, true);
                     } else if (response.code() == 500) {
                         if (response.errorBody() != null) {
                             Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();

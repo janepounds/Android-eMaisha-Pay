@@ -25,8 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WalletAuthActivity extends AppCompatActivity implements PinFragment.Listener {
-    private static final String TAG = "WalletAuthActivity";
+public class TokenAuthActivity extends AppCompatActivity implements PinFragment.Listener {
+    private static final String TAG = "TokenAuthActivity";
     static TextView errorTextView;
     private Context context;
     public static String WALLET_ACCESS_TOKEN = null;
@@ -40,11 +40,11 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
         errorTextView = findViewById(R.id.text_view_crop_user_error);
-        context = com.cabral.emaishapay.activities.WalletAuthActivity.this;
+        context = TokenAuthActivity.this;
 
-        if ( WalletAuthActivity.WALLET_ACCESS_TOKEN == null) {
+        if ( TokenAuthActivity.WALLET_ACCESS_TOKEN == null) {
 
-            PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(com.cabral.emaishapay.activities.WalletAuthActivity.this)
+            PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(TokenAuthActivity.this)
                     .validator(submission -> {
 
                         final ProgressDialog dialog = new ProgressDialog(context);
@@ -54,13 +54,13 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
                         String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + submission;
 
                         if (submission.length() < 4) {
-                            Toast.makeText(com.cabral.emaishapay.activities.WalletAuthActivity.this, "Enter PIN!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TokenAuthActivity.this, "Enter PIN!", Toast.LENGTH_SHORT).show();
                         } else {
                             //login and get token
-                            Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, com.cabral.emaishapay.activities.WalletAuthActivity.this));
+                            Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, TokenAuthActivity.this));
 
 
-                            WalletAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, com.cabral.emaishapay.activities.WalletAuthActivity.this),  context,dialog);
+                            TokenAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, TokenAuthActivity.this),  context,dialog);
 
                             overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
 
@@ -136,7 +136,7 @@ public class WalletAuthActivity extends AppCompatActivity implements PinFragment
     }
 
     public static void startAuth(Context context, boolean sessionExpired) {
-        Intent authenticate = new Intent(context, com.cabral.emaishapay.activities.WalletAuthActivity.class);
+        Intent authenticate = new Intent(context, TokenAuthActivity.class);
         authenticate.putExtra("sessionExpired", sessionExpired);
         context.startActivity(authenticate);
     }

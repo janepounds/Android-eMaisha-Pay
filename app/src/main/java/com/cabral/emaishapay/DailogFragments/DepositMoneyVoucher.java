@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.network.APIClient;
@@ -99,7 +99,7 @@ public class DepositMoneyVoucher extends DialogFragment {
     public void initiateDeposit(){
         dialog.show();
         /************RETROFIT IMPLEMENTATION*************/
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL,this.activity);
         String phoneNumber =  WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,this.activity);
         String codeEntered = voucherTxt.getText().toString();
@@ -112,7 +112,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                 if(response.code()== 200){
                     refreshActivity();
                 }else if(response.code()==401){
-                    WalletAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(activity, true);
                 }else if(response.code()==500){
                     if (response.errorBody() != null) {
                         errorMsgTxt.setText(response.body().getMessage());

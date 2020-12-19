@@ -5,10 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +23,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
-import com.cabral.emaishapay.DailogFragments.PayLoan;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.LoginBinding;
@@ -43,14 +40,9 @@ import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.LocaleHelper;
 import com.cabral.emaishapay.utils.ValidateInputs;
-import com.google.gson.Gson;
+import com.venmo.android.pin.PinFragment;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
@@ -61,7 +53,7 @@ import retrofit2.Response;
  * Login activity handles User's Email, Facebook and Google Login
  **/
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements PinFragment.Listener{
     private static final String TAG = "Login";
     private LoginBinding binding;
 
@@ -70,8 +62,7 @@ public class Login extends AppCompatActivity {
     APIRequests apiRequests;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
-
-    private WalletAuthentication.UserData userDetails;
+;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -132,7 +123,7 @@ public class Login extends AppCompatActivity {
 
             if (isValidData) {
                 // Proceed User Login
-                processLogin();
+                processLogin(binding.userPhone.getText().toString());
             }
 
 
@@ -142,12 +133,12 @@ public class Login extends AppCompatActivity {
 
     //*********** Proceed Login with User Email and Password ********//
 
-    private void processLogin() {
+    private void processLogin(String phonenumber) {
 
 
         //call the otp end point
         //********************RETROFIT IMPLEMENTATION*************************//
-        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(binding.userPhone.getText().toString());
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
@@ -171,7 +162,7 @@ public class Login extends AppCompatActivity {
 //                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
 
 //                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-//                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
+//                        TokenAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
 //                    } else if (response.body().getStatus() == 0) {
 //                        // Get the Error Message from Response
 //                        String message = response.body().getMessage();
@@ -191,7 +182,7 @@ public class Login extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("sms_code",response.body().getData().getSms_code());
                     // Create and show the dialog.
-                    DialogFragment payLoandialog = new LoginOtpDialog(getApplicationContext(),fm);
+                    DialogFragment payLoandialog = new LoginOtpDialog(Login.this,fm,phonenumber);
                     payLoandialog.setArguments(bundle);
                     payLoandialog.show(ft, "dialog");
                 }
@@ -232,7 +223,7 @@ public class Login extends AppCompatActivity {
 //                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
 //
 //                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-//                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
+//                        TokenAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
 //                    } else if (response.body().getStatus() == 0) {
 //                        // Get the Error Message from Response
 //                        String message = response.body().getMessage();
@@ -282,7 +273,7 @@ public class Login extends AppCompatActivity {
 
         editor.putBoolean("isLogged_in", true);
         editor.apply();
-        WalletAuthActivity.WALLET_ACCESS_TOKEN = null;
+        TokenAuthActivity.WALLET_ACCESS_TOKEN = null;
 
         // Set UserLoggedIn in MyAppPrefsManager
         MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(this);
@@ -376,6 +367,16 @@ public class Login extends AppCompatActivity {
     public void onBackPressed() {
         // Close app entirely
         finishAffinity();
+    }
+
+    @Override
+    public void onValidated() {
+
+    }
+
+    @Override
+    public void onPinCreated() {
+
     }
 }
 

@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
@@ -125,7 +125,7 @@ public class PurchasePreview extends DialogFragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         int merchantId = Integer.parseInt(WalletPurchase.getInstance().getMechantId());
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<MerchantInfoResponse> call = apiRequests.getMerchant(access_token,merchantId);
@@ -147,7 +147,7 @@ public class PurchasePreview extends DialogFragment {
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    WalletAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(activity, true);
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));
@@ -182,7 +182,7 @@ public class PurchasePreview extends DialogFragment {
         double amount = WalletPurchase.getInstance().getAmount();
         String coupon  = WalletPurchase.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         ProgressDialog dialog;
         dialog = new ProgressDialog(activity);
         dialog.setIndeterminate(true);

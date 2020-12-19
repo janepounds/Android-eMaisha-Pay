@@ -20,10 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletAuthActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 
@@ -83,7 +82,7 @@ public class WalletTransactionsListFragment extends Fragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -112,7 +111,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     dialog.dismiss();
                 } else if (response.code() == 401) {
 
-                    WalletAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(context, true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
