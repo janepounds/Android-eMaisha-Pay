@@ -19,11 +19,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
+import com.cabral.emaishapay.DailogFragments.PayLoan;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.LoginBinding;
 import com.cabral.emaishapay.models.WalletAuthentication;
+import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
@@ -82,7 +89,7 @@ public class Login extends AppCompatActivity {
         userInfoDB = new User_Info_DB();
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
-        binding.userEmail.setText(sharedPreferences.getString("userEmail", null));
+//        binding.userEmail.setText(sharedPreferences.getString("userEmail", null));
 
         binding.forgotPasswordText.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.DialogFullscreen);
@@ -127,64 +134,101 @@ public class Login extends AppCompatActivity {
                 // Proceed User Login
                 processLogin();
             }
+
+
+
         });
     }
 
     //*********** Proceed Login with User Email and Password ********//
 
     private void processLogin() {
-        dialogLoader.showProgressDialog();
 
-        Call<WalletAuthentication> call = apiRequests.authenticate(binding.userEmail.getText().toString().trim(), binding.userPassword.getText().toString().trim());
 
-        call.enqueue(new Callback<WalletAuthentication>() {
+        //call the otp end point
+        //********************RETROFIT IMPLEMENTATION*************************//
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(binding.userPhone.getText().toString());
+        call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
-            public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
-
-                dialogLoader.hideProgressDialog();
-
-                if (response.isSuccessful()) {
-
-                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
-                        // Get the User Details from Response
-                        userDetails = response.body().getData();
-
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
-                        editor.apply();
-
-                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-
-                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
-                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
-                    } else if (response.body().getStatus() == 0) {
-                        // Get the Error Message from Response
-                        String message = response.body().getMessage();
-                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
+                if(response.isSuccessful()){
+                    //call otp dialog
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
                     }
 
-                } else {
-                    // Show the Error Message
-                    if (response.message().equals("Bad Request")) {
-                        Snackbar.make(findViewById(android.R.id.content), "Incorrect email or password", Snackbar.LENGTH_LONG).show();
-                    }
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("sms_code",response.body().getData().getSms_code());
+
+
+                    // Create and show the dialog.
+                    DialogFragment payLoandialog = new LoginOtpDialog(getApplicationContext(),fm);
+                    payLoandialog.setArguments(bundle);
+                    payLoandialog.show(ft, "dialog");
                 }
+
             }
 
             @Override
-            public void onFailure(@NotNull Call<WalletAuthentication> call, @NotNull Throwable t) {
-                dialogLoader.hideProgressDialog();
-                Snackbar.make(findViewById(android.R.id.content), "Unexpected error, please try again later", Snackbar.LENGTH_LONG).show();
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+
             }
         });
+
+//        Call<WalletAuthentication> call = apiRequests.authenticate(binding.userEmail.getText().toString().trim(), binding.userPassword.getText().toString().trim());
+//
+//        call.enqueue(new Callback<WalletAuthentication>() {
+//            @Override
+//            public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
+//
+//                dialogLoader.hideProgressDialog();
+//
+//                if (response.isSuccessful()) {
+//
+//                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
+//                        // Get the User Details from Response
+//                        userDetails = response.body().getData();
+//
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
+//                        editor.apply();
+//
+//                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+//                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+//                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+//                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+//                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+//                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+//                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+//
+//                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
+//                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this);
+//                    } else if (response.body().getStatus() == 0) {
+//                        // Get the Error Message from Response
+//                        String message = response.body().getMessage();
+//                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } else {
+//                    // Show the Error Message
+//                    if (response.message().equals("Bad Request")) {
+//                        Snackbar.make(findViewById(android.R.id.content), "Incorrect email or password", Snackbar.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NotNull Call<WalletAuthentication> call, @NotNull Throwable t) {
+//                dialogLoader.hideProgressDialog();
+//                Snackbar.make(findViewById(android.R.id.content), "Unexpected error, please try again later", Snackbar.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     private void loginUser(WalletAuthentication.UserData userDetails, String password) {
@@ -263,16 +307,29 @@ public class Login extends AppCompatActivity {
 
     //*********** Validate Login Form Inputs ********//
 
-    private boolean validateLogin() {
-        if (!ValidateInputs.isValidEmail(binding.userEmail.getText().toString().trim())) {
-            binding.userEmail.setError(getString(R.string.invalid_email));
+//    private boolean validateLogin() {
+//        if (!ValidateInputs.isValidEmail(binding.userEmail.getText().toString().trim())) {
+//            binding.userEmail.setError(getString(R.string.invalid_email));
+//            return false;
+//        } else if (!ValidateInputs.isValidPassword(binding.userPassword.getText().toString().trim())) {
+//            binding.userPassword.setError(getString(R.string.invalid_password));
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+
+    private boolean validateLogin(){
+        if(binding.userPhone.getText().toString().isEmpty()) {
+            binding.userPhone.setError("Enter a phone number");
             return false;
-        } else if (!ValidateInputs.isValidPassword(binding.userPassword.getText().toString().trim())) {
-            binding.userPassword.setError(getString(R.string.invalid_password));
+        }else if(binding.userPhone.getText().toString().length()<10){
+            binding.userPhone.setError("Enter valid phone number");
             return false;
-        } else {
+        }else{
             return true;
         }
+
     }
 
     //*********** Set the Base Context for the ContextWrapper ********//

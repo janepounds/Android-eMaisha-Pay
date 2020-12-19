@@ -2,6 +2,7 @@ package com.cabral.emaishapay.network;
 
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
+import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
@@ -71,12 +72,17 @@ public interface APIRequests {
     @POST("user/check_account")
     Call<TokenResponse> checkWalletAccount(@Field("email") String email, @Field("phoneNumber") String phonenumber);
 
+//    //wallet authentication
+//    @FormUrlEncoded
+//    @POST("emaishawallet/user/authenticate")
+//    Call<WalletAuthentication> authenticate(@Field("email") String email,
+//                                            @Field("password") String password
+//    );
+
     //wallet authentication
     @FormUrlEncoded
-    @POST("emaishawallet/user/authenticate")
-    Call<WalletAuthentication> authenticate(@Field("email") String email,
-                                            @Field("password") String password
-    );
+    @POST("authenticate/emaishapay_app_user/login")
+    Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber);
 
     //wallet registration
     @FormUrlEncoded

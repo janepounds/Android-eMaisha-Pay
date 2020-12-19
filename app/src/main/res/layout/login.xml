@@ -100,11 +100,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:text="@string/email_address"
+                                android:text="@string/phone_number"
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/user_email"
+                                android:id="@+id/user_phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/edittext_corner"
@@ -120,7 +120,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -154,7 +155,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:background="@color/transparent"
-                                android:text="@string/login"
+                                android:text="@string/next"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/button_text_size" />
