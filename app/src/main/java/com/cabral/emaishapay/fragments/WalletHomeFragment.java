@@ -3,7 +3,9 @@ package com.cabral.emaishapay.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +73,8 @@ public class WalletHomeFragment extends Fragment {
 
         fm = requireActivity().getSupportFragmentManager();
         getTransactionsData();
-        binding.walletBalance.setText("UGX " + NumberFormat.getInstance().format(balance));
-        updateBalance();
+        binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
+        new MyTask(WalletHomeFragment.this).execute();
 
         binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
 
@@ -226,7 +229,7 @@ public class WalletHomeFragment extends Fragment {
         return ini.toUpperCase();
     }
     public void updateBalance() {
-        progressDialog.show();
+
 
         String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -241,7 +244,11 @@ public class WalletHomeFragment extends Fragment {
 
                     Log.d(TAG, "onSuccess: Balance = " + balance);
 
-                    binding.walletBalance.setText("UGX " + NumberFormat.getInstance().format(balance));
+                    //save balance in shared preference
+                     WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), String.valueOf(balance), context);
+
+                    Log.d(TAG, "onResponse: "+WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
+
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
@@ -281,5 +288,63 @@ public class WalletHomeFragment extends Fragment {
         dialog.setMessage("Coming Soon ..!!");
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+
+    private class MyTask extends AsyncTask<String, Void, String> {
+        private WeakReference<WalletHomeFragment> fragmentReference;
+        private Context context;
+
+        // only retain a weak reference to the activity
+        MyTask(WalletHomeFragment context) {
+            fragmentReference = new WeakReference<>(context);
+            progressDialog = new ProgressDialog(context.context);
+            this.context = context.context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            //update balance
+            updateBalance();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragmentReference.get().requireActivity().runOnUiThread(() -> {
+                                //get balanace from shared preference and update it in textview
+
+                                binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
+
+
+
+                                Log.d(TAG, "run: reached !!");
+
+                            });
+                        }
+                    });
+
+
+
+                }
+            }, 3000);
+
+
+
+        }
     }
 }
