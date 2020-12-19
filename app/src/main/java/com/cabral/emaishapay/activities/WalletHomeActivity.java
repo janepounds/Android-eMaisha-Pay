@@ -76,6 +76,9 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCE_ACCOUNT_REG_CERTIFICATE ="reg_certificate";
 
 
+    public static final double PREFERENCE_WALLET_BALANCE = 0;
+
+
 
 
 
