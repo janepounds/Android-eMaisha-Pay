@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -134,6 +135,7 @@ public class WalletHomeFragment extends Fragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
+        timerDelayRemoveDialog(20000,dialog);
         String access_token = WalletAuthActivity.WALLET_ACCESS_TOKEN;
 
         /**********RETROFIT IMPLEMENTATION************/
@@ -286,7 +288,9 @@ public class WalletHomeFragment extends Fragment {
         dialog.setIndeterminate(false);
         dialog.setMessage("Coming Soon ..!!");
         dialog.setCancelable(true);
+
         dialog.show();
+
     }
 
 
@@ -345,5 +349,13 @@ public class WalletHomeFragment extends Fragment {
 
 
         }
+    }
+
+    public void timerDelayRemoveDialog(long time, final ProgressDialog d){
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                d.dismiss();
+            }
+        }, time);
     }
 }
