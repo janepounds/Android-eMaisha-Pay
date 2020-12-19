@@ -81,7 +81,7 @@ public class LoginOtpDialog extends DialogFragment {
 
         btn_submit.setOnClickListener(v -> {
             ProgressDialog dialog;
-            dialog = new ProgressDialog(activity);
+            dialog = new ProgressDialog(getContext());
             dialog.setIndeterminate(true);
             dialog.setMessage("Please Wait..");
             dialog.setCancelable(false);
@@ -92,6 +92,7 @@ public class LoginOtpDialog extends DialogFragment {
             String sms_code= getArguments().getString("sms_code");
             if(sms_code.equalsIgnoreCase(code)){
                 //fetch session data
+
 
 
 
