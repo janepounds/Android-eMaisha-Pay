@@ -152,21 +152,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful()){
-                    //call otp dialog
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev = fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
 
-                    ft.addToBackStack(null);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("sms_code",response.body().getData().getSms_code());
 //
-//                    if (response.body().getStatus() == 1 || response.body().getStatus() == 2) {
+//
 //                        // Get the User Details from Response
-//                        userDetails = response.body().getData();
+//                        userDetails = response.body().getData().getUserData();
 //
 //                        SharedPreferences.Editor editor = sharedPreferences.edit();
 //                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId()+"");
@@ -179,7 +169,7 @@ public class Login extends AppCompatActivity {
 //                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
 //                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
 //                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-//
+
 //                        loginUser(userDetails, binding.userPassword.getText().toString().trim());
 //                        WalletAuthActivity.getLoginToken(binding.userPassword.getText().toString().trim(), userDetails.getPhoneNumber(), Login.this,null);
 //                    } else if (response.body().getStatus() == 0) {
@@ -189,14 +179,24 @@ public class Login extends AppCompatActivity {
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
 //                    }
+                    //call otp dialog
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
 
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("sms_code",response.body().getData().getSms_code());
                     // Create and show the dialog.
                     DialogFragment payLoandialog = new LoginOtpDialog(getApplicationContext(),fm);
                     payLoandialog.setArguments(bundle);
                     payLoandialog.show(ft, "dialog");
                 }
 
-                dialogLoader.hideProgressDialog();
+
             }
 
             @Override
