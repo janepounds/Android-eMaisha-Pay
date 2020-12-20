@@ -532,7 +532,12 @@ public class SignUp extends AppCompatActivity {
                             dialogOTP.dismiss();
 
                             //Final Registration Call to API
-                            processRegistration();
+                            Auth2Activity.processFurtherRegistration(SignUp.this, "0"+binding.userMobile.getText().toString(),
+                                    binding.userFirstname.getText().toString(),
+                                    binding.userLastname.getText().toString(),
+                                    binding.villageSpinner.getText().toString(),
+                                    binding.subCountySpinner.getText().toString(), binding.districtSpinner.getText().toString(),2);
+
                         } else {
                             //verification unsuccessful.. display an error message
                             String message = "Something is wrong, we will fix it soon...";
@@ -589,63 +594,6 @@ public class SignUp extends AppCompatActivity {
 
     //*********** Proceed User Registration Request ********//
 
-    private void processRegistration() {
-
-        dialogLoader.showProgressDialog();
-
-        RequestBody fName = RequestBody.create(MediaType.parse("text/plain"), binding.userFirstname.getText().toString().trim());
-        RequestBody lName = RequestBody.create(MediaType.parse("text/plain"), binding.userLastname.getText().toString().trim());
-        RequestBody customersTelephone = RequestBody.create(MediaType.parse("text/plain"), "0" + binding.userMobile.getText().toString().trim());
-        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), binding.userEmail.getText().toString().trim());
-        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), binding.userPassword.getText().toString().trim());
-        RequestBody countryCode = RequestBody.create(MediaType.parse("text/plain"), getResources().getString(R.string.ugandan_code));
-        RequestBody addressStreet = RequestBody.create(MediaType.parse("text/plain"), binding.villageSpinner.getText().toString());
-        RequestBody addressCityOrTown = RequestBody.create(MediaType.parse("text/plain"), binding.subCountySpinner.getText().toString());
-        RequestBody addressDistrict = RequestBody.create(MediaType.parse("text/plain"), binding.districtSpinner.getText().toString());
-
-        Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration(fName, lName, email, password, countryCode, customersTelephone, addressStreet, addressCityOrTown, addressDistrict);
-
-        call.enqueue(new Callback<UserData>() {
-            @Override
-            public void onResponse(@NotNull Call<UserData> call, @NotNull retrofit2.Response<UserData> response) {
-
-                dialogLoader.hideProgressDialog();
-
-                // Check if the Response is successful
-                if (response.isSuccessful()) {
-                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
-
-                        // Finish SignUpActivity to goto the LoginActivity
-                        onBackPressed();
-                        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-
-                    } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        // Get the Error Message from Response
-                        String message = response.body().getMessage();
-                        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-
-                    } else {
-                        // Unable to get Success status
-                        Toast.makeText(getApplicationContext(), getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    // Show the Error Message
-                    String Str = response.message();
-                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<UserData> call, @NotNull Throwable t) {
-                dialogLoader.hideProgressDialog();
-                String Str = "" + t;
-                Toast.makeText(getApplicationContext(), "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     //*********** Validate SignUp Form Inputs ********//
 
@@ -667,19 +615,6 @@ public class SignUp extends AppCompatActivity {
             return false;
         } else if (binding.villageSpinner.getText().toString().equals("Village")) {
             Toast.makeText(this, "Please select Village", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!ValidateInputs.isValidEmail(binding.userEmail.getText().toString().trim())) {
-            binding.userEmail.setError(getString(R.string.invalid_email));
-            return false;
-        } else if (binding.userPassword.getText().toString().trim().length() < 6) {
-            binding.userPassword.setError(getString(R.string.invalid_password_length));
-            return false;
-        } else if (!ValidateInputs.isValidPassword(binding.userPassword.getText().toString().trim())) {
-            binding.userPassword.setError(getString(R.string.invalid_password));
-            return false;
-        } else if (!ValidateInputs.isPasswordMatching(binding.userPassword.getText().toString(), binding.userConfirmPassword.getText().toString())) {
-            binding.userPassword.setError("Password does not match");
-            binding.userConfirmPassword.setError("Password does not match");
             return false;
         } else {
             return true;

@@ -221,7 +221,6 @@ public interface APIRequests {
     Call<UserData> processRegistration(
             @Part("firstname") RequestBody firstName,
             @Part("lastname") RequestBody lastName,
-            @Part("email") RequestBody email,
             @Part("password") RequestBody password,
             @Part("country_code") RequestBody countryCode,
             @Part("phoneNumber") RequestBody phoneNumber,

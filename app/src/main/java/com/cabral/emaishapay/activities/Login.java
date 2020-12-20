@@ -122,7 +122,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     private void processLogin(String phonenumber) {
         //call the otp end point
-        //********************RETROFIT IMPLEMENTATION*************************//
+        dialogLoader.showProgressDialog();
         Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
@@ -144,8 +144,10 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                     DialogFragment payLoandialog = new LoginOtpDialog(Login.this,fm,phonenumber);
                     payLoandialog.setArguments(bundle);
                     payLoandialog.show(ft, "dialog");
-                }
+                }else{
 
+                }
+                dialogLoader.hideProgressDialog();
 
             }
 

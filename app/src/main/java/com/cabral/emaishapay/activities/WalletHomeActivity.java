@@ -43,7 +43,6 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final String PREFERENCES_FIRST_NAME = "firstname";
     public static final String PREFERENCES_LAST_NAME = "lastname";
     public static String RETRIEVED_USER_ID = "";
-    public static String PREFERENCES_USER_ID = "userId";
     public static final String PREFERENCES_USER_EMAIL = "email";
     public static final String PREFERENCES_PHONE_NUMBER = "phoneNumber";
 

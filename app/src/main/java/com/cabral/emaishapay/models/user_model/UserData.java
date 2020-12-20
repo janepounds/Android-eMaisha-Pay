@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class UserData {
-    @SerializedName("success")
+    @SerializedName("status")
     @Expose
-    private String success;
+    private String status;
     @SerializedName("data")
     @Expose
     private List<UserDetails> data = null;
@@ -16,12 +16,12 @@ public class UserData {
     @Expose
     private String message;
 
-    public String getSuccess() {
-        return success;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSuccess(String success) {
-        this.success = success;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<UserDetails> getData() {

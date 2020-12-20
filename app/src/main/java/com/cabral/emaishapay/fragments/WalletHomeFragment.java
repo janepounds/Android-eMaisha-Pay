@@ -147,33 +147,35 @@ public class WalletHomeFragment extends Fragment {
                         WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
                         List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
                         models.clear();
-                        for (int i = 0; i < transactions_limit; i++) {
-                            WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
-                            Gson gson = new Gson();
-                            String ress = gson.toJson(res);
-                            JSONObject record = new JSONObject(ress);
-                            //type
-                            if (record.getString("type").equalsIgnoreCase("Charge")) {
-                                models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                            } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
-                                 models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-
-                            } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
-                                models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "-"+record.getDouble("amount")) );
-
-                            } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
-                                String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
-
-                                if (userName.equals(record.getString("sender"))) {
+                        if(transactions.size()!=0){
+                            for (int i = 0; i < transactions_limit; i++) {
+                                WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
+                                Gson gson = new Gson();
+                                String ress = gson.toJson(res);
+                                JSONObject record = new JSONObject(ress);
+                                //type
+                                if (record.getString("type").equalsIgnoreCase("Charge")) {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                                } else {
-                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
+                                } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
+                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+
+                                } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
+                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "-"+record.getDouble("amount")) );
+
+                                } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
+                                    String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
+
+                                    if (userName.equals(record.getString("sender"))) {
+                                        models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+                                    } else {
+                                        models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
+                                    }
+                                } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
+                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
+
                                 }
-                            } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
-                                models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
 
                             }
-
                         }
 
 

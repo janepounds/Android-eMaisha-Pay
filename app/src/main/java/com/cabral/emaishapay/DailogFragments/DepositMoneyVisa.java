@@ -152,7 +152,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         String expiryDate=cardexpiryTxt.getText().toString();
         double amount = Double.parseDouble(amountEntered);
 
-        txRef= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_ID,this.activity)+(new Date().getTime());
+        txRef= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID,this.activity)+(new Date().getTime());
         Log.e("PUBK : ", BuildConfig.PUBLIC_KEY+" : "+expiryDate.substring(0,2)+" : "+expiryDate.substring(3,5));
 
 

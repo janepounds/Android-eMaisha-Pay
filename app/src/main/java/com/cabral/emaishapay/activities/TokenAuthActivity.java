@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -47,10 +48,8 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
             PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(TokenAuthActivity.this)
                     .validator(submission -> {
 
-                        final ProgressDialog dialog = new ProgressDialog(context);
-                        dialog.setIndeterminate(true);
-                        dialog.setMessage("Please Wait..");
-                        dialog.setCancelable(false);
+                        DialogLoader dialogLoader = new DialogLoader(this);
+
                         String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + submission;
 
                         if (submission.length() < 4) {
@@ -60,7 +59,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                             Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, TokenAuthActivity.this));
 
 
-                            TokenAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, TokenAuthActivity.this),  context,dialog);
+                            TokenAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, TokenAuthActivity.this),  context,dialogLoader);
 
                             overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
 
@@ -82,9 +81,9 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
 
     }
 
-    public static void getLoginToken(final String password, String phonenumber, final Context context,ProgressDialog dialog) {
-        if(dialog!=null)
-            dialog.show();
+    public static void getLoginToken(final String password, String phonenumber, final Context context, DialogLoader dialogLoader) {
+        if(dialogLoader!=null)
+            dialogLoader.showProgressDialog();
 
         /****RETROFIT IMPLEMENTATION*******/
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -99,8 +98,8 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                     String accessToken = tokenResponse.getData().getAccess_token();
                     Log.d(TAG, accessToken);
                     WALLET_ACCESS_TOKEN = accessToken;
-                    if(dialog!=null)
-                        dialog.dismiss();
+                    if(dialogLoader!=null)
+                        dialogLoader.hideProgressDialog();
                     WalletHomeActivity.startHome(context);
                     //now you can go to next wallet page
                 }
@@ -120,16 +119,16 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                     } else {
                         Log.e(TAG, "Something got very very wrong");
                     }
-                    if(dialog!=null)
-                        dialog.dismiss();
+                    if(dialogLoader!=null)
+                        dialogLoader.hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<TokenResponse> call, @NotNull Throwable t) {
                 Log.e(TAG, String.valueOf(t.getMessage()));
-                if(dialog!=null)
-                    dialog.dismiss();
+                if(dialogLoader!=null)
+                    dialogLoader.hideProgressDialog();
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
