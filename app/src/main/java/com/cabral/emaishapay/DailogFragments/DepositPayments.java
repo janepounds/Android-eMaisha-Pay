@@ -56,7 +56,7 @@ public class DepositPayments extends DialogFragment {
         ImageView close = view.findViewById(R.id.wallet_deposit_close);
         close.setOnClickListener(v -> dismiss());
 
-        assert getArguments() != null;
+        if(getArguments() != null)
         balance = getArguments().getFloat("interest");
 
         return builder.create();

@@ -309,6 +309,10 @@
         <item>Mobile Number</item>
         <item>Bank</item>
     </string-array>
+    <string-array name="banks_list">
+        <item>Select</item>
+        <item>Bank 1</item>
+    </string-array>
     <string-array name="payment_method">
         <item>Select</item>
         <item>Wallet</item>

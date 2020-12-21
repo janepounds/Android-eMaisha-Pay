@@ -83,14 +83,19 @@ public class WalletHomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-        Bundle bundle = new Bundle();
-        bundle.putDouble("balance", balance);
 
 //        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
 //        layoutWalletTransactions.setOnClickListener(view111 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
 //        btnWalletTransactions.setOnClickListener(view14 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
-        binding.layoutTransfer.setOnClickListener(view110 -> navController.navigate(R.id.action_walletHomeFragment_to_transferMoney));
-        binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
+        binding.layoutTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle=new Bundle();
+                bundle.putDouble("balance",balance);
+                navController.navigate(R.id.action_walletHomeFragment_to_transferMoney, bundle);
+            }
+        });
+        binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments));
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
         binding.layoutPay.setOnClickListener(view1 -> navController.navigate(R.id.action_walletHomeFragment_to_payFragment));
         binding.moreTransactionCards.setOnClickListener(view11 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
@@ -108,22 +113,6 @@ public class WalletHomeFragment extends Fragment {
 
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
-
-    public void openTransfer() {
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-
-        ft.addToBackStack(null);
-        navController.navigate(R.id.action_walletHomeFragment_to_transferMoney);
-        // Create and show the dialog.
-//        Fragment transferDialog = new TransferMoney(context, balance, getActivity().getSupportFragmentManager());
-//        transferDialog.show(ft, "dialog");
-    }
-
-
 
     private void getTransactionsData() {
         ProgressDialog dialog;
@@ -164,7 +153,7 @@ public class WalletHomeFragment extends Fragment {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
 
                                 } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
-                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "-"+record.getDouble("amount")) );
+                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
 
                                 } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
                                     String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
@@ -232,6 +221,7 @@ public class WalletHomeFragment extends Fragment {
         //after getting "ync" => return "YNC"
         return ini.toUpperCase();
     }
+
     public void updateBalance() {
 
 

@@ -24,10 +24,9 @@
 
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingLeft="@dimen/dimen_20dp"
         android:paddingRight="@dimen/dimen_20dp">
 
@@ -38,15 +37,6 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/margin_10">
 
-            <TextView
-                android:id="@+id/text_view_error_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
-                android:gravity="center"
-                android:text="Insufficient Funds!"
-                android:textColor="@color/device_problem"
-                android:visibility="gone" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,6 +85,7 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_mobile_number"
                 android:layout_width="match_parent"
@@ -157,6 +148,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_emaisha_card"
                 android:layout_width="match_parent"
@@ -273,6 +265,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_bank"
                 android:layout_width="match_parent"
@@ -310,7 +303,7 @@
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:entries="@array/transfer_to"
+                            android:entries="@array/banks_list"
                             android:spinnerMode="dropdown"/>
 
                         <ImageView
@@ -530,38 +523,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingEnd="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="6dp"
-            android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                android:text="My Balance"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:text="UGX"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/crop_add_money_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

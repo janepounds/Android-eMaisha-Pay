@@ -156,14 +156,14 @@ public class DepositMoneyVisa extends DialogFragment implements
         Log.e("PUBK : ", BuildConfig.PUBLIC_KEY+" : "+expiryDate.substring(0,2)+" : "+expiryDate.substring(3,5));
 
 
-
+        String eMaishaPayServiceMail="info@cabraltech.com";
         RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
                 .setCurrency("UGX")
-                .setEmail( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL,this.activity) )
+                .setEmail( eMaishaPayServiceMail )
                 .setfName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME,this.activity) )
                 .setlName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME,this.activity) )
-                //.setPhoneNumber(userInfo.getPhone())
-                .setNarration("Cabral Tech Ltd")
+                .setPhoneNumber("+256"+ WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,this.activity).substring(1))
+                .setNarration("eMaisha Pay")
                 .setPublicKey(BuildConfig.PUBLIC_KEY)
                 .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
                 .setTxRef(txRef)
@@ -195,15 +195,14 @@ public class DepositMoneyVisa extends DialogFragment implements
         dialog.setIndeterminate(true);
         dialog.setMessage("Crediting Account..");
 
-
-
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
-        String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL,this.activity);
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
         /************RETROFIT IMPLEMENTATION*******************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,email,amount,txRef);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,userId,amount,txRef);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -223,7 +222,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();
                     } else {
 
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                        Log.e("info", "Something got very wrong, code: " + response.code());
                     }
                     Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else if (response.code() == 400) {

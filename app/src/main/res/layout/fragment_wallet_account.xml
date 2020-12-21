@@ -147,7 +147,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/security"
                                     android:layout_marginTop="@dimen/dimen_10dp"
-                                    android:text="My pin"
+                                    android:text="Change PIN"
                                     android:textStyle="bold" />
 
                                 <ImageView

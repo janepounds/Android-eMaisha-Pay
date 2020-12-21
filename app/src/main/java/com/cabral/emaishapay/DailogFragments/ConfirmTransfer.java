@@ -170,7 +170,7 @@ public class ConfirmTransfer extends DialogFragment {
 
                 receiverNameTextView.setText("Unknown Merchant");
 
-                errorTextView.setText("Error while checking for mechant occured");
+                errorTextView.setText("Error while checking for merchant occured");
                 errorTextView.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
