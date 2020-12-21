@@ -89,11 +89,6 @@ public class PersonalInformationFragment extends Fragment {
 
             String[] nok_split = nok.split(" ");
 
-//            final InputStream imageStream = getContentResolver().openInputStream(pic);
-//
-//            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//
-//            binding.userPic.setImageBitmap(selectedImage);
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -107,9 +102,12 @@ public class PersonalInformationFragment extends Fragment {
             //set edit textviews
             binding.dob.setText(dob);
             selectSpinnerItemByValue(binding.gender, displayGender);
-            binding.nextOfKinFirst.setText(nok_split[0]);
-            binding.nextOfKinLast.setText(nok_split[1]);
-            binding.nextOfKinContact.setText(nok_contact.substring(4));
+            if(nok_split.length>0)
+                binding.nextOfKinFirst.setText(nok_split[0]);
+            if(nok_split.length>1)
+                binding.nextOfKinLast.setText(nok_split[1]);
+            if(!nok_contact.isEmpty())
+                binding.nextOfKinContact.setText(nok_contact.substring(4));
             Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +pic).apply(options).into(binding.userPic);
             Log.d(TAG, "onViewCreated: "+pic +gender);
 

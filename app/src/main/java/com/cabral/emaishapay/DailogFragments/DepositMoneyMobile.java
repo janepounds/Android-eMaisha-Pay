@@ -122,14 +122,14 @@ public class DepositMoneyMobile extends DialogFragment {
 
         double amount = Float.parseFloat(amountEntered);
         txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
-
+        String eMaishaPayServiceMail="info@cabraltech.com";
         RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
                 .setCurrency("UGX")
-                .setEmail(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, this.activity))
+                .setEmail(eMaishaPayServiceMail)
                 .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.activity))
                 .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.activity))
                 .setPhoneNumber("0" + phoneNumber)
-                .setNarration("Cabral Tech Ltd")
+                .setNarration("eMaisha Pay")
                 .setPublicKey(BuildConfig.PUBLIC_KEY)
                 .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
                 .setTxRef(txRef)
@@ -198,10 +198,11 @@ public class DepositMoneyMobile extends DialogFragment {
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
         String referenceNumber = txRef;
-        String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, this.activity);
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,email,amount,referenceNumber);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,userId,amount,referenceNumber);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {

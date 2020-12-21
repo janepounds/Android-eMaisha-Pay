@@ -68,7 +68,6 @@ public class WalletAccountFragment extends Fragment {
         navController = Navigation.findNavController(view);
         retrieveAccountInfo();
         binding.userName.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, requireContext())) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, requireContext())));
-        binding.userEmail.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, requireContext()));
         binding.userPhone.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, requireContext())));
         String user_pic =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context);
         RequestOptions options = new RequestOptions()
@@ -247,7 +246,6 @@ public class WalletAccountFragment extends Fragment {
         });
 
         binding.editEmploymentInfo.setOnClickListener(view1 ->
-
                 {
                     Bundle bundle = new Bundle();
                     bundle.putString("employer",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYER, context));
@@ -292,8 +290,6 @@ public class WalletAccountFragment extends Fragment {
                 binding.layoutBusinessInfo.setVisibility(View.VISIBLE);
                 binding.viewBusinessInfo.setVisibility(View.GONE);
                 binding.businessNameTinLicence.setVisibility(View.GONE);
-
-
                 //set business info textviews
                 binding.textViewBusinessName.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
                 binding.textViewBusinessLocation.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
@@ -391,7 +387,7 @@ public class WalletAccountFragment extends Fragment {
 
                         }
 
-                        if(response.body().getProfile()!=null){
+                        if(response.body().getUserIdInfo()!=null){
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, response.body().getUserIdInfo().getId_type(), context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, response.body().getUserIdInfo().getId_number(), context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, response.body().getUserIdInfo().getExpiry_date(), context);

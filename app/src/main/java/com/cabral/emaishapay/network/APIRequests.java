@@ -194,7 +194,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/flutter/payment/credituser")
     Call<WalletTransaction> creditUser(@Header("Authorization") String token,
-                                       @Field("email") String email,
+                                       @Field("user_id") String user_id,
                                        @Field("amount") Double amount,
                                        @Field("referenceNumber") String referenceNumber
     );

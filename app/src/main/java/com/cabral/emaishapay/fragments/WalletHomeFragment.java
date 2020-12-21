@@ -148,7 +148,11 @@ public class WalletHomeFragment extends Fragment {
                         List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
                         models.clear();
                         if(transactions.size()!=0){
-                            for (int i = 0; i < transactions_limit; i++) {
+                            int loop_limit=transactions_limit;
+                            if(transactions.size()<transactions_limit)
+                                loop_limit=transactions.size();
+
+                            for (int i = 0; i < loop_limit; i++) {
                                 WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
                                 Gson gson = new Gson();
                                 String ress = gson.toJson(res);

@@ -83,17 +83,6 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/user_email"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_10dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="eng.johnelliot@gmail.com"
-                                android:textSize="@dimen/dimen_14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
                                 android:id="@+id/user_phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -158,7 +147,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/security"
                                     android:layout_marginTop="@dimen/dimen_10dp"
-                                    android:text="Password &amp; pin"
+                                    android:text="My pin"
                                     android:textStyle="bold" />
 
                                 <ImageView
