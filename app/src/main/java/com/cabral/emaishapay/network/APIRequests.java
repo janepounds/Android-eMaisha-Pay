@@ -22,6 +22,7 @@ import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletUserRegistration;
+import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -72,12 +73,6 @@ public interface APIRequests {
     @POST("user/check_account")
     Call<TokenResponse> checkWalletAccount(@Field("email") String email, @Field("phoneNumber") String phonenumber);
 
-//    //wallet authentication
-//    @FormUrlEncoded
-//    @POST("emaishawallet/user/authenticate")
-//    Call<WalletAuthentication> authenticate(@Field("email") String email,
-//                                            @Field("password") String password
-//    );
 
     //wallet authentication
     @FormUrlEncoded
@@ -117,8 +112,22 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/transfer/initiate")
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
-                                                    @Field("amount") Double amount,
-                                                    @Field("receiverPhoneNumber") String receiverPhoneNumber
+                                                            @Field("amount") Double amount,
+                                                            @Field("receiverPhoneNumber") String receiverPhoneNumber
+    );
+
+    //initiate transfer
+    @FormUrlEncoded
+    @POST("wallet/transfer/settlement")
+    Call<SettlementResponse> recordSettlementTransfer(@Header("Authorization") String token,
+                                                      @Field("amount") Double amount,
+                                                      @Field("thirdParty") String thirdParty,
+                                                      @Field("third_party_fee") Double third_party_fee,
+                                                      @Field("destination_type") String destination_type,
+                                                      @Field("destination_account_no") String destination_account_no,
+                                                      @Field("beneficiary_name") String beneficiary_name,
+                                                      @Field("destination_name") String destination_name,
+                                                      @Field("reference") String reference
     );
 
     //wallet transaction list

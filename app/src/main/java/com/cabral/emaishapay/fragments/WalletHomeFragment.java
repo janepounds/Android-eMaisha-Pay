@@ -147,7 +147,7 @@ public class WalletHomeFragment extends Fragment {
                                 String ress = gson.toJson(res);
                                 JSONObject record = new JSONObject(ress);
                                 //type
-                                if (record.getString("type").equalsIgnoreCase("Charge")) {
+                                if (record.getString("type").equalsIgnoreCase("Charge") || record.getString("type").equalsIgnoreCase("Settlement") ) {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
                                 } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );

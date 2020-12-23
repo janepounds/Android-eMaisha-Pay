@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/josefin_sans"
-                    android:text="Mobile Number"
+                    android:text="Mobile Number *"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
 
@@ -334,14 +334,40 @@
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/josefin_sans" />
 
-                    <EditText
-                        android:id="@+id/et_bank_branch"
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
                         android:background="@drawable/edittext_corner"
-                        android:inputType="text"
-                        android:textColor="@color/textColor"/>
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_bank_branch"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/banks_list"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_chevron_down" />
+
+                    </RelativeLayout>
+
 
                 </LinearLayout>
                 <LinearLayout
@@ -406,7 +432,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefin_sans"
                     android:layout_marginBottom="5dp"
-                    android:text="Amount"
+                    android:text="Amount *"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -427,7 +453,7 @@
                         android:layout_weight="0.2" />
 
                     <EditText
-                        android:id="@+id/crop_add_money_amount"
+                        android:id="@+id/money_amount"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"

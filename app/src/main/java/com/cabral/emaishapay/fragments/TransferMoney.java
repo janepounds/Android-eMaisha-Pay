@@ -1,15 +1,20 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,23 +31,53 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.models.InitiateTransferResponse;
+import com.cabral.emaishapay.models.external_transfer_model.Bank;
+import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
+import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
+import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
+import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
+import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.ExternalAPIRequests;
+import com.cabral.emaishapay.network.FlutterwaveV3APIClient;
+import com.cabral.emaishapay.network.RaveV2APIClient;
+import com.cabral.emaishapay.utils.ValidateInputs;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt;
-    Spinner spTransferTo, spSelectBank;
-    EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etBankBranch, etAccountName, etAccountNumber;
+    Spinner spTransferTo, spSelectBank,spSelectBankBranch;
+    EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
     FragmentManager fm;
     EditText phoneNumberTxt;
     private Context context;
     AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
-
-
+    DialogLoader dialogLoader;
+    Bank[] BankList; BankBranch[] bankBranches;
+    String selected_bank_code,selected_branch_code;
+    NavController navController;
     public TransferMoney() {
     }
 
@@ -50,6 +85,7 @@ public class TransferMoney extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
        // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.onCreate(savedInstanceState);
+        dialogLoader = new DialogLoader(context);
     }
 
     @Override
@@ -70,13 +106,14 @@ public class TransferMoney extends Fragment {
         mobile_numberTxt = view.findViewById(R.id.text_mobile_number);
         spTransferTo = view.findViewById(R.id.sp_transfer_to);
         spSelectBank = view.findViewById(R.id.sp_bank);
+        spSelectBankBranch = view.findViewById(R.id.sp_bank_branch);
         cardNumberTxt=view.findViewById(R.id.add_money_creditCardNumber);
         cardHolderNameTxt=view.findViewById(R.id.add_money_holder_name);
         cardexpiryTxt=view.findViewById(R.id.add_money_card_expiry);
         cardccvTxt=view.findViewById(R.id.add_money_card_cvv);
-        etBankBranch=view.findViewById(R.id.et_bank_branch);
         etAccountName=view.findViewById(R.id.et_account_name);
         etAccountNumber=view.findViewById(R.id.et_account_number);
+        etAmount=view.findViewById(R.id.money_amount);
         layoutMobileNumber=view.findViewById(R.id.layout_mobile_number);
         layoutEmaishaCard=view.findViewById(R.id.layout_emaisha_card);
         layoutBank=view.findViewById(R.id.layout_bank);
@@ -126,36 +163,84 @@ public class TransferMoney extends Fragment {
 
             }
         });
-
-        addMoneyImg.setOnClickListener(v -> {
-            String phoneNumber = "0"+phoneNumberTxt.getText().toString();
-            String amountEntered = addMoneyTxt.getText().toString();
-            float amount = Float.parseFloat(amountEntered);
-            float charges = (float) 100; //Transfer Charges
-
-            if (balance >= (amount + charges)) {
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new com.cabral.emaishapay.DailogFragments.ConfirmTransfer(context, phoneNumber, amount);
-                transferPreviewDailog.show(ft, "dialog");
-            } else {
-                Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
-                Log.e("Error", "Insufficient Account balance!");
+        spSelectBank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(BankList!=null)
+                    for (Bank bank: BankList) {
+                       if(bank.getName().equalsIgnoreCase(spSelectBank.getSelectedItem().toString())){
+                           selected_bank_code=bank.getCode();
+                           getTransferBankBranches(bank.getId());
+                       }
+                    }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spSelectBankBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(BankList!=null)
+                    for (BankBranch branch: bankBranches) {
+                        if(branch.getBranchName().equalsIgnoreCase(spSelectBankBranch.getSelectedItem().toString())){
+                            selected_branch_code=branch.getBranchCode();
+                        }
+                    }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        addMoneyImg.setOnClickListener(v -> {
+            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
+                queueBankTransfer();
+            }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account")){
+                transferToInternalWallet();
+            }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
+
+            }
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
+
+            }else{
+                Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
+            }
+
 
         });
 
     }
 
+    private void transferToInternalWallet() {
+        String phoneNumber = "0"+phoneNumberTxt.getText().toString();
+        String amountEntered = addMoneyTxt.getText().toString();
+        float amount = Float.parseFloat(amountEntered);
+        float charges = (float) 100; //Transfer Charges
+
+        if (balance >= (amount + charges)) {
+            FragmentTransaction ft = fm.beginTransaction();
+            Fragment prev = fm.findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+
+            // Create and show the dialog.
+            DialogFragment transferPreviewDailog = new com.cabral.emaishapay.DailogFragments.ConfirmTransfer(context, phoneNumber, amount);
+            transferPreviewDailog.show(ft, "dialog");
+        } else {
+            Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
+            Log.e("Error", "Insufficient Account balance!");
+        }
+    }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         if(getArguments()!=null) {
@@ -172,5 +257,213 @@ public class TransferMoney extends Fragment {
 
     private void  loadTransferBanks(){
 
+        ExternalAPIRequests apiRequests = RaveV2APIClient.getRavePayV2Instance();
+        Call<BanksInfoResponse> call = apiRequests.getTransferBanks(getString(R.string.countryCode), BuildConfig.PUBLIC_KEY);
+
+        dialogLoader.showProgressDialog();
+        call.enqueue(new Callback<BanksInfoResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<BanksInfoResponse> call, @NotNull Response<BanksInfoResponse> response) {
+                if (response.code() == 200) {
+                    try {
+                        BanksInfoResponse.InfoData bankInfo = response.body().getData();
+                        BankList=bankInfo.getBanks();
+                        Log.w("Banks_NumberFetched",BankList.length+" #############");
+                        List<String> Banknames = new ArrayList<>();
+                        Banknames.add("Select");
+                        for (Bank bank: BankList) {
+                            Banknames.add(bank.getName());
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, Banknames);
+                        spSelectBank.setAdapter(adapter);
+                    } catch (Exception e) {
+                        Log.e("response", response.toString());
+                        e.printStackTrace();
+                    } finally {
+                        dialogLoader.hideProgressDialog();
+                    }
+                } else {
+                    dialogLoader.hideProgressDialog();
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    String message = response.body().getMessage();
+                    Snackbar.make(layoutBank, message, Snackbar.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BanksInfoResponse> call, Throwable t) {
+                Log.e("info2 : ", t.getMessage());
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    private void  getTransferBankBranches(String bank_id){
+        ExternalAPIRequests apiRequests = RaveV2APIClient.getRavePayV2Instance();
+        Call<BankBranchInfoResponse> call = apiRequests.getTransferBankBranches(bank_id, BuildConfig.PUBLIC_KEY);
+
+        dialogLoader.showProgressDialog();
+        call.enqueue(new Callback<BankBranchInfoResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<BankBranchInfoResponse> call, @NotNull Response<BankBranchInfoResponse> response) {
+                if (response.code() == 200) {
+                    try {
+                        bankBranches = response.body().getData().getBankBranches();
+
+                        Log.w("Banks_NumberFetched",bankBranches.length+"****************");
+                        List<String> BankBranchnames = new ArrayList<>();
+                        BankBranchnames.add("Select");
+                        for (BankBranch bank: bankBranches) {
+                            BankBranchnames.add(bank.getBranchName());
+                        }
+                        BankBranchnames.add("Other");
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, BankBranchnames);
+                        spSelectBankBranch.setAdapter(adapter);
+                    } catch (Exception e) {
+                        Log.e("response", response.toString());
+                        e.printStackTrace();
+                    } finally {
+                        dialogLoader.hideProgressDialog();
+                    }
+                } else {
+                    dialogLoader.hideProgressDialog();
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    String message = response.body().getMessage();
+                    Snackbar.make(layoutBank, message, Snackbar.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BankBranchInfoResponse> call, Throwable t) {
+                Log.e("info2 : ", t.getMessage());
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    private void queueBankTransfer(){
+
+        String account_name = etAccountName.getText().toString();
+        String transfer_amount = etAmount.getText().toString();
+        String account_number = etAccountNumber.getText().toString();
+        String currency=getString(R.string.currency);
+        String narration="eMaisha Pay Bank Transfer outs";
+        String reference= UUID.randomUUID().toString();
+
+        if( !spSelectBank.getSelectedItem().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null ){
+
+            ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
+            Call<BankTransferResponse> call = apiRequests.bankTransferOuts( BuildConfig.SECRET_KEY,
+                    reference,
+                    account_name,
+                    currency,
+                    narration,
+                    transfer_amount,
+                    account_number,
+                    selected_branch_code,
+                    selected_bank_code);
+
+            dialogLoader.showProgressDialog();
+            call.enqueue(new Callback<BankTransferResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<BankTransferResponse> call, @NotNull Response<BankTransferResponse> response) {
+                    if (response.code() == 200 && response.body().getMessage().equals("Transfer Queued Successfully")) {
+                        try {
+                            com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
+                                    response.body().getData();
+                            recordTransferSettlement(TransferResponse,dialogLoader);
+
+                        } catch (Exception e) {
+                            Log.e("response", response.toString());
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        dialogLoader.hideProgressDialog();
+                        //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        String message = response.body().getMessage();
+                        Snackbar.make(layoutBank, message, Snackbar.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<BankTransferResponse> call, Throwable t) {
+                    Log.e("info2 : ", t.getMessage());
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+        }
+    }
+
+    private void recordTransferSettlement(BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader) {
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Double amount =Double.parseDouble(transferResponse.getAmount());
+        String thirdparty="flutterwave";
+        Double third_party_fee =Double.parseDouble(transferResponse.getFee());
+        String destination_type="Bank";
+        String destination_account_no=transferResponse.getAccount_number();
+        String beneficiary_name=transferResponse.getFull_name();
+        String destination_name=transferResponse.getBank_name();
+        String reference=transferResponse.getReference();
+
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
+                access_token,
+                amount,
+                thirdparty,
+                third_party_fee,
+                destination_type,
+                destination_account_no,
+                beneficiary_name,
+                destination_name,
+                reference);
+
+        call.enqueue(new Callback<SettlementResponse>() {
+            @Override
+            public void onResponse(Call<SettlementResponse> call, Response<SettlementResponse> response) {
+                if (response.code() == 200 && response.body().getStatus().equals("1")) {
+                    dialogLoader.hideProgressDialog();
+                    navController.navigate(R.id.action_transferMoney_to_walletHomeFragment);
+                } else {
+                    dialogLoader.hideProgressDialog();
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    String message = response.body().getMessage();
+                    Snackbar.make(layoutBank, message, Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SettlementResponse> call, Throwable t) {
+                Log.e("info : " , new String(String.valueOf(t.getMessage())));
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+
+    }
+
+    private boolean validateBankTransFerForm() {
+        if (!ValidateInputs.isValidName(etAccountName.getText().toString().trim())) {
+            etAccountName.setError(getString(R.string.invalid_name));
+            return false;
+        } else if (!ValidateInputs.isValidAccountNo(etAccountNumber.getText().toString().trim())) {
+            etAccountNumber.setError(getString(R.string.invalid_account_number));
+            return false;
+        } else if (Integer.parseInt(etAmount.getText().toString().trim())<0) {
+            etAmount.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
     }
 }

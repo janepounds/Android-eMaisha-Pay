@@ -21,6 +21,9 @@ import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.address_model.Zones;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
+import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
+import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
+import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.user_model.UserData;
 
@@ -78,5 +81,26 @@ public interface ExternalAPIRequests {
     @FormUrlEncoded
     @POST("getallpages")
     Call<PagesData> getStaticPages(@Field("language_id") int language_id);
+
+    //get all Banks
+    @GET("banks/{country}")
+    Call<BanksInfoResponse> getTransferBanks(@Path("country") String country, @Query("public_key") String public_key );
+
+    //get all Banks
+    @GET("banks/branches/{id}")
+    Call<BankBranchInfoResponse> getTransferBankBranches(@Path("id") String Bank_id, @Query("public_key") String public_key );
+
+    @FormUrlEncoded
+    @POST("transfers")
+    Call<BankTransferResponse> bankTransferOuts(@Header("Authorization") String secKey,
+                                                @Field("reference") String reference,
+                                                @Field("beneficiary_name") String beneficiary_name,
+                                                @Field("currency") String currency,
+                                                @Field("narration") String narration,
+                                                @Field("amount") String amount,
+                                                @Field("account_number") String account_number,
+                                                @Field("destination_branch_code") String destination_branch_code,
+                                                @Field("account_bank") String account_bank);
+
 
 }

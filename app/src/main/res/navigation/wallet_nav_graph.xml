@@ -195,10 +195,18 @@
     <fragment
         android:id="@+id/transferMoney"
         android:name="com.cabral.emaishapay.fragments.TransferMoney"
-        android:label="TRANSFER MONEY" />
+        android:label="TRANSFER MONEY" >
+        <action
+            android:id="@+id/action_transferMoney_to_walletHomeFragment"
+            app:destination="@id/walletHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/payFragment"
         android:name="com.cabral.emaishapay.fragments.PayFragment"
-        android:label="PAY MERCHANT" />
+        android:label="PAY MERCHANT" >
+        <action
+            android:id="@+id/action_payFragment_to_walletHomeFragment"
+            app:destination="@id/walletHomeFragment" />
+    </fragment>
 
 </navigation>

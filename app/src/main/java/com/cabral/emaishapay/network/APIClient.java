@@ -22,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
 
     public final static String LOCAL_URL = "http://10.0.2.2:8000";
-    // Base URL for API Requests
     private static final String BASE_URL ="https://emaisha.com/api/";
     private static final String BASE_URL_WALLET ="http://emaishawallet.myfarmnow.com/api/";
 
@@ -125,6 +124,8 @@ public class APIClient {
             return apiRequests;
         }
     }
+
+
 }
 
 

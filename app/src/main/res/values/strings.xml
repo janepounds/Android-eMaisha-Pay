@@ -38,6 +38,7 @@
     <string name="location">Location</string>
     <string name="address"> Address </string>
     <string name="country"> Country </string>
+    <string name="countryCode">UG</string>
     <string name="zone"> Zone </string>
     <string name="state"> State </string>
     <string name="city"> City </string>
@@ -162,8 +163,9 @@
     <string name="select_country"> Select Your Country </string>
     <string name="invalid_first_name"> Invalid First Name </string>
     <string name="invalid_last_name"> Invalid Last Name </string>
+    <string name="invalid_name"> Invalid  Name </string>
     <string name="invalid_email"> Invalid Email Address </string>
-    <string name="invalid_password"> Invalid Password </string>
+    <string name="invalid_account_number"> Invalid Account Number </string>
     <string name="invalid_password_length" translatable="false"> Password length must between 6 - 24 </string>
     <string name="invalid_contact"> Invalid Contact No. </string>
     <string name="invalid_post_code"> Invalid Postal Code </string>
@@ -306,12 +308,11 @@
         <item>Select</item>
         <item>eMaisha Account</item>
         <item>eMaisha Card</item>
-        <item>Mobile Number</item>
+        <item>Mobile Money</item>
         <item>Bank</item>
     </string-array>
     <string-array name="banks_list">
         <item>Select</item>
-        <item>Bank 1</item>
     </string-array>
     <string-array name="payment_method">
         <item>Select</item>
@@ -392,6 +393,7 @@
     <string name="fertilizer_title">Fertilizer</string>
     <string name="seeds">Seeds</string>
     <string name="transactions">Transactions</string>
+    <string name="invalid_number">Invalid Number</string>
 
 
     <string-array name="spinner_id_type">

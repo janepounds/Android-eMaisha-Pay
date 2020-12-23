@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.network;
 
-
 import android.util.Log;
 
 import java.io.IOException;
@@ -14,21 +13,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+public class FlutterwaveV3APIClient {
 
-/**
- * APIClient handles all the Network API Requests using Retrofit Library
- **/
-
-public class ExternalAPIClient {
-
-    public final static String LOCAL_URL = "http://10.0.2.2:8000";
-    // Base URL for API Requests
-    private static final String BASE_URL ="https://emaisha.com/api/";
+    private static final String FlutterwaveV3_URL ="https://api.flutterwave.com/v3/";
     private static ExternalAPIRequests apiRequests;
-    private  final String TAG="Retrofit2 Errors";
 
-
-    public static ExternalAPIRequests getInstance() {
+    public static ExternalAPIRequests getFlutterwaveV3Instance() {
         if (apiRequests == null) {
 
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new
@@ -38,6 +28,7 @@ public class ExternalAPIClient {
                                                                                Log.e("Retrofit2 Errors", "message: "+message);
                                                                            }
                                                                        });
+
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
@@ -61,7 +52,7 @@ public class ExternalAPIClient {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(FlutterwaveV3_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -76,7 +67,4 @@ public class ExternalAPIClient {
         }
     }
 
-
 }
-
-
