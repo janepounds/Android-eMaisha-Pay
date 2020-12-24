@@ -63,14 +63,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
-    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank;
+    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
     FragmentManager fm;
-    EditText phoneNumberTxt;
+    EditText etMobileMoneyNumber,etBeneficiaryName;
     private Context context;
     AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
@@ -100,7 +100,7 @@ public class TransferMoney extends Fragment {
 
     public void initializeForm(View view) {
         toolbar = view.findViewById(R.id.toolbar_wallet_add_money);
-        phoneNumberTxt = view.findViewById(R.id.crop_add_money_mobile_no);
+        etMobileMoneyNumber = view.findViewById(R.id.money_mobile_no);
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.crop_add_money_amount);
         mobile_numberTxt = view.findViewById(R.id.text_mobile_number);
@@ -114,9 +114,11 @@ public class TransferMoney extends Fragment {
         etAccountName=view.findViewById(R.id.et_account_name);
         etAccountNumber=view.findViewById(R.id.et_account_number);
         etAmount=view.findViewById(R.id.money_amount);
+        etBeneficiaryName=view.findViewById(R.id.et_beneficiary_name);
         layoutMobileNumber=view.findViewById(R.id.layout_mobile_number);
         layoutEmaishaCard=view.findViewById(R.id.layout_emaisha_card);
         layoutBank=view.findViewById(R.id.layout_bank);
+        layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -133,11 +135,13 @@ public class TransferMoney extends Fragment {
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
+                    layout_beneficiary_name.setVisibility(View.GONE);
                 }
                 else if(position==1){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
+                    layout_beneficiary_name.setVisibility(View.GONE);
                 }
                 else if(position==2){
                     layoutMobileNumber.setVisibility(View.GONE);
@@ -146,6 +150,7 @@ public class TransferMoney extends Fragment {
                 }
                 else if(position==3){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
+                    layout_beneficiary_name.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                 }
@@ -199,13 +204,14 @@ public class TransferMoney extends Fragment {
         addMoneyImg.setOnClickListener(v -> {
             if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
                 queueBankTransfer();
-            }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account")){
+            }
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account")){
                 transferToInternalWallet();
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
 
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
-
+                mobileMoneyTransfer();
             }else{
                 Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
             }
@@ -216,8 +222,8 @@ public class TransferMoney extends Fragment {
     }
 
     private void transferToInternalWallet() {
-        String phoneNumber = "0"+phoneNumberTxt.getText().toString();
-        String amountEntered = addMoneyTxt.getText().toString();
+        String phoneNumber = "0"+etMobileMoneyNumber.getText().toString();
+        String amountEntered = etAmount.getText().toString();
         float amount = Float.parseFloat(amountEntered);
         float charges = (float) 100; //Transfer Charges
 
@@ -272,6 +278,7 @@ public class TransferMoney extends Fragment {
                         List<String> Banknames = new ArrayList<>();
                         Banknames.add("Select");
                         for (Bank bank: BankList) {
+                            if( bank.getMobileVerified()==null && !bank.getName().equals("MTN") && !bank.getName().equals("Bank of Uganda"))
                             Banknames.add(bank.getName());
                         }
 
@@ -378,7 +385,7 @@ public class TransferMoney extends Fragment {
                         try {
                             com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
                                     response.body().getData();
-                            recordTransferSettlement(TransferResponse,dialogLoader);
+                            recordTransferSettlement("pending",TransferResponse,dialogLoader);
 
                         } catch (Exception e) {
                             Log.e("response", response.toString());
@@ -405,7 +412,63 @@ public class TransferMoney extends Fragment {
         }
     }
 
-    private void recordTransferSettlement(BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader) {
+    private void mobileMoneyTransfer() {
+        String account_bank = "MPS";
+        String beneficiary_name =etBeneficiaryName.getText().toString();
+        String transfer_amount = etAmount.getText().toString();
+        String account_number = "0"+etMobileMoneyNumber.getText().toString();
+        String currency=getString(R.string.currency);
+        String narration="eMaisha Pay Mobile Money Transfer outs";
+        String reference= UUID.randomUUID().toString();
+
+        if(validateMobileMoneyTransFerForm()){
+            ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
+            Call<BankTransferResponse> call = apiRequests.bankTransferOuts( BuildConfig.SECRET_KEY,
+                    reference,
+                    beneficiary_name,
+                    currency,
+                    narration,
+                    transfer_amount,
+                    account_number,
+                    null,
+                    account_bank);
+
+            dialogLoader.showProgressDialog();
+            call.enqueue(new Callback<BankTransferResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<BankTransferResponse> call, @NotNull Response<BankTransferResponse> response) {
+                    if (response.code() == 200 && response.body().getMessage().equals("Transfer Queued Successfully")) {
+                        try {
+                            com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
+                                    response.body().getData();
+                            recordTransferSettlement("completed",TransferResponse,dialogLoader);
+
+                        } catch (Exception e) {
+                            Log.e("response", response.toString());
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        dialogLoader.hideProgressDialog();
+                        //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        String message = response.body().getMessage();
+                        Snackbar.make(layoutBank, message, Snackbar.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<BankTransferResponse> call, Throwable t) {
+                    Log.e("info2 : ", t.getMessage());
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+        }
+
+    }
+
+    private void recordTransferSettlement(String third_party_status,BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Double amount =Double.parseDouble(transferResponse.getAmount());
         String thirdparty="flutterwave";
@@ -415,6 +478,7 @@ public class TransferMoney extends Fragment {
         String beneficiary_name=transferResponse.getFull_name();
         String destination_name=transferResponse.getBank_name();
         String reference=transferResponse.getReference();
+        String third_party_id=transferResponse.getId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
@@ -426,7 +490,9 @@ public class TransferMoney extends Fragment {
                 destination_account_no,
                 beneficiary_name,
                 destination_name,
-                reference);
+                reference,
+                third_party_status,
+                third_party_id);
 
         call.enqueue(new Callback<SettlementResponse>() {
             @Override
@@ -458,6 +524,21 @@ public class TransferMoney extends Fragment {
             return false;
         } else if (!ValidateInputs.isValidAccountNo(etAccountNumber.getText().toString().trim())) {
             etAccountNumber.setError(getString(R.string.invalid_account_number));
+            return false;
+        } else if (Integer.parseInt(etAmount.getText().toString().trim())<0) {
+            etAmount.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
+    }
+
+    private boolean validateMobileMoneyTransFerForm() {
+        if (!ValidateInputs.isValidName(etBeneficiaryName.getText().toString().trim())) {
+            etAccountName.setError(getString(R.string.invalid_name));
+            return false;
+        } else if (!ValidateInputs.isValidPhoneNo(etMobileMoneyNumber.getText().toString().trim())) {
+            etMobileMoneyNumber.setError(getString(R.string.invalid_phone));
             return false;
         } else if (Integer.parseInt(etAmount.getText().toString().trim())<0) {
             etAmount.setError(getString(R.string.invalid_number));

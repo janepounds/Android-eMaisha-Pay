@@ -168,6 +168,7 @@
     <string name="invalid_account_number"> Invalid Account Number </string>
     <string name="invalid_password_length" translatable="false"> Password length must between 6 - 24 </string>
     <string name="invalid_contact"> Invalid Contact No. </string>
+    <string name="invalid_phone"> Invalid Phone No. </string>
     <string name="invalid_post_code"> Invalid Postal Code </string>
     <string name="invalid_credit_card"> Invalid Credit Card Number </string>
     <string name="invalid_card_cvv"> Invalid Card CVV </string>

@@ -158,7 +158,7 @@ public class WalletHomeFragment extends Fragment {
                                 } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
                                     String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
 
-                                    if (userName.equals(record.getString("sender"))) {
+                                    if (userName.equalsIgnoreCase(record.getString("sender"))) {
                                         models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
                                     } else {
                                         models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );

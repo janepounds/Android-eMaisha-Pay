@@ -81,7 +81,6 @@ public class ConfirmTransfer extends DialogFragment {
     }
 
     public void initializeView(View view) {
-
         totalTextView = view.findViewById(R.id.txt_view_crop_bill_preview_total);
         errorTextView = view.findViewById(R.id.text_view_purchase_preview_error);
         datetimeTextView = view.findViewById(R.id.text_view_purchase_date_time);
@@ -120,8 +119,8 @@ public class ConfirmTransfer extends DialogFragment {
 
         getReceiverName(phoneNumber);
     }
-    public void getReceiverName(String receiverPhoneNumber){
 
+    public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/
         ProgressDialog dialog;
         dialog = new ProgressDialog(activity);
@@ -178,7 +177,6 @@ public class ConfirmTransfer extends DialogFragment {
 
 
     }
-
 
     public void initiateTransfer(final String phoneNumber, final float amount) {
         ProgressDialog dialog;

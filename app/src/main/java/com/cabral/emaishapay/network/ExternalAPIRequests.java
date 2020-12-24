@@ -102,5 +102,8 @@ public interface ExternalAPIRequests {
                                                 @Field("destination_branch_code") String destination_branch_code,
                                                 @Field("account_bank") String account_bank);
 
+    //get tranfer Data
+    @GET("transfers/{id}")
+    Call<BankTransferResponse> getTransferData(@Path("id") String transfer_id, @Header("Authorization") String secKey );
 
 }

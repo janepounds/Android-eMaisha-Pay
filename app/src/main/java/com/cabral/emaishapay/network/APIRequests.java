@@ -127,8 +127,10 @@ public interface APIRequests {
                                                       @Field("destination_account_no") String destination_account_no,
                                                       @Field("beneficiary_name") String beneficiary_name,
                                                       @Field("destination_name") String destination_name,
-                                                      @Field("reference") String reference
-    );
+                                                      @Field("reference") String reference,
+                                                      @Field("third_party_status") String third_party_status,
+                                                      @Field("third_party_id") String third_party_id
+                                                      );
 
     //wallet transaction list
     @GET("wallet/transactions/list")

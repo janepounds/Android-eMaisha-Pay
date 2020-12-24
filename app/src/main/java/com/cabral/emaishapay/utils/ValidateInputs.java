@@ -68,7 +68,7 @@ public class ValidateInputs {
     //*********** Validate Phone Number********//
 
     public static boolean isValidPhoneNo(String phoneNo) {
-        return phoneNo.length() >= 10 && Patterns.PHONE.matcher(phoneNo).matches();
+        return phoneNo.length() >= 9 && Patterns.PHONE.matcher(phoneNo).matches();
     }
 
     public static boolean isValidAccountNo(String accountNo) {

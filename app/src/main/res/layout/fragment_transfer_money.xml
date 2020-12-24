@@ -90,26 +90,27 @@
                 android:id="@+id/layout_mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/text_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="Mobile Number *"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="0dp">
+
+
+                    <TextView
+                        android:id="@+id/text_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Mobile Number *"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
@@ -128,7 +129,7 @@
                             android:textColor="@color/white"
                             android:textSize="14sp" />
                         <EditText
-                            android:id="@+id/crop_add_money_mobile_no"
+                            android:id="@+id/money_mobile_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/josefin_sans"
@@ -145,6 +146,32 @@
                     </LinearLayout>
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_beneficiary_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiary Name"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/josefin_sans" />
+
+                    <EditText
+                        android:id="@+id/et_beneficiary_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
 
                 </LinearLayout>
             </LinearLayout>
