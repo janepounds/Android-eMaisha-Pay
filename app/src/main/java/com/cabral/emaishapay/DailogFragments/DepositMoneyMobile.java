@@ -137,7 +137,6 @@ public class DepositMoneyMobile extends DialogFragment {
                 .isPreAuth(true)
                 .initialize();
 
-        //cardPayManager = new CardPaymentManager(( raveManager), this, this);
         UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
             @Override
             public void showProgressIndicator(boolean active) {
@@ -182,9 +181,6 @@ public class DepositMoneyMobile extends DialogFragment {
         UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
 
         mobilePayManager.charge();
-        //mobilePayManager.fetchTransactionFee();
-
-
     }
 
 

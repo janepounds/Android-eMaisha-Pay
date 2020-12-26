@@ -126,7 +126,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="Food Purchase"
+                        android:text="Purchase"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
@@ -204,6 +204,7 @@
                     android:layout_marginTop="15dp">
 
                     <TextView
+                        android:id="@+id/purchase_date_label"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"

@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -61,7 +62,6 @@ public class DepositMoneyVisa extends DialogFragment implements
     private final FragmentManager fm;
     private String txRef;
     private RaveVerificationUtils verificationUtils;
-
     private CardPaymentManager cardPayManager;
 
     double balance;
@@ -163,7 +163,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                 .setfName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME,this.activity) )
                 .setlName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME,this.activity) )
                 .setPhoneNumber("+256"+ WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,this.activity).substring(1))
-                .setNarration("eMaisha Pay")
+                .setNarration("eMaisha Pay Deposit")
                 .setPublicKey(BuildConfig.PUBLIC_KEY)
                 .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
                 .setTxRef(txRef)
@@ -191,9 +191,8 @@ public class DepositMoneyVisa extends DialogFragment implements
 
 
     public void creditAfterDeposit(String txRef){
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Crediting Account..");
+        DialogLoader dialogLoader = new DialogLoader(getContext());
+        dialogLoader.showProgressDialog();
 
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
@@ -206,13 +205,9 @@ public class DepositMoneyVisa extends DialogFragment implements
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                dialogLoader.hideProgressDialog();
+
                 if(response.code() == 200){
-                    dialog.cancel();
-
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-
                     refreshActivity();
                 }else if(response.code() == 401){
 
@@ -259,7 +254,8 @@ public class DepositMoneyVisa extends DialogFragment implements
 
             @Override
             public void onFailure(Call<WalletTransaction> call, Throwable t) {
-
+                Log.e("info", "Something got very very wrong, code: ");
+                dialogLoader.hideProgressDialog();
             }
         });
 

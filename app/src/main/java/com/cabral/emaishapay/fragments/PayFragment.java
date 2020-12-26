@@ -28,10 +28,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.cabral.emaishapay.DailogFragments.PurchasePreview;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.WalletPurchase;
+import com.cabral.emaishapay.utils.ValidateInputs;
+
+import java.text.BreakIterator;
 
 public class PayFragment extends Fragment {
-    TextView mechantIdTextView, text_coupon;
-    EditText totalAmountTxt, couponAmout;
+    TextView mechantIdEdt, text_coupon;
+    EditText totalAmountEdt, couponAmout, cardNumberEdt, accountNameEdt, expiryEdt, cvvEdt, mobileNumberEdt;
+
     LinearLayout layout_coupon,layoutEmaishaCard,layoutMobileMoney,layoutBankCards;
     Spinner spPaymentMethod;
     Button saveBtn;
@@ -53,33 +57,26 @@ public class PayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View view = inflater.inflate(R.layout.fragment_wallet_pay, container, false);
-
+        this.context=getActivity();
+        this.fm=getParentFragmentManager();
         initializeForm(view);
         return view;
     }
 
-//    @Override
-//    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // Get the layout inflater
-//        LayoutInflater inflater = getLayoutInflater();
-//        // Inflate and set the layout for the dialog
-//        // Pass null as the parent view because its going in the dialog layout
-//         View view =inflater.inflate(R.layout.fragment_wallet_pay, null);
-//         builder.setView(view);
-//         initializeForm( view);
-//
-//        ImageView close = view.findViewById(R.id.wallet_buy_close);
-//        close.setOnClickListener(v -> dismiss());
-//
-//         return builder.create();
-//    }
 
     public void initializeForm(View view) {
-            totalAmountTxt = view.findViewById(R.id.txt_crop_bill_total);
+
+            totalAmountEdt = view.findViewById(R.id.txt_bill_total);
+
+            cardNumberEdt = view.findViewById(R.id.pay_bank_CardNumber);
+            expiryEdt = view.findViewById(R.id.pay_bank_card_expiry);
+            cvvEdt = view.findViewById(R.id.pay_bank_card_cvv);
+            accountNameEdt= view.findViewById(R.id.pay_account_name);
+            mobileNumberEdt = view.findViewById(R.id.pay_mobile_no);
+
             couponAmout= view.findViewById(R.id.txt_wallet_bill_coupon);
             layout_coupon= view.findViewById(R.id.layout_coupon);
-            mechantIdTextView = view.findViewById(R.id.txt_wallet_purchase_mechant_id);
+            mechantIdEdt = view.findViewById(R.id.edt_purchase_mechant_id);
             saveBtn = view.findViewById(R.id.btn_save);
             text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
 
@@ -100,27 +97,23 @@ public class PayFragment extends Fragment {
                 } catch (Exception e) {
 
                 }
-                if(position==0){
+                String selectedItem=spPaymentMethod.getSelectedItem().toString();
+                if(selectedItem.equalsIgnoreCase("wallet")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
                 }
-                else if(position==1){
-                    layoutMobileMoney.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.GONE);
-                    layoutBankCards.setVisibility(View.GONE);
-                }
-                else if(position==2){
+                else if(selectedItem.equalsIgnoreCase("eMaisha Card")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.VISIBLE);
                     layoutBankCards.setVisibility(View.GONE);
                 }
-                else if(position==3){
+                else if(selectedItem.equalsIgnoreCase("Mobile Money")){
                     layoutMobileMoney.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
                 }
-                else if(position==4){
+                else if(selectedItem.equalsIgnoreCase("Bank Cards")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.VISIBLE);
@@ -157,11 +150,34 @@ public class PayFragment extends Fragment {
     }
 
     public void processPayment(){
-        float amount = Float.parseFloat(totalAmountTxt.getText().toString());
-        if(amount>0 && !mechantIdTextView.getText().toString().isEmpty()){
-            WalletPurchase.getInstance().setMechantId(mechantIdTextView.getText().toString());
+        float amount = Float.parseFloat(totalAmountEdt.getText().toString());
+        String cardNo = cardNumberEdt.getText().toString();
+        String account_name = accountNameEdt.getText().toString();
+        String cvv = cvvEdt.getText().toString();
+        String expiry = expiryEdt.getText().toString();
+        String mobileNo = mobileNumberEdt.getText().toString();
+        String methodOfPayment= spPaymentMethod.getSelectedItem().toString();
+
+        if(methodOfPayment.equals("Wallet"))
+            validateWalletPurchase();
+        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
+            validateBankCardPurchase();
+        else if(methodOfPayment.equals("Mobile Money"))
+            validateMobileMoneyPurchase();
+
+
+        if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
+            WalletPurchase.getInstance().setMechantId(mechantIdEdt.getText().toString());
             WalletPurchase.getInstance().setAmount(amount);
+            WalletPurchase.getInstance().setCardNumber(cardNo);
+            WalletPurchase.getInstance().setAccount_name(account_name);
+            WalletPurchase.getInstance().setCardExpiry(expiry);
+            WalletPurchase.getInstance().setCvv(cvv);
+            WalletPurchase.getInstance().setMobileNumber(mobileNo);
+            WalletPurchase.getInstance().setMethodOfPayment(methodOfPayment);
             WalletPurchase.getInstance().setCoupon(couponAmout.getText().toString());
+
+            
             FragmentTransaction ft = this.fm.beginTransaction();
             Fragment prev =this.fm.findFragmentByTag("dialog");
             if (prev != null) {
@@ -169,14 +185,65 @@ public class PayFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-            DialogFragment buyfoodPreviewDailog =new PurchasePreview(context);
-            buyfoodPreviewDailog.show( ft, "dialog");
+            DialogFragment PreviewDailog =new PurchasePreview(context);
+            PreviewDailog.show( ft, "dialog");
         }
         else{
             Log.d("ITEMS ", "NO ITEMS");
         }
     }
 
+    private boolean validateBankCardPurchase() {
+        if (!ValidateInputs.isValidName(accountNameEdt.getText().toString().trim())) {
+            accountNameEdt.setError(getString(R.string.invalid_name));
+            return false;
+        } else if (!ValidateInputs.isValidAccountNo(cardNumberEdt.getText().toString().trim())) {
+            cardNumberEdt.setError(getString(R.string.invalid_credit_card));
+            return false;
+        } else if (!ValidateInputs.isValidCvv(cvvEdt.getText().toString().trim())) {
+            cvvEdt.setError(getString(R.string.invalid_card_cvv));
+            return false;
+        } else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        } else if (!ValidateInputs.isValidCardExpiry(expiryEdt.getText().toString().trim())){
+            expiryEdt.setError(getString(R.string.invalid_expiry));
+            return false;
+        } else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
+    }
+
+    private boolean validateWalletPurchase() {
+        if (Integer.parseInt(mechantIdEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
+    }
+
+    private boolean validateMobileMoneyPurchase() {
+        if (!ValidateInputs.isValidPhoneNo(mobileNumberEdt.getText().toString().trim())) {
+            mobileNumberEdt.setError(getString(R.string.invalid_phone));
+            return false;
+        } else if (Integer.parseInt(mechantIdEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
+            totalAmountEdt.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
+    }
+    
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(view);

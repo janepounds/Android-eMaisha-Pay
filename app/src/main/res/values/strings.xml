@@ -316,7 +316,6 @@
         <item>Select</item>
     </string-array>
     <string-array name="payment_method">
-        <item>Select</item>
         <item>Wallet</item>
         <item>eMaisha Card</item>
         <item>Mobile Money</item>
@@ -395,6 +394,8 @@
     <string name="seeds">Seeds</string>
     <string name="transactions">Transactions</string>
     <string name="invalid_number">Invalid Number</string>
+    <string name="invalid_expiry">Invalid Expiry</string>
+    <string name="purchase_date">Purchase Date</string>
 
 
     <string-array name="spinner_id_type">

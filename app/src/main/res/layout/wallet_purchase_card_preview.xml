@@ -156,7 +156,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="Food Purchase"
+                        android:text="Purchase"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimary"/>

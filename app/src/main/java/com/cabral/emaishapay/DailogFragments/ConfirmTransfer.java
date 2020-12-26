@@ -205,6 +205,7 @@ public class ConfirmTransfer extends DialogFragment {
                     title.setText("SUCCESS!");
                     Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
                     dialogButton.setText("OK");
+                    dialogButton.setTextColor(Color.parseColor("#2E84BE"));
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

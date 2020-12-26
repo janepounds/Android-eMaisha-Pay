@@ -149,10 +149,10 @@ public class WalletHomeFragment extends Fragment {
                                 //type
                                 if (record.getString("type").equalsIgnoreCase("Charge") || record.getString("type").equalsIgnoreCase("Settlement") ) {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                                } else if (record.getString("type").equalsIgnoreCase("Purchase")) {
+                                } else if (record.getString("type").equalsIgnoreCase("Purchase") || record.getString("type").equalsIgnoreCase("External Purchase") ) {
                                     models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
 
-                                } else if (record.getString("type").equalsIgnoreCase("Deposit")) {
+                                }   else if (record.getString("type").equalsIgnoreCase("Deposit")) {
                                     models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
 
                                 } else if (record.getString("type").equalsIgnoreCase("Transfer")) {

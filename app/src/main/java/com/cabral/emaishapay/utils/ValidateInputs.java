@@ -76,6 +76,20 @@ public class ValidateInputs {
     }
     //*********** Validate Number Input ********//
 
+    public static boolean isValidCvv(String number) {
+
+        String regExpn = "^[0-9]{3,4}$";
+        CharSequence inputStr = number;
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        return matcher.matches();
+    }
+    public static boolean isValidCardExpiry(String expiryDate) {
+
+        return  expiryDate.matches("(?:0[1-9]|1[0-2])/[0-9]{2}");
+    }
+
     public static boolean isValidNumber(String number) {
 
         String regExpn = "^[0-9]{1,24}$";

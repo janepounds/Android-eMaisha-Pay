@@ -202,6 +202,9 @@ public class TransferMoney extends Fragment {
             }
         });
         addMoneyImg.setOnClickListener(v -> {
+            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
+            //fetch Transfer Charges
+
             if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
                 queueBankTransfer();
             }
@@ -362,7 +365,7 @@ public class TransferMoney extends Fragment {
         String account_number = etAccountNumber.getText().toString();
         String currency=getString(R.string.currency);
         String narration="eMaisha Pay Bank Transfer outs";
-        String reference= UUID.randomUUID().toString();
+        String reference= "TrO"+UUID.randomUUID().toString();
 
         if( !spSelectBank.getSelectedItem().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null ){
 
@@ -385,7 +388,7 @@ public class TransferMoney extends Fragment {
                         try {
                             com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
                                     response.body().getData();
-                            recordTransferSettlement("pending",TransferResponse,dialogLoader);
+                            recordTransferSettlement("pending","Bank",TransferResponse,dialogLoader);
 
                         } catch (Exception e) {
                             Log.e("response", response.toString());
@@ -441,7 +444,7 @@ public class TransferMoney extends Fragment {
                         try {
                             com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
                                     response.body().getData();
-                            recordTransferSettlement("completed",TransferResponse,dialogLoader);
+                            recordTransferSettlement("completed","Mobile Money",TransferResponse,dialogLoader);
 
                         } catch (Exception e) {
                             Log.e("response", response.toString());
@@ -468,12 +471,11 @@ public class TransferMoney extends Fragment {
 
     }
 
-    private void recordTransferSettlement(String third_party_status,BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader) {
+    private void recordTransferSettlement(String third_party_status,String destination_type, BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Double amount =Double.parseDouble(transferResponse.getAmount());
         String thirdparty="flutterwave";
         Double third_party_fee =Double.parseDouble(transferResponse.getFee());
-        String destination_type="Bank";
         String destination_account_no=transferResponse.getAccount_number();
         String beneficiary_name=transferResponse.getFull_name();
         String destination_name=transferResponse.getBank_name();

@@ -152,6 +152,17 @@ public interface APIRequests {
                                                  @Field("coupon") String coupon
     );
 
+    //make transaction
+    @FormUrlEncoded
+    @Headers({"Accept: application/json"})
+    @POST("wallet/external_payment/merchant")
+    Call<WalletPurchaseResponse> creditMerchantSale(@Header("Authorization") String token,
+                                                 @Field("merchantId") int merchantId,
+                                                 @Field("amount") Double amount,
+                                                 @Field("thirdParty") String thirdParty,
+                                                 @Field("reference") String reference
+    );
+
     //confirm payment
     @FormUrlEncoded
     @POST("wallet/payments/comfirm_paymerchant")
