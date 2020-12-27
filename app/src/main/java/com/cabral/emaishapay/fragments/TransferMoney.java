@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,6 +123,31 @@ public class TransferMoney extends Fragment {
         layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
 
         this.fm=getActivity().getSupportFragmentManager();
+
+            TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (filterLongEnough() && !cardexpiryTxt.getText().toString().contains("/")) {
+                    cardexpiryTxt.setText(cardexpiryTxt.getText().toString()+"/");
+                    int pos = cardexpiryTxt.getText().length();
+                    cardexpiryTxt.setSelection(pos);
+                }
+            }
+
+            private boolean filterLongEnough() {
+                return cardexpiryTxt.getText().toString().length() == 2;
+            }
+        };
+        cardexpiryTxt.addTextChangedListener(fieldValidatorTextWatcher);
+
 
         spTransferTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

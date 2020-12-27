@@ -2,6 +2,8 @@ package com.cabral.emaishapay.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +88,31 @@ public class PayFragment extends Fragment {
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
 
+            
+            TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (filterLongEnough() && !expiryEdt.getText().toString().contains("/")) {
+                    expiryEdt.setText(expiryEdt.getText().toString()+"/");
+                    int pos = expiryEdt.getText().length();
+                    expiryEdt.setSelection(pos);
+                }
+            }
+
+            private boolean filterLongEnough() {
+                return expiryEdt.getText().toString().length() == 2;
+            }
+        };
+        expiryEdt.addTextChangedListener(fieldValidatorTextWatcher);
+        
         spPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

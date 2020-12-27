@@ -116,7 +116,7 @@ public class DepositMoneyVisa extends DialogFragment implements
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (filterLongEnough()) {
+                if (filterLongEnough() && !cardexpiryTxt.getText().toString().contains("/")) {
                     cardexpiryTxt.setText(cardexpiryTxt.getText().toString()+"/");
                     int pos = cardexpiryTxt.getText().length();
                     cardexpiryTxt.setSelection(pos);
