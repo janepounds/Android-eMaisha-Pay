@@ -1187,7 +1187,161 @@
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
+                            <RelativeLayout
+                                android:id="@+id/business_account_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="10dp"
+                                android:paddingTop="6dp"
+                                android:paddingEnd="10dp">
 
+                                <TextView
+                                    android:id="@+id/business_account"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Create Business Account"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/agent_merchant"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/business_account"
+                                    android:layout_marginTop="@dimen/dimen_10dp"
+                                    android:text="Agent, Merchant"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/chevron_business_account"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_chevron_right" />
+
+                                <View
+                                    android:id="@+id/view_business_account"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_below="@id/agent_merchant"
+                                    android:layout_marginTop="8dp"
+                                    android:background="#F9F7FE" />
+
+                            </RelativeLayout>
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/layout_business_account"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/dimen_5dp"
+                                android:paddingStart="5dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="10dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:visibility="gone">
+
+
+
+                                <LinearLayout
+                                    android:id="@+id/layout_agent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="end"
+                                        android:src="@drawable/ic_boss" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="@dimen/dimen_10dp"
+                                        android:text="Agent"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/textColor" />
+
+
+
+                                </LinearLayout>
+                                <View
+                                    android:id="@+id/view4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    app:layout_constraintTop_toBottomOf="@id/layout_agent"
+                                    app:layout_constraintBottom_toTopOf="@id/layout_merchant"
+                                    android:layout_marginTop="5dp"
+                                    android:background="#F9F7FE" />
+                                <LinearLayout
+                                    android:id="@+id/layout_merchant"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginStart="5dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/view4">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="end"
+                                        android:src="@drawable/ic_hierarchy" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="@dimen/dimen_10dp"
+                                        android:text="Merchant"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/textColor" />
+
+                                </LinearLayout>
+                                <View
+                                    android:id="@+id/view5"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    app:layout_constraintTop_toBottomOf="@id/layout_merchant"
+                                    app:layout_constraintBottom_toTopOf="@id/layout_agent_merchant"
+                                    android:layout_marginTop="5dp"
+                                    android:background="#F9F7FE" />
+                                <LinearLayout
+                                    android:id="@+id/layout_agent_merchant"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginStart="5dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/view5">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="end"
+                                        android:src="@drawable/ic_location_pin" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="@dimen/dimen_10dp"
+                                        android:text="Agent &amp; Merchant"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/textColor" />
+
+                                </LinearLayout>
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
