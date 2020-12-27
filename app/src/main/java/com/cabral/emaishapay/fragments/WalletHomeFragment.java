@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,18 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.WalletTransactionAdapter;
+import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
-import com.cabral.emaishapay.models.TransactionModel;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -53,7 +48,7 @@ public class WalletHomeFragment extends Fragment {
     private NavController navController = null;
     private ProgressDialog progressDialog;
     private final int transactions_limit=4;
-    private List<TransactionModel> models = new ArrayList<>();
+    private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
 
@@ -99,6 +94,7 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
         binding.layoutPay.setOnClickListener(view1 -> navController.navigate(R.id.action_walletHomeFragment_to_payFragment));
         binding.moreTransactionCards.setOnClickListener(view11 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
+
     }
 
     @Override
@@ -143,42 +139,19 @@ public class WalletHomeFragment extends Fragment {
 
                             for (int i = 0; i < loop_limit; i++) {
                                 WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
-                                Gson gson = new Gson();
-                                String ress = gson.toJson(res);
-                                JSONObject record = new JSONObject(ress);
-                                //type
-                                if (record.getString("type").equalsIgnoreCase("Charge") || record.getString("type").equalsIgnoreCase("Settlement") ) {
-                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                                } else if (record.getString("type").equalsIgnoreCase("Purchase") || record.getString("type").equalsIgnoreCase("External Purchase") ) {
-                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-
-                                }   else if (record.getString("type").equalsIgnoreCase("Deposit")) {
-                                    models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
-
-                                } else if (record.getString("type").equalsIgnoreCase("Transfer")) {
-                                    String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
-
-                                    if (userName.equalsIgnoreCase(record.getString("sender"))) {
-                                        models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-                                    } else {
-                                        models.add( new TransactionModel(getNameInitials(record.getString("sender")), record.getString("sender"), record.getString("date"), "+"+record.getDouble("amount")) );
-                                    }
-                                } else if (record.getString("type").equalsIgnoreCase("Withdraw")) {
-                                    models.add( new TransactionModel(getNameInitials( record.getString("receiver")),  record.getString("receiver"), record.getString("date"), "-"+record.getDouble("amount")) );
-
-                                }
+                                models.add( res );
 
                             }
                         }
 
 
                     }
-                    catch (JSONException e) {
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                     finally {
                         if(models.size()>0){
-                            WalletTransactionAdapter adapter = new WalletTransactionAdapter(requireContext(), models);
+                            WalletTransactionsListAdapter adapter = new WalletTransactionsListAdapter( models, getActivity().getSupportFragmentManager());
                             binding.recyclerView.setAdapter(adapter);
                             binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                             binding.recyclerView.setHasFixedSize(true);
@@ -206,22 +179,6 @@ public class WalletHomeFragment extends Fragment {
         });
 
 
-    }
-
-    private String getNameInitials(String name){
-        if(name==null || name.isEmpty())
-            return null;
-        String ini = ""+name.charAt(0);
-        // we use ini to return the output
-        for (int i=0; i<name.length(); i++){
-            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' ' && ini.length()!=2){
-                //if i+1==name.length() you will have an indexboundofexception
-                //add the initials
-                ini+=name.charAt(i+1);
-            }
-        }
-        //after getting "ync" => return "YNC"
-        return ini.toUpperCase();
     }
 
     public void updateBalance() {
@@ -263,17 +220,6 @@ public class WalletHomeFragment extends Fragment {
                 TokenAuthActivity.startAuth(context, false);
             }
         });
-    }
-
-
-    public void comingSoon() {
-        ProgressDialog dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(false);
-        dialog.setMessage("Coming Soon ..!!");
-        dialog.setCancelable(true);
-
-        dialog.show();
-
     }
 
 

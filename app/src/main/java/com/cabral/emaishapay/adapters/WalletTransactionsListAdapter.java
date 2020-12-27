@@ -62,8 +62,6 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             WalletTransactionResponse.TransactionData.Transactions transaction = dataList.get(getAdapterPosition());
             //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
             if (fm!=null ){
-                Intent intent = new Intent(v.getContext(), WalletTransactionsReceiptDialog.class);
-                //intent.putExtra("referenceNumber",transaction.getReferenceNumber());
                 WalletTransactionsReceiptDialog walletTransactionsReceiptDialog = new WalletTransactionsReceiptDialog(transaction);
 
                 walletTransactionsReceiptDialog.show(fm, "walletTransactionsReceiptDialog");

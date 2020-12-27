@@ -1,15 +1,16 @@
 package com.cabral.emaishapay.models;
 
-public class WalletPurchase {
-    static com.cabral.emaishapay.models.WalletPurchase purchase = new com.cabral.emaishapay.models.WalletPurchase();
-    String mechantId, coupon, mobileNumber;
+public class WalletTransactionInitiation {
+    static WalletTransactionInitiation purchase = new WalletTransactionInitiation();
+    String mechantId, coupon, mobileNumber, accountNumber;
     float amount;
 
     String cardNumber, account_name, cardExpiry, cvv;
 
     String methodOfPayment;
+    String bankCode, bankBranch;
 
-    public static com.cabral.emaishapay.models.WalletPurchase getInstance(){
+    public static WalletTransactionInitiation getInstance(){
         return purchase;
     }
 
@@ -24,6 +25,13 @@ public class WalletPurchase {
     }
 
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public float getAmount() {
         return amount;
@@ -39,12 +47,12 @@ public class WalletPurchase {
 
     public String getCoupon() { return coupon; }
 
-    public static WalletPurchase getPurchase() {
+    public static WalletTransactionInitiation getPurchase() {
         return purchase;
     }
 
-    public static void setPurchase(WalletPurchase purchase) {
-        WalletPurchase.purchase = purchase;
+    public static void setPurchase(WalletTransactionInitiation purchase) {
+        WalletTransactionInitiation.purchase = purchase;
     }
 
     public String getMobileNumber() {
@@ -93,5 +101,21 @@ public class WalletPurchase {
 
     public void setMethodOfPayment(String methodOfPayment) {
         this.methodOfPayment = methodOfPayment;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getBankBranch() {
+        return bankBranch;
+    }
+
+    public void setBankBranch(String bankBranch) {
+        this.bankBranch = bankBranch;
     }
 }

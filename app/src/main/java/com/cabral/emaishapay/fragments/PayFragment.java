@@ -29,16 +29,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.cabral.emaishapay.DailogFragments.PurchasePreview;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.models.WalletPurchase;
+import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.utils.ValidateInputs;
-
-import java.text.BreakIterator;
 
 public class PayFragment extends Fragment {
     TextView mechantIdEdt, text_coupon;
-    EditText totalAmountEdt, couponAmout, cardNumberEdt, accountNameEdt, expiryEdt, cvvEdt, mobileNumberEdt;
+    EditText totalAmountEdt, couponAmout, cardNumberEdt, expiryEdt, cvvEdt, mobileNumberEdt;
 
-    LinearLayout layout_coupon,layoutEmaishaCard,layoutMobileMoney,layoutBankCards;
+    LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards;
     Spinner spPaymentMethod;
     Button saveBtn;
     FragmentManager fm;
@@ -73,7 +71,6 @@ public class PayFragment extends Fragment {
             cardNumberEdt = view.findViewById(R.id.pay_bank_CardNumber);
             expiryEdt = view.findViewById(R.id.pay_bank_card_expiry);
             cvvEdt = view.findViewById(R.id.pay_bank_card_cvv);
-            accountNameEdt= view.findViewById(R.id.pay_account_name);
             mobileNumberEdt = view.findViewById(R.id.pay_mobile_no);
 
             couponAmout= view.findViewById(R.id.txt_wallet_bill_coupon);
@@ -83,7 +80,6 @@ public class PayFragment extends Fragment {
             text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
 
             toolbar = view.findViewById(R.id.toolbar_wallet_pay_merchant);
-            layoutEmaishaCard = view.findViewById(R.id.layout_emaisha_card);
             layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
@@ -126,22 +122,14 @@ public class PayFragment extends Fragment {
                 String selectedItem=spPaymentMethod.getSelectedItem().toString();
                 if(selectedItem.equalsIgnoreCase("wallet")){
                     layoutMobileMoney.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.GONE);
-                    layoutBankCards.setVisibility(View.GONE);
-                }
-                else if(selectedItem.equalsIgnoreCase("eMaisha Card")){
-                    layoutMobileMoney.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.VISIBLE);
                     layoutBankCards.setVisibility(View.GONE);
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
                     layoutMobileMoney.setVisibility(View.VISIBLE);
-                    layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
                 }
-                else if(selectedItem.equalsIgnoreCase("Bank Cards")){
+                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
                     layoutMobileMoney.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.VISIBLE);
                 }
 
@@ -171,6 +159,7 @@ public class PayFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     processPayment();
+
                 }
             });
     }
@@ -178,7 +167,6 @@ public class PayFragment extends Fragment {
     public void processPayment(){
         float amount = Float.parseFloat(totalAmountEdt.getText().toString());
         String cardNo = cardNumberEdt.getText().toString();
-        String account_name = accountNameEdt.getText().toString();
         String cvv = cvvEdt.getText().toString();
         String expiry = expiryEdt.getText().toString();
         String mobileNo = mobileNumberEdt.getText().toString();
@@ -193,15 +181,14 @@ public class PayFragment extends Fragment {
 
 
         if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
-            WalletPurchase.getInstance().setMechantId(mechantIdEdt.getText().toString());
-            WalletPurchase.getInstance().setAmount(amount);
-            WalletPurchase.getInstance().setCardNumber(cardNo);
-            WalletPurchase.getInstance().setAccount_name(account_name);
-            WalletPurchase.getInstance().setCardExpiry(expiry);
-            WalletPurchase.getInstance().setCvv(cvv);
-            WalletPurchase.getInstance().setMobileNumber(mobileNo);
-            WalletPurchase.getInstance().setMethodOfPayment(methodOfPayment);
-            WalletPurchase.getInstance().setCoupon(couponAmout.getText().toString());
+            WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
+            WalletTransactionInitiation.getInstance().setAmount(amount);
+            WalletTransactionInitiation.getInstance().setCardNumber(cardNo);
+            WalletTransactionInitiation.getInstance().setCardExpiry(expiry);
+            WalletTransactionInitiation.getInstance().setCvv(cvv);
+            WalletTransactionInitiation.getInstance().setMobileNumber(mobileNo);
+            WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
+            WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
 
             
             FragmentTransaction ft = this.fm.beginTransaction();
@@ -220,10 +207,7 @@ public class PayFragment extends Fragment {
     }
 
     private boolean validateBankCardPurchase() {
-        if (!ValidateInputs.isValidName(accountNameEdt.getText().toString().trim())) {
-            accountNameEdt.setError(getString(R.string.invalid_name));
-            return false;
-        } else if (!ValidateInputs.isValidAccountNo(cardNumberEdt.getText().toString().trim())) {
+        if (!ValidateInputs.isValidAccountNo(cardNumberEdt.getText().toString().trim())) {
             cardNumberEdt.setError(getString(R.string.invalid_credit_card));
             return false;
         } else if (!ValidateInputs.isValidCvv(cvvEdt.getText().toString().trim())) {
@@ -282,5 +266,6 @@ public class PayFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
     }
+
 }
 

@@ -45,6 +45,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
@@ -185,7 +186,7 @@ public class Utilities {
         if (CheckPermissions.is_PHONE_STATE_PermissionGranted()) {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             try {
-                IMEI = telephonyManager.getDeviceId();
+                //IMEI = telephonyManager.getDeviceId();
                 NETWORK = telephonyManager.getNetworkOperatorName();
 
             } catch (SecurityException e) {
@@ -500,7 +501,8 @@ public class Utilities {
         try {
             // Use methods on Context to access package-specific directories on external storage.
             // This way, you don't need to request external read/write permission.
-            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" +userId+ System.currentTimeMillis() + ".png");
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();

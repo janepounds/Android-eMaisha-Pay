@@ -2,6 +2,7 @@ package com.cabral.emaishapay.network;
 
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
+import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
@@ -9,14 +10,12 @@ import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.address_model.Zones;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.BalanceResponse;
-import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
 import com.cabral.emaishapay.models.LoanPayResponse;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.models.WalletAuthentication;
-import com.cabral.emaishapay.models.WalletLoanAddPicResponse;
 import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
@@ -112,8 +111,8 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/transfer/initiate")
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
-                                                            @Field("amount") Double amount,
-                                                            @Field("receiverPhoneNumber") String receiverPhoneNumber
+                                                    @Field("amount") Double amount,
+                                                    @Field("receiverPhoneNumber") String receiverPhoneNumber
     );
 
     //initiate transfer

@@ -1,45 +1,22 @@
 package com.cabral.emaishapay.network;
 
 
-import com.cabral.emaishapay.models.BalanceResponse;
-import com.cabral.emaishapay.models.InitiateTransferResponse;
-import com.cabral.emaishapay.models.LoanListResponse;
-import com.cabral.emaishapay.models.LoanPayResponse;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
-import com.cabral.emaishapay.models.RequestLoanresponse;
-import com.cabral.emaishapay.models.TokenResponse;
-import com.cabral.emaishapay.models.WalletAuthentication;
-import com.cabral.emaishapay.models.WalletLoanAddPicResponse;
-import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
-import com.cabral.emaishapay.models.WalletPurchaseResponse;
-import com.cabral.emaishapay.models.WalletTransaction;
-import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.WalletUserRegistration;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.address_model.Zones;
-import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.user_model.UserData;
 
-import org.json.JSONObject;
-
-import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +28,10 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
-import com.cabral.emaishapay.models.WalletPurchase;
+import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
-import com.cabral.emaishapay.utils.ValidateInputs;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -55,7 +53,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -119,7 +116,7 @@ public class PurchasePreview extends DialogFragment implements
         mechantIdTextView = view.findViewById(R.id.text_view_purchase_preview_mechant_id);
         confirmBtn = view.findViewById(R.id.btn_purchase_preview_confirm);
 
-        totalTextView.setText( NumberFormat.getInstance().format(WalletPurchase.getInstance().getAmount()));
+        totalTextView.setText( NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount()));
 
         SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat(), Locale.ENGLISH);
         localFormat.setTimeZone(TimeZone.getDefault());
@@ -131,11 +128,15 @@ public class PurchasePreview extends DialogFragment implements
         purchase_date_label_TextView.setText(getString(R.string.purchase_date));
         datetimeTextView.setText(currentDateandTime);
 
-        mechantIdTextView.setText(WalletPurchase.getInstance().getMechantId());
+        mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processPayment();
+                double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),getContext()));
+                Float PurchaseCharges=0F;
+                if(balance >= Double.parseDouble( ""+(WalletTransactionInitiation.getInstance().getAmount())+PurchaseCharges) ){
+                    processPayment();
+                }
             }
         });
 
@@ -156,7 +157,7 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        int merchantId = Integer.parseInt(WalletPurchase.getInstance().getMechantId());
+        int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<MerchantInfoResponse> call = apiRequests.getMerchant(access_token,merchantId);
         call.enqueue(new Callback<MerchantInfoResponse>() {
@@ -203,7 +204,7 @@ public class PurchasePreview extends DialogFragment implements
 
     public void processPayment(){
 
-        String methodOfPayment=WalletPurchase.getInstance().getMethodOfPayment();
+        String methodOfPayment= WalletTransactionInitiation.getInstance().getMethodOfPayment();
         if(methodOfPayment.equalsIgnoreCase("wallet")){
           processWalletPayment();
         }
@@ -219,9 +220,10 @@ public class PurchasePreview extends DialogFragment implements
     }
 
     private void processMobileMoneyPayment() {
-        String mobileNumber=WalletPurchase.getInstance().getMobileNumber();
-        double amount = WalletPurchase.getInstance().getAmount();
-        String txRef= "MMP"+ UUID.randomUUID().toString();
+        String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        String txRef= "MMP"+userId+ System.currentTimeMillis();
         String eMaishaPayServiceMail="info@cabraltech.com";
 
 
@@ -292,11 +294,12 @@ public class PurchasePreview extends DialogFragment implements
 
     private void processCardPayment() {
 
-        String expiryDate=WalletPurchase.getInstance().getCardExpiry();
-        String cardNumber=WalletPurchase.getInstance().getCardNumber();
-        String cardccv=WalletPurchase.getInstance().getCvv();
-        double amount = WalletPurchase.getInstance().getAmount();
-        String txRef= "BCP"+ UUID.randomUUID().toString();
+        String expiryDate= WalletTransactionInitiation.getInstance().getCardExpiry();
+        String cardNumber= WalletTransactionInitiation.getInstance().getCardNumber();
+        String cardccv= WalletTransactionInitiation.getInstance().getCvv();
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        String txRef= "BCP"+userId+ System.currentTimeMillis();
         String eMaishaPayServiceMail="info@cabraltech.com";
 
 
@@ -336,9 +339,9 @@ public class PurchasePreview extends DialogFragment implements
     }
 
     private void processWalletPayment() {
-        int merchantId = Integer.parseInt(WalletPurchase.getInstance().getMechantId());
-        double amount = WalletPurchase.getInstance().getAmount();
-        String coupon  = WalletPurchase.getInstance().getCoupon();
+        int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
@@ -361,7 +364,7 @@ public class PurchasePreview extends DialogFragment implements
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
                     TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
-                    text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletPurchase.getInstance().getAmount())+" from "+businessName);
+                    text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
                     TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
                     title.setText("SUCCESS!");
                     Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
@@ -551,9 +554,9 @@ public class PurchasePreview extends DialogFragment implements
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
 
-        int merchantId = Integer.parseInt(WalletPurchase.getInstance().getMechantId());
-        double amount = WalletPurchase.getInstance().getAmount();
-        String coupon  = WalletPurchase.getInstance().getCoupon();
+        int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
@@ -571,7 +574,7 @@ public class PurchasePreview extends DialogFragment implements
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
                     TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
-                    text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletPurchase.getInstance().getAmount())+" from "+businessName);
+                    text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
                     TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
                     title.setText("SUCCESS!");
                     Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
