@@ -158,7 +158,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
         String ini = ""+name.charAt(0);
         // we use ini to return the output
         for (int i=0; i<name.length(); i++){
-            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' '){
+            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' ' && ini.length()!=2 ){
                 //if i+1==name.length() you will have an indexboundofexception
                 //add the initials
                 ini+=name.charAt(i+1);

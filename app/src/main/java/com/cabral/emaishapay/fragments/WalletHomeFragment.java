@@ -172,9 +172,11 @@ public class WalletHomeFragment extends Fragment {
                         }
 
 
-                    } catch (JSONException e) {
+                    }
+                    catch (JSONException e) {
                         e.printStackTrace();
-                    }finally {
+                    }
+                    finally {
                         if(models.size()>0){
                             WalletTransactionAdapter adapter = new WalletTransactionAdapter(requireContext(), models);
                             binding.recyclerView.setAdapter(adapter);
@@ -212,7 +214,7 @@ public class WalletHomeFragment extends Fragment {
         String ini = ""+name.charAt(0);
         // we use ini to return the output
         for (int i=0; i<name.length(); i++){
-            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' '){
+            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' ' && ini.length()!=2){
                 //if i+1==name.length() you will have an indexboundofexception
                 //add the initials
                 ini+=name.charAt(i+1);
@@ -263,18 +265,6 @@ public class WalletHomeFragment extends Fragment {
         });
     }
 
-//    public void openBuy() {
-//        FragmentTransaction ft = fm.beginTransaction();
-//        Fragment prev = fm.findFragmentByTag("dialog");
-//        if (prev != null) {
-//            ft.remove(prev);
-//        }
-//        ft.addToBackStack(null);
-//
-//        // Create and show the dialog.
-//        DialogFragment buyFoodDialog = new PayFragment(context, requireActivity().getSupportFragmentManager());
-//        buyFoodDialog.show(ft, "dialog");
-//    }
 
     public void comingSoon() {
         ProgressDialog dialog = new ProgressDialog(context);
@@ -325,8 +315,6 @@ public class WalletHomeFragment extends Fragment {
                                 //get balanace from shared preference and update it in textview
 
                                 binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
-
-
 
                                 Log.d(TAG, "run: reached !!");
 
