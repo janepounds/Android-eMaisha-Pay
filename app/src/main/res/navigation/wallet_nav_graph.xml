@@ -141,6 +141,9 @@
         <action
             android:id="@+id/action_walletAccountFragment_to_businessInformationFragment"
             app:destination="@id/businessInformationFragment" />
+        <action
+            android:id="@+id/action_walletAccountFragment_to_businessAccountFragment"
+            app:destination="@id/businessAccountFragment" />
     </fragment>
 
     <fragment
@@ -208,5 +211,9 @@
             android:id="@+id/action_payFragment_to_walletHomeFragment"
             app:destination="@id/walletHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/businessAccountFragment"
+        android:name="com.cabral.emaishapay.fragments.BusinessAccountFragment"
+        android:label="Merchant Details" />
 
 </navigation>

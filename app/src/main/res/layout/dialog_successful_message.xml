@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_round_white"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dimen_10dp"
+    android:padding="@dimen/dimen_10dp"
+    android:id="@+id/pop_up_layout">
+
+    <ImageView
+        android:id="@+id/pop_up_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/success"
+        android:layout_margin="@dimen/dimen_20dp"/>
+    <TextView
+        android:id="@+id/thank_you_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pop_up_img"
+        android:text="Success"
+        android:textSize="45sp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/dimen_20dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/pop_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thank_you_tv">
+
+
+        <TextView
+            android:id="@+id/pop_up_content_account_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Details for CABRAL TECH LTD"
+            android:textSize="16sp"
+            android:textColor="#222222"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="have been successfully submitted, awaiting approaval."
+            android:textSize="16sp"
+            android:textColor="#222222"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

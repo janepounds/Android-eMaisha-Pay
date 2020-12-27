@@ -103,6 +103,13 @@ public class WalletAccountFragment extends Fragment {
                 binding.layoutBusinessInfo.setVisibility(View.GONE);
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
+            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                binding.agentMerchant.setVisibility(View.VISIBLE);
+                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+                binding.layoutBusinessAccount.setVisibility(View.GONE);
+                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
+            }
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
                 binding.genderDobStatus.setVisibility(View.VISIBLE);
@@ -159,6 +166,13 @@ public class WalletAccountFragment extends Fragment {
                 binding.viewPersonalInfo.setVisibility(View.VISIBLE);
                 binding.layoutPersonalInfo.setVisibility(View.GONE);
                 binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+            }
+            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                binding.agentMerchant.setVisibility(View.VISIBLE);
+                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+                binding.layoutBusinessAccount.setVisibility(View.GONE);
+                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
             }
 
             if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
@@ -219,6 +233,13 @@ public class WalletAccountFragment extends Fragment {
 
 
             }
+            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                binding.agentMerchant.setVisibility(View.VISIBLE);
+                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+                binding.layoutBusinessAccount.setVisibility(View.GONE);
+                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
+            }
 
             if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                 binding.employeeDesignation.setVisibility(View.VISIBLE);
@@ -277,6 +298,15 @@ public class WalletAccountFragment extends Fragment {
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
+            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                binding.agentMerchant.setVisibility(View.VISIBLE);
+                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+                binding.layoutBusinessAccount.setVisibility(View.GONE);
+                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
+
+
+            }
 
             if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                 binding.businessNameTinLicence.setVisibility(View.VISIBLE);
@@ -300,6 +330,8 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+
+
         binding.editBusinessInfo.setOnClickListener(view1 ->
                 {
                     Bundle bundle = new Bundle();
@@ -311,6 +343,69 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("trade_license",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
                     navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment,bundle);
                 });
+
+
+        binding.businessAccountLayout.setOnClickListener(view12 ->{
+
+            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+                binding.genderDobStatus.setVisibility(View.VISIBLE);
+                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+                binding.layoutPersonalInfo.setVisibility(View.GONE);
+                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+            }
+
+            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+                binding.idTypeNumber.setVisibility(View.VISIBLE);
+                binding.viewIdInfo.setVisibility(View.VISIBLE);
+                binding.layoutIdInfo.setVisibility(View.GONE);
+                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+            }
+
+            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+                binding.employeeDesignation.setVisibility(View.VISIBLE);
+                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+            }
+
+            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+                binding.layoutBusinessInfo.setVisibility(View.GONE);
+                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+            }
+                if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                    binding.agentMerchant.setVisibility(View.VISIBLE);
+                    binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+                    binding.layoutBusinessAccount.setVisibility(View.GONE);
+                    binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
+
+
+                } else {
+                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+                binding.layoutBusinessAccount.setVisibility(View.VISIBLE);
+                binding.viewBusinessAccount.setVisibility(View.GONE);
+                binding.agentMerchant.setVisibility(View.GONE);
+
+            }
+
+
+        });
+        binding.layoutAgent.setOnClickListener(view1 ->
+        {
+
+             navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+        });
+        binding.layoutMerchant.setOnClickListener(view1 ->
+        {
+            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+        });
+        binding.layoutAgentMerchant.setOnClickListener(view1 ->
+        {
+            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+        });
+
 
         binding.shareApp.setOnClickListener(view13 -> {
             Intent sendIntent = new Intent();
