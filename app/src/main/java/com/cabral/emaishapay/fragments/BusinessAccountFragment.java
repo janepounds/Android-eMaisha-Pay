@@ -22,6 +22,7 @@ import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 public class BusinessAccountFragment extends Fragment {
     private FragmentBusinessAccountBinding binding;
     private NavController navController = null;
+
     public BusinessAccountFragment() {
         // Required empty public constructor
     }
@@ -39,7 +40,25 @@ public class BusinessAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_account, container, false);
+        if(getArguments()!=null) {
+            String agent = "Agent";
+            String merchant = "Merchant";
+            String agentMerchant = "AgentMerchant";
+            if (getArguments().getString("Agent").equals(agent)) {
+                binding.toolbar.setTitle(getArguments().getString("Agent"));
 
+            }else if(getArguments().getString("Merchant").equals(merchant)){
+                binding.toolbar.setTitle(getArguments().getString("Merchant"));
+
+            }else if(getArguments().getString("AgentMerchant").equals(agentMerchant)){
+                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
+
+            }else{
+
+            }
+
+
+        }
         return binding.getRoot();
     }
 
@@ -56,13 +75,6 @@ public class BusinessAccountFragment extends Fragment {
     }
 
     public void initializeViews(){
-        if(getArguments().getString("Agent").equalsIgnoreCase("Agent")){
-            binding.toolbar.setTitle(getArguments().getString("Agent"));
 
-        }else if(getArguments().getString("Merchant").equalsIgnoreCase("Merchant")){
-            binding.toolbar.setTitle(getArguments().getString("Merchant"));
-        }else if(getArguments().getString("AgentMerchant").equalsIgnoreCase("AgentMerchant")) {
-            binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
-        }
     }
 }
