@@ -51,6 +51,7 @@ public class WalletHomeFragment extends Fragment {
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
+    boolean shouldStopLoop = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +65,19 @@ public class WalletHomeFragment extends Fragment {
         progressDialog.setCancelable(false);
 
         fm = requireActivity().getSupportFragmentManager();
-        getTransactionsData();
+
+        Handler mHandler = new Handler();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                getTransactionsData();
+                if (!shouldStopLoop) {
+                    mHandler.postDelayed(this, 20000);
+                }
+            }
+        };
+
         binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
         new MyTask(WalletHomeFragment.this).execute();
 
@@ -117,7 +130,7 @@ public class WalletHomeFragment extends Fragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        timerDelayRemoveDialog(20000,dialog);
+
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         /**********RETROFIT IMPLEMENTATION************/
@@ -278,11 +291,5 @@ public class WalletHomeFragment extends Fragment {
         }
     }
 
-    public void timerDelayRemoveDialog(long time, final ProgressDialog d){
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                d.dismiss();
-            }
-        }, time);
-    }
+  
 }
