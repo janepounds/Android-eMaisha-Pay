@@ -8,6 +8,7 @@ import com.cabral.emaishapay.models.address_model.Zones;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
+import com.cabral.emaishapay.models.external_transfer_model.TransferFeeResponse;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.user_model.UserData;
 
@@ -78,6 +79,12 @@ public interface ExternalAPIRequests {
                                                 @Field("account_number") String account_number,
                                                 @Field("destination_branch_code") String destination_branch_code,
                                                 @Field("account_bank") String account_bank);
+
+    @GET("transfers/fee")
+    Call<TransferFeeResponse> getFlutterwaveTransferFee(@Header("Authorization") String secKey,
+                                                        @Query("currency") String currency,
+                                                        @Query("amount") String amount,
+                                                        @Query("type") String type);
 
     //get tranfer Data
     @GET("transfers/{id}")

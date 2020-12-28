@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
+import com.cabral.emaishapay.models.external_transfer_model.TransferFeeResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.ExternalAPIRequests;
@@ -55,13 +57,15 @@ public class ConfirmTransfer extends DialogFragment {
 
     Button confirmBtn;
     TextView serviceTextView, datetimeTextView, totalTextView, receiverPhoneNumber,
-            receiverNameTextView, errorTextView, transactionLabelTextView, receiverLabel;
+            receiverNameTextView, errorTextView, transactionLabelTextView, receiverLabel,chargesTextView;
     String businessName = "";
     Context activity;
+    LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
 
-    public ConfirmTransfer(Context context) {
+    public ConfirmTransfer(Context context, WalletTransactionInitiation instance) {
         this.activity = context;
+        WalletTransactionInitiation.setPurchase(instance);
     }
 
 
@@ -96,7 +100,7 @@ public class ConfirmTransfer extends DialogFragment {
         datetimeTextView = view.findViewById(R.id.text_view_purchase_date_time);
         transactionLabelTextView = view.findViewById(R.id.transaction_receiver_label);
         transactionLabelTextView.setText("Transferring to");
-
+        chargesTextView = view.findViewById(R.id.txt_view_charges);
         receiverLabel = view.findViewById(R.id.txt_wallet_purchase_mechant_label);
         receiverLabel.setText("Receiver's Phone Number");
 
@@ -106,13 +110,15 @@ public class ConfirmTransfer extends DialogFragment {
         confirmBtn.setText("Confirm Transfer");
         serviceTextView = view.findViewById(R.id.text_view_purchase_service);
         serviceTextView.setText("Money Transfer");
+        charges_layount= view.findViewById(R.id.charges_layount);
+        discount_layount= view.findViewById(R.id.discount_layount);
 
         dialogLoader = new DialogLoader(activity);
 
         double amount=WalletTransactionInitiation.getInstance().getAmount();
         String phoneNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
 
-        totalTextView.setText(NumberFormat.getInstance().format(amount));
+        totalTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(amount));
 
         SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat(), Locale.ENGLISH);
         localFormat.setTimeZone(TimeZone.getDefault());
@@ -124,10 +130,11 @@ public class ConfirmTransfer extends DialogFragment {
 
         datetimeTextView.setText(currentDateandTime);
         receiverPhoneNumber.setText(phoneNumber);
+        String methodOfTransfer=WalletTransactionInitiation.getInstance().getMethodOfPayment();
+
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String methodOfTransfer=WalletTransactionInitiation.getInstance().getMethodOfPayment();
                 if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")){
                     initiateWalletTransfer(phoneNumber, amount);
                 }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")){
@@ -147,7 +154,24 @@ public class ConfirmTransfer extends DialogFragment {
             }
         });
 
-        getReceiverName(phoneNumber);
+        if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")) {
+            getReceiverName(phoneNumber);
+            charges_layount.setVisibility(View.VISIBLE);
+            discount_layount.setVisibility(View.GONE);
+        }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")) {
+            getFlutterwaveTransferFee(""+amount,"mobilemoney");
+            String beneficiary_name = WalletTransactionInitiation.getInstance().getAccount_name();
+            receiverNameTextView.setText(beneficiary_name);
+            charges_layount.setVisibility(View.VISIBLE);
+            discount_layount.setVisibility(View.GONE);
+        }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
+            getFlutterwaveTransferFee(""+amount,"account");
+            String account_name = WalletTransactionInitiation.getInstance().getAccount_name();
+            receiverNameTextView.setText(account_name);
+            receiverPhoneNumber.setVisibility(View.GONE);
+            charges_layount.setVisibility(View.VISIBLE);
+            discount_layount.setVisibility(View.GONE);
+        }
     }
 
     public void getReceiverName(String receiverPhoneNumber){
@@ -205,6 +229,54 @@ public class ConfirmTransfer extends DialogFragment {
             }
         });
 
+
+    }
+
+    private void getFlutterwaveTransferFee( String amount, String type){
+        if(type.equals("mobilemoney") || type.equals("account") ){
+            String currency=getString(R.string.currency);
+            dialogLoader.showProgressDialog();
+            ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
+            Call<TransferFeeResponse> call = apiRequests.getFlutterwaveTransferFee( BuildConfig.SECRET_KEY,
+                    currency,
+                    amount,
+                    type);
+
+            call.enqueue(new Callback<TransferFeeResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<TransferFeeResponse> call, @NotNull Response<TransferFeeResponse> response) {
+
+
+                    if (response.code() == 200 && response.body().getMessage().equals("Transfer fee fetched")) {
+                        try {
+                            double fees = response.body().calculateFees( Double.parseDouble(amount) );
+                            chargesTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(fees));
+                        } catch (Exception e) {
+                            Log.e("response", response.toString());
+                            e.printStackTrace();
+                        }finally {
+                            dialogLoader.hideProgressDialog();
+                        }
+
+                    } else {
+                        dialogLoader.hideProgressDialog();
+                        String message = response.body().getMessage();
+                        Snackbar.make(serviceTextView, message, Snackbar.LENGTH_LONG).show();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<TransferFeeResponse> call, Throwable t) {
+                    Log.e("info2 : ", t.getMessage());
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+        }else {
+            Toast.makeText(getContext(),"Wrong Type Value Supplied!!",Toast.LENGTH_LONG).show();
+        }
 
     }
 

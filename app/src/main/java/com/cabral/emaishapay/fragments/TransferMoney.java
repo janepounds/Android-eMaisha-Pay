@@ -247,7 +247,7 @@ public class TransferMoney extends Fragment {
                 WalletTransactionInitiation.getInstance().setMobileNumber(phoneNumber);
                 WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Account");
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
-
+                WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") &&  validateMobileMoneyTransFerForm()){
 
@@ -269,8 +269,9 @@ public class TransferMoney extends Fragment {
                 }
                 ft.addToBackStack(null);
 
+
                 // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new com.cabral.emaishapay.DailogFragments.ConfirmTransfer(context);
+                DialogFragment transferPreviewDailog = new com.cabral.emaishapay.DailogFragments.ConfirmTransfer(context,WalletTransactionInitiation.getInstance());
                 transferPreviewDailog.show(ft, "dialog");
             } else {
                 Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();

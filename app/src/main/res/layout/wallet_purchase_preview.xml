@@ -167,12 +167,49 @@
 
 
                 <LinearLayout
+                    android:id="@+id/charges_layount"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="Transfer Charges"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:text=":"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"  />
+                    <TextView
+                        android:id="@+id/txt_view_charges"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="UGX 0"
+                        android:alpha="1.0"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/discount_layount"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginTop="15dp">
 
                     <TextView
+
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -198,6 +235,7 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
