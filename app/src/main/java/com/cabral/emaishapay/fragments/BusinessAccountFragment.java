@@ -39,6 +39,7 @@ public class BusinessAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_account, container, false);
+
         return binding.getRoot();
     }
 
@@ -48,8 +49,20 @@ public class BusinessAccountFragment extends Fragment {
         navController = Navigation.findNavController(view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+        initializeViews();
 
 
 
+    }
+
+    public void initializeViews(){
+        if(getArguments().getString("Agent").equalsIgnoreCase("Agent")){
+            binding.toolbar.setTitle(getArguments().getString("Agent"));
+
+        }else if(getArguments().getString("Merchant").equalsIgnoreCase("Merchant")){
+            binding.toolbar.setTitle(getArguments().getString("Merchant"));
+        }else if(getArguments().getString("AgentMerchant").equalsIgnoreCase("AgentMerchant")) {
+            binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
+        }
     }
 }

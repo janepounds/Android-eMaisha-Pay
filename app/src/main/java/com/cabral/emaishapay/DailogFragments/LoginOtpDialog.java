@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Auth2Activity;
+import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.customs.DialogLoader;
 
 public class LoginOtpDialog extends DialogFragment {
     Context activity;
@@ -28,6 +31,8 @@ public class LoginOtpDialog extends DialogFragment {
     private Button btn_submit;
     private Context context;
     private  String phonenumber;
+    private TextView resend_code;
+    DialogLoader dialogLoader;
 
     public LoginOtpDialog(Context context, FragmentManager supportFragmentManager,String phonenumber) {
         this.activity = context;
@@ -82,6 +87,7 @@ public class LoginOtpDialog extends DialogFragment {
         code3 = view.findViewById(R.id.otp_code3_et);
         code4 = view.findViewById(R.id.otp_code4_et);
         btn_submit = view.findViewById(R.id.btn_submit);
+        resend_code = view.findViewById(R.id.login_otp_resend_code);
 
         code1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -143,6 +149,11 @@ public class LoginOtpDialog extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 validateEnteredCode();
             }
+        });
+
+        resend_code.setOnClickListener(v -> {
+            Login process_login = new Login();
+            process_login.processLogin(phonenumber);
         });
 
         btn_submit.setOnClickListener(v -> {

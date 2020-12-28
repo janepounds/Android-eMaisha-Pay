@@ -45,6 +45,7 @@ public class WalletAccountFragment extends Fragment {
     private FragmentWalletAccountBinding binding;
     private NavController navController = null;
     private Context context;
+    private String label_details;
 
 
     @Override
@@ -394,16 +395,27 @@ public class WalletAccountFragment extends Fragment {
         });
         binding.layoutAgent.setOnClickListener(view1 ->
         {
+            Bundle bundle = new Bundle();
+            label_details = "Agent Details";
+            bundle.putString("Agent",label_details);
 
-             navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+             navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
         });
         binding.layoutMerchant.setOnClickListener(view1 ->
         {
-            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+            Bundle bundle = new Bundle();
+            label_details = "Merchant Details";
+            bundle.putString("Merchant",label_details);
+
+            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
         });
         binding.layoutAgentMerchant.setOnClickListener(view1 ->
         {
-            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment);
+            Bundle bundle = new Bundle();
+            label_details = "Agent & Merchant Details";
+            bundle.putString("AgentMerchant",label_details);
+
+            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
         });
 
 

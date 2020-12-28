@@ -120,7 +120,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     //*********** Proceed Login with User Email and Password ********//
 
-    private void processLogin(String phonenumber) {
+    public void processLogin(String phonenumber) {
         //call the otp end point
         dialogLoader.showProgressDialog();
         Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
