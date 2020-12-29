@@ -41,7 +41,12 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.SignupBinding;
 import com.cabral.emaishapay.network.APIClient;
@@ -369,6 +374,9 @@ public class SignUp extends AppCompatActivity {
 
                 sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
 
+
+
+
             }
         });
     }
@@ -460,6 +468,22 @@ public class SignUp extends AppCompatActivity {
     private void sendVerificationCode(String mobile) {
 
         showOTPDialog(this, "");
+
+        //call otp dialog
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+
+        ft.addToBackStack(null);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("sms_code",response.body().getData().getSms_code());
+        // Create and show the dialog.
+        DialogFragment payLoandialog = new LoginOtpDialog(SignUp.this,fm,mobile);
+//        payLoandialog.setArguments(bundle);
+        payLoandialog.show(ft, "dialog");
 
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
