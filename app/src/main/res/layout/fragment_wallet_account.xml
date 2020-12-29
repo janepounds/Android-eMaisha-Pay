@@ -540,7 +540,7 @@
                                     android:visibility="gone"/>
 
                                 <ImageView
-                                    android:id="@+id/img_id_front"
+                                    android:id="@+id/img_display_id_front"
                                     android:layout_width="160dp"
                                     android:layout_height="100dp"
                                     android:scaleType="fitCenter"

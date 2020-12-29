@@ -142,7 +142,6 @@ public class WalletHomeFragment extends Fragment {
                             for (int i = 0; i < loop_limit; i++) {
                                 WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
                                 models.add( res );
-
                             }
                         }
 

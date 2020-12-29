@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import retrofit2.http.Field;
+
 public class AccountResponse {
     @SerializedName("businessInfo")
     @Expose
@@ -73,6 +75,24 @@ public class AccountResponse {
         @SerializedName("registration_cert")
         @Expose
         public String registration_cert;
+        @SerializedName("proprietor_name")
+        @Expose
+        public String proprietor_name;
+        @SerializedName("proprietor_nin")
+        @Expose
+        public String proprietor_nin;
+        @SerializedName("national_id_front")
+        @Expose
+        public String national_id_front;
+        @SerializedName("national_id_back")
+        @Expose
+        public String national_id_back;
+        @SerializedName("role")
+        @Expose
+        public String role;
+
+
+
 
         public String getBusiness_name() {
             return business_name;
@@ -120,6 +140,46 @@ public class AccountResponse {
 
         public void setRegistration_cert(String registration_cert) {
             this.registration_cert = registration_cert;
+        }
+
+        public String getProprietor_name() {
+            return proprietor_name;
+        }
+
+        public void setProprietor_name(String proprietor_name) {
+            this.proprietor_name = proprietor_name;
+        }
+
+        public String getProprietor_nin() {
+            return proprietor_nin;
+        }
+
+        public void setProprietor_nin(String proprietor_nin) {
+            this.proprietor_nin = proprietor_nin;
+        }
+
+        public String getNational_id_front() {
+            return national_id_front;
+        }
+
+        public void setNational_id_front(String national_id_front) {
+            this.national_id_front = national_id_front;
+        }
+
+        public String getNational_id_back() {
+            return national_id_back;
+        }
+
+        public void setNational_id_back(String national_id_back) {
+            this.national_id_back = national_id_back;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
         }
     }
 
