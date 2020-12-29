@@ -166,7 +166,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center_vertical"
                     android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_arrow">
+                    android:src="@drawable/ic_right_chevron">
 
                 </ImageView>
 
