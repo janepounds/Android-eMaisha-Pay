@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#F1F5F8">
+    android:background="#F1F5F8"
+    android:paddingBottom="10dp">
 
     <!--Title-->
     <LinearLayout
@@ -99,6 +100,28 @@
             android:textSize="14sp"
             android:maxLength="1"
             android:inputType="number"/>
+        <EditText
+            android:id="@+id/otp_code5_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:padding="14dp"
+            android:background="@drawable/outline_primary"
+            android:textSize="14sp"
+            android:maxLength="1"
+            android:inputType="number"/>
+        <EditText
+            android:id="@+id/otp_code6_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:padding="14dp"
+            android:background="@drawable/outline_primary"
+            android:textSize="14sp"
+            android:maxLength="1"
+            android:inputType="number"/>
     </LinearLayout>
 
 
@@ -131,8 +154,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_corners_button"
