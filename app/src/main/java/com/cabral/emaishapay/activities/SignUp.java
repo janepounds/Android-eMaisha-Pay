@@ -555,7 +555,7 @@ public class SignUp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            dialogOTP.dismiss();
+//                            dialogOTP.dismiss();
 
                             //Final Registration Call to API
                             Auth2Activity.processFurtherRegistration(SignUp.this, "0"+binding.userMobile.getText().toString(),
