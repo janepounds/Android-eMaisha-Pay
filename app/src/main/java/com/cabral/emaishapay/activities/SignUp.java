@@ -47,6 +47,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
+import com.cabral.emaishapay.DailogFragments.SignUpOtpDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.SignupBinding;
 import com.cabral.emaishapay.network.APIClient;
@@ -467,7 +468,7 @@ public class SignUp extends AppCompatActivity {
     //you can take the country id as user input as well
     private void sendVerificationCode(String mobile) {
 
-        showOTPDialog(this, "");
+//        showOTPDialog(this, "");
 
         //call otp dialog
         FragmentManager fm = getSupportFragmentManager();
@@ -481,8 +482,9 @@ public class SignUp extends AppCompatActivity {
 //        Bundle bundle = new Bundle();
 //        bundle.putString("sms_code",response.body().getData().getSms_code());
         // Create and show the dialog.
-        DialogFragment payLoandialog = new LoginOtpDialog(SignUp.this,fm,mobile);
+        DialogFragment payLoandialog = new SignUpOtpDialog(SignUp.this,fm,mobile);
 //        payLoandialog.setArguments(bundle);
+
         payLoandialog.show(ft, "dialog");
 
         PhoneAuthOptions options =
