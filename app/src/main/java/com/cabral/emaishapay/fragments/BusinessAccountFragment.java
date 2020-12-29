@@ -40,25 +40,7 @@ public class BusinessAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_account, container, false);
-        if(getArguments()!=null) {
-            String agent = "Agent";
-            String merchant = "Merchant";
-            String agentMerchant = "AgentMerchant";
-            if (getArguments().getString("Agent").equals(agent)) {
-                binding.toolbar.setTitle(getArguments().getString("Agent"));
 
-            }else if(getArguments().getString("Merchant").equals(merchant)){
-                binding.toolbar.setTitle(getArguments().getString("Merchant"));
-
-            }else if(getArguments().getString("AgentMerchant").equals(agentMerchant)){
-                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
-
-            }else{
-
-            }
-
-
-        }
         return binding.getRoot();
     }
 
@@ -75,6 +57,21 @@ public class BusinessAccountFragment extends Fragment {
     }
 
     public void initializeViews(){
+        if(getArguments()!=null) {
+
+            if (getArguments().getString("Agent")!=null) {
+                binding.toolbar.setTitle(getArguments().getString("Agent"));
+
+            }else if(getArguments().getString("Merchant")!=null){
+                binding.toolbar.setTitle(getArguments().getString("Merchant"));
+
+            }else if(getArguments().getString("AgentMerchant")!=null) {
+                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
+
+            }
+
+
+        }
 
     }
 }
