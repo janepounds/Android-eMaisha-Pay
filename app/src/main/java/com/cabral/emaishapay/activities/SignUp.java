@@ -517,7 +517,7 @@ public class SignUp extends AppCompatActivity {
             //so user has to manually enter the code
             if (code != null) {
 
-                ed_otp.setText(code);
+//                ed_otp.setText(code);
                 //verifying the code
                 verifyVerificationCode(code);
             }
