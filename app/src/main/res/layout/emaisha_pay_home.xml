@@ -468,7 +468,7 @@
                     android:textColor="#404040"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_transact_with_customers"
                     android:layout_width="match_parent"
@@ -480,7 +480,7 @@
                     android:background="@drawable/background_round_white"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_account_opening"
