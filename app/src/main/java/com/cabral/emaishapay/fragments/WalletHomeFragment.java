@@ -51,7 +51,6 @@ public class WalletHomeFragment extends Fragment {
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
-    boolean shouldStopLoop = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,17 +65,7 @@ public class WalletHomeFragment extends Fragment {
 
         fm = requireActivity().getSupportFragmentManager();
 
-        Handler mHandler = new Handler();
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                getTransactionsData();
-                if (!shouldStopLoop) {
-                    mHandler.postDelayed(this, 20000);
-                }
-            }
-        };
+        getTransactionsData();
 
         binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
         new MyTask(WalletHomeFragment.this).execute();
@@ -195,8 +184,6 @@ public class WalletHomeFragment extends Fragment {
     }
 
     public void updateBalance() {
-
-
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<BalanceResponse> call = apiRequests.requestBalance(access_token);
