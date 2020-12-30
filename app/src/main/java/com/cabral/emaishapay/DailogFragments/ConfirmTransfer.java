@@ -403,17 +403,14 @@ public class ConfirmTransfer extends DialogFragment {
                 if(response.code() ==200){
                     dialog.dismiss();
                     final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.wallet_dialog_one_button);
+                    dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                     text.setText("You have transferred UGX " + NumberFormat.getInstance().format(amount) + " to " + businessName);
-                    TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
-                    title.setText("SUCCESS!");
-                    Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
-                    dialogButton.setText("OK");
-                    dialogButton.setTextColor(Color.parseColor("#2E84BE"));
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
+
+
+                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
@@ -491,18 +488,14 @@ public class ConfirmTransfer extends DialogFragment {
                     dialogLoader.hideProgressDialog();
 
                     final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.wallet_dialog_one_button);
+                    dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                     text.setText("Transferred UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" to "+WalletTransactionInitiation.getInstance().getAccount_name());
-                    TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
-                    title.setText("SUCCESS!");
-                    Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
-                    dialogButton.setText("OK");
-                    dialogButton.setTextColor(Color.parseColor("#2E84BE"));
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
+
+
+                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();

@@ -47,11 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Details for CABRAL TECH LTD"
+            android:text="Details from eMaisha Pay"
             android:textSize="16sp"
             android:textColor="#222222"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/dialog_success_txt_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

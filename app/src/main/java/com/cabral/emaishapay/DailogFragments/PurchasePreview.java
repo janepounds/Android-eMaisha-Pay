@@ -360,18 +360,14 @@ public class PurchasePreview extends DialogFragment implements
                 if(response.code()== 200){
                     dialog.dismiss();
                     final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.wallet_dialog_one_button);
+                    dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                     text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
-                    TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
-                    title.setText("SUCCESS!");
-                    Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
-                    dialogButton.setText("OK");
-                    dialogButton.setTextColor(Color.parseColor("#2E84BE"));
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
+
+
+                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
@@ -570,18 +566,13 @@ public class PurchasePreview extends DialogFragment implements
                 if(response.code()== 200){
                     dialogLoader.hideProgressDialog();
                     final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.wallet_dialog_one_button);
+                    dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dlg_one_button_tv_message);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                     text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
-                    TextView title = dialog.findViewById(R.id.dlg_one_button_tv_title);
-                    title.setText("SUCCESS!");
-                    Button dialogButton = (Button) dialog.findViewById(R.id.dlg_one_button_btn_ok);
-                    dialogButton.setText("OK");
-                    dialogButton.setTextColor(Color.parseColor("#2E84BE"));
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
+
+                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
