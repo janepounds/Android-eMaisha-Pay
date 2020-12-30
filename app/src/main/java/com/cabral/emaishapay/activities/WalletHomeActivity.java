@@ -18,6 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
+import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
+import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
+import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
@@ -168,7 +172,59 @@ public class WalletHomeActivity extends AppCompatActivity {
         DialogFragment depositDialog = new DepositMoneyVoucher(this, WalletHomeFragment.balance);
         depositDialog.show(ft, "dialog");
     }
+    public void openAgentCustomerDeposit(View view) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
 
+        // Create and show the dialog.
+        DialogFragment depositDialog = new AgentCustomerDeposits();
+        depositDialog.show(ft, "dialog");
+    }
+    public void openAgentCustomerBalanceInquiry(View view) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment balanceInquiryDialog = new AgentCustomerBalanceInquiry();
+        balanceInquiryDialog.show(ft, "dialog");
+    }
+    public void openAgentCustomerFundsTransfer(View view) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment fundsTransferDialog = new AgentCustomerFundsTransfer();
+        fundsTransferDialog.show(ft, "dialog");
+    }
+
+    public void openAgentCustomerWithdraw(View view) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment customerWithdrawDialog = new AgentCustomerWithdraw();
+        customerWithdrawDialog.show(ft, "dialog");
+    }
+    public void openAgentCustomerAccountOpening(View view) {
+        Intent intent = new Intent(this, AccountOpeningActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {

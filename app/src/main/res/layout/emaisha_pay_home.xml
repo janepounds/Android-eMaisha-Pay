@@ -489,12 +489,13 @@
                         app:layout_constraintBottom_toTopOf="@id/layout_loan_app"
                         app:layout_constraintEnd_toStartOf="@id/layout_deposits"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="openAgentCustomerAccountOpening">
 
                         <ImageView
                             android:id="@+id/image_account_opening"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="16dp"
+                            android:layout_height="20dp"
                             android:layout_margin="5dp"
                             android:src="@drawable/ic_account_opening"
                             app:layout_constraintBottom_toTopOf="@id/label_account_opening"
@@ -528,7 +529,8 @@
                         app:layout_constraintEnd_toStartOf="@id/layout_funds_transfers"
                         app:layout_constraintStart_toEndOf="@id/layout_account_opening"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layout_withdraw">
+                        app:layout_constraintBottom_toTopOf="@id/layout_withdraw"
+                        android:onClick="openAgentCustomerDeposit">
 
                         <ImageView
                             android:id="@+id/image_deposits"
@@ -566,7 +568,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/layout_deposits"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layout_balance_inquiry">
+                        app:layout_constraintBottom_toTopOf="@id/layout_balance_inquiry"
+                        android:onClick="openAgentCustomerFundsTransfer">
 
                         <ImageView
                             android:id="@+id/image_funds_transfers"
@@ -643,7 +646,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/layout_loan_app"
                         app:layout_constraintTop_toBottomOf="@id/layout_deposits"
-                        app:layout_constraintEnd_toStartOf="@id/layout_balance_inquiry">
+                        app:layout_constraintEnd_toStartOf="@id/layout_balance_inquiry"
+                        android:onClick="openAgentCustomerWithdraw">
 
                         <ImageView
                             android:id="@+id/image_withdraw"
@@ -681,7 +685,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/layout_withdraw"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layout_funds_transfers">
+                        app:layout_constraintTop_toBottomOf="@id/layout_funds_transfers"
+                        android:onClick="openAgentCustomerBalanceInquiry">
 
                         <ImageView
                             android:id="@+id/image_balance_inquiry"
