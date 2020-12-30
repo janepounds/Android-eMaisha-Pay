@@ -489,12 +489,13 @@
                         app:layout_constraintBottom_toTopOf="@id/layout_loan_app"
                         app:layout_constraintEnd_toStartOf="@id/layout_deposits"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="openAgentCustomerAccountOpening">
 
                         <ImageView
                             android:id="@+id/image_account_opening"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="16dp"
+                            android:layout_height="20dp"
                             android:layout_margin="5dp"
                             android:src="@drawable/ic_account_opening"
                             app:layout_constraintBottom_toTopOf="@id/label_account_opening"

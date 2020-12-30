@@ -32,7 +32,7 @@
     <dimen name="dimen_20sp">20sp</dimen>
 
 
-    <dimen name="badge_text_size" >12sp</dimen>
+    <dimen name="badge_text_size">12sp</dimen>
     <dimen name="image_slider_height">360dp</dimen>
 
 

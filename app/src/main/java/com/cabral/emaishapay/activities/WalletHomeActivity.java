@@ -221,6 +221,10 @@ public class WalletHomeActivity extends AppCompatActivity {
         DialogFragment customerWithdrawDialog = new AgentCustomerWithdraw();
         customerWithdrawDialog.show(ft, "dialog");
     }
+    public void openAgentCustomerAccountOpening(View view) {
+        Intent intent = new Intent(this, AccountOpeningActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
