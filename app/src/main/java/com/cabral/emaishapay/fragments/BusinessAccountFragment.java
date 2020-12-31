@@ -1,6 +1,9 @@
 package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,12 +23,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
-import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
 
@@ -35,7 +39,6 @@ import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
 
 public class BusinessAccountFragment extends Fragment {
     private FragmentBusinessAccountBinding binding;
@@ -46,12 +49,19 @@ public class BusinessAccountFragment extends Fragment {
     private ImageView imageView;
     private String encodedIdreg_cert;
     private String encodedIdtradelicense;
+    private ProgressDialog progressDialog;
+    private Context context;
 
     public BusinessAccountFragment() {
         // Required empty public constructor
     }
 
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,6 +137,11 @@ public class BusinessAccountFragment extends Fragment {
     }
 
     public void saveInfo(){
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         String user_Id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String business_name = binding.businessName.getText().toString();
         String registration_no = binding.registrationNumber.getText().toString();
@@ -140,11 +155,45 @@ public class BusinessAccountFragment extends Fragment {
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if(response.isSuccessful()){
+                    String message = response.body().getMessage();
+
+
+
+                    //call success dialog
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.dialog_successful_message);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                    text.setText(message);
+
+
+
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+
+                            //go to home activity fragment
+
+                            Intent goToWallet = new Intent(context, WalletHomeActivity.class);
+                            startActivity(goToWallet);
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    dialog.show();
+
+                }else{
+                    Toast.makeText(context,response.message(),Toast.LENGTH_LONG);
+                }
+                progressDialog.dismiss();
 
             }
 
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG);
 
             }
         });

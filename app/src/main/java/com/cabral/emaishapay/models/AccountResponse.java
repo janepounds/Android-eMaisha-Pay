@@ -24,6 +24,20 @@ public class AccountResponse {
     @Expose
     public PersonalInfoData profile;
 
+    @SerializedName("message")
+    @Expose
+    public String message;
+
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public BusinessInfoData getBusinessInfo() {
         return businessInfo;
     }
@@ -57,6 +71,7 @@ public class AccountResponse {
     }
 
     public class BusinessInfoData{
+
         @SerializedName("business_name")
         @Expose
         public String business_name;
@@ -87,9 +102,7 @@ public class AccountResponse {
         @SerializedName("national_id_back")
         @Expose
         public String national_id_back;
-        @SerializedName("role")
-        @Expose
-        public String role;
+
 
 
 
@@ -174,13 +187,7 @@ public class AccountResponse {
             this.national_id_back = national_id_back;
         }
 
-        public String getRole() {
-            return role;
-        }
 
-        public void setRole(String role) {
-            this.role = role;
-        }
     }
 
     public class EmploymentInfoData{
