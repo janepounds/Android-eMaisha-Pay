@@ -110,7 +110,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
             if (isValidData) {
                 // Proceed User Login
-                processLogin(binding.userPhone.getText().toString());
+                processLogin("0"+binding.userPhone.getText().toString());
             }
 
 
@@ -196,7 +196,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         if(binding.userPhone.getText().toString().isEmpty()) {
             binding.userPhone.setError("Enter a phone number");
             return false;
-        }else if(binding.userPhone.getText().toString().length()<10){
+        }else if(binding.userPhone.getText().toString().length()<9){
             binding.userPhone.setError("Enter valid phone number");
             return false;
         }else{

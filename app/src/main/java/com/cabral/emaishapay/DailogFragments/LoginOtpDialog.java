@@ -27,7 +27,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 public class LoginOtpDialog extends DialogFragment {
     Context activity;
     FragmentManager fm;
-    private EditText code1, code2, code3, code4;
+    private EditText code1, code2, code3, code4, code5, code6;
     private Button btn_submit;
     private Context context;
     private  String phonenumber;
@@ -86,6 +86,9 @@ public class LoginOtpDialog extends DialogFragment {
         code2 = view.findViewById(R.id.otp_code2_et);
         code3 = view.findViewById(R.id.otp_code3_et);
         code4 = view.findViewById(R.id.otp_code4_et);
+        code5 = view.findViewById(R.id.otp_code5_et);
+        code6 = view.findViewById(R.id.otp_code6_et);
+
         btn_submit = view.findViewById(R.id.btn_submit);
         resend_code = view.findViewById(R.id.login_otp_resend_code);
 
@@ -135,8 +138,38 @@ public class LoginOtpDialog extends DialogFragment {
             }
         });
 
-
         code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code5.requestFocus();
+            }
+        });
+
+        code5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code6.requestFocus();
+            }
+        });
+
+
+        code6.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -166,7 +199,7 @@ public class LoginOtpDialog extends DialogFragment {
     }
 
     private void validateEnteredCode() {
-        String code = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString();
+        String code = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString()+ code5.getText().toString()+ code6.getText().toString();
 
 
         String sms_code = getArguments().getString("sms_code");
