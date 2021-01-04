@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -27,7 +28,12 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.network.StartAppRequests;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class WalletHomeActivity extends AppCompatActivity {
     private static final String TAG = "WalletHomeActivity";
@@ -97,6 +103,12 @@ public class WalletHomeActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
 
         setUpNavigation();
+
+        if (!getPreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, WalletHomeActivity.this).equals("yes")) {
+            getAppToken();
+        }
+
+
     }
 
     public void setUpNavigation() {
@@ -239,4 +251,78 @@ public class WalletHomeActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         }
     }
+
+
+    public void getAppToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            // Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        Log.d(TAG, "onComplete-token: "+token);
+                        StartAppRequests.RegisterDeviceForFCM(getApplicationContext());
+//                        sendFirebaseToken(token, WalletHomeActivity.this);
+
+
+                    }
+                });
+
+    }
+
+
+
+       public static void sendFirebaseToken(String token, final Context context) {
+           ///**************** RETROFIT IMPLEMENTATION******************************//////////
+
+
+
+
+
+       }
+//        final AsyncHttpClient client = new AsyncHttpClient();
+//        final RequestParams params = new RequestParams();
+//        // client.addHeader("Authorization","Bearer "+CropWalletAuthActivity.WALLET_ACCESS_TOKEN);
+//        params.put("email", DashboardActivity.getPreferences(DashboardActivity.PREFERENCES_USER_EMAIL, context));
+//        params.put("firebaseToken", token);
+//
+//        Handler mainHandler = new Handler(Looper.getMainLooper());
+//        Runnable myRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                client.post(ApiPaths.CROP_SEND_FIREBASE_TOKEN, params, new AsyncHttpResponseHandler() {
+//
+//                    @Override
+//                    public void onStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                        savePreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, "yes", context);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                        if (responseBody != null) {
+//                            Log.e("info", new String(String.valueOf(responseBody)));
+//                        } else {
+//                            Log.e("info", "Something got very very wrong");
+//                        }
+//                    }
+//
+//
+//                });
+//            }
+//        };
+//        mainHandler.post(myRunnable);
+//
+//    }
+
+
 }

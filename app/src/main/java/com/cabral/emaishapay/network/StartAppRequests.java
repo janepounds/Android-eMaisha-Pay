@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
 import com.cabral.emaishapay.models.pages_model.PagesData;
@@ -161,5 +162,69 @@ public class StartAppRequests {
         }
         
     }
-    
+
+    //*********** Register Device to Admin Panel with the Device's Info ********//
+
+    public static void RegisterDeviceForFCM(final Context context) {
+
+
+
+        final DeviceInfo device = Utilities.getDeviceInfo(context);
+        final String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+
+
+
+        //deviceID = FirebaseInstanceId.getInstance().getToken();
+        if(user_id!=null)
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String deviceID =instanceIdResult.getToken();
+
+                    Call<UserData> call = APIClient.getWalletInstance()
+                            .registerDeviceToFCM
+                                    (
+                                            deviceID,
+                                            device.getDeviceType(),
+                                            user_id,
+                                            device.getDeviceRAM(),
+                                            device.getDeviceProcessors(),
+                                            device.getDeviceAndroidOS(),
+                                            device.getDeviceLocation(),
+                                            device.getDeviceModel(),
+                                            device.getDeviceManufacturer(),
+                                            device.getDeviceSystemOS()
+                                    );
+
+                    call.enqueue(new Callback<UserData>() {
+                        @Override
+                        public void onResponse(Call<UserData> call, Response<UserData> response) {
+
+                            if (response.isSuccessful()) {
+                                if (response.body().getStatus().equalsIgnoreCase("1")) {
+
+                                    Log.i("notification", response.body().getMessage());
+
+                                }
+                                else {
+
+                                    Log.i("notification", response.body().getMessage());
+                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else {
+                                Log.i("notification", response.errorBody().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserData> call, Throwable t) {
+//                Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            });
+    }
+
+
 }

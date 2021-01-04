@@ -356,4 +356,23 @@ public interface APIRequests {
             @Field("national_id_back") String national_id_back,
             @Field("role") String role
     );
+
+
+    @FormUrlEncoded
+    @POST("wallet/add_device_info")
+    Call<UserData> registerDeviceToFCM(
+            @Field("device_id") String device_id,
+            @Field("device_type") String device_type,
+            @Field("user_id") String user_id,
+            @Field("device_ram") String device_ram,
+            @Field("processor") String processor,
+            @Field("device_os") String device_os,
+            @Field("location") String location,
+            @Field("device_model") String device_model,
+            @Field("manufacturer") String manufacturer,
+            @Field("operating_system") String operating_system
+
+    );
+
+
 }
