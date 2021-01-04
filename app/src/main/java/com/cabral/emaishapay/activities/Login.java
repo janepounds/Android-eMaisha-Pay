@@ -2,10 +2,14 @@ package com.cabral.emaishapay.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,7 +56,14 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     DialogLoader dialogLoader;
     APIRequests apiRequests;
-;
+    private Dialog dialog;
+    private Context context;
+    private EditText code1,code2,code3,code4,code5,code6;
+    private  String code, sms_code;
+
+    public Login(Context context) {
+        this.context = context;
+    }
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -128,22 +139,128 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful()){
+                   sms_code =response.body().getData().getSms_code();
 
                     //call otp dialog
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev = fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
+                    dialog  = new Dialog(context);
+                    dialog.setContentView(R.layout.login_dialog_otp);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    code1= dialog.findViewById(R.id.otp_code1_et);
+                    code2= dialog.findViewById(R.id.otp_code2_et);
+                    code3= dialog.findViewById(R.id.otp_code3_et);
+                    code4= dialog.findViewById(R.id.otp_code4_et);
+                    code5=dialog.findViewById(R.id.otp_code5_et);
+                    code6= dialog.findViewById(R.id.otp_code6_et);
+                    code1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-                    ft.addToBackStack(null);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("sms_code",response.body().getData().getSms_code());
-                    // Create and show the dialog.
-                    DialogFragment payLoandialog = new LoginOtpDialog(Login.this,fm,phonenumber);
-                    payLoandialog.setArguments(bundle);
-                    payLoandialog.show(ft, "dialog");
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code2.requestFocus();
+            }
+        });
+
+
+        code2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code3.requestFocus();
+            }
+        });
+
+        code3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code4.requestFocus();
+            }
+        });
+
+        code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code5.requestFocus();
+            }
+        });
+
+        code5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code6.requestFocus();
+            }
+        });
+
+
+        code6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateEnteredCode(code1.getText().toString()+code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString(),sms_code);
+            }
+        });
+
+                    dialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                          //  processLogin("0"+binding.userPhone.getText().toString());
+                        }
+                    });
+                    dialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
+
+                            validateEnteredCode(code,sms_code);
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    dialog.show();
                 }else{
 
                 }
@@ -158,7 +275,16 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         });
 
     }
+    private void validateEnteredCode(String code,String sent_code) {
+        String phone ="0"+binding.userPhone.getText().toString();
 
+        if (sent_code.equalsIgnoreCase(code)) {
+            //fetch session data
+            Auth2Activity.startAuth(context,phone,1);
+        } else {
+            Toast.makeText(context, "Enter valid code", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void processForgotPassword(String email) {
         dialogLoader.showProgressDialog();

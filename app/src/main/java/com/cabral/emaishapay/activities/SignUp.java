@@ -19,41 +19,28 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.cabral.emaishapay.DailogFragments.LoginOtpDialog;
-import com.cabral.emaishapay.DailogFragments.SignUpOtpDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.SignupBinding;
-import com.cabral.emaishapay.network.APIClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -63,12 +50,10 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.models.address_model.RegionDetails;
-import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.utils.CheckPermissions;
 import com.cabral.emaishapay.utils.ImagePicker;
 import com.cabral.emaishapay.utils.LocaleHelper;
@@ -83,10 +68,6 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import am.appwise.components.ni.NoInternetDialog;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * SignUp activity handles User's Registration
@@ -105,8 +86,8 @@ public class SignUp extends AppCompatActivity {
     DialogLoader dialogLoader;
 
     //Custom Dialog Vies
-    private Dialog dialogOTP;
-    private EditText ed_otp;
+    private Dialog dialog;
+    private EditText code1,code2,code3,code4,code5,code6;
 
     // Verification id that will be sent to the user
     private String mVerificationId;
@@ -442,25 +423,36 @@ public class SignUp extends AppCompatActivity {
 
     /// Custom dialog for OTP
     public void showOTPDialog(Activity activity, String msg) {
-        dialogOTP = new Dialog(activity);
-        dialogOTP.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogOTP.setCancelable(false);
-        dialogOTP.setContentView(R.layout.dialog_otp);
 
-        ed_otp = dialogOTP.findViewById(R.id.ed_otp);
-        AppCompatButton btn_resend, btn_submit;
-        btn_resend = dialogOTP.findViewById(R.id.btn_resend);
-        btn_submit = dialogOTP.findViewById(R.id.btn_submit);
-
-        btn_resend.setOnClickListener(view -> sendVerificationCode(binding.userMobile.getText().toString().trim()));
-
-        btn_submit.setOnClickListener(view -> {
-            if (!ed_otp.getText().toString().trim().isEmpty()) {
-                verifyVerificationCode(ed_otp.getText().toString().trim());
+        //call success dialog
+        dialog  = new Dialog(context);
+        dialog.setContentView(R.layout.login_dialog_otp);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        code1= dialog.findViewById(R.id.otp_code1_et);
+        code2= dialog.findViewById(R.id.otp_code2_et);
+        code3= dialog.findViewById(R.id.otp_code3_et);
+        code4= dialog.findViewById(R.id.otp_code4_et);
+        code5=dialog.findViewById(R.id.otp_code5_et);
+        code6= dialog.findViewById(R.id.otp_code6_et);
+        dialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerificationCode(binding.userMobile.getText().toString().trim());
             }
         });
+        dialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                String code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
 
-        dialogOTP.show();
+                verifyVerificationCode(code);
+            }
+        });
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
     }
 
     //the method is sending verification code
@@ -468,24 +460,7 @@ public class SignUp extends AppCompatActivity {
     //you can take the country id as user input as well
     private void sendVerificationCode(String mobile) {
 
-//        showOTPDialog(this, "");
-
-        //call otp dialog
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-
-        ft.addToBackStack(null);
-//        Bundle bundle = new Bundle();
-//        bundle.putString("sms_code",response.body().getData().getSms_code());
-        // Create and show the dialog.
-        DialogFragment payLoandialog = new SignUpOtpDialog(SignUp.this,fm,mobile);
-//        payLoandialog.setArguments(bundle);
-
-        payLoandialog.show(ft, "dialog");
+        showOTPDialog(this, "");
 
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
@@ -516,8 +491,10 @@ public class SignUp extends AppCompatActivity {
             //in this case the code will be null
             //so user has to manually enter the code
             if (code != null) {
+                //split code
 
 //                ed_otp.setText(code);
+
                 //verifying the code
                 verifyVerificationCode(code);
             }
@@ -526,7 +503,7 @@ public class SignUp extends AppCompatActivity {
         @Override
         public void onVerificationFailed(FirebaseException e) {
             Toast.makeText(getApplicationContext(), "Verification failed : " + e.getMessage(), Toast.LENGTH_LONG).show();
-            dialogOTP.dismiss();
+            dialog.dismiss();
         }
 
         @Override
