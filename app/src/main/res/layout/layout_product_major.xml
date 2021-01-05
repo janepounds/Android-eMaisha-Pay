@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="205dp"
+    android:layout_marginStart="@dimen/dimen_10dp"
+    android:layout_marginTop="@dimen/dimen_5dp"
+    android:layout_marginEnd="@dimen/dimen_10dp"
+    app:cardElevation="@dimen/dimen_5dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_10dp"
+            android:layout_marginTop="@dimen/dimen_10dp">
+
+            <ImageView
+                android:id="@+id/product_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_10dp"
+                android:src="@drawable/placeholder" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrame"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lg_card_cover_height"
+                android:alpha=".7"
+                app:shimmer_duration="1500">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/lg_card_cover_height"
+                    android:clickable="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/percentage_sale_off"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:background="@drawable/round_badge_drawable"
+                android:fontFamily="@font/josefin_sans"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="16% OFF"
+                android:textColor="@android:color/white"
+                app:autoSizeTextType="uniform" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/product_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/josefin_sans"
+                            android:maxLines="1"
+                            android:text="Butanil S"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/active_ingredient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/josefin_sans"
+                            android:maxLines="1"
+                            android:text="60% EC"
+                            android:textSize="18sp" />
+
+                        <RelativeLayout
+                            android:id="@+id/product_like_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/first_star"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_star_rate"
+                                tools:ignore="VectorDrawableCompat" />
+
+                            <ImageView
+                                android:id="@+id/second_star"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/first_star"
+                                app:srcCompat="@drawable/ic_star_rate" />
+
+
+                            <ImageView
+                                android:id="@+id/third_star"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/second_star"
+                                app:srcCompat="@drawable/ic_star_rate" />
+
+                            <ImageView
+                                android:id="@+id/fourth_star"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/third_star"
+                                app:srcCompat="@drawable/ic_star_rate" />
+
+                            <ImageView
+                                android:id="@+id/fifth_star"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/fourth_star"
+                                app:srcCompat="@drawable/ic_star_border" />
+
+                            <TextView
+                                android:id="@+id/produce_overall_rating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/dimen_5dp"
+                                android:layout_toEndOf="@id/fifth_star"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/josefin_sans"
+                                android:maxLines="1"
+                                android:text="430 Ratings"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_corner"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3.4dp">
+
+                    <Spinner
+                        android:id="@+id/spinner_produce_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/buy_produce_quantity"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="10dp"
+                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/product_price_old"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="UGX : 15,000" />
+
+                        <TextView
+                            android:id="@+id/product_price_new"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="UGX : 1,200"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/product_card_Btn"
+                        android:layout_width="80dp"
+                        android:layout_height="36dp"
+                        android:paddingStart="3dp"
+                        android:paddingEnd="3dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/rounded_corners2_button_green"
+                        android:fontFamily="@font/josefin_sans"
+                        android:gravity="center"
+                        android:text="Add"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeMaxTextSize="14sp"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10dp">
+
+
+
+                        <TextView
+                            android:id="@+id/selected_weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="10kg"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/saleLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/productItemTagSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccentGreen"
+            android:padding="2dp"
+            android:text="SALE"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/productItemTagOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productItemTagSale"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorAccentGreen"
+            android:padding="2dp"
+            android:text=" OFF"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/product_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:clickable="true"
+        android:paddingBottom="20dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/checked"
+        android:layout_gravity="center"/>
+
+</androidx.cardview.widget.CardView>

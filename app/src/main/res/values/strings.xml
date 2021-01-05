@@ -52,6 +52,7 @@
     <string name="update_address"> Update Address </string>
     <string name="edit_profile"> Edit Profile </string>
     <string name="subscribe_newsletter"> Subscribe Newsletter </string>
+    <string name="a_z" translatable="false">A_Z</string>
 
 
     <!--  Messages Strings -->
@@ -80,9 +81,13 @@
 
     <string name="order_dialog_prompt"> Do you really want to cancel the order? </string>
 
+    <string name="push_notification"> Push Notifications </string>
+    <string name="local_notification"> Local Notifications </string>
+
     <string name="processing"> Processing... </string>
     <string name="please_wait"> Please Wait... </string>
     <string name="invalid_address"> Invalid Address </string>
+    <string name="invalid_password"> Invalid Password </string>
     <string name="no_internet"> Internet Connection is not Available </string>
 
     <string name="permission_rejected"> Permission not Granted! </string>
@@ -124,6 +129,7 @@
     <string name="search"> Search </string>
     <string name="clear"> Clear </string>
     <string name="login"> Login </string>
+    <string name="actionLogout"> LOGOUT </string>
     <string name="signup"> Signup </string>
     <string name="cancel"> Cancel </string>
     <string name="welcome"> Welcome </string>
@@ -132,6 +138,53 @@
     <string name="register"> Sign Up </string>
     <string name="drawerOpen"> DrawerOpen </string>
     <string name="drawerClose"> DrawerClose </string>
+    <string name="actionCategories"> CATEGORIES </string>
+    <string name="actionShop"> Shop </string>
+    <string name="actionCart"> MY CART </string>
+    <string name="actionOrders"> MY ORDERS </string>
+    <string name="actionAccount"> MY ACCOUNT </string>
+    <string name="actionAddresses"> MY ADDRESSES </string>
+    <string name="actionFavourites"> MY FAVORITES </string>
+    <string name="actionSettings"> SETTINGS </string>
+    <string name="actionNews"> News </string>
+    <string name="actionBooking" translatable="false"> Dr.CdmKart Appointment Booking </string>
+    <string name="actionWhatsApp" translatable="false">Customer Support</string>
+    <string name="actionIntro"> INTRO </string>
+    <string name="actionAbout"> ABOUT US </string>
+    <string name="actionContactUs"> CONTACT US </string>
+    <string name="actionShareApp"> SHARE APP </string>
+    <string name="actionRateApp"> RATE APP </string>
+
+    <string name="view"> View </string>
+    <string name="cart"> Cart </string>
+    <string name="product"> Product </string>
+    <string name="products"> Products </string>
+    <string name="category"> Category </string>
+    <string name="categories"> Categories </string>
+    <string name="final_price"> Final Price </string>
+    <string name="total_price"> Total Price </string>
+    <string name="product_price"> Product Price </string>
+    <string name="checkout_price"> Checkout Price </string>
+    <string name="product_title"> Product Title </string>
+    <string name="view_product"> View Product </string>
+    <string name="quantity"> Quantity </string>
+    <string name="description"> Description </string>
+    <string name="attributes"> Attributes </string>
+    <string name="attribute_name"> Attribute Name </string>
+    <string name="product_description"> Product Description </string>
+
+    <string name="order"> Order </string>
+    <string name="order_id"> Order ID </string>
+    <string name="order_status"> Order Status </string>
+    <string name="order_date"> Order Date </string>
+    <string name="order_address"> Order Address </string>
+    <string name="order_details"> Order Details </string>
+    <string name="order_confirmed"> Order Confirmed </string>
+    <string name="order_notes"> Order Instructions </string>
+    <string name="order_comments"> Order Comments </string>
+    <string name="no_of_products"> No. of Products </string>
+
+
 
 
     <string name="app_terms_services">By creating an account, you agree to our</string>
@@ -139,8 +192,24 @@
     <string name="ugandan_code" translatable="false">+256 </string>
     <string name="actionHome"> HOME </string>
     <string name="actionCategory"> CATEGORY </string>
-    <string name="description">Description</string>
+    <string name="defaultcurrency" translatable="false">UGX</string>
 
+
+    <!--  Coupon Error Strings -->
+    <string name="coupon_expired"> Coupon is expired! </string>
+    <string name="coupon_applied"> Coupon already applied! </string>
+    <string name="coupon_cannot_be_applied"> Coupon cannot be applied! </string>
+    <string name="coupon_used_by_you"> You have already used this Coupon! </string>
+    <string name="coupon_used_by_all"> Coupon has been used by limited users! </string>
+    <string name="coupon_is_not_for_you"> You are not applicable to use this Coupon! </string>
+    <string name="coupon_cannot_used_with_existing"> Coupon cannot be used with existing Coupon! </string>
+    <string name="coupon_is_not_for_sale_items"> Coupon cannot be used on sale items! </string>
+    <string name="coupon_is_not_for_these_products"> Coupon is not valid for these products! </string>
+    <string name="coupon_is_not_for_these_categories"> Coupon is not valid for these category of products! </string>
+    <string name="coupon_is_not_for_excluded_products"> Coupon cannot be used on excluded products! </string>
+    <string name="coupon_is_not_for_excluded_categories"> Coupon cannot be used on excluded categories! </string>
+    <string name="coupon_max_amount_is_less_than_order_total"> Cart total does not meet the maximum amount for Coupon! </string>
+    <string name="coupon_min_amount_is_greater_than_order_total"> Cart total does not meet the minimum amount for Coupon! </string>
 
     <!--  App Settings Strings -->
     <string name="select_language"> Select Language </string>
@@ -153,6 +222,7 @@
     <string name="service_terms"> Terms of Service </string>
     <string name="ad_banner"> Banner Ad </string>
     <string name="ad_interstitial"> Interstitial Ad </string>
+
 
     <!--  Errors Message Strings -->
     <string name="enter_name"> Enter Your Name </string>
@@ -179,7 +249,69 @@
     <string name="cannot_get_payment_methods"> Error Getting Payment Methods </string>
     <string name="cannot_initialize_braintree"> Error initializing Braintree Fragment </string>
 
+    <string name="searchShippingAddress" translatable="false">Search Delivery Address</string>
+    <string name="QNShippingAddress" translatable="false">Where would do you like your goods be delivered?</string>
+    <string name="nearby_merchants" translatable="false">Nearby Merchants</string>
+    <string name="Receivername" translatable="false">Receiver Name</string>
+    <string name="Receivercontact_no" translatable="false">Receiver Phone Number</string>
+    <string name="pair" translatable="false">Pair Shop</string>
+    <string name="found_merchant" translatable="false">Found Merchant</string>
+    <string name="select_merchants_fragment" translatable="false">select_merchants_fragment</string>
+    <string name="flashSale"> Flash Sale </string>
+    <string name="upcoming"> UPCOMING </string>
+    <string name="cannot_add_upcoming"> You can not add upcoming item to cart. </string>
+    <string name="today" translatable="false">Today</string>
+    <string name="tomorrow" translatable="false">Tomorrow</string>
+    <string name="select_schedule" translatable="false">Select schedule</string>
+    <string name="polling" translatable="false">Polling</string>
+    <string name="rate_product" translatable="false">Rate Product</string>
+    <string name="vendors" translatable="false">Vendors</string>
+    <string name="vendor_detail" translatable="false">Vendor Detail</string>
+    <string name="email_subject" translatable="false">Hello There</string>
+    <string name="shop_by_category" translatable="false">Shop by category</string>
+    <string name="select_option">Please select at-least one option of question</string>
+    <string name="thirkural">Thirukural</string>
+    <string name="timing">Timing</string>
+    <string name="set_current_location">Set current location</string>
+    <string name="error">Api key is empty or incorrect</string>
+    <string name="enter_location">Search location</string>
+    <string name="place_picker_id" translatable="false">YOUR_PLACEPICKER_ID</string>
+
+    <string name="likes"> Likes </string>
+    <string name="google_login"> Google Login </string>
+    <string name="facebook_login"> Facebook Login </string>
+    <string name="in_stock"> In Stock </string>
+    <string name="outOfStock"> Out of Stock </string>
+    <string name="addToCart"> Add to Cart </string>
+    <string name="removeProduct"> Remove Product </string>
+    <string name="removeFromCart"> Remove from Cart </string>
+    <string name="remove"> Remove </string>
+    <string name="save_address"> Save Address </string>
+    <string name="reset_filters"> Reset Filters </string>
+    <string name="order_now"> Order Now </string>
+    <string name="continue_shopping"> Continue Shopping </string>
+    <string name="proceed_checkout"> Proceed Checkout </string>
+    <string name="checkout" translatable="false">Checkout</string>
+    <string name="btn_continue" translatable="false">CONTINUE</string>
+    <string name="actionSearch"> Search </string>
+    <string name="Newest"> NEWEST </string>
+    <string name="topSeller"> TOP SELLER </string>
+    <string name="superDeals"> SUPER DEALS </string>
+    <string name="mostLiked"> MOST LIKED </string>
+    <string name="actionLanguage"> Language </string>
+    <string name="label_currency"> Currency </string>
+    <string name="packing_charge" translatable="false">Packing charges</string>
+    <string name="favorite">Favorite</string>
+
+    <string name="all"> All </string>
+    <string name="newest"> Newest </string>
+    <string name="top_seller"> Top Seller </string>
+    <string name="super_deals"> Deals </string>
+    <string name="most_liked"> Most Liked </string>
+    <string name="recentlyViewed"> Recently Viewed </string>
+
     <string name="sendemail">SEND EMAIL</string>
+    <string name="filter">Filter</string>
     <string name="forgot_title">Enter the email address you used to create your account and we will email you a link to reset your password</string>
 
     <string name="select">Select</string>
@@ -203,6 +335,8 @@
     <string name="calculate">calculate</string>
     <string name="area">Area</string>
     <string name="acres">Acres</string>
+    <string name="measure">Measure</string>
+    <string name="date">Date</string>
 
     <!--    Arrays to test Sign Up with District, Sub-County and Village-->
     <string-array name="spinner_gender">
@@ -397,7 +531,23 @@
     <string name="invalid_expiry">Invalid Expiry</string>
     <string name="purchase_date">Purchase Date</string>
 
+    <string-array name="sortBy_array">
+        <item> Newest </item>
+        <item> A - Z </item>
+        <item> Z - A </item>
+        <item> Price : High - Low </item>
+        <item> Price : Low - High </item>
+        <item> Top Seller </item>
+        <item> Special Deals </item>
+        <item> Most Liked </item>
+    </string-array>
 
+    <string-array name="buy_produce_quantity">
+        <item>750 ml - Bottle</item>
+        <item>700 ml - Bottle</item>
+        <item>650 ml - Bottle</item>
+        <item>600 ml - Bottle</item>
+    </string-array>
     <string-array name="spinner_id_type">
         <item>Select</item>
         <item>National Id</item>

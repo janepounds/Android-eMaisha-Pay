@@ -202,4 +202,25 @@
         <item name="colorControlActivated">#FFAC41</item>
     </style>
 
+    <style name="AndroidImageSlider_Indicator">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="shape">oval</item>
+        <item name="padding_left">3dp</item>
+        <item name="padding_right">3dp</item>
+        <item name="padding_top">4dp</item>
+        <item name="padding_bottom">4dp</item>
+        <item name="selected_width">10dp</item>
+        <item name="selected_height">10dp</item>
+        <item name="unselected_width">6dp</item>
+        <item name="unselected_height">6dp</item>
+        <item name="selected_padding_left">6dp</item>
+        <item name="selected_padding_right">6dp</item>
+        <item name="unselected_padding_left">4dp</item>
+        <item name="unselected_padding_right">4dp</item>
+    </style>
+
 </resources>

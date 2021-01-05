@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/layoutBackgroundLight"
+    android:id="@+id/fragment_container">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/merchants_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="?attr/actionBarSize" />
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+</LinearLayout>

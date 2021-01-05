@@ -8,7 +8,12 @@ import android.widget.Toast;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.cabral.emaishapay.models.address_model.AddressDetails;
+import com.cabral.emaishapay.models.banner_model.BannerDetails;
+import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
+import com.cabral.emaishapay.models.product_model.ProductDetails;
+import com.cabral.emaishapay.models.shipping_model.ShippingService;
 import com.google.gson.Gson;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
@@ -35,9 +40,15 @@ public class EmaishaPayApp extends MultiDexApplication {
     private static final String TAG = "EmaishaPayApp";
     // Application Context
     private static Context context;
-
+    private String tax = "";
     private AppSettingsDetails appSettingsDetails = null;
     private List<PagesDetails> staticPagesDetails = new ArrayList<>();
+    private List<BannerDetails> bannersList = new ArrayList<>();
+    private List<CategoryDetails> categoriesList = new ArrayList<>();
+    private ShippingService shippingService = null;
+    private AddressDetails shippingAddress = new AddressDetails();
+    private AddressDetails billingAddress = new AddressDetails();
+    private ProductDetails productDetails = new ProductDetails();
 
     @Override
     public void onCreate() {
@@ -71,7 +82,29 @@ public class EmaishaPayApp extends MultiDexApplication {
         this.appSettingsDetails = appSettingsDetails;
     }
 
+    public List<BannerDetails> getBannersList() {
+        return bannersList;
+    }
 
+    public void setBannersList(List<BannerDetails> bannersList) {
+        this.bannersList = bannersList;
+    }
+
+    public List<CategoryDetails> getCategoriesList() {
+        return categoriesList;
+    }
+
+    public void setCategoriesList(List<CategoryDetails> categoriesList) {
+        this.categoriesList = categoriesList;
+    }
+
+    public ProductDetails getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
+    }
     public List<PagesDetails> getStaticPagesDetails() {
         return staticPagesDetails;
     }
@@ -80,7 +113,36 @@ public class EmaishaPayApp extends MultiDexApplication {
         this.staticPagesDetails = staticPagesDetails;
     }
 
+    public ShippingService getShippingService() {
+        return shippingService;
+    }
 
+    public void setShippingService(ShippingService shippingService) {
+        this.shippingService = shippingService;
+    }
+
+    public AddressDetails getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(AddressDetails shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public AddressDetails getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(AddressDetails billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
+    }
 
     private String getSHA1(String packageName) {
         try {

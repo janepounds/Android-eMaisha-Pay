@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#FBFBFB"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardPreventCornerOverlap="false"
+    android:id="@+id/cardview_perant" >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <RadioButton
+            android:id="@+id/default_address_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"/>
+
+        <!--<CheckBox
+            android:id="@+id/makeDefaultAddress_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHighlight="@color/colorAccent"
+            android:textColor="@color/textColorPrimaryLight"
+            android:layout_margin="10dp" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/default_address_rb"
+            android:orientation="vertical"
+            android:padding="7dp"
+            android:layout_toRightOf="@+id/default_address_rb">
+
+            <TextView
+                android:id="@+id/address_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@string/full_name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/address_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:maxLines="2"
+                android:text="@string/address"
+                android:textColor="@color/textColorSecondaryDark"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/edit_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/round_button_dark_green"
+                    android:text="@string/bt_edit"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:drawableEnd="@drawable/ic_right_chevron"/>
+
+                <Button
+                    android:id="@+id/delete_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/round_button_red"
+                    android:text="@string/bt_delete"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:drawableEnd="@drawable/ic_right_chevron" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

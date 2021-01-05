@@ -15,6 +15,17 @@ public class UserData {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("success")
+    @Expose
+    private String success;
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
 
     public String getStatus() {
         return status;

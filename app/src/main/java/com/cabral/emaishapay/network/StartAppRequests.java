@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
+import com.cabral.emaishapay.models.banner_model.BannerData;
+import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -101,6 +103,65 @@ public class StartAppRequests {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    //*********** API Request Method to Fetch App Banners ********//
+
+    public void RequestBanners() {
+
+        Call<BannerData> call = BuyInputsAPIClient.getInstance()
+                .getBanners();
+
+        try {
+            Response<BannerData> response = call.execute();
+
+            BannerData bannerData = new BannerData();
+
+            if (response.isSuccessful()) {
+
+                bannerData = response.body();
+
+                if (!TextUtils.isEmpty(bannerData.getSuccess()))
+                    emaishaPayApp.setBannersList(bannerData.getData());
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //*********** API Request Method to Fetch All Categories ********//
+
+    public void RequestAllCategories() {
+
+        Call<CategoryData> call = BuyInputsAPIClient.getInstance()
+                .getAllCategories
+                        (
+                                ConstantValues.LANGUAGE_ID
+                        );
+
+        try {
+            Response<CategoryData> response = call.execute();
+
+            CategoryData categoryData = new CategoryData();
+
+            if (response.isSuccessful()) {
+
+                String json= new Gson().toJson(response.body());
+                categoryData = response.body();
+
+                if (!TextUtils.isEmpty(categoryData.getSuccess()))
+                    emaishaPayApp.setCategoriesList(categoryData.getData());
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Error: ", e.getMessage() );
         }
 
     }
