@@ -13,8 +13,8 @@
         android:layout_margin="5dp"
         android:background="@color/windowBackground"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp"
-        app:layout_behavior="customs.AppBarFlingScrollBehavior">
+        app:elevation="0dp">
+<!--        app:layout_behavior="customs.AppBarFlingScrollBehavior">-->
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

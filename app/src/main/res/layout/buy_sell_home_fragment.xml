@@ -55,7 +55,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline42"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                     />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline42"
@@ -83,8 +84,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
         <FrameLayout
             android:id="@+id/main_fragment_container"

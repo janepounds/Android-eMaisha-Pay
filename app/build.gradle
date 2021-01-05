@@ -50,7 +50,10 @@ android {
 }
 
 dependencies {
+    def material_version = "1.2.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     def nav_version = "2.3.1"
 
@@ -65,6 +68,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //No Internet available
     implementation 'am.appwise.components:NoInternetDialog:1.1.3'
 

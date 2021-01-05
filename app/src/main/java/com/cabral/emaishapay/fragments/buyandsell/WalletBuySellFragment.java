@@ -59,8 +59,8 @@ public class WalletBuySellFragment extends Fragment {
         View view = inflater.inflate(R.layout.buy_sell_home_fragment, container, false);
 
         setHasOptionsMenu(true);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(getString(R.string.app_name));
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setElevation(0.5f);
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(getString(R.string.app_name));
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setElevation(0.5f);
 
         toolbar = view.findViewById(R.id.buy_inputs_home_toolbar);
         searchView = view.findViewById(R.id.buy_inputs_search_view);

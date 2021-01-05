@@ -6,6 +6,7 @@ import android.content.pm.Signature;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.cabral.emaishapay.models.address_model.AddressDetails;
@@ -206,6 +207,12 @@ public class EmaishaPayApp extends MultiDexApplication {
         }
 
     }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
+
 }
 
 
