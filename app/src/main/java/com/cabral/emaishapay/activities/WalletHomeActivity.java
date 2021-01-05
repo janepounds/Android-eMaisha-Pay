@@ -28,6 +28,9 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
+import com.cabral.emaishapay.fragments.buyandsell.Shipping_Address;
+import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,7 +91,7 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static final double PREFERENCE_WALLET_BALANCE = 0;
 
 
-
+    public static PostOrder postOrder = new PostOrder();
 
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -274,7 +277,56 @@ public class WalletHomeActivity extends AppCompatActivity {
                 });
 
     }
-
+//    public void setupTitle() {
+//        Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+//        if (currentFrag instanceof My_Cart) {
+//            actionBar.setTitle(getString(R.string.actionCart));
+//            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof Shipping_Address) {
+//            actionBar.setTitle(getString(R.string.shipping_address));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof Nearby_Merchants) {
+//            actionBar.setTitle(getString(R.string.nearby_merchants));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof UpdateAccountFragment) {
+//            actionBar.setTitle(getString(R.string.actionAccount));
+//        } else if (currentFrag instanceof My_Orders) {
+//            actionBar.setTitle(getString(R.string.actionOrders));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof My_Addresses) {
+//            actionBar.setTitle(getString(R.string.actionAddresses));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof com.myfarmnow.myfarmcrop.fragments.buyInputsFragments.SettingsFragment) {
+//            actionBar.setTitle(getString(R.string.actionSettings));
+//        } else if (currentFrag instanceof AccountFragment) {
+//            actionBar.setTitle(getString(R.string.actionAccount));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+//        } else if (currentFrag instanceof MarketPlaceHomeFragment) {
+//            actionBar.setTitle(getString(R.string.actionMarketPlace));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+//        } else if (currentFrag instanceof BuyInputsHomePage) {
+//            actionBar.setTitle(getString(R.string.app_name));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof SellProduceFragment) {
+//            actionBar.setTitle(getString(R.string.actionproducemarket));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof Category_Products) {
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof PaymentMethodsFragment) {
+//            actionBar.setTitle(getString(R.string.payment_methods));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof Thank_You) {
+//            actionBar.setTitle(getString(R.string.order_confirmed));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof Product_Description) {
+//            actionBar.setTitle(getString(R.string.product_description));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        } else if (currentFrag instanceof CheckoutFinal) {
+//            actionBar.setTitle(getString(R.string.checkout));
+//            DashboardActivity.bottomNavigationView.setVisibility(View.GONE);
+//        }
+//
+//    }
 
 
        public static void sendFirebaseToken(String token, final Context context) {

@@ -295,6 +295,44 @@ public class Utilities {
         return isNew;
     }
 
+    //*********** Used to Animate the MenuIcons ********//
+
+    public static void animateCartMenuIcon(Context context, Activity activity) {
+
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+
+        MenuItem cartItem = toolbar.getMenu().findItem(R.id.toolbar_ic_cart);
+        if (cartItem == null)
+            return;
+
+        cartItem.setActionView(R.layout.buy_inputs_animated_ic_cart);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.shake_icon);
+        animation.setRepeatMode(Animation.ZORDER_TOP);
+        animation.setRepeatCount(2);
+
+
+        Animation anim = cartItem.getActionView().getAnimation();
+
+        cartItem.getActionView().startAnimation(animation);
+
+    }
+
+
+    //*********** Used to Calculate the Discount Percentage between New and Old Prices ********//
+
+    public static String checkDiscount(String actualPrice, String discountedPrice) {
+
+        if (discountedPrice == null) {
+            discountedPrice = actualPrice;
+        }
+
+        Double oldPrice = Double.parseDouble(actualPrice.replace(",",""));
+        Double newPrice = Double.parseDouble(discountedPrice.replace(",",""));
+
+        double discount = (oldPrice - newPrice)/oldPrice * 100;
+
+        return (discount > 0) ? Math.round(discount) +"% " + EmaishaPayApp.getContext().getString(R.string.OFF) : null;
+    }
 
 
     //*********** Convert given String to Md5Hash ********//
@@ -315,8 +353,31 @@ public class Utilities {
             return null;
         }
     }
-    
-    
+
+
+    //*********** Shares the Product with its Image and Url ********//
+
+    public static void shareProduct(Context context, String subject, ImageView imageView, String url) {
+
+        Uri bmpUri = getLocalBitmapUri(context, imageView);
+
+        if (bmpUri != null) {
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/*");
+            shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            shareIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+            context.startActivity(Intent.createChooser(shareIntent, "Share via"));
+
+        } else {
+            Toast.makeText(context, "Null bmpUri", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     
     //*********** Returns the current DataTime of Device ********//
