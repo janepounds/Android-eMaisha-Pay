@@ -125,7 +125,8 @@
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@id/first_star"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                tools:ignore="VectorDrawableCompat" />
 
 
                             <ImageView
@@ -134,7 +135,8 @@
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@id/second_star"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                tools:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/fourth_star"
@@ -142,7 +144,8 @@
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@id/third_star"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                tools:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/fifth_star"
@@ -150,7 +153,8 @@
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@id/fourth_star"
-                                app:srcCompat="@drawable/ic_star_border" />
+                                app:srcCompat="@drawable/ic_star_border"
+                                tools:ignore="VectorDrawableCompat" />
 
                             <TextView
                                 android:id="@+id/produce_overall_rating"
@@ -211,7 +215,8 @@
                         android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="10dp"
-                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                        tools:ignore="VectorDrawableCompat" />
 
                 </RelativeLayout>
 
@@ -358,6 +363,7 @@
         android:paddingBottom="20dp"
         android:scaleType="center"
         app:srcCompat="@drawable/checked"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.cardview.widget.CardView>
