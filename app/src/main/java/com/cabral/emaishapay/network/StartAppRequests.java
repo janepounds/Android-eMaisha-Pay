@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -13,6 +14,8 @@ import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
+import com.cabral.emaishapay.models.product_model.GetAllProducts;
+import com.cabral.emaishapay.models.product_model.ProductData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -51,6 +54,7 @@ public class StartAppRequests {
     private Context context;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
+
 
 
     public StartAppRequests(Context context) {
@@ -133,6 +137,59 @@ public class StartAppRequests {
         }
 
     }
+    //****************request special deals*******************//
+    public void RequestSpecialDeals() {
+
+
+        GetAllProducts getAllProducts = new GetAllProducts();
+        getAllProducts.setPageNumber(0);
+        getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
+        getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+        getAllProducts.setType("special");
+        getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
+
+
+        Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
+                .getAllProducts
+                        (
+                                getAllProducts
+                        );
+
+        networkCall.enqueue(new Callback<ProductData>() {
+            @Override
+            public void onResponse(Call<ProductData> call, retrofit2.Response<ProductData> response) {
+
+                if (response.isSuccessful()) {
+
+                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
+                        // Products have been returned. Add Products to the dealProductsList
+
+                        emaishaPayApp.setTopDeals(response.body().getProductData());
+
+
+
+                    }
+                    else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                        // Products haven't been returned
+
+                        }
+
+                    }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ProductData> call, Throwable t) {
+                if (!networkCall.isCanceled()) {
+                    Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+
 
     //*********** API Request Method to Fetch All Categories ********//
 
@@ -223,6 +280,7 @@ public class StartAppRequests {
         }
         
     }
+
 
     //*********** Register Device to Admin Panel with the Device's Info ********//
 

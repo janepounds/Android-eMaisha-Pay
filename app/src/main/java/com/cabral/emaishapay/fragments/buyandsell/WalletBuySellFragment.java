@@ -29,6 +29,7 @@ import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
+import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
 
@@ -45,7 +46,7 @@ public class WalletBuySellFragment extends Fragment {
     private static final String TAG = "BuyInputsHomePage";
     StartAppRequests startAppRequests;
 
-    List<BannerDetails> bannerImages = new ArrayList<>();
+    List<ProductDetails> specialDealsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
 
@@ -74,10 +75,11 @@ public class WalletBuySellFragment extends Fragment {
 
 
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
+        specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
 
         // Binding Layout View
 
-        if (allCategoriesList.isEmpty())
+        if (allCategoriesList.isEmpty() || specialDealsList.isEmpty())
             new MyTask().execute();
         else
             continueSetup();
@@ -94,8 +96,9 @@ public class WalletBuySellFragment extends Fragment {
     public void continueSetup() {
 
         allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
+        specialDealsList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
 
-
+        getTopDeals(specialDealsList);
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -109,6 +112,8 @@ public class WalletBuySellFragment extends Fragment {
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
+
+
     }
 
     @Override
@@ -138,8 +143,8 @@ public class WalletBuySellFragment extends Fragment {
             // Check for Internet Connection from the static method of Helper class
             if (Utilities.hasActiveInternetConnection(getContext())) {
                 // Call the method of StartAppRequests class to process App Startup Requests
-                startAppRequests.RequestBanners();
                 startAppRequests.RequestAllCategories();
+                startAppRequests.RequestSpecialDeals();
                 return "1";
             } else {
                 return "0";
@@ -155,7 +160,15 @@ public class WalletBuySellFragment extends Fragment {
             }
         }
     }
+    private void getTopDeals(final List<ProductDetails> productDetails) {
+        fragmentManager = getFragmentManager();
 
+        Bundle categoryBundle = new Bundle();
+
+        Fragment categories = new TopDealsFragment(productDetails);
+        categories.setArguments(categoryBundle);
+        fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Bind Menu Items

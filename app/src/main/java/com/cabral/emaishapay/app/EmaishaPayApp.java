@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
@@ -13,8 +14,11 @@ import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
+import com.cabral.emaishapay.models.product_model.GetAllProducts;
+import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.shipping_model.ShippingService;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.gson.Gson;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
@@ -46,6 +50,7 @@ public class EmaishaPayApp extends MultiDexApplication {
     private List<PagesDetails> staticPagesDetails = new ArrayList<>();
     private List<BannerDetails> bannersList = new ArrayList<>();
     private List<CategoryDetails> categoriesList = new ArrayList<>();
+    private List<ProductDetails> productList = new ArrayList<>();
     private ShippingService shippingService = null;
     private AddressDetails shippingAddress = new AddressDetails();
     private AddressDetails billingAddress = new AddressDetails();
@@ -98,6 +103,14 @@ public class EmaishaPayApp extends MultiDexApplication {
     public void setCategoriesList(List<CategoryDetails> categoriesList) {
         this.categoriesList = categoriesList;
     }
+    public List<ProductDetails> getTopDeals() {
+        return productList;
+    }
+
+    public void setTopDeals(List<ProductDetails> categoriesList) {
+        this.productList = productList;
+    }
+
 
     public ProductDetails getProductDetails() {
         return productDetails;

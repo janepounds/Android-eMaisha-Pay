@@ -314,4 +314,6 @@ public interface APIRequestsForBuyInputs {
 
     @GET("get_sellPrices_by_shopId")
     Call<MerchantData> getMerchantsProductData(@Query("shopID") String shopID, @Query("productlist") String productlist);
+
+
 }
