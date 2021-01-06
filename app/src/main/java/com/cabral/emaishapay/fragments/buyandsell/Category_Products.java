@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments.buyandsell;
 
 import android.app.AlertDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -83,6 +86,7 @@ public class Category_Products extends Fragment {
 
     Call<FilterData> filterCAll;
     Call<ProductData> productsCall;
+    Toolbar toolbar;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -91,6 +95,7 @@ public class Category_Products extends Fragment {
         isVisible = isVisibleToUser;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,7 +112,8 @@ public class Category_Products extends Fragment {
         if (getArguments().containsKey("sortBy")) {
             sortBy = getArguments().getString("sortBy");
         }
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.actionShop)+" "+CategoryName);
+        toolbar = rootView.findViewById(R.id.toolbar_product_home);
+        toolbar.setTitle(getString(R.string.actionShop)+" "+CategoryName);
 
 //        DashboardActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         // Get the Customer's ID from SharedPreferences

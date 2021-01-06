@@ -5,8 +5,14 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cabral.emaishapay.models.product_model.ProductDetails;
+
+import java.util.List;
+
 public class ProductDealsAdapter extends RecyclerView.Adapter<ProductDealsAdapter.MyViewHolder>{
-    public ProductDealsAdapter(){
+    private List<ProductDetails> productList;
+    public ProductDealsAdapter(List<ProductDetails> productList){
+        this.productList = productList;
 
     }
 
