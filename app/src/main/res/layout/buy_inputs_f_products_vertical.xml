@@ -4,7 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackgroundDark">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_orders_home"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/topBar"
@@ -85,7 +96,8 @@
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/toggle_ic_filter"
-                android:tint="@color/black" />
+                android:tint="@color/black"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:layout_width="match_parent"
