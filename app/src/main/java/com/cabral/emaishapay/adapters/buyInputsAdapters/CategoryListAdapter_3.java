@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -135,18 +136,19 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
     /********** Custom ViewHolder provides a direct reference to each of the Views within a Data_Item *********/
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CardView category_card;
+        ConstraintLayout layout_category;
         ImageView category_icon;
         TextView category_title, category_products;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
-            category_card = itemView.findViewById(R.id.category_card);
+
             category_icon = itemView.findViewById(R.id.category_icon);
             category_title = itemView.findViewById(R.id.category_title);
             category_products = itemView.findViewById(R.id.category_products);
+            layout_category = itemView.findViewById(R.id.layout_category);
 
-            category_card.setOnClickListener(this);
+            layout_category.setOnClickListener(this);
         }
 
         // Handle Click Listener on OrderProductCategory item

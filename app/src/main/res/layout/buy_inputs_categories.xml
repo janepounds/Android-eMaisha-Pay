@@ -1,14 +1,12 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FBFBFB">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_round_white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/categories_header"
@@ -20,7 +18,19 @@
             android:drawableTint="@color/iconsLight"
             android:text="@string/categories"
             android:textColor="@color/textColorSecondary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categories_header"
+
+        android:elevation="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categories_recycler"
@@ -28,8 +38,11 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/dimen_10dp"
             android:paddingRight="@dimen/dimen_10dp"
-            android:layout_below="@+id/categories_header" />
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:id="@+id/empty_record_text"
             android:layout_width="wrap_content"
@@ -39,6 +52,6 @@
             android:textColor="@color/textColorPrimaryLight"
             android:textSize="18sp" />
 
-    </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -5,342 +5,162 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <EditText
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/etxt_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="?actionBarSize"
-        android:background="@drawable/rounded_corners_edittext_white"
-        android:drawableEnd="@drawable/ic_search"
-        android:ems="10"
-        android:fontFamily="@font/josefin_sans"
-        android:hint="Search for Items"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:elevation="5dp"/>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_1"
+        android:background="@drawable/edittext_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="5dp">
+
+        <EditText
+            android:id="@+id/buy_inputs_search_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="Search for Items"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline42"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <ImageView
+            android:id="@+id/buy_inputs_search_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline42"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_search_menu24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/main_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etxt_search"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/background_round_white"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@id/etxt_search"
+        android:elevation="@dimen/dimen_5dp">
+
+        <include layout="@layout/buy_inputs_homepage_9" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_maincontent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_fragment_container"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="?actionBarSize"
         android:elevation="5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_account_opening"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/label_most_popular"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/layout_loan_app"
-            app:layout_constraintEnd_toStartOf="@id/layout_deposits"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="openAgentCustomerAccountOpening">
 
-            <ImageView
-                android:id="@+id/image_account_opening"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_pesticide"
-                app:layout_constraintBottom_toTopOf="@id/label_account_opening"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Most Popular"
+            android:textColor="#31244A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/label_account_opening"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Pesticides"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:maxLines="2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_account_opening" />
+        <TextView
+            android:id="@+id/btn_view_all_most_popular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/rectangular_green_solid"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="View All"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_view_all_most_popular"
+            android:layout_margin="15dp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_deposits"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toStartOf="@id/layout_funds_transfers"
-            app:layout_constraintStart_toEndOf="@id/layout_account_opening"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layout_withdraw"
-            android:onClick="openAgentCustomerDeposit">
+        <TextView
+            android:id="@+id/label_deals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Deals"
+            android:textColor="#31244A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/image_deposits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_fertilizers"
-                app:layout_constraintBottom_toTopOf="@id/label_deposits"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/btn_view_all_deals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recycler"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/rectangular_green_solid"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="View All"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/label_deposits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Fertilizers"
-                android:textAllCaps="true"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_deposits" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_view_all_deals"
+            android:layout_margin="15dp" />
+    </RelativeLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_funds_transfers"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_deposits"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layout_balance_inquiry"
-            android:onClick="openAgentCustomerFundsTransfer">
-
-            <ImageView
-                android:id="@+id/image_funds_transfers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_seeds"
-                app:layout_constraintBottom_toTopOf="@id/label_funds_transfers"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/label_funds_transfers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Seeds"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:gravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_funds_transfers" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_loan_app"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/layout_deposits"
-            app:layout_constraintTop_toBottomOf="@id/layout_account_opening">
-
-            <ImageView
-                android:id="@+id/image_loan_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_farm_tools"
-                app:layout_constraintBottom_toTopOf="@id/label_loan_app"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/label_loan_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:gravity="center_horizontal"
-                android:text="Farm Tools"
-                android:textAllCaps="true"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_loan_app" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_withdraw"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_loan_app"
-            app:layout_constraintTop_toBottomOf="@id/layout_deposits"
-            app:layout_constraintEnd_toStartOf="@id/layout_balance_inquiry"
-            android:onClick="openAgentCustomerWithdraw">
-
-            <ImageView
-                android:id="@+id/image_withdraw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_feeds"
-                app:layout_constraintBottom_toTopOf="@id/label_withdraw"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/label_withdraw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Feeds"
-                android:textAllCaps="true"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_withdraw" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_balance_inquiry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_withdraw"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_funds_transfers"
-            android:onClick="openAgentCustomerBalanceInquiry">
-
-            <ImageView
-                android:id="@+id/image_balance_inquiry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_animal_drugs"
-                app:layout_constraintBottom_toTopOf="@id/label_balance_inquiry"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/label_balance_inquiry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Animal Drugs"
-                android:textAllCaps="true"
-                android:textColor="#31244A"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_balance_inquiry" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <TextView
-        android:id="@+id/label_most_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_1"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:text="Most Popular"
-        android:textColor="#31244A"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/btn_view_all_most_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rectangular_green_solid"
-        android:text="View All"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:textAllCaps="true"
-        android:layout_below="@+id/layout_1"
-        android:layout_alignParentEnd="true"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_below="@id/btn_view_all_most_popular"/>
-    <TextView
-        android:id="@+id/label_deals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recycler"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:text="Deals"
-        android:textColor="#31244A"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/btn_view_all_deals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rectangular_green_solid"
-        android:text="View All"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:textAllCaps="true"
-        android:layout_below="@+id/recycler"
-        android:layout_alignParentEnd="true"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_below="@id/btn_view_all_deals"/>
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="190dp"

@@ -78,9 +78,9 @@ public class Categories_3 extends Fragment {
         emptyText = view.findViewById(R.id.empty_record_text);
         headerText = view.findViewById(R.id.categories_header);
         category_recycler = view.findViewById(R.id.categories_recycler);
-        NestedScrollView scroll_container = view.findViewById(R.id.scroll_container);
-        scroll_container.setNestedScrollingEnabled(true);
-        category_recycler.setNestedScrollingEnabled(false);
+
+//        scroll_container.setNestedScrollingEnabled(true);
+//        category_recycler.setNestedScrollingEnabled(false);
 
         // Hide some of the Views
         emptyText.setVisibility(View.GONE);
