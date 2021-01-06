@@ -67,6 +67,7 @@ public class WalletBuySellFragment extends Fragment {
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
 
 
+
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
         startAppRequests = new StartAppRequests(requireContext());
