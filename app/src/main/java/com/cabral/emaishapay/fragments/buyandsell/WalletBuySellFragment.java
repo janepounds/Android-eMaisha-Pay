@@ -68,20 +68,19 @@ public class WalletBuySellFragment extends Fragment {
 
 
 
-//        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-//        //noInternetDialog.show();
-//        startAppRequests = new StartAppRequests(requireContext());
-//
-//        // Get BannersList from ApplicationContext
-//        bannerImages = ((EmaishaPayApp) requireContext().getApplicationContext()).getBannersList();
-//        allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
-//
-//        // Binding Layout View
-//
-//        if (bannerImages.isEmpty() || allCategoriesList.isEmpty())
-//            new MyTask().execute();
-//        else
-//            continueSetup();
+        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
+        //noInternetDialog.show();
+        startAppRequests = new StartAppRequests(requireContext());
+
+
+        allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
+
+        // Binding Layout View
+
+        if (allCategoriesList.isEmpty())
+            new MyTask().execute();
+        else
+            continueSetup();
 
         return view;
     }
@@ -92,26 +91,25 @@ public class WalletBuySellFragment extends Fragment {
         this.context = context;
     }
 
-//    public void continueSetup() {
-//        bannerImages = ((EmaishaPayApp) getContext().getApplicationContext()).getBannersList();
-//        allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
-//        // Setup BannerSlider
-//        setupBannerSlider(bannerImages);
-//
-//        // Add corresponding ViewPagers to TabLayouts
-//        fragmentManager = getFragmentManager();
-//
-//        Bundle categoryBundle = new Bundle();
-//        categoryBundle.putBoolean("isHeaderVisible", false);
-//        categoryBundle.putBoolean("isMenuItem", false);
-//        categoryBundle.putBoolean("home_9", true);
-//        Fragment categories = new Categories_3();
-//        categories.setArguments(categoryBundle);
-//        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
-//
-//        Bundle bundleInfo = new Bundle();
-//        bundleInfo.putString("sortBy", "Newest");
-//    }
+    public void continueSetup() {
+
+        allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
+
+
+        // Add corresponding ViewPagers to TabLayouts
+        fragmentManager = getFragmentManager();
+
+        Bundle categoryBundle = new Bundle();
+        categoryBundle.putBoolean("isHeaderVisible", false);
+        categoryBundle.putBoolean("isMenuItem", false);
+        categoryBundle.putBoolean("home_9", true);
+        Fragment categories = new Categories_3();
+        categories.setArguments(categoryBundle);
+        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
+
+        Bundle bundleInfo = new Bundle();
+        bundleInfo.putString("sortBy", "Newest");
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -123,24 +121,7 @@ public class WalletBuySellFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    //*********** Setup the BannerSlider with the given List of BannerImages ********//
 
-    private void setupBannerSlider(final List<BannerDetails> bannerImages) {
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment bannerStyle = null;
-
-        switch (ConstantValues.DEFAULT_BANNER_STYLE) {
-            case 0:
-            case 1:
-                bannerStyle = new BannerStyle1(bannerImages, allCategoriesList);
-                break;
-        }
-
-        if (bannerStyle != null) {
-            assert fragmentManager != null;
-            fragmentManager.beginTransaction().replace(R.id.bannerFrameHome9, bannerStyle).commit();
-        }
-    }
 
     private class MyTask extends AsyncTask<String, Void, String> {
 
@@ -169,7 +150,7 @@ public class WalletBuySellFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result.equalsIgnoreCase("1")) {
-//                continueSetup();
+                continueSetup();
                 dialogLoader.hideProgressDialog();
             }
         }
