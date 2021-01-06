@@ -56,7 +56,7 @@ public class WalletBuySellFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.buy_sell_home_fragment, container, false);
+        View view = inflater.inflate(R.layout.orders_home, container, false);
 
         setHasOptionsMenu(true);
 //        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(getString(R.string.app_name));
@@ -68,20 +68,20 @@ public class WalletBuySellFragment extends Fragment {
 
 
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
-        startAppRequests = new StartAppRequests(requireContext());
-
-        // Get BannersList from ApplicationContext
-        bannerImages = ((EmaishaPayApp) requireContext().getApplicationContext()).getBannersList();
-        allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
-
-        // Binding Layout View
-
-        if (bannerImages.isEmpty() || allCategoriesList.isEmpty())
-            new MyTask().execute();
-        else
-            continueSetup();
+//        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
+//        //noInternetDialog.show();
+//        startAppRequests = new StartAppRequests(requireContext());
+//
+//        // Get BannersList from ApplicationContext
+//        bannerImages = ((EmaishaPayApp) requireContext().getApplicationContext()).getBannersList();
+//        allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
+//
+//        // Binding Layout View
+//
+//        if (bannerImages.isEmpty() || allCategoriesList.isEmpty())
+//            new MyTask().execute();
+//        else
+//            continueSetup();
 
         return view;
     }
@@ -92,26 +92,26 @@ public class WalletBuySellFragment extends Fragment {
         this.context = context;
     }
 
-    public void continueSetup() {
-        bannerImages = ((EmaishaPayApp) getContext().getApplicationContext()).getBannersList();
-        allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
-        // Setup BannerSlider
-        setupBannerSlider(bannerImages);
-
-        // Add corresponding ViewPagers to TabLayouts
-        fragmentManager = getFragmentManager();
-
-        Bundle categoryBundle = new Bundle();
-        categoryBundle.putBoolean("isHeaderVisible", false);
-        categoryBundle.putBoolean("isMenuItem", false);
-        categoryBundle.putBoolean("home_9", true);
-        Fragment categories = new Categories_3();
-        categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
-
-        Bundle bundleInfo = new Bundle();
-        bundleInfo.putString("sortBy", "Newest");
-    }
+//    public void continueSetup() {
+//        bannerImages = ((EmaishaPayApp) getContext().getApplicationContext()).getBannersList();
+//        allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
+//        // Setup BannerSlider
+//        setupBannerSlider(bannerImages);
+//
+//        // Add corresponding ViewPagers to TabLayouts
+//        fragmentManager = getFragmentManager();
+//
+//        Bundle categoryBundle = new Bundle();
+//        categoryBundle.putBoolean("isHeaderVisible", false);
+//        categoryBundle.putBoolean("isMenuItem", false);
+//        categoryBundle.putBoolean("home_9", true);
+//        Fragment categories = new Categories_3();
+//        categories.setArguments(categoryBundle);
+//        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
+//
+//        Bundle bundleInfo = new Bundle();
+//        bundleInfo.putString("sortBy", "Newest");
+//    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -169,7 +169,7 @@ public class WalletBuySellFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result.equalsIgnoreCase("1")) {
-                continueSetup();
+//                continueSetup();
                 dialogLoader.hideProgressDialog();
             }
         }

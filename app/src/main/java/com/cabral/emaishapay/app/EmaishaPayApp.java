@@ -207,11 +207,11 @@ public class EmaishaPayApp extends MultiDexApplication {
         }
 
     }
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(base);
-    }
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(base);
+//    }
 
 }
 
