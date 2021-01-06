@@ -167,7 +167,7 @@ public class WalletBuySellFragment extends Fragment {
 
         Fragment categories = new TopDealsFragment(productDetails);
         categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
+        fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
