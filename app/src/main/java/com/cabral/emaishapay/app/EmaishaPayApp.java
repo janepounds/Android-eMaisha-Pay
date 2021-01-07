@@ -51,6 +51,8 @@ public class EmaishaPayApp extends MultiDexApplication {
     private List<BannerDetails> bannersList = new ArrayList<>();
     private List<CategoryDetails> categoriesList = new ArrayList<>();
     private List<ProductDetails> productList = new ArrayList<>();
+    private List<ProductDetails> dealsList = new ArrayList<>();
+    private List<ProductDetails> popularproductList = new ArrayList<>();
     private ShippingService shippingService = null;
     private AddressDetails shippingAddress = new AddressDetails();
     private AddressDetails billingAddress = new AddressDetails();
@@ -87,7 +89,13 @@ public class EmaishaPayApp extends MultiDexApplication {
     public void setAppSettingsDetails(AppSettingsDetails appSettingsDetails) {
         this.appSettingsDetails = appSettingsDetails;
     }
+    public List<ProductDetails> getPopularProducts() {
+        return popularproductList;
+    }
 
+    public void setPopularProducts(List<ProductDetails> popularproductList) {
+        this.popularproductList = popularproductList;
+    }
     public List<BannerDetails> getBannersList() {
         return bannersList;
     }
@@ -104,19 +112,15 @@ public class EmaishaPayApp extends MultiDexApplication {
         this.categoriesList = categoriesList;
     }
     public List<ProductDetails> getTopDeals() {
-        return productList;
+        return dealsList;
     }
 
-    public void setTopDeals(List<ProductDetails> productList) {
-        this.productList = productList;
-    }
-    public List<ProductDetails> getPopularProducts() {
-        return productList;
+    public void setTopDeals(List<ProductDetails> dealsList) {
+        this.dealsList = dealsList;
     }
 
-    public void setPopularProducts(List<ProductDetails> productList) {
-        this.productList = productList;
-    }
+
+
 
 
     public ProductDetails getProductDetails() {

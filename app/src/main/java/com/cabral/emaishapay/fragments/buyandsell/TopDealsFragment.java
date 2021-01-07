@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.PopularProductsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
+import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ import java.util.List;
 
 public class TopDealsFragment extends Fragment {
     View rootView;
-    List<ProductDetails> allProductList = new ArrayList<>();
+    List<ProductDetails> allProductList;
+    List<ProductDetails> topDealsList;
     private RecyclerView recyclerView;
     private Context context;
     private ProductDealsAdapter topDealsAdapter;
@@ -43,10 +47,26 @@ public class TopDealsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.top_deals_fragment, container, false);
         recyclerView = rootView.findViewById(R.id.layout_top_deals);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        allProductList = new ArrayList<>();
 
-        topDealsAdapter = new ProductDealsAdapter(allProductList,context);
+        // Get CategoriesList from ApplicationContext
+        allProductList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
+
+        topDealsList = new ArrayList<>();
+
+        for (int i = 0; i < allProductList.size(); i++) {
+
+            topDealsList.add(allProductList.get(i));
+        }
+
+        // Initialize the CategoryListAdapter for RecyclerView
+        topDealsAdapter = new ProductDealsAdapter( topDealsList, context);
+
+        // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(topDealsAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        topDealsAdapter.notifyDataSetChanged();
 
         return rootView;
     }

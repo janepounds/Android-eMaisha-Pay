@@ -165,6 +165,7 @@ public class StartAppRequests {
                         // Products have been returned. Add Products to the dealProductsList
 
                         emaishaPayApp.setTopDeals(response.body().getProductData());
+                        Log.d(TAG, "onResponse: deals"+response.body().getProductData());
 
 
 
@@ -218,6 +219,8 @@ public class StartAppRequests {
                         // Products have been returned. Add Products to the dealProductsList
 
                         emaishaPayApp.setPopularProducts(response.body().getProductData());
+                        Log.d(TAG, "onResponse: setpopulr"+response.body().getProductData());
+                        Log.d(TAG, "onResponse: getpopular"+emaishaPayApp.getPopularProducts());
 
 
 

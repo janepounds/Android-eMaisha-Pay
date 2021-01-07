@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,13 +44,14 @@ import am.appwise.components.ni.NoInternetDialog;
 
 public class WalletBuySellFragment extends Fragment {
     private Context context;
-    private static final String TAG = "BuyInputsHomePage";
+    private static final String TAG = "WalletBuySellFragment";
     StartAppRequests startAppRequests;
 
     List<ProductDetails> specialDealsList = new ArrayList<>();
     List<ProductDetails> popularProductsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
+    private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
     private Toolbar toolbar;
     @SuppressLint("StaticFieldLeak")
@@ -61,6 +63,7 @@ public class WalletBuySellFragment extends Fragment {
         View view = inflater.inflate(R.layout.orders_home, container, false);
 
         setHasOptionsMenu(true);
+        emaishaPayApp = ((EmaishaPayApp) context.getApplicationContext());
 
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
@@ -79,15 +82,17 @@ public class WalletBuySellFragment extends Fragment {
         //noInternetDialog.show();
         startAppRequests = new StartAppRequests(requireContext());
 
-
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
         specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
-        popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
+        popularProductsList = emaishaPayApp.getPopularProducts();
+
+        Log.d(TAG, "onCreateView: Popular"+popularProductsList);
+        Log.d(TAG, "onCreateView: special"+specialDealsList);
 
 
         // Binding Layout View
 
-        if (allCategoriesList.isEmpty() || specialDealsList.isEmpty())
+        if (allCategoriesList.isEmpty() || specialDealsList.isEmpty() || popularProductsList.isEmpty())
             new MyTask().execute();
         else
             continueSetup();
@@ -105,10 +110,13 @@ public class WalletBuySellFragment extends Fragment {
 
         allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
         specialDealsList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
-        popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
+
+
+        Log.d(TAG, "continueSetup: popular"+popularProductsList);
+        Log.d(TAG, "continueSetup: specil"+specialDealsList);
 
         getTopDeals(specialDealsList);
-        getPopularProducts(popularProductsList);
+        getPopularProducts();
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -122,6 +130,7 @@ public class WalletBuySellFragment extends Fragment {
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
+
 
 
     }
@@ -173,13 +182,9 @@ public class WalletBuySellFragment extends Fragment {
         fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
     }
 
-    private void getPopularProducts(final List<ProductDetails> productDetails) {
+    private void getPopularProducts() {
         fragmentManager = getFragmentManager();
-
-        Bundle categoryBundle = new Bundle();
-
-        Fragment categories = new PopularProductsFragment(productDetails);
-        categories.setArguments(categoryBundle);
+        Fragment categories = new PopularProductsFragment(context);
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
 
