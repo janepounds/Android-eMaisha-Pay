@@ -107,7 +107,14 @@ public class EmaishaPayApp extends MultiDexApplication {
         return productList;
     }
 
-    public void setTopDeals(List<ProductDetails> categoriesList) {
+    public void setTopDeals(List<ProductDetails> productList) {
+        this.productList = productList;
+    }
+    public List<ProductDetails> getPopularProducts() {
+        return productList;
+    }
+
+    public void setPopularProducts(List<ProductDetails> productList) {
         this.productList = productList;
     }
 

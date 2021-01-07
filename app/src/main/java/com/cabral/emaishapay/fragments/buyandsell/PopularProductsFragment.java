@@ -13,21 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.adapters.LoansListAdapter;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.PopularProductsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TopDealsFragment extends Fragment {
+public class PopularProductsFragment extends Fragment {
     View rootView;
     List<ProductDetails> allProductList = new ArrayList<>();
     private RecyclerView recyclerView;
     private Context context;
-    private ProductDealsAdapter topDealsAdapter;
+    private PopularProductsAdapter popularProductsAdapter;
 
-    public TopDealsFragment(List<ProductDetails> productDetails) {
+    public PopularProductsFragment(List<ProductDetails> productDetails) {
         this.allProductList = productDetails;
     }
 
@@ -45,8 +45,8 @@ public class TopDealsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        topDealsAdapter = new ProductDealsAdapter(allProductList,context);
-        recyclerView.setAdapter(topDealsAdapter);
+        popularProductsAdapter = new PopularProductsAdapter(allProductList,context);
+        recyclerView.setAdapter(popularProductsAdapter);
 
         return rootView;
     }

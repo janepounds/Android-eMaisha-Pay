@@ -79,7 +79,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private Boolean isFlash;
     public Fragment currentFragment;
     private FragmentManager fragmentManager;
-    private List<ProductMeasure> productweights;
 
     private User_Recents_BuyInputsDB recents_db;
     private List<ProductDetails> productList;
