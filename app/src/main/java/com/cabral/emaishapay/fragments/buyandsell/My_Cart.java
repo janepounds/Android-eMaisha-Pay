@@ -359,11 +359,11 @@ public class My_Cart extends Fragment {
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
-        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
-        profileItem.setVisible(false);
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+//        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
+//        profileItem.setVisible(false);
         cartItem.setVisible(false);
-        searchItem.setVisible(false);
+//        searchItem.setVisible(false);
     }
 
     private class MyTask extends AsyncTask<String, Void, String> {
