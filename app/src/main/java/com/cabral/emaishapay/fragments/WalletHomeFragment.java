@@ -156,6 +156,8 @@ public class WalletHomeFragment extends Fragment {
                             binding.recyclerView.setAdapter(adapter);
                             binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                             binding.recyclerView.setHasFixedSize(true);
+                        } else{
+                            binding.moreTransactionCards.setVisibility(View.GONE);
                         }
                     }
 

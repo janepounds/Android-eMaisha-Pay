@@ -459,7 +459,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefin_sans"
                     android:layout_marginBottom="5dp"
-                    android:text="Amount *"
+                    android:text="Amount"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -477,7 +477,7 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="0.1" />
 
                     <EditText
                         android:id="@+id/money_amount"
@@ -567,7 +567,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center_vertical"
                     android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_arrow">
+                    android:src="@drawable/ic_right_chevron">
 
                 </ImageView>
 

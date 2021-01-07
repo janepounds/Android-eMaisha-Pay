@@ -89,7 +89,7 @@
                             android:id="@+id/txt_crops_estimated_revenue_units"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.1"
                             android:background="@drawable/edittext_left_corners_green"
                             android:gravity="center"
                             android:text="+256"
@@ -101,7 +101,7 @@
                             android:id="@+id/agent_deposit_mobile_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.7"
+                            android:layout_weight="0.5"
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
@@ -159,7 +159,7 @@
                     android:paddingStart="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
                     android:inputType="number"
-                    android:textColor="@color/textColor"
+                    android:textColor="@android:color/black"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 
@@ -192,7 +192,7 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="0.1" />
 
                     <EditText
                         android:id="@+id/crop_add_money_amount"
@@ -204,7 +204,7 @@
                         android:inputType="number"
                         android:background="@android:color/transparent"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/textColor"
+                        android:textColor="@android:color/black"
                         android:textColorHint="@color/textColorPrimaryDark"/>
 
 

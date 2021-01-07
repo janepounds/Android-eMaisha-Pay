@@ -61,12 +61,17 @@ public class WalletBuySellFragment extends Fragment {
         View view = inflater.inflate(R.layout.orders_home, container, false);
 
         setHasOptionsMenu(true);
-//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(getString(R.string.app_name));
-//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setElevation(0.5f);
 
-        toolbar = view.findViewById(R.id.buy_inputs_home_toolbar);
+
+        toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
+
+        toolbar.setTitle("Buy and Sell");
+//        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
+
+
+
 
 
 
@@ -78,6 +83,7 @@ public class WalletBuySellFragment extends Fragment {
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
         specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
         popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
+
 
         // Binding Layout View
 
@@ -120,15 +126,7 @@ public class WalletBuySellFragment extends Fragment {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.toolbar_ic_search:
-//                Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
 
 
@@ -149,6 +147,7 @@ public class WalletBuySellFragment extends Fragment {
                 // Call the method of StartAppRequests class to process App Startup Requests
                 startAppRequests.RequestAllCategories();
                 startAppRequests.RequestSpecialDeals();
+                startAppRequests.RequestTopSellers();
                 return "1";
             } else {
                 return "0";
@@ -183,18 +182,16 @@ public class WalletBuySellFragment extends Fragment {
         categories.setArguments(categoryBundle);
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Bind Menu Items
-        MenuItem languageItem = menu.findItem(R.id.toolbar_ic_language);
-        MenuItem currencyItem = menu.findItem(R.id.toolbar_ic_currency);
-        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
+
         MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
 
-        profileItem.setVisible(false);
-        languageItem.setVisible(false);
-        currencyItem.setVisible(false);
+
         searchItem.setVisible(false);
         cartItem.setVisible(true);
 

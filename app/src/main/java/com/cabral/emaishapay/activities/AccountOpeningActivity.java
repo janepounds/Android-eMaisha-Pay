@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,11 +13,17 @@ import com.cabral.emaishapay.fragments.PersonalDetailsFragment;
 
 public class AccountOpeningActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_opening);
 
+        toolbar = findViewById(R.id.toolbar_account_opening);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Account Opening");
 //        getActionBar().setHomeButtonEnabled(true); //for back button
 //        getActionBar().setDisplayHomeAsUpEnabled(true);//for back button
 //        getActionBar().setTitle("Account Opening");
@@ -33,25 +40,26 @@ public class AccountOpeningActivity extends AppCompatActivity {
     }
 
     //for back button
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//
-//            case android.R.id.home:
-//                // app icon in action bar clicked; goto parent activity.
-//                this.finish();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
 //        if (getFragmentManager().getBackStackEntryCount() == 1) {
 //            moveTaskToBack(false);
 //        } else {
-//            super.onBackPressed();
+//           super.onBackPressed();
 //        }
-//    }
+        finish();
+    }
 }
