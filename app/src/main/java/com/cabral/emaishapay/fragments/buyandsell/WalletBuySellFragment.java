@@ -79,6 +79,7 @@ public class WalletBuySellFragment extends Fragment {
         specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
         popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
 
+
         // Binding Layout View
 
         if (allCategoriesList.isEmpty() || specialDealsList.isEmpty())
@@ -149,6 +150,7 @@ public class WalletBuySellFragment extends Fragment {
                 // Call the method of StartAppRequests class to process App Startup Requests
                 startAppRequests.RequestAllCategories();
                 startAppRequests.RequestSpecialDeals();
+                startAppRequests.RequestTopSellers();
                 return "1";
             } else {
                 return "0";
