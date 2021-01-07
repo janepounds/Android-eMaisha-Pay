@@ -145,7 +145,7 @@
                     android:paddingStart="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
                     android:inputType="number"
-                    android:textColor="@color/textColor"
+                    android:textColor="@android:color/black"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 

@@ -56,16 +56,11 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     private EditText code1,code2,code3,code4,code5,code6;
     private  String code, sms_code;
 
-    public Login(Context context) {
-        this.context = context;
-    }
-
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(com.cabral.emaishapay.activities.Login.this).build();
+        context=com.cabral.emaishapay.activities.Login.this;
+        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(context).build();
         // noInternetDialog.show();
         binding = DataBindingUtil.setContentView(this, R.layout.login);
         apiRequests = APIClient.getWalletInstance();
