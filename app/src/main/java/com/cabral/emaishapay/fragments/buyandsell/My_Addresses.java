@@ -304,15 +304,11 @@ public class My_Addresses extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
-        MenuItem languageItem = menu.findItem(R.id.toolbar_ic_language);
-        MenuItem currencyItem = menu.findItem(R.id.toolbar_ic_currency);
-        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
-        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
-        profileItem.setVisible(false);
-        languageItem.setVisible(false);
-        currencyItem.setVisible(false);
-        searchItem.setVisible(false);
+
+//        searchItem.setVisible(false);
         cartItem.setVisible(false);
     }
 

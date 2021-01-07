@@ -38,7 +38,7 @@ public class ConstantValues {
     public static int LANGUAGE_ID;
     public static String LANGUAGE_CODE= "en";;
     public static String CURRENCY_SYMBOL;
-    public static String CURRENCY_CODE;
+    public static String CURRENCY_CODE="UGX";
     public static String PACKING_CHARGE;
     public static long NEW_PRODUCT_DURATION;
 

@@ -5,27 +5,27 @@
     <item
         android:id="@+id/toolbar_ic_cart"
         android:actionLayout="@layout/buy_inputs_animated_ic_cart"
-        android:icon="@drawable/toggle_ic_cart"
+        android:icon="@drawable/ic_card"
         android:title="@string/actionCart"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/toolbar_edit_profile"
-        android:icon="@drawable/ic_edit_profile"
-        android:title="Edit Profile"
-        app:actionLayout="@layout/layout_animated_ic_cart"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/toolbar_edit_profile"-->
+<!--        android:icon="@drawable/ic_edit_profile"-->
+<!--        android:title="Edit Profile"-->
+<!--        app:actionLayout="@layout/layout_animated_ic_cart"-->
+<!--        app:showAsAction="always" />-->
 
-    <item
-        android:id="@+id/toolbar_ic_language"
-        android:icon="@drawable/ic_language"
-        android:title="@string/actionLanguage"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/toolbar_ic_currency"
-        android:icon="@drawable/ic_action_currency"
-        android:title="@string/label_currency"
-        app:showAsAction="ifRoom" />
+<!--    <item-->
+<!--        android:id="@+id/toolbar_ic_language"-->
+<!--        android:icon="@drawable/ic_language"-->
+<!--        android:title="@string/actionLanguage"-->
+<!--        app:showAsAction="ifRoom" />-->
+<!--    <item-->
+<!--        android:id="@+id/toolbar_ic_currency"-->
+<!--        android:icon="@drawable/ic_action_currency"-->
+<!--        android:title="@string/label_currency"-->
+<!--        app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/toolbar_ic_search"
@@ -33,11 +33,11 @@
         android:title="@string/actionSearch"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/toolbar_ic_favorite"
-        android:title="@string/favorite"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
+<!--    <item-->
+<!--        android:id="@+id/toolbar_ic_favorite"-->
+<!--        android:title="@string/favorite"-->
+<!--        android:visible="false"-->
+<!--        app:showAsAction="ifRoom" />-->
 
 
 </menu>
