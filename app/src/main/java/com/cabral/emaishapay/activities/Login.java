@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -136,6 +137,9 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                     dialog.setContentView(R.layout.login_dialog_otp);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
+
+
+
                     code1= dialog.findViewById(R.id.otp_code1_et);
                     code2= dialog.findViewById(R.id.otp_code2_et);
                     code3= dialog.findViewById(R.id.otp_code3_et);
@@ -250,6 +254,10 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                         }
                     });
                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    WindowManager.LayoutParams params = dialog.getWindow().getAttributes(); // change this to your dialog.
+
+                    params.x = 100; // Here is the param to set your dialog position. Same with params.x
+                    dialog.getWindow().setAttributes(params);
                     dialog.show();
                 }else{
 

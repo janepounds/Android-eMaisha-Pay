@@ -1257,7 +1257,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_boss" />
+                                        android:src="@drawable/ic_sales_agent" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -1293,7 +1293,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_hierarchy" />
+                                        android:src="@drawable/ic_fast_food" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -1461,7 +1461,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_boss" />
+                                        android:src="@drawable/toll_free_24_hrs" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -1497,7 +1497,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_hierarchy" />
+                                        android:src="@drawable/ic_mail" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -1531,7 +1531,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_location_pin" />
+                                        android:src="@drawable/ic_chat" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
