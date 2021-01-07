@@ -49,8 +49,7 @@ public class TopDealsFragment extends Fragment {
 
         allProductList = new ArrayList<>();
 
-        // Get CategoriesList from ApplicationContext
-        allProductList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
+
 
         topDealsList = new ArrayList<>();
 

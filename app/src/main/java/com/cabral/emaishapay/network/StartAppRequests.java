@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
+import com.cabral.emaishapay.models.PopularDealsProduct;
 import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
@@ -54,6 +55,7 @@ public class StartAppRequests {
     private Context context;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
+    private PopularDealsProduct popularDealsProduct = new PopularDealsProduct();
 
 
 
@@ -164,7 +166,7 @@ public class StartAppRequests {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Products have been returned. Add Products to the dealProductsList
 
-                        emaishaPayApp.setTopDeals(response.body().getProductData());
+                        popularDealsProduct.setDealsList(response.body().getProductData());
                         Log.d(TAG, "onResponse: deals"+response.body().getProductData());
 
 
@@ -218,8 +220,9 @@ public class StartAppRequests {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Products have been returned. Add Products to the dealProductsList
 
-                        emaishaPayApp.setPopularProducts(response.body().getProductData());
-                        Log.d(TAG, "onResponse: getpopular"+emaishaPayApp.getPopularProducts());
+                        popularDealsProduct.setPopularproductList(
+                                response.body().getProductData());
+
 
 
 

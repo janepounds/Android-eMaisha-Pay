@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,14 +24,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.models.PopularDealsProduct;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
+import com.cabral.emaishapay.models.product_model.GetAllProducts;
+import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
 
@@ -41,6 +47,8 @@ import java.util.List;
 import java.util.Objects;
 
 import am.appwise.components.ni.NoInternetDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class WalletBuySellFragment extends Fragment {
     private Context context;
@@ -51,7 +59,8 @@ public class WalletBuySellFragment extends Fragment {
     List<ProductDetails> popularProductsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
-    private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
+    private PopularDealsProduct popularDealsProduct = new PopularDealsProduct();
+
 
     private Toolbar toolbar;
     @SuppressLint("StaticFieldLeak")
@@ -63,7 +72,7 @@ public class WalletBuySellFragment extends Fragment {
         View view = inflater.inflate(R.layout.orders_home, container, false);
 
         setHasOptionsMenu(true);
-        emaishaPayApp = ((EmaishaPayApp) context.getApplicationContext());
+
 
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
@@ -83,8 +92,9 @@ public class WalletBuySellFragment extends Fragment {
         startAppRequests = new StartAppRequests(requireContext());
 
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
-        specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
-        popularProductsList = emaishaPayApp.getPopularProducts();
+        specialDealsList = popularDealsProduct.getDealsList();
+        popularProductsList = popularDealsProduct.getPopularproductList();
+
 
         Log.d(TAG, "onCreateView: Popular"+popularProductsList);
         Log.d(TAG, "onCreateView: special"+specialDealsList);
@@ -92,8 +102,15 @@ public class WalletBuySellFragment extends Fragment {
 
         // Binding Layout View
 
-        if (allCategoriesList.isEmpty() || specialDealsList.isEmpty() || popularProductsList.isEmpty())
+        if (allCategoriesList.isEmpty()) {
             new MyTask().execute();
+        }
+        else if(specialDealsList.isEmpty()) {
+            new MyTask().execute();
+        }
+        else if(popularProductsList.isEmpty()) {
+            new MyTask().execute();
+        }
         else
             continueSetup();
 
@@ -109,14 +126,11 @@ public class WalletBuySellFragment extends Fragment {
     public void continueSetup() {
 
         allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
-        specialDealsList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
-
-
-        Log.d(TAG, "continueSetup: popular"+popularProductsList);
-        Log.d(TAG, "continueSetup: specil"+specialDealsList);
+        specialDealsList = popularDealsProduct.getDealsList();
+        popularProductsList = popularDealsProduct.getPopularproductList();
 
         getTopDeals(specialDealsList);
-        getPopularProducts();
+        getPopularProducts(popularProductsList);
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -155,7 +169,9 @@ public class WalletBuySellFragment extends Fragment {
             if (Utilities.hasActiveInternetConnection(getContext())) {
                 // Call the method of StartAppRequests class to process App Startup Requests
                 startAppRequests.RequestAllCategories();
+
                 startAppRequests.RequestSpecialDeals();
+
                 startAppRequests.RequestTopSellers();
                 return "1";
             } else {
@@ -182,9 +198,10 @@ public class WalletBuySellFragment extends Fragment {
         fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
     }
 
-    private void getPopularProducts() {
+    private void getPopularProducts(final List<ProductDetails> productDetails) {
+        //end point to pick
         fragmentManager = getFragmentManager();
-        Fragment categories = new PopularProductsFragment();
+        Fragment categories = new PopularProductsFragment( productDetails);
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
 
@@ -207,4 +224,6 @@ public class WalletBuySellFragment extends Fragment {
         TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
         badge.setText(String.valueOf(cartItemsList.size()));
     }
+
+
 }
