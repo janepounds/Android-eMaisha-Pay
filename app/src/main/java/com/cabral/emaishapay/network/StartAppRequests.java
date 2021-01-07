@@ -58,7 +58,7 @@ public class StartAppRequests {
 
 
     public StartAppRequests(Context context) {
-        emaishaPayApp = ((EmaishaPayApp) context.getApplicationContext());
+        emaishaPayApp = ((EmaishaPayApp) EmaishaPayApp.getContext());
         db_handler = new BuyInputsDB_Handler();
         dbHandler =DbHandlerSingleton.getHandlerInstance(context);
         BuyInputsDB_Manager.initializeInstance(db_handler);
@@ -219,7 +219,6 @@ public class StartAppRequests {
                         // Products have been returned. Add Products to the dealProductsList
 
                         emaishaPayApp.setPopularProducts(response.body().getProductData());
-                        Log.d(TAG, "onResponse: setpopulr"+response.body().getProductData());
                         Log.d(TAG, "onResponse: getpopular"+emaishaPayApp.getPopularProducts());
 
 

@@ -184,7 +184,7 @@ public class WalletBuySellFragment extends Fragment {
 
     private void getPopularProducts() {
         fragmentManager = getFragmentManager();
-        Fragment categories = new PopularProductsFragment(context);
+        Fragment categories = new PopularProductsFragment();
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
 

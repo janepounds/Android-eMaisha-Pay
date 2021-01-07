@@ -90,7 +90,9 @@ public class EmaishaPayApp extends MultiDexApplication {
         this.appSettingsDetails = appSettingsDetails;
     }
     public List<ProductDetails> getPopularProducts() {
-        return popularproductList;
+
+        Log.d(TAG, "PopularProductsSize"+ this.popularproductList.size());
+        return this.popularproductList;
     }
 
     public void setPopularProducts(List<ProductDetails> popularproductList) {

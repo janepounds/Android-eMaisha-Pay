@@ -36,11 +36,6 @@ public class PopularProductsFragment extends Fragment {
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
 
-    public PopularProductsFragment(Context context){
-        emaishaPayApp =(EmaishaPayApp) context.getApplicationContext();
-    }
-
-
 
 
     @Override
@@ -56,11 +51,11 @@ public class PopularProductsFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.layout_top_deals);
 
 
-        allProductList = new ArrayList<>();
+        emaishaPayApp =(EmaishaPayApp) EmaishaPayApp.getContext();
 
         // Get CategoriesList from ApplicationContext
         allProductList = emaishaPayApp.getPopularProducts();
-        Log.d(TAG, "onCreateView: allproducts"+allProductList);
+        Log.d(TAG, "onCreateView: allproducts"+allProductList.size());
 
         popularProductsList = new ArrayList<>();
 
