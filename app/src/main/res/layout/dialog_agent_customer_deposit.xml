@@ -111,7 +111,7 @@
                             android:paddingLeft="@dimen/dimen_10dp"
                             android:tag="+256 "
                             android:textColor="@android:color/black"
-                            android:textColorHint="@color/textColor" />
+                            android:textColorHint="@android:color/black" />
                     </LinearLayout>
 
 
@@ -159,7 +159,7 @@
                     android:paddingStart="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
                     android:inputType="number"
-                    android:textColor="@color/textColor"
+                    android:textColor="@android:color/black"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                         android:inputType="number"
                         android:background="@android:color/transparent"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/textColor"
+                        android:textColor="@android:color/black"
                         android:textColorHint="@color/textColorPrimaryDark"/>
 
 
