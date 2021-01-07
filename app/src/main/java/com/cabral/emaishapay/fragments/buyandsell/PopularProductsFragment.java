@@ -35,6 +35,9 @@ public class PopularProductsFragment extends Fragment {
     private PopularProductsAdapter popularProductsAdapter;
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
+    public PopularProductsFragment(List<ProductDetails> productDetails) {
+        this.allProductList = productDetails;
+    }
 
 
 
@@ -51,12 +54,7 @@ public class PopularProductsFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.layout_top_deals);
 
 
-        emaishaPayApp =(EmaishaPayApp) EmaishaPayApp.getContext();
-
-        // Get CategoriesList from ApplicationContext
-        allProductList = emaishaPayApp.getPopularProducts();
-        Log.d(TAG, "onCreateView: allproducts"+allProductList.size());
-
+        Log.d(TAG, "onCreateView: popul"+allProductList);
         popularProductsList = new ArrayList<>();
 
         for (int i = 0; i < allProductList.size(); i++) {
