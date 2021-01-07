@@ -47,6 +47,7 @@ public class WalletBuySellFragment extends Fragment {
     StartAppRequests startAppRequests;
 
     List<ProductDetails> specialDealsList = new ArrayList<>();
+    List<ProductDetails> popularProductsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
 
@@ -76,6 +77,7 @@ public class WalletBuySellFragment extends Fragment {
 
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
         specialDealsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getTopDeals();
+        popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
 
         // Binding Layout View
 
@@ -97,8 +99,10 @@ public class WalletBuySellFragment extends Fragment {
 
         allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
         specialDealsList = ((EmaishaPayApp) getContext().getApplicationContext()).getTopDeals();
+        popularProductsList = ((EmaishaPayApp) requireContext().getApplicationContext()).getPopularProducts();
 
         getTopDeals(specialDealsList);
+        getPopularProducts(popularProductsList);
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -168,6 +172,16 @@ public class WalletBuySellFragment extends Fragment {
         Fragment categories = new TopDealsFragment(productDetails);
         categories.setArguments(categoryBundle);
         fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
+    }
+
+    private void getPopularProducts(final List<ProductDetails> productDetails) {
+        fragmentManager = getFragmentManager();
+
+        Bundle categoryBundle = new Bundle();
+
+        Fragment categories = new PopularProductsFragment(productDetails);
+        categories.setArguments(categoryBundle);
+        fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
