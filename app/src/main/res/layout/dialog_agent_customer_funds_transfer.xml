@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/dialog_background"
     tools:context=".DailogFragments.AgentCustomerFundsTransfer">
 
     <LinearLayout
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/top_rounded_blue">
 
         <TextView
             android:id="@+id/agent_bal_inquiry_title_label"
@@ -34,14 +35,15 @@
             android:src="@drawable/close" />
 
     </LinearLayout>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="#F1F5F8">
+        android:paddingRight="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,44 +52,38 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/margin_10">
 
-            <TextView
-                android:id="@+id/text_view_error_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
-                android:gravity="center"
-                android:text="Insufficient Funds!"
-                android:textColor="@color/device_problem"
-                android:visibility="gone" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:text="Transfer to"
                     android:textSize="16sp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="8dp"
+                    android:layout_alignParentTop="true"
                     android:background="@drawable/edittext_corner"
                     android:orientation="horizontal">
 
                     <Spinner
-                        android:id="@+id/etxt_transfer_to"
+                        android:id="@+id/sp_transfer_to"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:entries="@array/transfer_to"
                         android:spinnerMode="dropdown"/>
 
                     <ImageView
@@ -106,27 +102,23 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:orientation="vertical"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/text_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="Recipient Mobile Number"
-                    android:textSize="@dimen/margin_16" />
+                    <TextView
+                        android:id="@+id/text_recepient_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Recipient's Number"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:padding="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
@@ -134,7 +126,6 @@
                         android:background="@drawable/edittext_corner"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/txt_crops_estimated_revenue_units"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.1"
@@ -144,29 +135,265 @@
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
-
                         <EditText
-                            android:id="@+id/etxt_receiver_number"
+                            android:id="@+id/mobile_money_recipients_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:fontFamily="@font/josefin_sans"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/dimen_10dp"
+                            android:tag="+256 "
+                            android:maxLength="9"
                             android:layout_weight="0.5"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
-                            android:gravity="center_vertical"
-                            android:inputType="phone"
-                            android:maxLength="9"
-                            android:paddingStart="@dimen/dimen_10dp"
-                            android:paddingLeft="@dimen/dimen_10dp"
-                            android:tag="+256 "
                             android:textColor="@android:color/black"
-                            android:textColorHint="@android:color/black" />
+                            android:textColorHint="@android:color/black"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dimen_10dp" />
                     </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_emaisha_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recipient's Account"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/josefin_sans" />
+
+                    <EditText
+                        android:id="@+id/etxt_recipients_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner"
+                        android:inputType="number"
+                        android:textColor="@color/textColor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/text_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Mobile Number"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@drawable/edittext_left_corners_green"
+                            android:gravity="center"
+                            android:text="+256"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                        <EditText
+                            android:id="@+id/money_mobile_no"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/josefin_sans"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/dimen_10dp"
+                            android:tag="+256 "
+                            android:maxLength="9"
+                            android:layout_weight="0.5"
+                            android:background="@android:color/transparent"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dimen_10dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Select Bank"
+                        android:textSize="16sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/banks_list"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_chevron_down" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bank Branch"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/josefin_sans" />
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_bank_branch"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/banks_list"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_chevron_down" />
+
+                    </RelativeLayout>
 
 
                 </LinearLayout>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Name"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/josefin_sans" />
+
+                    <EditText
+                        android:id="@+id/et_account_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account Number"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/josefin_sans" />
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/edittext_corner"
+                        android:inputType="number"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,38 +404,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Recepient Account"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
-
-                <EditText
-                    android:id="@+id/etxt_receiver_account"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
-                    android:inputType="number"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:fontFamily="@font/josefin_sans"
+                    android:layout_marginBottom="5dp"
                     android:text="Amount"
-                    android:textSize="@dimen/margin_16" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_corner"
                     android:orientation="horizontal">
                     <TextView
@@ -224,7 +427,7 @@
                         android:layout_weight="0.1" />
 
                     <EditText
-                        android:id="@+id/etxt_transfered_amount"
+                        android:id="@+id/money_amount"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
@@ -233,7 +436,6 @@
                         android:inputType="number"
                         android:background="@android:color/transparent"
                         android:textAlignment="viewStart"
-                        android:textColor="@android:color/black"
                         android:textColorHint="@color/textColorPrimaryDark"/>
 
 
@@ -283,14 +485,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="right">
 
                 <Button
-                    android:id="@+id/txt_transfer_submit"
+                    android:id="@+id/button_add_money"
                     style="@style/Button_DW"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
@@ -298,7 +500,7 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:backgroundTint="@color/textColor"
-                    android:text="@string/submit"
+                    android:text="@string/transfer"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -353,5 +555,5 @@
                 android:text="0" />
         </LinearLayout>
     </LinearLayout>
-
+</ScrollView>
 </LinearLayout>

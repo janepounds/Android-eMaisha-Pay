@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/windowBackground">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/josefin_sans"
+            android:padding="10dp"
+            android:text="ENTER AGENT'S PIN"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etxt_create_agent_pin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/edittext_corner"
+            android:fontFamily="@font/josefin_sans"
+            android:hint="Create pin"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_corners_button"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/txt_custom_add_agent_submit_pin"
+                style="@style/Button_DW"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:backgroundTint="@color/textColor"
+                android:text="@string/submit"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size" />
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="10dip"
+                android:src="@drawable/ic_right_chevron">
+
+            </ImageView>
+
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

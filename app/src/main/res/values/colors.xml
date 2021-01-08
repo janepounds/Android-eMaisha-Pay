@@ -60,7 +60,7 @@
     <color name="textColorSecondaryDark">#212121</color>
     <color name="textColorSecondaryLight">#666666</color>
 
-    <color name="windowBackground">#FFFFFF</color>
+    <color name="windowBackground">#F1F5F8</color>
     <color name="windowBackgroundDark">#F9F9F9</color>
     <color name="windowBackgroundLight">#f2f2f2</color>
 
