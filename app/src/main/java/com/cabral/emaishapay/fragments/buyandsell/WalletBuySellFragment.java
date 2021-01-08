@@ -218,11 +218,11 @@ public class WalletBuySellFragment extends Fragment {
         cartItem.setVisible(true);
 
         //set badge value
-        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-        List<CartProduct> cartItemsList;
-        cartItemsList = user_cart_BuyInputs_db.getCartItems();
-        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
-        badge.setText(String.valueOf(cartItemsList.size()));
+//        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+//        List<CartProduct> cartItemsList;
+//        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+//        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+//        badge.setText(String.valueOf(cartItemsList.size()));
     }
 
 
