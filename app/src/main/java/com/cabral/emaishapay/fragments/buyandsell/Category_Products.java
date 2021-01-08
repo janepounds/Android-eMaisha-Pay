@@ -104,6 +104,7 @@ public class Category_Products extends Fragment {
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
 
+
         // Get CategoryID from bundle arguments
         categoryID = getArguments().getInt("CategoryID");
         CategoryName = getArguments().getString("CategoryName");
@@ -113,7 +114,9 @@ public class Category_Products extends Fragment {
             sortBy = getArguments().getString("sortBy");
         }
         toolbar = rootView.findViewById(R.id.toolbar_product_home);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.actionShop)+" "+CategoryName);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        DashboardActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         // Get the Customer's ID from SharedPreferences

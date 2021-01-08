@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,7 +25,9 @@ import androidx.fragment.app.FragmentManager;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.PopularDealsProduct;
+import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
@@ -64,9 +68,10 @@ public class WalletBuySellFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
-
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Buy and Sell");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get FragmentManager
         FragmentManager fragmentManager = getFragmentManager();
@@ -107,6 +112,8 @@ public class WalletBuySellFragment extends Fragment {
 
         return view;
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -191,21 +198,18 @@ public class WalletBuySellFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Bind Menu Items
-
-        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
 
-
-        searchItem.setVisible(false);
         cartItem.setVisible(true);
 
         //set badge value
-//        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-//        List<CartProduct> cartItemsList;
-//        cartItemsList = user_cart_BuyInputs_db.getCartItems();
-//        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
-//        badge.setText(String.valueOf(cartItemsList.size()));
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
     }
+
 
 
 }
