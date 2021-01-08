@@ -33,6 +33,8 @@ public class BuyInputsDB_Handler extends SQLiteOpenHelper {
         // Creating Tables
         db.execSQL(User_Info_DB.createTable());
         db.execSQL(User_Recents_DB.createTable());
+        db.execSQL(User_Cart_BuyInputsDB.createTableCart());
+        db.execSQL(User_Cart_BuyInputsDB.createTableCartAttributes());
     }
 
 
