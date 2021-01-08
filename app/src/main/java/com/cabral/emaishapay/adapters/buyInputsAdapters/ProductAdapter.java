@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -110,8 +108,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View itemView
-                = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_product_major, parent, false);
+        View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.buy_input_product_home_card, parent, false);
 
         currentFragment = fragmentManager.getPrimaryNavigationFragment();
         // Return a new holder instance
@@ -124,26 +121,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         if (position != productList.size()) {
-
+            Log.e("ProductSIZE---ptr",""+productList.size());
             // Get the data model based on Position
             final ProductDetails product = productList.get(position);
 
-            if (product.getProductsMeasure().size() > 0) {
-                // Check if the Product is already in the Cart with its measure
-                String weight = product.getProductsMeasure().get(0).getProducts_weight();
-                if (!holder.product_weight_spn.getSelectedItem().toString().equalsIgnoreCase(" ")) {
-                    String[] splited = holder.product_weight_spn.getSelectedItem().toString().split("\\s+");
-                    weight = splited[0];
-                }
-
-                if (My_Cart.checkCartHasProductAndMeasure(product.getProductsId())) {
-                    holder.product_checked.setVisibility(View.VISIBLE);
-                    holder.product_add_cart_btn.setVisibility(View.GONE);
-                } else {
-                    holder.product_checked.setVisibility(View.GONE);
-                    holder.product_add_cart_btn.setVisibility(View.VISIBLE);
-                }
-            }
+//            if (product.getProductsMeasure().size() > 0) {
+//                // Check if the Product is already in the Cart with its measure
+//                String weight = product.getProductsMeasure().get(0).getProducts_weight();
+//                if (!holder.product_weight_spn.getSelectedItem().toString().equalsIgnoreCase(" ")) {
+//                    String[] splited = holder.product_weight_spn.getSelectedItem().toString().split("\\s+");
+//                    weight = splited[0];
+//                }
+//
+//                if (My_Cart.checkCartHasProductAndMeasure(product.getProductsId())) {
+//                    holder.product_checked.setVisibility(View.VISIBLE);
+//                    holder.product_add_cart_btn.setVisibility(View.GONE);
+//                } else {
+//                    holder.product_checked.setVisibility(View.GONE);
+//                    holder.product_add_cart_btn.setVisibility(View.VISIBLE);
+//                }
+//            }
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -174,107 +171,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 holder.product_thumbnail.setClipToOutline(true);
-//                holder.product_tag_new.setClipToOutline(true);
             }
 
             holder.product_title.setText(product.getProductsName().toUpperCase().substring(0, 1) + product.getProductsName().toLowerCase().substring(1));
 
-            ArrayList<CropSpinnerItem> weightItems = new ArrayList<>();
-            int k = 0;
-            for (ProductMeasure x : product.getProductsMeasure()) {
-
-                if (k == 0)
-                    weightItems.add(0, new CropSpinnerItem() {
-                        @Override
-                        public String getId() {
-                            return x + "";
-                        }
-
-                        @Override
-                        public String getUnits() {
-                            return x.getProducts_weight_unit();
-                        }
-
-                        @NonNull
-                        @Override
-                        public String toString() {
-                            return " ";
-                        }
-                    });
-
-                weightItems.add(new CropSpinnerItem() {
-                    @Override
-                    public String getId() {
-                        return x + "";
-                    }
-
-                    @Override
-                    public String toString() {
-                        return x.getProducts_weight() + " " + x.getProducts_weight_unit();
-                    }
-
-                    @Override
-                    public String getUnits() {
-                        return x.getProducts_weight_unit();
-                    }
-                });
-                k++;
-            }
-
-            CropSpinnerAdapter weightSpinnerAdapter = new CropSpinnerAdapter(weightItems, null, context);
-            holder.product_weight_spn.setAdapter(weightSpinnerAdapter);
-
-            ((ArrayAdapter) holder.product_weight_spn.getAdapter()).setDropDownViewResource(android.R.layout.simple_spinner_item);
-            //set on item selected on weight spinner
-            holder.product_weight_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                    String selection = parent.getItemAtPosition(position).toString();
-
-                    int k = 0;
-                    for (ProductMeasure x : product.getProductsMeasure()) {
-                        if (selection.equalsIgnoreCase(x.getProducts_weight() + " " + x.getProducts_weight_unit())) {
-
-                            product.setSelectedProductsWeight(x.getProducts_weight());
-                            product.setSelectedProductsWeightUnit(x.getProducts_weight_unit());
-                            product.setProductsPrice(x.getProducts_price());
-                            holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + new DecimalFormat("#0.00").format(Double.valueOf(x.getProducts_price())));
-
-                            //set selected weight
-                            holder.selected_weight.setText(selection);
-
-                        } else if (selection.equalsIgnoreCase(" ")) {
-
-                            product.setSelectedProductsWeight(product.getProductsMeasure().get(0).getProducts_weight());
-                            product.setSelectedProductsWeightUnit(product.getProductsMeasure().get(0).getProducts_weight_unit());
-                            product.setProductsPrice(product.getProductsMeasure().get(0).getProducts_price());
-                            holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsMeasure().get(0).getProducts_price())));
-
-                            //set selected weight
-                            holder.selected_weight.setText(product.getProductsMeasure().get(0).getProducts_weight() + " " + product.getProductsMeasure().get(0).getProducts_weight_unit());
-
-                        } else if (holder.product_checked.getVisibility() == View.VISIBLE && (!holder.product_weight_spn.getSelectedItem().equals(holder.selected_weight))) {
-                            holder.product_add_cart_btn.setVisibility(View.VISIBLE);
-                            Log.d(TAG, "onBindViewHolder: spinner changed");
-                        }
-                        k++;
-                    }
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            //
-
-            if (product.getProductsModel() != null)
-                holder.product_ingredient.setText(product.getProductsModel());
-            else
-                holder.product_ingredient.setVisibility(View.GONE);
 
             holder.product_price_old.setPaintFlags(holder.product_price_old.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -306,9 +206,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
 //                holder.product_tag_new.setVisibility(View.GONE);
 
-                // Set Discount Tag and its Text
-                holder.layoutSale.setVisibility(View.VISIBLE);
-                holder.product_tag_discount_text.setText(discount);
 
             } else {
 
@@ -321,7 +218,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 // }
 
                 // Hide Discount Text and Set Product's Price
-                holder.layoutSale.setVisibility(View.GONE);
                 holder.product_price_old.setVisibility(View.GONE);
 /*
                 NumberFormat nf = NumberFormat.getInstance(LocaleHelper.getSystemLocale( context.getResources().getConfiguration())); //or "nb","No" - for Norway
@@ -414,7 +310,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             // Handle the Click event of product_checked ImageView
             holder.product_title.setOnClickListener(view -> {
-
                 // Get Product Info
                 Bundle itemInfo = new Bundle();
                 itemInfo.putParcelable("productDetails", product);
@@ -447,21 +342,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             // Check the Button's Visibility
             if (!ConstantValues.IS_PRODUCT_CHECKED) {
 
-//                holder.product_add_cart_btn.setVisibility(View.VISIBLE);
-//                holder.product_add_cart_btn.setOnClickListener(null);
-
-                if (product.getProductsType() != 0) {
-                    holder.product_add_cart_btn.setText(context.getString(R.string.view_product));
-                    holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
-                } else {
-                    if (product.getProductsDefaultStock() < 1) {
-                        holder.product_add_cart_btn.setText(context.getString(R.string.outOfStock));
-                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_red));
-                    } else {
-                        holder.product_add_cart_btn.setText(context.getString(R.string.addToCart));
-                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
-                    }
-                }
+//                if (product.getProductsType() != 0) {
+//                    holder.product_add_cart_btn.setText(context.getString(R.string.view_product));
+//                    holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
+//                } else {
+//                    if (product.getProductsDefaultStock() < 1) {
+//                        holder.product_add_cart_btn.setText(context.getString(R.string.outOfStock));
+//                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_red));
+//                    } else {
+//                        holder.product_add_cart_btn.setText(context.getString(R.string.addToCart));
+//                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
+//                    }
+//                }
 
                 if (isFlash) {
                     start = Long.parseLong(product.getFlashStartDate()) * 1000L;
@@ -488,13 +380,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                                 String hoursLeft = String.format("%d", (serverUptimeSeconds % 86400) / 3600);
                                 String minutesLeft = String.format("%d", ((serverUptimeSeconds % 86400) % 3600) / 60);
                                 String secondsLeft = String.format("%d", ((serverUptimeSeconds % 86400) % 3600) % 60);
-                                holder.product_add_cart_btn.setText(daysLeft + "D:" + hoursLeft + "H:" + minutesLeft + "M:" + secondsLeft + "S");
                             }
 
                             @Override
                             public void onFinish() {
-                                holder.product_add_cart_btn.setText(context.getResources().getString(R.string.upcoming));
-                                holder.product_add_cart_btn.setBackgroundResource(R.drawable.rounded_corners_button_red);
                             }
                         }.start();
                     } else {
@@ -502,8 +391,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         if (product.getProductsMeasure().size() > 0)
                             holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsMeasure().get(0).getProducts_price())));
 
-                        holder.product_add_cart_btn.setText(context.getResources().getString(R.string.upcoming));
-                        holder.product_add_cart_btn.setBackgroundResource(R.drawable.rounded_corners_button_red);
                     }
 
                     holder.product_price_old.setVisibility(View.VISIBLE);
@@ -511,7 +398,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
                 Log.d(TAG, "onBindViewHolder: Product Type = " + product.getProductsType());
 
-                holder.product_add_cart_btn.setOnClickListener(view -> {
+                holder.product_container.setOnClickListener(view -> {
 
                     if (product.getProductsType() != 0) {
 
@@ -544,8 +431,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                                 addProductToCart(product);
 
                                 holder.product_checked.setVisibility(View.VISIBLE);
-                                //disable add to cart button
-                                holder.product_add_cart_btn.setVisibility(View.GONE);
 
                                 Snackbar.make(view, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
 
@@ -561,8 +446,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                                 addProductToCart(product);
 
                                 holder.product_checked.setVisibility(View.VISIBLE);
-                                //set add to cart button disabled
-                                holder.product_add_cart_btn.setVisibility(View.GONE);
+
                                 Snackbar.make(view, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
                             }
 
@@ -637,11 +521,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //                    }
 //                });
 
-            } else {
-                // Make the Button Invisible
-                holder.product_add_cart_btn.setVisibility(View.GONE);
-
             }
+
 
         }
 
@@ -669,12 +550,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
 
         ImageView product_checked;
-        Button product_add_cart_btn;
-        ImageButton product_card_img_btn;
         RelativeLayout product_like_layout;
-        ImageView product_thumbnail, product_tag_new;
-        TextView product_title, product_ingredient, product_price_old, product_price_new, product_tag_discount_text, selected_weight;
-        LinearLayout layoutSale;
+        LinearLayout product_container;
+        ImageView product_thumbnail;
+        TextView product_title, product_price_old, product_price_new;
         Spinner product_weight_spn;
         ShimmerFrameLayout shimmerProgress;
 
@@ -683,21 +562,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             product_weight_spn = itemView.findViewById(R.id.spinner_produce_quantity);
             product_checked = itemView.findViewById(R.id.product_checked);
-            product_ingredient = itemView.findViewById(R.id.active_ingredient);
-
-            product_add_cart_btn = itemView.findViewById(R.id.product_card_Btn);
 //            product_card_img_btn = itemView.findViewById(R.id.product_card_img_btn);
             product_like_layout = itemView.findViewById(R.id.product_like_layout);
+            product_container = itemView.findViewById(R.id.product_container);
             product_title = itemView.findViewById(R.id.product_title);
 //            product_category = itemView.findViewById(R.id.product_category);
             product_price_old = itemView.findViewById(R.id.product_price_old);
             product_price_new = itemView.findViewById(R.id.product_price_new);
             product_thumbnail = itemView.findViewById(R.id.product_cover);
             // product_tag_new = itemView.findViewById(R.id.product_item_tag_new);
-            product_tag_discount_text = itemView.findViewById(R.id.productItemTagOff);
-            layoutSale = itemView.findViewById(R.id.saleLayout);
+
             shimmerProgress = itemView.findViewById(R.id.shimmerFrame);
-            selected_weight = itemView.findViewById(R.id.selected_weight);
         }
 
     }
