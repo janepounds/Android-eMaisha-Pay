@@ -62,6 +62,7 @@ public class WalletBuySellFragment extends Fragment {
     public static EditText searchView;
     public static ImageView searchIcon;
     PopularProductsFragment popularProducts;
+    TopDealsFragment topDeals;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,6 +84,10 @@ public class WalletBuySellFragment extends Fragment {
         // Add Top_Seller Fragment to specified FrameLayout
         popularProducts = new PopularProductsFragment();
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
+
+        //Add Deals Fragment to specified FrameLayout
+        topDeals = new TopDealsFragment();
+        fragmentManager.beginTransaction().replace(R.id.layout_deals,topDeals).commit();
 
         // Disable the bottom navigation from showing when you come back from payment methods fragment
         WalletHomeActivity walletHomeActivity = new WalletHomeActivity();
@@ -137,7 +142,6 @@ public class WalletBuySellFragment extends Fragment {
         specialDealsList = popularDealsProduct.getDealsList();
         popularProductsList = popularDealsProduct.getPopularproductList();
 
-        getTopDeals(specialDealsList);
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -194,15 +198,7 @@ public class WalletBuySellFragment extends Fragment {
             }
         }
     }
-    private void getTopDeals(final List<ProductDetails> productDetails) {
-        fragmentManager = getFragmentManager();
 
-        Bundle categoryBundle = new Bundle();
-
-        Fragment categories = new TopDealsFragment(productDetails);
-        categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
-    }
 
 
 
