@@ -13,30 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.PopularDealsProduct;
-import com.cabral.emaishapay.models.banner_model.BannerDetails;
-import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
-import com.cabral.emaishapay.models.product_model.GetAllProducts;
-import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
 
@@ -44,11 +33,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import am.appwise.components.ni.NoInternetDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class WalletBuySellFragment extends Fragment {
     private Context context;
@@ -71,7 +57,8 @@ public class WalletBuySellFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.orders_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_buy_and_sell_home, container, false);
+
         setHasOptionsMenu(true);
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
@@ -213,11 +200,11 @@ public class WalletBuySellFragment extends Fragment {
         cartItem.setVisible(true);
 
         //set badge value
-        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-        List<CartProduct> cartItemsList;
-        cartItemsList = user_cart_BuyInputs_db.getCartItems();
-        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
-        badge.setText(String.valueOf(cartItemsList.size()));
+//        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+//        List<CartProduct> cartItemsList;
+//        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+//        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+//        badge.setText(String.valueOf(cartItemsList.size()));
     }
 
 
