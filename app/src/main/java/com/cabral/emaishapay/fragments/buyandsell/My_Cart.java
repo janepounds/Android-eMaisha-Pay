@@ -358,7 +358,7 @@ public class My_Cart extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
-        MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
 //        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
 //        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
 //        profileItem.setVisible(false);

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.cabral.emaishapay.fragments.buyandsell.Shipping_Address;
 import com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.network.StartAppRequests;
+import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,6 +46,7 @@ public class WalletHomeActivity extends AppCompatActivity {
     private static final String TAG = "WalletHomeActivity";
     private Context context;
     public static FragmentManager fm;
+    public Fragment currentFragment;
 
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
     public static final String PREFERENCES_USER_PIN = "";
@@ -124,6 +128,7 @@ public class WalletHomeActivity extends AppCompatActivity {
         assert navHostFragment != null;
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
     }
+
 
     public static void startHome(Context context) {
         try {
@@ -280,12 +285,9 @@ public class WalletHomeActivity extends AppCompatActivity {
                 });
 
     }
-    public void setupTitle() {
-        Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.layout_buy_sell);
-        if (currentFrag instanceof WalletBuySellFragment) {
+    public void disableNavigation() {
+      bottomNavigationView.setVisibility(View.GONE);
 
-            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
-        }
 
     }
 
@@ -337,5 +339,42 @@ public class WalletHomeActivity extends AppCompatActivity {
 //
 //    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate toolbar_menu Menu
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
 
+        // Bind Menu Items
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+
+
+        currentFragment = this.getSupportFragmentManager().getPrimaryNavigationFragment();
+
+
+
+        cartItem.setActionView(R.layout.buy_inputs_animated_ic_cart);
+
+        cartItem.getActionView().setOnClickListener(v -> {
+            // Navigate to My_Cart Fragment
+            Fragment fragment = new My_Cart();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            if (currentFragment == null)
+                fragmentManager.beginTransaction()
+                        .add(R.id.main_fragment_container_home, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(getString(R.string.actionHome)).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .hide(currentFragment)
+                        .add(R.id.main_fragment_container, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(getString(R.string.actionHome)).commit();
+        });
+
+        // Tint Menu Icons with the help of static method of Utilities class
+//        Utilities.tintMenuIcon(DashboardActivity.this, languageItem, R.color.white);
+        Utilities.tintMenuIcon(WalletHomeActivity.this, cartItem, R.color.white);
+
+        return true;
+    }
 }

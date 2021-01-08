@@ -306,7 +306,7 @@ public class My_Addresses extends Fragment {
         // Hide Cart Icon in the Toolbar
 
 //        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-        MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
 
 //        searchItem.setVisible(false);
         cartItem.setVisible(false);

@@ -426,8 +426,8 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
-        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-        searchItem.setVisible(false);
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+//        searchItem.setVisible(false);
     }
 
     /**
