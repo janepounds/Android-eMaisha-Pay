@@ -193,61 +193,6 @@ public class StartAppRequests {
     }
 
 
-    //****************request special deals*******************//
-    public void RequestTopSellers() {
-
-
-        GetAllProducts getAllProducts = new GetAllProducts();
-        getAllProducts.setPageNumber(0);
-        getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
-        getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
-        getAllProducts.setType("top seller");
-        getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-
-
-        Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
-                .getAllProducts
-                        (
-                                getAllProducts
-                        );
-
-        networkCall.enqueue(new Callback<ProductData>() {
-            @Override
-            public void onResponse(Call<ProductData> call, retrofit2.Response<ProductData> response) {
-
-                if (response.isSuccessful()) {
-
-                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
-                        // Products have been returned. Add Products to the dealProductsList
-
-                        popularDealsProduct.setPopularproductList(
-                                response.body().getProductData());
-
-
-
-
-                    }
-                    else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        // Products haven't been returned
-
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ProductData> call, Throwable t) {
-                if (!networkCall.isCanceled()) {
-                    Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-    }
-
-
     //*********** API Request Method to Fetch All Categories ********//
 
     public void RequestAllCategories() {

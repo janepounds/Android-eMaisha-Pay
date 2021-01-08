@@ -10,14 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.adapters.LoansListAdapter;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.PopularProductsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
-import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 
 import java.util.ArrayList;

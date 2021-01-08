@@ -49,6 +49,7 @@ public class WalletBuySellFragment extends Fragment {
     List<ProductDetails> popularProductsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
+
     private PopularDealsProduct popularDealsProduct = new PopularDealsProduct();
 
 
@@ -56,14 +57,13 @@ public class WalletBuySellFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     public static EditText searchView;
     public static ImageView searchIcon;
+    PopularProductsFragment popularProducts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buy_and_sell_home, container, false);
 
         setHasOptionsMenu(true);
-
-
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
@@ -72,6 +72,17 @@ public class WalletBuySellFragment extends Fragment {
         toolbar.setTitle("Buy and Sell");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get FragmentManager
+        FragmentManager fragmentManager = getFragmentManager();
+
+        // Add Top_Seller Fragment to specified FrameLayout
+        popularProducts = new PopularProductsFragment();
+        fragmentManager.beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
+
+
+
+
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
         startAppRequests = new StartAppRequests(requireContext());
@@ -117,7 +128,6 @@ public class WalletBuySellFragment extends Fragment {
         popularProductsList = popularDealsProduct.getPopularproductList();
 
         getTopDeals(specialDealsList);
-        getPopularProducts(popularProductsList);
         // Add corresponding ViewPagers to TabLayouts
         fragmentManager = getFragmentManager();
 
@@ -159,7 +169,6 @@ public class WalletBuySellFragment extends Fragment {
 
                 startAppRequests.RequestSpecialDeals();
 
-                startAppRequests.RequestTopSellers();
                 return "1";
             } else {
                 return "0";
@@ -183,13 +192,6 @@ public class WalletBuySellFragment extends Fragment {
         Fragment categories = new TopDealsFragment(productDetails);
         categories.setArguments(categoryBundle);
         fragmentManager.beginTransaction().replace(R.id.layout_deals, categories).commit();
-    }
-
-    private void getPopularProducts(final List<ProductDetails> productDetails) {
-        //end point to pick
-        fragmentManager = getFragmentManager();
-        Fragment categories = new PopularProductsFragment( productDetails);
-        fragmentManager.beginTransaction().replace(R.id.layout_most_popular, categories).commit();
     }
 
 
