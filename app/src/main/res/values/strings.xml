@@ -185,8 +185,6 @@
     <string name="no_of_products"> No. of Products </string>
 
 
-
-
     <string name="app_terms_services">By creating an account, you agree to our</string>
 
     <string name="ugandan_code" translatable="false">+256 </string>
@@ -445,6 +443,11 @@
         <item>eMaisha Card</item>
         <item>Mobile Money</item>
         <item>Bank</item>
+    </string-array>
+    <string-array name="deposit_to">
+        <item>Select</item>
+        <item>Wallet</item>
+        <item>eMaisha Card</item>
     </string-array>
     <string-array name="banks_list">
         <item>Select</item>

@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +44,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AgentCustomerDeposits extends DialogFragment {
-    LinearLayout layoutAddMoney;
+    LinearLayout layoutMobileNumber, layoutWalletNumber,layoutAccountNumber;
+    Spinner spDepositTo;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
     static String PENDING_DEPOSIT_REFERENCE_NUMBER;
@@ -75,13 +78,60 @@ public class AgentCustomerDeposits extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.dialog_agent_customer_deposit, null);
 
-        builder.setView(view);
+        spDepositTo = view.findViewById(R.id.sp_deposit_to);
+        layoutAccountNumber = view.findViewById(R.id.layout_account_number);
+        layoutMobileNumber = view.findViewById(R.id.layout_mobile_number);
+        layoutWalletNumber = view.findViewById(R.id.layout_wallet_number);
 
+        spDepositTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                } catch (Exception e) {
+
+                }
+                if(position==0){
+                    layoutWalletNumber.setVisibility(View.GONE);
+                    layoutAccountNumber.setVisibility(View.GONE);
+                    layoutMobileNumber.setVisibility(View.GONE);
+                }
+                else if(position==1){
+                    layoutWalletNumber.setVisibility(View.VISIBLE);
+                    layoutAccountNumber.setVisibility(View.GONE);
+                    layoutMobileNumber.setVisibility(View.GONE);
+                }
+                else if(position==2){
+                    layoutWalletNumber.setVisibility(View.GONE);
+                    layoutAccountNumber.setVisibility(View.VISIBLE);
+                    layoutMobileNumber.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        setCancelable(false);
 
         ImageView close = view.findViewById(R.id.agent_deposit_money_close);
         close.setOnClickListener(v -> dismiss());
 
-        return builder.create();
+
+
+
+
+        return dialog;
 
     }
 
