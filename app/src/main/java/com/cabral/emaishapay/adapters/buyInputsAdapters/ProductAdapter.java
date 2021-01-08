@@ -57,8 +57,8 @@ import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
 import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.utils.Utilities;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

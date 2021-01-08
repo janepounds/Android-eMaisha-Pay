@@ -6,24 +6,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.CategoryListAdapter_3;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.PopularProductsAdapter;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.models.product_model.GetAllProducts;
+import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class PopularProductsFragment extends Fragment {
     private static final String TAG = "PopularProductsFragment";
@@ -32,11 +37,9 @@ public class PopularProductsFragment extends Fragment {
     List<ProductDetails> popularProductsList;
     private RecyclerView recyclerView;
     private Context context;
-    private PopularProductsAdapter popularProductsAdapter;
-    private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
+    private ProductAdapter popularProductsAdapter;
 
-    public PopularProductsFragment(List<ProductDetails> productDetails) {
-        this.allProductList = productDetails;
+    public PopularProductsFragment() {
     }
 
 
@@ -57,19 +60,15 @@ public class PopularProductsFragment extends Fragment {
         Log.d(TAG, "onCreateView: popul"+allProductList);
         popularProductsList = new ArrayList<>();
 
-        for (int i = 0; i < allProductList.size(); i++) {
-
-            popularProductsList.add(allProductList.get(i));
-            }
 
         // Initialize the CategoryListAdapter for RecyclerView
-        popularProductsAdapter = new PopularProductsAdapter( popularProductsList, context);
+        popularProductsAdapter = new ProductAdapter(getActivity(),popularProductsList,false);
 
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(popularProductsAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        RequestTopSellers();
 
-        popularProductsAdapter.notifyDataSetChanged();
 
         return rootView;
     }
@@ -78,4 +77,60 @@ public class PopularProductsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    public void invalidateProducts(){
+        popularProductsAdapter.notifyDataSetChanged();
+    }
+
+    public void RequestTopSellers() {
+
+        GetAllProducts getAllProducts = new GetAllProducts();
+        getAllProducts.setPageNumber(0);
+        getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
+        getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+        getAllProducts.setType("top seller");
+        getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
+
+
+        Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
+                .getAllProducts
+                        (
+                                getAllProducts
+                        );
+
+        networkCall.enqueue(new Callback<ProductData>() {
+            @Override
+            public void onResponse(Call<ProductData> call, retrofit2.Response<ProductData> response) {
+
+                if (response.isSuccessful()) {
+
+                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
+                        // Products have been returned. Add Products to the dealProductsList
+
+//                        popularDealsProduct.setPopularproductList(
+//                                response.body().getProductData());
+
+                        allProductList=response.body().getProductData();
+                        popularProductsAdapter.notifyDataSetChanged();
+                    }
+                    else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                        // Products haven't been returned
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ProductData> call, Throwable t) {
+                if (!networkCall.isCanceled()) {
+                    Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
 }
