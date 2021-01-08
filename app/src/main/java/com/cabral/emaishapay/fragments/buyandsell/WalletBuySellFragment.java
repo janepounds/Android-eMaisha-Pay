@@ -74,7 +74,7 @@ public class WalletBuySellFragment extends Fragment {
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Buy and Sell");
+        //toolbar.setTitle("Buy and Sell");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setHasOptionsMenu(true);

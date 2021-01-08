@@ -5,14 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="5dp">
+
         <FrameLayout
             android:id="@+id/main_fragment_container_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:layout_marginBottom="?actionBarSize">
 
 
         <RelativeLayout
@@ -85,15 +84,18 @@
 
             </FrameLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout_maincontent"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/main_fragment_container"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="27dp"
-                android:layout_marginBottom="?actionBarSize"
+                android:layout_marginTop="5dp"
                 android:elevation="5dp">
+
+
+            <RelativeLayout
+                android:id="@+id/layout_maincontent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/label_most_popular"
@@ -170,9 +172,9 @@
                     android:layout_below="@id/btn_view_all_deals"
                     android:layout_margin="15dp" />
             </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
         </RelativeLayout>
         </FrameLayout>
-    </androidx.core.widget.NestedScrollView>
 
 
 

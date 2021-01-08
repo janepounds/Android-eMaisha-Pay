@@ -6,9 +6,8 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:focusable="true"
-    android:padding="@dimen/dimen_5dp"
-    android:layout_margin="@dimen/dimen_5dp"
-   >
+    android:padding="2dp"
+    android:layout_margin="2dp">
 
     <ImageView
         android:id="@+id/imageView2"

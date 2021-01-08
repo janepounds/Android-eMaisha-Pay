@@ -218,7 +218,7 @@
     <fragment
         android:id="@+id/walletBuySellFragment"
         android:name="com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment"
-        android:label="Buy &amp; Sell"
+        android:label=" "
         tools:layout="@layout/fragment_buy_and_sell_home"/>
 
 </navigation>
