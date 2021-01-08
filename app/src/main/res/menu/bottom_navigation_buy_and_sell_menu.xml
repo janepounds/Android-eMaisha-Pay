@@ -5,30 +5,31 @@
         android:id="@+id/walletBuyFragment"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="Buy"
-        app:showAsAction="ifRoom"/>
+        android:title="BUY"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/walletSellFragment"
         android:enabled="true"
         android:icon="@drawable/ic_sell"
-        android:title="Sell"
+        android:title="SELL"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletOrdersFragment"
         android:enabled="true"
         android:icon="@drawable/ic_orders"
-        android:title="Orders"
+        android:title="ORDERS"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletAddressesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_accept"
-        android:title="Addresses"
+        android:title="ADDRESSES"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletCartFragment"
         android:enabled="true"
         android:icon="@drawable/ic_shopping_cart"
-        android:title="Cart"
+        android:title="CART"
         app:showAsAction="ifRoom"/>
 </menu>

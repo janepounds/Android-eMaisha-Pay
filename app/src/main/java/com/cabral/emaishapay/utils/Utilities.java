@@ -301,7 +301,7 @@ public class Utilities {
 
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
 
-        MenuItem cartItem = toolbar.getMenu().findItem(R.id.toolbar_ic_cart);
+        MenuItem cartItem = toolbar.getMenu().findItem(R.id.ic_cart_item);
         if (cartItem == null)
             return;
 

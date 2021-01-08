@@ -168,7 +168,7 @@ public class Products extends Fragment {
 //        MenuItem currencyItem = menu.findItem(R.id.toolbar_ic_currency);
 //        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
 //        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-        MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
 //        profileItem.setVisible(false);
 //        languageItem.setVisible(false);
 //        currencyItem.setVisible(false);

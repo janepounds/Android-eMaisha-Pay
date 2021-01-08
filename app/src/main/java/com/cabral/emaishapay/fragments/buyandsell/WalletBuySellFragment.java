@@ -67,7 +67,7 @@ public class WalletBuySellFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buy_and_sell_home, container, false);
 
-        setHasOptionsMenu(true);
+
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
@@ -76,7 +76,7 @@ public class WalletBuySellFragment extends Fragment {
         toolbar.setTitle("Buy and Sell");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setHasOptionsMenu(true);
         // Get FragmentManager
         FragmentManager fragmentManager = getFragmentManager();
 
@@ -86,7 +86,7 @@ public class WalletBuySellFragment extends Fragment {
 
         // Disable the bottom navigation from showing when you come back from payment methods fragment
         WalletHomeActivity walletHomeActivity = new WalletHomeActivity();
-        walletHomeActivity.setupTitle();
+        walletHomeActivity.disableNavigation();
 
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
         bottomNavigationView.setItemIconTintList(null);
@@ -205,20 +205,26 @@ public class WalletBuySellFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
-        // Bind Menu Items
-        MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
 
-//        cartItem.setVisible(true);
 
-        //set badge value
-//        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-//        List<CartProduct> cartItemsList;
-//        cartItemsList = user_cart_BuyInputs_db.getCartItems();
-//        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
-//        badge.setText(String.valueOf(cartItemsList.size()));
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+
+        return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+        cartItem.setVisible(true);
 
+        //set badge value
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
+    }
 }

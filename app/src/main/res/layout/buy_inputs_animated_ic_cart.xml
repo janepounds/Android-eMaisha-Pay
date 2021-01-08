@@ -5,7 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:focusable="true">
+    android:focusable="true"
+    android:padding="@dimen/dimen_5dp"
+    android:layout_margin="@dimen/dimen_5dp"
+   >
 
     <ImageView
         android:id="@+id/imageView2"
@@ -36,7 +39,7 @@
         android:paddingEnd="@dimen/dimen_5dp"
         android:textStyle="bold"
         android:text="0"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline41"
@@ -48,6 +51,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.35714287" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

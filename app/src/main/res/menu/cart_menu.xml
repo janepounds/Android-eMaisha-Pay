@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_cart_item"
+        android:actionLayout="@layout/buy_inputs_animated_ic_cart"
+        android:icon="@drawable/ic_card"
+        android:title="@string/actionCart"
+        app:showAsAction="always" />
+
+
+<!--    <item-->
+<!--        android:id="@+id/toolbar_ic_search"-->
+<!--        android:icon="@drawable/ic_search_menu24"-->
+<!--        android:title="@string/actionSearch"-->
+<!--        app:showAsAction="ifRoom" />-->
+</menu>

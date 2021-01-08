@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
@@ -33,8 +34,7 @@ import retrofit2.Callback;
 public class PopularProductsFragment extends Fragment {
     private static final String TAG = "PopularProductsFragment";
     View rootView;
-    List<ProductDetails> allProductList;
-    List<ProductDetails> popularProductsList;
+    List<ProductDetails> popularProductsList= new ArrayList<>();
     private RecyclerView recyclerView;
     private Context context;
     private ProductAdapter popularProductsAdapter;
@@ -56,17 +56,16 @@ public class PopularProductsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.top_deals_fragment, container, false);
         recyclerView = rootView.findViewById(R.id.layout_top_deals);
 
-
-        Log.d(TAG, "onCreateView: popul"+allProductList);
-        popularProductsList = new ArrayList<>();
-
+        // RecyclerView has fixed Size
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Initialize the CategoryListAdapter for RecyclerView
-        popularProductsAdapter = new ProductAdapter(getActivity(),popularProductsList,false);
-
+        popularProductsAdapter = new ProductAdapter(getActivity(),getFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(popularProductsAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+
         RequestTopSellers();
 
 
@@ -110,7 +109,11 @@ public class PopularProductsFragment extends Fragment {
 //                        popularDealsProduct.setPopularproductList(
 //                                response.body().getProductData());
 
-                        allProductList=response.body().getProductData();
+                        popularProductsList.addAll(response.body().getProductData());
+                        Log.w("PopularProductzSIZE", ""+popularProductsList.size());
+
+
+
                         popularProductsAdapter.notifyDataSetChanged();
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
