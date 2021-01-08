@@ -200,7 +200,7 @@ public class WalletBuySellFragment extends Fragment {
         // Bind Menu Items
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
 
-        cartItem.setVisible(true);
+//        cartItem.setVisible(true);
 
         //set badge value
         User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
