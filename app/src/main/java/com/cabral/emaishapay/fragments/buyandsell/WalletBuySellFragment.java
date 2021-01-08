@@ -21,8 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -32,6 +35,7 @@ import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -80,6 +84,12 @@ public class WalletBuySellFragment extends Fragment {
         popularProducts = new PopularProductsFragment();
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
 
+        // Disable the bottom navigation from showing when you come back from payment methods fragment
+        WalletHomeActivity walletHomeActivity = new WalletHomeActivity();
+        walletHomeActivity.setupTitle();
+
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
+        bottomNavigationView.setItemIconTintList(null);
 
 
 
@@ -200,16 +210,15 @@ public class WalletBuySellFragment extends Fragment {
         // Bind Menu Items
         MenuItem cartItem = menu.findItem(R.id.toolbar_ic_cart);
 
-        cartItem.setVisible(true);
+//        cartItem.setVisible(true);
 
         //set badge value
-        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-        List<CartProduct> cartItemsList;
-        cartItemsList = user_cart_BuyInputs_db.getCartItems();
-        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
-        badge.setText(String.valueOf(cartItemsList.size()));
+//        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+//        List<CartProduct> cartItemsList;
+//        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+//        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+//        badge.setText(String.valueOf(cartItemsList.size()));
     }
-
 
 
 }
