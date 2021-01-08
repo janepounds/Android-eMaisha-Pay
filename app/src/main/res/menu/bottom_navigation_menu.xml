@@ -5,7 +5,8 @@
         android:id="@+id/walletHomeFragment"
         android:enabled="true"
         android:icon="@drawable/home"
-        android:title="Home"
+        android:title="HOME"
+        android:titleCondensed="Home"
         app:showAsAction="ifRoom" />
 
 
@@ -14,21 +15,27 @@
         android:id="@+id/walletCouponsFragment"
         android:enabled="true"
         android:icon="@drawable/coupon"
-        android:title="Coupons"
+        android:title="COUPONS"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/walletBuySellFragment"
         android:enabled="true"
         android:icon="@drawable/ic_buy_sell"
-        android:title="Buy &amp; Sell"
+        android:title="BUY &amp; SELL"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/walletCardsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_accept"
+        android:title="CARD"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/walletAccountFragment"
         android:enabled="true"
         android:icon="@drawable/user"
-        android:title="Account"
+        android:title="ACCOUNT"
         app:showAsAction="ifRoom" />
 <!--    <item-->
 <!--        android:id="@+id/walletSettlementFragment"-->
@@ -37,82 +44,9 @@
 <!--        android:title="Settlement"-->
 <!--        app:showAsAction="ifRoom"-->
 <!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletAcceptPaymentFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_accept"-->
-<!--        android:title="Accept Payment"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletShopFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_accept"-->
-<!--        android:title="Shop"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
 
-<!--    <item-->
-<!--        android:id="@+id/walletProductsFragment"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_product"-->
-<!--        android:title="Products"-->
-<!--        app:showAsAction="ifRoom" />-->
-<!--    <item-->
-<!--        android:id="@+id/walletOrdersFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_orders"-->
-<!--        android:title="Orders"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletPOSFragment"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_pos"-->
-<!--        android:title="POS"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletSalesFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_pos"-->
-<!--        android:title="Sales"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletCardsFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_accept"-->
-<!--        android:title="Cards"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletBuyFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_home"-->
-<!--        android:title="Buy"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletSellFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_sell"-->
-<!--        android:title="Sell"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletAddressesFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_accept"-->
-<!--        android:title="Addresses"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-<!--    <item-->
-<!--        android:id="@+id/walletCartFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/ic_shopping_cart"-->
-<!--        android:title="Addresses"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
+
+
+
 
 </menu>

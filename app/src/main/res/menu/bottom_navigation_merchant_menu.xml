@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/walletHomeFragment"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="HOME"
+        android:titleCondensed="Home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/walletShopFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_accept"
+        android:title="SHOP"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/walletAcceptPaymentFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_accept"
+        android:title="ACCEPT PAYMENT"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/walletAccountFragment"
+        android:enabled="true"
+        android:icon="@drawable/user"
+        android:title="ACCOUNT"
+        app:showAsAction="ifRoom" />
+
+</menu>
