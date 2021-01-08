@@ -7,6 +7,7 @@
     android:background="@drawable/background_round_white"
     android:layout_margin="15dp">
     <LinearLayout
+        android:id="@+id/product_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -158,5 +159,18 @@
 
         </LinearLayout>
 
+
+        <ImageView
+            android:id="@+id/product_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:clickable="true"
+            android:paddingBottom="20dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/checked"
+            android:layout_gravity="center"
+            tools:ignore="VectorDrawableCompat"
+            android:visibility="gone"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

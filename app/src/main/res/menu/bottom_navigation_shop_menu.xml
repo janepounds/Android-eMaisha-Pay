@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/walletProductsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_product"
+        android:title="PRODUCTS"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/walletOrdersFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_orders"
+        android:title="ORDERS"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/walletPOSFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_pos"
+        android:title="POS"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/walletSalesFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_pos"
+        android:title="SALES"
+        app:showAsAction="ifRoom"/>
+</menu>
