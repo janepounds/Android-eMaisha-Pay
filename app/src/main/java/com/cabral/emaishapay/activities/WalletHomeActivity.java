@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.core.graphics.drawable.WrappedDrawable;
@@ -33,13 +34,22 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.NotificationBadger;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.fragments.buyandsell.Category_Products;
+import com.cabral.emaishapay.fragments.buyandsell.CheckoutFinal;
+import com.cabral.emaishapay.fragments.buyandsell.My_Addresses;
 import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
+import com.cabral.emaishapay.fragments.buyandsell.My_Orders;
+import com.cabral.emaishapay.fragments.buyandsell.Nearby_Merchants;
+import com.cabral.emaishapay.fragments.buyandsell.PaymentMethodsFragment;
+import com.cabral.emaishapay.fragments.buyandsell.Product_Description;
 import com.cabral.emaishapay.fragments.buyandsell.Shipping_Address;
+import com.cabral.emaishapay.fragments.buyandsell.Thank_You;
 import com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.network.StartAppRequests;
@@ -55,6 +65,7 @@ public class WalletHomeActivity extends AppCompatActivity {
     private Context context;
     public static FragmentManager fm;
     public Fragment currentFragment;
+    public static ActionBar actionBar;
 
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
     public static final String PREFERENCES_USER_PIN = "";
@@ -120,7 +131,27 @@ public class WalletHomeActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
 
         setUpNavigation();
+//        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(ConstantValues.APP_HEADER);
 
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+
+            // Check BackStackEntryCount of FragmentManager
+            if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
+                // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
+                actionBar.setTitle(ConstantValues.APP_HEADER);
+                actionBar.setHomeButtonEnabled(false);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            setupTitle();
+        });
         if (!getPreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, WalletHomeActivity.this).equals("yes")) {
             getAppToken();
         }
@@ -298,7 +329,45 @@ public class WalletHomeActivity extends AppCompatActivity {
 
 
     }
+    public void setupTitle() {
+        Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (currentFrag instanceof My_Cart) {
+            actionBar.setTitle(getString(R.string.actionCart));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof Shipping_Address) {
+            actionBar.setTitle(getString(R.string.shipping_address));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof Nearby_Merchants) {
+            actionBar.setTitle(getString(R.string.nearby_merchants));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof My_Orders) {
+            actionBar.setTitle(getString(R.string.actionOrders));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof My_Addresses) {
+            actionBar.setTitle(getString(R.string.actionAddresses));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof WalletHomeFragment) {
+            actionBar.setTitle(getString(R.string.app_name));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
 
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof Category_Products) {
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof PaymentMethodsFragment) {
+            actionBar.setTitle(getString(R.string.payment_methods));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof Thank_You) {
+            actionBar.setTitle(getString(R.string.order_confirmed));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof Product_Description) {
+            actionBar.setTitle(getString(R.string.product_description));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        } else if (currentFrag instanceof CheckoutFinal) {
+            actionBar.setTitle(getString(R.string.checkout));
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        }
+
+    }
 
        public static void sendFirebaseToken(String token, final Context context) {
            ///**************** RETROFIT IMPLEMENTATION******************************//////////
