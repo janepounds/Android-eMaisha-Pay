@@ -138,12 +138,26 @@
                         android:visibility="gone" />
 
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/ratings_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/priceLayout">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reviews_ratings"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ratings_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/priceLayout"
+                    android:layout_below="@id/ratings_review"
                     android:layout_margin="@dimen/dimen_10dp">
 
                     <RelativeLayout
@@ -301,18 +315,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reviews_ratings"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
 
 
                 <TextView

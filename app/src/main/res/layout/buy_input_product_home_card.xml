@@ -160,17 +160,22 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/product_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.5"
-            android:clickable="true"
-            android:paddingBottom="20dp"
-            android:scaleType="center"
-            app:srcCompat="@drawable/checked"
-            android:layout_gravity="center"
-            tools:ignore="VectorDrawableCompat"
-            android:visibility="gone"/>
+
     </LinearLayout>
+    <ImageView
+        android:id="@+id/product_checked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:paddingBottom="20dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/checked"
+        android:layout_gravity="center"
+        tools:ignore="VectorDrawableCompat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

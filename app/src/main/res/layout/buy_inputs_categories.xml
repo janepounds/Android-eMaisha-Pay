@@ -5,6 +5,10 @@
     android:id="@+id/scroll_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="25dp"
+    android:layout_marginEnd="5dp"
     android:background="@android:color/transparent">
 
 
@@ -29,16 +33,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:elevation="5dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categories_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dimen_10dp"
-            android:paddingRight="@dimen/dimen_10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
