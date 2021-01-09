@@ -291,12 +291,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //                if (((WalletHomeActivity) context).currentFragment != null)
 //                    fragmentManager.beginTransaction()
 //                            .hide(((WalletHomeActivity) context).currentFragment)
-//                            .add(R.id.main_fragment_container, fragment)
+//                            .add(R.id.nav_host_fragment, fragment)
 //                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                            .addToBackStack(null).commit();
 //                else
                     fragmentManager.beginTransaction()
-                            .replace(R.id.main_fragment_container_home, fragment)
+                            .replace(R.id.nav_host_fragment, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
 
@@ -321,15 +321,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
                 Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
 
-//                if (currentFragment != null)
-//                    fragmentManager.beginTransaction()
-//                            .hide(currentFragment)
-//                            .add(R.id.main_fragment_container, fragment)
-//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                            .addToBackStack(null).commit();
-//                else
+                if (currentFragment != null)
                     fragmentManager.beginTransaction()
-                            .replace(R.id.main_fragment_container_home, fragment)
+                            .hide(currentFragment)
+                            .add(R.id.main_fragment_container, fragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
 
@@ -412,7 +412,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                         FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
                         fragmentManager.beginTransaction()
-                                .replace(R.id.main_fragment_container_home, fragment)
+                                .replace(R.id.nav_host_fragment, fragment)
 //                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 

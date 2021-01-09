@@ -51,7 +51,14 @@ public class WalletHomeFragment extends Fragment {
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0;
     public static FragmentManager fm;
+    public WalletHomeFragment(){}
 
+    public WalletHomeFragment(Context context, FragmentManager supportFragmentManager) {
+        super();
+        this.context = context;
+        this.fm = supportFragmentManager;
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -255,19 +262,15 @@ public class WalletHomeFragment extends Fragment {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            fragmentReference.get().requireActivity().runOnUiThread(() -> {
+
+
                                 //get balanace from shared preference and update it in textview
 
                                 binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
 
                                 Log.d(TAG, "run: reached !!");
 
-                            });
-                        }
-                    });
+
 
 
 

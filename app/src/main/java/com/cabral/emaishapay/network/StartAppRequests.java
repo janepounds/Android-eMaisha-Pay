@@ -1,16 +1,13 @@
 package com.cabral.emaishapay.network;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
-import com.cabral.emaishapay.models.PopularDealsProduct;
 import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
@@ -27,7 +24,6 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.address_model.RegionDetails;
 import com.cabral.emaishapay.models.address_model.Regions;
-import com.cabral.emaishapay.models.device_model.AppSettingsData;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.utils.Utilities;
@@ -39,8 +35,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -55,7 +49,7 @@ public class StartAppRequests {
     private Context context;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
-    private PopularDealsProduct popularDealsProduct = new PopularDealsProduct();
+
 
 
 
@@ -166,7 +160,7 @@ public class StartAppRequests {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Products have been returned. Add Products to the dealProductsList
 
-                        popularDealsProduct.setDealsList(response.body().getProductData());
+
                         Log.d(TAG, "onResponse: deals"+response.body().getProductData());
 
 

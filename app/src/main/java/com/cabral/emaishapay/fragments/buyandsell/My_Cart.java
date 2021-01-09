@@ -158,7 +158,7 @@ public class My_Cart extends Fragment {
 
         // Handle Click event of continue_shopping_btn Button
         continue_shopping_btn.setOnClickListener(view -> {
-            // Go back to previous fragment
+            // Go back to previous fragment(wallet home)
             requireActivity().onBackPressed();
         });
 

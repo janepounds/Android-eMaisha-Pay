@@ -177,7 +177,7 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
             fragment.setArguments(categoryInfo);
             FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_fragment_container_home, fragment)
+                    .replace(R.id.nav_host_fragment, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .addToBackStack(null).commit();
         }
