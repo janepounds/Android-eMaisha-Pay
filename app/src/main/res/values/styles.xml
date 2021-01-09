@@ -130,7 +130,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/josefin_sans</item>
         <item name="android:textColorSecondary">@color/gray</item>
+        <item name="android:textSize">8sp</item>
     </style>
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
 
     <!-- Wallet plugin Style-->
     <style name="AppTheme0" parent="Theme.AppCompat.Light.DarkActionBar">
