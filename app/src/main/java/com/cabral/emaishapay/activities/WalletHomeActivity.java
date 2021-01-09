@@ -130,12 +130,12 @@ public class WalletHomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_home);
-        setupDefaultHomePage();
+//        setupDefaultHomePage();
         context = getApplicationContext();
         fm = getSupportFragmentManager();
 
         setUpNavigation();
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         toolbar = findViewById(R.id.main_Toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
@@ -175,11 +175,6 @@ public class WalletHomeActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
     }
 
-    private void setupDefaultHomePage() {
-        defaultHomeFragment = new WalletHomeFragment(WalletHomeActivity.this, getSupportFragmentManager());
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, defaultHomeFragment).commit();
-        currentFragment = defaultHomeFragment;
-    }
     public static void startHome(Context context) {
         try {
             Intent home = new Intent(context, WalletHomeActivity.class);
@@ -397,52 +392,52 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Fragment fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-
-                if (currentFragment == defaultHomeFragment)
-
-                    new AlertDialog.Builder(this)
-                            .setMessage("Are you sure you want to exit?")
-                            .setCancelable(false)
-                            .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
-                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                            .show();
-
-                else if (fragmentManager.getBackStackEntryCount() > 0) {
-                    // Pop previous Fragment
-                    fragmentManager.popBackStack();
-                } else
-                    showHomePage();
-
-                break;
-            case R.id.ic_cart_item:
-
-                // Navigate to My_Cart Fragment
-                fragment = new My_Cart();
-                fragmentManager.beginTransaction()
-                        .hide(currentFragment)
-                        .add(R.id.nav_host_fragment, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(getString(R.string.actionHome)).commit();
-                break;
-
-
-
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        Fragment fragment;
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//
+//        switch (item.getItemId()) {
+//
+//            case android.R.id.home:
+//
+//                if (currentFragment == defaultHomeFragment)
+//
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("Are you sure you want to exit?")
+//                            .setCancelable(false)
+//                            .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
+//                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+//                            .show();
+//
+//                else if (fragmentManager.getBackStackEntryCount() > 0) {
+//                    // Pop previous Fragment
+//                    fragmentManager.popBackStack();
+//                } else
+//                    showHomePage();
+//
+//                break;
+//            case R.id.ic_cart_item:
+//
+//                // Navigate to My_Cart Fragment
+//                fragment = new My_Cart();
+//                fragmentManager.beginTransaction()
+//                        .hide(currentFragment)
+//                        .add(R.id.nav_host_fragment, fragment)
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .addToBackStack(getString(R.string.actionHome)).commit();
+//                break;
+//
+//
+//
+//
+//            default:
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 //    @Override
 //    public void onBackPressed() {
@@ -548,7 +543,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 //                        .addToBackStack(getString(R.string.actionHome)).commit();
 //            else
                 fragmentManager.beginTransaction()
-                        .hide(currentFragment)
+//                        .hide(currentFragment)
                         .replace(R.id.nav_host_fragment, fragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null).commit();
@@ -620,25 +615,5 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         return super.onPrepareOptionsMenu(menu);
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.walletBuySellFragment:
-                    selectedFragment = new WalletBuySellFragment(WalletHomeActivity.this, getSupportFragmentManager());
-                    break;
-//            case R.id.page_2:
-//                selectedFragment = new OffersFragment();
-//                break;
-//            case R.id.page_3:
-//                selectedFragment = new AccountFragment();
-//                break;
-//                default:
-//                    selectedFragment = new WalletBuySellFragment(WalletHomeActivity.this, getSupportFragmentManager());
-            }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
-            return true;
-        }
-    };
 }

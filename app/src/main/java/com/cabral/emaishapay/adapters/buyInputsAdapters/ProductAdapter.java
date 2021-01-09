@@ -288,13 +288,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                 FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
-                if (((WalletHomeActivity) context).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) context).currentFragment)
-                            .add(R.id.nav_host_fragment, fragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .addToBackStack(null).commit();
-                else
+//                if (((WalletHomeActivity) context).currentFragment != null)
+//                    fragmentManager.beginTransaction()
+//                            .hide(((WalletHomeActivity) context).currentFragment)
+//                            .add(R.id.nav_host_fragment, fragment)
+//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                            .addToBackStack(null).commit();
+//                else
                     fragmentManager.beginTransaction()
                             .replace(R.id.nav_host_fragment, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

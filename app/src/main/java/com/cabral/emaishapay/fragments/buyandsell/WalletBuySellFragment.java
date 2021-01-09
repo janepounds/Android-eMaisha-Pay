@@ -59,14 +59,9 @@ public class WalletBuySellFragment extends Fragment {
     public static ImageView searchIcon;
     PopularProductsFragment popularProducts;
     TopDealsFragment topDeals;
-    public WalletBuySellFragment(){}
 
-    public WalletBuySellFragment(Context context, FragmentManager supportFragmentManager) {
-        super();
-        this.context = context;
-        this.fm = supportFragmentManager;
 
-    }
+
 
 
     @Override
@@ -99,7 +94,7 @@ public class WalletBuySellFragment extends Fragment {
 
         // Disable the bottom navigation from showing when you come back from payment methods fragment
         WalletHomeActivity walletHomeActivity = new WalletHomeActivity();
-        walletHomeActivity.setupTitle();
+        walletHomeActivity.disableNavigation();
 
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
         bottomNavigationView.setItemIconTintList(null);

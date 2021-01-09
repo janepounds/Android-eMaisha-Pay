@@ -262,19 +262,15 @@ public class WalletHomeFragment extends Fragment {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            fragmentReference.get().getActivity().runOnUiThread(() -> {
+
+
                                 //get balanace from shared preference and update it in textview
 
                                 binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
 
                                 Log.d(TAG, "run: reached !!");
 
-                            });
-                        }
-                    });
+
 
 
 
