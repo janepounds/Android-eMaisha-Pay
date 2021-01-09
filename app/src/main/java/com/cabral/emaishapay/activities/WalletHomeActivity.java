@@ -139,7 +139,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         toolbar = findViewById(R.id.main_Toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-        actionBar.setTitle(ConstantValues.APP_HEADER);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -149,14 +149,14 @@ public class WalletHomeActivity extends AppCompatActivity{
             // Check BackStackEntryCount of FragmentManager
             if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
                 // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
-                actionBar.setTitle(ConstantValues.APP_HEADER);
+                actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
             }
 
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            setupTitle();
+           // setupTitle();
         });
         if (!getPreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, WalletHomeActivity.this).equals("yes")) {
             getAppToken();
@@ -372,7 +372,7 @@ public class WalletHomeActivity extends AppCompatActivity{
             actionBar.setTitle(getString(R.string.actionAddresses));
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         } else if (currentFrag instanceof WalletBuySellFragment) {
-            actionBar.setTitle(getString(R.string.app_name));
+            actionBar.setDisplayShowTitleEnabled(false);
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         } else if (currentFrag instanceof Category_Products) {
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
@@ -467,7 +467,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, defaultHomeFragment).commit();
         currentFragment = defaultHomeFragment;
 
-        actionBar.setTitle(getString(R.string.app_name));
+       // actionBar.setTitle(getString(R.string.app_name));
     }
 
        public static void sendFirebaseToken(String token, final Context context) {

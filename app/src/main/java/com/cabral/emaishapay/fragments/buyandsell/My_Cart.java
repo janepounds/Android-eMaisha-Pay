@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -69,13 +70,14 @@ public class My_Cart extends Fragment {
     List<ProductDetails> cartProducts = new ArrayList<>();
     List<String> stocks = new ArrayList<>();
     DialogLoader dialogLoader;
+    Toolbar toolbar;
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
         if (!hidden) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(getString(R.string.actionCart));
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("My Cart");
         }
     }
 
@@ -92,7 +94,8 @@ public class My_Cart extends Fragment {
 
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-
+        toolbar = rootView.findViewById(R.id.toolbar_product_home);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(getString(R.string.actionCart));
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -358,16 +361,16 @@ public class My_Cart extends Fragment {
         return result;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
-        // Hide Cart Icon in the Toolbar
-        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
+//        // Hide Cart Icon in the Toolbar
+//        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
 //        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
 //        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
 //        profileItem.setVisible(false);
-        cartItem.setVisible(false);
-//        searchItem.setVisible(false);
-    }
+//        cartItem.setVisible(false);
+////        searchItem.setVisible(false);
+//    }
 
     private class MyTask extends AsyncTask<String, Void, String> {
 
@@ -538,6 +541,25 @@ public class My_Cart extends Fragment {
             }
 
         }
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+        cartItem.setVisible(false);
+
+        //set badge value
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
     }
 
 //    @Override

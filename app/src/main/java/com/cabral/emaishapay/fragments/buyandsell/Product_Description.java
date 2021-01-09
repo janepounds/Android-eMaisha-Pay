@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
@@ -116,6 +117,7 @@ public class Product_Description extends Fragment {
     static ProductDetails productDetails;
     ProductAttributesAdapter attributesAdapter;
 
+    Toolbar toolbar;
     List<Image> itemImages = new ArrayList<>();
     List<Attribute> attributesList = new ArrayList<>();
     List<CartProductAttributes> selectedAttributesList;
@@ -161,7 +163,8 @@ public class Product_Description extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_product_description, container, false);
-
+        toolbar = rootView.findViewById(R.id.toolbar_product_home);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.product_description));
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
