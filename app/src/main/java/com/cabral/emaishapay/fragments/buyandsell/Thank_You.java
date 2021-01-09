@@ -67,12 +67,13 @@ public class Thank_You extends Fragment {
         // Binding Layout Views
         continue_shopping_btn.setOnClickListener(view -> {
             // Navigate to HomePage Fragment
-            Fragment buyinputshome = new WalletBuySellFragment();
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            Fragment buyinputshome = new WalletBuySellFragment(getContext(),fragmentManager);
 
             fragmentManager.beginTransaction()
                     //.hide(currentFragment)
-                    .add(R.id.main_fragment_container, buyinputshome)
+                    .add(R.id.nav_host_fragment, buyinputshome)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(getString(R.string.actionHome)).commit();
 

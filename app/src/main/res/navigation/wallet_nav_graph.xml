@@ -215,10 +215,10 @@
         android:id="@+id/businessAccountFragment"
         android:name="com.cabral.emaishapay.fragments.BusinessAccountFragment"
         android:label="Merchant Details" />
-    <fragment
-        android:id="@+id/walletBuySellFragment"
-        android:name="com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment"
-        android:label=" "
-        tools:layout="@layout/fragment_buy_and_sell_home"/>
+<!--    <fragment-->
+<!--        android:id="@+id/walletBuySellFragment"-->
+<!--        android:name="com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment"-->
+<!--        android:label=" "-->
+<!--        tools:layout="@layout/fragment_buy_and_sell_home"/>-->
 
 </navigation>

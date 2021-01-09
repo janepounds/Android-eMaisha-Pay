@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawableWrapper;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.drawable.WrappedDrawable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -57,15 +59,17 @@ import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-public class WalletHomeActivity extends AppCompatActivity {
+public class WalletHomeActivity extends AppCompatActivity{
     private static final String TAG = "WalletHomeActivity";
     private Context context;
     public static FragmentManager fm;
     public Fragment currentFragment;
     public static ActionBar actionBar;
+    Fragment selectedFragment = null;
 
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
     public static final String PREFERENCES_USER_PIN = "";
@@ -118,20 +122,22 @@ public class WalletHomeActivity extends AppCompatActivity {
     public static PostOrder postOrder = new PostOrder();
     public static BottomNavigationView bottomNavigationView;
 
-
+    Fragment defaultHomeFragment;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_home);
-
+        setupDefaultHomePage();
         context = getApplicationContext();
         fm = getSupportFragmentManager();
 
         setUpNavigation();
-//        setSupportActionBar(toolbar);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        toolbar = findViewById(R.id.main_Toolbar);
+        setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         actionBar.setTitle(ConstantValues.APP_HEADER);
 
@@ -165,10 +171,15 @@ public class WalletHomeActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
+
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
     }
 
-
+    private void setupDefaultHomePage() {
+        defaultHomeFragment = new WalletHomeFragment(WalletHomeActivity.this, getSupportFragmentManager());
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, defaultHomeFragment).commit();
+        currentFragment = defaultHomeFragment;
+    }
     public static void startHome(Context context) {
         try {
             Intent home = new Intent(context, WalletHomeActivity.class);
@@ -329,6 +340,25 @@ public class WalletHomeActivity extends AppCompatActivity {
 
 
     }
+
+//    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
+//        Fragment selectedFragment = null;
+//
+//        switch (item.getItemId()) {
+//            case R.id.walletBuySellFragment:
+//                selectedFragment = new WalletBuySellFragment(WalletHomeActivity.this, getSupportFragmentManager());
+//                break;
+////            case R.id.page_2:
+////                selectedFragment = new OffersFragment();
+////                break;
+////            case R.id.page_3:
+////                selectedFragment = new AccountFragment();
+////                break;
+//        }
+//
+//        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
+//        return true;
+//    };
     public void setupTitle() {
         Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (currentFrag instanceof My_Cart) {
@@ -346,10 +376,8 @@ public class WalletHomeActivity extends AppCompatActivity {
         } else if (currentFrag instanceof My_Addresses) {
             actionBar.setTitle(getString(R.string.actionAddresses));
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
-        } else if (currentFrag instanceof WalletHomeFragment) {
+        } else if (currentFrag instanceof WalletBuySellFragment) {
             actionBar.setTitle(getString(R.string.app_name));
-            WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
-
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         } else if (currentFrag instanceof Category_Products) {
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
@@ -367,6 +395,84 @@ public class WalletHomeActivity extends AppCompatActivity {
             WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+
+                if (currentFragment == defaultHomeFragment)
+
+                    new AlertDialog.Builder(this)
+                            .setMessage("Are you sure you want to exit?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
+                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                            .show();
+
+                else if (fragmentManager.getBackStackEntryCount() > 0) {
+                    // Pop previous Fragment
+                    fragmentManager.popBackStack();
+                } else
+                    showHomePage();
+
+                break;
+            case R.id.ic_cart_item:
+
+                // Navigate to My_Cart Fragment
+                fragment = new My_Cart();
+                fragmentManager.beginTransaction()
+                        .hide(currentFragment)
+                        .add(R.id.nav_host_fragment, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(getString(R.string.actionHome)).commit();
+                break;
+
+
+
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        // Get FragmentManager
+//        FragmentManager fm = getSupportFragmentManager();
+//
+//        if (fm.getBackStackEntryCount() > 0) {
+//            // Pop previous Fragment
+//            fm.popBackStack();
+//        } else {
+//
+//            if (currentFragment == defaultHomeFragment)
+//
+//                new AlertDialog.Builder(this)
+//                        .setMessage("Are you sure you want to exit?")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes", (dialog, id) -> finishAffinity())
+//                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+//                        .show();
+//            else
+//                showHomePage();
+//        }
+//    }
+
+    private void showHomePage() {
+//        getSupportFragmentManager().beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, defaultHomeFragment).commit();
+        currentFragment = defaultHomeFragment;
+
+        actionBar.setTitle(getString(R.string.app_name));
     }
 
        public static void sendFirebaseToken(String token, final Context context) {
@@ -437,13 +543,13 @@ public class WalletHomeActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
 //            if (currentFragment == null)
 //                fragmentManager.beginTransaction()
-//                        .add(R.id.main_fragment_container_home, fragment)
+//                        .add(R.id.nav_host_fragment, fragment)
 //                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                        .addToBackStack(getString(R.string.actionHome)).commit();
 //            else
                 fragmentManager.beginTransaction()
-//                        .hide(currentFragment)
-                        .replace(R.id.main_fragment_container_home, fragment)
+                        .hide(currentFragment)
+                        .replace(R.id.nav_host_fragment, fragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null).commit();
         });
@@ -514,4 +620,25 @@ public class WalletHomeActivity extends AppCompatActivity {
 
         return super.onPrepareOptionsMenu(menu);
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.walletBuySellFragment:
+                    selectedFragment = new WalletBuySellFragment(WalletHomeActivity.this, getSupportFragmentManager());
+                    break;
+//            case R.id.page_2:
+//                selectedFragment = new OffersFragment();
+//                break;
+//            case R.id.page_3:
+//                selectedFragment = new AccountFragment();
+//                break;
+//                default:
+//                    selectedFragment = new WalletBuySellFragment(WalletHomeActivity.this, getSupportFragmentManager());
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
+            return true;
+        }
+    };
 }
