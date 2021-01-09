@@ -94,6 +94,9 @@ public class My_Cart extends Fragment {
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
 
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(getString(R.string.actionCart));
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         // Get the List of Cart Items from the Local Databases User_Cart_DB
         finalCartItemsList = cartItemsList = user_cart_BuyInputs_db.getCartItems();

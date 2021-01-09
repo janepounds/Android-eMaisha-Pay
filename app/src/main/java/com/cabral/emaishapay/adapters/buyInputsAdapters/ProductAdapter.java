@@ -412,8 +412,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                         FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
                         fragmentManager.beginTransaction()
-                                .add(R.id.main_fragment_container, fragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .replace(R.id.main_fragment_container_home, fragment)
+//                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         // Add the Product to User's Recently Viewed Products

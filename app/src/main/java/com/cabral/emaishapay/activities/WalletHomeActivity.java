@@ -1,8 +1,11 @@
 package com.cabral.emaishapay.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,10 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawableWrapper;
+import androidx.core.graphics.drawable.WrappedDrawable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +33,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.customs.NotificationBadger;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
@@ -358,14 +366,14 @@ public class WalletHomeActivity extends AppCompatActivity {
             // Navigate to My_Cart Fragment
             Fragment fragment = new My_Cart();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            if (currentFragment == null)
+//            if (currentFragment == null)
+//                fragmentManager.beginTransaction()
+//                        .add(R.id.main_fragment_container_home, fragment)
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .addToBackStack(getString(R.string.actionHome)).commit();
+//            else
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_fragment_container_home, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(getString(R.string.actionHome)).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .hide(currentFragment)
+//                        .hide(currentFragment)
                         .add(R.id.main_fragment_container, fragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(getString(R.string.actionHome)).commit();
@@ -376,5 +384,65 @@ public class WalletHomeActivity extends AppCompatActivity {
         Utilities.tintMenuIcon(WalletHomeActivity.this, cartItem, R.color.white);
 
         return true;
+    }
+
+    //*********** Prepares the OptionsMenu of Toolbar ********//
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+
+        // Get No. of Cart Items with the static method of My_Cart Fragment
+        int cartSize = My_Cart.getCartSize();
+
+
+        // if Cart has some Items
+        if (cartSize > 0) {
+
+            // Animation for cart_menuItem
+            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_icon);
+            animation.setRepeatMode(Animation.REVERSE);
+            animation.setRepeatCount(1);
+
+            cartItem.getActionView().startAnimation(animation);
+            cartItem.getActionView().setAnimation(null);
+
+
+            LayerDrawable icon = null;
+            Drawable drawable = cartItem.getIcon();
+
+            if (drawable instanceof DrawableWrapper) {
+                drawable = ((DrawableWrapper) drawable).getWrappedDrawable();
+            } else if (drawable instanceof WrappedDrawable) {
+                drawable = ((WrappedDrawable) drawable).getWrappedDrawable();
+            }
+
+
+            if (drawable instanceof LayerDrawable) {
+                icon = (LayerDrawable) drawable;
+            } else if (drawable instanceof DrawableWrapper) {
+                DrawableWrapper wrapper = (DrawableWrapper) drawable;
+                if (wrapper.getWrappedDrawable() instanceof LayerDrawable) {
+                    icon = (LayerDrawable) wrapper.getWrappedDrawable();
+                }
+            }
+
+//                icon = (LayerDrawable) drawable;
+
+
+            // Set BadgeCount on Cart_Icon with the static method of NotificationBadger class
+            if (icon != null)
+                NotificationBadger.setBadgeCount(this, icon, String.valueOf(cartSize));
+
+
+        } else {
+            // Set the Icon for Empty Cart
+            cartItem.setIcon(R.drawable.ic_cart_empty);
+        }
+
+
+        return super.onPrepareOptionsMenu(menu);
     }
 }
