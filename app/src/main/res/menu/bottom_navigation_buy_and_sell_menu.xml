@@ -26,10 +26,5 @@
         android:icon="@drawable/ic_accept"
         android:title="ADDRESSES"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/walletCartFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_shopping_cart"
-        android:title="CART"
-        app:showAsAction="ifRoom"/>
+
 </menu>

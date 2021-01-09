@@ -6,13 +6,13 @@
     android:background="#FBFBFB"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="?actionBarSize">
 
     <LinearLayout
         android:id="@+id/cart_view_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
         android:orientation="vertical"
         android:padding="20dp">
 

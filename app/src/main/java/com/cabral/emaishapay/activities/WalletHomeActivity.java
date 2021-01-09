@@ -374,9 +374,9 @@ public class WalletHomeActivity extends AppCompatActivity {
 //            else
                 fragmentManager.beginTransaction()
 //                        .hide(currentFragment)
-                        .add(R.id.main_fragment_container, fragment)
+                        .replace(R.id.main_fragment_container_home, fragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(getString(R.string.actionHome)).commit();
+                        .addToBackStack(null).commit();
         });
 
         // Tint Menu Icons with the help of static method of Utilities class
