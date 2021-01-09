@@ -186,7 +186,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_corners_button"
         android:gravity="right"
-        android:paddingRight="@dimen/dimen_10dp">
+        android:paddingRight="@dimen/dimen_10dp"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_submit"

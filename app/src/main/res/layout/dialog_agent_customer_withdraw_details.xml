@@ -27,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".1"
                     android:gravity="center"
-                    android:text="Confirm Funds Transfer Details"
+                    android:text="Confirm Withdraw Details"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
-                        android:text="Receiver"
+                        android:text="Customer"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -87,41 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
-                        android:text="Receiver Account"
-                        android:textColor="#929292"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
-                        android:text="0112378934459034"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Receiver Mobile"
+                        android:text="Phone Number"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -155,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
-                        android:text="Amount"
+                        android:text="Amount Received"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -189,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
-                        android:text="Transfer Charge"
+                        android:text="Transaction Charge"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -238,18 +204,16 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginBottom="5dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="right">
 
                 <Button
-                    android:id="@+id/txt_transfer_confirm"
+                    android:id="@+id/txt_withdraw_confirm"
                     style="@style/Button_DW"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
