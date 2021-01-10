@@ -78,7 +78,7 @@ public class WalletBuySellFragment extends Fragment {
         //toolbar.setTitle("Buy and Sell");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setElevation(0.5f);
         // Get FragmentManager
@@ -195,15 +195,6 @@ public class WalletBuySellFragment extends Fragment {
     }
 
 
-
-
-
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

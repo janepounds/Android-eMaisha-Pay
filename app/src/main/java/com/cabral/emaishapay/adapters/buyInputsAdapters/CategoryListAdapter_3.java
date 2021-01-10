@@ -25,6 +25,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.fragments.buyandsell.Category_Products;
@@ -175,7 +176,7 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
             }
 
             fragment.setArguments(categoryInfo);
-            FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+            FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.nav_host_fragment, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

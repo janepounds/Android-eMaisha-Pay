@@ -22,26 +22,24 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic,android:theme">
         <activity
+            android:name=".activities.WalletBuySellActivity"
+            android:label="@string/title_activity_wallet_buy_sell"></activity>
+        <activity
             android:name=".activities.CardDetail"
             android:label="@string/title_activity_card_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.AccountOpeningActivity" />
         <activity android:name=".activities.Auth2Activity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/emaishapay_logo_icon" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
-
 
         <activity
             android:name=".activities.SplashScreen"
@@ -75,10 +73,7 @@
             android:label="Sign UP" />
         <activity
             android:name=".activities.Login"
-            android:label="Sign In" />
-
-        <!-- Firebase Notifications -->
-
+            android:label="Sign In" /> <!-- Firebase Notifications -->
         <service
             android:name=".messaging.FirebaseMessageReceiver"
             android:permission="false">
@@ -87,11 +82,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
-
-
-
-
 
 </manifest>

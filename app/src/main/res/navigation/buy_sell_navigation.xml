@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_buy_and_sell_home"/>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.cabral.emaishapay.fragments.buyandsell.My_Orders"
+        android:label="@string/actionOrders"
+        tools:layout="@layout/buy_inputs_orders" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.cabral.emaishapay.fragments.buyandsell.My_Addresses"
+        android:label="@string/actionAddresses"
+        tools:layout="@layout/buy_inputs_my__addresses" />
+
+</navigation>
