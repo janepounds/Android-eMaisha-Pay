@@ -40,6 +40,7 @@ import com.bumptech.glide.request.target.Target;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.CropSpinnerAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -287,7 +288,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
 //                if (((WalletHomeActivity) context).currentFragment != null)
 //                    fragmentManager.beginTransaction()
 //                            .hide(((WalletHomeActivity) context).currentFragment)

@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAttributesAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductMeasureAdapter;
@@ -289,7 +290,7 @@ public class Product_Description extends Fragment {
 
                         Snackbar.make(view, context.getString(R.string.outOfStock), Snackbar.LENGTH_SHORT).show();
                     } else {
-                        Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletHomeActivity) context);
+                        Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
                         // Add Product to User's Cart
                         addProductToCart(productDetails);
                     }

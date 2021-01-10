@@ -56,6 +56,10 @@ public class My_Orders extends Fragment {
 
     List<OrderDetails> ordersList = new ArrayList<>();
 
+    public  My_Orders(){
+
+    }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

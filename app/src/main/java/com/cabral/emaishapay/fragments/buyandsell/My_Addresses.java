@@ -58,6 +58,8 @@ public class My_Addresses extends Fragment {
 
     private int defaultAddressPosition = -1;
 
+
+    public  My_Addresses(){ }
     public My_Addresses(My_Cart my_cart) {
         this.my_cart = my_cart;
     }
