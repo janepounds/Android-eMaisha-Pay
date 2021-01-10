@@ -123,7 +123,7 @@ public class WishList extends Fragment {
 
         // Initialize the ProductAdapter and GridLayoutManager for RecyclerView
         productAdapter = new ProductAdapterRemovable(getContext(), favouriteProductsList, false, false, emptyRecord);
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager = new GridLayoutManager(getContext(), 3);
 
         
         // Set the Adapter and LayoutManager to the RecyclerView

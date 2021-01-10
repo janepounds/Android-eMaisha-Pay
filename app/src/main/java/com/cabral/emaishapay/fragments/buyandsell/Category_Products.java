@@ -139,7 +139,7 @@ public class Category_Products extends Fragment {
         emptyRecord.setVisibility(View.GONE);
         resetFiltersBtn.setVisibility(View.GONE);
 
-        isGridView = false;
+        isGridView = true;
         isFilterApplied = false;
         // Set sortListText text
         if (sortBy.equalsIgnoreCase("top seller")) {
@@ -162,7 +162,7 @@ public class Category_Products extends Fragment {
         RequestFilters(categoryID);
 
         // Initialize GridLayoutManager and LinearLayoutManager
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager = new GridLayoutManager(getContext(), 3);
         linearLayoutManager = new LinearLayoutManager(getContext());
         if (categoryProductsList.size() < 3)
             TopBar.setVisibility(View.INVISIBLE);
