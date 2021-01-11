@@ -37,16 +37,5 @@
         android:icon="@drawable/user"
         android:title="ACCOUNT"
         app:showAsAction="ifRoom" />
-<!--    <item-->
-<!--        android:id="@+id/walletSettlementFragment"-->
-<!--        android:enabled="false"-->
-<!--        android:icon="@drawable/transaction"-->
-<!--        android:title="Settlement"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:visible="false"/>-->
-
-
-
-
 
 </menu>

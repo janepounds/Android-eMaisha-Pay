@@ -23,7 +23,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -91,8 +93,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     LinearLayout save_address_layout;
 
     EditText input_name,  input_phone;
-
     DialogLoader dialogLoader;
+
+    Toolbar toolbar;
+    public static ActionBar actionBar;
 
     //LocationPicker.
     /*Edited  28-Dec-18*/
@@ -163,6 +167,11 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         rootView = inflater.inflate(R.layout.buy_inputs_address, container, false);
 
         setHasOptionsMenu(true);
+        toolbar = rootView.findViewById(R.id.main_Toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         // noInternetDialog.show();
 

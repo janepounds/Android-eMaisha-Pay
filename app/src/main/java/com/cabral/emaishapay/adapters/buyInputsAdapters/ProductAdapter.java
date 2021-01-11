@@ -41,6 +41,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.CropSpinnerAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -269,8 +270,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                     // Navigate to Login Activity
                     Intent i = new Intent(context, Login.class);
                     context.startActivity(i);
-                    ((WalletHomeActivity) context).finish();
-                    ((WalletHomeActivity) context).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+                    ((WalletBuySellActivity) context).finish();
+                    ((WalletBuySellActivity) context).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
                 }
             });
 
@@ -289,9 +290,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                 FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
-//                if (((WalletHomeActivity) context).currentFragment != null)
+//                if (((WalletBuySellActivity) context).currentFragment != null)
 //                    fragmentManager.beginTransaction()
-//                            .hide(((WalletHomeActivity) context).currentFragment)
+//                            .hide(((WalletBuySellActivity) context).currentFragment)
 //                            .add(R.id.nav_host_fragment, fragment)
 //                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                            .addToBackStack(null).commit();
@@ -319,7 +320,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
                 Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
 
                 if (currentFragment != null)
@@ -411,7 +412,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
                         fragment.setArguments(itemInfo);
                         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                        FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+                        FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.nav_host_fragment, fragment)
 //                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -427,7 +428,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                             if (start > server) {
                                 Snackbar.make(view, context.getString(R.string.cannot_add_upcoming), Snackbar.LENGTH_SHORT).show();
                             } else {
-                                Utilities.animateCartMenuIcon(context, (WalletHomeActivity) context);
+                                Utilities.animateCartMenuIcon(context, (WalletBuySellActivity) context);
                                 // Add Product to User's Cart
                                 addProductToCart(product);
 
@@ -442,7 +443,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
                                 Snackbar.make(view, context.getString(R.string.outOfStock), Snackbar.LENGTH_SHORT).show();
                             } else {
-                                Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletHomeActivity) context);
+                                Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
                                 // Add Product to User's Cart
                                 addProductToCart(product);
 
@@ -681,7 +682,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 );
 
         // Recreate the OptionsMenu
-        ((WalletHomeActivity) context).invalidateOptionsMenu();
+        ((WalletBuySellActivity) context).invalidateOptionsMenu();
     }
 
     public String nFormate(double d) {
