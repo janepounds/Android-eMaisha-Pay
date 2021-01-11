@@ -185,7 +185,7 @@ public class Product_Description extends Fragment {
             Fragment fragment = new ProductRatingReviewListFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_fragment_container, fragment)
+                    .replace(R.id.nav_host_fragment, fragment)
                     .addToBackStack(null).commit();
         });
 

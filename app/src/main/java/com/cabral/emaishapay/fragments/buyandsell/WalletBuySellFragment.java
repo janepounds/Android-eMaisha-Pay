@@ -58,7 +58,10 @@ public class WalletBuySellFragment extends Fragment {
     public static EditText searchView;
     public static ImageView searchIcon;
     PopularProductsFragment popularProducts;
+    ViewAllPopularProducts viewAllPopularProducts;
     TopDealsFragment topDeals;
+    ViewAllTopDeals viewAllTopDeals;
+    TextView view_all_most_popular,view_all_deals;
 
 
 
@@ -73,6 +76,8 @@ public class WalletBuySellFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
+        view_all_most_popular = view.findViewById(R.id.btn_view_all_most_popular);
+        view_all_deals = view.findViewById(R.id.btn_view_all_deals);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
         //toolbar.setTitle("Buy and Sell");
@@ -99,7 +104,23 @@ public class WalletBuySellFragment extends Fragment {
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
         bottomNavigationView.setItemIconTintList(null);
 
+        //navigatigate to view all most popular
+        view_all_most_popular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewAllPopularProducts = new ViewAllPopularProducts();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, viewAllPopularProducts).commit();
+            }
+        });
 
+        //navigate to view all deals
+        view_all_deals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewAllTopDeals = new ViewAllTopDeals();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment,viewAllTopDeals).commit();
+            }
+        });
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
