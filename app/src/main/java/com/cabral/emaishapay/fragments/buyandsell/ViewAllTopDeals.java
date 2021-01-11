@@ -58,7 +58,7 @@ public class ViewAllTopDeals extends Fragment {
         recyclerView = rootView.findViewById(R.id.view_all_recycler);
         toolbar = rootView.findViewById(R.id.toolbar_view_all);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Popular Products");
+        toolbar.setTitle("Top Deals");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Initialize the CategoryListAdapter for RecyclerView
