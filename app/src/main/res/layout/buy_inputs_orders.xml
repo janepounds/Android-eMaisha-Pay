@@ -24,7 +24,7 @@
 
         <ImageView
             android:tint="@color/dark_gray"
-            android:src="@drawable/ic_cart_empty"
+            android:src="@drawable/ic_card"
             android:layout_width="80dp"
             android:layout_height="80dp"
             tools:ignore="UseAppTint" />
@@ -54,8 +54,7 @@
             android:paddingEnd="12dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/button_margin"
-            app:backgroundTint="@color/colorAccentGreen"
-            android:background="@drawable/rounded_corners_button_green" />
+            android:background="@drawable/rectangular_green_solid" />
     </LinearLayout>
 
     <FrameLayout

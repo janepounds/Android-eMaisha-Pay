@@ -16,10 +16,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@drawable/ic_location"
+            android:src="@drawable/ic_location_placeholder"
             android:layout_width="140dp"
-            android:layout_height="140dp"
-            app:tint="@color/grey" />
+            android:layout_height="140dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,8 +45,7 @@
             android:textSize="@dimen/button_text_size"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/button_margin"
-            app:backgroundTint="@color/colorAccentGreen"
-            android:background="@drawable/rounded_corners_button_green" />
+            android:background="@drawable/rectangular_green_solid" />
     </LinearLayout>
 
     <FrameLayout
@@ -71,8 +69,7 @@
             android:translationZ="3dp"
             android:layout_gravity="bottom|end"
             android:layout_marginRight="@dimen/fab_margin"
-            android:layout_marginBottom="50dp"
-            app:backgroundTint="@color/colorAccentGreen" />
+            android:layout_marginBottom="50dp"/>
 
     </FrameLayout>
 

@@ -147,7 +147,7 @@
                         app:srcCompat="@drawable/ic_add_white_24dp"
                         android:scaleType="centerInside"
                         android:tint="@color/white"
-                        android:background="@drawable/round_button_dark_green" />
+                        android:background="@drawable/rounded_corners_button" />
 
                 </LinearLayout>
 
@@ -175,7 +175,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="end"
-                    android:textColor="@color/colorAccentGreen" />
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 

@@ -96,7 +96,7 @@ public class My_Cart extends Fragment {
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         toolbar = rootView.findViewById(R.id.toolbar_product_home);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(getString(R.string.actionCart));
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("My Cart");
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
