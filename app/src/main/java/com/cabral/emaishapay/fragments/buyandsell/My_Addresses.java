@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -53,6 +55,7 @@ public class My_Addresses extends Fragment {
 
     DialogLoader dialogLoader;
     static AddressListAdapter addressListAdapter;
+    Toolbar toolbar;
 
     List<AddressDetails> addressesList = new ArrayList<>();
 
@@ -69,9 +72,13 @@ public class My_Addresses extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_my__addresses, container, false);
         setHasOptionsMenu(true);
+        toolbar = rootView.findViewById(R.id.toolbar_addresses);
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.actionAddresses));
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.actionAddresses));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         // noInternetDialog.show();
@@ -98,7 +105,7 @@ public class My_Addresses extends Fragment {
             args.putBoolean("isUpdate", false);
             fragment.setArguments(args);
 
-            FragmentManager fragmentManager = ((WalletHomeActivity) getContext()).getSupportFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //            if (((WalletHomeActivity) getActivity()).currentFragment != null)
 //                fragmentManager.beginTransaction()
 //                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
@@ -106,7 +113,7 @@ public class My_Addresses extends Fragment {
 //                        .addToBackStack(null).commit();
 //            else
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_fragment_container, fragment)
+                        .add(R.id.nav_host_fragment, fragment)
                         .addToBackStack(null).commit();
         });
 
@@ -118,7 +125,7 @@ public class My_Addresses extends Fragment {
             args.putBoolean("isUpdate", false);
             fragment.setArguments(args);
 
-            FragmentManager fragmentManager = ((WalletHomeActivity) getContext()).getSupportFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //            if (((WalletHomeActivity) getActivity()).currentFragment != null)
 //                fragmentManager.beginTransaction()
 //                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
@@ -126,7 +133,7 @@ public class My_Addresses extends Fragment {
 //                        .addToBackStack(null).commit();
 //            else
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_fragment_container, fragment)
+                        .add(R.id.nav_host_fragment, fragment)
                         .addToBackStack(null).commit();
         });
 

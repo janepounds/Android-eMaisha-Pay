@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.buyandsell;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -53,6 +58,8 @@ public class My_Orders extends Fragment {
 
     DialogLoader dialogLoader;
     OrdersListAdapter ordersListAdapter;
+    Toolbar toolbar;
+    private Context context;
 
     List<OrderDetails> ordersList = new ArrayList<>();
 
@@ -68,13 +75,22 @@ public class My_Orders extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_orders, container, false);
+        toolbar = rootView.findViewById(R.id.toolbar_orders);
         setHasOptionsMenu(true);
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
@@ -110,9 +126,9 @@ public class My_Orders extends Fragment {
                 // Navigate to Products Fragment
                 Fragment fragment = new Products();
                 fragment.setArguments(bundle);
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_fragment_container, fragment)
+                        .replace(R.id.nav_host_fragment, fragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(getString(R.string.actionCart)).commit();
             }
@@ -258,7 +274,10 @@ public class My_Orders extends Fragment {
 //        searchItem.setVisible(false);
         cartItem.setVisible(false);
     }
-    
-   
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
 
