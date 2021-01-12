@@ -170,6 +170,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         toolbar = rootView.findViewById(R.id.main_Toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();

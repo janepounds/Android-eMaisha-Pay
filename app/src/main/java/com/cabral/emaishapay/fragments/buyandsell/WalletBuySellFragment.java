@@ -21,8 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -52,7 +56,6 @@ public class WalletBuySellFragment extends Fragment {
 
 
 
-    FragmentManager fm;
     private Toolbar toolbar;
     @SuppressLint("StaticFieldLeak")
     public static EditText searchView;
@@ -86,8 +89,10 @@ public class WalletBuySellFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setElevation(0.5f);
+
         // Get FragmentManager
-        FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager  = ((WalletBuySellActivity) getActivity()).getSupportFragmentManager();
+        fragmentManager=getFragmentManager();
 
         // Add Top_Seller Fragment to specified FrameLayout
         popularProducts = new PopularProductsFragment();
@@ -97,9 +102,6 @@ public class WalletBuySellFragment extends Fragment {
         topDeals = new TopDealsFragment();
         fragmentManager.beginTransaction().replace(R.id.layout_deals,topDeals).commit();
 
-        // Disable the bottom navigation from showing when you come back from payment methods fragment
-        WalletHomeActivity walletHomeActivity = new WalletHomeActivity();
-        walletHomeActivity.disableNavigation();
 
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
         bottomNavigationView.setItemIconTintList(null);
@@ -109,7 +111,11 @@ public class WalletBuySellFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 viewAllPopularProducts = new ViewAllPopularProducts();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, viewAllPopularProducts).commit();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment2, viewAllPopularProducts)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null).commit();
+
             }
         });
 
@@ -118,7 +124,9 @@ public class WalletBuySellFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 viewAllTopDeals = new ViewAllTopDeals();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment,viewAllTopDeals).commit();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2,viewAllTopDeals)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null).commit();
             }
         });
 

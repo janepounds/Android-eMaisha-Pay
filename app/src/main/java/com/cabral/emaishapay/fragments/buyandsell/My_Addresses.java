@@ -126,12 +126,12 @@ public class My_Addresses extends Fragment {
             fragment.setArguments(args);
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-                        .add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(null).commit();
-            else
+//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
+//                fragmentManager.beginTransaction()
+//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+//                        .add(R.id.nav_host_fragment2, fragment)
+//                        .addToBackStack(null).commit();
+//            else
                 fragmentManager.beginTransaction()
                         .add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(null).commit();

@@ -176,6 +176,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottomNavigationView.setItemIconTintList(null);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        currentFragment=fragmentManager.getPrimaryNavigationFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
