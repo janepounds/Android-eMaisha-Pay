@@ -552,7 +552,7 @@ public class Product_Description extends Fragment {
 
         String description = productDetails.getProductsDescription();
         String styleSheet = "<style> " + "@font-face {font-family: 'JosefinSans-Regular'; src: url('file:///android_asset/fonts/JosefinSans-Regular.ttf');} " +
-                "body{background:#ffffff; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
+                "body{background:#F1F5F8; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
                 "p{color:#757575;} " +
                 "img{display:inline; height:auto; max-width:100%;}" +
                 "</style>";
@@ -859,7 +859,7 @@ public class Product_Description extends Fragment {
                     sliderImageView = v.findViewById(com.daimajia.slider.library.R.id.daimajia_slider_image);
 
                     // Set ScaleType of ImageView
-                    sliderImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    sliderImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     bindEventAndShow(v, sliderImageView);
 
                     return v;

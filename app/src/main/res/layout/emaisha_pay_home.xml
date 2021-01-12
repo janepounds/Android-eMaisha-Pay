@@ -468,7 +468,7 @@
                     android:textColor="#404040"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:visibility="visible"/>
+                    android:visibility="gone"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_transact_with_customers"
                     android:layout_width="match_parent"
@@ -480,7 +480,7 @@
                     android:background="@drawable/background_round_white"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_account_opening"
@@ -733,7 +733,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/label_transactions"
                     android:layout_margin="20dp" />
                 <TextView
@@ -758,9 +758,8 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:visibility="gone"
-                    android:layout_marginStart="@dimen/dimen_20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/recycler_view"/>
+                    android:layout_margin="20dp"
+                    android:layout_below="@id/label_transactions"/>
 
 
             </RelativeLayout>
