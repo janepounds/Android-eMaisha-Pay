@@ -319,7 +319,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
                 Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
 
                 if (currentFragment != null)

@@ -757,7 +757,7 @@
                     android:alpha=".4"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/recycler_view"/>

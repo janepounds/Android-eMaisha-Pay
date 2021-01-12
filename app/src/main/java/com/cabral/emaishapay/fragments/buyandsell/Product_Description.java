@@ -451,7 +451,7 @@ public class Product_Description extends Fragment {
         Snackbar.make(requireActivity().findViewById(android.R.id.content), context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
 
         // Recreate the OptionsMenu
-        ((WalletHomeActivity) context).invalidateOptionsMenu();
+        ((WalletBuySellActivity) context).invalidateOptionsMenu();
 
         Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
         // Navigate to My_Cart Fragment
