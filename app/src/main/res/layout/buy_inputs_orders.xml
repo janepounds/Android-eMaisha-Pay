@@ -22,9 +22,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orders_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp"
-        android:layout_marginTop="?actionBarSize"/>
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="?actionBarSize"/>
 
     <LinearLayout
         android:gravity="center"
@@ -73,6 +74,8 @@
         android:id="@+id/banner_adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"></FrameLayout>
+        android:layout_alignParentBottom="true">
+
+    </FrameLayout>
 
 </RelativeLayout>
