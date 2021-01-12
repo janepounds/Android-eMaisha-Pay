@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,11 +62,13 @@ public class ViewAllPopularProducts extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar_view_all);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Popular Products");
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // Initialize the CategoryListAdapter for RecyclerView
-        popularProductsAdapter = new ProductAdapter(getActivity(),getFragmentManager(),popularProductsList,false,false);
+        popularProductsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(popularProductsAdapter);
 
@@ -132,5 +136,23 @@ public class ViewAllPopularProducts extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.home:
+                FragmentManager fm = getFragmentManager();
+
+                // Check if BackStack has some Fragments
+                if (fm.getBackStackEntryCount() > 0) {
+                    // Pop previous Fragment
+                    fm.popBackStack();
+
+                }
+                break;
+        }
+        return true;
     }
 }

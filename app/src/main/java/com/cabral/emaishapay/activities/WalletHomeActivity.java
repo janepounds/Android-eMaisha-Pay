@@ -176,6 +176,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottomNavigationView.setItemIconTintList(null);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        currentFragment=fragmentManager.getPrimaryNavigationFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -189,8 +190,6 @@ public class WalletHomeActivity extends AppCompatActivity{
                         return true;
 
                     case R.id.walletAccountFragment :
-                        if (currentFragment == walletAccountFragment)
-                            return false;
                         if(walletAccountFragment == null) {
                             walletAccountFragment = new WalletAccountFragment();
                             if (currentFragment == null)
@@ -211,8 +210,6 @@ public class WalletHomeActivity extends AppCompatActivity{
                         return true;
 
                     case R.id.walletHomeFragment :
-                        if (currentFragment == defaultHomeFragment)
-                            return false;
                         if(defaultHomeFragment == null) {
                             defaultHomeFragment = new WalletHomeFragment();
                             if (currentFragment == null)
@@ -233,8 +230,6 @@ public class WalletHomeActivity extends AppCompatActivity{
                         return true;
 
                         default:
-                            if (currentFragment == defaultHomeFragment)
-                                return false;
                             fragmentManager.beginTransaction()
                                     .add(R.id.nav_host_fragment, defaultHomeFragment)
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

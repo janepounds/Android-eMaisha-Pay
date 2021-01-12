@@ -100,40 +100,40 @@ public class My_Addresses extends Fragment {
 
         addAddressButton.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
-            Fragment fragment = new Shipping_Address(null, My_Addresses.this);
+            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", false);
             fragment.setArguments(args);
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-//                fragmentManager.beginTransaction()
-//                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-//                        .add(R.id.main_fragment_container, fragment)
-//                        .addToBackStack(null).commit();
-//            else
+            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
                 fragmentManager.beginTransaction()
-                        .add(R.id.nav_host_fragment, fragment)
+                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+                        .add(R.id.nav_host_fragment2, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(null).commit();
         });
 
         // Handle Click event of add_address_fab FAB
         add_address_fab.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
-            Fragment fragment = new Shipping_Address(null, My_Addresses.this);
+            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", false);
             fragment.setArguments(args);
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
 //                fragmentManager.beginTransaction()
-//                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-//                        .add(R.id.main_fragment_container, fragment)
+//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+//                        .add(R.id.nav_host_fragment2, fragment)
 //                        .addToBackStack(null).commit();
 //            else
                 fragmentManager.beginTransaction()
-                        .add(R.id.nav_host_fragment, fragment)
+                        .add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(null).commit();
         });
 

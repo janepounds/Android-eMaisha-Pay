@@ -48,6 +48,8 @@ public class WalletAccountFragment extends Fragment {
     private String label_details;
 
 
+    public WalletAccountFragment(){}
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
