@@ -114,12 +114,12 @@ public class Categories_3 extends Fragment {
 
         categoryListAdapter.notifyDataSetChanged();
 
-        WalletBuySellFragment.searchIcon.setOnClickListener(v -> {
-            if ((WalletBuySellFragment.searchView.getText().toString().trim().isEmpty()) || (WalletBuySellFragment.searchView.getText().toString().trim() == null)) {
+        WalletBuyFragment.searchIcon.setOnClickListener(v -> {
+            if ((WalletBuyFragment.searchView.getText().toString().trim().isEmpty()) || (WalletBuyFragment.searchView.getText().toString().trim() == null)) {
                 Toast.makeText(context, "Search Text is empty", Toast.LENGTH_SHORT).show();
             } else {
                 Bundle bundle = new Bundle();
-                bundle.putString("searchKey", WalletBuySellFragment.searchView.getText().toString());
+                bundle.putString("searchKey", WalletBuyFragment.searchView.getText().toString());
                 // Navigate to SearchFragment Fragment
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 Fragment searchFragment = new SearchFragment();

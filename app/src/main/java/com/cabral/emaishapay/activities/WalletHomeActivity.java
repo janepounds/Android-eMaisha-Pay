@@ -30,7 +30,7 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
-import com.cabral.emaishapay.fragments.buy_fragments.WalletBuySellFragment;
+import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,7 +99,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static BottomNavigationView bottomNavigationView;
 
     Fragment defaultHomeFragment;
-    WalletBuySellFragment buysellFragment;
+    WalletBuyFragment buysellFragment;
     WalletAccountFragment walletAccountFragment;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
@@ -155,7 +155,7 @@ public class WalletHomeActivity extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
                 switch (item.getItemId()){
-                    case R.id.walletBuySellFragment :
+                    case R.id.WalletBuyFragment :
                         bottomNavigationView.postDelayed(() -> {
                             startActivity(new Intent(WalletHomeActivity.this, WalletBuySellActivity.class));
                         }, 300);

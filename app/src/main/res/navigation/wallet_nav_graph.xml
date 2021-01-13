@@ -216,7 +216,7 @@
         android:name="com.cabral.emaishapay.fragments.BusinessAccountFragment"
         android:label="Merchant Details" />
     <activity
-        android:id="@+id/walletBuySellFragment"
+        android:id="@+id/WalletBuyFragment"
         android:name="com.cabral.emaishapay.activities.WalletBuySellActivity"
         android:label=" "
         tools:layout="@layout/activity_wallet_buy_sell"/>

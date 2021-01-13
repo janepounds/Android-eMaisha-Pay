@@ -16,7 +16,7 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
-import com.cabral.emaishapay.fragments.buy_fragments.WalletBuySellFragment;
+import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -66,7 +66,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
         });
 
 
-        defaultHomeFragment =new WalletBuySellFragment(WalletBuySellActivity.this, getSupportFragmentManager());
+        defaultHomeFragment =new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setItemIconTintList(null);

@@ -19,7 +19,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/walletBuySellFragment"
+        android:id="@+id/WalletBuyFragment"
         android:enabled="true"
         android:icon="@drawable/ic_buy_sell"
         android:title="BUY &amp; SELL"

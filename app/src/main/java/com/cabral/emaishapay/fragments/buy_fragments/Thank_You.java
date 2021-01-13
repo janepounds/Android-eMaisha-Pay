@@ -68,7 +68,7 @@ public class Thank_You extends Fragment {
             // Navigate to HomePage Fragment
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            Fragment buyinputshome = new WalletBuySellFragment(getContext(),fragmentManager);
+            Fragment buyinputshome = new WalletBuyFragment(getContext(),fragmentManager);
 
             fragmentManager.beginTransaction()
                     //.hide(currentFragment)

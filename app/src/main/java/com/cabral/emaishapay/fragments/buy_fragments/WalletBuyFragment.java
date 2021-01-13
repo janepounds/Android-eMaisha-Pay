@@ -40,9 +40,9 @@ import java.util.Objects;
 
 import am.appwise.components.ni.NoInternetDialog;
 
-public class WalletBuySellFragment extends Fragment {
+public class WalletBuyFragment extends Fragment {
     private Context context;
-    private static final String TAG = "WalletBuySellFragment";
+    private static final String TAG = "WalletBuyFragment";
     StartAppRequests startAppRequests;
 
     List<ProductDetails> specialDealsList = new ArrayList<>();
@@ -62,7 +62,7 @@ public class WalletBuySellFragment extends Fragment {
     ViewAllTopDeals viewAllTopDeals;
     TextView view_all_most_popular,view_all_deals;
 
-    public WalletBuySellFragment(Context context, FragmentManager fragmentManager) {
+    public WalletBuyFragment(Context context, FragmentManager fragmentManager) {
         this.context=context;
         this.fragmentManager=fragmentManager;
     }
