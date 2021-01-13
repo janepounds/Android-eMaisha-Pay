@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -117,6 +118,7 @@ public class Category_Products extends Fragment {
         toolbar.setTitle(getString(R.string.actionShop)+" "+CategoryName);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
 //        DashboardActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         // Get the Customer's ID from SharedPreferences
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());

@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.Maps.PlacesFieldSelector;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ShippingTimeSlotsAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -174,7 +175,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         // noInternetDialog.show();
-
+        WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         if (getArguments() != null) {
             if (getArguments().containsKey("isUpdate")) {
                 isUpdate = getArguments().getBoolean("isUpdate", false);

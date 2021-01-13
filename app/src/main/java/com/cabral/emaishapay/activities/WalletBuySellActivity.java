@@ -7,6 +7,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -33,6 +34,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     public static ActionBar actionBar;
+    public static BottomNavigationView bottomNavigationView;
     public Fragment currentFragment, defaultHomeFragment;
 
     @Override
@@ -58,6 +60,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
                 actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
 
             actionBar.setHomeButtonEnabled(true);
@@ -68,7 +71,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
         defaultHomeFragment =new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         setupDefaultHomePage();
@@ -84,13 +87,14 @@ public class WalletBuySellActivity extends AppCompatActivity {
                 selectedFragment = new WalletHomeFragment(WalletBuySellActivity.this, getSupportFragmentManager());
                 break;
             case R.id.walletOrdersFragment:
-                selectedFragment = new My_Orders();
+                selectedFragment = new My_Orders(false);
                 break;
             case R.id.walletAddressesFragment:
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
                 selectedFragment = new My_Addresses(new My_Cart());
                 break;
         }
-
+        WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, selectedFragment).commit();
         currentFragment=selectedFragment;
         return true;
@@ -145,15 +149,17 @@ public class WalletBuySellActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
 //            if (currentFragment == null)
 //                fragmentManager.beginTransaction()
-//                        .add(R.id.nav_host_fragment, fragment)
+//                        .add(R.id.nav_host_fragment2, fragment)
 //                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                        .addToBackStack(getString(R.string.actionHome)).commit();
 //            else
             fragmentManager.beginTransaction()
 //                        .hide(currentFragment)
-                    .replace(R.id.nav_host_fragment, fragment)
+                    .replace(R.id.nav_host_fragment2, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .addToBackStack(null).commit();
+
+            WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         });
 
         // Tint Menu Icons with the help of static method of Utilities class

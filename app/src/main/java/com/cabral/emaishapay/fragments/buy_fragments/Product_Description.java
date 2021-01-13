@@ -165,7 +165,7 @@ public class Product_Description extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         // noInternetDialog.show();
 
@@ -180,7 +180,7 @@ public class Product_Description extends Fragment {
             Fragment fragment = new ProductRatingReviewListFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, fragment)
+                    .replace(R.id.nav_host_fragment2, fragment)
                     .addToBackStack(null).commit();
         });
 
@@ -225,7 +225,6 @@ public class Product_Description extends Fragment {
 
         // Get product Info from bundle arguments
         if (getArguments() != null) {
-
             if (getArguments().containsKey("itemID")) {
                 productID = getArguments().getInt("itemID");
 

@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -109,7 +110,7 @@ public class WalletBuyFragment extends Fragment {
                         .replace(R.id.nav_host_fragment2, viewAllPopularProducts)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null).commit();
-
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -121,6 +122,7 @@ public class WalletBuyFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2,viewAllTopDeals)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .addToBackStack(null).commit();
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -129,8 +131,6 @@ public class WalletBuyFragment extends Fragment {
         startAppRequests = new StartAppRequests(requireContext());
 
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
-
-
 
         Log.d(TAG, "onCreateView: Popular"+popularProductsList);
         Log.d(TAG, "onCreateView: special"+specialDealsList);

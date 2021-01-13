@@ -338,7 +338,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                         FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
                         fragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment, fragment)
+                                .replace(R.id.nav_host_fragment2, fragment)
 //                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 

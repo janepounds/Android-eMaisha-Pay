@@ -72,7 +72,7 @@ public class Thank_You extends Fragment {
 
             fragmentManager.beginTransaction()
                     //.hide(currentFragment)
-                    .add(R.id.nav_host_fragment, buyinputshome)
+                    .add(R.id.nav_host_fragment2, buyinputshome)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(getString(R.string.actionHome)).commit();
 
