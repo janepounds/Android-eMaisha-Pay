@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,10 +36,11 @@ public class TopDealsFragment extends Fragment {
     List<ProductDetails> topDealsList;
     private RecyclerView recyclerView;
     private Context context;
+    FragmentManager fragmentManager;
     private ProductAdapter topDealsAdapter;
 
-    public TopDealsFragment() {
-
+    public TopDealsFragment(FragmentManager fragmentManager) {
+        this.fragmentManager=fragmentManager;
     }
 
     @Override
@@ -54,13 +57,12 @@ public class TopDealsFragment extends Fragment {
         topDealsList = new ArrayList<>();
         // RecyclerView has fixed Size
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         // Initialize the CategoryListAdapter for RecyclerView
-        topDealsAdapter = new ProductAdapter(getActivity(),getFragmentManager(),topDealsList,false,false);
+        topDealsAdapter = new ProductAdapter(getActivity(),fragmentManager,topDealsList,false,false);
 
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(topDealsAdapter);
-//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 
         RequestSpecialDeals();
@@ -77,6 +79,7 @@ public class TopDealsFragment extends Fragment {
 
         GetAllProducts getAllProducts = new GetAllProducts();
         getAllProducts.setPageNumber(0);
+        getAllProducts.setLimit(3);
         getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("special");

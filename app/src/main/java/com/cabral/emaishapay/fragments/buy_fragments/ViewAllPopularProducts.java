@@ -61,7 +61,6 @@ public class ViewAllPopularProducts extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar_view_all);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Popular Products");
-        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -137,21 +136,4 @@ public class ViewAllPopularProducts extends Fragment {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.home:
-                FragmentManager fm = getFragmentManager();
-
-                // Check if BackStack has some Fragments
-                if (fm.getBackStackEntryCount() > 0) {
-                    // Pop previous Fragment
-                    fm.popBackStack();
-
-                }
-                break;
-        }
-        return true;
-    }
 }

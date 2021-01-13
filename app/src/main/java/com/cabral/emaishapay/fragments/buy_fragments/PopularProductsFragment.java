@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,9 +37,11 @@ public class PopularProductsFragment extends Fragment {
     List<ProductDetails> popularProductsList= new ArrayList<>();
     private RecyclerView recyclerView;
     private Context context;
+    FragmentManager fragmentManager;
     private ProductAdapter popularProductsAdapter;
 
-    public PopularProductsFragment() {
+    public PopularProductsFragment(FragmentManager fragmentManager) {
+        this.fragmentManager=fragmentManager;
     }
 
 
@@ -56,10 +60,10 @@ public class PopularProductsFragment extends Fragment {
 
         // RecyclerView has fixed Size
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         // Initialize the CategoryListAdapter for RecyclerView
-        popularProductsAdapter = new ProductAdapter(getActivity(),getFragmentManager(),popularProductsList,false,false);
+        popularProductsAdapter = new ProductAdapter(getActivity(),fragmentManager,popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(popularProductsAdapter);
 
@@ -82,6 +86,7 @@ public class PopularProductsFragment extends Fragment {
     public void RequestTopSellers() {
 
         GetAllProducts getAllProducts = new GetAllProducts();
+        getAllProducts.setLimit(3);
         getAllProducts.setPageNumber(0);
         getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));

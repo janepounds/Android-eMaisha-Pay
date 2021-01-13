@@ -89,11 +89,11 @@ public class WalletBuyFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setElevation(0.5f);
 
         // Add Top_Seller Fragment to specified FrameLayout
-        popularProducts = new PopularProductsFragment();
+        popularProducts = new PopularProductsFragment(fragmentManager);
         fragmentManager.beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
 
         //Add Deals Fragment to specified FrameLayout
-        topDeals = new TopDealsFragment();
+        topDeals = new TopDealsFragment(fragmentManager);
         fragmentManager.beginTransaction().replace(R.id.layout_deals,topDeals).commit();
 
 
@@ -157,10 +157,7 @@ public class WalletBuyFragment extends Fragment {
     }
 
     public void continueSetup() {
-
         allCategoriesList = ((EmaishaPayApp) getContext().getApplicationContext()).getCategoriesList();
-
-
         // Add corresponding ViewPagers to TabLayouts
 
         Bundle categoryBundle = new Bundle();
@@ -173,8 +170,6 @@ public class WalletBuyFragment extends Fragment {
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
-
-
     }
 
 

@@ -14,6 +14,9 @@ public class GetAllProducts {
     @SerializedName("page_number")
     @Expose
     private int pageNumber;
+    @SerializedName("limit")
+    @Expose
+    private int limit;
     @SerializedName("language_id")
     @Expose
     private int languageId;
@@ -122,4 +125,11 @@ public class GetAllProducts {
         this.price = price;
     }
 
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 }
