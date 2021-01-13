@@ -140,12 +140,12 @@
     <string name="drawerClose"> DrawerClose </string>
     <string name="actionCategories"> CATEGORIES </string>
     <string name="actionShop"> Shop </string>
-    <string name="actionCart"> MY CART </string>
-    <string name="actionOrders"> MY ORDERS </string>
+    <string name="actionCart"> My Cart </string>
+    <string name="actionOrders"> My Orders </string>
     <string name="actionAccount"> MY ACCOUNT </string>
-    <string name="actionAddresses"> MY ADDRESSES </string>
-    <string name="actionFavourites"> MY FAVORITES </string>
-    <string name="actionSettings"> SETTINGS </string>
+    <string name="actionAddresses"> My Addresses </string>
+    <string name="actionFavourites"> My Favorites</string>
+    <string name="actionSettings"> Settings </string>
     <string name="actionNews"> News </string>
     <string name="actionBooking" translatable="false"> Dr.CdmKart Appointment Booking </string>
     <string name="actionWhatsApp" translatable="false">Customer Support</string>

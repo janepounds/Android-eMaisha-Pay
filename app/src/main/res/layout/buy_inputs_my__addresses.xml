@@ -62,8 +62,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="?actionBarSize"
+        android:paddingTop="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addresses_recycler"

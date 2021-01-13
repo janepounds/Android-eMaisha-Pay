@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Most Popular"
                     android:textColor="#31244A"
                     android:textSize="18sp"
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/rectangular_green_solid"
                     android:paddingStart="15dp"
@@ -133,7 +133,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_view_all_most_popular"
-                    android:layout_margin="15dp" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:id="@+id/label_deals"
@@ -141,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_most_popular"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Deals"
                     android:textColor="#31244A"
                     android:textSize="18sp"
@@ -153,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_most_popular"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/rectangular_green_solid"
                     android:paddingStart="15dp"
@@ -171,7 +172,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_view_all_deals"
-                    android:layout_margin="15dp" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
             </RelativeLayout>
             </androidx.core.widget.NestedScrollView>
         </RelativeLayout>
