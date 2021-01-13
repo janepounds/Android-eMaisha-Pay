@@ -56,13 +56,14 @@ public class My_Addresses extends Fragment {
     DialogLoader dialogLoader;
     static AddressListAdapter addressListAdapter;
     Toolbar toolbar;
+    Boolean enable_back=true;
 
     List<AddressDetails> addressesList = new ArrayList<>();
 
     private int defaultAddressPosition = -1;
 
 
-    public  My_Addresses(){ }
+    public  My_Addresses(Boolean enable_back){ this.enable_back = enable_back; }
     public My_Addresses(My_Cart my_cart) {
         this.my_cart = my_cart;
     }
@@ -77,7 +78,8 @@ public class My_Addresses extends Fragment {
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.actionAddresses));
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();

@@ -59,11 +59,14 @@ public class My_Orders extends Fragment {
     OrdersListAdapter ordersListAdapter;
     Toolbar toolbar;
     private Context context;
+    Boolean enable_back=true;
 
     List<OrderDetails> ordersList = new ArrayList<>();
 
+    public  My_Orders(Boolean enable_back){
+        this.enable_back=enable_back;
+    }
     public  My_Orders(){
-
     }
 
     @Override
@@ -89,7 +92,8 @@ public class My_Orders extends Fragment {
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.actionOrders));
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
