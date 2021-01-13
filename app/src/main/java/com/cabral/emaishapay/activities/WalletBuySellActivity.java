@@ -13,7 +13,11 @@ import android.view.animation.AnimationUtils;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.customs.NotificationBadger;
+import com.cabral.emaishapay.fragments.WalletHomeFragment;
+import com.cabral.emaishapay.fragments.buyandsell.My_Addresses;
 import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
+import com.cabral.emaishapay.fragments.buyandsell.My_Orders;
+import com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,7 +39,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     public static ActionBar actionBar;
-    public Fragment currentFragment;
+    public Fragment currentFragment, defaultHomeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,8 @@ public class WalletBuySellActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
 
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
@@ -68,18 +72,41 @@ public class WalletBuySellActivity extends AppCompatActivity {
         });
 
 
+        defaultHomeFragment =new WalletBuySellFragment(WalletBuySellActivity.this, getSupportFragmentManager());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setItemIconTintList(null);
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.walletBuyFragment, R.id.walletSellFragment, R.id.walletOrdersFragment, R.id.walletAddressesFragment)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment2);
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setItemIconTintList(null);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        setupDefaultHomePage();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
+        Fragment selectedFragment = null;
+        switch (item.getItemId()) {
+            case R.id.walletBuyFragment:
+                selectedFragment =defaultHomeFragment;
+                break;
+            case R.id.walletSellFragment:
+                selectedFragment = new WalletHomeFragment(WalletBuySellActivity.this, getSupportFragmentManager());
+                break;
+            case R.id.walletOrdersFragment:
+                selectedFragment = new My_Orders();
+                break;
+            case R.id.walletAddressesFragment:
+                selectedFragment = new My_Addresses(new My_Cart());
+                break;
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, selectedFragment).commit();
+        currentFragment=selectedFragment;
+        return true;
+    };
+
+    private void setupDefaultHomePage() {
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment2, defaultHomeFragment).commit();
+        currentFragment = defaultHomeFragment;
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

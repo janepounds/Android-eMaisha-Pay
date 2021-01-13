@@ -66,8 +66,10 @@ public class WalletBuySellFragment extends Fragment {
     ViewAllTopDeals viewAllTopDeals;
     TextView view_all_most_popular,view_all_deals;
 
-
-
+    public WalletBuySellFragment(Context context, FragmentManager fragmentManager) {
+        this.context=context;
+        this.fragmentManager=fragmentManager;
+    }
 
 
     @Override
@@ -89,10 +91,6 @@ public class WalletBuySellFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setElevation(0.5f);
-
-        // Get FragmentManager
-        //fragmentManager  = ((WalletBuySellActivity) getActivity()).getSupportFragmentManager();
-        fragmentManager=getFragmentManager();
 
         // Add Top_Seller Fragment to specified FrameLayout
         popularProducts = new PopularProductsFragment();
@@ -168,7 +166,6 @@ public class WalletBuySellFragment extends Fragment {
 
 
         // Add corresponding ViewPagers to TabLayouts
-        fragmentManager = getFragmentManager();
 
         Bundle categoryBundle = new Bundle();
         categoryBundle.putBoolean("isHeaderVisible", false);
@@ -204,8 +201,6 @@ public class WalletBuySellFragment extends Fragment {
             if (Utilities.hasActiveInternetConnection(getContext())) {
                 // Call the method of StartAppRequests class to process App Startup Requests
                 startAppRequests.RequestAllCategories();
-
-                startAppRequests.RequestSpecialDeals();
 
                 return "1";
             } else {

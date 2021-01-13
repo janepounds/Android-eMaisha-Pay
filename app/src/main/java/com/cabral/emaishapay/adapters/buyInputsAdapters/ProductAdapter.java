@@ -127,22 +127,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             // Get the data model based on Position
             final ProductDetails product = productList.get(position);
 
-//            if (product.getProductsMeasure().size() > 0) {
-//                // Check if the Product is already in the Cart with its measure
-//                String weight = product.getProductsMeasure().get(0).getProducts_weight();
-//                if (!holder.product_weight_spn.getSelectedItem().toString().equalsIgnoreCase(" ")) {
-//                    String[] splited = holder.product_weight_spn.getSelectedItem().toString().split("\\s+");
-//                    weight = splited[0];
-//                }
-//
-//                if (My_Cart.checkCartHasProductAndMeasure(product.getProductsId())) {
-//                    holder.product_checked.setVisibility(View.VISIBLE);
-//                    holder.product_add_cart_btn.setVisibility(View.GONE);
-//                } else {
-//                    holder.product_checked.setVisibility(View.GONE);
-//                    holder.product_add_cart_btn.setVisibility(View.VISIBLE);
-//                }
-//            }
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -206,18 +190,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsPrice())));
                 holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getDiscountPrice())));
 
-//                holder.product_tag_new.setVisibility(View.GONE);
-
 
             } else {
-
-                // Check if the Product is Newly Added with the help of static method of Helper class
-                //if (Utilities.checkNewProduct(product.getProductsDateAdded())) {
-                // Set New Tag and its Text
-                //    holder.product_tag_new.setVisibility(View.VISIBLE);
-                // } else {
-                //    holder.product_tag_new.setVisibility(View.GONE);
-                // }
 
                 // Hide Discount Text and Set Product's Price
                 holder.product_price_old.setVisibility(View.GONE);
@@ -289,7 +263,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
                 fragment.setArguments(itemInfo);
                 //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
 //                if (((WalletBuySellActivity) context).currentFragment != null)
 //                    fragmentManager.beginTransaction()
 //                            .hide(((WalletBuySellActivity) context).currentFragment)
@@ -298,7 +271,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //                            .addToBackStack(null).commit();
 //                else
                     fragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment, fragment)
+                            .replace(R.id.nav_host_fragment2, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null).commit();
 
@@ -309,37 +282,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 }
             });
 
-
-            // Handle the Click event of product_checked ImageView
-            holder.product_title.setOnClickListener(view -> {
-                // Get Product Info
-                Bundle itemInfo = new Bundle();
-                itemInfo.putParcelable("productDetails", product);
-
-                // Navigate to Product_Description of selected Product
-                Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
-                fragment.setArguments(itemInfo);
-                //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-                FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
-                Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
-
-                if (currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(currentFragment)
-                            .add(R.id.main_fragment_container, fragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment, fragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .addToBackStack(null).commit();
-
-                // Add the Product to User's Recently Viewed Products
-                if (!recents_db.getUserRecents().contains(product.getProductsId())) {
-                    recents_db.insertRecentItem(product.getProductsId());
-                }
-            });
 
             // Check the Button's Visibility
             if (!ConstantValues.IS_PRODUCT_CHECKED) {
@@ -421,37 +363,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         // Add the Product to User's Recently Viewed Products
                         if (!recents_db.getUserRecents().contains(product.getProductsId())) {
                             recents_db.insertRecentItem(product.getProductsId());
-                        }
-                    } else {
-
-                        if (isFlash) {
-                            if (start > server) {
-                                Snackbar.make(view, context.getString(R.string.cannot_add_upcoming), Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                Utilities.animateCartMenuIcon(context, (WalletBuySellActivity) context);
-                                // Add Product to User's Cart
-                                addProductToCart(product);
-
-                                holder.product_checked.setVisibility(View.VISIBLE);
-
-                                Snackbar.make(view, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-
-                            }
-                        } else {
-
-                            if (product.getProductsDefaultStock() < 1) {
-
-                                Snackbar.make(view, context.getString(R.string.outOfStock), Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
-                                // Add Product to User's Cart
-                                addProductToCart(product);
-
-                                holder.product_checked.setVisibility(View.VISIBLE);
-
-                                Snackbar.make(view, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-                            }
-
                         }
                     }
 
@@ -579,117 +490,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     }
 
-    //********** Adds the Product to User's Cart *********//
 
-    private void addProductToCart(ProductDetails product) {
-
-        CartProduct cartProduct = new CartProduct();
-
-        double productBasePrice, productFinalPrice = 0.0, attributesPrice = 0;
-        List<CartProductAttributes> selectedAttributesList = new ArrayList<>();
-
-
-        // Check Discount on Product with the help of static method of Helper class
-        final String discount = Utilities.checkDiscount(product.getProductsPrice(), product.getDiscountPrice());
-
-        // Get Product's Price based on Discount
-        if (discount != null) {
-            product.setIsSaleProduct("1");
-            productBasePrice = Double.parseDouble(product.getDiscountPrice());
-        } else {
-            product.setIsSaleProduct("0");
-            productBasePrice = Double.parseDouble(product.getProductsPrice());
-        }
-
-
-        // Get Default Attributes from AttributesList
-        for (int i = 0; i < product.getAttributes().size(); i++) {
-
-            CartProductAttributes productAttribute = new CartProductAttributes();
-
-            // Get Name and First Value of current Attribute
-            Option option = product.getAttributes().get(i).getOption();
-            Value value = product.getAttributes().get(i).getValues().get(0);
-
-
-            // Add the Attribute's Value Price to the attributePrices
-            String attrPrice = value.getPricePrefix() + value.getPrice();
-            attributesPrice += Double.parseDouble(attrPrice);
-
-
-            // Add Value to new List
-            List<Value> valuesList = new ArrayList<>();
-            valuesList.add(value);
-
-
-            // Set the Name and Value of Attribute
-            productAttribute.setOption(option);
-            productAttribute.setValues(valuesList);
-
-
-            // Add current Attribute to selectedAttributesList
-            selectedAttributesList.add(i, productAttribute);
-        }
-
-        if (isFlash) {
-            productFinalPrice = Double.parseDouble(product.getFlashPrice()) + attributesPrice;
-        } else {
-            // Add Attributes Price to Product's Final Price
-            productFinalPrice = productBasePrice + attributesPrice;
-        }
-
-
-        // Set Product's Price and Quantity
-        product.setCustomersBasketQuantity(1);
-        product.setProductsPrice(String.valueOf(productBasePrice));
-        product.setAttributesPrice(String.valueOf(attributesPrice));
-        product.setProductsFinalPrice(String.valueOf(productFinalPrice));
-        //set selected measure/weight
-//
-//        product.setSelectedProductsWeight(we);
-//        product.setSelectedProductsWeightUnit(product.getProductsWeightUnit().get(0));
-
-        product.setProductsQuantity(product.getProductsDefaultStock());
-
-        // Set Product's OrderProductCategory Info
-        String[] categoryIDs = new String[product.getCategories().size()];
-        String[] categoryNames = new String[product.getCategories().size()];
-        if (product.getCategories().size() > 0) {
-
-            for (int i = 0; i < product.getCategories().size(); i++) {
-                categoryIDs[i] = String.valueOf(product.getCategories().get(i).getCategoriesId());
-                categoryNames[i] = product.getCategories().get(i).getCategoriesName();
-            }
-
-            product.setCategoryIDs(TextUtils.join(",", categoryIDs));
-            product.setCategoryNames(TextUtils.join(",", categoryNames));
-        } else {
-            product.setCategoryIDs("");
-            product.setCategoryNames("");
-        }
-        // product.setCategoryNames(product.getCategoryNames());
-
-        product.setTotalPrice(String.valueOf(productFinalPrice));
-
-        // Set Customer's Basket Product and selected Attributes Info
-        cartProduct.setCustomersBasketProduct(product);
-        cartProduct.setCustomersBasketProductAttributes(selectedAttributesList);
-
-        // Add the Product to User's Cart with the help of static method of My_Cart class
-        My_Cart.AddCartItem
-                (
-                        cartProduct
-                );
-
-        // Recreate the OptionsMenu
-        ((WalletBuySellActivity) context).invalidateOptionsMenu();
-    }
-
-    public String nFormate(double d) {
-        NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
-        nf.setMaximumFractionDigits(10);
-        String st = nf.format(d);
-        return st;
-    }
 }
 
