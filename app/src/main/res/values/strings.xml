@@ -183,6 +183,7 @@
     <string name="order_notes"> Order Instructions </string>
     <string name="order_comments"> Order Comments </string>
     <string name="no_of_products"> No. of Products </string>
+    <string name="actionproducemarket">Produce Market</string>
 
 
     <string name="app_terms_services">By creating an account, you agree to our</string>
@@ -458,6 +459,20 @@
         <item>Mobile Money</item>
         <item>Bank Cards</item>
     </string-array>
+    <string-array name="crop_quantity_unit">
+        <item> Unit</item>
+        <item>Kg</item>
+        <item>Boxes</item>
+        <item>Litres</item>
+        <item>Tones</item>
+    </string-array>
+
+    <string-array name="market_price_crops_list">
+        <item>Select Crop</item>
+        <item>Ginger</item>
+        <item>Millet</item>
+        <item>Milk</item>
+    </string-array>
 
     <string-array name="crop_havest_units">
         <item>Select</item>
@@ -499,6 +514,7 @@
     <string name="temp_min">16.8&#xb0;C Min</string>
     <string name="crop">Crop</string>
     <string name="label_confirm">Comfirm</string>
+    <string name="variety">Variety</string>
 
 
     <string name="sponsors" translatable="false">Cabral Tech Ltd</string>
@@ -543,6 +559,14 @@
         <item> Top Seller </item>
         <item> Special Deals </item>
         <item> Most Liked </item>
+    </string-array>
+
+    <string-array name="crop_add_produce">
+        <item> Crop</item>
+        <item>Tomatoes</item>
+        <item>Maize</item>
+        <item>Cassava</item>
+        <item>Irish</item>
     </string-array>
 
     <string-array name="buy_produce_quantity">
