@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.buyandsell.Product_Description;
+import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.order_model.OrderProducts;
 import com.cabral.emaishapay.models.order_model.PostProductsAttributes;
 import com.cabral.emaishapay.models.product_model.Value;

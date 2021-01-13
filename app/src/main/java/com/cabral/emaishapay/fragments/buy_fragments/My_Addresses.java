@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;

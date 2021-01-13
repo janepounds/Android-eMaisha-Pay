@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,10 +24,9 @@ import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.buyandsell.Category_Products;
-import com.cabral.emaishapay.fragments.buyandsell.SubCategories_3;
+import com.cabral.emaishapay.fragments.buy_fragments.Category_Products;
+import com.cabral.emaishapay.fragments.buy_fragments.SubCategories_3;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 
 

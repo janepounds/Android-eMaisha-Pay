@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 
 import android.app.Dialog;
@@ -28,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -44,8 +43,6 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
-import com.cabral.emaishapay.fragments.WalletHomeFragment;
-import com.cabral.emaishapay.fragments.buyandsell.Languages;
 import com.cabral.emaishapay.models.contact_model.ContactUsData;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.user_model.UserDetails;

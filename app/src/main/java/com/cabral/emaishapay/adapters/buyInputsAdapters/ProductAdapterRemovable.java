@@ -35,7 +35,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Recents_BuyInputsDB;
-import com.cabral.emaishapay.fragments.buyandsell.Product_Description;
+import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;

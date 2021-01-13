@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.activities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -14,15 +13,14 @@ import android.view.animation.AnimationUtils;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.customs.NotificationBadger;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
-import com.cabral.emaishapay.fragments.buyandsell.My_Addresses;
-import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
-import com.cabral.emaishapay.fragments.buyandsell.My_Orders;
-import com.cabral.emaishapay.fragments.buyandsell.WalletBuySellFragment;
+import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
+import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
+import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
+import com.cabral.emaishapay.fragments.buy_fragments.WalletBuySellFragment;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.appcompat.widget.Toolbar;
@@ -30,10 +28,6 @@ import androidx.core.graphics.drawable.WrappedDrawable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class WalletBuySellActivity extends AppCompatActivity {
 

@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 
-import com.cabral.emaishapay.fragments.sell.MarketPriceFragment;
-import com.cabral.emaishapay.fragments.sell.MyProduceFragment;
+import com.cabral.emaishapay.fragments.sell_fragment.MarketPriceFragment;
+import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
 
 import java.util.Objects;
 

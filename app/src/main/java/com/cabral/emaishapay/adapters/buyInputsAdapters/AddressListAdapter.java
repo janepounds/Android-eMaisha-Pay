@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -20,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.fragments.buyandsell.My_Addresses;
-import com.cabral.emaishapay.fragments.buyandsell.Nearby_Merchants;
-import com.cabral.emaishapay.fragments.buyandsell.Shipping_Address;
+import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
+import com.cabral.emaishapay.fragments.buy_fragments.Nearby_Merchants;
+import com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.utils.SharedPreferenceHelper;
 
