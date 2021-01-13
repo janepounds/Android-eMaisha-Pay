@@ -68,17 +68,29 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/ic_search_menu24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/etxt_search"
+                android:layout_marginTop="15dp"
+                android:elevation="5dp">
 
+
+                <RelativeLayout
+                    android:id="@+id/layout_maincontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
             <FrameLayout
                 android:id="@+id/main_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_round_white"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_below="@id/etxt_search"
                 android:elevation="@dimen/dimen_5dp">
 
                 <TextView
@@ -94,24 +106,13 @@
 
             </FrameLayout>
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/main_fragment_container"
-                android:layout_marginTop="5dp"
-                android:elevation="5dp">
 
-
-            <RelativeLayout
-                android:id="@+id/layout_maincontent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/label_most_popular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:layout_below="@+id/main_fragment_container"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="Most Popular"
@@ -126,6 +127,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_below="@+id/main_fragment_container"
                     android:background="@drawable/rectangular_green_solid"
                     android:paddingStart="15dp"
                     android:paddingTop="10dp"

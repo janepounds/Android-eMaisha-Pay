@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +11,7 @@
     android:focusable="true"
     android:orientation="vertical">
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -24,9 +25,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
         android:layout_marginBottom="?actionBarSize">
 
         <LinearLayout
@@ -38,48 +40,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:id="@+id/img_slider_and_weights"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_margin="15dp">
+
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/product_cover_slider"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:background="@color/windowBackground"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/background_round_white"
                     custom:auto_cycle="true"
                     custom:indicator_visibility="visible" />
+                    <LinearLayout
+                        android:id="@+id/layout_weights"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/measure_recyclerview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <com.daimajia.slider.library.Indicators.PagerIndicator
                     android:id="@+id/product_slider_indicator"
                     style="@style/AndroidImageSlider_Indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/product_cover_slider"
+                    android:layout_alignBottom="@+id/img_slider_and_weights"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:paddingBottom="20dp"
                     app:selected_color="@color/colorPrimary"
                     app:unselected_color="@color/layoutBackground" />
 
-                <LinearLayout
-                    android:id="@+id/layout_weights"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/product_slider_indicator"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/measure_recyclerview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
-                </LinearLayout>
 
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
                 <TextView
                     android:id="@+id/product_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/layout_weights"
+                    android:layout_below="@+id/img_slider_and_weights"
                     android:gravity="start"
                     android:maxLines="3"
                     android:paddingStart="20dp"
@@ -196,7 +220,8 @@
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                custom:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/second_star"
@@ -211,7 +236,8 @@
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/first_star"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                custom:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/third_star"
@@ -226,7 +252,8 @@
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/second_star"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                custom:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/fourth_star"
@@ -241,7 +268,8 @@
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/third_star"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_star_rate" />
+                                app:srcCompat="@drawable/ic_star_rate"
+                                custom:ignore="VectorDrawableCompat" />
 
                             <ImageView
                                 android:id="@+id/fifth_star"
@@ -256,7 +284,8 @@
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toEndOf="@+id/fourth_star"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_star_border" />
+                                app:srcCompat="@drawable/ic_star_border"
+                                custom:ignore="VectorDrawableCompat" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -301,7 +330,8 @@
                         app:layout_constraintStart_toStartOf="@+id/guideline59"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_add_circle"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/colorPrimary"
+                        custom:ignore="VectorDrawableCompat" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline57"
@@ -473,7 +503,6 @@
                     android:id="@+id/product_tag_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/product_cover_slider"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="-10dp"
@@ -487,14 +516,12 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:visibility="gone" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#31244A"
+                    android:alpha=".13"
+                    android:layout_margin="20dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -558,76 +585,43 @@
             </LinearLayout>
 
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_10dp"
-                android:background="@drawable/rounded_corners_button"
-                android:maxHeight="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline48"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline49">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/continue_shopping_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:text="buy now"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dip"
-                    android:background="@drawable/rounded_cornor_bg_light"
-                    app:srcCompat="@drawable/ic_chevron_right"
-                    app:tint="@color/colorPrimary" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_10dp"
-                android:layout_marginTop="@dimen/dimen_5dp"
-                android:layout_marginEnd="@dimen/dimen_10dp"
-                android:layout_marginBottom="@dimen/dimen_10dp"
-                android:background="@drawable/round_corners_button_darkgray"
-                android:maxHeight="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline47">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/product_cart_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:text="@string/addToCart"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dip"
-                    android:background="@drawable/rounded_cornor_bg_light"
-                    app:srcCompat="@drawable/ic_chevron_right"
-                    app:tint="#535353" />
-            </FrameLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/product_cart_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#444444"
+            android:text="@string/addToCart"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            android:textStyle="bold" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continue_shopping_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:text="buy now"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</RelativeLayout>
