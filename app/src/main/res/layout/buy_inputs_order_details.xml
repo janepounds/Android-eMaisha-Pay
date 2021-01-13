@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/layoutBackgroundLight"
+    android:background="@color/windowBackground"
     android:paddingTop="?actionBarSize"
     android:paddingBottom="?actionBarSize">
 
@@ -44,7 +44,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -347,7 +347,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -418,7 +418,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <TextView
                         android:id="@+id/shipping_method"
@@ -461,7 +461,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/checkout_items_recycler"
@@ -496,7 +496,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -687,7 +687,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <TextView
                         android:id="@+id/buyer_comments"
@@ -731,7 +731,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/textColorSecondaryDark"
                         android:padding="5dp"
-                        android:background="@color/windowBackgroundLight" />
+                        android:background="#d0e5f4" />
 
                     <TextView
                         android:id="@+id/seller_comments"

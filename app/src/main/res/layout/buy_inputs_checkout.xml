@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?actionBarSize"
-    android:background="#FBFBFB">
+    android:background="@color/windowBackground">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_container"

@@ -2,6 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="20dp">
@@ -13,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/windowBackground">
 
             <ImageView
                 android:id="@+id/produce_close"
@@ -272,22 +274,17 @@
                 android:visibility="visible"
                 app:cardCornerRadius="@dimen/dimen_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+
 
                     <ImageView
                         android:id="@+id/produce_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:padding="5dp"
                         app:srcCompat="@drawable/add_default_image"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        tools:ignore="VectorDrawableCompat" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 

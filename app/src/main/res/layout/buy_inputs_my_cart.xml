@@ -26,7 +26,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
-        android:layout_marginTop="?actionBarSize">
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -157,6 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10dp"
                 android:layout_marginLeft="@dimen/dimen_10dp"
+                android:alpha=".6"
                 android:src="@drawable/ic_pin" />
 
             <LinearLayout
@@ -172,17 +174,19 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/dimen_5dp"
                     android:text="Deliver at : Home"
-                    android:textColor="#222"
+                    android:textColor="#31244A"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:alpha=".6"/>
 
                 <TextView
                     android:id="@+id/default_delivery_location2_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Nakibinge Rd, Kampala, Uganda"
-                    android:textColor="#222"
-                    android:textSize="16sp" />
+                    android:textColor="#31244A"
+                    android:textSize="16sp"
+                    android:alpha=".6"/>
             </LinearLayout>
 
 

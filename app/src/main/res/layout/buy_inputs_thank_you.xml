@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/windowBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         android:layout_marginBottom="?actionBarSize"
-        android:background="@color/white"
-        android:orientation="vertical"
+         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
         android:paddingEnd="20dp"
@@ -52,9 +51,8 @@
                     android:layout_height="30dip"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dip"
-                    android:background="@drawable/rounded_cornor_bg_light"
-                    app:srcCompat="@drawable/ic_chevron_right"
-                    app:tint="#FF6969" />
+                    app:srcCompat="@drawable/ic_right_chevron"
+                    tools:ignore="VectorDrawableCompat" />
             </FrameLayout>
 
             <FrameLayout
@@ -88,9 +86,8 @@
                     android:layout_height="30dip"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dip"
-                    android:background="@drawable/rounded_cornor_bg_light"
-                    app:srcCompat="@drawable/ic_chevron_right"
-                    app:tint="#535353" />
+                    app:srcCompat="@drawable/ic_right_chevron"
+                    tools:ignore="VectorDrawableCompat"/>
             </FrameLayout>
 
             <TextView

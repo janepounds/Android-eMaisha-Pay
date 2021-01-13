@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -49,7 +50,7 @@
                     android:text="@string/product_title"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="#31244A" />
 
 
                 <ImageView
@@ -73,8 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/product_price"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/textColorSecondaryDark" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/cart_item_base_price"
@@ -83,8 +83,7 @@
                     android:text="UGX 00.0"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:gravity="end"
-                    android:textColor="@color/colorPrimary" />
+                    android:gravity="end" />
 
             </LinearLayout>
 
@@ -106,8 +105,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/quantity"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/textColorSecondaryDark" />
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0dp"
@@ -147,7 +145,8 @@
                         app:srcCompat="@drawable/ic_add_white_24dp"
                         android:scaleType="centerInside"
                         android:tint="@color/white"
-                        android:background="@drawable/rounded_corners_button" />
+                        android:background="@drawable/rounded_corners_button"
+                        tools:ignore="VectorDrawableCompat" />
 
                 </LinearLayout>
 
@@ -164,18 +163,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/measure"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/textColorSecondaryDark" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/cart_item_measure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10kg"
+                    android:text="0 kg"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:gravity="end"
-                    android:textColor="@color/colorPrimary" />
+                    android:gravity="end" />
 
             </LinearLayout>
 

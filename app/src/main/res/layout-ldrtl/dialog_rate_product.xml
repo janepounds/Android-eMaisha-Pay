@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/windowBackground">
 
 
     <LinearLayout
@@ -47,7 +47,7 @@
         <EditText
             android:id="@+id/dialog_author_name"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/input_field_height"
+            android:layout_height="45dp"
             android:hint="@string/full_name"
             android:inputType="textNoSuggestions"
             android:textColor="@color/textColorSecondaryLight"
@@ -63,7 +63,7 @@
         <EditText
             android:id="@+id/dialog_author_email"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/input_field_height"
+            android:layout_height="45dp"
             android:hint="@string/email_address"
             android:inputType="textEmailAddress|textNoSuggestions"
             android:textColor="@color/textColorSecondaryLight"
@@ -79,7 +79,7 @@
         <EditText
             android:id="@+id/dialog_author_message"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/input_field_height"
+            android:layout_height="45dp"
             android:hint="@string/your_message"
             android:inputType="textMultiLine"
             android:textColor="@color/textColorSecondaryLight"
@@ -117,7 +117,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_gravity="end"
-            android:background="@drawable/rounded_corners_button_accent"
+            android:background="@drawable/rectangular_green_solid"
             android:layout_marginRight="10dp" />
 
     </LinearLayout>

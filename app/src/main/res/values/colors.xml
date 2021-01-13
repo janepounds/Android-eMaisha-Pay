@@ -62,7 +62,7 @@
 
     <color name="windowBackground">#F1F5F8</color>
     <color name="windowBackgroundDark">#F9F9F9</color>
-    <color name="windowBackgroundLight">#f2f2f2</color>
+    <color name="windowBackgroundLight">#d0e5f4</color>
 
     <color name="layoutBackground">#d9d9d9</color>
     <color name="layoutBackgroundDark">#cccccc</color>

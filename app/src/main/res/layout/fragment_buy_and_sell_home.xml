@@ -81,6 +81,15 @@
                 android:layout_below="@id/etxt_search"
                 android:elevation="@dimen/dimen_5dp">
 
+                <TextView
+                    android:id="@+id/text_categories_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Loading Product Categories . . ."
+                    android:padding="30dp"
+                    android:drawablePadding="10dp"
+                    app:drawableTopCompat="@drawable/ic_loop" />
                 <include layout="@layout/buy_inputs_homepage_9" />
 
             </FrameLayout>
