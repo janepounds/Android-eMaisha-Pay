@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -13,17 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,30 +36,17 @@ import com.bumptech.glide.request.target.Target;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
-import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.CropSpinnerAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Recents_BuyInputsDB;
-import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
-import com.cabral.emaishapay.fragments.buyandsell.Product_Description;
-import com.cabral.emaishapay.models.CropSpinnerItem;
-import com.cabral.emaishapay.models.cart_model.CartProduct;
-import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
-import com.cabral.emaishapay.models.product_model.Option;
+import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
-import com.cabral.emaishapay.models.product_model.ProductMeasure;
-import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.utils.Utilities;
-import com.google.android.material.snackbar.Snackbar;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * ProductAdapter is the adapter class of RecyclerView holding List of Products in All_Products and other Product relevant Classes

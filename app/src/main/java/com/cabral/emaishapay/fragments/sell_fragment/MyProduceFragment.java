@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.sell;
+package com.cabral.emaishapay.fragments.sell_fragment;
 
 import android.Manifest;
 import android.app.Activity;

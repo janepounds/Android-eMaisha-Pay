@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ViewPagerCustomAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;

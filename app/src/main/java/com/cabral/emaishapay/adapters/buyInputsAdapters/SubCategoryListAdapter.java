@@ -22,7 +22,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
-import com.cabral.emaishapay.fragments.buyandsell.Products;
+import com.cabral.emaishapay.fragments.buy_fragments.Products;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 
 

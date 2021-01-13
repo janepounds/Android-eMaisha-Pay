@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.fragments.buyandsell.CurrencyFrag;
+import com.cabral.emaishapay.fragments.buy_fragments.CurrencyFrag;
 import com.cabral.emaishapay.models.currency_model.CurrencyList;
 
 import java.util.List;

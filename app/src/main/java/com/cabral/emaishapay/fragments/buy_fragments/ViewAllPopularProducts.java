@@ -1,24 +1,27 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
-import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
@@ -31,15 +34,15 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class PopularProductsFragment extends Fragment {
-    private static final String TAG = "PopularProductsFragment";
+public class ViewAllPopularProducts extends Fragment {
     View rootView;
     List<ProductDetails> popularProductsList= new ArrayList<>();
     private RecyclerView recyclerView;
     private Context context;
     private ProductAdapter popularProductsAdapter;
+    Toolbar toolbar;
 
-    public PopularProductsFragment() {
+    public ViewAllPopularProducts() {
     }
 
 
@@ -53,32 +56,30 @@ public class PopularProductsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.top_deals_fragment, container, false);
-        recyclerView = rootView.findViewById(R.id.layout_top_deals);
+        rootView = inflater.inflate(R.layout.layout_view_all_products, container, false);
+        recyclerView = rootView.findViewById(R.id.view_all_recycler);
+        toolbar = rootView.findViewById(R.id.toolbar_view_all);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Popular Products");
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // RecyclerView has fixed Size
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Initialize the CategoryListAdapter for RecyclerView
-        popularProductsAdapter = new ProductAdapter(getActivity(),getFragmentManager(),popularProductsList,false,false);
+        popularProductsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(popularProductsAdapter);
 
+        // Set the Adapter and LayoutManager to the RecyclerView
+        recyclerView.setAdapter(popularProductsAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        popularProductsAdapter.notifyDataSetChanged();
+
 
         RequestTopSellers();
-
-
-        return rootView;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    public void invalidateProducts(){
-        popularProductsAdapter.notifyDataSetChanged();
+        return  rootView;
     }
 
     public void RequestTopSellers() {
@@ -136,4 +137,21 @@ public class PopularProductsFragment extends Fragment {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.home:
+                FragmentManager fm = getFragmentManager();
+
+                // Check if BackStack has some Fragments
+                if (fm.getBackStackEntryCount() > 0) {
+                    // Pop previous Fragment
+                    fm.popBackStack();
+
+                }
+                break;
+        }
+        return true;
+    }
 }

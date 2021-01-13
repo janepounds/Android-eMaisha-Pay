@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.buyandsell.My_Orders;
-import com.cabral.emaishapay.fragments.buyandsell.Order_Details;
+import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
+import com.cabral.emaishapay.fragments.buy_fragments.Order_Details;
 import com.cabral.emaishapay.models.order_model.OrderDetails;
 
 import java.util.List;

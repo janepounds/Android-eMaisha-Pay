@@ -1,34 +1,21 @@
 package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -42,20 +29,12 @@ import com.bumptech.glide.request.target.Target;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.CropSpinnerAdapter;
-import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
-import com.cabral.emaishapay.fragments.buyandsell.Product_Description;
-import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
-import com.cabral.emaishapay.models.product_model.ProductMeasure;
 import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDealsAdapter extends RecyclerView.Adapter<ProductDealsAdapter.MyViewHolder>{

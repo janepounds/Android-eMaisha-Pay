@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;

@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.buyandsell;
+package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,7 +24,6 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.buyandsell.My_Cart;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.language_model.LanguageData;
