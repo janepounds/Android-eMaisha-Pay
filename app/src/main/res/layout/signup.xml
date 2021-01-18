@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#F5F6F8"
         android:orientation="vertical"
         tools:context="com.cabral.emaishapay.activities.SignUp">
@@ -55,6 +55,7 @@
                     android:id="@+id/layout_form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:background="@drawable/background_custom_dialog"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
@@ -117,7 +118,7 @@
                                 <EditText
                                     android:id="@+id/user_firstname"
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:background="@drawable/edittext_corner"
                                     android:fontFamily="@font/josefin_sans"
                                     android:gravity="start|center_vertical"
@@ -146,7 +147,7 @@
                                 <EditText
                                     android:id="@+id/user_lastname"
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:background="@drawable/edittext_corner"
                                     android:fontFamily="@font/josefin_sans"
                                     android:gravity="start|center_vertical"
@@ -182,7 +183,7 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:background="@drawable/edittext_corner"
                                     android:padding="6dp">
 
@@ -221,7 +222,7 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:background="@drawable/edittext_corner"
                                     android:padding="6dp">
 
@@ -252,7 +253,7 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:background="@drawable/edittext_corner"
                                     android:padding="6dp">
 
@@ -289,7 +290,7 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="45dp"
                                     android:layout_alignParentTop="true"
                                     android:background="@drawable/edittext_corner"
                                     android:orientation="horizontal">

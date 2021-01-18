@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/windowBackground"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <TextView
@@ -44,8 +45,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_20dp"
-                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="?actionBarSize"
                     android:background="@color/white"
                     android:orientation="vertical"

@@ -33,7 +33,7 @@
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/button_text_size"
-        android:background="@color/colorAccentGreen" />
+        android:background="@color/colorPrimary" />
 
 
 </LinearLayout>
