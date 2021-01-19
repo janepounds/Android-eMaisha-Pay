@@ -110,8 +110,9 @@
                     android:paddingTop="12dp"
                     android:paddingEnd="20dp"
                     android:text="@string/product_title"
-                    android:textSize="27sp"
-                    android:textStyle="bold" />
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#515C6F"/>
 
                 <RelativeLayout
                     android:id="@+id/priceLayout"
@@ -129,7 +130,7 @@
                         android:gravity="center_vertical"
                         android:text="Price : "
                         android:textColor="@color/colorPrimary"
-                        android:textSize="22sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -141,7 +142,7 @@
                         android:gravity="center_vertical"
                         android:text="UGX 30.00"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="22sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -153,7 +154,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/default_old_price"
                         android:textColor="@color/hintColor"
-                        android:textSize="22sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -185,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reviews_ratings"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -197,16 +198,15 @@
 
                     <RelativeLayout
                         android:id="@+id/product_rating_bar"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline57"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_width="160dp"
+                            android:layout_height="35dp">
 
                             <ImageView
                                 android:id="@+id/first_star"
@@ -296,23 +296,23 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:padding="@dimen/dimen_5dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="2:1.5"
+                        app:layout_constraintDimensionRatio="1.8:1"
                         app:layout_constraintEnd_toStartOf="@+id/guideline58"
                         app:layout_constraintStart_toStartOf="@+id/guideline57"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_remove_circle"
                         app:tint="@color/black" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/product_quantity"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="1"
-                        android:textSize="26sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
+                        android:background="@android:color/transparent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline59"
                         app:layout_constraintStart_toStartOf="@+id/guideline58"
@@ -325,7 +325,7 @@
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/dimen_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="2:1.5"
+                        app:layout_constraintDimensionRatio="1.8:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline59"
                         app:layout_constraintTop_toTopOf="parent"
@@ -338,21 +338,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.6" />
+                        app:layout_constraintGuide_percent="0.5" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline58"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.75" />
+                        app:layout_constraintGuide_percent="0.66" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline59"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.85" />
+                        app:layout_constraintGuide_percent="0.84" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -521,7 +521,10 @@
                     android:layout_height="1dp"
                     android:background="#31244A"
                     android:alpha=".13"
-                    android:layout_margin="20dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -539,7 +542,7 @@
                         android:text="@string/product_description"
                         android:textAlignment="viewStart"
                         android:textColor="#515C6F"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
 
@@ -547,7 +550,7 @@
                         android:id="@+id/product_description_webView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="8dp"
                         android:isScrollContainer="true" />
 
 
@@ -590,7 +593,7 @@
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
 
@@ -601,7 +604,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/product_cart_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="#444444"
@@ -613,7 +616,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/continue_shopping_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:background="@color/colorPrimary"
             android:layout_weight="1"

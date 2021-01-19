@@ -22,6 +22,7 @@ import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.user_model.UserDetails;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.Connectivity;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -159,8 +160,11 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                     } finally {
                         dialogLoader.hideProgressDialog();
                     }
-                } else {
+
+                }
+                else {
                     dialogLoader.hideProgressDialog();
+
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String message = response.body().getMessage();
                     //Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
