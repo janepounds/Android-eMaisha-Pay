@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +43,7 @@ public class SearchFragment extends Fragment {
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-
+    private Toolbar toolbar;
     private ProductAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -51,6 +53,12 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.buy_inputs_search_fragment, container, false);
 
         progressBar = view.findViewById(R.id.buy_inputs_search_progress_bar);
+        toolbar = view.findViewById(R.id.toolbar_search_fragment);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.search));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = view.findViewById(R.id.buy_inputs_search_recycler_view);
 
         setHasOptionsMenu(true);
@@ -84,9 +92,9 @@ public class SearchFragment extends Fragment {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
 
                         recyclerView.setHasFixedSize(true);
-                        layoutManager = new LinearLayoutManager(context);
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                         adapter = new ProductAdapter(requireActivity(), requireActivity().getSupportFragmentManager(), response.body().getProductData().getProducts(), false, false);
-                        recyclerView.setLayoutManager(layoutManager);
+
                         recyclerView.setAdapter(adapter);
 
                         Log.d(TAG, "onResponse: Result = " + response.body().getProductData().getProducts().get(0).getProductsName());
