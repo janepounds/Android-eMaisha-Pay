@@ -38,6 +38,7 @@ import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -157,7 +158,12 @@ public class Category_Products extends Fragment {
         categoryProductsList = new ArrayList<>();
 
         // Request for Products of given OrderProductCategory based on PageNo.
-        RequestCategoryProducts(pageNo, sortBy);
+        //check internet connection
+       if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+            RequestCategoryProducts(pageNo, sortBy);
+        }else {
+           Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+       }
 
         // Request for Filters of given OrderProductCategory
         RequestFilters(categoryID);
@@ -287,10 +293,23 @@ public class Category_Products extends Fragment {
                 categoryProductsList.clear();
                 if (isFilterApplied) {
                     // Initialize LoadMoreTask to Load More Products from Server against some Filters
-                    RequestFilteredProducts(pageNo, sortBy, filters);
+                    //check internet connection
+                    if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                        RequestFilteredProducts(pageNo, sortBy, filters);
+                    }else {
+                        Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                    }
+
+
                 } else {
                     // Initialize LoadMoreTask to Load More Products from Server without Filters
-                    RequestCategoryProducts(pageNo, sortBy);
+                    //check internet connection
+                    if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                        RequestCategoryProducts(pageNo, sortBy);
+                    }else {
+                        Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 dialog1.dismiss();
 
@@ -419,7 +438,11 @@ public class Category_Products extends Fragment {
                     // Hide the ProgressBar
                     progressBar.setVisibility(View.GONE);
                     mainProgress.setVisibility(View.GONE);
-                } else {
+                } else if(!Connectivity.isConnectedFast(EmaishaPayApp.getContext())){
+                    Toast.makeText(EmaishaPayApp.getContext(), "slow connection please try again later", Toast.LENGTH_LONG).show();
+
+                }
+                else {
                     if (isVisible)
                         Toast.makeText(EmaishaPayApp.getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -569,10 +592,22 @@ public class Category_Products extends Fragment {
             // Check if any of the Filter is applied
             if (isFilterApplied) {
                 // Request for Products against specified Filters, based on PageNo.
-                RequestFilteredProducts(page_number, sortBy, postFilters);
+                //check internet connection
+                if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                    RequestFilteredProducts(page_number, sortBy, postFilters);
+                }else {
+                    Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                }
+
             } else {
                 // Request for Products of given OrderProductCategory, based on PageNo.
-                RequestCategoryProducts(page_number, sortBy);
+                //check internet connection
+                if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                    RequestCategoryProducts(page_number, sortBy);
+                }else {
+                    Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                }
+
             }
 
             return "All Done!";

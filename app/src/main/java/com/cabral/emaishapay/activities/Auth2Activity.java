@@ -152,7 +152,13 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                         loginUser(userDetails, rawpassword);
 
                         Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
-                        TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
+                        if(Connectivity.isConnected(context)){
+                            TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
+                        }else{
+                            Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
+
+                        }
+
 
                     } catch (Exception e) {
                         Log.e("response", response.toString());

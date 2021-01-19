@@ -60,10 +60,17 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                             //login and get token
                             Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, TokenAuthActivity.this));
 
+                            if (Connectivity.isConnected(context)) {
+                                TokenAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, TokenAuthActivity.this),  context,dialogLoader);
 
-                            TokenAuthActivity.getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, TokenAuthActivity.this),  context,dialogLoader);
+                                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
 
-                            overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+
+                            }else{
+
+                                Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                            }
+
 
                         }
                         return WalletPass.equals(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, context));
@@ -131,10 +138,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                 Log.e(TAG, String.valueOf(t.getMessage()));
                 if (dialogLoader != null)
                     dialogLoader.hideProgressDialog();
-                if (!Connectivity.isConnected(context)) {
-                    Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
-
-                } else if(!Connectivity.isConnectedFast(context)){
+               if(!Connectivity.isConnectedFast(context)){
                     Toast.makeText(context, "Slow internet connection", Toast.LENGTH_LONG).show();
 
                 }
