@@ -61,6 +61,7 @@ public class My_Orders extends Fragment {
     private Context context;
     Boolean enable_back=true;
 
+    FragmentManager fragmentManager;
     List<OrderDetails> ordersList = new ArrayList<>();
 
     public  My_Orders(Boolean enable_back){
@@ -127,7 +128,7 @@ public class My_Orders extends Fragment {
                 bundle.putBoolean("isSubFragment", false);
 
                 // Navigate to Products Fragment
-                Fragment fragment = new Products();
+                Fragment fragment = new WalletBuyFragment(getContext(),getParentFragmentManager());
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
