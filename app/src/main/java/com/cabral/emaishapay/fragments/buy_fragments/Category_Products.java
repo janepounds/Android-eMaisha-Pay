@@ -162,7 +162,7 @@ public class Category_Products extends Fragment {
        if(Connectivity.isConnected(EmaishaPayApp.getContext())){
             RequestCategoryProducts(pageNo, sortBy);
         }else {
-           Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+           Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
        }
 
         // Request for Filters of given OrderProductCategory
@@ -297,7 +297,7 @@ public class Category_Products extends Fragment {
                     if(Connectivity.isConnected(EmaishaPayApp.getContext())){
                         RequestFilteredProducts(pageNo, sortBy, filters);
                     }else {
-                        Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                        Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
                     }
 
 
@@ -307,7 +307,7 @@ public class Category_Products extends Fragment {
                     if(Connectivity.isConnected(EmaishaPayApp.getContext())){
                         RequestCategoryProducts(pageNo, sortBy);
                     }else {
-                        Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                        Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
                     }
 
                 }
@@ -596,7 +596,7 @@ public class Category_Products extends Fragment {
                 if(Connectivity.isConnected(EmaishaPayApp.getContext())){
                     RequestFilteredProducts(page_number, sortBy, postFilters);
                 }else {
-                    Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                    Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
                 }
 
             } else {
@@ -605,7 +605,7 @@ public class Category_Products extends Fragment {
                 if(Connectivity.isConnected(EmaishaPayApp.getContext())){
                     RequestCategoryProducts(page_number, sortBy);
                 }else {
-                    Toast.makeText(EmaishaPayApp.getContext(), "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                    Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
                 }
 
             }
