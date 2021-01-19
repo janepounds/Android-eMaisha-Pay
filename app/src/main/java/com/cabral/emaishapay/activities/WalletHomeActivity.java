@@ -108,7 +108,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_home);
-//        setupDefaultHomePage();
+        //setupDefaultHomePage();
         context = getApplicationContext();
         fm = getSupportFragmentManager();
 

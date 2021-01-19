@@ -160,6 +160,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         this.parentFrag = parentFrag;
     }
 
+    public Shipping_Address(My_Addresses parentFrag) {
+        this.parentFrag = parentFrag;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
@@ -637,7 +641,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Address has been added to User's Addresses
                         // Navigate to Addresses fragment
-                        ((WalletHomeActivity) getContext()).getSupportFragmentManager().popBackStack();
+                        ((WalletBuySellActivity) getContext()).getSupportFragmentManager().popBackStack();
                         if( my_cart!=null){
                             // Navigate to Shipping_Methods Fragment
                             Fragment fragment = new Nearby_Merchants(my_cart);

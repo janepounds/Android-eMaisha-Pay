@@ -262,7 +262,9 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/topcornerscurved"
                     android:elevation="@dimen/dimen_10dp"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
 
                     <LinearLayout
                         android:id="@+id/layout_total_payment"
