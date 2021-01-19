@@ -67,6 +67,7 @@ public class WalletBuyFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buy_home, container, false);
@@ -222,5 +223,9 @@ public class WalletBuyFragment extends Fragment {
         cartItemsList = user_cart_BuyInputs_db.getCartItems();
         TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
         badge.setText(String.valueOf(cartItemsList.size()));
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
