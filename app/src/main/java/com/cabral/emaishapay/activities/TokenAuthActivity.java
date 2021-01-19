@@ -18,6 +18,7 @@ import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.Connectivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.venmo.android.pin.PinFragment;
 import com.venmo.android.pin.PinFragmentConfiguration;
 
@@ -67,8 +68,8 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
 
 
                             }else{
+                                Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
 
-                                Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
                             }
 
 

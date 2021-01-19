@@ -155,7 +155,8 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                         if(Connectivity.isConnected(context)){
                             TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
                         }else{
-                            Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
+                            Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+
 
                         }
 
