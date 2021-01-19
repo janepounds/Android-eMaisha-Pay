@@ -92,7 +92,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
                 break;
             case R.id.walletAddressesFragment:
                 WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
-                selectedFragment = new My_Addresses(new My_Cart());
+                selectedFragment = new My_Addresses(false);
                 break;
         }
         WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
