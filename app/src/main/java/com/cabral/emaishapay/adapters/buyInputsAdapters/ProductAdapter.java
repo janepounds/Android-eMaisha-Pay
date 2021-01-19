@@ -325,9 +325,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 Log.d(TAG, "onBindViewHolder: Product Type = " + product.getProductsType());
 
                 holder.product_container.setOnClickListener(view -> {
-
-                    if (product.getProductsType() != 0) {
-
                         // Get Product Info
                         Bundle itemInfo = new Bundle();
                         itemInfo.putParcelable("productDetails", product);
@@ -346,7 +343,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         if (!recents_db.getUserRecents().contains(product.getProductsId())) {
                             recents_db.insertRecentItem(product.getProductsId());
                         }
-                    }
+
 
                 });
 
