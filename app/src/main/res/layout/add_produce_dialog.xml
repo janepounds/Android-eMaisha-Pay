@@ -5,17 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/windowBackground"
     app:cardCornerRadius="20dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        android:background="@color/windowBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/windowBackground">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/produce_close"
@@ -68,7 +70,7 @@
                         <Spinner
                             android:id="@+id/produce_name"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
@@ -114,7 +116,7 @@
                         <EditText
                             android:id="@+id/produce_variety"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/josefin_sans"
@@ -157,7 +159,7 @@
                         <Spinner
                             android:id="@+id/produce_quantity_unit"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="45dp"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
@@ -192,7 +194,7 @@
                         android:textSize="@dimen/dimen_16sp" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:background="@drawable/edittext_corner"
@@ -234,7 +236,7 @@
                 android:textSize="@dimen/dimen_16sp" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:background="@drawable/edittext_corner"

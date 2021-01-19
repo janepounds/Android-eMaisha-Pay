@@ -37,7 +37,7 @@
                 <Spinner
                     android:id="@+id/spinner_market_price_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
