@@ -125,9 +125,9 @@ public class Categories_3 extends Fragment {
                 Fragment searchFragment = new SearchFragment();
                 searchFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_fragment_container, searchFragment)
+                        .add(R.id.nav_host_fragment2, searchFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(getString(R.string.actionHome)).commit();
+                        .addToBackStack(null).commit();
             }
         });
 
