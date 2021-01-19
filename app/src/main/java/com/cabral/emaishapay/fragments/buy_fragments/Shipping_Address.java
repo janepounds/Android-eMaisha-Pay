@@ -646,7 +646,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                             // Navigate to Shipping_Methods Fragment
                             Fragment fragment = new Nearby_Merchants(my_cart);
                             FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                            fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                                     .addToBackStack(null).commit();
                         }else
                             parentFrag.RequestAllAddresses(v);

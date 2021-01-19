@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -159,7 +162,9 @@ public class Product_Description extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         rootView = inflater.inflate(R.layout.buy_inputs_product_description, container, false);
+        setHasOptionsMenu(true);
         toolbar = rootView.findViewById(R.id.toolbar_product_home);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.product_description));
@@ -448,14 +453,34 @@ public class Product_Description extends Fragment {
         // Recreate the OptionsMenu
         ((WalletBuySellActivity) context).invalidateOptionsMenu();
 
-        Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
-        // Navigate to My_Cart Fragment
-        Fragment fragment = new My_Cart();
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.main_fragment_container, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .addToBackStack(getString(R.string.actionHome)).commit();
+//        Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
+//        // Navigate to My_Cart Fragment
+//        Fragment fragment = new My_Cart();
+//        FragmentManager fragmentManager = getParentFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .add(R.id.nav_host_fragment2, fragment)
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .addToBackStack(getString(R.string.actionHome)).commit();
+
+
+
+
+
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+        cartItem.setVisible(true);
+
+        //set badge value
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
     }
 
     //*********** Adds Product's Details to the Views ********//
@@ -1299,7 +1324,7 @@ public class Product_Description extends Fragment {
             if (isAllStockValid(stocks)) {
                 Fragment fragment = new My_Addresses(new My_Cart());
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(getString(R.string.actionAddresses)).commit();
 
             } else {
@@ -1338,5 +1363,7 @@ public class Product_Description extends Fragment {
         }
         return ids;
     }
+
+
 }
 
