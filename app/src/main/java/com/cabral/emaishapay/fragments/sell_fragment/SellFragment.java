@@ -1,4 +1,4 @@
-package com.cabral.emaishapay;
+package com.cabral.emaishapay.fragments.sell_fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,12 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.adapters.sell.SellProduceViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -32,6 +35,9 @@ public class SellFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    public SellFragment(WalletBuySellActivity walletBuySellActivity, FragmentManager supportFragmentManager) {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
