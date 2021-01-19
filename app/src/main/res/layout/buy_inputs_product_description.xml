@@ -111,8 +111,7 @@
                     android:paddingEnd="20dp"
                     android:text="@string/product_title"
                     android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#515C6F"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:id="@+id/priceLayout"
@@ -295,8 +294,8 @@
                         android:id="@+id/reduce_quantity"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="@dimen/dimen_5dp"
-                        app:layout_constraintDimensionRatio="1.8:1"
+                        android:padding="3dp"
+                        app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toStartOf="@+id/guideline58"
                         app:layout_constraintStart_toStartOf="@+id/guideline57"
                         app:layout_constraintTop_toTopOf="parent"
@@ -312,7 +311,7 @@
                         android:text="1"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:background="@android:color/transparent"
+                        android:background="@drawable/edit_text_bottom_line_gray"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline59"
                         app:layout_constraintStart_toStartOf="@+id/guideline58"
@@ -323,9 +322,9 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center_vertical"
-                        android:padding="@dimen/dimen_5dp"
+                        android:padding="3dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1.8:1"
+                        app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline59"
                         app:layout_constraintTop_toTopOf="parent"
@@ -338,21 +337,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        app:layout_constraintGuide_percent="0.67" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline58"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.66" />
+                        app:layout_constraintGuide_percent="0.77" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline59"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.84" />
+                        app:layout_constraintGuide_percent="0.9" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -542,7 +541,7 @@
                         android:text="@string/product_description"
                         android:textAlignment="viewStart"
                         android:textColor="#515C6F"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
 
@@ -550,7 +549,7 @@
                         android:id="@+id/product_description_webView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="5dp"
                         android:isScrollContainer="true" />
 
 
