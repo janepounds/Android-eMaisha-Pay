@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackgroundDark">
+    android:background="@color/windowBackground">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="@color/windowBackgroundDark"
+        android:background="@color/windowBackground"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -117,6 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/topBar"
+        android:layout_marginStart="10dp"
         android:paddingBottom="60dp" />
 
     <TextView
