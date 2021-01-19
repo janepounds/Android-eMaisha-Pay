@@ -51,8 +51,6 @@ public class WalletBuyFragment extends Fragment {
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
 
-
-
     private Toolbar toolbar;
     @SuppressLint("StaticFieldLeak")
     public static EditText searchView;
@@ -61,7 +59,7 @@ public class WalletBuyFragment extends Fragment {
     ViewAllPopularProducts viewAllPopularProducts;
     TopDealsFragment topDeals;
     ViewAllTopDeals viewAllTopDeals;
-    TextView view_all_most_popular,view_all_deals;
+    TextView view_all_most_popular,view_all_deals,text_categories_placeholder;
 
     public WalletBuyFragment(Context context, FragmentManager fragmentManager) {
         this.context=context;
@@ -71,15 +69,15 @@ public class WalletBuyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buy_and_sell_home, container, false);
-
-
+        View view = inflater.inflate(R.layout.fragment_buy_home, container, false);
         setHasOptionsMenu(true);
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
         view_all_most_popular = view.findViewById(R.id.btn_view_all_most_popular);
         view_all_deals = view.findViewById(R.id.btn_view_all_deals);
+        text_categories_placeholder = view.findViewById(R.id.text_categories_placeholder);
+        //text_categories_placeholder
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
         //toolbar.setTitle("Buy and Sell");
@@ -170,6 +168,7 @@ public class WalletBuyFragment extends Fragment {
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
+        text_categories_placeholder.setVisibility(View.GONE);
     }
 
 
