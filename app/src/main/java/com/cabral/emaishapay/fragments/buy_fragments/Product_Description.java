@@ -106,7 +106,8 @@ public class Product_Description extends Fragment {
     LinearLayout product_attributes;
     RecyclerView attribute_recycler;
     WebView product_description_webView;
-    TextView title, category, price_new, price_old, product_stock, product_likes, product_tag_new, product_tag_discount, product_ratings_count, pdtQty;
+    TextView title, category, price_new, price_old, product_stock, product_likes, product_tag_new, product_tag_discount, product_ratings_count;
+    EditText pdtQty;
     AppCompatButton addToCart, continue_shopping_btn;
 
     DialogLoader dialogLoader;
@@ -546,7 +547,7 @@ public class Product_Description extends Fragment {
 
         String description = productDetails.getProductsDescription();
         String styleSheet = "<style> " + "@font-face {font-family: 'JosefinSans-Regular'; src: url('file:///android_asset/fonts/JosefinSans-Regular.ttf');} " +
-                "body{background:#F1F5F8; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
+                "body{background:#FFFFFF; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
                 "p{color:#757575;} " +
                 "img{display:inline; height:auto; max-width:100%;}" +
                 "</style>";
