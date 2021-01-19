@@ -17,6 +17,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.Connectivity;
 import com.venmo.android.pin.PinFragment;
 import com.venmo.android.pin.PinFragmentConfiguration;
 
@@ -27,6 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TokenAuthActivity extends AppCompatActivity implements PinFragment.Listener {
+
     private static final String TAG = "TokenAuthActivity";
     static TextView errorTextView;
     private Context context;
@@ -127,9 +129,18 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
             @Override
             public void onFailure(@NotNull Call<TokenResponse> call, @NotNull Throwable t) {
                 Log.e(TAG, String.valueOf(t.getMessage()));
-                if(dialogLoader!=null)
+                if (dialogLoader != null)
                     dialogLoader.hideProgressDialog();
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (!Connectivity.isConnected(context)) {
+                    Toast.makeText(context, "check your internet connection and try again", Toast.LENGTH_LONG).show();
+
+                } else if(!Connectivity.isConnectedFast(context)){
+                    Toast.makeText(context, "Slow internet connection", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
