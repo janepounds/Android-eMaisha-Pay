@@ -496,7 +496,7 @@ public class My_Cart extends Fragment {
             if (isAllStockValid(stocks)) {
                 Fragment fragment = new My_Addresses(My_Cart.this);
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(getString(R.string.actionAddresses)).commit();
 
             } else {
@@ -530,7 +530,7 @@ public class My_Cart extends Fragment {
             if (isAllStockValid(stocks)) {
                 Fragment fragment = new My_Addresses(My_Cart.this);
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(getString(R.string.actionAddresses)).commit();
 
             } else {

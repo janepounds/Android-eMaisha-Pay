@@ -299,7 +299,7 @@ public class Utilities {
 
     public static void animateCartMenuIcon(Context context, Activity activity) {
 
-        Toolbar toolbar = activity.findViewById(R.id.toolbar_orders_home);
+        Toolbar toolbar = activity.findViewById(R.id.toolbar_product_home);
 
         MenuItem cartItem = toolbar.getMenu().findItem(R.id.ic_cart_item);
         if (cartItem == null)
