@@ -594,4 +594,5 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="internet_connection_error">check your internet connection and try again</string>
+    <string name="iv">98765432</string>
 </resources>

@@ -79,7 +79,7 @@ public class WalletHomeFragment extends Fragment {
         binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
         new MyTask(WalletHomeFragment.this).execute();
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
-        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,"12121212");
+        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getString(R.string.iv));
         String hash=encrypter.encrypt(name);
 
         binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+encrypter.encrypt(name)+" "+encrypter.decrypt(hash));
