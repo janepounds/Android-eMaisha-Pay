@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginTop="?actionBarSize"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_20dp"
         android:orientation="horizontal"
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.19" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_market_price_fragment"

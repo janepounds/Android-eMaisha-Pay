@@ -118,4 +118,5 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.3.0'
     implementation 'com.crystal:crystalrangeseekbar:1.1.1'
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
+    implementation 'commons-codec:commons-codec:1.8'
 }
