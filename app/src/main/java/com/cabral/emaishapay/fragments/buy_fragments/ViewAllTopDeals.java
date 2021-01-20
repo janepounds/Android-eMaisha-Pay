@@ -1,10 +1,12 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -19,11 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
+import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
+import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.Connectivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +45,11 @@ public class ViewAllTopDeals extends Fragment {
     private Context context;
     private ProductAdapter topDealsAdapter;
     Toolbar toolbar;
+    ProgressBar progressBar,mainProgress;
+    LoadMoreTask loadMoreTask;
+    PostFilterData filters = null;
+    Call<ProductData> productsCall;
+    int pageNo = 0;
 
     public ViewAllTopDeals() {
     }
@@ -61,7 +72,10 @@ public class ViewAllTopDeals extends Fragment {
         toolbar.setTitle("Top Deals");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        progressBar = rootView.findViewById(R.id.loading_bar);
+        mainProgress = rootView.findViewById(R.id.progressBar);
 
+        RequestSpecialDeals(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         topDealsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),topDealsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
@@ -70,31 +84,46 @@ public class ViewAllTopDeals extends Fragment {
         // Set the Adapter and LayoutManager to the RecyclerView
         recyclerView.setAdapter(topDealsAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        // Handle the Scroll event of Product's RecyclerView
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScroll() {
+            @Override
+            public void onLoadMore(final int current_page) {
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                // Initialize LoadMoreTask to Load More Products from Server without Filters
+                loadMoreTask = new ViewAllTopDeals.LoadMoreTask(current_page, filters);
+
+
+                // Execute AsyncTask LoadMoreTask to Load More Products from Server
+                loadMoreTask.execute();
+            }
+        });
 
         topDealsAdapter.notifyDataSetChanged();
 
 
-        RequestSpecialDeals();
+
         return  rootView;
     }
-    public void RequestSpecialDeals() {
+    public void RequestSpecialDeals(int pagenumber) {
 
 
         GetAllProducts getAllProducts = new GetAllProducts();
-        getAllProducts.setPageNumber(0);
+        getAllProducts.setPageNumber(pagenumber);
         getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("special");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
 
-        Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
+        productsCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (
                                 getAllProducts
                         );
 
-        networkCall.enqueue(new Callback<ProductData>() {
+        productsCall.enqueue(new Callback<ProductData>() {
             @Override
             public void onResponse(Call<ProductData> call, retrofit2.Response<ProductData> response) {
 
@@ -114,6 +143,9 @@ public class ViewAllTopDeals extends Fragment {
                         // Products haven't been returned
 
                     }
+                    // Hide the ProgressBar
+                    progressBar.setVisibility(View.GONE);
+                    mainProgress.setVisibility(View.GONE);
 
                 }
 
@@ -122,11 +154,61 @@ public class ViewAllTopDeals extends Fragment {
 
             @Override
             public void onFailure(Call<ProductData> call, Throwable t) {
-                if (!networkCall.isCanceled()) {
+                if (!productsCall.isCanceled()) {
                     Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
+                    mainProgress.setVisibility(View.GONE);
 
                 }
             }
         });
     }
+
+    /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
+
+    private class LoadMoreTask extends AsyncTask<String, Void, String> {
+
+        int page_number;
+        PostFilterData postFilters;
+
+
+        private LoadMoreTask(int page_number, PostFilterData postFilterData) {
+            this.page_number = page_number;
+            this.postFilters = postFilterData;
+        }
+
+
+        //*********** Runs on the UI thread before #doInBackground() ********//
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            // Request for Products of given OrderProductCategory, based on PageNo.
+            //check internet connection
+
+                RequestSpecialDeals(page_number);
+
+
+
+            return "All Done!";
+        }
+
+
+        //*********** Runs on the UI thread after #doInBackground() ********//
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+    }
+
+
 }

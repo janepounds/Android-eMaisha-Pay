@@ -1,12 +1,14 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -22,11 +24,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
+import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
+import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.Connectivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +48,11 @@ public class ViewAllPopularProducts extends Fragment {
     private Context context;
     private ProductAdapter popularProductsAdapter;
     Toolbar toolbar;
+    LoadMoreTask loadMoreTask;
+    PostFilterData filters = null;
+    ProgressBar progressBar,mainProgress;
+    Call<ProductData> productsCall;
+    int pageNo = 0;
 
     public ViewAllPopularProducts() {
     }
@@ -63,8 +75,10 @@ public class ViewAllPopularProducts extends Fragment {
         toolbar.setTitle("Popular Products");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        progressBar = rootView.findViewById(R.id.loading_bar);
+        mainProgress = rootView.findViewById(R.id.progressBar);
 
-
+        RequestTopSellers(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         popularProductsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
@@ -74,30 +88,48 @@ public class ViewAllPopularProducts extends Fragment {
         recyclerView.setAdapter(popularProductsAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        // Handle the Scroll event of Product's RecyclerView
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScroll() {
+            @Override
+            public void onLoadMore(final int current_page) {
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                    // Initialize LoadMoreTask to Load More Products from Server without Filters
+                    loadMoreTask = new ViewAllPopularProducts.LoadMoreTask(current_page, filters);
+
+
+                // Execute AsyncTask LoadMoreTask to Load More Products from Server
+                loadMoreTask.execute();
+            }
+        });
+
+
+
         popularProductsAdapter.notifyDataSetChanged();
 
 
-        RequestTopSellers();
+
         return  rootView;
     }
 
-    public void RequestTopSellers() {
+    public void RequestTopSellers(int pagenumber) {
 
         GetAllProducts getAllProducts = new GetAllProducts();
-        getAllProducts.setPageNumber(0);
+        getAllProducts.setPageNumber(pagenumber);
         getAllProducts.setLanguageId(ConstantValues.LANGUAGE_ID);
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("top seller");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
 
-        Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
+        productsCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (
                                 getAllProducts
                         );
 
-        networkCall.enqueue(new Callback<ProductData>() {
+        productsCall.enqueue(new Callback<ProductData>() {
             @Override
             public void onResponse(Call<ProductData> call, retrofit2.Response<ProductData> response) {
 
@@ -120,7 +152,9 @@ public class ViewAllPopularProducts extends Fragment {
                         // Products haven't been returned
 
                     }
-
+                    // Hide the ProgressBar
+                    progressBar.setVisibility(View.GONE);
+                    mainProgress.setVisibility(View.GONE);
                 }
 
 
@@ -128,12 +162,71 @@ public class ViewAllPopularProducts extends Fragment {
 
             @Override
             public void onFailure(Call<ProductData> call, Throwable t) {
-                if (!networkCall.isCanceled()) {
+                if (!productsCall.isCanceled()) {
                     Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
 
                 }
             }
         });
+    }
+
+    /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
+
+    private class LoadMoreTask extends AsyncTask<String, Void, String> {
+
+        int page_number;
+        PostFilterData postFilters;
+
+
+        private LoadMoreTask(int page_number, PostFilterData postFilterData) {
+            this.page_number = page_number;
+            this.postFilters = postFilterData;
+        }
+
+
+        //*********** Runs on the UI thread before #doInBackground() ********//
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+                // Request for Products of given OrderProductCategory, based on PageNo.
+                //check internet connection
+                if(Connectivity.isConnected(context)){
+                    RequestTopSellers(page_number);
+
+                }else {
+                    Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_LONG).show();
+
+
+            }
+
+            return "All Done!";
+        }
+
+
+        //*********** Runs on the UI thread after #doInBackground() ********//
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (productsCall.isExecuted())
+            productsCall.cancel();
+
     }
 
 }
