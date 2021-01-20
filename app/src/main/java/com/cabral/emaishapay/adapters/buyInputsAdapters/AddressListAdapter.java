@@ -99,7 +99,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
                 Fragment fragment = new Nearby_Merchants(parentFrag.my_cart);
                 FragmentManager fragmentManager = parentFrag.getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(context.getString(R.string.select_merchants_fragment)).commit();
             } else {
                 // Request the Server to Change Default Address

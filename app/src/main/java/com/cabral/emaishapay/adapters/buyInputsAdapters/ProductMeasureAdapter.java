@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -27,6 +28,9 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
     private String measure;
     private TextView new_price;
     private Product_Description productDescription;
+    private boolean isChecked;
+    private int result = 0;
+
 
     public ProductMeasureAdapter(Context context, List<ProductMeasure> productMeasureList, String product_measure, TextView new_price, Product_Description productDescription) {
         this.context = context;
@@ -34,6 +38,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
         this.selected_measure = product_measure;
         this.new_price = new_price;
         this.productDescription = productDescription;
+
     }
 
     @NonNull
@@ -51,8 +56,10 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
 
         for (int i = 0; i < productMeasures.size(); i++) {
             ProductMeasure productMeasure1 = productMeasures.get(i);
+            isChecked = productMeasure1.isChecked();
             Log.d(TAG, "onBindViewHolder: Checked = " + productMeasure1.isChecked());
-
+            Log.d(TAG, "onBindViewHolder: Checkedischecked = " + productMeasure1.isChecked());
+            checkSelectedMeasure();
             measure = productMeasure.getProducts_weight() + " " + productMeasure.getProducts_weight_unit();
             holder.weight.setText(measure);
         }
@@ -61,26 +68,39 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_green_background));
             holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
             new_price.setText("UGX " + productMeasure.getProducts_price());
+            isChecked=true;
+
         } else {
             holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_mild_gray_background));
             holder.weight.setTextColor(ContextCompat.getColor(context, R.color.mild_gray));
+            isChecked = false;
+
         }
 
         holder.weight.setOnClickListener(v -> {
             for (ProductMeasure productMeasure1 : productMeasures) {
                 productMeasure1.setChecked(false);
+
                 Log.d(TAG, "onBindViewHolder: ClickCheck = " + productMeasure1.isChecked());
+                Log.d(TAG, "onBindViewHolder: ClickCheckischecked= " + isChecked);
+
             }
 
             productMeasure.setChecked(true);
             holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_green_background));
             holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
             new_price.setText("UGX " + productMeasure.getProducts_price());
+            isChecked = true;
 
             productDescription.showMeasuresRecyclerView();
 
+
+
             for (ProductMeasure productMeasure1 : productMeasures) {
                 Log.d(TAG, "onBindViewHolder: AfterClickCheck = " + productMeasure1.isChecked());
+                Log.d(TAG, "onBindViewHolder: AfterClickCheckischecked = " + isChecked);
+
+
             }
         });
     }
@@ -98,7 +118,22 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             super(itemView);
             weight = itemView.findViewById(R.id.weight1);
 
+
         }
 
+
+
+    }
+
+    public boolean checkSelectedMeasure(){
+        if(isChecked==true){
+            return true;
+
+
+        }else {
+            Toast.makeText(context,"Please select a measure before proceeding",Toast.LENGTH_LONG).show();
+            return false;
+
+        }
     }
 }

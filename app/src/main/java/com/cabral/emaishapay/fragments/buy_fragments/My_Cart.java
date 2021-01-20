@@ -164,30 +164,30 @@ public class My_Cart extends Fragment {
 
         // Handle Click event of cart_checkout_btn Button
         cart_checkout_btn.setOnClickListener(view -> {
-            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
-
-            if (ConstantValues.MAINTENANCE_MODE != null) {
-                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
-                    showDialog(ConstantValues.MAINTENANCE_TEXT);
-                else {
-                    // Check if cartItemsList isn't empty
-                    if (cartItemsList.size() != 0) {
-
-                        // Check if User is Logged-In
-                        if (ConstantValues.IS_USER_LOGGED_IN) {
+//            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
+//
+//            if (ConstantValues.MAINTENANCE_MODE != null) {
+//                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
+//                    showDialog(ConstantValues.MAINTENANCE_TEXT);
+//                else {
+//                    // Check if cartItemsList isn't empty
+//                    if (cartItemsList.size() != 0) {
+//
+//                        // Check if User is Logged-In
+//                        if (ConstantValues.IS_USER_LOGGED_IN) {
                             Log.e("VC_Shop", "checkout executes  ");
                             new CheckStockTask().execute();
-                        } else {
-                            // Navigate to Login Activity
-                            Intent i = new Intent(getContext(), Login.class);
-                            getContext().startActivity(i);
-                            ((WalletHomeActivity) getContext()).finish();
-                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-                        }
-                    }
-
-                }
-            }
+//                        } else {
+//                            // Navigate to Login Activity
+//                            Intent i = new Intent(getContext(), Login.class);
+//                            getContext().startActivity(i);
+//                            ((WalletHomeActivity) getContext()).finish();
+//                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+//                        }
+//                    }
+//
+//                }
+//            }
         });
 
 //        cart_pair_btn.setOnClickListener(new View.OnClickListener() {

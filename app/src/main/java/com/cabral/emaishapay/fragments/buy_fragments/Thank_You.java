@@ -57,7 +57,7 @@ public class Thank_You extends Fragment {
             Fragment fragment = new My_Orders();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.main_fragment_container, fragment)
+                    .add(R.id.nav_host_fragment2, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .addToBackStack(null)
                     .commit();
