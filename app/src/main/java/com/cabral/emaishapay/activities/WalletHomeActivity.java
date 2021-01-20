@@ -36,6 +36,7 @@ import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -373,6 +374,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
 
     public void getAppToken() {
+        FirebaseApp.initializeApp(WalletHomeActivity.this);
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
