@@ -49,6 +49,7 @@ public class ViewAllTopDeals extends Fragment {
     LoadMoreTask loadMoreTask;
     PostFilterData filters = null;
     Call<ProductData> productsCall;
+    int pageNo = 0;
 
     public ViewAllTopDeals() {
     }
@@ -73,6 +74,8 @@ public class ViewAllTopDeals extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressBar = rootView.findViewById(R.id.loading_bar);
         mainProgress = rootView.findViewById(R.id.progressBar);
+
+        RequestSpecialDeals(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         topDealsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),topDealsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
@@ -190,14 +193,10 @@ public class ViewAllTopDeals extends Fragment {
 
             // Request for Products of given OrderProductCategory, based on PageNo.
             //check internet connection
-            if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+
                 RequestSpecialDeals(page_number);
 
-            }else {
-                Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_LONG).show();
 
-
-            }
 
             return "All Done!";
         }
@@ -211,11 +210,5 @@ public class ViewAllTopDeals extends Fragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (productsCall.isExecuted())
-            productsCall.cancel();
 
-    }
 }

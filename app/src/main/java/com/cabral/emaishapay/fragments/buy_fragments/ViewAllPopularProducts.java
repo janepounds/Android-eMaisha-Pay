@@ -52,6 +52,7 @@ public class ViewAllPopularProducts extends Fragment {
     PostFilterData filters = null;
     ProgressBar progressBar,mainProgress;
     Call<ProductData> productsCall;
+    int pageNo = 0;
 
     public ViewAllPopularProducts() {
     }
@@ -76,6 +77,8 @@ public class ViewAllPopularProducts extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressBar = rootView.findViewById(R.id.loading_bar);
         mainProgress = rootView.findViewById(R.id.progressBar);
+
+        RequestTopSellers(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         popularProductsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
@@ -197,7 +200,7 @@ public class ViewAllPopularProducts extends Fragment {
 
                 // Request for Products of given OrderProductCategory, based on PageNo.
                 //check internet connection
-                if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                if(Connectivity.isConnected(context)){
                     RequestTopSellers(page_number);
 
                 }else {
