@@ -1,14 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="@color/windowBackground">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_my_produce_fragment"
+        android:id="@+id/recyclerView_card_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_my_produce"
+        android:id="@+id/btn_add_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -31,7 +28,7 @@
         app:srcCompat="@drawable/ic_add_white_24dp"
         tools:ignore="VectorDrawableCompat" />
     <LinearLayout
-        android:id="@+id/cart_view_empty"
+        android:id="@+id/card_view_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -45,14 +42,13 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_empty_crate"
+                android:layout_width="266dp"
+                android:layout_height="261dp"
+                android:src="@drawable/ic_no_card"
                 app:layout_constraintBottom_toTopOf="@+id/guideline43"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/textView4"
@@ -60,37 +56,36 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20dp"
-                android:text="No Produce"
+                android:text="No Cards Added"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/guideline45"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline44"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="@+id/guideline44" />
+
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline43"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.53" />
+                app:layout_constraintGuide_percent="0.59" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline44"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.63" />
+                app:layout_constraintGuide_percent="0.62" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline45"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.77" />
+                app:layout_constraintGuide_percent="0.74" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline46"
