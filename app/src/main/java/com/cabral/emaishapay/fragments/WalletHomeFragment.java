@@ -21,6 +21,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -30,6 +31,7 @@ import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.utils.CryptoUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,8 +78,11 @@ public class WalletHomeFragment extends Fragment {
 
         binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
         new MyTask(WalletHomeFragment.this).execute();
+        String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
+        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,"12121212");
+        String hash=encrypter.encrypt(name);
 
-        binding.username.setText("Hi, " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context)));
+        binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+encrypter.encrypt(name)+" "+encrypter.decrypt(hash));
 
         return binding.getRoot();
     }
