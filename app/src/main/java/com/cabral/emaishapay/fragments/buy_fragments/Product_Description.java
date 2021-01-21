@@ -137,6 +137,7 @@ public class Product_Description extends Fragment {
     List<CartProduct> cartItemsList = new ArrayList<>();
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
     List<String> stocks = new ArrayList<>();
+    ArrayList<Boolean>booleanArrayList= new ArrayList<>();
 
     public Product_Description(ImageView checkedImageView, Boolean isFlash, long start, long server) {
         this.checkImageView = checkedImageView;
@@ -149,9 +150,9 @@ public class Product_Description extends Fragment {
         this.checkImageView = null;
     }
 
-    public Product_Description(String selcted_measure) {
-        this.selected_measure = selcted_measure;
-    }
+//    public Product_Description(String selcted_measure) {
+//        this.selected_measure = selcted_measure;
+//    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -283,7 +284,7 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context, (WalletHomeActivity) context);
                         // Add Product to User's Cart
-                        if(productMeasureAdapter.checkSelectedMeasure()) {
+                        if(isAnyBooleanTrue(booleanArrayList)) {
                             addProductToCart(productDetails);
                         }
                     }
@@ -295,7 +296,7 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
                         // Add Product to User's Cart
-                        if(productMeasureAdapter.checkSelectedMeasure()) {
+                        if(isAnyBooleanTrue(booleanArrayList)) {
                             addProductToCart(productDetails);
                         }
                     }
@@ -425,15 +426,20 @@ public class Product_Description extends Fragment {
             // Add Attributes Price to Product's Final Price
             productFinalPrice = productBasePrice + attributesPrice;
         }
+        String []products_price = price_new.getText().toString().split("\\s+");
+
+
 
         // Set Product's Price and Quantity
         product.setCustomersBasketQuantity(Integer.parseInt(pdtQty.getText().toString()));
-        product.setProductsPrice(String.valueOf(productBasePrice));
+        product.setProductsPrice(String.valueOf(products_price[1]));
         product.setAttributesPrice(String.valueOf(attributesPrice));
         product.setProductsFinalPrice(String.valueOf(productFinalPrice));
         //set selected measure/weight
+
 //
-//        product.setSelectedProductsWeight(we);
+        product.setSelectedProductsWeight(selected_measure);
+        Log.d(TAG, "buyNow:measure"+selected_measure +"price"+products_price[1]);
 //        product.setSelectedProductsWeightUnit(product.getProductsWeightUnit().get(0));
 
         product.setProductsQuantity(product.getProductsDefaultStock());
@@ -526,7 +532,7 @@ public class Product_Description extends Fragment {
             productBasePrice = Double.parseDouble(product.getDiscountPrice());
         } else {
             product.setIsSaleProduct("0");
-            productBasePrice = Double.parseDouble(product.getProductsPrice());
+            productBasePrice =Double.parseDouble(product.getProductsPrice());
         }
 
         // Get Default Attributes from AttributesList
@@ -917,9 +923,10 @@ public class Product_Description extends Fragment {
     }
 
     public void showMeasuresRecyclerView() {
-        productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, selected_measure, price_new, this);
+        productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, selected_measure, price_new, this,booleanArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(productMeasureAdapter);
+
 
 
 
@@ -1525,6 +1532,25 @@ public class Product_Description extends Fragment {
         }
         return ids;
     }
+
+
+    public boolean isAnyBooleanTrue(ArrayList<Boolean> booleanArrayList) {
+        boolean isAnyChecked = false;
+
+        for (int i = 0; i < booleanArrayList.size(); i++) {
+            if (booleanArrayList.get(i).booleanValue()==true) {
+                isAnyChecked = true;
+            }else{
+                Toast.makeText(context, "please select a measure before proceeding", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        return isAnyChecked;
+    }
+
+
+
 
 
 
