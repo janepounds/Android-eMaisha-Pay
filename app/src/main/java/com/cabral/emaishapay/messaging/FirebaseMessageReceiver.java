@@ -48,22 +48,24 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
+
         Bitmap notificationBitmap = null;
         String notification_title, notification_message, notification_image = "";
 
 
         if (remoteMessage.getData().size() > 0) {
             notification_title = remoteMessage.getData().get("title");
-            notification_message = remoteMessage.getData().get("message");
+            notification_message = remoteMessage.getData().get("body");
+            Log.w("MessageReceiption", "Message: " + notification_message);
+
             //notification_image = remoteMessage.getData().get("image");
         } else {
             notification_title = remoteMessage.getNotification().getTitle();
             notification_message = remoteMessage.getNotification().getBody();
         }
 
-
-        notificationBitmap = getBitmapFromUrl(notification_image);
-
+        //notificationBitmap =BitmapFactory.decodeResource(getResources(), R.drawable.emaishapay_logo_icon);
+        notificationBitmap=getBitmapFromUrl(notification_image);
 
         Intent notificationIntent = new Intent(getApplicationContext(), WalletHomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
