@@ -128,6 +128,7 @@ public class Product_Description extends Fragment {
     private List<ProductMeasure> productMeasures;
     private Context context;
     private String selected_measure;
+    private  String []products_price;
 
     ImageView checkImageView;
 
@@ -390,7 +391,7 @@ public class Product_Description extends Fragment {
             product.setIsSaleProduct("0");
             productBasePrice = Double.parseDouble(product.getProductsPrice());
         }
-
+        products_price = price_new.getText().toString().split("\\s+");
         // Get Default Attributes from AttributesList
         for (int i = 0; i < product.getAttributes().size(); i++) {
 
@@ -424,9 +425,9 @@ public class Product_Description extends Fragment {
             productFinalPrice = Double.parseDouble(product.getFlashPrice()) + attributesPrice;
         } else {
             // Add Attributes Price to Product's Final Price
-            productFinalPrice = productBasePrice + attributesPrice;
+            productFinalPrice = Double.parseDouble(products_price[1]) + attributesPrice;
         }
-        String []products_price = price_new.getText().toString().split("\\s+");
+
 
 
 
