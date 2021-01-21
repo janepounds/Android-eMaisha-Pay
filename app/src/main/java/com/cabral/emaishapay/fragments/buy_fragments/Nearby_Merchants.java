@@ -4,6 +4,9 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +44,8 @@ import retrofit2.Callback;
 
 public class Nearby_Merchants extends Fragment {
 
+    Toolbar toolbar;
+    Boolean enable_back=true;
     View rootView;
 
     DialogLoader dialogLoader;
@@ -58,6 +64,7 @@ public class Nearby_Merchants extends Fragment {
     private RadioButton lastChecked_RB = null;
     My_Cart my_cart;
     MerchantData merchantData;
+    public Nearby_Merchants(Boolean enable_back){ this.enable_back = enable_back; }
     public Nearby_Merchants(My_Cart my_cart) {
         this.my_cart = my_cart;
     }
@@ -73,6 +80,7 @@ public class Nearby_Merchants extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_nearbymerchants, container, false);
 
+        toolbar = rootView.findViewById(R.id.toolbar_nearby_merchants);
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         setHasOptionsMenu(true);
         merchants_recycler=rootView.findViewById(R.id.merchants_list);
@@ -92,8 +100,10 @@ public class Nearby_Merchants extends Fragment {
 
 
         // Set the Title of Toolbar
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby_merchants));
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
         return rootView;
     }
@@ -216,8 +226,19 @@ public class Nearby_Merchants extends Fragment {
     public void setLastChecked_RB(RadioButton lastChecked_RB) {
         this.lastChecked_RB = lastChecked_RB;
     }
-    
-    
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+
+//        searchItem.setVisible(false);
+        cartItem.setVisible(false);
+    }
+
+
 }
 
 

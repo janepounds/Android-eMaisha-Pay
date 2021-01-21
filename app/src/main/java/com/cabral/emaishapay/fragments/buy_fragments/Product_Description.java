@@ -111,7 +111,7 @@ public class Product_Description extends Fragment {
     WebView product_description_webView;
     TextView title, category, price_new, price_old, product_stock, product_likes, product_tag_new, product_tag_discount, product_ratings_count;
     EditText pdtQty;
-    AppCompatButton addToCart, continue_shopping_btn;
+    AppCompatButton addToCart, continue_shopping_btn,buy_now;
 
     DialogLoader dialogLoader;
     static ProductDetails productDetails;
@@ -128,15 +128,17 @@ public class Product_Description extends Fragment {
     private List<ProductMeasure> productMeasures;
     private Context context;
     private String selected_measure;
+    private  String []products_price;
 
     ImageView checkImageView;
 
-    private Boolean isFlash;
+    private Boolean isFlash,isChecked;
     private long start, server;
 
     List<CartProduct> cartItemsList = new ArrayList<>();
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
     List<String> stocks = new ArrayList<>();
+    ArrayList<Boolean>booleanArrayList= new ArrayList<>();
 
     public Product_Description(ImageView checkedImageView, Boolean isFlash, long start, long server) {
         this.checkImageView = checkedImageView;
@@ -149,9 +151,9 @@ public class Product_Description extends Fragment {
         this.checkImageView = null;
     }
 
-    public Product_Description(String selcted_measure) {
-        this.selected_measure = selcted_measure;
-    }
+//    public Product_Description(String selcted_measure) {
+//        this.selected_measure = selcted_measure;
+//    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -205,6 +207,7 @@ public class Product_Description extends Fragment {
         product_share_btn = rootView.findViewById(R.id.product_share_btn);
         product_attributes = rootView.findViewById(R.id.product_attributes);
         attribute_recycler = rootView.findViewById(R.id.product_attributes_recycler);
+        buy_now = rootView.findViewById(R.id.buy_now);
 
         product_ratings_count = rootView.findViewById(R.id.product_ratings_count);
 
@@ -216,7 +219,7 @@ public class Product_Description extends Fragment {
         pdtQty = rootView.findViewById(R.id.product_quantity);
         addToCart = rootView.findViewById(R.id.product_cart_btn);
         recyclerView = rootView.findViewById(R.id.measure_recyclerview);
-        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
+//        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
 
         attribute_recycler.setNestedScrollingEnabled(false);
 
@@ -282,7 +285,9 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context, (WalletHomeActivity) context);
                         // Add Product to User's Cart
-                        addProductToCart(productDetails);
+                        if(isAnyBooleanTrue(booleanArrayList)) {
+                            addProductToCart(productDetails);
+                        }
                     }
 
                 } else {
@@ -292,7 +297,9 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
                         // Add Product to User's Cart
-                        addProductToCart(productDetails);
+                        if(isAnyBooleanTrue(booleanArrayList)) {
+                            addProductToCart(productDetails);
+                        }
                     }
                 }
 
@@ -301,35 +308,194 @@ public class Product_Description extends Fragment {
             }
         });
 
-        continue_shopping_btn.setOnClickListener(view -> {
-            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
+//        continue_shopping_btn.setOnClickListener(view -> {
+//            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
+//
+//            if (ConstantValues.MAINTENANCE_MODE != null) {
+//                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
+//                    showDialog(ConstantValues.MAINTENANCE_TEXT);
+//                else {
+//                    // Check if cartItemsList isn't empty
+//                    if (cartItemsList.size() != 0) {
+//
+//                        // Check if User is Logged-In
+//                        if (ConstantValues.IS_USER_LOGGED_IN) {
+//                            Log.e("VC_Shop", "checkout executes  ");
+//                            new Product_Description.CheckStockTask().execute();
+//                        } else {
+//                            // Navigate to Login Activity
+//                            Intent i = new Intent(getContext(), Login.class);
+//                            getContext().startActivity(i);
+//                            ((WalletHomeActivity) getContext()).finish();
+//                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+//                        }
+//                    }
+//
+//                }
+//            }
+//        });
 
-            if (ConstantValues.MAINTENANCE_MODE != null) {
-                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
-                    showDialog(ConstantValues.MAINTENANCE_TEXT);
-                else {
-                    // Check if cartItemsList isn't empty
-                    if (cartItemsList.size() != 0) {
-
-                        // Check if User is Logged-In
-                        if (ConstantValues.IS_USER_LOGGED_IN) {
-                            Log.e("VC_Shop", "checkout executes  ");
-                            new Product_Description.CheckStockTask().execute();
+        buy_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!My_Cart.checkCartHasProductAndMeasure(productDetails.getProductsId())) {
+                    if (isFlash) {
+                        if (start > server) {
+                            Snackbar.make(v, context.getString(R.string.cannot_add_upcoming), Snackbar.LENGTH_SHORT).show();
                         } else {
-                            // Navigate to Login Activity
-                            Intent i = new Intent(getContext(), Login.class);
-                            getContext().startActivity(i);
-                            ((WalletHomeActivity) getContext()).finish();
-                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+                            Utilities.animateCartMenuIcon(context, (WalletHomeActivity) context);
+                            // Add Product to User's Cart
+//                            if(productMeasureAdapter.checkSelectedMeasure()) {
+                                buyNow(productDetails);
+//                            }
+                        }
+
+                    } else {
+                        if (productDetails.getProductsDefaultStock() < 1) {
+
+                            Snackbar.make(v, context.getString(R.string.outOfStock), Snackbar.LENGTH_SHORT).show();
+                        } else {
+                            Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
+                            // Add Product to User's Cart
+//                            if(productMeasureAdapter.checkSelectedMeasure()) {
+                                buyNow(productDetails);
+//                            }
                         }
                     }
 
+                } else {
+                    Snackbar.make(v, "Item already in your cart", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
         return rootView;
     }
+    //********** Adds the Product to User's Cart *********//
+
+    private void buyNow(ProductDetails product) {
+
+        CartProduct cartProduct = new CartProduct();
+
+        double productBasePrice, productFinalPrice = 0.0, attributesPrice = 0;
+        List<CartProductAttributes> selectedAttributesList = new ArrayList<>();
+
+        // Check Discount on Product with the help of static method of Helper class
+        final String discount = Utilities.checkDiscount(product.getProductsPrice(), product.getDiscountPrice());
+
+        // Get Product's Price based on Discount
+        if (discount != null) {
+            product.setIsSaleProduct("1");
+            productBasePrice = Double.parseDouble(product.getDiscountPrice());
+        } else {
+            product.setIsSaleProduct("0");
+            productBasePrice = Double.parseDouble(product.getProductsPrice());
+        }
+        products_price = price_new.getText().toString().split("\\s+");
+        // Get Default Attributes from AttributesList
+        for (int i = 0; i < product.getAttributes().size(); i++) {
+
+            CartProductAttributes productAttribute = new CartProductAttributes();
+
+            // Get Name and First Value of current Attribute
+            Option option = product.getAttributes().get(i).getOption();
+            Value value = product.getAttributes().get(i).getValues().get(0);
+
+
+            // Add the Attribute's Value Price to the attributePrices
+            String attrPrice = value.getPricePrefix() + value.getPrice();
+            attributesPrice += Double.parseDouble(attrPrice);
+
+
+            // Add Value to new List
+            List<Value> valuesList = new ArrayList<>();
+            valuesList.add(value);
+
+
+            // Set the Name and Value of Attribute
+            productAttribute.setOption(option);
+            productAttribute.setValues(valuesList);
+
+
+            // Add current Attribute to selectedAttributesList
+            selectedAttributesList.add(i, productAttribute);
+        }
+
+        if (isFlash) {
+            productFinalPrice = Double.parseDouble(product.getFlashPrice()) + attributesPrice;
+        } else {
+            // Add Attributes Price to Product's Final Price
+            productFinalPrice = Double.parseDouble(products_price[1]) + attributesPrice;
+        }
+
+
+
+
+        // Set Product's Price and Quantity
+        product.setCustomersBasketQuantity(Integer.parseInt(pdtQty.getText().toString()));
+        product.setProductsPrice(String.valueOf(products_price[1]));
+        product.setAttributesPrice(String.valueOf(attributesPrice));
+        product.setProductsFinalPrice(String.valueOf(productFinalPrice));
+        //set selected measure/weight
+
+//
+        product.setSelectedProductsWeight(selected_measure);
+        Log.d(TAG, "buyNow:measure"+selected_measure +"price"+products_price[1]);
+//        product.setSelectedProductsWeightUnit(product.getProductsWeightUnit().get(0));
+
+        product.setProductsQuantity(product.getProductsDefaultStock());
+
+        // Set Product's OrderProductCategory Info
+        String[] categoryIDs = new String[product.getCategories().size()];
+        String[] categoryNames = new String[product.getCategories().size()];
+        if (product.getCategories().size() > 0) {
+
+            for (int i = 0; i < product.getCategories().size(); i++) {
+                categoryIDs[i] = String.valueOf(product.getCategories().get(i).getCategoriesId());
+                categoryNames[i] = product.getCategories().get(i).getCategoriesName();
+            }
+
+            product.setCategoryIDs(TextUtils.join(",", categoryIDs));
+            product.setCategoryNames(TextUtils.join(",", categoryNames));
+        } else {
+            product.setCategoryIDs("");
+            product.setCategoryNames("");
+        }
+        // product.setCategoryNames(product.getCategoryNames());
+
+        product.setTotalPrice(String.valueOf(productFinalPrice));
+
+        // Set Customer's Basket Product and selected Attributes Info
+        cartProduct.setCustomersBasketProduct(product);
+        cartProduct.setCustomersBasketProductAttributes(selectedAttributesList);
+
+        // Add the Product to User's Cart with the help of static method of My_Cart class
+        My_Cart.AddCartItem
+                (
+                        cartProduct
+                );
+
+//        Snackbar.make(requireActivity().findViewById(android.R.id.content), context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
+
+        // Recreate the OptionsMenu
+        ((WalletBuySellActivity) context).invalidateOptionsMenu();
+
+        Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
+        // Navigate to My_Cart Fragment
+        Fragment fragment = new My_Cart();
+        FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.nav_host_fragment2, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(getString(R.string.actionHome)).commit();
+
+
+
+
+
+
+    }
+
 
     private void showDialog(String str) {
         android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getContext());
@@ -367,7 +533,7 @@ public class Product_Description extends Fragment {
             productBasePrice = Double.parseDouble(product.getDiscountPrice());
         } else {
             product.setIsSaleProduct("0");
-            productBasePrice = Double.parseDouble(product.getProductsPrice());
+            productBasePrice =Double.parseDouble(product.getProductsPrice());
         }
 
         // Get Default Attributes from AttributesList
@@ -407,13 +573,13 @@ public class Product_Description extends Fragment {
         }
 
         // Set Product's Price and Quantity
-        product.setCustomersBasketQuantity(1);
+        product.setCustomersBasketQuantity(Integer.parseInt(pdtQty.getText().toString()));
         product.setProductsPrice(String.valueOf(productBasePrice));
         product.setAttributesPrice(String.valueOf(attributesPrice));
         product.setProductsFinalPrice(String.valueOf(productFinalPrice));
         //set selected measure/weight
-//
-//        product.setSelectedProductsWeight(we);
+
+        product.setSelectedProductsWeight(selected_measure);
 //        product.setSelectedProductsWeightUnit(product.getProductsWeightUnit().get(0));
 
         product.setProductsQuantity(product.getProductsDefaultStock());
@@ -758,9 +924,13 @@ public class Product_Description extends Fragment {
     }
 
     public void showMeasuresRecyclerView() {
-        productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, selected_measure, price_new, this);
+        productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, selected_measure, price_new, this,booleanArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(productMeasureAdapter);
+
+
+
+
     }
 
     //*********** Update Product's final Price based on selected Attributes ********//
@@ -1363,6 +1533,26 @@ public class Product_Description extends Fragment {
         }
         return ids;
     }
+
+
+    public boolean isAnyBooleanTrue(ArrayList<Boolean> booleanArrayList) {
+        boolean isAnyChecked = false;
+
+        for (int i = 0; i < booleanArrayList.size(); i++) {
+            if (booleanArrayList.get(i).booleanValue()==true) {
+                isAnyChecked = true;
+            }else{
+                Toast.makeText(context, "please select a measure before proceeding", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        return isAnyChecked;
+    }
+
+
+
+
 
 
 }

@@ -278,7 +278,7 @@ public class CheckoutFinal extends Fragment {
                     checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.main_fragment_container, fragment)
+            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
                     .addToBackStack(getString(R.string.checkout)).commit();
         });
 
@@ -364,7 +364,7 @@ public class CheckoutFinal extends Fragment {
             fragment.setArguments(args);
 
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.main_fragment_container, fragment)
+            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
                     .addToBackStack(null).commit();
         });
 
@@ -1100,7 +1100,7 @@ public class CheckoutFinal extends Fragment {
                         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                         fragmentManager.popBackStack(getString(R.string.actionHome), FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         fragmentManager.beginTransaction()
-                                .add(R.id.main_fragment_container, fragment)
+                                .add(R.id.nav_host_fragment2, fragment)
                                 .addToBackStack(null)
                                 .commit();
 

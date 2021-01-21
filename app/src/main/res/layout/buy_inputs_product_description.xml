@@ -613,7 +613,7 @@
             android:textSize="@dimen/button_text_size"
             android:textStyle="bold" />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/continue_shopping_btn"
+            android:id="@+id/buy_now"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"

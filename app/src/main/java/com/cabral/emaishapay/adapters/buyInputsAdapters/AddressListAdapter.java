@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
@@ -99,7 +100,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
                 Fragment fragment = new Nearby_Merchants(parentFrag.my_cart);
                 FragmentManager fragmentManager = parentFrag.getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_fragment_container, fragment)
+                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(context.getString(R.string.select_merchants_fragment)).commit();
             } else {
                 // Request the Server to Change Default Address
@@ -135,9 +136,9 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
             ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
             Fragment fragment = new Shipping_Address(null, parentFrag);
             fragment.setArguments(addressInfo);
-            FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+            FragmentManager fragmentManager = ((WalletBuySellActivity)context).getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.main_fragment_container, fragment)
+                    .add(R.id.nav_host_fragment2, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .addToBackStack(null).commit();
         });

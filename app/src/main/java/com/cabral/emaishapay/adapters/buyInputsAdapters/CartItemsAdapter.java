@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -124,9 +125,9 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             //holder.cart_item_category.setText(cartProduct.getCustomersBasketProduct().getCategoryNames());
             holder.cart_item_quantity.setText("" + cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity());
             holder.cart_item_base_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getProductsPrice())));
-            //holder.cart_item_sub_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getTotalPrice())));
+//            holder.cart_item_sub_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getTotalPrice())));
 
-            holder.cart_item_measure.setText(cartProduct.getCustomersBasketProduct().getSelectedProductsWeight() + " " + cartProduct.getCustomersBasketProduct().getSelectedProductsWeightUnit());
+            holder.cart_item_measure.setText(cartProduct.getCustomersBasketProduct().getSelectedProductsWeight());
     
             List<Value> selectedAttributeValues= new ArrayList<>();
             List<CartProductAttributes> productAttributes= new ArrayList<>();
@@ -226,13 +227,14 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
                     // Get Product Info
                     Bundle itemInfo = new Bundle();
                     itemInfo.putInt("itemID", cartProduct.getCustomersBasketProduct().getProductsId());
-            
+
+//                    holder.cart_item_measure.getText().toString()
                     // Navigate to Product_Description of selected Product
-                    Fragment fragment = new Product_Description(holder.cart_item_measure.getText().toString());
+                    Fragment fragment = new Product_Description();
                     fragment.setArguments(itemInfo);
                     FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
                     fragmentManager.beginTransaction()
-                            .add(R.id.main_fragment_container, fragment)
+                            .add(R.id.nav_host_fragment2, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .addToBackStack(null)
                             .commit();

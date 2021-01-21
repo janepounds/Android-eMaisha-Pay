@@ -4,9 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -24,6 +28,8 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
@@ -74,7 +80,7 @@ public class ViewAllTopDeals extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressBar = rootView.findViewById(R.id.loading_bar);
         mainProgress = rootView.findViewById(R.id.progressBar);
-
+        setHasOptionsMenu(true);
         RequestSpecialDeals(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         topDealsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),topDealsList,false,false);
@@ -209,6 +215,18 @@ public class ViewAllTopDeals extends Fragment {
             super.onPostExecute(result);
         }
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+        cartItem.setVisible(true);
 
+        //set badge value
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
+    }
 
 }
