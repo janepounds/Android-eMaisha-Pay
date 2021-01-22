@@ -14,12 +14,15 @@ import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +40,10 @@ import retrofit2.Response;
 
 public class AddCardFragment extends DialogFragment {
 
-    EditText etName, etCardNumber, etCvv;
-    TextView txtExpiryDate;
+    EditText etName, etCardNumber, etCvv, etExpiryDate;
+    TextView txtTitle;
+    LinearLayout amountLayout, purporseLayout;
+
     Button btnSaveCard;
     private Context context;
     private NavController navController;
@@ -74,12 +79,47 @@ public class AddCardFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.dialog_add_card, null);
-        etName = view.findViewById(R.id.txt_card_holder_name);
-        etCardNumber = view.findViewById(R.id.txt_card_number);
-        etCvv = view.findViewById(R.id.card_cvv);
-        txtExpiryDate = view.findViewById(R.id.card_expiry);
+        View view = inflater.inflate(R.layout.wallet_add_money_visa, null);
+        etName = view.findViewById(R.id.add_money_holder_name);
+        etCardNumber = view.findViewById(R.id.add_money_creditCardNumber);
+        etCvv = view.findViewById(R.id.add_money_card_cvv);
+        etExpiryDate = view.findViewById(R.id.add_money_card_expiry);
         btnSaveCard = view.findViewById(R.id.save_card_button);
+        amountLayout = view.findViewById(R.id.add_money_amount_layout);
+        purporseLayout = view.findViewById(R.id.layout_purpose);
+        txtTitle = view.findViewById(R.id.add_money_title);
+
+        amountLayout.setVisibility(View.GONE);
+        purporseLayout.setVisibility(View.GONE);
+        txtTitle.setText("ADD CARD");
+        btnSaveCard.setText("SAVE CARD");
+
+
+        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (filterLongEnough() && !etExpiryDate.getText().toString().contains("/")) {
+                    etExpiryDate.setText(etExpiryDate.getText().toString()+"/");
+                    int pos = etExpiryDate.getText().length();
+                    etExpiryDate.setSelection(pos);
+                }
+            }
+
+            private boolean filterLongEnough() {
+                return etExpiryDate.getText().toString().length() == 2;
+            }
+        };
+        etExpiryDate.addTextChangedListener(fieldValidatorTextWatcher);
+
+
 
         btnSaveCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +136,7 @@ public class AddCardFragment extends DialogFragment {
                     String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                     String card_number = etCardNumber.getText().toString().trim();
                     String cvv = etCvv.getText().toString().trim();
-                    String expiry =txtExpiryDate.getText().toString();
+                    String expiry = etExpiryDate.getText().toString();
                     String account_name = etName.getText().toString();
 
                     /**********ENCRPT CARD DETAILS****************/
@@ -161,8 +201,8 @@ public class AddCardFragment extends DialogFragment {
             return false;
         }
 
-        else if (txtExpiryDate.getText().toString().trim() == null || txtExpiryDate.getText().toString().trim().isEmpty()){
-            txtExpiryDate.setError("Please select valid value");
+        else if (etExpiryDate.getText().toString().trim() == null || etExpiryDate.getText().toString().trim().isEmpty()){
+            etExpiryDate.setError("Please select valid value");
             return false;
         }
 
@@ -174,5 +214,10 @@ public class AddCardFragment extends DialogFragment {
 
             return true;
         }
+
+
+
+
+
     }
 }

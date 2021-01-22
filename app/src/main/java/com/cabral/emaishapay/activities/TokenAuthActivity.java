@@ -109,6 +109,8 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 0) {
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (dialogLoader != null)
+                            dialogLoader.hideProgressDialog();
 
                     } else {
                         Log.d(TAG, "OnSuccess running");
