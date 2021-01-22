@@ -52,7 +52,6 @@
             android:id="@+id/viewPager_sell_produce_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="45dp"
             android:layout_marginBottom="?actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
