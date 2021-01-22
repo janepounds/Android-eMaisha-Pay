@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -11,13 +12,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.CardListAdapter;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
 import com.cabral.emaishapay.models.CardResponse;
@@ -73,8 +77,8 @@ public class CardListFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-//            DialogFragment addCardDialog =new SearchMerchantForPairing();
-//            addCardDialog.show( ft, "dialog");
+            DialogFragment addCardDialog =new AddCardFragment();
+            addCardDialog.show( ft, "dialog");
 
         });
         return rootView;
@@ -82,8 +86,15 @@ public class CardListFragment extends Fragment {
 
 
     public void RequestCards(){
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("Please Wait..");
+        dialog.setCancelable(false);
+        dialog.show();
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getInstance().getCards();
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token);
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -91,13 +102,23 @@ public class CardListFragment extends Fragment {
                     cardlists.add(response.body());
                     cardListAdapter.notifyDataSetChanged();
                     updateCardView(cardlists.size());
+                    dialog.dismiss();
+                }else if (response.code() == 401) {
 
+                    TokenAuthActivity.startAuth(context, true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialog.dismiss();
                 }
+
             }
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
 

@@ -84,6 +84,16 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+encrypter.encrypt(name)+" "+encrypter.decrypt(hash));
 
+        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        if(role.equalsIgnoreCase("agent")){
+            binding.layout2.setVisibility(View.VISIBLE);
+        }else if(role.equalsIgnoreCase("merchant")){
+            binding.layout2.setVisibility(View.VISIBLE);
+        }else if(role.equalsIgnoreCase("agent merchant")){
+            binding.layout2.setVisibility(View.VISIBLE);
+        }else{
+            binding.layout2.setVisibility(View.GONE);
+        }
         return binding.getRoot();
     }
 

@@ -394,7 +394,7 @@ public interface APIRequests {
 
     //get card info
     @GET("wallet/cards/list")
-    Call<CardResponse>getCards();
+    Call<CardResponse>getCards(@Header("Authorization") String token);
 
 
 
