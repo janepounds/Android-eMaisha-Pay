@@ -25,6 +25,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.fragments.WalletAccountFragment;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
@@ -103,6 +104,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     Fragment defaultHomeFragment;
     WalletBuyFragment buysellFragment;
     WalletAccountFragment walletAccountFragment;
+    CardListFragment cardListFragment;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
     Toolbar toolbar;
@@ -204,6 +206,25 @@ public class WalletHomeActivity extends AppCompatActivity{
                         currentFragment = defaultHomeFragment;
                         return true;
 
+//                    case R.id.walletCardsFragment:
+//                        if(cardListFragment== null) {
+//                            cardListFragment = new CardListFragment();
+//                            if (currentFragment == null)
+//                                fragmentManager.beginTransaction()
+//                                        .add(R.id.nav_host_fragment, cardListFragment)
+//                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                                        .commit();
+//                            else
+//                                fragmentManager.beginTransaction()
+//                                        .hide(currentFragment)
+//                                        .add(R.id.nav_host_fragment, cardListFragment)
+//                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                                        .commit();
+//                        }else {
+//                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+//                        }
+//                        currentFragment = cardListFragment;
+//                        return true;
                         default:
                             fragmentManager.beginTransaction()
                                     .add(R.id.nav_host_fragment, defaultHomeFragment)
