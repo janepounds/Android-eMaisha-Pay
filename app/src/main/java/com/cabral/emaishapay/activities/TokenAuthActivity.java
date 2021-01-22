@@ -107,20 +107,28 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.code() == 200) {
-                    Log.d(TAG, "OnSuccess running");
-                    TokenResponse tokenResponse = response.body();
+                    if (response.body().getStatus() == 0) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (dialogLoader != null)
+                            dialogLoader.hideProgressDialog();
 
-                    String accessToken = tokenResponse.getData().getAccess_token();
-                    String accountRole = tokenResponse.getData().getAccountRole();
-                    Log.d(TAG, accessToken);
-                    WALLET_ACCESS_TOKEN = accessToken;
-                    WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE,accountRole,context);
-                    if(dialogLoader!=null)
-                        dialogLoader.hideProgressDialog();
-                    WalletHomeActivity.startHome(context);
-                    //now you can go to next wallet page
-                }
-                else {
+                    } else {
+                        Log.d(TAG, "OnSuccess running");
+                        TokenResponse tokenResponse = response.body();
+
+                        String accessToken = tokenResponse.getData().getAccess_token();
+                        String accountRole = tokenResponse.getData().getAccountRole();
+                        Log.d(TAG, accessToken);
+                        WALLET_ACCESS_TOKEN = accessToken;
+                        WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
+                        if (dialogLoader != null)
+                            dialogLoader.hideProgressDialog();
+                        WalletHomeActivity.startHome(context);
+
+                        //now you can go to next wallet page
+                    }
+
+                } else {
 
                     if (response.code() == 403) {
                         //Toast.makeText(context, errorResponse.getString("message"), Toast.LENGTH_LONG).show();
@@ -130,8 +138,6 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                             errorTextView.requestFocus();
                         }
 
-                    }else if(response.code()==400){
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                     }
                     if (response.errorBody() != null) {
 
@@ -140,10 +146,11 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
 //                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Something got very very wrong");
                     }
-                    if(dialogLoader!=null)
+                    if (dialogLoader != null)
                         dialogLoader.hideProgressDialog();
                 }
             }
+
 
             @Override
             public void onFailure(@NotNull Call<TokenResponse> call, @NotNull Throwable t) {

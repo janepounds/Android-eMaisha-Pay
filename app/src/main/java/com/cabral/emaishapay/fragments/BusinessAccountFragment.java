@@ -42,7 +42,6 @@ import retrofit2.Response;
 
 public class BusinessAccountFragment extends Fragment {
     private FragmentBusinessAccountBinding binding;
-    private NavController navController = null;
     private String role;
     private String encodedIdFront;
     private String encodedIdBack;
@@ -51,9 +50,11 @@ public class BusinessAccountFragment extends Fragment {
     private String encodedIdtradelicense;
     private ProgressDialog progressDialog;
     private Context context;
+    Bundle localBundle;
 
-    public BusinessAccountFragment() {
+    public BusinessAccountFragment(Bundle bundle) {
         // Required empty public constructor
+        this.localBundle=bundle;
     }
 
 
@@ -74,35 +75,25 @@ public class BusinessAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_account, container, false);
-
+        initializeViews();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-        initializeViews();
 
-
-
-    }
 
     public void initializeViews(){
-        if(getArguments()!=null) {
+        if(localBundle!=null) {
 
-            if (getArguments().getString("Agent")!=null) {
-                binding.toolbar.setTitle(getArguments().getString("Agent"));
+            if (localBundle.getString("Agent")!=null) {
+                binding.toolbar.setTitle(localBundle.getString("Agent"));
                 role = "AGENT";
 
-            }else if(getArguments().getString("Merchant")!=null){
-                binding.toolbar.setTitle(getArguments().getString("Merchant"));
+            }else if(localBundle.getString("Merchant")!=null){
+                binding.toolbar.setTitle(localBundle.getString("Merchant"));
                 role = "MERCHANT";
 
-            }else if(getArguments().getString("AgentMerchant")!=null) {
-                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
+            }else if(localBundle.getString("AgentMerchant")!=null) {
+                binding.toolbar.setTitle(localBundle.getString("AgentMerchant"));
                 role = "AGENT_MERCHANT";
 
             }
@@ -158,8 +149,6 @@ public class BusinessAccountFragment extends Fragment {
                 if(response.isSuccessful()){
                     String message = response.body().getMessage();
 
-
-
                     //call success dialog
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.dialog_successful_message);
@@ -168,15 +157,11 @@ public class BusinessAccountFragment extends Fragment {
                     TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                     text.setText(message);
 
-
-
                     dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
-
                             //go to home activity fragment
-
                             Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                             startActivity(goToWallet);
                         }
