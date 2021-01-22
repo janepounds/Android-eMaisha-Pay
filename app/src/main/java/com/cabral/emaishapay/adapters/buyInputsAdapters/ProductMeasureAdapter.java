@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
+import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
+import com.cabral.emaishapay.models.search_model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,11 +70,9 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             checkedmesure.add(productMeasure1.isChecked());
 
 
-
-
-
             measure = productMeasure.getProducts_weight() + " " + productMeasure.getProducts_weight_unit();
             holder.weight.setText(measure);
+
         }
 
 
@@ -85,9 +85,13 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             selected_measure = holder.weight.getText().toString();
             String []products_price = new_price.getText().toString().split("\\s+");
 
+            ProductDetails productDetails = new ProductDetails();
+            productDetails.setSelectedProductsWeight(selected_measure);
             productMeasure.setProducts_weight(weight[0]);
             productMeasure.setProducts_weight_unit(weight[1]);
             productMeasure.setProducts_price(products_price[1]);
+
+            //
 
             new_price.setText("UGX " + productMeasure.getProducts_price());
             isChecked=true;

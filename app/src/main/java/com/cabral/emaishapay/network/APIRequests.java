@@ -2,6 +2,7 @@ package com.cabral.emaishapay.network;
 
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
+import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
@@ -373,6 +374,28 @@ public interface APIRequests {
             @Field("operating_system") String operating_system
 
     );
+
+    //store card info
+    @FormUrlEncoded
+    @POST("wallet/add_card_info")
+    Call<CardResponse>saveCardInfo(
+            @Field("user_id") String user_id,
+            @Field("card_number") String card_number,
+            @Field("cvv") String cvv,
+            @Field("expiry") String expiry,
+            @Field("account_name") String account_name
+
+
+
+    );
+
+
+
+
+    //get card info
+    @GET("wallet/cards/list")
+    Call<CardResponse>getCards(@Header("Authorization") String token);
+
 
 
 }

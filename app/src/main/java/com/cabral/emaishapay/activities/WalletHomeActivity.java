@@ -71,6 +71,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static String RETRIEVED_USER_ID = "";
     public static final String PREFERENCES_USER_EMAIL = "email";
     public static final String PREFERENCES_PHONE_NUMBER = "phoneNumber";
+    public static final String PREFERENCES_WALLET_ACCOUNT_ROLE = "accountRole";
 
     public static final String PREFERENCES_FIREBASE_TOKEN_SUBMITTED = "tokenSubmitted";
     public static final String PREFERENCES_USER_BACKED_UP = "userBackedUp";

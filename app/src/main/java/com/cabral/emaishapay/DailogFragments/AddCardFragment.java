@@ -19,6 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.network.APIClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AddCardFragment extends DialogFragment {
@@ -57,22 +64,28 @@ public class AddCardFragment extends DialogFragment {
         btnSaveCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etName.getText().toString().trim() == null || etName.getText().toString().trim().isEmpty()) {
-                    etName.setError("Please enter valid value");
+                if(validateEntries()){
+                    String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                    String card_number = etCardNumber.getText().toString().trim();
+                    String cvv = etCvv.getText().toString().trim();
+                    String expiry =txtExpiryDate.getText().toString();
+                    String account_name = etName.getText().toString();
+                    /*************RETROFIT IMPLEMENTATION**************/
+                    Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(user_id,card_number,cvv,expiry,account_name);
+                    call.enqueue(new Callback<CardResponse>() {
+                        @Override
+                        public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                            if(response.isSuccessful()){
+                               
 
-                } else if (etCardNumber.getText().toString().trim() == null || etCardNumber.getText().toString().trim().isEmpty()
-                        || etCardNumber.getText().toString().trim().length()<13 ){
-                    etCardNumber.setError("Please enter valid value");
-                }
+                            }
+                        }
 
-                else if (txtExpiryDate.getText().toString().trim() == null || txtExpiryDate.getText().toString().trim().isEmpty()){
-                    txtExpiryDate.setError("Please select valid value");
-                }
+                        @Override
+                        public void onFailure(Call<CardResponse> call, Throwable t) {
 
-                else if (etCvv.getText().toString().trim() == null || etCvv.getText().toString().trim().isEmpty()
-                        || etCvv.getText().toString().trim().length()<3 ){
-                    etCardNumber.setError("Please enter valid value");
-                }else {
+                        }
+                    });
 
                 }
             }
@@ -89,5 +102,32 @@ public class AddCardFragment extends DialogFragment {
 
         return dialog;
 
+    }
+
+    public boolean validateEntries(){
+
+        if (etName.getText().toString().trim() == null || etName.getText().toString().trim().isEmpty()) {
+            etName.setError("Please enter valid value");
+            return false;
+
+        } else if (etCardNumber.getText().toString().trim() == null || etCardNumber.getText().toString().trim().isEmpty()
+                || etCardNumber.getText().toString().trim().length()<13 ){
+            etCardNumber.setError("Please enter valid value");
+            return false;
+        }
+
+        else if (txtExpiryDate.getText().toString().trim() == null || txtExpiryDate.getText().toString().trim().isEmpty()){
+            txtExpiryDate.setError("Please select valid value");
+            return false;
+        }
+
+        else if (etCvv.getText().toString().trim() == null || etCvv.getText().toString().trim().isEmpty()
+                || etCvv.getText().toString().trim().length()<3 ){
+            etCardNumber.setError("Please enter valid value");
+            return false;
+        }else {
+
+            return true;
+        }
     }
 }

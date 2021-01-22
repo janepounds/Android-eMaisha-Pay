@@ -28,12 +28,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
+
 public class TokenAuthActivity extends AppCompatActivity implements PinFragment.Listener {
 
     private static final String TAG = "TokenAuthActivity";
     static TextView errorTextView;
     private Context context;
     public static String WALLET_ACCESS_TOKEN = null;
+    public static String WALLET_ACCOUNT_ROLE = null;
     private static SharedPreferences sharedPreferences;
 
     @Override
@@ -106,8 +109,10 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                     TokenResponse tokenResponse = response.body();
 
                     String accessToken = tokenResponse.getData().getAccess_token();
+                    String accountRole = tokenResponse.getData().getAccountRole();
                     Log.d(TAG, accessToken);
                     WALLET_ACCESS_TOKEN = accessToken;
+                    WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE,accountRole,context);
                     if(dialogLoader!=null)
                         dialogLoader.hideProgressDialog();
                     WalletHomeActivity.startHome(context);
