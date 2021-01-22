@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="5dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,33 +19,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/produce_close"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
-                android:src="@drawable/close" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_add_money"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="Add Produce"
-                android:textAllCaps="true"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:background="@drawable/top_rounded_blue">
+
+                <TextView
+                    android:id="@+id/produce_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:gravity="center"
+                    android:text="Add Produce"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"/>
+                <ImageView
+                    android:id="@+id/produce_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".9"
+                    android:layout_gravity="end"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/close" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -61,7 +71,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -70,7 +80,7 @@
                         <Spinner
                             android:id="@+id/produce_name"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
+                            android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
@@ -107,7 +117,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_alignParentTop="true"
                         android:background="@drawable/edittext_corner"
                         android:gravity="center"
@@ -117,7 +127,7 @@
                         <EditText
                             android:id="@+id/produce_variety"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/josefin_sans"
@@ -151,7 +161,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -160,7 +170,7 @@
                         <Spinner
                             android:id="@+id/produce_quantity_unit"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
+                            android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
@@ -177,7 +187,8 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="10dp"
-                            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+                            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            tools:ignore="VectorDrawableCompat" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -274,6 +285,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="15dp"
                 android:visibility="visible"
                 app:cardCornerRadius="@dimen/dimen_5dp">
 

@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +75,7 @@ public class MyProduceFragment extends Fragment {
     private DbHandlerSingleton dbHandler;
 
     private RecyclerView recyclerView;
+    private LinearLayout layoutEmptyCart;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -82,12 +84,21 @@ public class MyProduceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_produce, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView_my_produce_fragment);
+        layoutEmptyCart = view.findViewById(R.id.cart_view_empty);
         FloatingActionButton addProduce = view.findViewById(R.id.btn_add_my_produce);
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
         getAllProduce();
         Log.d(TAG, "onCreateView: " + produceList);
+
+        if (produceList.size() != 0) {
+
+            layoutEmptyCart.setVisibility(View.GONE);
+        } else {
+
+            layoutEmptyCart.setVisibility(View.VISIBLE);
+        }
 
         addProduce.setOnClickListener(v -> addProduce());
 
