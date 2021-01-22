@@ -108,6 +108,11 @@ public class WalletHomeActivity extends AppCompatActivity{
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
     Toolbar toolbar;
+
+    public Fragment getCurrentFragment() {
+        return currentFragment;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +122,11 @@ public class WalletHomeActivity extends AppCompatActivity{
         fm = getSupportFragmentManager();
 
         defaultHomeFragment= new WalletHomeFragment();
+        currentFragment=defaultHomeFragment;
+        fm.beginTransaction()
+                .add(R.id.wallet_home_container, defaultHomeFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
         setUpNavigation();
 
         toolbar = findViewById(R.id.main_Toolbar);
@@ -152,18 +162,34 @@ public class WalletHomeActivity extends AppCompatActivity{
          bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setItemIconTintList(null);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        currentFragment=fragmentManager.getPrimaryNavigationFragment();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
-                switch (item.getItemId()){
-                    case R.id.WalletBuyFragment :
-                        bottomNavigationView.postDelayed(() -> {
-                            startActivity(new Intent(WalletHomeActivity.this, WalletBuySellActivity.class));
-                        }, 300);
 
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                switch (item.getItemId()){
+
+                    case R.id.walletCardsFragment:
+                        if(cardListFragment== null) {
+                            cardListFragment = new CardListFragment();
+                            if (currentFragment == null)
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = cardListFragment;
                         return true;
 
                     case R.id.walletAccountFragment :
@@ -206,30 +232,19 @@ public class WalletHomeActivity extends AppCompatActivity{
                         currentFragment = defaultHomeFragment;
                         return true;
 
-                    case R.id.walletCardsFragment:
-                        if(cardListFragment== null) {
-                            cardListFragment = new CardListFragment();
-                            if (currentFragment == null)
-                                fragmentManager.beginTransaction()
-                                        .add(R.id.wallet_home_container, cardListFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-                            else
-                                fragmentManager.beginTransaction()
-                                        .hide(currentFragment)
-                                        .add(R.id.wallet_home_container, cardListFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-                        }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-                        }
-                        currentFragment = cardListFragment;
-                        return true;
 
+                    case R.id.WalletBuyFragment :
+                        bottomNavigationView.postDelayed(() -> {
+                            startActivity(new Intent(WalletHomeActivity.this, WalletBuySellActivity.class));
+                        }, 300);
+
+                        return true;
+                    default:
+                        return false;
 
 
                 }
-               return false;
+
             }
         });
 
