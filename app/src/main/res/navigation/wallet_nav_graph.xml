@@ -221,5 +221,19 @@
         android:name="com.cabral.emaishapay.activities.WalletBuySellActivity"
         android:label=" "
         tools:layout="@layout/activity_wallet_buy_sell"/>
+    <fragment
+        android:id="@+id/cardListFragment"
+        android:name="com.cabral.emaishapay.fragments.CardListFragment"
+        android:label="CardListFragment"
+        tools:layout="@layout/fragment_card_list"/>
+    <dialog
+        android:id="@+id/addCardFragment"
+        android:name="com.cabral.emaishapay.DailogFragments.AddCardFragment"
+        android:label="dialog_add_card"
+        tools:layout="@layout/dialog_add_card" >
+        <action
+            android:id="@+id/action_addCardFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+    </dialog>
 
 </navigation>
