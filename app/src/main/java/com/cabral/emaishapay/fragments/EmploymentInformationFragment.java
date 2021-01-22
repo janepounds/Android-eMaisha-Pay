@@ -33,8 +33,12 @@ import retrofit2.Response;
 public class EmploymentInformationFragment extends Fragment {
     private static final String TAG = "EmploymentInformation";
     private FragmentEmploymentInformationBinding binding;
-    private NavController navController = null;
     private ProgressDialog progressDialog;
+    Bundle localBundle;
+
+    public EmploymentInformationFragment(Bundle bundle) {
+        this.localBundle=bundle;
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -42,21 +46,11 @@ public class EmploymentInformationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employment_information, container, false);
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-
-        if(getArguments()!=null){
-            String employer = getArguments().getString("employer");
-            String designation =getArguments().getString("designation");
-            String location =getArguments().getString("location");
-            String employee_id =getArguments().getString("employee_id");
+        if(localBundle!=null){
+            String employer = localBundle.getString("employer");
+            String designation =localBundle.getString("designation");
+            String location =localBundle.getString("location");
+            String employee_id =localBundle.getString("employee_id");
 
             //set edit textviews
             binding.employer.setText(employer);
@@ -82,7 +76,9 @@ public class EmploymentInformationFragment extends Fragment {
                 public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse: successful");
-                        navController.navigate(R.id.action_employmentInformationFragment_to_walletAccountFragment);
+
+                        Fragment fragment= new WalletAccountFragment();
+                        getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
                     } else {
                         Log.d(TAG, "onResponse: failed" + response.errorBody());
                         Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
@@ -97,6 +93,10 @@ public class EmploymentInformationFragment extends Fragment {
             });
         });
 
-        binding.cancelButton.setOnClickListener(v -> navController.popBackStack());
+        binding.cancelButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+
+        return binding.getRoot();
     }
+
+
 }

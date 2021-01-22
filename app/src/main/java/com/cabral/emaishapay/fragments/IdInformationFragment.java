@@ -54,12 +54,16 @@ import static com.cabral.emaishapay.fragments.PersonalInformationFragment.select
 public class IdInformationFragment extends Fragment {
     private static final String TAG = "IdInformationFragment";
     private FragmentIdInformationBinding binding;
-    private NavController navController = null;
+    Bundle localBundle;
 
     private String encodedIdFront;
     private String encodedIdBack;
     private ImageView imageView;
     private ProgressDialog progressDialog;
+
+    public IdInformationFragment(Bundle bundle) {
+        this.localBundle=bundle;
+    }
 
 
     @Override
@@ -68,22 +72,12 @@ public class IdInformationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_id_information, container, false);
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-
-        if(getArguments()!=null){
-            String idtype = getArguments().getString("idtype");
-            String idNumber =getArguments().getString("idNumber");
-            String expiryDate =getArguments().getString("expiryDate");
-            String front =getArguments().getString("front");
-            String back =getArguments().getString("back");
+        if(localBundle!=null){
+            String idtype = localBundle.getString("idtype");
+            String idNumber =localBundle.getString("idNumber");
+            String expiryDate =localBundle.getString("expiryDate");
+            String front =localBundle.getString("front");
+            String back =localBundle.getString("back");
             Log.d(TAG, "onViewCreated: "+ ConstantValues.WALLET_DOMAIN+front);
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -135,12 +129,14 @@ public class IdInformationFragment extends Fragment {
                 saveInfo();
         });
 
-        binding.cancelButton.setOnClickListener(view1 -> navController.popBackStack());
+        binding.cancelButton.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Please Wait..");
         progressDialog.setCancelable(false);
+
+        return binding.getRoot();
     }
 
     public void saveInfo() {
@@ -155,7 +151,10 @@ public class IdInformationFragment extends Fragment {
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
-                    navController.navigate(R.id.action_idInformationFragment_to_walletAccountFragment);
+
+                    Fragment fragment= new WalletAccountFragment();
+                    getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
+
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }
