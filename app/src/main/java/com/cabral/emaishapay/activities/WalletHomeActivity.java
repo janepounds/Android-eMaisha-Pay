@@ -413,6 +413,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         // Get FragmentManager
         FragmentManager fm = getSupportFragmentManager();
 
+        currentFragment = this.getSupportFragmentManager().getPrimaryNavigationFragment();
         // Check if BackStack has some Fragments
         if (fm.getBackStackEntryCount() > 0) {
             // Pop previous Fragment
