@@ -230,7 +230,9 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("front",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context));
                     bundle.putString("back",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, context));
 
-                    navController.navigate(R.id.action_walletAccountFragment_to_idInformationFragment,bundle);
+            Fragment fragment= new IdInformationFragment(bundle);
+            getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
+            ;
                 });
 
         binding.employmentInformationLayout.setOnClickListener(view12 -> {
@@ -304,7 +306,10 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("designation",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_DESIGNATION, context));
                     bundle.putString("location",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LOCATION, context));
                     bundle.putString("employee_id",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, context));
-                    navController.navigate(R.id.action_walletAccountFragment_to_employmentInformationFragment,bundle);
+
+
+                    Fragment fragment= new EmploymentInformationFragment(bundle);
+                    getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
                 });
 
         binding.businessInformationLayout.setOnClickListener(view12 -> {
@@ -379,7 +384,8 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("license_no",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
                     bundle.putString("reg_cert",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
                     bundle.putString("trade_license",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
-                    navController.navigate(R.id.action_walletAccountFragment_to_businessInformationFragment,bundle);
+                    Fragment fragment= new BusinessAccountFragment(bundle);
+                    getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
                 });
 
 
@@ -503,7 +509,9 @@ public class WalletAccountFragment extends Fragment {
             label_details = "Agent Details";
             bundle.putString("Agent",label_details);
 
-             navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
+            Fragment fragment= new BusinessAccountFragment(bundle);
+            getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
+
         });
         binding.layoutMerchant.setOnClickListener(view1 ->
         {
@@ -511,7 +519,8 @@ public class WalletAccountFragment extends Fragment {
             label_details = "Merchant Details";
             bundle.putString("Merchant",label_details);
 
-            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
+            Fragment fragment= new BusinessAccountFragment(bundle);
+            getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
         });
         binding.layoutAgentMerchant.setOnClickListener(view1 ->
         {
@@ -519,7 +528,8 @@ public class WalletAccountFragment extends Fragment {
             label_details = "Agent & Merchant Details";
             bundle.putString("AgentMerchant",label_details);
 
-            navController.navigate(R.id.action_walletAccountFragment_to_businessAccountFragment,bundle);
+            Fragment fragment= new BusinessAccountFragment(bundle);
+            getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
         });
 
 
