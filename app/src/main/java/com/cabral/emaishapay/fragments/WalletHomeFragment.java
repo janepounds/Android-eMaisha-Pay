@@ -279,15 +279,11 @@ public class WalletHomeFragment extends Fragment {
             handler.postDelayed(new Runnable() {
                 public void run() {
 
+                        //get balanace from shared preference and update it in textview
 
-                                //get balanace from shared preference and update it in textview
+                        binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
 
-                                binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
-
-                                Log.d(TAG, "run: reached !!");
-
-
-
+                        Log.d(TAG, "run: reached !!");
 
 
                 }
