@@ -171,13 +171,13 @@ public class WalletHomeActivity extends AppCompatActivity{
                             walletAccountFragment = new WalletAccountFragment();
                             if (currentFragment == null)
                                 fragmentManager.beginTransaction()
-                                        .add(R.id.nav_host_fragment, walletAccountFragment)
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
                                 fragmentManager.beginTransaction()
                                         .hide(currentFragment)
-                                        .add(R.id.nav_host_fragment, walletAccountFragment)
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                         }else {
@@ -191,13 +191,13 @@ public class WalletHomeActivity extends AppCompatActivity{
                             defaultHomeFragment = new WalletHomeFragment();
                             if (currentFragment == null)
                                 fragmentManager.beginTransaction()
-                                        .add(R.id.nav_host_fragment, defaultHomeFragment)
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
                                 fragmentManager.beginTransaction()
                                         .hide(currentFragment)
-                                        .add(R.id.nav_host_fragment, defaultHomeFragment)
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                         }else {
@@ -206,35 +206,30 @@ public class WalletHomeActivity extends AppCompatActivity{
                         currentFragment = defaultHomeFragment;
                         return true;
 
-//                    case R.id.walletCardsFragment:
-//                        if(cardListFragment== null) {
-//                            cardListFragment = new CardListFragment();
-//                            if (currentFragment == null)
-//                                fragmentManager.beginTransaction()
-//                                        .add(R.id.nav_host_fragment, cardListFragment)
-//                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                                        .commit();
-//                            else
-//                                fragmentManager.beginTransaction()
-//                                        .hide(currentFragment)
-//                                        .add(R.id.nav_host_fragment, cardListFragment)
-//                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                                        .commit();
-//                        }else {
-//                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-//                        }
-//                        currentFragment = cardListFragment;
-//                        return true;
-                        default:
-                            fragmentManager.beginTransaction()
-                                    .add(R.id.nav_host_fragment, defaultHomeFragment)
-                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .commit();
-                            return true;
+                    case R.id.walletCardsFragment:
+                        if(cardListFragment== null) {
+                            cardListFragment = new CardListFragment();
+                            if (currentFragment == null)
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = cardListFragment;
+                        return true;
+
 
 
                 }
-//                return false;
+               return false;
             }
         });
 
@@ -427,7 +422,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     private void showHomePage() {
         getSupportFragmentManager().beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, defaultHomeFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.wallet_home_container, defaultHomeFragment).commit();
         currentFragment = defaultHomeFragment;
 
        // actionBar.setTitle(getString(R.string.app_name));
