@@ -4,14 +4,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class TokenResponse {
+    @SerializedName("status")
+    @Expose
+    public int status;
 
     @SerializedName("message")
     @Expose
     private String message;
+
+
     @SerializedName("data")
     @Expose
     private TokenData data = null;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getMessage() {
         return message;
