@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -43,6 +45,7 @@ public class CardListFragment extends Fragment {
     private Context context;
     private CardListAdapter cardListAdapter;
     private ArrayList<CardResponse>cardlists = new ArrayList();
+    Toolbar toolbar;
     public CardListFragment() {
         // Required empty public constructor
     }
@@ -61,6 +64,11 @@ public class CardListFragment extends Fragment {
         cardRecycler   =rootView.findViewById(R.id.recyclerView_card_fragment);
         layoutCardViewEmpty = rootView.findViewById(R.id.card_view_empty);
         btnAddCard = rootView.findViewById(R.id.btn_add_card);
+        toolbar = rootView.findViewById(R.id.toolbar_card_list);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("My Cards");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         cardRecycler.setLayoutManager(new LinearLayoutManager(context));
         RequestCards();
 

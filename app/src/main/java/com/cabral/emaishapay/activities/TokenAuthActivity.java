@@ -130,12 +130,14 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
                             errorTextView.requestFocus();
                         }
 
+                    }else if(response.code()==400){
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                     }
                     if (response.errorBody() != null) {
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+
                         Log.e(TAG, new String(response.message()));
                     } else {
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Something got very very wrong");
                     }
                     if(dialogLoader!=null)
