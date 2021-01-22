@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_card_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_card"
@@ -94,6 +85,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.95" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_card_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
