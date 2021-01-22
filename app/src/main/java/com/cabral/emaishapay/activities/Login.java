@@ -55,6 +55,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     private Dialog dialog;
     private Context context;
     private EditText code1,code2,code3,code4,code5,code6;
+    TextView resendtxtview;
     private  String code, sms_code;
 
     @Override
@@ -146,7 +147,10 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                     code4= dialog.findViewById(R.id.otp_code4_et);
                     code5=dialog.findViewById(R.id.otp_code5_et);
                     code6= dialog.findViewById(R.id.otp_code6_et);
-                    code1.addTextChangedListener(new TextWatcher() {
+                    resendtxtview= dialog.findViewById(R.id.login_otp_resend_code);
+
+
+            code1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -241,7 +245,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                     dialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                          //  processLogin("0"+binding.userPhone.getText().toString());
+                            processLogin("0"+binding.userPhone.getText().toString());
                         }
                     });
                     dialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
