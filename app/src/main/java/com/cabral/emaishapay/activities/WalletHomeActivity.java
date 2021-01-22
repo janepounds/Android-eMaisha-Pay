@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +22,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -338,7 +346,36 @@ public class WalletHomeActivity extends AppCompatActivity{
         Intent intent = new Intent(this, AccountOpeningActivity.class);
         startActivity(intent);
     }
+    public void editMyProduce(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
 
+        View addProduceDialog = View.inflate(context,R.layout.add_produce_dialog,null);
+        Dialog dialog = builder.create();
+
+        ImageView close = addProduceDialog.findViewById(R.id.produce_close);
+        Spinner name = addProduceDialog.findViewById(R.id.produce_name);
+        EditText variety = addProduceDialog.findViewById(R.id.produce_variety);
+        Spinner quantityUnit = addProduceDialog.findViewById(R.id.produce_quantity_unit);
+        EditText quantity = addProduceDialog.findViewById(R.id.produce_quantity);
+        TextView quantityMeasure = addProduceDialog.findViewById(R.id.produce_quantity_measure);
+        EditText price = addProduceDialog.findViewById(R.id.produce_price);
+        CardView cardView = addProduceDialog.findViewById(R.id.image_view_holder);
+        ImageView image = addProduceDialog.findViewById(R.id.produce_image);
+        Button submit = addProduceDialog.findViewById(R.id.produce_submit_button);
+        LinearLayout layoutSubmitBtn = addProduceDialog.findViewById(R.id.layout_submit_button);
+        LinearLayout layoutEditBtns = addProduceDialog.findViewById(R.id.edit_buttons);
+
+        layoutSubmitBtn.setVisibility(View.GONE);
+        layoutEditBtns.setVisibility(View.VISIBLE);
+
+        close.setOnClickListener(view1 -> dialog.dismiss());
+        builder.setView(addProduceDialog);
+        builder.setCancelable(false);
+
+
+        dialog.show();
+
+    }
     @Override
     public void onBackPressed() {
         // Get FragmentManager
