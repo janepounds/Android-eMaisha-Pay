@@ -76,7 +76,8 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
 
                         if (submission.length() < 4) {
                             Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
-                        } else {
+
+                        }else {
                             //login and get token
                             SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
                             checkLogin(WalletPass, phonenumber,  context, dialogLoader, sharedPreferences);

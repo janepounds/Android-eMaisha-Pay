@@ -60,7 +60,9 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
 
                         if (submission.length() < 4) {
                             Toast.makeText(TokenAuthActivity.this, "Enter PIN!", Toast.LENGTH_SHORT).show();
-                        } else {
+
+                        }
+                            else {
                             //login and get token
                             Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, TokenAuthActivity.this));
 
@@ -130,8 +132,10 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
 
                     }
                     if (response.errorBody() != null) {
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                         Log.e(TAG, new String(response.message()));
                     } else {
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Something got very very wrong");
                     }
                     if(dialogLoader!=null)

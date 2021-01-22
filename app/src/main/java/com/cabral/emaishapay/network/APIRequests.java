@@ -379,7 +379,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/add_card_info")
     Call<CardResponse>saveCardInfo(
-            @Field("user_id") String user_id,
+            @Field("identifier") String user_id,
             @Field("card_number") String card_number,
             @Field("cvv") String cvv,
             @Field("expiry") String expiry,
