@@ -86,8 +86,12 @@ public class WalletHomeFragment extends Fragment {
 
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent")){
+            WalletHomeActivity.disableNavigation();
+            WalletHomeActivity.setupAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("merchant")){
+            WalletHomeActivity.disableNavigation();
+            WalletHomeActivity.setupMerchntNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("agent merchant")){
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
@@ -117,7 +121,23 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments));
         binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
         binding.layoutPay.setOnClickListener(view1 -> navController.navigate(R.id.action_walletHomeFragment_to_payFragment));
-        binding.moreTransactionCards.setOnClickListener(view11 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
+        binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //To WalletTrasactionListFragment
+                Fragment fragment= new WalletTransactionsListFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+            }
+        });
 
     }
 
