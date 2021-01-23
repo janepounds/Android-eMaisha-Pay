@@ -20,6 +20,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.models.CardResponse;
@@ -37,10 +39,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyViewHolder>{
-    private List<CardResponse.CardData.Cards> dataList;
+    private static final String TAG = "CardListAdapter";
+    private List<CardResponse.Cards> dataList;
     private Context context;
 
-    public CardListAdapter(List<CardResponse.CardData.Cards> cardsList, Context context){
+    public CardListAdapter(List<CardResponse.Cards> cardsList, Context context){
         this.dataList = cardsList;
         this.context = context;
 
@@ -48,17 +51,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
 
 
     @Override
-    public CardListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CardListAdapter.MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.payment_card, parent, false);
-        CardListAdapter.MyViewHolder holder = new CardListAdapter.MyViewHolder(view);
-        return holder;
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.payment_card, parent, false);
+
+        return new CardListAdapter.MyViewHolder(itemView);
+
+
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(CardListAdapter.MyViewHolder holder, int position) {
-        CardResponse.CardData.Cards data = dataList.get(position);
+        CardResponse.Cards data = dataList.get(position);
 
         //decript values
         CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
@@ -86,7 +91,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
         //set card number
 
 
-
+        Log.d(TAG, "onBindViewHolder: "+dataList);
 
     }
 

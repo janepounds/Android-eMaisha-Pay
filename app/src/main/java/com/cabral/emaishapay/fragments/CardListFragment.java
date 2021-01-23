@@ -41,13 +41,14 @@ import retrofit2.Response;
 
 
 public class CardListFragment extends Fragment {
+    private static final String TAG = "CardListFragment";
 
     FloatingActionButton btnAddCard;
     LinearLayout layoutCardViewEmpty;
     RecyclerView cardRecycler;
     private Context context;
     private CardListAdapter cardListAdapter;
-    private List<CardResponse.CardData.Cards> cardlists = new ArrayList();
+    private List<CardResponse.Cards> cardlists = new ArrayList();
     Toolbar toolbar;
     public CardListFragment() {
         // Required empty public constructor
@@ -110,16 +111,17 @@ public class CardListFragment extends Fragment {
                 if(response.isSuccessful()){
 
                     try {
-                        CardResponse.CardData  cardData = response.body().getCardData();
-                        cardlists = cardData.getCardsList();
+
+                        cardlists = response.body().getCardsList();
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        Log.w("cardlist",cardlists.size()+"**********");
+                        Log.d(TAG,cardlists.size()+"**********");
 
                         cardRecycler.setLayoutManager(new LinearLayoutManager(context));
-                        cardListAdapter = new CardListAdapter(cardlists, context);
+                        cardListAdapter = new CardListAdapter(cardlists,context);
                         cardRecycler.setAdapter(cardListAdapter);
                         cardListAdapter.notifyDataSetChanged();
                         updateCardView(cardlists.size());

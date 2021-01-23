@@ -6,20 +6,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class CardResponse {
+    private static final String TAG = "CardResponse";
     @SerializedName("message")
     @Expose
     private String message;
 
-    @SerializedName("cardData")
+    @SerializedName("cards")
     @Expose
-    public CardData cardData;
+    private List<Cards> cardsList;
 
-    public CardData getCardData() {
-        return cardData;
+    public List<Cards> getCardsList() {
+        return cardsList;
     }
 
-    public void setCardData(CardData cardData) {
-        this.cardData = cardData;
+    public void setCardsList(List<Cards> cardsList) {
+        this.cardsList = cardsList;
     }
 
     public String getMessage() {
@@ -30,18 +31,6 @@ public class CardResponse {
         this.message = message;
     }
 
-    public class CardData {
-        @SerializedName("cards")
-        @Expose
-        private List<Cards> cardsList;
-
-        public List<Cards> getCardsList() {
-            return cardsList;
-        }
-
-        public void setCardsList(List<Cards> cardsList) {
-            this.cardsList = cardsList;
-        }
 
         public class Cards {
             @SerializedName("account_name")
@@ -91,4 +80,4 @@ public class CardResponse {
             }
         }
     }
-}
+
