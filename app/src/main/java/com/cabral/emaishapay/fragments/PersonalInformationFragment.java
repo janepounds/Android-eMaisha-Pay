@@ -10,8 +10,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -54,10 +56,14 @@ import retrofit2.Response;
 public class PersonalInformationFragment extends Fragment {
     private static final String TAG = "PersonalInformation";
     private FragmentPersonalInformationBinding binding;
-    private NavController navController = null;
     private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
+    Bundle localBundle;
     private String selectedGender,displayGender;
+
+    public PersonalInformationFragment(Bundle bundle) {
+        this.localBundle=bundle;
+    }
 
 
     @Override
@@ -65,22 +71,23 @@ public class PersonalInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_personal_information, container, false);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
+        binding.toolbar.setTitle(getString(R.string.AddPersonalInformation));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
-        if(getArguments()!=null) {
-            String dob = getArguments().getString("dob");
-            String gender = getArguments().getString("gender");
-            String nok = getArguments().getString("nok");
-            String nok_contact = getArguments().getString("nok_contact");
-            String pic = getArguments().getString("picture") ;
+        if(localBundle!=null) {
+            String dob = localBundle.getString("dob");
+            String gender = localBundle.getString("gender");
+            String nok = localBundle.getString("nok");
+            String nok_contact = localBundle.getString("nok_contact");
+            String pic = localBundle.getString("picture") ;
             if(gender.equalsIgnoreCase("F")){
                 displayGender = "Female";
             }else{
@@ -140,7 +147,7 @@ public class PersonalInformationFragment extends Fragment {
 
         binding.submitButton.setOnClickListener(v -> saveInfo());
 
-        binding.cancelButton.setOnClickListener(v -> navController.popBackStack());
+        binding.cancelButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
@@ -167,7 +174,17 @@ public class PersonalInformationFragment extends Fragment {
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
-                    navController.navigate(R.id.action_personalInformationFragment_to_walletAccountFragment);
+                    Fragment fragment= new WalletAccountFragment();
+                    FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                     Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();

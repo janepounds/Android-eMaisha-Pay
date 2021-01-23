@@ -408,11 +408,19 @@ public class WalletHomeActivity extends AppCompatActivity{
         dialog.show();
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @Override
     public void onBackPressed() {
         // Get FragmentManager
         FragmentManager fm = getSupportFragmentManager();
 
+        currentFragment = this.getSupportFragmentManager().getPrimaryNavigationFragment();
         // Check if BackStack has some Fragments
         if (fm.getBackStackEntryCount() > 0) {
             // Pop previous Fragment
