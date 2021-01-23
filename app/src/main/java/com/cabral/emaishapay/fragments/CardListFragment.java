@@ -26,6 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.CardListAdapter;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
+import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -74,8 +75,6 @@ public class CardListFragment extends Fragment {
         cardRecycler.setLayoutManager(new LinearLayoutManager(context));
         RequestCards();
 
-        cardListAdapter = new CardListAdapter(cardlists,context);
-        cardRecycler.setAdapter(cardListAdapter);
 
         btnAddCard.setOnClickListener(v -> {
         //nvigate to add card fragment
@@ -109,10 +108,22 @@ public class CardListFragment extends Fragment {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if(response.isSuccessful()){
-                    CardResponse.CardData  cardData = response.body().getCardData();
-                    cardlists = cardData.getCardsList();
-                    cardListAdapter.notifyDataSetChanged();
-                    updateCardView(cardlists.size());
+
+                    try {
+                        CardResponse.CardData  cardData = response.body().getCardData();
+                        cardlists = cardData.getCardsList();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        Log.w("cardlist",cardlists.size()+"**********");
+
+                        cardRecycler.setLayoutManager(new LinearLayoutManager(context));
+                        cardListAdapter = new CardListAdapter(cardlists, context);
+                        cardRecycler.setAdapter(cardListAdapter);
+                        cardListAdapter.notifyDataSetChanged();
+                        updateCardView(cardlists.size());
+                    }
                     dialog.dismiss();
                 }else if (response.code() == 401) {
 

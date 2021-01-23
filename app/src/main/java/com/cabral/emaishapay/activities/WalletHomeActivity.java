@@ -472,7 +472,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                 });
 
     }
-    public void disableNavigation() {
+    public static void disableNavigation() {
       bottomNavigationView.setVisibility(View.GONE);
 
 

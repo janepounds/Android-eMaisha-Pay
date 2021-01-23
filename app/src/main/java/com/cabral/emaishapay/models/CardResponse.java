@@ -30,7 +30,7 @@ public class CardResponse {
         this.message = message;
     }
 
-    public class CardData{
+    public class CardData {
         @SerializedName("cards")
         @Expose
         private List<Cards> cardsList;
@@ -43,116 +43,51 @@ public class CardResponse {
             this.cardsList = cardsList;
         }
 
-        public class Cards{
-            @SerializedName("type")
+        public class Cards {
+            @SerializedName("account_name")
             @Expose
-            private String type;
-            @SerializedName("amount")
+            private String account_name;
+
+            @SerializedName("card_number")
             @Expose
-            private double amount;
-            @SerializedName("dateCompleted")
+            private String card_number;
+            @SerializedName("cvv")
             @Expose
-            private String dateCompleted;
-            @SerializedName("status")
+            private String cvv;
+            @SerializedName("expiry")
             @Expose
-            private String status;
-            @SerializedName("referenceNumber")
-            @Expose
-            private String referenceNumber;
-            @SerializedName("phoneNumber")
-            @Expose
-            private String phoneNumber;
-            @SerializedName("date")
-            @Expose
-            private String date;
-            @SerializedName("receiver")
-            @Expose
-            private String receiver;
-            @SerializedName("sender")
-            @Expose
-            private String sender;
-            @SerializedName("receiptNumber")
-            @Expose
-            private String receiptNumber;
+            private String expiry;
 
-            public String getType() {
-                return type;
+            public String getAccount_name() {
+                return account_name;
             }
 
-            public void setType(String type) {
-                this.type = type;
+            public void setAccount_name(String account_name) {
+                this.account_name = account_name;
             }
 
-            public double getAmount() {
-                return amount;
+            public String getCard_number() {
+                return card_number;
             }
 
-            public void setAmount(double amount) {
-                this.amount = amount;
+            public void setCard_number(String card_number) {
+                this.card_number = card_number;
             }
 
-            public String getDateCompleted() {
-                return dateCompleted;
+            public String getCvv() {
+                return cvv;
             }
 
-            public void setDateCompleted(String dateCompleted) {
-                this.dateCompleted = dateCompleted;
+            public void setCvv(String cvv) {
+                this.cvv = cvv;
             }
 
-            public String getStatus() {
-                return status;
+            public String getExpiry() {
+                return expiry;
             }
 
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getReferenceNumber() {
-                return referenceNumber;
-            }
-
-            public void setReferenceNumber(String referenceNumber) {
-                this.referenceNumber = referenceNumber;
-            }
-
-            public String getPhoneNumber() {
-                return phoneNumber;
-            }
-
-            public void setPhoneNumber(String phoneNumber) {
-                this.phoneNumber = phoneNumber;
-            }
-
-            public String getDate() {
-                return date;
-            }
-
-            public void setDate(String date) {
-                this.date = date;
-            }
-
-            public String getReceiver() {
-                return receiver;
-            }
-
-            public void setReceiver(String receiver) {
-                this.receiver = receiver;
-            }
-
-            public String getSender() {
-                return sender;
-            }
-
-            public void setSender(String sender) {
-                this.sender = sender;
-            }
-
-            public String getReceiptNumber() {
-                return receiptNumber;
-            }
-
-            public void setReceiptNumber(String receiptNumber) {
-                this.receiptNumber = receiptNumber;
+            public void setExpiry(String expiry) {
+                this.expiry = expiry;
             }
         }
     }

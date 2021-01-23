@@ -52,7 +52,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
     @Override
     public void onBindViewHolder(CardListAdapter.MyViewHolder holder, int position) {
         CardResponse.CardData.Cards data = dataList.get(position);
+        holder.accountNme.setText(data.getAccount_name());
+        holder.expiry.setText(data.getExpiry());
         //check if card number is 5 or 4
+
 
 
     }
