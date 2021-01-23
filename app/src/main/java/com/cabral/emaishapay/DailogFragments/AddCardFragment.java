@@ -157,7 +157,7 @@ public class AddCardFragment extends DialogFragment {
 
                                 //call card list fragment
 //                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
-
+                                getActivity().getSupportFragmentManager().popBackStack();
 
 
                                
