@@ -408,6 +408,13 @@ public class WalletHomeActivity extends AppCompatActivity{
         dialog.show();
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @Override
     public void onBackPressed() {
         // Get FragmentManager

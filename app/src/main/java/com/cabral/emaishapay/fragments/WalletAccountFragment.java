@@ -139,7 +139,7 @@ public class WalletAccountFragment extends Fragment {
             bundle.putString("nok_contact",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
             bundle.putString("picture",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context));
 
-            Fragment fragment= new PersonalInformationFragment();
+            Fragment fragment= new PersonalInformationFragment(bundle);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             if (((WalletHomeActivity) getActivity()).currentFragment != null)
                 fragmentManager.beginTransaction()

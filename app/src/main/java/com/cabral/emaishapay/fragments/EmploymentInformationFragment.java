@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -84,7 +86,16 @@ public class EmploymentInformationFragment extends Fragment {
                         Log.d(TAG, "onResponse: successful");
 
                         Fragment fragment= new WalletAccountFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
+                        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                            fragmentManager.beginTransaction()
+                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                    .add(R.id.wallet_home_container, fragment)
+                                    .addToBackStack(null).commit();
+                        else
+                            fragmentManager.beginTransaction()
+                                    .add(R.id.wallet_home_container, fragment)
+                                    .addToBackStack(null).commit();
                     } else {
                         Log.d(TAG, "onResponse: failed" + response.errorBody());
                         Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
