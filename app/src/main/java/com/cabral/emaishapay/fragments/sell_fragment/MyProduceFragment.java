@@ -93,11 +93,11 @@ public class MyProduceFragment extends Fragment {
         Log.d(TAG, "onCreateView: " + produceList);
 
         if (produceList.size() != 0) {
-
             layoutEmptyProduceList.setVisibility(View.GONE);
+           // layoutEmptyProduceList.setVisibility(View.GONE);
         } else {
-
             layoutEmptyProduceList.setVisibility(View.VISIBLE);
+           // layoutEmptyProduceList.setVisibility(View.VISIBLE);
         }
 
         addProduce.setOnClickListener(v -> addProduce());

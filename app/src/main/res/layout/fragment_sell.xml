@@ -13,17 +13,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_account_opening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_sell_home"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:background="@color/colorPrimary"
+                app:titleTextColor="@color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
+        </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:layout_marginTop="?attr/actionBarSize"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -47,7 +56,7 @@
             android:id="@+id/viewPager_sell_produce_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_marginTop="100dp">
 
         </androidx.viewpager.widget.ViewPager>
 
