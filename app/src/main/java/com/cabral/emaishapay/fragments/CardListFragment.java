@@ -27,10 +27,12 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.CardListAdapter;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +46,7 @@ public class CardListFragment extends Fragment {
     RecyclerView cardRecycler;
     private Context context;
     private CardListAdapter cardListAdapter;
-    private ArrayList<CardResponse>cardlists = new ArrayList();
+    private List<CardResponse.CardData.Cards> cardlists = new ArrayList();
     Toolbar toolbar;
     public CardListFragment() {
         // Required empty public constructor
@@ -107,7 +109,8 @@ public class CardListFragment extends Fragment {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if(response.isSuccessful()){
-                    cardlists.add(response.body());
+                    CardResponse.CardData  cardData = response.body().getCardData();
+                    cardlists = cardData.getCardsList();
                     cardListAdapter.notifyDataSetChanged();
                     updateCardView(cardlists.size());
                     dialog.dismiss();
