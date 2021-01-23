@@ -84,7 +84,7 @@ public class AddCardFragment extends DialogFragment {
         etCardNumber = view.findViewById(R.id.add_money_creditCardNumber);
         etCvv = view.findViewById(R.id.add_money_card_cvv);
         etExpiryDate = view.findViewById(R.id.add_money_card_expiry);
-        btnSaveCard = view.findViewById(R.id.save_card_button);
+        btnSaveCard = view.findViewById(R.id.button_add_money);
         amountLayout = view.findViewById(R.id.add_money_amount_layout);
         purporseLayout = view.findViewById(R.id.layout_purpose);
         txtTitle = view.findViewById(R.id.add_money_title);
@@ -156,7 +156,7 @@ public class AddCardFragment extends DialogFragment {
                                 Toast.makeText(context,message,Toast.LENGTH_LONG).show();
 
                                 //call card list fragment
-                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
+//                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
 
 
 
@@ -182,7 +182,7 @@ public class AddCardFragment extends DialogFragment {
 //        dialog.setCanceledOnTouchOutside(false);
 //        setCancelable(false);
 
-        ImageView close = view.findViewById(R.id.add_card_close);
+        ImageView close = view.findViewById(R.id.wallet_deposit_close);
         close.setOnClickListener(v -> dismiss());
 
         return dialog;
