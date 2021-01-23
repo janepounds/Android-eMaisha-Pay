@@ -107,7 +107,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
 
     public static PostOrder postOrder = new PostOrder();
-    public static BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView,bottom_navigation_shop,bottom_navigation_merchant;
 
     Fragment defaultHomeFragment;
     WalletBuyFragment buysellFragment;
@@ -163,7 +163,8 @@ public class WalletHomeActivity extends AppCompatActivity{
             getAppToken();
         }
 
-
+        bottom_navigation_merchant = findViewById(R.id.bottom_navigation_merchant);
+        bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
     }
 
     public void setUpNavigation() {
@@ -478,7 +479,19 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     }
 
+    public static void setupMerchntNav() {
+        bottomNavigationView.setVisibility(View.GONE);
+        bottom_navigation_merchant.setVisibility(View.VISIBLE);
+        bottom_navigation_merchant.setItemIconTintList(null);
 
+
+    }
+    public static void setupAgentNav() {
+        bottomNavigationView.setVisibility(View.GONE);
+        bottom_navigation_shop.setVisibility(View.VISIBLE);
+        bottom_navigation_shop.setItemIconTintList(null);
+
+    }
 
     private void showHomePage() {
         getSupportFragmentManager().beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();

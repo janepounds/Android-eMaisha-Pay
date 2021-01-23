@@ -87,11 +87,11 @@ public class WalletHomeFragment extends Fragment {
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent")){
             WalletHomeActivity.disableNavigation();
-//            showgentMenu();
+            WalletHomeActivity.setupAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
-//            showMerchantMenu();
+            WalletHomeActivity.setupMerchntNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("agent merchant")){
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
