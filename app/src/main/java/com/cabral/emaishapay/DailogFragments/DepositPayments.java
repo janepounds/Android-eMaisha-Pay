@@ -26,13 +26,10 @@ public class DepositPayments extends DialogFragment {
     private Context context;
     private double balance;
 
-    public static com.cabral.emaishapay.DailogFragments.DepositPayments newInstance(double balance) {
-        com.cabral.emaishapay.DailogFragments.DepositPayments dialog = new com.cabral.emaishapay.DailogFragments.DepositPayments();
-        Bundle bundle = new Bundle();
-        bundle.putDouble("balance", balance);
-        dialog.setArguments(bundle);
-        return dialog;
+    public DepositPayments(double balance){
+        this.balance=balance;
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,8 +53,6 @@ public class DepositPayments extends DialogFragment {
         ImageView close = view.findViewById(R.id.wallet_deposit_close);
         close.setOnClickListener(v -> dismiss());
 
-        if(getArguments() != null)
-        balance = getArguments().getFloat("interest");
 
         return builder.create();
     }

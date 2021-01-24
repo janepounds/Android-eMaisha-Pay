@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -68,13 +69,13 @@ public class TransferMoney extends Fragment {
     FragmentManager fm;
     EditText etMobileMoneyNumber,etBeneficiaryName;
     private Context context;
-    AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
-    NavController navController;
-    public TransferMoney() {
+
+    public TransferMoney(double balance) {
+        this.balance=balance;
     }
 
     @Override
@@ -91,6 +92,12 @@ public class TransferMoney extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transfer_money, container, false);
 
         initializeForm(view);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         return view;
     }
 
@@ -283,16 +290,6 @@ public class TransferMoney extends Fragment {
 
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-        if(getArguments()!=null) {
-            this.balance = getArguments().getDouble("balance");
-        }
-
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {

@@ -15,13 +15,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
+import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -47,7 +51,6 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private EmaishaPayHomeBinding binding;
     private Context context;
-    private NavController navController = null;
     private ProgressDialog progressDialog;
     private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
@@ -55,12 +58,6 @@ public class WalletHomeFragment extends Fragment {
     public static FragmentManager fm;
     public WalletHomeFragment(){}
 
-    public WalletHomeFragment(Context context, FragmentManager supportFragmentManager) {
-        super();
-        this.context = context;
-        this.fm = supportFragmentManager;
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +101,6 @@ public class WalletHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
 
 
 //        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
@@ -113,14 +109,74 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                bundle.putDouble("balance",balance);
-                navController.navigate(R.id.action_walletHomeFragment_to_transferMoney, bundle);
+
+                Fragment fragment = new TransferMoney(balance);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+
             }
         });
-        binding.layoutTopUp.setOnClickListener(view16 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments));
-        binding.layoutLoan.setOnClickListener(view13 -> navController.navigate(R.id.action_walletHomeFragment_to_walletLoansListFragment));
-        binding.layoutPay.setOnClickListener(view1 -> navController.navigate(R.id.action_walletHomeFragment_to_payFragment));
+        binding.layoutTopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment depositDialog = new DepositPayments( WalletHomeFragment.balance);
+                depositDialog.show(ft, "dialog");
+            }
+        });
+
+        binding.layoutLoan.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+
+                  Fragment fragment = new WalletLoansListFragment();
+                  FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                  if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                      fragmentManager.beginTransaction()
+                              .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                              .add(R.id.wallet_home_container, fragment)
+                              .addToBackStack(null).commit();
+                  else
+                      fragmentManager.beginTransaction()
+                              .add(R.id.wallet_home_container, fragment)
+                              .addToBackStack(null).commit();
+
+              }
+          }
+        );
+        binding.layoutPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Fragment fragment = new PayFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+            }
+        });
         binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

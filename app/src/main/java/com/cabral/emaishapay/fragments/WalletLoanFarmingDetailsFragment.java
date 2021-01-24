@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -33,15 +34,15 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     Spinner harvesting_unit_spn, crop_spn, from_insurance_spn;
     EditText crop_area_edt, expected_yield_edt, expected_revenue_edt;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb;
-    NavController navController;
+    Bundle localBundle;
     private StateProgressBar loanProgressBarId;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     LoanApplication loanApplication;
     Float interest;
     AppBarConfiguration appBarConfiguration;
 
-    public WalletLoanFarmingDetailsFragment() {
-        // Required empty public constructor
+    public WalletLoanFarmingDetailsFragment(Bundle bundle) {
+       this.localBundle=bundle;
     }
 
     @Override
@@ -77,6 +78,14 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         return view;
     }
 
@@ -86,9 +95,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-        if(getArguments() != null){
-            loanApplication= (LoanApplication) getArguments().getSerializable("loanApplication");
-            interest=getArguments().getFloat("interest");
+        if(localBundle != null){
+            loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
+            interest=localBundle.getFloat("interest");
         }
 
         previousBtn.setOnClickListener(view2 -> navController.popBackStack());

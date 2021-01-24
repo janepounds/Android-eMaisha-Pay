@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -59,7 +60,6 @@ public class WalletLoansListFragment extends Fragment {
     private List<LoanApplication> dataList = new ArrayList<>();
     private float interest;
     private String possible_action;
-    private  NavController navController;
 
     private Toolbar toolbar;
     private RelativeLayout walletApplyLoanLayout;
@@ -87,32 +87,40 @@ public class WalletLoansListFragment extends Fragment {
         statementAdapter = new LoansListAdapter(dataList);
         loansListRecyclerView.setAdapter(statementAdapter);
 
-        actualStatementData();
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController  = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-
-
         walletApplyLoanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putFloat("interest", interest);
                 bundle.putString("possible_action", possible_action);
-                navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
+
+                Fragment fragment = new WalletLoanDetailsFragment(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
             }
         });
 
+        actualStatementData();
 
+
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        
+        return view;
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -162,10 +170,25 @@ public class WalletLoansListFragment extends Fragment {
 
                             if(possible_action.equalsIgnoreCase("Apply For Loan")){
                                 walletApplyLoanBtn.setText(possible_action);
-                                walletApplyLoanBtn.setOnClickListener(view2 -> {
-                                            Bundle bundle = new Bundle();
-                                            bundle.putFloat("interest", interest);
-                                            navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanAppInitiateFragment, bundle);
+                                walletApplyLoanBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putFloat("interest", interest);
+
+                                        Fragment fragment = new WalletLoanDetailsFragment(bundle);
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                                            fragmentManager.beginTransaction()
+                                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                                    .add(R.id.wallet_home_container, fragment)
+                                                    .addToBackStack(null).commit();
+                                        else
+                                            fragmentManager.beginTransaction()
+                                                    .add(R.id.wallet_home_container, fragment)
+                                                    .addToBackStack(null).commit();
+
+                                }
                                 });
 
                             }else if(possible_action.equalsIgnoreCase("Cancel Loan")){

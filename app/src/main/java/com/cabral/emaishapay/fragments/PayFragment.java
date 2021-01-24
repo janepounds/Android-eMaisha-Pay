@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -41,16 +42,9 @@ public class PayFragment extends Fragment {
     Button saveBtn;
     FragmentManager fm;
     private Context context;
-    AppBarConfiguration appBarConfiguration;
-    private Toolbar toolbar;
 
-   public PayFragment(Context context, FragmentManager supportFragmentManager){
-      this.context=context;
-      this.fm=supportFragmentManager;
-    }
 
     public PayFragment() {
-
     }
 
     @Override
@@ -58,6 +52,12 @@ public class PayFragment extends Fragment {
        // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View view = inflater.inflate(R.layout.fragment_wallet_pay, container, false);
         this.context=getActivity();
+        Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         this.fm=getParentFragmentManager();
         initializeForm(view);
         return view;
@@ -78,8 +78,6 @@ public class PayFragment extends Fragment {
             mechantIdEdt = view.findViewById(R.id.edt_purchase_mechant_id);
             saveBtn = view.findViewById(R.id.btn_save);
             text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
-
-            toolbar = view.findViewById(R.id.toolbar_wallet_pay_merchant);
             layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
@@ -253,14 +251,7 @@ public class PayFragment extends Fragment {
             return true;
         }
     }
-    
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
