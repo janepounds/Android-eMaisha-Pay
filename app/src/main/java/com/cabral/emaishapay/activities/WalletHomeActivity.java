@@ -53,7 +53,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     private static final String TAG = "WalletHomeActivity";
     private Context context;
     public static FragmentManager fm;
-    public Fragment currentFragment;
+    public static Fragment currentFragment;
     public static ActionBar actionBar;
     Fragment selectedFragment = null;
 
@@ -109,9 +109,9 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static PostOrder postOrder = new PostOrder();
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop,bottom_navigation_merchant;
 
-    Fragment defaultHomeFragment;
+    public static Fragment defaultHomeFragment;
     WalletBuyFragment buysellFragment;
-    WalletAccountFragment walletAccountFragment;
+    public static WalletAccountFragment walletAccountFragment;
     CardListFragment cardListFragment;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
@@ -170,8 +170,6 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void setUpNavigation() {
          bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setItemIconTintList(null);
-
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -256,8 +254,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
             }
         });
-
-
 
     }
 
@@ -486,10 +482,158 @@ public class WalletHomeActivity extends AppCompatActivity{
 
 
     }
+
     public static void setupAgentNav() {
         bottomNavigationView.setVisibility(View.GONE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
+        bottom_navigation_shop.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
+
+                switch (item.getItemId()){
+
+                    case R.id.walletSettlementFragment:
+
+                        return false;
+
+                    case R.id.walletAccountFragment_agent :
+                        if(walletAccountFragment == null) {
+                            walletAccountFragment = new WalletAccountFragment();
+                            if (currentFragment == null)
+                                fm.beginTransaction()
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fm.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fm.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = walletAccountFragment;
+                        return true;
+
+                    case R.id.walletHomeFragment :
+                        if(defaultHomeFragment == null) {
+                            defaultHomeFragment = new WalletHomeFragment();
+                            if (currentFragment == null)
+                                fm.beginTransaction()
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fm.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fm.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = defaultHomeFragment;
+                        return true;
+
+                    default:
+                        return false;
+
+
+                }
+
+            }
+        });
+    }
+
+    public void setUpAgentNavigation() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setItemIconTintList(null);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                switch (item.getItemId()){
+
+                    case R.id.walletCardsFragment:
+                        if(cardListFragment== null) {
+                            cardListFragment = new CardListFragment();
+                            if (currentFragment == null)
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, cardListFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = cardListFragment;
+                        return true;
+
+                    case R.id.walletAccountFragment :
+                        if(walletAccountFragment == null) {
+                            walletAccountFragment = new WalletAccountFragment();
+                            if (currentFragment == null)
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, walletAccountFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fragmentManager.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = walletAccountFragment;
+                        return true;
+
+                    case R.id.walletHomeFragment :
+                        if(defaultHomeFragment == null) {
+                            defaultHomeFragment = new WalletHomeFragment();
+                            if (currentFragment == null)
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .hide(currentFragment)
+                                        .add(R.id.wallet_home_container, defaultHomeFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .commit();
+                        }else {
+                            fragmentManager.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                        }
+                        currentFragment = defaultHomeFragment;
+                        return true;
+
+
+                    case R.id.WalletBuyFragment :
+                        bottomNavigationView.postDelayed(() -> {
+                            startActivity(new Intent(WalletHomeActivity.this, WalletBuySellActivity.class));
+                        }, 300);
+
+                        return true;
+                    default:
+                        return false;
+
+
+                }
+
+            }
+        });
 
     }
 

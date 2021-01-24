@@ -16,7 +16,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/walletAccountFragment"
+        android:id="@+id/walletAccountFragment_agent"
         android:enabled="true"
         android:icon="@drawable/user"
         android:title="ACCOUNT"

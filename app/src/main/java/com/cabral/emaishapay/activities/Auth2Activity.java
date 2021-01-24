@@ -132,42 +132,52 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
             @Override
             public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
                 if (response.code() == 200) {
-                    try {
-                        Gson gson = new Gson();
-                        String user = gson.toJson(response.body().getData());
-                        JSONObject userobject = new JSONObject(user);
-                        //userobject.getInt("id")
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userobject.getString("id"));
-                        editor.apply();
 
-                        WalletAuthentication.UserData userDetails = response.body().getData();
-                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+                    if (response.body().getStatus() == 0) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (dialogLoader != null)
+                            dialogLoader.hideProgressDialog();
 
-                        loginUser(userDetails, rawpassword);
+                    }else{
+                        try {
+                            Gson gson = new Gson();
+                            String user = gson.toJson(response.body().getData());
+                            JSONObject userobject = new JSONObject(user);
+                            //userobject.getInt("id")
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userobject.getString("id"));
+                            editor.apply();
 
-                        Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
-                        if(Connectivity.isConnected(context)){
-                            TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
-                        }else{
-                            Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+                            WalletAuthentication.UserData userDetails = response.body().getData();
+                            Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+                            Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+                            Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+                            Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+                            Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+                            Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+                            Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+
+                            loginUser(userDetails, rawpassword);
+
+                            Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+                            if(Connectivity.isConnected(context)){
+                                TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
+                            }else{
+                                Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
 
 
+                            }
+
+
+                        } catch (Exception e) {
+                            Log.e("response", response.toString());
+                            e.printStackTrace();
+                        } finally {
+                            dialogLoader.hideProgressDialog();
                         }
-
-
-                    } catch (Exception e) {
-                        Log.e("response", response.toString());
-                        e.printStackTrace();
-                    } finally {
-                        dialogLoader.hideProgressDialog();
                     }
+
+
 
                 }
                 else {
