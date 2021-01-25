@@ -46,11 +46,15 @@ import retrofit2.Response;
 public class BusinessInformationFragment extends Fragment {
     private static final String TAG = "BusinessInformation";
     private FragmentBusinessInformationBinding binding;
-
+    Bundle localBundle;
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
     private ImageView imageView;
     private ProgressDialog progressDialog;
+
+    public BusinessInformationFragment(Bundle bundle){
+        this.localBundle=bundle;
+    }
 
 
     @Override
@@ -70,14 +74,14 @@ public class BusinessInformationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         if(getArguments()!=null){
-            String business_name = getArguments().getString("biz_name");
-            String business_location =getArguments().getString("biz_location");
-            String reg_no =getArguments().getString("reg_no");
-            String license_no =getArguments().getString("license_no");
-            String reg_cert =  getArguments().getString("reg_cert");
+         if(localBundle!=null){
+            String business_name = localBundle.getString("biz_name");
+            String business_location =localBundle.getString("biz_location");
+            String reg_no =localBundle.getString("reg_no");
+            String license_no =localBundle.getString("license_no");
+            String reg_cert =  localBundle.getString("reg_cert");
 
-            String trade_license =getArguments().getString("trade_license");
+            String trade_license =localBundle.getString("trade_license");
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()

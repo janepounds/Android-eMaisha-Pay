@@ -356,7 +356,6 @@ public class WalletAccountFragment extends Fragment {
                     binding.layoutBusinessAccount.setVisibility(View.GONE);
                     binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
 
-
                 }
                 if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
                     binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
@@ -399,7 +398,7 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("license_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
                     bundle.putString("reg_cert", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
                     bundle.putString("trade_license", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
-                    Fragment fragment = new BusinessAccountFragment(bundle);
+                    Fragment fragment = new BusinessInformationFragment(bundle);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (((WalletHomeActivity) getActivity()).currentFragment != null)
                         fragmentManager.beginTransaction()

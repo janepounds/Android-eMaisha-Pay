@@ -48,26 +48,12 @@ public class BusinessAccountFragment extends Fragment {
     private String encodedIdreg_cert;
     private String encodedIdtradelicense;
     private ProgressDialog progressDialog;
-    private Context context;
     Bundle localBundle;
 
     public BusinessAccountFragment(Bundle bundle) {
-        // Required empty public constructor
         this.localBundle=bundle;
     }
 
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -155,7 +141,7 @@ public class BusinessAccountFragment extends Fragment {
                     String message = response.body().getMessage();
 
                     //call success dialog
-                    final Dialog dialog = new Dialog(context);
+                    final Dialog dialog = new Dialog(getContext());
                     dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
@@ -167,7 +153,7 @@ public class BusinessAccountFragment extends Fragment {
                         public void onClick(View v) {
                             dialog.dismiss();
                             //go to home activity fragment
-                            Intent goToWallet = new Intent(context, WalletHomeActivity.class);
+                            Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
                             startActivity(goToWallet);
                         }
                     });
@@ -175,7 +161,7 @@ public class BusinessAccountFragment extends Fragment {
                     dialog.show();
 
                 }else{
-                    Toast.makeText(context,response.message(),Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(),response.message(),Toast.LENGTH_LONG);
                 }
                 progressDialog.dismiss();
 
@@ -183,7 +169,7 @@ public class BusinessAccountFragment extends Fragment {
 
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
-                Toast.makeText(context,t.getMessage(),Toast.LENGTH_LONG);
+                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_LONG);
 
             }
         });
