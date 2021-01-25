@@ -177,67 +177,66 @@ public class WalletHomeActivity extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
 
                 switch (item.getItemId()){
 
                     case R.id.walletCardsFragment:
-                        if(cardListFragment== null) {
+//                        if(cardListFragment== null) {
                             cardListFragment = new CardListFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, cardListFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, cardListFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
-                        }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-                        }
+//                        }else {
+//                            fm.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+//                        }
                         currentFragment = cardListFragment;
                         return true;
 
                     case R.id.walletAccountFragment :
-                        if(walletAccountFragment == null) {
+//                        if(walletAccountFragment == null) {
                             walletAccountFragment = new WalletAccountFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
-                        }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-                        }
+//                        }else {
+//                            fm.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+//                        }
                         currentFragment = walletAccountFragment;
                         return true;
 
                     case R.id.walletHomeFragment :
-                        if(defaultHomeFragment == null) {
+//                        if(defaultHomeFragment == null) {
                             defaultHomeFragment = new WalletHomeFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
-                        }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-                        }
+//                        }else {
+//                            fm.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+//                        }
                         currentFragment = defaultHomeFragment;
                         return true;
 
@@ -416,8 +415,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        // Get FragmentManager
-        FragmentManager fm = getSupportFragmentManager();
 
         currentFragment = this.getSupportFragmentManager().getPrimaryNavigationFragment();
         // Check if BackStack has some Fragments
@@ -557,26 +554,24 @@ public class WalletHomeActivity extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-
                 switch (item.getItemId()){
 
                     case R.id.walletCardsFragment:
                         if(cardListFragment== null) {
                             cardListFragment = new CardListFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, cardListFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, cardListFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                         }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                            fm.beginTransaction().hide(currentFragment).show(cardListFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                         }
                         currentFragment = cardListFragment;
                         return true;
@@ -585,18 +580,18 @@ public class WalletHomeActivity extends AppCompatActivity{
                         if(walletAccountFragment == null) {
                             walletAccountFragment = new WalletAccountFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, walletAccountFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                         }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                            fm.beginTransaction().hide(currentFragment).show(walletAccountFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                         }
                         currentFragment = walletAccountFragment;
                         return true;
@@ -605,18 +600,18 @@ public class WalletHomeActivity extends AppCompatActivity{
                         if(defaultHomeFragment == null) {
                             defaultHomeFragment = new WalletHomeFragment();
                             if (currentFragment == null)
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                             else
-                                fragmentManager.beginTransaction()
+                                fm.beginTransaction()
                                         .hide(currentFragment)
                                         .add(R.id.wallet_home_container, defaultHomeFragment)
                                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
                         }else {
-                            fragmentManager.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                            fm.beginTransaction().hide(currentFragment).show(defaultHomeFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                         }
                         currentFragment = defaultHomeFragment;
                         return true;

@@ -407,7 +407,7 @@ public interface APIRequests {
     @POST("wallet_delete_card")
     Call<CardResponse>deleteCard(
             @Field("id") String id,
-            @Field("Authorization") String token
+            @Header("Authorization") String token
     );
 
 
