@@ -285,9 +285,9 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context, (WalletHomeActivity) context);
                         // Add Product to User's Cart
-                        if(isAnyBooleanTrue(booleanArrayList)) {
-                            addProductToCart(productDetails);
-                        }
+//                            if(productMeasureAdapter.checkSelectedMeasure()) {
+                        addProductToCart(productDetails);
+//                            }
                     }
 
                 } else {
@@ -297,13 +297,14 @@ public class Product_Description extends Fragment {
                     } else {
                         Utilities.animateCartMenuIcon(context.getApplicationContext(), (WalletBuySellActivity) context);
                         // Add Product to User's Cart
-                        if(isAnyBooleanTrue(booleanArrayList)) {
-                            addProductToCart(productDetails);
-                        }
+//                            if(productMeasureAdapter.checkSelectedMeasure()) {
+                        addProductToCart(productDetails);
+//                            }
                     }
                 }
 
-            } else {
+            }
+            else {
                 Snackbar.make(view, "Item already in your cart", Snackbar.LENGTH_SHORT).show();
             }
         });
@@ -363,7 +364,8 @@ public class Product_Description extends Fragment {
                         }
                     }
 
-                } else {
+                }
+                else {
                     Snackbar.make(v, "Item already in your cart", Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -375,8 +377,6 @@ public class Product_Description extends Fragment {
 
     private void buyNow(ProductDetails product) {
         addProductToCart(product);
-        // Recreate the OptionsMenu
-        ((WalletBuySellActivity) context).invalidateOptionsMenu();
 
         Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
         // Navigate to My_Cart Fragment
@@ -493,6 +493,10 @@ public class Product_Description extends Fragment {
 
 //        Snackbar.make(requireActivity().findViewById(android.R.id.content), context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
 
+
+
+        // Recreate the OptionsMenu
+        ((WalletBuySellActivity) context).invalidateOptionsMenu();
     }
 
 
