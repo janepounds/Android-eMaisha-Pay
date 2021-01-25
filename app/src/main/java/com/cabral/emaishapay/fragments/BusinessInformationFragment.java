@@ -12,10 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Base64;
 import android.util.Log;
@@ -49,7 +46,6 @@ import retrofit2.Response;
 public class BusinessInformationFragment extends Fragment {
     private static final String TAG = "BusinessInformation";
     private FragmentBusinessInformationBinding binding;
-    private NavController navController = null;
 
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
@@ -64,7 +60,7 @@ public class BusinessInformationFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_information, container, false);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        binding.toolbar.setTitle("Business Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -74,10 +70,7 @@ public class BusinessInformationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-        if(getArguments()!=null){
+         if(getArguments()!=null){
             String business_name = getArguments().getString("biz_name");
             String business_location =getArguments().getString("biz_location");
             String reg_no =getArguments().getString("reg_no");
@@ -121,7 +114,7 @@ public class BusinessInformationFragment extends Fragment {
                 saveInfo();
         });
 
-        binding.cancelButton.setOnClickListener(view1 -> navController.popBackStack());
+        binding.cancelButton.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
@@ -171,7 +164,18 @@ public class BusinessInformationFragment extends Fragment {
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
-                    navController.navigate(R.id.action_businessInformationFragment_to_walletAccountFragment);
+
+                    Fragment fragment= new WalletAccountFragment();
+                    FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }

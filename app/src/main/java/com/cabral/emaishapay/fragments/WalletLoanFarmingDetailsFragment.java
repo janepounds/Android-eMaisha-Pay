@@ -16,11 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
@@ -91,20 +90,32 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-
-        if(localBundle != null){
+         if(localBundle != null){
             loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
             interest=localBundle.getFloat("interest");
         }
 
-        previousBtn.setOnClickListener(view2 -> navController.popBackStack());
+        previousBtn.setOnClickListener(view2 -> getParentFragmentManager().popBackStack());
 
 
-        nextBtn.setOnClickListener(view1 -> navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment));
 
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new WalletLoanPreviewRequestFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+
+            }
+        });
         harvesting_unit_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -151,7 +162,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             }
         });
 
-        previousBtn.setOnClickListener(view2 -> navController.popBackStack());
+        previousBtn.setOnClickListener(view2 -> getParentFragmentManager().popBackStack());
 
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +187,20 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putFloat("interest", interest);
                 bundle.putSerializable("loanApplication", loanApplication);
-                navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
+//                navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
+
+                Fragment fragment = new WalletLoanPreviewRequestFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+
             }
         });
 

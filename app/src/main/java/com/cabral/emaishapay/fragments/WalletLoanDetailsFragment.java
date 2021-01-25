@@ -72,7 +72,7 @@ public class WalletLoanDetailsFragment extends Fragment {
 
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        toolbar.setTitle("Apply for Loan");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -202,6 +202,7 @@ public class WalletLoanDetailsFragment extends Fragment {
                 bundle.putFloat("interest", localBundle.getFloat("interest"));
                 bundle.putSerializable("loanApplication", loanApplication);
 
+                Log.d(TAG, "onViewCreated: LOAN APPLICATION"+ loanApplication);
 
                 Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

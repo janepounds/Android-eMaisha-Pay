@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.LoanApplication;
 
 import java.text.NumberFormat;
@@ -72,6 +72,11 @@ public class WalletLoanStatusPreview extends Fragment {
         loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
 
         initializeActivity();
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Loan Status Preview");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         return view;
     }
@@ -125,9 +130,6 @@ public class WalletLoanStatusPreview extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NavController navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
         // Set up the user interaction to manually show or hide the system UI.
 
@@ -139,11 +141,33 @@ public class WalletLoanStatusPreview extends Fragment {
 //        });
 
         paymentHistory.setOnClickListener(v->{
-            navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentHistory);
+
+            Fragment fragment = new WalletLoanPaymentHistory();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                fragmentManager.beginTransaction()
+                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
 
         });
         paymentSchedule.setOnClickListener(v -> {
-            navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentSchedule);
+
+            Fragment fragment = new WalletLoanPaymentSchedule();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                fragmentManager.beginTransaction()
+                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
         });
 
     }

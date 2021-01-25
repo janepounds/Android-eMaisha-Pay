@@ -9,11 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +45,7 @@ public class EmploymentInformationFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employment_information, container, false);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        binding.toolbar.setTitle("Employment Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

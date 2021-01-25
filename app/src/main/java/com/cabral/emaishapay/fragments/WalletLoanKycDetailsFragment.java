@@ -22,14 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
@@ -50,9 +48,6 @@ import retrofit2.Response;
 public class WalletLoanKycDetailsFragment extends Fragment {
     private static final String TAG = "WalletLoanKycDetailsFragment";
     private Context context;
-
-    NavController navController;
-    AppBarConfiguration appBarConfiguration;
 
     private static final int GALLERY_REQUESTED_NID_BACK = 1;
     private static final int GALLERY_REQUESTED_NID_FRONT = 2;
@@ -116,13 +111,6 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -301,7 +289,19 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                         textViewErrorMessage.setText(response.body().getData().getMessage());
                     }else {
 
-                        navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
+                       // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
+                        Fragment fragment = new WalletLoansListFragment();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                            fragmentManager.beginTransaction()
+                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                    .add(R.id.wallet_home_container, fragment)
+                                    .addToBackStack(null).commit();
+                        else
+                            fragmentManager.beginTransaction()
+                                    .add(R.id.wallet_home_container, fragment)
+                                    .addToBackStack(null).commit();
+
                     }
 
                 } else if (response.code() == 401) {

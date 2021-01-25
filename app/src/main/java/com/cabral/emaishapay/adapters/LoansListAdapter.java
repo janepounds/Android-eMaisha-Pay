@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.WalletAccountFragment;
+import com.cabral.emaishapay.fragments.WalletLoanStatusPreview;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
@@ -27,6 +31,7 @@ import java.util.TimeZone;
 
 public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.LoansListAdapter.MyViewHolder> {
     private List<LoanApplication> dataList;
+    Context context;
 
     public LoansListAdapter(List<LoanApplication> dataList) {
         this.dataList = dataList;
@@ -114,11 +119,31 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
         public void onClick(View v) {
             LoanApplication transaction = dataList.get(getAdapterPosition());
 
-            NavController navController = Navigation.findNavController(v);
+          //  NavController navController = Navigation.findNavController(v);
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("loanApplication", transaction);
-            navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanStatusPreview,bundle);
+        //    navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanStatusPreview,bundle);
+
+//            FragmentManager fm = ((WalletHomeActivity) context).getSupportFragmentManager();
+//            FragmentTransaction ft = fm.beginTransaction();
+//            Fragment prev =fm.findFragmentByTag("dialog");
+//            if (prev != null) {
+//                ft.remove(prev);
+//            }
+//            ft.addToBackStack(null);
+
+            Fragment fragment= new WalletLoanStatusPreview();
+            FragmentManager fragmentManager=((WalletHomeActivity) context).getSupportFragmentManager();
+            if (((WalletHomeActivity) context).currentFragment != null)
+                fragmentManager.beginTransaction()
+                        .hide(((WalletHomeActivity) context).currentFragment)
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
         }
     }
 }

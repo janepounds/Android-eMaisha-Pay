@@ -14,10 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Base64;
 import android.util.Log;
@@ -75,7 +72,7 @@ public class IdInformationFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_id_information, container, false);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        binding.toolbar.setTitle("ID Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         if(localBundle!=null){
@@ -159,7 +156,16 @@ public class IdInformationFragment extends Fragment {
                     Log.d(TAG, "onResponse: successful");
 
                     Fragment fragment= new WalletAccountFragment();
-                    getParentFragmentManager().beginTransaction().replace(R.id.wallet_home_container, fragment).commit();
+                    FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
 
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
