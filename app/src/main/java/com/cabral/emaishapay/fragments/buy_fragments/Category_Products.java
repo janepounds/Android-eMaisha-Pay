@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,6 +34,8 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.customs.FilterDialog;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.get_filters.FilterData;
 import com.cabral.emaishapay.models.filter_model.get_filters.FilterDetails;
 import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
@@ -105,7 +110,7 @@ public class Category_Products extends Fragment {
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
 
-
+        setHasOptionsMenu(true);
         // Get CategoryID from bundle arguments
         categoryID = getArguments().getInt("CategoryID");
         CategoryName = getArguments().getString("CategoryName");
@@ -346,6 +351,20 @@ public class Category_Products extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+        cartItem.setVisible(true);
+
+        //set badge value
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        List<CartProduct> cartItemsList;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+        TextView badge = (TextView) cartItem.getActionView().findViewById(R.id.cart_badge);
+        badge.setText(String.valueOf(cartItemsList.size()));
     }
 
     //*********** Switch RecyclerView's LayoutManager ********//

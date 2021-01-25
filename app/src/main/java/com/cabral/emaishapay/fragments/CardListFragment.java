@@ -18,17 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.adapters.CardListAdapter;
-import com.cabral.emaishapay.adapters.LoansListAdapter;
-import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
+import com.cabral.emaishapay.adapters.CardsListAdapter;
 import com.cabral.emaishapay.models.CardResponse;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -44,10 +40,10 @@ public class CardListFragment extends Fragment {
     private static final String TAG = "CardListFragment";
 
     FloatingActionButton btnAddCard;
-    LinearLayout layoutCardViewEmpty;
+    LinearLayout layoutCardViewEmpty,recycler_view_card;
     RecyclerView cardRecycler;
     private Context context;
-    private CardListAdapter cardListAdapter;
+    private CardsListAdapter cardListAdapter;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     Toolbar toolbar;
     public CardListFragment() {
@@ -67,14 +63,16 @@ public class CardListFragment extends Fragment {
         View rootView =inflater.inflate(R.layout.fragment_card_list, container, false);
         cardRecycler   =rootView.findViewById(R.id.recyclerView_card_fragment);
         layoutCardViewEmpty = rootView.findViewById(R.id.card_view_empty);
+        recycler_view_card = rootView.findViewById(R.id.recycler_view_card);
         btnAddCard = rootView.findViewById(R.id.btn_add_card);
         toolbar = rootView.findViewById(R.id.toolbar_card_list);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("My Cards");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        cardRecycler.setLayoutManager(new LinearLayoutManager(context));
+
         RequestCards();
+
 
 
         btnAddCard.setOnClickListener(v -> {
@@ -121,7 +119,7 @@ public class CardListFragment extends Fragment {
                         Log.d(TAG,cardlists.size()+"**********");
 
                         cardRecycler.setLayoutManager(new LinearLayoutManager(context));
-                        cardListAdapter = new CardListAdapter(cardlists,context);
+                        cardListAdapter = new CardsListAdapter(cardlists,requireActivity().getSupportFragmentManager());
                         cardRecycler.setAdapter(cardListAdapter);
                         cardListAdapter.notifyDataSetChanged();
                         updateCardView(cardlists.size());
@@ -156,10 +154,10 @@ public class CardListFragment extends Fragment {
     public void updateCardView(int cardListSize) {
         // Check if Cart has some Items
         if (cardListSize != 0) {
-            layoutCardViewEmpty.setVisibility(View.VISIBLE);
+            recycler_view_card.setVisibility(View.VISIBLE);
             layoutCardViewEmpty.setVisibility(View.GONE);
         } else {
-            layoutCardViewEmpty.setVisibility(View.GONE);
+            recycler_view_card.setVisibility(View.GONE);
             layoutCardViewEmpty.setVisibility(View.VISIBLE);
         }
     }

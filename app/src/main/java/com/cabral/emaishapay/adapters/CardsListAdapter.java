@@ -1,6 +1,8 @@
 package com.cabral.emaishapay.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +22,9 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.WalletTransactionsReceiptDialog;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductDealsAdapter;
-import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.LoanApplication;
@@ -33,42 +35,62 @@ import com.cabral.emaishapay.utils.CryptoUtil;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 
-public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyViewHolder>{
-    private static final String TAG = "CardListAdapter";
+public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyViewHolder> {
+    private static final String TAG = "CardsListAdapter";
     private List<CardResponse.Cards> dataList;
-    private Context context;
+    private FragmentManager fm;
+    Context context;
 
-    public CardListAdapter(List<CardResponse.Cards> cardsList, Context context){
-        this.dataList = cardsList;
-        this.context = context;
+
+    public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        CircularImageView cardImage;
+        TextView accountNme,accountNumberFirst,accountNumberLast,expiry;
+
+        public MyViewHolder(View v, FragmentManager fm) {
+            super(v);
+            accountNme = v.findViewById(R.id.text_card_account_name);
+            accountNumberFirst = v.findViewById(R.id.text_card_account_number_first);
+            accountNumberLast = v.findViewById(R.id.text_card_account_number_end);
+            expiry = v.findViewById(R.id.text_card_expiry);
+            cardImage = v.findViewById(R.id.item_card_image);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    public CardsListAdapter(List<CardResponse.Cards> dataList,FragmentManager supportFragmentManager) {
+        this.dataList = dataList;
+        fm=supportFragmentManager;
 
     }
 
-
     @Override
-    public CardListAdapter.MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+    public CardsListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.payment_card, parent, false);
-
-        return new CardListAdapter.MyViewHolder(itemView);
-
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.payment_card,parent,false);
+        context=parent.getContext();
+        CardsListAdapter.MyViewHolder holder = new CardsListAdapter.MyViewHolder(view,fm);
+        return holder;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(CardListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(CardsListAdapter.MyViewHolder holder, int position) {
         CardResponse.Cards data = dataList.get(position);
 
         //decript values
         CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
         holder.accountNme.setText(encrypter.decrypt(data.getAccount_name()));
-        holder.expiry.setText(encrypter.decrypt(data.getExpiry()));
+        holder.expiry.setText("Expiry Date: "+encrypter.decrypt(data.getExpiry()));
         String card_number = encrypter.decrypt(data.getCard_number());
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -89,9 +111,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
         }
 
         //set card number
+        if(card_number.length()>4) {
 
+            holder.accountNumberFirst.setText(card_number.substring(0,  4));
+            holder.accountNumberLast.setText(card_number.substring(card_number.length() - 4));
+            Log.d(TAG, "onBindViewHolder: "+card_number.substring(0, 4));
+        }
 
-        Log.d(TAG, "onBindViewHolder: "+dataList);
 
     }
 
@@ -101,25 +127,5 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
         return dataList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CircularImageView cardImage;
-        TextView accountNme,accountNumberFirst,accountNumberLast,expiry;
 
-
-        public MyViewHolder(View v) {
-            super(v);
-            accountNme = v.findViewById(R.id.text_card_account_name);
-            accountNumberFirst = v.findViewById(R.id.text_card_account_number_first);
-            accountNumberLast = v.findViewById(R.id.text_card_account_number_end);
-            expiry = v.findViewById(R.id.text_card_expiry);
-            cardImage = v.findViewById(R.id.item_card_image);
-
-
-        }
-
-        @Override
-        public void onClick(View v) {
-
-        }
-    }
 }
