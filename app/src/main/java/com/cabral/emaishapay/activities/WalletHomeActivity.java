@@ -153,6 +153,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                 actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
+
+                WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
 
             actionBar.setHomeButtonEnabled(true);
