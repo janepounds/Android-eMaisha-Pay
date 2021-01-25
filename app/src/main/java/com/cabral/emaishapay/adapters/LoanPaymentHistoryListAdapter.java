@@ -8,22 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
 public class LoanPaymentHistoryListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.LoanPaymentHistoryListAdapter.MyViewHolder> {
     private List<LoanApplication> dataList;
 
