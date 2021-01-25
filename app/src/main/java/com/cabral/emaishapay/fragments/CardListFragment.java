@@ -68,8 +68,8 @@ public class CardListFragment extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar_card_list);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("My Cards");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
 
         RequestCards();
 
@@ -77,7 +77,7 @@ public class CardListFragment extends Fragment {
 
         btnAddCard.setOnClickListener(v -> {
         //nvigate to add card fragment
-            FragmentManager fm = CardListFragment.this.getFragmentManager();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             Fragment prev =fm.findFragmentByTag("dialog");
             if (prev != null) {

@@ -131,7 +131,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
 
         holder.payment_card.setOnClickListener(v -> {
 
-            editPaymentCard(holder);
+            editPaymentCard(data);
         });
 
     }
@@ -143,15 +143,18 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
     }
 
 
-    public void editPaymentCard(CardsListAdapter.MyViewHolder holder){
+    public void editPaymentCard(CardResponse.Cards data){
         //call card dialog
         //nvigate to add card fragment
+        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
+
         Bundle bundle = new Bundle();
-        bundle.putString("account_name",holder.accountNme.getText().toString());
-        bundle.putString("account_number",card_number);
-        bundle.putString("cvv",cvv);
-        bundle.putString("expiry",expiry_date);
-        bundle.putString("id",id);
+        bundle.putString("account_name", encrypter.decrypt(data.getAccount_name()));
+        bundle.putString("account_number",encrypter.decrypt(data.getCard_number()));
+        bundle.putString("cvv",encrypter.decrypt(data.getCvv()));
+        bundle.putString("expiry",encrypter.decrypt(data.getExpiry()));
+
+        bundle.putString("id",data.getId());
         FragmentManager fm = ((WalletHomeActivity) context).getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev =fm.findFragmentByTag("dialog");

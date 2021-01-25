@@ -11,6 +11,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +32,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.CardListFragment;
-import com.cabral.emaishapay.fragments.IdInformationFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
@@ -104,6 +106,7 @@ public class AddCardFragment extends DialogFragment {
             txtTitle.setText("EDIT CARD");
             btnSaveCard.setText("UPDATE CARD");
             delete_card.setVisibility(View.VISIBLE);
+
             delete_card.setOnClickListener(v -> {
                 ProgressDialog dialog;
                 dialog = new ProgressDialog(context);
@@ -128,10 +131,14 @@ public class AddCardFragment extends DialogFragment {
                                 String message = response.body().getMessage();
                                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
-                                //call card list fragment
-//                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
                                 getActivity().getSupportFragmentManager().popBackStack();
 
+                                Fragment fragment = new CardListFragment();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                fragmentManager.beginTransaction()
+                                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                        .replace(R.id.wallet_home_container, fragment)
+                                        .addToBackStack(null).commit();
 
                                 dialog.dismiss();
                             }
@@ -222,10 +229,17 @@ public class AddCardFragment extends DialogFragment {
                                 if (response.isSuccessful()) {
                                     String message = response.body().getMessage();
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                    getActivity().getSupportFragmentManager().popBackStack();
+
+                                    Fragment fragment = new CardListFragment();
+                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                            .replace(R.id.wallet_home_container, fragment)
+                                            .addToBackStack(null).commit();
 
                                     //call card list fragment
 //                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
-                                    getActivity().getSupportFragmentManager().popBackStack();
 
 
                                     dialog.dismiss();
@@ -252,19 +266,16 @@ public class AddCardFragment extends DialogFragment {
                                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
                                         //redirect to card list fragment
-
                                         getActivity().getSupportFragmentManager().popBackStack();
-//                                        Fragment fragment = new CardListFragment();
-//                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-//                                            fragmentManager.beginTransaction()
-//                                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-//                                                    .add(R.id.wallet_home_container, fragment)
-//                                                    .addToBackStack(null).commit();
-//                                        else
-//                                            fragmentManager.beginTransaction()
-//                                                    .add(R.id.wallet_home_container, fragment)
-//                                                    .addToBackStack(null).commit();
+                                        Fragment fragment = new CardListFragment();
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                                            fragmentManager.beginTransaction()
+                                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                                    .replace(R.id.wallet_home_container, fragment)
+                                                    .addToBackStack(null).commit();
+
 
                                         dialog.dismiss();
                                     } else if (response.code() == 401) {
