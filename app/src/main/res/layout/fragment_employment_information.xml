@@ -167,7 +167,7 @@
                             android:id="@+id/text_country_code"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.2"
                             android:background="@drawable/edittext_left_corners_green"
                             android:gravity="center"
                             android:text="+256"
