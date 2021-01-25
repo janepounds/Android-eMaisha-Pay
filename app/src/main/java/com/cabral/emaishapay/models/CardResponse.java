@@ -33,6 +33,9 @@ public class CardResponse {
 
 
         public class Cards {
+            @SerializedName("id")
+            @Expose
+            public String id;
             @SerializedName("account_name")
             @Expose
             private String account_name;
@@ -46,6 +49,14 @@ public class CardResponse {
             @SerializedName("expiry")
             @Expose
             private String expiry;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
 
             public String getAccount_name() {
                 return account_name;
