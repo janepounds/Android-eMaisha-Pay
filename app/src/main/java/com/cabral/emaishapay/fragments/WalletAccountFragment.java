@@ -606,6 +606,12 @@ public class WalletAccountFragment extends Fragment {
                 }
             });
 
+            binding.layoutTollFree.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0800399399"));
+                startActivity(intent);
+            });
+
 
         return binding.getRoot();
     }
