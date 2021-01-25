@@ -83,6 +83,8 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             String measure = holder.weight.getText().toString();
             String []weight = measure.split("\\s+");
             selected_measure = holder.weight.getText().toString();
+            new_price.setText("UGX " + productMeasure.getProducts_price());
+
             String []products_price = new_price.getText().toString().split("\\s+");
 
             ProductDetails productDetails = new ProductDetails();
@@ -91,9 +93,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             productMeasure.setProducts_weight_unit(weight[1]);
             productMeasure.setProducts_price(products_price[1]);
 
-            //
 
-            new_price.setText("UGX " + productMeasure.getProducts_price());
             isChecked=true;
             Log.d(TAG, "onBindViewHolder: prodctsprice"+products_price[1] + "measure"+selected_measure);
 
@@ -119,6 +119,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
 //            String []products_price = new_price.getText().toString().split("\\s+");
 //            productMeasure.setProducts_price(products_price[1]);
+            Product_Description.selected_measure=holder.weight.getText().toString();
             selected_measure = holder.weight.getText().toString();
             new_price.setText("UGX " + productMeasure.getProducts_price());
             isChecked = true;

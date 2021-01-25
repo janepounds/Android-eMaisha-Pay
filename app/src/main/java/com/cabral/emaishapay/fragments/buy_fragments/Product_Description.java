@@ -127,7 +127,7 @@ public class Product_Description extends Fragment {
     private ProductMeasureAdapter productMeasureAdapter;
     private List<ProductMeasure> productMeasures;
     private Context context;
-    private String selected_measure;
+    public static String selected_measure;
     private  String []products_price;
 
     ImageView checkImageView;
@@ -391,6 +391,11 @@ public class Product_Description extends Fragment {
     }
 
     private  void  addProductToCart(ProductDetails product){
+        if(Product_Description.selected_measure==null){
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), context.getString(R.string.select_product_weight), Snackbar.LENGTH_SHORT).show();
+
+            return;
+        }
         CartProduct cartProduct = new CartProduct();
 
         double productBasePrice, productFinalPrice = 0.0, attributesPrice = 0;
