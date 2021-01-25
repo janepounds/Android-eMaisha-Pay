@@ -25,10 +25,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
@@ -94,7 +90,7 @@ public class TransferMoney extends Fragment {
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        toolbar.setTitle("Transfer Money");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

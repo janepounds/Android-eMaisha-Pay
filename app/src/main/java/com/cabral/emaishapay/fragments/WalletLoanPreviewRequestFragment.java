@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
 
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
@@ -32,14 +31,12 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     LoanApplication loanApplication;
     ProgressDialog dialog;
-    private NavController navController;
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId;
     private TextView textViewLoanPreviewAmount, textViewLoanPreviewInterestRate, textViewLoanPreviewDuration, textViewLoanPreviewDueDate,
             textViewLoanPreviewDueAmount, loan_type_or_schedule_txt,textViewErrorMessage, loan_purpose_txt;
     private Button btnLoanNextStep, btnPrevious;
-    AppBarConfiguration appBarConfiguration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,16 +69,18 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
             initializeActivity();
         }
 
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Loan Preview");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-        btnPrevious.setOnClickListener(view1 -> navController.popBackStack());
+          btnPrevious.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
     }
 
@@ -130,7 +129,7 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
                 loan_purpose_txt.setText(getString(R.string.seeds));
         }
 
-        btnPrevious.setOnClickListener(view1 -> navController.popBackStack());
+        btnPrevious.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
         btnLoanNextStep.setOnClickListener(view -> AddPhotos());
     }
@@ -139,7 +138,20 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("loanApplication", loanApplication);
-        navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
+       // navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
+
+        Fragment fragment = new WalletLoanKycDetailsFragment();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+            fragmentManager.beginTransaction()
+                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                    .add(R.id.wallet_home_container, fragment)
+                    .addToBackStack(null).commit();
+        else
+            fragmentManager.beginTransaction()
+                    .add(R.id.wallet_home_container, fragment)
+                    .addToBackStack(null).commit();
 
 
     }

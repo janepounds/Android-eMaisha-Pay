@@ -19,12 +19,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;

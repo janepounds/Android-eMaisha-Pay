@@ -76,7 +76,7 @@ public class BusinessAccountFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_account, container, false);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        //binding.toolbar.setTitle("Merchant Details");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

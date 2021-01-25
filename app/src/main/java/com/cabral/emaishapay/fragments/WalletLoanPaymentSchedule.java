@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +23,6 @@ public class WalletLoanPaymentSchedule extends Fragment {
     private Context context;
     private RecyclerView recyclerView;
     private LoanPaymentScheduleListAdapter loanPaymentScheduleListAdapter;
-    private NavController navController;
     private Toolbar toolbar;
     AppBarConfiguration appBarConfiguration;
 
@@ -46,15 +44,11 @@ public class WalletLoanPaymentSchedule extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_payment_schedule);
 
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Payment Schedule");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController  = Navigation.findNavController(view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-    }
 }
