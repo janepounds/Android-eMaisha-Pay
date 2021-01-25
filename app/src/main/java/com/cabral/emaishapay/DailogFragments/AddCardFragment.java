@@ -91,8 +91,23 @@ public class AddCardFragment extends DialogFragment {
 
         amountLayout.setVisibility(View.GONE);
         purporseLayout.setVisibility(View.GONE);
-        txtTitle.setText("ADD CARD");
-        btnSaveCard.setText("SAVE CARD");
+        if(getArguments()!=null){
+            String account_name = getArguments().getString("account_name");
+            String card_number = getArguments().getString("account_number");
+            String cvv = getArguments().getString("cvv");
+            String expiry_date = getArguments().getString("expiry");
+
+            //set corresponsding edit texts;
+            etName.setText(account_name);
+            etCardNumber.setText(card_number);
+            etCvv.setText(cvv);
+            etExpiryDate.setText(expiry_date);
+            txtTitle.setText("EDIT CARD");
+            btnSaveCard.setText("UPDATE CARD");
+        }else {
+            txtTitle.setText("ADD CARD");
+            btnSaveCard.setText("SAVE CARD");
+        }
 
 
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
