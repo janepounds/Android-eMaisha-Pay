@@ -11,6 +11,18 @@ public class CardResponse {
     @Expose
     private String message;
 
+    @SerializedName("status")
+    @Expose
+    private int  status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @SerializedName("cards")
     @Expose
     private List<Cards> cardsList;

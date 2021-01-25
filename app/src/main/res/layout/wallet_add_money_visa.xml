@@ -319,10 +319,10 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="right"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <Button
-                    android:id="@+id/button_add_money"
+
                     style="@style/Button_DW"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
@@ -353,8 +353,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:visibility="gone">
+                android:layout_marginTop="10dp">
 
 
 
@@ -370,16 +369,16 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:drawableEnd="@drawable/ic_right_chevron" />
+                    android:drawableEnd="@drawable/ic_right_chevron"
+                    android:visibility="gone"/>
                 <Button
-                    android:id="@+id/edit_card"
+                    android:id="@+id/button_add_money"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="10dp"
                     android:paddingEnd="10dp"
                     android:background="@drawable/round_button_dark_green"
-                    android:text="Update"
+                    android:text="@string/deposit"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="16sp"

@@ -45,7 +45,7 @@ public class AddCardFragment extends DialogFragment {
     TextView txtTitle;
     LinearLayout amountLayout, purporseLayout;
 
-    Button btnSaveCard;
+    Button btnSaveCard,delete_card;
     private Context context;
 
     private String id;
@@ -85,6 +85,7 @@ public class AddCardFragment extends DialogFragment {
         amountLayout = view.findViewById(R.id.add_money_amount_layout);
         purporseLayout = view.findViewById(R.id.layout_purpose);
         txtTitle = view.findViewById(R.id.add_money_title);
+        delete_card = view.findViewById(R.id.delete_card);
 
         amountLayout.setVisibility(View.GONE);
         purporseLayout.setVisibility(View.GONE);
@@ -102,6 +103,56 @@ public class AddCardFragment extends DialogFragment {
             etExpiryDate.setText(expiry_date);
             txtTitle.setText("EDIT CARD");
             btnSaveCard.setText("UPDATE CARD");
+            delete_card.setVisibility(View.VISIBLE);
+            delete_card.setOnClickListener(v -> {
+                ProgressDialog dialog;
+                dialog = new ProgressDialog(context);
+                dialog.setIndeterminate(true);
+                dialog.setMessage("Please Wait..");
+                dialog.setCancelable(false);
+                dialog.show();
+
+                //call retrofit method for deleting card
+                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                /*************RETROFIT IMPLEMENTATION**************/
+                Call<CardResponse> call = APIClient.getWalletInstance().deleteCard(id,access_token);
+                call.enqueue(new Callback<CardResponse>() {
+                    @Override
+                    public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getStatus() == 0) {
+                                dialog.dismiss();
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                            } else {
+                                String message = response.body().getMessage();
+                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                                //call card list fragment
+//                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
+                                getActivity().getSupportFragmentManager().popBackStack();
+
+
+                                dialog.dismiss();
+                            }
+
+                        }else if(response.code()==401){
+                            dialog.dismiss();
+                            Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+
+                            //redirect to auth
+                            TokenAuthActivity.startAuth(context, true);
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<CardResponse> call, Throwable t) {
+                        dialog.dismiss();
+
+                    }
+                });
+            });
         }else {
             txtTitle.setText("ADD CARD");
             btnSaveCard.setText("SAVE CARD");
@@ -146,8 +197,6 @@ public class AddCardFragment extends DialogFragment {
                 dialog.show();
 
                     if (validateEntries()) {
-
-
 
                         String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                         String card_number = etCardNumber.getText().toString().trim();
@@ -218,6 +267,12 @@ public class AddCardFragment extends DialogFragment {
 //                                                    .addToBackStack(null).commit();
 
                                         dialog.dismiss();
+                                    } else if (response.code() == 401) {
+                                        dialog.dismiss();
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                        //redirect to auth
+                                        TokenAuthActivity.startAuth(context, true);
                                     }
                                 }
 
