@@ -129,7 +129,7 @@ public class NotificationBadger extends Drawable {
         NotificationBadger badge;
 
         // Reuse drawable if possible
-        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_badge);
+        Drawable reuse = icon.findDrawableByLayerId(R.id.cart_badge);
 
         if (reuse != null && reuse instanceof NotificationBadger) {
             // Reuse Badge
@@ -144,7 +144,7 @@ public class NotificationBadger extends Drawable {
 
         // Set badge on LayerDrawable
         icon.mutate();
-        icon.setDrawableByLayerId(R.id.ic_badge, badge);
+        icon.setDrawableByLayerId(R.id.cart_badge, badge);
     }
 
 }

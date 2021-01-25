@@ -55,11 +55,11 @@ public class WalletLoanStatusPreview extends Fragment {
         textViewLoanStatusPreviewDuration = view.findViewById(R.id.text_view_loan_status_preview_duration);
         textViewLoanStatusPreviewStatus = view.findViewById(R.id.text_view_loan_status_preview_status);
         textViewLoanStatusPreviewAmount = view.findViewById(R.id.text_view_loan_status_preview_amount);
-        textViewLoanStatusEditPhotos = view.findViewById(R.id.text_view_loan_status_edit_photos);
+      //  textViewLoanStatusEditPhotos = view.findViewById(R.id.text_view_loan_status_edit_photos);
         textViewLoanStatusPreviewInterestRate = view.findViewById(R.id.text_view_loan_status_preview_interest_rate);
         textViewLoanStatusPreviewDueAmount = view.findViewById(R.id.text_view_loan_status_preview_due_amount);
-        textViewLoanStatusPreviewPayments = view.findViewById(R.id.text_view_loan_status_preview_payments);
-        textViewLoanStatusPreviewFines = view.findViewById(R.id.text_view_loan_status_preview_fines);
+//        textViewLoanStatusPreviewPayments = view.findViewById(R.id.text_view_loan_status_preview_payments);
+//        textViewLoanStatusPreviewFines = view.findViewById(R.id.text_view_loan_status_preview_fines);
         imageViewLoanStatusPreviewNidBack = view.findViewById(R.id.image_view_loan_status_preview_nid_back);
         imageViewLoanStatusPreviewNidFront = view.findViewById(R.id.image_view_loan_status_preview_nid_front);
         imageViewLoanStatusPreviewUserPhoto = view.findViewById(R.id.image_view_loan_status_preview_user_photo);
