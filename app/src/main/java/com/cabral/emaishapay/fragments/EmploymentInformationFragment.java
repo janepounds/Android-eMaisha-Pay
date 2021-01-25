@@ -44,6 +44,7 @@ public class EmploymentInformationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employment_information, container, false);
 
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle("Employment Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

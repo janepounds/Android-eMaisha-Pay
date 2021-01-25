@@ -67,6 +67,8 @@ public class PersonalInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_personal_information, container, false);
+
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(getString(R.string.AddPersonalInformation));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
