@@ -389,6 +389,22 @@ public interface APIRequests {
 
     );
 
+    //update card info
+    @FormUrlEncoded
+    @POST("wallet/update_card_info")
+    Call<CardResponse>updateCardInfo(
+            @Header("Authorization")String token,
+            @Field("id") String id,
+            @Field("identifier") String user_id,
+            @Field("card_number") String card_number,
+            @Field("cvv") String cvv,
+            @Field("expiry") String expiry,
+            @Field("account_name") String account_name
+
+
+    );
+
+
 
 
 

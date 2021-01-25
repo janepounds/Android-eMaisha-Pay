@@ -51,7 +51,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
     private List<CardResponse.Cards> dataList;
     private FragmentManager fm;
     Context context;
-    private String account_name, card_number,cvv,expiry_date;
+    private String account_name, card_number,cvv,expiry_date,id;
 
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -104,6 +104,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         holder.accountNme.setText(account_name);
         holder.expiry.setText("Expiry Date: "+expiry_date);
         card_number = encrypter.decrypt(data.getCard_number());
+        id= data.getId();
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.ic_visa)
@@ -152,6 +153,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         bundle.putString("account_number",card_number);
         bundle.putString("cvv",cvv);
         bundle.putString("expiry",expiry_date);
+        bundle.putString("id",id);
         FragmentManager fm = ((WalletHomeActivity) context).getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev =fm.findFragmentByTag("dialog");

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -28,7 +30,10 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.IdInformationFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
@@ -47,6 +52,7 @@ public class AddCardFragment extends DialogFragment {
     Button btnSaveCard;
     private Context context;
     private NavController navController;
+    private String id;
 
     public AddCardFragment() {
         // Required empty public constructor
@@ -96,6 +102,7 @@ public class AddCardFragment extends DialogFragment {
             String card_number = getArguments().getString("account_number");
             String cvv = getArguments().getString("cvv");
             String expiry_date = getArguments().getString("expiry");
+             id = getArguments().getString("id");
 
             //set corresponsding edit texts;
             etName.setText(account_name);
@@ -139,54 +146,99 @@ public class AddCardFragment extends DialogFragment {
         btnSaveCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ProgressDialog dialog;
                 dialog = new ProgressDialog(context);
                 dialog.setIndeterminate(true);
                 dialog.setMessage("Please Wait..");
                 dialog.setCancelable(false);
                 dialog.show();
-                if(validateEntries()){
+
+                    if (validateEntries()) {
 
 
-                    String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                    String card_number = etCardNumber.getText().toString().trim();
-                    String cvv = etCvv.getText().toString().trim();
-                    String expiry = etExpiryDate.getText().toString();
-                    String account_name = etName.getText().toString();
 
-                    /**********ENCRPT CARD DETAILS****************/
-                    CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getString(R.string.iv));
-                    String hash_card_number=encrypter.encrypt(card_number);
-                    String hash_cvv=encrypter.encrypt(cvv);
-                    String hash_expiry=encrypter.encrypt(expiry);
-                    String hash_account_name=encrypter.encrypt(account_name);
+                        String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                        String card_number = etCardNumber.getText().toString().trim();
+                        String cvv = etCvv.getText().toString().trim();
+                        String expiry = etExpiryDate.getText().toString();
+                        String account_name = etName.getText().toString();
 
-                    /*************RETROFIT IMPLEMENTATION**************/
-                    Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(identifier,hash_card_number,hash_cvv,hash_expiry,hash_account_name);
-                    call.enqueue(new Callback<CardResponse>() {
-                        @Override
-                        public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                            if(response.isSuccessful()){
-                                String message = response.body().getMessage();
-                                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+                        /**********ENCRPT CARD DETAILS****************/
+                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getString(R.string.iv));
+                        String hash_card_number = encrypter.encrypt(card_number);
+                        String hash_cvv = encrypter.encrypt(cvv);
+                        String hash_expiry = encrypter.encrypt(expiry);
+                        String hash_account_name = encrypter.encrypt(account_name);
 
-                                //call card list fragment
+                        //check if the button text is save card
+                        if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
+
+                        /*************RETROFIT IMPLEMENTATION**************/
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                        call.enqueue(new Callback<CardResponse>() {
+                            @Override
+                            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                                if (response.isSuccessful()) {
+                                    String message = response.body().getMessage();
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                                    //call card list fragment
 //                                navController.navigate(R.id.action_addCardFragment_to_cardListFragment);
-                                getActivity().getSupportFragmentManager().popBackStack();
+                                    getActivity().getSupportFragmentManager().popBackStack();
 
 
-                               
-                            dialog.dismiss();
+                                    dialog.dismiss();
+                                }
                             }
+
+                            @Override
+                            public void onFailure(Call<CardResponse> call, Throwable t) {
+                                dialog.dismiss();
+
+                            }
+                        });
+
+                    }else{
+                            //call update card endpoint
+                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                            /*************RETROFIT IMPLEMENTATION**************/
+                            Call<CardResponse> call = APIClient.getWalletInstance().updateCardInfo(access_token,id,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                            call.enqueue(new Callback<CardResponse>() {
+                                @Override
+                                public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        String message = response.body().getMessage();
+                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                                        //redirect to card list fragment
+
+                                        getActivity().getSupportFragmentManager().popBackStack();
+//                                        Fragment fragment = new CardListFragment();
+//                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+//                                            fragmentManager.beginTransaction()
+//                                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+//                                                    .add(R.id.wallet_home_container, fragment)
+//                                                    .addToBackStack(null).commit();
+//                                        else
+//                                            fragmentManager.beginTransaction()
+//                                                    .add(R.id.wallet_home_container, fragment)
+//                                                    .addToBackStack(null).commit();
+
+                                        dialog.dismiss();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<CardResponse> call, Throwable t) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+
                         }
-
-                        @Override
-                        public void onFailure(Call<CardResponse> call, Throwable t) {
-                            dialog.dismiss();
-
-                        }
-                    });
-
                 }
             }
         });
