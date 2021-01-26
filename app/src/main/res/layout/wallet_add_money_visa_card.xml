@@ -139,7 +139,8 @@
                     android:background="@drawable/edittext_corner"
                     android:textColor="@color/textColor"
                     android:layout_marginTop="5dp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:drawablePadding="@dimen/dimen_5dp"/>
 
             </LinearLayout>
 
@@ -217,7 +218,9 @@
                     android:background="@drawable/edittext_corner"
                     android:inputType="number"
                     android:textColor="@color/textColor"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:maxLength="19"
+                    android:drawablePadding="@dimen/dimen_5dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -251,7 +254,8 @@
                         android:inputType="date"
                         android:maxLength="5"
                         android:textColor="@color/textColor"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="@dimen/dimen_5dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -276,7 +280,9 @@
                         android:background="@drawable/edittext_corner"
                         android:inputType="number"
                         android:textColor="@color/textColor"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"
+                        android:maxLength="3"
+                        android:drawablePadding="@dimen/dimen_5dp"/>
                 </LinearLayout>
 
 
@@ -364,6 +370,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:paddingStart="@dimen/dimen_10dp"
+                        android:drawablePadding="@dimen/dimen_5dp"
                         android:gravity="start|center_vertical"
                         android:inputType="number"
                         android:background="@android:color/transparent"
