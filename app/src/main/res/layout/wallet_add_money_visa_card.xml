@@ -34,6 +34,9 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,26 +157,45 @@
                     android:fontFamily="@font/josefin_sans" />
 
 
-                <Spinner
-                    android:id="@+id/spinner_select_card"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_centerInParent="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                   android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_corner"
-                    android:layout_marginTop="5dp"
-                    android:paddingStart="@dimen/dimen_10dp"/>
+                    android:orientation="horizontal">
 
+                    <Spinner
+                        android:id="@+id/spinner_select_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_chevron_down" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-<LinearLayout
-    android:id="@+id/card_details_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/card_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -424,4 +446,5 @@
 
     </LinearLayout>
 
+    </ScrollView>
 </LinearLayout>
