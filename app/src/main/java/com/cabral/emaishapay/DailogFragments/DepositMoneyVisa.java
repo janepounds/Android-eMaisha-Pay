@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.utils.CryptoUtil;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -154,7 +155,7 @@ public class DepositMoneyVisa extends DialogFragment implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    if (position == 0) {
+                    if (position == 1) {
 
                         //call add card
                         card_details_layout.setVisibility(View.VISIBLE);
@@ -204,13 +205,24 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                         cardlists = response.body().getCardsList();
                         for(int i =0; i<cardlists.size();i++){
-                            if(i==0){
-                                cardItems.add(0,"Add New");
+                                cardItems.add(0,"Select Card");
+                                cardItems.add(1,"Add New");
 
+                                //decript card number
+                            CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
+
+
+                            String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                            String decripted_card_number = null;
+                            if(card_number.length()>4) {
+
+                               String first_four_digits = (card_number.substring(0,  4));
+                               String last_four_digits = (card_number.substring(card_number.length() - 4));
+                               decripted_card_number = first_four_digits + "*******"+last_four_digits;
+                             
                             }
-                            String card_number = cardlists.get(i).getCard_number();
 
-                            cardItems.add(card_number);
+                            cardItems.add(decripted_card_number);
                         }
 
 
