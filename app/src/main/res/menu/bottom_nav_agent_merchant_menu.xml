@@ -21,12 +21,17 @@
         android:title="ACCEPT PAYMENT"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/walletSettlementFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_loan_purpose"
+        android:title="SETTLEMENT"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/walletAccountFragment"
+        android:id="@+id/walletAccountFragment_agent"
         android:enabled="true"
         android:icon="@drawable/user"
         android:title="ACCOUNT"
         app:showAsAction="ifRoom" />
-
 </menu>
