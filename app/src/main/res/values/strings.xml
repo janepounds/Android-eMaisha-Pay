@@ -597,4 +597,5 @@
     <string name="iv">98765432</string>
     <string name="AddPersonalInformation">Personal Information</string>
     <string name="select_product_weight">Select product weight first!</string>
+    <string name="settle">Settle</string>
 </resources>

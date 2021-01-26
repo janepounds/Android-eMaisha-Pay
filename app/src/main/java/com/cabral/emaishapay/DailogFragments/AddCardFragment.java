@@ -104,7 +104,7 @@ public class AddCardFragment extends DialogFragment {
             etCvv.setText(cvv);
             etExpiryDate.setText(expiry_date);
             txtTitle.setText("EDIT CARD");
-            btnSaveCard.setText("UPDATE CARD");
+            btnSaveCard.setText("UPDATE");
             delete_card.setVisibility(View.VISIBLE);
 
             delete_card.setOnClickListener(v -> {

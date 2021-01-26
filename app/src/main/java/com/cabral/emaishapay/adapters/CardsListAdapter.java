@@ -117,11 +117,11 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
 
             Glide.with(context).load(R.drawable.ic_visa).apply(options).into(holder.cardImage);
 
-//        }else if (Integer.parseInt(first_value)==5){
-//            Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
-//
-//        }else if (Integer.parseInt(first_value)==6 && Integer.parseInt(second_value)==2){
-//            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
+        }else if (Integer.parseInt(first_value)==5){
+            Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
+
+        }else if (Integer.parseInt(first_value)==6 && Integer.parseInt(second_value)==2){
+            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
         }
         else {
             Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
