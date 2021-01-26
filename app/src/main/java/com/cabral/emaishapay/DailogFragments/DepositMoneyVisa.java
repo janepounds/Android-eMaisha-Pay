@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,9 +30,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.utils.CryptoUtil;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
@@ -70,12 +73,14 @@ public class DepositMoneyVisa extends DialogFragment implements
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt;
     Spinner spinner_select_card;
     LinearLayout card_details_layout;
+    CheckBox checkbox_save_card;
     private final FragmentManager fm;
     private String txRef;
     private RaveVerificationUtils verificationUtils;
     private CardPaymentManager cardPayManager;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<String> cardItems = new ArrayList<>();
+    private String expiryDate;
 
     double balance;
     ProgressDialog dialog;
@@ -117,6 +122,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
         spinner_select_card = view.findViewById(R.id.spinner_select_card);
         card_details_layout = view.findViewById(R.id.card_details_layout);
+        checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
         verificationUtils = new RaveVerificationUtils( this, false, BuildConfig.PUBLIC_KEY);
 
 
@@ -147,8 +153,54 @@ public class DepositMoneyVisa extends DialogFragment implements
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!cardNumberTxt.getText().toString().isEmpty() && !cardccvTxt.getText().toString().isEmpty() &&  !cardexpiryTxt.getText().toString().isEmpty() &&  !addMoneyTxt.getText().toString().isEmpty() )
-                    initiateDeposit();
+
+                if(checkbox_save_card.isChecked()){
+                    //save card
+                    if (validateEntries()) {
+
+                        String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                        String cvv = cardccvTxt.getText().toString().trim();
+                        String expiry = cardexpiryTxt.getText().toString();
+                        String account_name = cardHolderNameTxt.getText().toString();
+                        String card_number = cardNumberTxt.getText().toString();
+
+                        /**********ENCRPT CARD DETAILS****************/
+                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getString(R.string.iv));
+                        String hash_card_number = encrypter.encrypt(card_number);
+                        String hash_cvv = encrypter.encrypt(cvv);
+                        String hash_expiry = encrypter.encrypt(expiry);
+                        String hash_account_name = encrypter.encrypt(account_name);
+
+                            /*************RETROFIT IMPLEMENTATION**************/
+                            Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                            call.enqueue(new Callback<CardResponse>() {
+                                @Override
+                                public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        String message = response.body().getMessage();
+                                        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<CardResponse> call, Throwable t) {
+                                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+
+                                }
+                            });
+
+
+                    }
+
+                    if(!addMoneyTxt.getText().toString().isEmpty() )
+                        initiateDeposit();
+                }else{
+                    if(!addMoneyTxt.getText().toString().isEmpty() )
+                        initiateDepositWithExistingCard();
+                }
+
             }
         });
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -158,7 +210,10 @@ public class DepositMoneyVisa extends DialogFragment implements
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     //call add card
                     card_details_layout.setVisibility(View.VISIBLE);
-            }
+
+            }else{
+                    card_details_layout.setVisibility(View.VISIBLE);
+                }
 
 
             }
@@ -196,14 +251,15 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                         cardlists = response.body().getCardsList();
                         for(int i =0; i<cardlists.size();i++){
-//                                cardItems.add(0,"Select Card");
+                                cardItems.add(0,"Select Card");
                                 cardItems.add(cardlists.size(),"Add New");
 
                                 //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
 
 
-                            String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                             String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                            expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
                             String decripted_card_number = null;
                             if(card_number.length()>4) {
 
@@ -292,7 +348,48 @@ public class DepositMoneyVisa extends DialogFragment implements
 
     }
 
+    public void initiateDepositWithExistingCard(){
 
+        String amountEntered = addMoneyTxt.getText().toString();
+
+        double amount = Double.parseDouble(amountEntered);
+
+        txRef= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID,this.activity)+(new Date().getTime());
+        Log.e("PUBK : ", BuildConfig.PUBLIC_KEY+" : "+expiryDate.substring(0,2)+" : "+expiryDate.substring(3,5));
+
+
+        String eMaishaPayServiceMail="info@cabraltech.com";
+        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
+                .setCurrency("UGX")
+                .setEmail( eMaishaPayServiceMail )
+                .setfName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME,this.activity) )
+                .setlName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME,this.activity) )
+                .setPhoneNumber("+256"+ WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,this.activity).substring(1))
+                .setNarration("eMaisha Pay Deposit")
+                .setPublicKey(BuildConfig.PUBLIC_KEY)
+                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
+                .setTxRef(txRef)
+                .onStagingEnv(false)
+                .isPreAuth(true)
+                .initialize();
+
+
+
+
+        cardPayManager = new CardPaymentManager(
+                raveNonUIManager, this, this);
+
+        Card card = new Card(
+                cardNumberTxt.getText().toString(),
+                expiryDate.substring(0,2),
+                expiryDate.substring(3,5),
+                cardccvTxt.getText().toString()
+        );
+
+        cardPayManager.chargeCard(card);
+        //cardPayManager.onWebpageAuthenticationComplete();
+
+    }
     public void creditAfterDeposit(String txRef){
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
@@ -512,6 +609,38 @@ public class DepositMoneyVisa extends DialogFragment implements
     public void showAuthenticationWebPage(String authenticationUrl) {
         Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
+    }
+
+    public boolean validateEntries(){
+
+        if (cardHolderNameTxt.getText().toString().trim() == null || cardHolderNameTxt.getText().toString().trim().isEmpty()) {
+            cardHolderNameTxt.setError("Please enter valid value");
+            return false;
+
+        } else if (cardNumberTxt.getText().toString().trim() == null || cardNumberTxt.getText().toString().trim().isEmpty()
+                || cardNumberTxt.getText().toString().trim().length()<13 ){
+            cardNumberTxt.setError("Please enter valid value");
+            return false;
+        }
+
+        else if (cardexpiryTxt.getText().toString().trim() == null || cardexpiryTxt.getText().toString().trim().isEmpty()){
+            cardexpiryTxt.setError("Please select valid value");
+            return false;
+        }
+
+        else if (cardccvTxt.getText().toString().trim() == null || cardccvTxt.getText().toString().trim().isEmpty()
+                || cardccvTxt.getText().toString().trim().length()<3 ){
+            cardccvTxt.setError("Please enter valid value");
+            return false;
+        }else {
+
+            return true;
+        }
+
+
+
+
+
     }
 
 }
