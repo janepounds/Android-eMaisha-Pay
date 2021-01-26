@@ -7,16 +7,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +32,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.models.CardResponse;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -46,6 +53,7 @@ import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,10 +67,14 @@ public class DepositMoneyVisa extends DialogFragment implements
     Button addMoneyImg;
     TextView addMoneyTxt ,errorMsgTxt;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt;
+    Spinner spinner_select_card;
+    LinearLayout card_details_layout;
     private final FragmentManager fm;
     private String txRef;
     private RaveVerificationUtils verificationUtils;
     private CardPaymentManager cardPayManager;
+    private List<CardResponse.Cards> cardlists = new ArrayList();
+    ArrayList<String> cardItems = new ArrayList<>();
 
     double balance;
     ProgressDialog dialog;
@@ -84,7 +96,7 @@ public class DepositMoneyVisa extends DialogFragment implements
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view =inflater.inflate(R.layout.wallet_add_money_visa, null);
+        View view =inflater.inflate(R.layout.wallet_add_money_visa_card, null);
         builder.setView(view);
         initializeForm( view);
         ImageView close = view.findViewById(R.id.wallet_deposit_close);
@@ -102,6 +114,8 @@ public class DepositMoneyVisa extends DialogFragment implements
         cardexpiryTxt=view.findViewById(R.id.add_money_card_expiry);
         cardccvTxt=view.findViewById(R.id.add_money_card_cvv);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
+        spinner_select_card = view.findViewById(R.id.spinner_select_card);
+        card_details_layout = view.findViewById(R.id.card_details_layout);
         verificationUtils = new RaveVerificationUtils( this, false, BuildConfig.PUBLIC_KEY);
 
 
@@ -136,12 +150,98 @@ public class DepositMoneyVisa extends DialogFragment implements
                     initiateDeposit();
             }
         });
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    if (position == 0) {
+
+                        //call add card
+                        card_details_layout.setVisibility(View.VISIBLE);
+
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    } else {
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary)); //Change selected text color
+                    }
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
+
+        getCards();
+        //get available cards
+
+
 
 
         dialog = new ProgressDialog(this.activity);
         dialog.setIndeterminate(true);
         dialog.setMessage("Processing the transaction..");
 
+
+    }
+
+    public void getCards(){
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token);
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        cardlists = response.body().getCardsList();
+                        for(int i =0; i<cardlists.size();i++){
+                            if(i==0){
+                                cardItems.add(0,"Add New");
+
+                            }
+                            String card_number = cardlists.get(i).getCard_number();
+
+                            cardItems.add(card_number);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        ArrayAdapter<String> cardListAdapter = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+//                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
+                        spinner_select_card.setAdapter(cardListAdapter);
+
+
+                    }
+
+                }else if (response.code() == 401) {
+
+                    TokenAuthActivity.startAuth(getContext(), true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialog.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
 
     }
 
