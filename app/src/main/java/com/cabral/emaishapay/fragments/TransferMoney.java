@@ -69,9 +69,11 @@ public class TransferMoney extends Fragment {
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
+    String action;
 
-    public TransferMoney(double balance) {
+    public TransferMoney(double balance, String action) {
         this.balance=balance;
+        this.action=action;
     }
 
     @Override
@@ -90,7 +92,12 @@ public class TransferMoney extends Fragment {
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
         toolbar.setTitle("Transfer Money");
+        if(this.action.equalsIgnoreCase(getString(R.string.settlements))){
+            toolbar.setTitle("Settle Money");
+        }
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -192,6 +199,15 @@ public class TransferMoney extends Fragment {
 
             }
         });
+
+        if(this.action.equalsIgnoreCase(getString(R.string.settlements))){
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.settle_to));
+            spTransferTo.setAdapter(adapter);
+
+        }else{
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.transfer_to));
+            spTransferTo.setAdapter(adapter);
+        }
         spSelectBank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -316,6 +332,8 @@ public class TransferMoney extends Fragment {
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, Banknames);
                         spSelectBank.setAdapter(adapter);
+
+
                     } catch (Exception e) {
                         Log.e("response", response.toString());
                         e.printStackTrace();
