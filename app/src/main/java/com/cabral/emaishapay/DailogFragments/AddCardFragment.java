@@ -104,7 +104,7 @@ public class AddCardFragment extends DialogFragment {
             etCvv.setText(cvv);
             etExpiryDate.setText(expiry_date);
             txtTitle.setText("EDIT CARD");
-            btnSaveCard.setText("UPDATE CARD");
+            btnSaveCard.setText("UPDATE");
             delete_card.setVisibility(View.VISIBLE);
 
             delete_card.setOnClickListener(v -> {
@@ -196,14 +196,15 @@ public class AddCardFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                ProgressDialog dialog;
-                dialog = new ProgressDialog(context);
-                dialog.setIndeterminate(true);
-                dialog.setMessage("Please Wait..");
-                dialog.setCancelable(false);
-                dialog.show();
+
 
                     if (validateEntries()) {
+                        ProgressDialog dialog;
+                        dialog = new ProgressDialog(context);
+                        dialog.setIndeterminate(true);
+                        dialog.setMessage("Please Wait..");
+                        dialog.setCancelable(false);
+                        dialog.show();
 
                         String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                         String card_number = etCardNumber.getText().toString().trim();
@@ -315,31 +316,32 @@ public class AddCardFragment extends DialogFragment {
 
     public boolean validateEntries(){
 
+        boolean check = true;
         if (etName.getText().toString().trim() == null || etName.getText().toString().trim().isEmpty()) {
+            check = false;
             etName.setError("Please enter valid value");
-            return false;
+
 
         } else if (etCardNumber.getText().toString().trim() == null || etCardNumber.getText().toString().trim().isEmpty()
                 || etCardNumber.getText().toString().trim().length()<13 ){
+            check = false;
             etCardNumber.setError("Please enter valid value");
-            return false;
+
         }
 
         else if (etExpiryDate.getText().toString().trim() == null || etExpiryDate.getText().toString().trim().isEmpty()){
+            check = false;
             etExpiryDate.setError("Please select valid value");
-            return false;
+
         }
 
         else if (etCvv.getText().toString().trim() == null || etCvv.getText().toString().trim().isEmpty()
-                || etCvv.getText().toString().trim().length()<3 ){
+                || etCvv.getText().toString().trim().length()<3 ) {
+            check = false;
             etCardNumber.setError("Please enter valid value");
-            return false;
-        }else {
 
-            return true;
         }
-
-
+        return check;
 
 
 

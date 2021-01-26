@@ -135,7 +135,7 @@
                     android:id="@+id/add_money_holder_name"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:paddingStart="@dimen/dimen_10dp"
+                    android:padding="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
                     android:textColor="@color/textColor"
                     android:layout_marginTop="5dp"
@@ -162,11 +162,12 @@
                     android:id="@+id/add_money_creditCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:paddingStart="@dimen/dimen_10dp"
+                    android:padding="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
                     android:inputType="number"
                     android:textColor="@color/textColor"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:maxLength="19"/>
             </LinearLayout>
 
             <LinearLayout
@@ -194,12 +195,12 @@
                         android:id="@+id/add_money_card_expiry"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
+                        android:padding="@dimen/dimen_10dp"
                         android:background="@drawable/edittext_corner"
                         android:inputType="date"
                         android:maxLength="5"
                         android:textColor="@color/textColor"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -220,11 +221,13 @@
                         android:id="@+id/add_money_card_cvv"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
+                        android:padding="10dp"
                         android:background="@drawable/edittext_corner"
                         android:inputType="number"
                         android:textColor="@color/textColor"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"
+                        android:maxLength="3"
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -301,7 +304,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:paddingStart="@dimen/dimen_10dp"
+                        android:padding="@dimen/dimen_10dp"
                         android:gravity="start|center_vertical"
                         android:inputType="number"
                         android:background="@android:color/transparent"
