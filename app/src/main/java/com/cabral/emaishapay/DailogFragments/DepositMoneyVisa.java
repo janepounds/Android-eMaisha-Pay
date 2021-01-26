@@ -36,6 +36,8 @@ import androidx.fragment.app.FragmentManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.CardSpinnerItem;
+import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.utils.CryptoUtil;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
@@ -66,7 +68,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DepositMoneyVisa extends DialogFragment implements
+
         SavedCardsListener, CardPaymentCallback {
+    private static final String TAG = "DepositMoneyVisa";
 
     Button addMoneyImg;
     TextView addMoneyTxt ,errorMsgTxt;
@@ -79,8 +83,9 @@ public class DepositMoneyVisa extends DialogFragment implements
     private RaveVerificationUtils verificationUtils;
     private CardPaymentManager cardPayManager;
     private List<CardResponse.Cards> cardlists = new ArrayList();
-    ArrayList<String> cardItems = new ArrayList<>();
-    private String expiryDate;
+    ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+    String decripted_card_number = null;
+    private String expiryDate,cvv,card_no;
 
     double balance;
     ProgressDialog dialog;
@@ -211,8 +216,18 @@ public class DepositMoneyVisa extends DialogFragment implements
                     //call add card
                     card_details_layout.setVisibility(View.VISIBLE);
 
-            }else{
-                    card_details_layout.setVisibility(View.VISIBLE);
+            }
+                else {
+                    for(int i = 0; i<cardItems.size();i++){
+                        if(cardItems.get(i).toString().equalsIgnoreCase(spinner_select_card.getSelectedItem().toString())){
+                           expiryDate =  cardItems.get(i).getExpiryDate();
+                            card_no = cardItems.get(i).getCardNumber();
+                            cvv = cardItems.get(i).getCvv();
+
+                        }
+                    }
+                    Log.d(TAG, "onItemSelected: expiry"+expiryDate+"card_no"+card_no+"cvv"+cvv);
+                    card_details_layout.setVisibility(View.GONE);
                 }
 
 
@@ -251,16 +266,60 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                         cardlists = response.body().getCardsList();
                         for(int i =0; i<cardlists.size();i++){
-                                cardItems.add(0,"Select Card");
-                                cardItems.add(cardlists.size(),"Add New");
+
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getCardNumber() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String getCvv() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String toString() {
+                                        return "Select Card";
+                                    }
+                                });
+
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getCardNumber() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String getCvv() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public String toString() {
+                                        return "Add New";
+                                    }
+                                });
+
 
                                 //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
 
 
                              String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                            expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String decripted_card_number = null;
+                            String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
+                            String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
+
                             if(card_number.length()>4) {
 
                                String first_four_digits = (card_number.substring(0,  4));
@@ -269,14 +328,35 @@ public class DepositMoneyVisa extends DialogFragment implements
                              
                             }
 
-                            cardItems.add(decripted_card_number);
+                            cardItems.add(new CardSpinnerItem() {
+                                @Override
+                                public String getCardNumber() {
+                                    return card_number;
+                                }
+
+                                @Override
+                                public String getExpiryDate() {
+                                    return decripted_expiryDate;
+                                }
+
+                                @Override
+                                public String getCvv() {
+                                    return cvv;
+                                }
+
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return decripted_card_number;
+                                }
+                            });
                         }
 
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        ArrayAdapter<String> cardListAdapter = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
                         spinner_select_card.setAdapter(cardListAdapter);
 
@@ -380,10 +460,10 @@ public class DepositMoneyVisa extends DialogFragment implements
                 raveNonUIManager, this, this);
 
         Card card = new Card(
-                cardNumberTxt.getText().toString(),
+                card_no,
                 expiryDate.substring(0,2),
                 expiryDate.substring(3,5),
-                cardccvTxt.getText().toString()
+                cvv
         );
 
         cardPayManager.chargeCard(card);
