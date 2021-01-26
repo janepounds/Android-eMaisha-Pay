@@ -425,7 +425,7 @@ public class SignUp extends AppCompatActivity {
     public void showOTPDialog(Activity activity, String msg) {
 
         //call success dialog
-        dialog  = new Dialog(context);
+        dialog  = new Dialog(activity);
         dialog.setContentView(R.layout.login_dialog_otp);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);

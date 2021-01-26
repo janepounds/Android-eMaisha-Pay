@@ -40,22 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         android:visibility="visible"/>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_merchant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        app:labelVisibilityMode="labeled"
-        app:itemRippleColor="@color/gray_gray"
-        app:itemIconTint="@android:color/transparent"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_merchant_menu"
-        android:visibility="gone"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_shop"
         android:layout_width="match_parent"
@@ -70,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_agent_menu"
+        app:menu="@menu/bottom_nav_agent_merchant_menu"
         android:visibility="gone"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_buy_and_sell"
@@ -87,21 +72,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_buy_and_sell_menu"
-        android:visibility="gone"/>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_agent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        app:labelVisibilityMode="labeled"
-        app:itemRippleColor="@color/gray_gray"
-        app:itemIconTint="@android:color/transparent"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_agent_menu"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
