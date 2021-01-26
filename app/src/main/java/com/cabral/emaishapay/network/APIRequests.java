@@ -91,8 +91,9 @@ public interface APIRequests {
                                         @Field("email") String email,
                                         @Field("password") String password,
                                         @Field("phoneNumber") String phoneNumber,
-                                        @Field("addressStreet") String addressStreet,
-                                        @Field("addressCityOrTown") String addressCityOrTown
+                                        @Field("district") String district,
+                                        @Field("subCounty") String subCounty,
+                                        @Field("village") String village
     );
 
     //refresh token

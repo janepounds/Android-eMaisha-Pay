@@ -177,7 +177,7 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //To WalletTrasactionListFragment
-                Fragment fragment= new WalletTransactionsListFragment();
+                Fragment fragment= new WalletTransactionsListFragment(getString(R.string.transactions));
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 if (((WalletHomeActivity) getActivity()).currentFragment != null)
                     fragmentManager.beginTransaction()
