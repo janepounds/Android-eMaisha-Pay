@@ -154,22 +154,13 @@ public class DepositMoneyVisa extends DialogFragment implements
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    if (position == 1) {
 
-                        //call add card
-                        card_details_layout.setVisibility(View.VISIBLE);
+                if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+                    //call add card
+                    card_details_layout.setVisibility(View.VISIBLE);
+            }
 
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                    } else {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary)); //Change selected text color
-                    }
-                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
-                } catch (Exception e) {
-
-                }
             }
 
             @Override
@@ -205,8 +196,8 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                         cardlists = response.body().getCardsList();
                         for(int i =0; i<cardlists.size();i++){
-                                cardItems.add(0,"Select Card");
-                                cardItems.add(1,"Add New");
+//                                cardItems.add(0,"Select Card");
+                                cardItems.add(cardlists.size(),"Add New");
 
                                 //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
