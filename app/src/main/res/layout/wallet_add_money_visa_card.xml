@@ -195,7 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -279,7 +279,16 @@
                         android:layout_marginTop="5dp" />
                 </LinearLayout>
 
+
             </LinearLayout>
+            <CheckBox
+                android:id="@+id/checkbox_save_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save Card"
+                android:textSize="14sp"
+                android:layout_gravity="end"/>
 </LinearLayout>
             <LinearLayout
                 android:id="@+id/layout_purpose"
