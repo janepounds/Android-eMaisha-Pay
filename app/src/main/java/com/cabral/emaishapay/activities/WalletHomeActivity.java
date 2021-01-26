@@ -51,7 +51,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 public class WalletHomeActivity extends AppCompatActivity{
     private static final String TAG = "WalletHomeActivity";
-    private Context context;
+    private  static Context context;
     public static FragmentManager fm;
     public static Fragment currentFragment;
     public static ActionBar actionBar;
@@ -478,7 +478,6 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
 
-
     }
 
     public static void setupAgentNav() {
@@ -527,6 +526,13 @@ public class WalletHomeActivity extends AppCompatActivity{
                                         .commit();
 
                         currentFragment = defaultHomeFragment;
+                        return true;
+
+                    case R.id.walletShopFragment:
+
+                        Intent shop = new Intent(context, ShopActivity.class);
+                        context.startActivity(shop);
+
                         return true;
 
                     default:
@@ -587,6 +593,14 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         currentFragment = defaultHomeFragment;
                         return true;
+
+                    case R.id.walletShopFragment:
+
+                        Intent shop = new Intent(context, ShopActivity.class);
+                        context.startActivity(shop);
+
+                        return true;
+
 
                     default:
                         return false;
