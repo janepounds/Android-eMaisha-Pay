@@ -86,7 +86,7 @@ public class TransferMoney extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transfer_money, container, false);
-
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);

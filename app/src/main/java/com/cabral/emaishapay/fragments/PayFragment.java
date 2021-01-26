@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.DailogFragments.PurchasePreview;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.utils.ValidateInputs;
 
@@ -47,6 +48,7 @@ public class PayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View view = inflater.inflate(R.layout.fragment_wallet_pay, container, false);
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         this.context=getActivity();
         Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
 

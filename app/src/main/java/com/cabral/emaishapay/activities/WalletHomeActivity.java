@@ -533,6 +533,13 @@ public class WalletHomeActivity extends AppCompatActivity{
                         currentFragment = defaultHomeFragment;
                         return true;
 
+                    case R.id.walletShopFragment:
+
+                        Intent shop = new Intent(context, ShopActivity.class);
+                        context.startActivity(shop);
+
+                        return true;
+
                     default:
                         return false;
 
@@ -591,6 +598,14 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         currentFragment = defaultHomeFragment;
                         return true;
+
+                    case R.id.walletShopFragment:
+
+                        Intent shop = new Intent(context, ShopActivity.class);
+                        context.startActivity(shop);
+
+                        return true;
+
 
                     default:
                         return false;

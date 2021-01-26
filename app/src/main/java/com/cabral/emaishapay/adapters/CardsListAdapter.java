@@ -100,26 +100,33 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         cvv = encrypter.decrypt(data.getCvv());
         expiry_date = encrypter.decrypt(data.getExpiry());
         holder.accountNme.setText(account_name);
-        holder.expiry.setText("Expiry Date: "+expiry_date);
+        holder.expiry.setText("Exp. Date: "+expiry_date);
         card_number = encrypter.decrypt(data.getCard_number());
         id= data.getId();
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.ic_visa)
-                .error(R.drawable.ic_visa)
+                .error(R.drawable.ic_mastercard)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
 
-        //check if card number is 5 or 4
+        //check if card number is 5 or 4 or 62
         String first_value = String.valueOf(card_number.charAt(0));
-        if(Integer.parseInt(first_value)==5){
+        String second_value = String.valueOf(card_number.charAt(1));
+        if(Integer.parseInt(first_value)==4){
 
-            Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
-
-        }else{
             Glide.with(context).load(R.drawable.ic_visa).apply(options).into(holder.cardImage);
 
+        }else if (Integer.parseInt(first_value)==5){
+            Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
+
+        }else if (Integer.parseInt(first_value)==6 && Integer.parseInt(second_value)==2){
+            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
         }
+        else {
+            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
+        }
+
 
         //set card number
         if(card_number.length()>4) {

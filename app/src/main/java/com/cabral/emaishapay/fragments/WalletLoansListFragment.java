@@ -70,7 +70,7 @@ public class WalletLoansListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wallet_loans_list, container, false);
-
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         toolbar = view.findViewById(R.id.toolbar_wallet_loans_list);
         walletApplyLoanLayout = view.findViewById(R.id.wallet_apply_loan_layout);
         walletPayLoanLayout = view.findViewById(R.id.wallet_pay_loan_layout);

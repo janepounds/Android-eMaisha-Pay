@@ -71,6 +71,9 @@
         <activity
             android:name=".activities.SignUp"
             android:label="Sign UP" />
+
+        <activity android:name=".activities.ShopActivity"
+            android:label="Shop"/>
         <activity
             android:name=".activities.Login"
             android:label="Sign In" /> <!-- Firebase Notifications -->

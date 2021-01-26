@@ -5,25 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_10"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginBottom="@dimen/dimen_10dp"
+    android:layout_marginBottom="15dp"
     android:clickable="true"
     android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:paddingStart="10dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="23dp" />
-
+            app:layout_constraintGuide_begin="10dp" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -31,24 +27,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.21" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2">
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
+            app:layout_constraintVertical_bias="0.0">
 
             <com.cabral.emaishapay.customs.CircularImageView
                 android:id="@+id/item_card_image"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:src="@drawable/ic_visa" />
 
         </androidx.cardview.widget.CardView>
@@ -58,28 +57,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.44" />
+            app:layout_constraintGuide_percent="0.37" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.41" />
+            app:layout_constraintGuide_percent="0.45" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.63" />
+            app:layout_constraintGuide_percent="0.7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.88" />
+            app:layout_constraintGuide_percent="1.0" />
 
         <TextView
             android:id="@+id/text_card_account_name"
@@ -88,10 +87,12 @@
             android:fontFamily="@font/josefin_sans"
             android:gravity="start|center"
             android:text="Account Name"
-            android:textColor="@color/colorPrimary"
+            android:textAllCaps="true"
+            android:textColor="#31244a"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <TextView
@@ -99,12 +100,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/josefin_sans"
-            android:gravity="start|center"
+            android:gravity="top"
             android:text="0000"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#31244a"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
         <TextView
@@ -112,9 +113,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/josefin_sans"
-            android:gravity="start|center"
-            android:text="***"
-            android:textColor="@color/colorPrimary"
+            android:gravity="top"
+            android:text="* * * *"
+            android:textColor="#31244a"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -125,25 +126,26 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/josefin_sans"
-            android:gravity="start|center"
+            android:gravity="top"
             android:text="0000"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#31244a"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_card_account_number_hidden"
             app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
         <TextView
             android:id="@+id/text_card_expiry"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/josefin_sans"
-            android:gravity="start|center"
-            android:text="01/01"
-            android:textColor="@color/colorPrimary"
+            android:gravity="top"
+            android:text="00/00"
+            android:textColor="#31244a"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/guideline6"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -151,13 +153,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.55" />
+            app:layout_constraintGuide_percent="0.47" />
 
-
-
-
-
-
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.27" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

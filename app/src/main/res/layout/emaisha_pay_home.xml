@@ -350,7 +350,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/layout_pay"
                         app:layout_constraintStart_toEndOf="@id/layout_topUp"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="visible">
 
                         <ImageView
                             android:id="@+id/image_transfer"
@@ -378,6 +379,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/image_transfer" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_settle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_pay"
+                        app:layout_constraintStart_toEndOf="@id/layout_topUp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:id="@+id/image_settle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_settle"
+                            app:layout_constraintBottom_toTopOf="@id/label_settle"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/label_settle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="@string/settle"
+                            android:textAllCaps="true"
+                            android:textColor="#31244A"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/image_settle" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
