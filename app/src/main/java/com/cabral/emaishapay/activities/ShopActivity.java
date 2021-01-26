@@ -40,13 +40,13 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
 
 
-        toolbar = findViewById(R.id.main_Toolbar);
+        toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Products");
 
         // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
@@ -98,9 +98,19 @@ public class ShopActivity extends AppCompatActivity {
     };
 
     private void setupDefaultHomePage() {
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment2, defaultHomeFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment3, defaultHomeFragment).commit();
         currentFragment = defaultHomeFragment;
     }
+
+//    public static void setUpTitle(){
+//        if(currentFragment instanceof ShopProductsFragment){
+//            actionBar.setDisplayShowTitleEnabled(true);
+//
+//            actionBar.setHomeButtonEnabled(true);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setTitle("Products");
+//        }
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -137,59 +147,4 @@ public class ShopActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("RestrictedApi")
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
-        // Get No. of Cart Items with the static method of My_Cart Fragment
-        int cartSize = My_Cart.getCartSize();
-
-
-        // if Cart has some Items
-        if (cartSize > 0) {
-
-            // Animation for cart_menuItem
-            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_icon);
-            animation.setRepeatMode(Animation.REVERSE);
-            animation.setRepeatCount(1);
-
-            cartItem.getActionView().startAnimation(animation);
-            cartItem.getActionView().setAnimation(null);
-
-
-            LayerDrawable icon = null;
-            Drawable drawable = cartItem.getIcon();
-
-            if (drawable instanceof DrawableWrapper) {
-                drawable = ((DrawableWrapper) drawable).getWrappedDrawable();
-            } else if (drawable instanceof WrappedDrawable) {
-                drawable = ((WrappedDrawable) drawable).getWrappedDrawable();
-            }
-
-
-            if (drawable instanceof LayerDrawable) {
-                icon = (LayerDrawable) drawable;
-            } else if (drawable instanceof DrawableWrapper) {
-                DrawableWrapper wrapper = (DrawableWrapper) drawable;
-                if (wrapper.getWrappedDrawable() instanceof LayerDrawable) {
-                    icon = (LayerDrawable) wrapper.getWrappedDrawable();
-                }
-            }
-
-//                icon = (LayerDrawable) drawable;
-
-
-            // Set BadgeCount on Cart_Icon with the static method of NotificationBadger class
-            if (icon != null)
-                NotificationBadger.setBadgeCount(this, icon, String.valueOf(cartSize));
-
-
-        } else {
-            // Set the Icon for Empty Cart
-            cartItem.setIcon(R.drawable.ic_cart_empty);
-        }
-
-
-        return super.onPrepareOptionsMenu(menu);
-    }
 }
