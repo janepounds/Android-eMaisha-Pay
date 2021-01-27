@@ -24,7 +24,7 @@
     <item
         android:id="@+id/walletSalesFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_pos"
+        android:icon="@drawable/ic_sales"
         android:title="SALES"
         app:showAsAction="ifRoom"/>
 </menu>

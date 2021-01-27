@@ -751,4 +751,18 @@
         <item>Driving Permit</item>
     </string-array>
 
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_wallet_buy_sell">eMaisha Shop</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="internet_connection_error">check your internet connection and try again</string>
+    <string name="iv">98765432</string>
+    <string name="AddPersonalInformation">Personal Information</string>
+    <string name="select_product_weight">Select product weight first!</string>
+    <string name="settlements">Settlements</string>
+    <string name="settle">Settle</string>
+
 </resources>

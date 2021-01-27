@@ -45,10 +45,10 @@
 
             <com.cabral.emaishapay.customs.CircularImageView
                 android:id="@+id/item_card_image"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="71.9dp"
+                android:layout_height="71.9dp"
                 android:gravity="center"
-                android:src="@drawable/ic_visa" />
+                android:src="@drawable/ic_default_card" />
 
         </androidx.cardview.widget.CardView>
 

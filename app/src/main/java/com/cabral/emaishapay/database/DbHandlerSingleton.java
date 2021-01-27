@@ -894,24 +894,65 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         ArrayList<HashMap<String, String>> orderDetailsList = new ArrayList<>();
         this.database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM order_details WHERE invoice_id='" + order_id + "' ORDER BY order_details_id DESC", null);
+    //Add product into cart
+    public int addToCart(String product_id, String weight, String weight_unit, String price, int qty) {
+
+
+        Cursor result = database.rawQuery("SELECT * FROM product_cart WHERE product_id='" + product_id + "'", null);
+        if (result.getCount() >= 1) {
+
+            return 2;
+
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("product_id", product_id);
+            values.put("product_weight", weight);
+            values.put("product_weight_unit", weight_unit);
+            values.put("product_price", price);
+            values.put("product_qty", qty);
+
+            long check = database.insert("product_cart", null, values);
+
+
+            database.close();
+
+
+            //if data insert success, its return 1, if failed return -1
+            if (check == -1) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+
+    }
+
+
+    //get cart product
+    public ArrayList<HashMap<String, String>> getCartProduct() {
+        ArrayList<HashMap<String, String>> product = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM product_cart", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
 
-                map.put("product_name", cursor.getString(2));
-                map.put("product_weight", cursor.getString(3));
-                map.put("product_qty", cursor.getString(4));
-                map.put("product_price", cursor.getString(5));
-                map.put("product_image", cursor.getString(6));
+                map.put("cart_id", cursor.getString(0));
+                map.put("product_id", cursor.getString(1));
+                map.put("product_weight", cursor.getString(2));
+                map.put("product_weight_unit", cursor.getString(3));
+                map.put("product_price", cursor.getString(4));
+                map.put("product_qty", cursor.getString(5));
 
-                orderDetailsList.add(map);
+
+                product.add(map);
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         database.close();
-        return orderDetailsList;
+        return product;
     }
 }
 
