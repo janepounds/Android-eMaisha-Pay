@@ -57,6 +57,9 @@ public class ShopPOSFragment extends Fragment {
         this.shop = shopActivity;
     }
 
+    public ShopPOSFragment(boolean b) {
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -68,11 +71,11 @@ public class ShopPOSFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shop_pos, container, false);
-        toolbar = view.findViewById(R.id.toolbar_shop_products);
+        toolbar = view.findViewById(R.id.toolbar_shop_pos);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Products");
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.all_product);
 
         etxtSearch = view.findViewById(R.id.etxt_search);
         recyclerView = view.findViewById(R.id.recycler);

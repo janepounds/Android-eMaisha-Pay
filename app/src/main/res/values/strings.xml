@@ -13,6 +13,11 @@
     <string name="filter_by">Filter By :</string>
 
     <string name="search_here">Search Here</string>
+    <string name="order_deleted">Order Deleted</string>
+    <string name="want_to_delete_order">Want to Delete Order ?</string>
+    <string name="order_history">Order History</string>
+    <string name="no_order_found">No Order Found</string>
+    <string name="order_type">Order Type</string>
 
 
     <string name="lorem_ipsum">
@@ -270,6 +275,11 @@
     <string name="attributes"> Attributes </string>
     <string name="attribute_name"> Attribute Name </string>
     <string name="product_description"> Product Description </string>
+    <string name="product_cart">Product Cart</string>
+    <string name="product_removed_from_cart">Product removed from cart</string>
+    <string name="no_product_in_cart">No Product in Cart</string>
+    <string name="select_order_type">SELECT ORDER TYPE</string>
+    <string name="select_customer">SELECT CUSTOMER</string>
 
     <string name="order"> Order </string>
     <string name="order_id"> Order ID </string>
@@ -592,12 +602,25 @@
     <string name="product_deleted">Product Deleted</string>
 
 
+    <string name="title_activity_card_detail">CardDetail</string>
+
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="all_product">All Products</string>
+    <!-- Strings used for fragments for navigation -->
+
+
+    <string name="title_notifications">Notifications</string>
+    <string name="internet_connection_error">check your internet connection and try again</string>
+    <string name="iv">98765432</string>
+
+
+    <string name="settle">Settle</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
     <string-array name="spinner_district">
         <item>District</item>
         <item>Kampala</item>
@@ -623,6 +646,7 @@
         <item>Guardian</item>
         <item>Wife</item>
     </string-array>
+    <!-- Strings used for fragments for navigation -->
     <string-array name="loan_farming_details_crops_list">
         <item>Select</item>
         <item>Beans</item>
@@ -639,12 +663,12 @@
         <item>Pepper</item>
         <item>Sorghum</item>
     </string-array>
-    <!-- Strings used for fragments for navigation -->
     <string-array name="loan_farm_insurance">
         <item>Select</item>
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
     <string-array name="loan_durations">
         <item>Daily</item>
         <item>Weekly</item>
@@ -652,7 +676,6 @@
         <item>After 3 months</item>
         <item>After 6 months</item>
     </string-array>
-
     <string-array name="transfer_to">
         <item>Select</item>
         <item>eMaisha Account</item>
@@ -681,13 +704,13 @@
         <item>Litres</item>
         <item>Tones</item>
     </string-array>
+
     <string-array name="market_price_crops_list">
         <item>Select Crop</item>
         <item>Ginger</item>
         <item>Millet</item>
         <item>Milk</item>
     </string-array>
-
     <string-array name="crop_havest_units">
         <item>Select</item>
         <item>Boxes</item>
@@ -720,6 +743,7 @@
         <item>650 ml - Bottle</item>
         <item>600 ml - Bottle</item>
     </string-array>
+
     <string-array name="spinner_id_type">
         <item>Select</item>
         <item>National Id</item>
@@ -732,13 +756,8 @@
     <string name="title_activity_wallet_buy_sell">eMaisha Shop</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-
-    <string name="internet_connection_error">check your internet connection and try again</string>
-    <string name="iv">98765432</string>
     <string name="AddPersonalInformation">Personal Information</string>
     <string name="select_product_weight">Select product weight first!</string>
     <string name="settlements">Settlements</string>
-    <string name="settle">Settle</string>
 
 </resources>

@@ -70,6 +70,10 @@
     <color name="layoutBackgroundDark">#cccccc</color>
     <color name="layoutBackgroundLight">#e0e0e0</color>
 
+    <color name="grey_5">#F8F8F8</color>
+    <color name="grey_60">#666666</color>
+    <color name="grey_10">#e6e6e6</color>
+
 
 
     <color name="linkColor">#0000ee</color>

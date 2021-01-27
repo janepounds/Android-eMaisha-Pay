@@ -16,9 +16,12 @@ import com.cabral.emaishapay.models.marketplace.MyProduce;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DbHandlerSingleton extends SQLiteOpenHelper {
     private static final String TAG = "emaishapayHandler";
@@ -49,56 +52,107 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String MARKET_PRICE_RETAIL = "retail";
     public static final String MARKET_PRICE_WHOLESALE = "wholesale";
 
-    public static final String PRODUCTS_TABLE_NAME ="products";
-    public static final String PRODUCT_ID ="product_id";
-    public static final String PRODUCT_NAME ="product_name";
-    public static final String PRODUCT_CODE ="product_code";
-    public static final String PRODUCT_CATEGORY ="product_category";
-    public static final String PRODUCT_DESCRIPTION ="product_description";
-    public static final String PRODUCT_BUY_PRICE ="product_buy_price";
-    public static final String PRODUCT_SELL_PRICE ="product_sell_price";
-    public static final String PRODUCT_SUPPLIER ="product_supplier";
-    public static final String PRODUCT_IMAGE ="product_image";
-    public static final String PRODUCT_STOCK ="product_stock";
-    public static final String PRODUCT_WEIGHT_UNIT ="product_weight_unit";
-    public static final String PRODUCT_WEIGHT ="product_weight";
+    public static final String PRODUCTS_TABLE_NAME = "products";
+    public static final String PRODUCT_ID = "product_id";
+    public static final String PRODUCT_NAME = "product_name";
+    public static final String PRODUCT_CODE = "product_code";
+    public static final String PRODUCT_CATEGORY = "product_category";
+    public static final String PRODUCT_DESCRIPTION = "product_description";
+    public static final String PRODUCT_BUY_PRICE = "product_buy_price";
+    public static final String PRODUCT_SELL_PRICE = "product_sell_price";
+    public static final String PRODUCT_SUPPLIER = "product_supplier";
+    public static final String PRODUCT_IMAGE = "product_image";
+    public static final String PRODUCT_STOCK = "product_stock";
+    public static final String PRODUCT_WEIGHT_UNIT = "product_weight_unit";
+    public static final String PRODUCT_WEIGHT = "product_weight";
 
 
-    public static final String PRODUCT_CATEGORY_TABLE_NAME ="product_category";
-    public static final String CATEGORY_ID ="category_id";
-    public static final String CATEGORY_NAME ="category_name";
+    public static final String PRODUCT_CATEGORY_TABLE_NAME = "product_category";
+    public static final String CATEGORY_ID = "category_id";
+    public static final String CATEGORY_NAME = "category_name";
 
 
-    public static final String SUPPLIERS_TABLE_NAME ="suppliers";
-    public static final String SUPPLIERS_ID ="suppliers_id";
-    public static final String SUPPLIERS_NAME ="suppliers_name";
-    public static final String SUPPLIERS_CONTACT_PERSON ="suppliers_contact_person";
-    public static final String SUPPLIERS_CELL ="suppliers_cell";
-    public static final String SUPPLIERS_EMAIL ="suppliers_email";
-    public static final String SUPPLIERS_ADDRESS ="suppliers_address";
-    public static final String SUPPLIERS_ADDRESS_TWO ="suppliers_address_two";
-    public static final String SUPPLIERS_IMAGE ="suppliers_image";
+    public static final String SUPPLIERS_TABLE_NAME = "suppliers";
+    public static final String SUPPLIERS_ID = "suppliers_id";
+    public static final String SUPPLIERS_NAME = "suppliers_name";
+    public static final String SUPPLIERS_CONTACT_PERSON = "suppliers_contact_person";
+    public static final String SUPPLIERS_CELL = "suppliers_cell";
+    public static final String SUPPLIERS_EMAIL = "suppliers_email";
+    public static final String SUPPLIERS_ADDRESS = "suppliers_address";
+    public static final String SUPPLIERS_ADDRESS_TWO = "suppliers_address_two";
+    public static final String SUPPLIERS_IMAGE = "suppliers_image";
 
 
-    public static final String PRODUCT_WEIGHT_TABLE_NAME ="product_weight";
-    public static final String WEIGHT_ID ="weight_id";
-    public static final String WEIGHT_UNIT ="weight_unit";
+    public static final String PRODUCT_WEIGHT_TABLE_NAME = "product_weight";
+    public static final String WEIGHT_ID = "weight_id";
+    public static final String WEIGHT_UNIT = "weight_unit";
 
 
-    public static final String SHOP_TABLE_NAME ="shop";
-    public static final String SHOP_ID ="shop_id";
-    public static final String SHOP_NAME ="shop_name";
-    public static final String SHOP_CONTACT ="shop_contact";
-    public static final String SHOP_EMAIL ="shop_email";
-    public static final String SHOP_ADDRESS ="shop_address";
-    public static final String SHOP_CURRENCY ="shop_currency";
-    public static final String LATITUDE ="latitude";
-    public static final String LONGITUDE ="longitude";
+    public static final String SHOP_TABLE_NAME = "shop";
+    public static final String SHOP_ID = "shop_id";
+    public static final String SHOP_NAME = "shop_name";
+    public static final String SHOP_CONTACT = "shop_contact";
+    public static final String SHOP_EMAIL = "shop_email";
+    public static final String SHOP_ADDRESS = "shop_address";
+    public static final String SHOP_CURRENCY = "shop_currency";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
 
+    public static final String ORDER_LIST_TABLE_NAME = "order_list";
+    public static final String ORDER_ID = "order_id";
+    public static final String INVOICE_ID = "invoice_id";
+    public static final String ORDER_DATE = "order_date";
+    public static final String ORDER_TIME = "order_time";
+    public static final String ORDER_TYPE = "order_type";
+    public static final String ORDER_PAYMENT_METHOD = "order_payment_method";
+    public static final String CUSTOMER_NAME = "customer_name";
+    public static final String STORAGE_STATUS = "storage_status";
+    public static final String DISCOUNT = "discount";
+    public static final String ORDER_STATUS = "order_status";
+    public static final String CUSTOMER_ADDRESS = "customer_address";
+    public static final String CUSTOMER_CELL = "customer_cell";
+    public static final String DELIVERY_FEE = "delivery_fee";
+    public static final String CUSTOMER_EMAIL = "customer_email";
 
 
+    public static final String ORDER_DETAILS_TABLE_NAME = "order_details";
+    public static final String ORDER_DETAILS_ID = "order_details_id";
+    public static final String ORDER_INVOICE_ID = "invoice_id";
+    public static final String ORDER_PRODUCT_NAME = "product_name";
+    public static final String ORDER_PRODUCT_WEIGHT = "product_weight";
+    public static final String ORDER_PRODUCT_QTY = "product_qty";
+    public static final String PRODUCT_PRICE = "product_price";
+    public static final String ORDER_PRODUCT_IMAGE = "product_image";
+    public static final String PRODUCT_ORDER_DATE = "product_order_date";
 
+
+    public static final String ORDER_TYPE_TABLE_NAME = "order_type";
+    public static final String ORDER_TYPE_ID = "order_type_id";
+    public static final String ORDER_TYPE_NAME = "order_type_name";
+
+
+    public static final String PRODUCT_CART_TABLE_NAME = "product_cart";
+    public static final String CART_ID = "cart_id";
+    public static final String CART_PRODUCT_ID = "product_id";
+    public static final String CART_PRODUCT_WEIGHT = "product_weight";
+    public static final String CART_PRODUCT_WEIGHT_UNIT = "product_weight_unit";
+    public static final String CART_PRODUCT_PRICE = "product_price";
+    public static final String PRODUCT_QTY = "product_qty";
+
+    public static final String CUSTOMERS_TABLE_NAME = "customers";
+    public static final String CUSTOMER_ID = "customer_id";
+    public static final String CUSTOMER_CUSTOMER_NAME = "customer_name";
+    public static final String CUSTOMER_CUSTOMER_CELL = "customer_cell";
+    public static final String CUSTOMER_CUSTOMER_EMAIL = "customer_email";
+    public static final String CUSTOMER_CUSTOMER_ADDRESS = "customer_address";
+    public static final String CUSTOMER_ADDRESS_TWO = "customer_address_two";
+    public static final String CUSTOMER_IMAGE = "customer_image";
+
+
+    public static final String PAYMENT_METHOD_TABLE_NAME = "payment_method";
+    public static final String PAYMENT_METHOD_ID = "payment_method_id";
+    public static final String PAYMENT_METHOD_NAME = "payment_method_name";
 
 
 
@@ -134,16 +188,16 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         String market_price_insert_query = " CREATE TABLE IF NOT EXISTS " + MARKET_PRICE_TABLE_NAME + " ( " + MARKET_PRICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 MARKET_PRICE_CROP + " TEXT NOT NULL, " + MARKET_PRICE_TABLE_MARKET + " TEXT NOT NULL, " + MARKET_PRICE_RETAIL + " TEXT NOT NULL, " + MARKET_PRICE_WHOLESALE + " TEXT NOT NULL " + " ) ";
 
-        String products_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "( " +PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+        String products_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "( " + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 PRODUCT_NAME + " TEXT, " + PRODUCT_CODE + " TEXT , " + PRODUCT_CATEGORY + " TEXT , " + PRODUCT_DESCRIPTION + " TEXT ," +
                 PRODUCT_BUY_PRICE + " TEXT, " + PRODUCT_SELL_PRICE + " TEXT , " + PRODUCT_SUPPLIER + " TEXT , " + PRODUCT_IMAGE + " TEXT ," +
                 PRODUCT_STOCK + " TEXT, " + PRODUCT_WEIGHT_UNIT + " TEXT , " + PRODUCT_WEIGHT + " TEXT  " + " ) ";
 
         String product_category_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CATEGORY_TABLE_NAME + "( " + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
-                                CATEGORY_NAME + " TEXT " + " ) ";
+                CATEGORY_NAME + " TEXT " + " ) ";
 
 
-        String suppliers_table_insert_query ="CREATE TABLE IF NOT EXISTS " + SUPPLIERS_TABLE_NAME + "( " +SUPPLIERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+        String suppliers_table_insert_query = "CREATE TABLE IF NOT EXISTS " + SUPPLIERS_TABLE_NAME + "( " + SUPPLIERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 SUPPLIERS_NAME + " TEXT, " + SUPPLIERS_CONTACT_PERSON + " TEXT , " + SUPPLIERS_CELL + " TEXT , " + SUPPLIERS_EMAIL + " TEXT ," +
                 SUPPLIERS_ADDRESS + " TEXT, " + SUPPLIERS_ADDRESS_TWO + " TEXT , " + SUPPLIERS_IMAGE + " TEXT   " + " ) ";
 
@@ -151,9 +205,37 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 WEIGHT_UNIT + " TEXT " + " ) ";
 
 
-        String shop_insert_query = "CREATE TABLE IF NOT EXISTS " + SHOP_TABLE_NAME + "( " +SHOP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+        String shop_insert_query = "CREATE TABLE IF NOT EXISTS " + SHOP_TABLE_NAME + "( " + SHOP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 SHOP_NAME + " TEXT, " + SHOP_CONTACT + " TEXT , " + SHOP_EMAIL + " TEXT , " + SHOP_ADDRESS + " TEXT ," +
                 SHOP_CURRENCY + " TEXT, " + LATITUDE + " TEXT , " + LONGITUDE + " TEXT  " + " ) ";
+
+
+        String order_list_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_LIST_TABLE_NAME + "( " + ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                INVOICE_ID + " TEXT, " + ORDER_DATE + " TEXT , " + ORDER_TIME + " TEXT , " + ORDER_TYPE + " TEXT ," +
+                ORDER_PAYMENT_METHOD + " TEXT, " + CUSTOMER_NAME + " TEXT , " + STORAGE_STATUS + " TEXT , " + DISCOUNT + " TEXT ," +
+                ORDER_STATUS + " TEXT, " + CUSTOMER_ADDRESS + " TEXT , " + CUSTOMER_CELL + " TEXT ," + DELIVERY_FEE + " TEXT , " + CUSTOMER_EMAIL + " TEXT " + " ) ";
+
+
+        String order_details_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_DETAILS_TABLE_NAME + "( " + ORDER_DETAILS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                ORDER_INVOICE_ID + " TEXT, " + ORDER_PRODUCT_NAME + " TEXT , " + ORDER_PRODUCT_WEIGHT + " TEXT , " + ORDER_PRODUCT_QTY + " TEXT ," +
+                PRODUCT_PRICE + " TEXT, " + ORDER_PRODUCT_IMAGE + " TEXT , " + PRODUCT_ORDER_DATE + " TEXT  " + " ) ";
+
+
+        String order_type_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_TYPE_TABLE_NAME + "( " + ORDER_TYPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                ORDER_TYPE_NAME + " TEXT " + " ) ";
+
+
+        String product_cart_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CART_TABLE_NAME + "( " + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                CART_PRODUCT_ID + " TEXT, " + CART_PRODUCT_WEIGHT + " TEXT , " + CART_PRODUCT_WEIGHT_UNIT + " TEXT , " + CART_PRODUCT_PRICE + " TEXT ," +
+                PRODUCT_QTY + " TEXT " + " ) ";
+
+        String customers_table_insert_query = "CREATE TABLE IF NOT EXISTS " + CUSTOMERS_TABLE_NAME + "( " + CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                CUSTOMER_CUSTOMER_NAME + " TEXT, " + CUSTOMER_CUSTOMER_CELL + " TEXT , " + CUSTOMER_CUSTOMER_EMAIL + " TEXT , " + CUSTOMER_CUSTOMER_ADDRESS + " TEXT ," +
+                CUSTOMER_ADDRESS_TWO + " TEXT, " + CUSTOMER_IMAGE + " TEXT " + " ) ";
+
+        String payment_method_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PAYMENT_METHOD_TABLE_NAME + "( " + PAYMENT_METHOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                PAYMENT_METHOD_NAME + " TEXT " + " ) ";
+
 
 
 
@@ -166,6 +248,12 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(suppliers_table_insert_query);
         database.execSQL(product_weight_table_insert_query);
         database.execSQL(shop_insert_query);
+        database.execSQL(order_list_table_insert_query);
+        database.execSQL(order_details_table_insert_query);
+        database.execSQL(order_type_table_insert_query);
+        database.execSQL(product_cart_table_insert_query);
+        database.execSQL(customers_table_insert_query);
+        database.execSQL(payment_method_table_insert_query);
     }
 
     @Override
@@ -187,7 +275,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         this.close();
     }
 
- 
 
     //******INSERT REGIONS************//
     public void insertRegionDetails(List<RegionDetails> regionDetails) {
@@ -328,6 +415,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         Log.d("VillageDetails ", array_list.size() + "");
         return array_list;
     }
+
     public void insertProduce(MyProduce produce) {
         openDB();
 
@@ -464,7 +552,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getProducts() {
         ArrayList<HashMap<String, String>> product = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+ PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_ID + " DESC ", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_ID + " DESC ", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -527,7 +615,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getProductCategory() {
         ArrayList<HashMap<String, String>> product_category = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME + " ORDER BY " +  CATEGORY_ID + " DESC ", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME + " ORDER BY " + CATEGORY_ID + " DESC ", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -551,7 +639,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getProductSupplier() {
         ArrayList<HashMap<String, String>> product_suppliers = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+ SUPPLIERS_TABLE_NAME + "", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + SUPPLIERS_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -654,7 +742,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public String getCurrency() {
 
         String currency = "n/a";
-        Cursor cursor = database.rawQuery("SELECT * FROM " +SHOP_TABLE_NAME +"", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
 
 
         if (cursor.moveToFirst()) {
@@ -677,7 +765,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public String getSupplierName(String supplier_id) {
 
         String supplier_name = "n/a";
-        Cursor cursor = database.rawQuery("SELECT * FROM " +SUPPLIERS_TABLE_NAME +  " WHERE "+ SUPPLIERS_ID + "=" + supplier_id + "", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + SUPPLIERS_TABLE_NAME + " WHERE " + SUPPLIERS_ID + "=" + supplier_id + "", null);
 
 
         if (cursor.moveToFirst()) {
@@ -713,7 +801,136 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     }
 
-    //Add product into cart
+
+    //delete order
+    public boolean deleteOrder(String invoice_id) {
+
+
+        long check = database.delete(ORDER_LIST_TABLE_NAME, ORDER_ID + "=?", new String[]{invoice_id});
+        long check2 = database.delete("order_details", "invoice_id=?", new String[]{invoice_id});
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public ArrayList<HashMap<String, String>> getOrderList() {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + ORDER_LIST_TABLE_NAME + " ORDER BY " + ORDER_ID + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(INVOICE_ID, cursor.getString(1));
+                map.put(ORDER_DATE, cursor.getString(2));
+                map.put(ORDER_TIME, cursor.getString(3));
+                map.put(ORDER_TYPE, cursor.getString(4));
+                map.put(ORDER_PAYMENT_METHOD, cursor.getString(5));
+                map.put(CUSTOMER_NAME, cursor.getString(6));
+                map.put(STORAGE_STATUS, cursor.getString(7));
+                map.put(ORDER_STATUS, cursor.getString(9));
+                map.put(CUSTOMER_ADDRESS, cursor.getString(10));
+                map.put(CUSTOMER_CELL, cursor.getString(11));
+                map.put(DELIVERY_FEE, cursor.getString(12));
+                map.put(CUSTOMER_EMAIL, cursor.getString(13));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+    public ArrayList<HashMap<String, String>> getOnlineOrderList() {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_list WHERE order_status LIKE'Pending%' AND storage_status LIKE '%online%' ORDER BY order_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("invoice_id", cursor.getString(1));
+                map.put("order_date", cursor.getString(2));
+                map.put("order_time", cursor.getString(3));
+                map.put("order_type", cursor.getString(4));
+                map.put("order_payment_method", cursor.getString(5));
+                map.put("customer_name", cursor.getString(6));
+                map.put("storage_status", cursor.getString(7));
+                map.put("order_status", cursor.getString(9));
+                map.put("customer_address", cursor.getString(10));
+                map.put("customer_cell", cursor.getString(11));
+                map.put("delivery_fee", cursor.getString(12));
+                map.put("customer_email", cursor.getString(13));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+    public ArrayList<HashMap<String, String>> searchOrderList(String s) {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_list WHERE customer_name LIKE '%" + s + "%' OR invoice_id LIKE '%" + s + "%' ORDER BY order_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("invoice_id", cursor.getString(1));
+                map.put("order_date", cursor.getString(2));
+                map.put("order_time", cursor.getString(3));
+                map.put("order_type", cursor.getString(4));
+                map.put("order_payment_method", cursor.getString(5));
+                map.put("customer_name", cursor.getString(6));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+    //get order history data
+    public ArrayList<HashMap<String, String>> getOrderDetailsList(String order_id) {
+        ArrayList<HashMap<String, String>> orderDetailsList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_details WHERE invoice_id='" + order_id + "' ORDER BY order_details_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("product_name", cursor.getString(2));
+                map.put("product_weight", cursor.getString(3));
+                map.put("product_qty", cursor.getString(4));
+                map.put("product_price", cursor.getString(5));
+                map.put("product_image", cursor.getString(6));
+
+                orderDetailsList.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+        return orderDetailsList;
+    }
+
+    //get order history data
     public int addToCart(String product_id, String weight, String weight_unit, String price, int qty) {
 
 
@@ -773,6 +990,267 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.close();
         return product;
     }
+
+    //get product name
+    public String getProductName(String product_id) {
+
+        String product_name = "n/a";
+        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_id='" + product_id + "'", null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                product_name = cursor.getString(1);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        database.close();
+        return product_name;
+    }
+
+    //get product image base 64
+    public String getProductImage(String product_id) {
+
+        String image = "n/a";
+        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_id='" + product_id + "'", null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                image = cursor.getString(8);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        database.close();
+        return image;
+    }
+
+    //calculate total price of product
+    public double getTotalPrice() {
+
+
+        double total_price = 0;
+
+        Cursor cursor = database.rawQuery("SELECT * FROM product_cart", null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                double price = Double.parseDouble(cursor.getString(4));
+                int qty = Integer.parseInt(cursor.getString(5));
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+
+
+            } while (cursor.moveToNext());
+        } else {
+            total_price = 0;
+        }
+        cursor.close();
+        database.close();
+        return total_price;
+    }
+
+
+    //delete product from cart
+    public boolean deleteProductFromCart(String id) {
+
+
+        long check = database.delete("product_cart", "cart_id=?", new String[]{id});
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    //get cart item count
+    public int getCartItemCount() {
+
+        Cursor cursor = database.rawQuery("SELECT * FROM product_cart", null);
+        int itemCount = cursor.getCount();
+
+
+        cursor.close();
+        database.close();
+        return itemCount;
+    }
+
+
+    //calculate total price of product
+    public double getTotalOrderPrice(String type) {
+
+
+        double total_price = 0;
+        Cursor cursor = null;
+
+
+        if (type.equals("monthly")) {
+
+            String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
+
+            String sql = "SELECT * FROM order_details WHERE strftime('%m', product_order_date) = '" + currentMonth + "' ";
+
+            cursor = database.rawQuery(sql, null);
+
+        } else if (type.equals("yearly")) {
+
+            String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
+            String sql = "SELECT * FROM order_details WHERE strftime('%Y', product_order_date) = '" + currentYear + "' ";
+
+            cursor = database.rawQuery(sql, null);
+
+        } else if (type.equals("daily")) {
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+            cursor = database.rawQuery("SELECT * FROM order_details WHERE   product_order_date='" + currentDate + "' ORDER BY order_Details_id DESC", null);
+
+        } else {
+            cursor = database.rawQuery("SELECT * FROM order_details", null);
+
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                double price = Double.parseDouble(cursor.getString(4));
+                int qty = Integer.parseInt(cursor.getString(5));
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+
+
+            } while (cursor.moveToNext());
+        } else {
+            total_price = 0;
+        }
+        cursor.close();
+        database.close();
+        return total_price;
+    }
+
+
+    //delete product from cart
+    public void updateProductQty(String id, String qty) {
+
+        ContentValues values = new ContentValues();
+
+        values.put("product_qty", qty);
+
+        long check = database.update("product_cart", values, "cart_id=?", new String[]{id});
+
+
+    }
+
+    //get customer data
+    public ArrayList<HashMap<String, String>> getCustomers() {
+        ArrayList<HashMap<String, String>> customer = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM customers ORDER BY customer_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put("customer_id", cursor.getString(0));
+                map.put("customer_name", cursor.getString(1));
+                map.put("customer_cell", cursor.getString(2));
+                map.put("customer_email", cursor.getString(3));
+                map.put("customer_address", cursor.getString(4));
+                map.put("customer_address_two", cursor.getString(5));
+                map.put("customer_image", cursor.getString(6));
+
+
+                customer.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return customer;
+    }
+
+    //get order type data
+    public ArrayList<HashMap<String, String>> getOrderType() {
+        ArrayList<HashMap<String, String>> order_type = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_type ORDER BY order_type_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("order_type_id", cursor.getString(0));
+                map.put("order_type_name", cursor.getString(1));
+
+
+                order_type.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return order_type;
+    }
+
+
+    //get order type data
+    public ArrayList<HashMap<String, String>> getPaymentMethod() {
+        ArrayList<HashMap<String, String>> payment_method = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM payment_method ORDER BY payment_method_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("payment_method_id", cursor.getString(0));
+                map.put("payment_method_name", cursor.getString(1));
+
+
+                payment_method.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return payment_method;
+    }
+
+
+    //get customer data
+    public ArrayList<HashMap<String, String>> searchCustomers(String s) {
+        ArrayList<HashMap<String, String>> customer = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM customers WHERE customer_name LIKE '%" + s + "%' ORDER BY customer_id DESC", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("customer_id", cursor.getString(0));
+                map.put("customer_name", cursor.getString(1));
+                map.put("customer_cell", cursor.getString(2));
+                map.put("customer_email", cursor.getString(3));
+                map.put("customer_address", cursor.getString(4));
+
+
+                customer.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return customer;
+    }
 }
+
 
 
