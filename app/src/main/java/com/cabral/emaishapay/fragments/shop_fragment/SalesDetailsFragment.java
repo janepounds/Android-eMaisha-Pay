@@ -121,7 +121,7 @@ public class SalesDetailsFragment extends Fragment {
         currency = shopData.get(0).get("shop_currency");
 
 
-        total_price = dbHandler.totalOrderPrice(order_id);
+        total_price = dbHandler.getTotalOrderPrice(order_id);
         txtTotalPrice.setText(currency + total_price);
 
 
