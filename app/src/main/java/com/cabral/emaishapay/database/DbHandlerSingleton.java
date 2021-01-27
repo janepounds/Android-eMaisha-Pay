@@ -17,6 +17,7 @@ import com.cabral.emaishapay.models.marketplace.MyProduce;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DbHandlerSingleton extends SQLiteOpenHelper {
@@ -47,6 +48,60 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String MARKET_PRICE_TABLE_MARKET = "market";
     public static final String MARKET_PRICE_RETAIL = "retail";
     public static final String MARKET_PRICE_WHOLESALE = "wholesale";
+
+    public static final String PRODUCTS_TABLE_NAME ="products";
+    public static final String PRODUCT_ID ="product_id";
+    public static final String PRODUCT_NAME ="product_name";
+    public static final String PRODUCT_CODE ="product_code";
+    public static final String PRODUCT_CATEGORY ="product_category";
+    public static final String PRODUCT_DESCRIPTION ="product_description";
+    public static final String PRODUCT_BUY_PRICE ="product_buy_price";
+    public static final String PRODUCT_SELL_PRICE ="product_sell_price";
+    public static final String PRODUCT_SUPPLIER ="product_supplier";
+    public static final String PRODUCT_IMAGE ="product_image";
+    public static final String PRODUCT_STOCK ="product_stock";
+    public static final String PRODUCT_WEIGHT_UNIT ="product_weight_unit";
+    public static final String PRODUCT_WEIGHT ="product_weight";
+
+
+    public static final String PRODUCT_CATEGORY_TABLE_NAME ="product_category";
+    public static final String CATEGORY_ID ="category_id";
+    public static final String CATEGORY_NAME ="category_name";
+
+
+    public static final String SUPPLIERS_TABLE_NAME ="suppliers";
+    public static final String SUPPLIERS_ID ="suppliers_id";
+    public static final String SUPPLIERS_NAME ="suppliers_name";
+    public static final String SUPPLIERS_CONTACT_PERSON ="suppliers_contact_person";
+    public static final String SUPPLIERS_CELL ="suppliers_cell";
+    public static final String SUPPLIERS_EMAIL ="suppliers_email";
+    public static final String SUPPLIERS_ADDRESS ="suppliers_address";
+    public static final String SUPPLIERS_ADDRESS_TWO ="suppliers_address_two";
+    public static final String SUPPLIERS_IMAGE ="suppliers_image";
+
+
+    public static final String PRODUCT_WEIGHT_TABLE_NAME ="product_weight";
+    public static final String WEIGHT_ID ="weight_id";
+    public static final String WEIGHT_UNIT ="weight_unit";
+
+
+    public static final String SHOP_TABLE_NAME ="shop";
+    public static final String SHOP_ID ="shop_id";
+    public static final String SHOP_NAME ="shop_name";
+    public static final String SHOP_CONTACT ="shop_contact";
+    public static final String SHOP_EMAIL ="shop_email";
+    public static final String SHOP_ADDRESS ="shop_address";
+    public static final String SHOP_CURRENCY ="shop_currency";
+    public static final String LATITUDE ="latitude";
+    public static final String LONGITUDE ="longitude";
+
+
+
+
+
+
+
+
 
 
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
@@ -79,9 +134,38 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         String market_price_insert_query = " CREATE TABLE IF NOT EXISTS " + MARKET_PRICE_TABLE_NAME + " ( " + MARKET_PRICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 MARKET_PRICE_CROP + " TEXT NOT NULL, " + MARKET_PRICE_TABLE_MARKET + " TEXT NOT NULL, " + MARKET_PRICE_RETAIL + " TEXT NOT NULL, " + MARKET_PRICE_WHOLESALE + " TEXT NOT NULL " + " ) ";
 
+        String products_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "( " +PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                PRODUCT_NAME + " TEXT, " + PRODUCT_CODE + " TEXT , " + PRODUCT_CATEGORY + " TEXT , " + PRODUCT_DESCRIPTION + " TEXT ," +
+                PRODUCT_BUY_PRICE + " TEXT, " + PRODUCT_SELL_PRICE + " TEXT , " + PRODUCT_SUPPLIER + " TEXT , " + PRODUCT_IMAGE + " TEXT ," +
+                PRODUCT_STOCK + " TEXT, " + PRODUCT_WEIGHT_UNIT + " TEXT , " + PRODUCT_WEIGHT + " TEXT  " + " ) ";
+
+        String product_category_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CATEGORY_TABLE_NAME + "( " + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                                CATEGORY_NAME + " TEXT " + " ) ";
+
+
+        String suppliers_table_insert_query ="CREATE TABLE IF NOT EXISTS " + SUPPLIERS_TABLE_NAME + "( " +SUPPLIERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                SUPPLIERS_NAME + " TEXT, " + SUPPLIERS_CONTACT_PERSON + " TEXT , " + SUPPLIERS_CELL + " TEXT , " + SUPPLIERS_EMAIL + " TEXT ," +
+                SUPPLIERS_ADDRESS + " TEXT, " + SUPPLIERS_ADDRESS_TWO + " TEXT , " + SUPPLIERS_IMAGE + " TEXT   " + " ) ";
+
+        String product_weight_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_WEIGHT_TABLE_NAME + "( " + WEIGHT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                WEIGHT_UNIT + " TEXT " + " ) ";
+
+
+        String shop_insert_query = "CREATE TABLE IF NOT EXISTS " + SHOP_TABLE_NAME + "( " +SHOP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                SHOP_NAME + " TEXT, " + SHOP_CONTACT + " TEXT , " + SHOP_EMAIL + " TEXT , " + SHOP_ADDRESS + " TEXT ," +
+                SHOP_CURRENCY + " TEXT, " + LATITUDE + " TEXT , " + LONGITUDE + " TEXT  " + " ) ";
+
+
+
+
         database.execSQL(regions_details_insert_query);
         database.execSQL(add_produce_insert_query);
         database.execSQL(market_price_insert_query);
+        database.execSQL(products_table_insert_query);
+        database.execSQL(product_category_table_insert_query);
+        database.execSQL(suppliers_table_insert_query);
+        database.execSQL(product_weight_table_insert_query);
+        database.execSQL(shop_insert_query);
     }
 
     @Override
@@ -373,6 +457,260 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         }
 
         return marketPriceArrayList;
+    }
+
+
+    //get product data
+    public ArrayList<HashMap<String, String>> getProducts() {
+        ArrayList<HashMap<String, String>> product = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+ PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_ID + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(PRODUCT_ID, cursor.getString(0));
+                map.put(PRODUCT_NAME, cursor.getString(1));
+                map.put(PRODUCT_CODE, cursor.getString(2));
+                map.put(PRODUCT_CATEGORY, cursor.getString(3));
+                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
+                map.put(PRODUCT_IMAGE, cursor.getString(8));
+                map.put(PRODUCT_STOCK, cursor.getString(9));
+                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
+                map.put(PRODUCT_WEIGHT, cursor.getString(11));
+
+
+                product.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return product;
+    }
+
+    //get product data
+    public ArrayList<HashMap<String, String>> getSearchProducts(String s) {
+        ArrayList<HashMap<String, String>> product = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_name LIKE '%" + s + "%' OR product_code LIKE '%" + s + "%' ORDER BY product_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(PRODUCT_ID, cursor.getString(0));
+                map.put(PRODUCT_NAME, cursor.getString(1));
+                map.put(PRODUCT_CODE, cursor.getString(2));
+                map.put(PRODUCT_CATEGORY, cursor.getString(3));
+                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
+                map.put(PRODUCT_IMAGE, cursor.getString(8));
+                map.put(PRODUCT_STOCK, cursor.getString(9));
+                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
+                map.put(PRODUCT_WEIGHT, cursor.getString(11));
+
+
+                product.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return product;
+    }
+
+    //get product category data
+    public ArrayList<HashMap<String, String>> getProductCategory() {
+        ArrayList<HashMap<String, String>> product_category = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME + " ORDER BY " +  CATEGORY_ID + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(CATEGORY_ID, cursor.getString(0));
+                map.put(CATEGORY_NAME, cursor.getString(1));
+
+                product_category.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+
+        return product_category;
+    }
+
+
+    //get product supplier data
+    public ArrayList<HashMap<String, String>> getProductSupplier() {
+        ArrayList<HashMap<String, String>> product_suppliers = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+ SUPPLIERS_TABLE_NAME + "", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(SUPPLIERS_ID, cursor.getString(0));
+                map.put(SUPPLIERS_NAME, cursor.getString(1));
+
+                product_suppliers.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+
+        return product_suppliers;
+    }
+
+    //get product supplier data
+    public ArrayList<HashMap<String, String>> getWeightUnit() {
+        ArrayList<HashMap<String, String>> product_weight_unit = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_WEIGHT_TABLE_NAME + "", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(WEIGHT_ID, cursor.getString(0));
+                map.put(WEIGHT_UNIT, cursor.getString(1));
+
+                product_weight_unit.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+
+        return product_weight_unit;
+    }
+
+    //get shop information
+    public ArrayList<HashMap<String, String>> getShopInformation() {
+        ArrayList<HashMap<String, String>> shop_info = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(SHOP_ID, cursor.getString(0));
+                map.put(SHOP_NAME, cursor.getString(1));
+                map.put(SHOP_CONTACT, cursor.getString(2));
+                map.put(SHOP_EMAIL, cursor.getString(3));
+                map.put(SHOP_ADDRESS, cursor.getString(4));
+                map.put(SHOP_CURRENCY, cursor.getString(5));
+                map.put(LATITUDE, cursor.getString(6));
+                map.put(LONGITUDE, cursor.getString(7));
+
+
+                shop_info.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return shop_info;
+    }
+
+
+    //insert products
+    public boolean addProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_stock, String product_supplier, String product_image, String weight_unit, String product_weight) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+        values.put(PRODUCT_ID, product_id);
+        values.put(PRODUCT_NAME, product_name);
+        values.put(PRODUCT_CODE, product_code);
+        values.put(PRODUCT_CATEGORY, product_category);
+        values.put(PRODUCT_DESCRIPTION, product_description);
+        values.put(PRODUCT_BUY_PRICE, product_buy_price);
+        values.put(PRODUCT_SELL_PRICE, product_sell_price);
+        values.put(PRODUCT_SUPPLIER, product_supplier);
+        values.put(PRODUCT_IMAGE, product_image);
+        values.put(PRODUCT_STOCK, product_stock);
+        values.put(PRODUCT_WEIGHT_UNIT, weight_unit);
+        values.put(PRODUCT_WEIGHT, product_weight);
+
+        long check = database.insert(PRODUCTS_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //get product name
+    public String getCurrency() {
+
+        String currency = "n/a";
+        Cursor cursor = database.rawQuery("SELECT * FROM " +SHOP_TABLE_NAME +"", null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                currency = cursor.getString(5);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        database.close();
+        return currency;
+    }
+
+    //get product weight unit name
+    public String getSupplierName(String supplier_id) {
+
+        String supplier_name = "n/a";
+        Cursor cursor = database.rawQuery("SELECT * FROM " +SUPPLIERS_TABLE_NAME +  " WHERE "+ SUPPLIERS_ID + "=" + supplier_id + "", null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                supplier_name = cursor.getString(1);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        database.close();
+        return supplier_name;
+    }
+
+    //delete product
+    public boolean deleteProduct(String product_id) {
+
+
+        long check = database.delete(PRODUCTS_TABLE_NAME, PRODUCT_ID + " =? ", new String[]{product_id});
+        long check2 = database.delete("product_cart", "product_id=?", new String[]{product_id});
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
 
