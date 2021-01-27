@@ -123,4 +123,5 @@ dependencies {
 
     implementation 'com.ajts.androidmads.SQLite2Excel:library:1.0.4'
     implementation 'com.github.hedzr:android-file-chooser:v1.2.0-final'
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
 }
