@@ -480,8 +480,8 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 map.put(PRODUCT_SUPPLIER, cursor.getString(7));
                 map.put(PRODUCT_IMAGE, cursor.getString(8));
                 map.put(PRODUCT_STOCK, cursor.getString(9));
-                map.put(PRODUCT_WEIGHT, cursor.getString(10));
-                map.put("product_weight", cursor.getString(11));
+                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
+                map.put(PRODUCT_WEIGHT, cursor.getString(11));
 
 
                 product.add(map);
@@ -495,6 +495,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //get product data
     public ArrayList<HashMap<String, String>> getSearchProducts(String s) {
         ArrayList<HashMap<String, String>> product = new ArrayList<>();
+        this.database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_name LIKE '%" + s + "%' OR product_code LIKE '%" + s + "%' ORDER BY product_id DESC", null);
         if (cursor.moveToFirst()) {
             do {
@@ -549,6 +550,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //get product supplier data
     public ArrayList<HashMap<String, String>> getProductSupplier() {
         ArrayList<HashMap<String, String>> product_suppliers = new ArrayList<>();
+        this.database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM "+ SUPPLIERS_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
@@ -594,6 +596,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //get shop information
     public ArrayList<HashMap<String, String>> getShopInformation() {
         ArrayList<HashMap<String, String>> shop_info = new ArrayList<>();
+        this.database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
