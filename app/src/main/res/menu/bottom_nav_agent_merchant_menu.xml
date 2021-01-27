@@ -11,7 +11,7 @@
     <item
         android:id="@+id/walletShopFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_accept"
+        android:icon="@drawable/ic_shop"
         android:title="SHOP"
         app:showAsAction="ifRoom"/>
     <item
@@ -24,7 +24,7 @@
     <item
         android:id="@+id/walletSettlementFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_loan_purpose"
+        android:icon="@drawable/transaction"
         android:title="SETTLEMENT"
         app:showAsAction="ifRoom"/>
 
