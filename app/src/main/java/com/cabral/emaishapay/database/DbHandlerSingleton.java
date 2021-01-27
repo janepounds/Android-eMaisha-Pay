@@ -16,9 +16,12 @@ import com.cabral.emaishapay.models.marketplace.MyProduce;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DbHandlerSingleton extends SQLiteOpenHelper {
     private static final String TAG = "emaishapayHandler";
@@ -1086,6 +1089,58 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         cursor.close();
         database.close();
         return itemCount;
+    }
+
+
+    //calculate total price of product
+    public double getTotalOrderPrice(String type) {
+
+
+        double total_price = 0;
+        Cursor cursor = null;
+
+
+        if (type.equals("monthly")) {
+
+            String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
+
+            String sql = "SELECT * FROM order_details WHERE strftime('%m', product_order_date) = '" + currentMonth + "' ";
+
+            cursor = database.rawQuery(sql, null);
+
+        } else if (type.equals("yearly")) {
+
+            String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
+            String sql = "SELECT * FROM order_details WHERE strftime('%Y', product_order_date) = '" + currentYear + "' ";
+
+            cursor = database.rawQuery(sql, null);
+
+        } else if (type.equals("daily")) {
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+            cursor = database.rawQuery("SELECT * FROM order_details WHERE   product_order_date='" + currentDate + "' ORDER BY order_Details_id DESC", null);
+
+        } else {
+            cursor = database.rawQuery("SELECT * FROM order_details", null);
+
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                double price = Double.parseDouble(cursor.getString(4));
+                int qty = Integer.parseInt(cursor.getString(5));
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+
+
+            } while (cursor.moveToNext());
+        } else {
+            total_price = 0;
+        }
+        cursor.close();
+        database.close();
+        return total_price;
     }
 
 
