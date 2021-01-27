@@ -36,7 +36,6 @@ public class ShopActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Products");
 
         // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
@@ -47,7 +46,7 @@ public class ShopActivity extends AppCompatActivity {
                 actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
-                WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                ShopActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
 
             actionBar.setHomeButtonEnabled(true);
