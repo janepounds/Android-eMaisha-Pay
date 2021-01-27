@@ -119,4 +119,8 @@ dependencies {
     implementation 'com.crystal:crystalrangeseekbar:1.1.1'
     implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
     implementation 'commons-codec:commons-codec:1.8'
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
+    implementation 'com.ajts.androidmads.SQLite2Excel:library:1.0.4'
+    implementation 'com.github.hedzr:android-file-chooser:v1.2.0-final'
 }

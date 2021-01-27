@@ -101,6 +101,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCE_ACCOUNT_LICENSE_NUMBER ="license_number";
     public static final String PREFERENCE_ACCOUNT_TRADE_LICENSE ="trade_license";
     public static final String PREFERENCE_ACCOUNT_REG_CERTIFICATE ="reg_certificate";
+    public static final String PREFERENCE_SHOP_ID ="shop_id";
 
 
     public static final double PREFERENCE_WALLET_BALANCE = 0;
@@ -467,6 +468,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                 });
 
     }
+
+
     public static void disableNavigation() {
       bottomNavigationView.setVisibility(View.GONE);
 

@@ -19,6 +19,8 @@
 
 
     <color name="white">#ffffff</color>
+    <color name="creditCardBackground">#557F5F</color>
+    <color name="faintred">#FFCCCB</color>
 
     <color name="device_problem">#dc4436</color>
     <color name="gray">#f0f1ed</color>
