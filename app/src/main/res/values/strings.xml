@@ -205,7 +205,6 @@
     <string name="title_activity_maps" translatable="false">Map</string>
     <string name="stock_value" translatable="false">00</string>
     <string name="productstock" translatable="false">Product Stock</string>
-    <string name="settlements" translatable="false">Settlements</string>
     <string name="accept_payment" translatable="false">Accept Payment</string>
     <string name="home" translatable="false">Home</string>
     <string name="title_activity_p_o_s_home" translatable="false">POSHomeActivity</string>
@@ -544,24 +543,14 @@
     <string name="invalid_expiry">Invalid Expiry</string>
     <string name="purchase_date">Purchase Date</string>
 
-    <string name="title_activity_card_detail">CardDetail</string>
-    <string name="first_fragment_label">First Fragment</string>
 
-    <string name="second_fragment_label">Second Fragment</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_wallet_buy_sell">eMaisha Shop</string>
     <string name="no_product_found">No Product Found</string>
     <string name="product_category">Product Category</string>
     <string name="suppliers">Suppliers</string>
     <string name="customers">Customers</string>
     <string name="pos">POS</string>
-    <string name="title_home">Home</string>
+
     <!-- Strings used for fragments for navigation -->
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <string name="add_suppliers">Add Suppliers</string>
     <string name="enter_suppliers_name">Enter Suppliers Name</string>
@@ -602,11 +591,7 @@
     <string name="want_to_delete_product">Want to Delete Product ?</string>
     <string name="product_deleted">Product Deleted</string>
 
-    <string name="internet_connection_error">check your internet connection and try again</string>
-    <string name="iv">98765432</string>
-    <string name="AddPersonalInformation">Personal Information</string>
-    <string name="select_product_weight">Select product weight first!</string>
-    <string name="settle">Settle</string>
+
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

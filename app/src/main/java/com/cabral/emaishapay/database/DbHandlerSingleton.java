@@ -49,6 +49,60 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String MARKET_PRICE_RETAIL = "retail";
     public static final String MARKET_PRICE_WHOLESALE = "wholesale";
 
+    public static final String PRODUCTS_TABLE_NAME ="products";
+    public static final String PRODUCT_ID ="product_id";
+    public static final String PRODUCT_NAME ="product_name";
+    public static final String PRODUCT_CODE ="product_code";
+    public static final String PRODUCT_CATEGORY ="product_category";
+    public static final String PRODUCT_DESCRIPTION ="product_description";
+    public static final String PRODUCT_BUY_PRICE ="product_buy_price";
+    public static final String PRODUCT_SELL_PRICE ="product_sell_price";
+    public static final String PRODUCT_SUPPLIER ="product_supplier";
+    public static final String PRODUCT_IMAGE ="product_image";
+    public static final String PRODUCT_STOCK ="product_stock";
+    public static final String PRODUCT_WEIGHT_UNIT ="product_weight_unit";
+    public static final String PRODUCT_WEIGHT ="product_weight";
+
+
+    public static final String PRODUCT_CATEGORY_TABLE_NAME ="product_category";
+    public static final String CATEGORY_ID ="category_id";
+    public static final String CATEGORY_NAME ="category_name";
+
+
+    public static final String SUPPLIERS_TABLE_NAME ="suppliers";
+    public static final String SUPPLIERS_ID ="suppliers_id";
+    public static final String SUPPLIERS_NAME ="suppliers_name";
+    public static final String SUPPLIERS_CONTACT_PERSON ="suppliers_contact_person";
+    public static final String SUPPLIERS_CELL ="suppliers_cell";
+    public static final String SUPPLIERS_EMAIL ="suppliers_email";
+    public static final String SUPPLIERS_ADDRESS ="suppliers_address";
+    public static final String SUPPLIERS_ADDRESS_TWO ="suppliers_address_two";
+    public static final String SUPPLIERS_IMAGE ="suppliers_image";
+
+
+    public static final String PRODUCT_WEIGHT_TABLE_NAME ="product_weight";
+    public static final String WEIGHT_ID ="weight_id";
+    public static final String WEIGHT_UNIT ="weight_unit";
+
+
+    public static final String SHOP_TABLE_NAME ="shop";
+    public static final String SHOP_ID ="shop_id";
+    public static final String SHOP_NAME ="shop_name";
+    public static final String SHOP_CONTACT ="shop_contact";
+    public static final String SHOP_EMAIL ="shop_email";
+    public static final String SHOP_ADDRESS ="shop_address";
+    public static final String SHOP_CURRENCY ="shop_currency";
+    public static final String LATITUDE ="latitude";
+    public static final String LONGITUDE ="longitude";
+
+
+
+
+
+
+
+
+
 
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
@@ -80,9 +134,38 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         String market_price_insert_query = " CREATE TABLE IF NOT EXISTS " + MARKET_PRICE_TABLE_NAME + " ( " + MARKET_PRICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 MARKET_PRICE_CROP + " TEXT NOT NULL, " + MARKET_PRICE_TABLE_MARKET + " TEXT NOT NULL, " + MARKET_PRICE_RETAIL + " TEXT NOT NULL, " + MARKET_PRICE_WHOLESALE + " TEXT NOT NULL " + " ) ";
 
+        String products_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "( " +PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                PRODUCT_NAME + " TEXT, " + PRODUCT_CODE + " TEXT , " + PRODUCT_CATEGORY + " TEXT , " + PRODUCT_DESCRIPTION + " TEXT ," +
+                PRODUCT_BUY_PRICE + " TEXT, " + PRODUCT_SELL_PRICE + " TEXT , " + PRODUCT_SUPPLIER + " TEXT , " + PRODUCT_IMAGE + " TEXT ," +
+                PRODUCT_STOCK + " TEXT, " + PRODUCT_WEIGHT_UNIT + " TEXT , " + PRODUCT_WEIGHT + " TEXT  " + " ) ";
+
+        String product_category_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CATEGORY_TABLE_NAME + "( " + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                                CATEGORY_NAME + " TEXT " + " ) ";
+
+
+        String suppliers_table_insert_query ="CREATE TABLE IF NOT EXISTS " + SUPPLIERS_TABLE_NAME + "( " +SUPPLIERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                SUPPLIERS_NAME + " TEXT, " + SUPPLIERS_CONTACT_PERSON + " TEXT , " + SUPPLIERS_CELL + " TEXT , " + SUPPLIERS_EMAIL + " TEXT ," +
+                SUPPLIERS_ADDRESS + " TEXT, " + SUPPLIERS_ADDRESS_TWO + " TEXT , " + SUPPLIERS_IMAGE + " TEXT   " + " ) ";
+
+        String product_weight_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_WEIGHT_TABLE_NAME + "( " + WEIGHT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                WEIGHT_UNIT + " TEXT " + " ) ";
+
+
+        String shop_insert_query = "CREATE TABLE IF NOT EXISTS " + SHOP_TABLE_NAME + "( " +SHOP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                SHOP_NAME + " TEXT, " + SHOP_CONTACT + " TEXT , " + SHOP_EMAIL + " TEXT , " + SHOP_ADDRESS + " TEXT ," +
+                SHOP_CURRENCY + " TEXT, " + LATITUDE + " TEXT , " + LONGITUDE + " TEXT  " + " ) ";
+
+
+
+
         database.execSQL(regions_details_insert_query);
         database.execSQL(add_produce_insert_query);
         database.execSQL(market_price_insert_query);
+        database.execSQL(products_table_insert_query);
+        database.execSQL(product_category_table_insert_query);
+        database.execSQL(suppliers_table_insert_query);
+        database.execSQL(product_weight_table_insert_query);
+        database.execSQL(shop_insert_query);
     }
 
     @Override
@@ -381,23 +464,23 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getProducts() {
         ArrayList<HashMap<String, String>> product = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM products ORDER BY product_id DESC", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM "+ PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_ID + " DESC ", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
 
-                map.put("product_id", cursor.getString(0));
-                map.put("product_name", cursor.getString(1));
-                map.put("product_code", cursor.getString(2));
-                map.put("product_category", cursor.getString(3));
-                map.put("product_description", cursor.getString(4));
-                map.put("product_buy_price", cursor.getString(5));
-                map.put("product_sell_price", cursor.getString(6));
-                map.put("product_supplier", cursor.getString(7));
-                map.put("product_image", cursor.getString(8));
-                map.put("product_stock", cursor.getString(9));
-                map.put("product_weight_unit", cursor.getString(10));
+                map.put(PRODUCT_ID, cursor.getString(0));
+                map.put(PRODUCT_NAME, cursor.getString(1));
+                map.put(PRODUCT_CODE, cursor.getString(2));
+                map.put(PRODUCT_CATEGORY, cursor.getString(3));
+                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
+                map.put(PRODUCT_IMAGE, cursor.getString(8));
+                map.put(PRODUCT_STOCK, cursor.getString(9));
+                map.put(PRODUCT_WEIGHT, cursor.getString(10));
                 map.put("product_weight", cursor.getString(11));
 
 
@@ -417,18 +500,18 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
-                map.put("product_id", cursor.getString(0));
-                map.put("product_name", cursor.getString(1));
-                map.put("product_code", cursor.getString(2));
-                map.put("product_category", cursor.getString(3));
-                map.put("product_description", cursor.getString(4));
-                map.put("product_buy_price", cursor.getString(5));
-                map.put("product_sell_price", cursor.getString(6));
-                map.put("product_supplier", cursor.getString(7));
-                map.put("product_image", cursor.getString(8));
-                map.put("product_stock", cursor.getString(9));
-                map.put("product_weight_unit_id", cursor.getString(10));
-                map.put("product_weight", cursor.getString(11));
+                map.put(PRODUCT_ID, cursor.getString(0));
+                map.put(PRODUCT_NAME, cursor.getString(1));
+                map.put(PRODUCT_CODE, cursor.getString(2));
+                map.put(PRODUCT_CATEGORY, cursor.getString(3));
+                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
+                map.put(PRODUCT_IMAGE, cursor.getString(8));
+                map.put(PRODUCT_STOCK, cursor.getString(9));
+                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
+                map.put(PRODUCT_WEIGHT, cursor.getString(11));
 
 
                 product.add(map);
@@ -443,14 +526,14 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getProductCategory() {
         ArrayList<HashMap<String, String>> product_category = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM product_category ORDER BY category_id DESC", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME + " ORDER BY " +  CATEGORY_ID + " DESC ", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
 
-                map.put("category_id", cursor.getString(0));
-                map.put("category_name", cursor.getString(1));
+                map.put(CATEGORY_ID, cursor.getString(0));
+                map.put(CATEGORY_NAME, cursor.getString(1));
 
                 product_category.add(map);
             } while (cursor.moveToNext());
@@ -466,14 +549,14 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //get product supplier data
     public ArrayList<HashMap<String, String>> getProductSupplier() {
         ArrayList<HashMap<String, String>> product_suppliers = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM suppliers", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM "+ SUPPLIERS_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
 
-                map.put("suppliers_id", cursor.getString(0));
-                map.put("suppliers_name", cursor.getString(1));
+                map.put(SUPPLIERS_ID, cursor.getString(0));
+                map.put(SUPPLIERS_NAME, cursor.getString(1));
 
                 product_suppliers.add(map);
             } while (cursor.moveToNext());
@@ -489,14 +572,14 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getWeightUnit() {
         ArrayList<HashMap<String, String>> product_weight_unit = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM product_weight", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_WEIGHT_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
 
-                map.put("weight_id", cursor.getString(0));
-                map.put("weight_unit", cursor.getString(1));
+                map.put(WEIGHT_ID, cursor.getString(0));
+                map.put(WEIGHT_UNIT, cursor.getString(1));
 
                 product_weight_unit.add(map);
             } while (cursor.moveToNext());
@@ -511,19 +594,19 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //get shop information
     public ArrayList<HashMap<String, String>> getShopInformation() {
         ArrayList<HashMap<String, String>> shop_info = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM shop", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
-                map.put("shop_id", cursor.getString(0));
-                map.put("shop_name", cursor.getString(1));
-                map.put("shop_contact", cursor.getString(2));
-                map.put("shop_email", cursor.getString(3));
-                map.put("shop_address", cursor.getString(4));
-                map.put("shop_currency", cursor.getString(5));
-                map.put("latitude", cursor.getString(6));
-                map.put("longitude", cursor.getString(7));
+                map.put(SHOP_ID, cursor.getString(0));
+                map.put(SHOP_NAME, cursor.getString(1));
+                map.put(SHOP_CONTACT, cursor.getString(2));
+                map.put(SHOP_EMAIL, cursor.getString(3));
+                map.put(SHOP_ADDRESS, cursor.getString(4));
+                map.put(SHOP_CURRENCY, cursor.getString(5));
+                map.put(LATITUDE, cursor.getString(6));
+                map.put(LONGITUDE, cursor.getString(7));
 
 
                 shop_info.add(map);
@@ -540,20 +623,20 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         this.database = this.getWritableDatabase();
-        values.put("product_id", product_id);
-        values.put("product_name", product_name);
-        values.put("product_code", product_code);
-        values.put("product_category", product_category);
-        values.put("product_description", product_description);
-        values.put("product_buy_price", product_buy_price);
-        values.put("product_sell_price", product_sell_price);
-        values.put("product_supplier", product_supplier);
-        values.put("product_image", product_image);
-        values.put("product_stock", product_stock);
-        values.put("product_weight_unit", weight_unit);
-        values.put("product_weight", product_weight);
+        values.put(PRODUCT_ID, product_id);
+        values.put(PRODUCT_NAME, product_name);
+        values.put(PRODUCT_CODE, product_code);
+        values.put(PRODUCT_CATEGORY, product_category);
+        values.put(PRODUCT_DESCRIPTION, product_description);
+        values.put(PRODUCT_BUY_PRICE, product_buy_price);
+        values.put(PRODUCT_SELL_PRICE, product_sell_price);
+        values.put(PRODUCT_SUPPLIER, product_supplier);
+        values.put(PRODUCT_IMAGE, product_image);
+        values.put(PRODUCT_STOCK, product_stock);
+        values.put(PRODUCT_WEIGHT_UNIT, weight_unit);
+        values.put(PRODUCT_WEIGHT, product_weight);
 
-        long check = database.insert("products", null, values);
+        long check = database.insert(PRODUCTS_TABLE_NAME, null, values);
         database.close();
 
         //if data insert success, its return 1, if failed return -1
@@ -568,7 +651,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public String getCurrency() {
 
         String currency = "n/a";
-        Cursor cursor = database.rawQuery("SELECT * FROM shop", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " +SHOP_TABLE_NAME +"", null);
 
 
         if (cursor.moveToFirst()) {
@@ -591,7 +674,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public String getSupplierName(String supplier_id) {
 
         String supplier_name = "n/a";
-        Cursor cursor = database.rawQuery("SELECT * FROM suppliers WHERE suppliers_id=" + supplier_id + "", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " +SUPPLIERS_TABLE_NAME +  " WHERE "+ SUPPLIERS_ID + "=" + supplier_id + "", null);
 
 
         if (cursor.moveToFirst()) {
@@ -614,7 +697,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public boolean deleteProduct(String product_id) {
 
 
-        long check = database.delete("products", "product_id=?", new String[]{product_id});
+        long check = database.delete(PRODUCTS_TABLE_NAME, PRODUCT_ID + " =? ", new String[]{product_id});
         long check2 = database.delete("product_cart", "product_id=?", new String[]{product_id});
 
         database.close();
