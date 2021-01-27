@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/windowBackground">
+
+            <ImageView
+                android:id="@+id/image_no_product"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/empty_cart_image"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/txt_no_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/no_product_in_cart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+               />
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="50dp"
+                android:background="@color/windowBackground">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cart_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:padding="10dp"
+        android:elevation="10dp"
+        android:background="@drawable/top_curved_background_white"
+        android:layout_alignParentBottom="true">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_sans"
+                android:paddingStart="15dp"
+                android:paddingBottom="5dp"
+                android:text="TOTAL"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_sans"
+                android:paddingStart="15dp"
+                android:paddingBottom="10dp"
+                android:text="UGX 350"
+                android:textColor="@color/creditCardBackground"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_submit_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="18dp"
+            android:layout_weight="4"
+            android:background="@drawable/balance_cards"
+            android:fontFamily="@font/josefin_sans"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="CHECKOUT"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

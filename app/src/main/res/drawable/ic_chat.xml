@@ -13,8 +13,8 @@
           android:endY="547.1343"
           android:endX="557.0066"
           android:type="linear">
-        <item android:offset="0" android:color="#FFA7F3CE"/>
-        <item android:offset="1" android:color="#FF61DB99"/>
+        <item android:offset="0" android:color="#2e84be"/>
+        <item android:offset="1" android:color="#2e84be"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -27,8 +27,8 @@
           android:endY="274.84927"
           android:endX="284.71603"
           android:type="linear">
-        <item android:offset="0" android:color="#0061DB99"/>
-        <item android:offset="1" android:color="#FF009E74"/>
+        <item android:offset="0" android:color="#2e84be"/>
+        <item android:offset="1" android:color="#2e84be"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -42,7 +42,7 @@
           android:endX="392.6368"
           android:type="linear">
         <item android:offset="0" android:color="#FF62E1FB"/>
-        <item android:offset="1" android:color="#FF00A2F3"/>
+        <item android:offset="1" android:color="#97d2f9"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -56,7 +56,7 @@
           android:endX="41.999016"
           android:type="linear">
         <item android:offset="0" android:color="#0000A2F3"/>
-        <item android:offset="1" android:color="#FF0075CD"/>
+        <item android:offset="1" android:color="#97d2f9"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -73,7 +73,7 @@
           android:endX="132.18689"
           android:type="linear">
         <item android:offset="0" android:color="#0000A2F3"/>
-        <item android:offset="1" android:color="#FF0075CD"/>
+        <item android:offset="1" android:color="#97d2f9"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -90,7 +90,7 @@
           android:endX="222.37576"
           android:type="linear">
         <item android:offset="0" android:color="#0000A2F3"/>
-        <item android:offset="1" android:color="#FF0075CD"/>
+        <item android:offset="1" android:color="#97d2f9"/>
       </gradient>
     </aapt:attr>
   </path>

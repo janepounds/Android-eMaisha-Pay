@@ -1,8 +1,6 @@
 package com.cabral.emaishapay.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,37 +10,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.AddCardFragment;
-import com.cabral.emaishapay.DailogFragments.WalletTransactionsReceiptDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.CircularImageView;
-import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.CardResponse;
-import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.TimeZone;
 
 public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyViewHolder> {
     private static final String TAG = "CardsListAdapter";
@@ -106,7 +91,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.ic_visa)
-                .error(R.drawable.ic_mastercard)
+                .error(R.drawable.ic_error_card)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
 
@@ -115,16 +100,18 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         String second_value = String.valueOf(card_number.charAt(1));
         if(Integer.parseInt(first_value)==4){
 
-            Glide.with(context).load(R.drawable.ic_visa).apply(options).into(holder.cardImage);
+          //  Glide.with(context).load(R.drawable.ic_visa).apply(options).into(holder.cardImage);
+            holder.cardImage.setImageResource(R.drawable.ic_visa);
 
         }else if (Integer.parseInt(first_value)==5){
-            Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
-
-        }else if (Integer.parseInt(first_value)==6 && Integer.parseInt(second_value)==2){
-            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
+            //Glide.with(context).load(R.drawable.ic_mastercard).apply(options).into(holder.cardImage);
+            holder.cardImage.setImageResource(R.drawable.ic_mastercard);
+        }else if (Integer.parseInt(first_value)==6 && Integer.parseInt(second_value)==2 ){
+            //Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
+            holder.cardImage.setImageResource(R.drawable.ic_union_pay);
         }
         else {
-            Glide.with(context).load(R.drawable.ic_unionpay).apply(options).into(holder.cardImage);
+            holder.cardImage.setImageResource(R.drawable.ic_default_card);
         }
 
 

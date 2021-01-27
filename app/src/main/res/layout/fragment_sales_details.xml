@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?android:attr/selectableItemBackground">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image_no_product"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="50dp" />
+
+                <TextView
+                    android:id="@+id/txt_no_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="No Order Found"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefin_sans"
+                    android:paddingStart="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="TOTAL PRICE"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefin_sans"
+                    android:paddingStart="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="$350000"
+                    android:textColor="@color/creditCardBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_pdf_receipt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="18dp"
+                android:layout_weight="4"
+                android:background="@drawable/balance_cards"
+                android:fontFamily="@font/josefin_sans"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="PDF RECEIPT"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

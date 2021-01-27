@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/windowBackground"
+    android:theme="@style/Theme.AppCompat">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="Amount"
+                            android:textColor="#B9B9B9"
+                            android:textSize="22sp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="10dp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="UGX 0"
+                            android:textColor="@color/textColorPrimaryDark"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:padding="10dp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#31244A"
+                            android:alpha=".1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp">
+
+
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="Description"
+                            android:textColor="@color/textColorPrimaryDark"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="10dp"/>
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/josefin_sans"
+                            android:text="@string/product_name"
+                            android:textColor="#B9B9B9"
+                            android:textSize="20sp"/>
+
+
+                    </LinearLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/outline_primary"
+                        android:backgroundTint="#B9B9B9"
+                        android:layout_margin="15dp">
+
+                        <LinearLayout
+                            android:id="@+id/minus"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/quantity"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:background="@drawable/ugx_background"
+                            android:backgroundTint="#b9b9b9">
+                            <View
+                                android:layout_width="35dp"
+                                android:layout_height="5dp"
+                                android:gravity="center"
+                                android:background="@color/textColorPrimaryDark"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/quantity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@id/minus"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/plus"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/josefin_sans"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="Qty"
+                                android:textColor="#B9B9B9"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/josefin_sans"
+                                android:gravity="center"
+                                android:padding="2dp"
+                                android:text="0"
+                                android:textColor="@color/textColorPrimaryDark"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/plus"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toEndOf="@id/quantity"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:orientation="horizontal"
+                            android:background="@drawable/browse_background">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_add"
+                                app:tint="@color/textColorPrimaryDark" />
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/josefin_sans"
+                            android:padding="5dp"
+                            android:gravity="center"
+                            android:text="Total Amount"
+                            android:textColor="#B9B9B9"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:id="@+id/txt_online_overall_total_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/josefin_sans"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="UGX 5000"
+                            android:textColor="@color/textColorPrimaryDark"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="15dp">
+
+                        <TextView
+                            android:id="@+id/btn_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/balance_cards"
+                            android:backgroundTint="#C7C7C9"
+                            android:fontFamily="@font/josefin_sans"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="@string/cancel"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/btn_update"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/balance_cards"
+                            android:fontFamily="@font/josefin_sans"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="Update"
+                            android:textColor="#fff"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

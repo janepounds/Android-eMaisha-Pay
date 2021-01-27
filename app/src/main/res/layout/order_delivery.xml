@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@color/windowBackground">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefin_sans"
+        android:layout_marginBottom="5dp"
+        android:text="Delivery Time"
+        android:textColor="@color/textColorSecondaryLight"
+        android:textSize="16sp" />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/edittext_corner"
+        android:fontFamily="@font/josefin_sans"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textColor="@color/creditCardBackground"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefin_sans"
+        android:layout_marginBottom="5dp"
+        android:text="Select Time"
+        android:textColor="@color/textColorSecondaryLight"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etxt_supplier"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/edittext_corner"
+        android:drawableRight="@drawable/drop_down"
+        android:fontFamily="@font/josefin_sans"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="@color/creditCardBackground"
+        android:textSize="18sp" />
+
+
+
+    <TextView
+        android:id="@+id/txt_add_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/balance_cards"
+        android:fontFamily="@font/josefin_sans"
+        android:gravity="center"
+        android:padding="13dp"
+        android:text="Accept &amp; Confirm"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"/>
+</LinearLayout>
