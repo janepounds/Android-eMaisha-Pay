@@ -129,6 +129,17 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String ORDER_TYPE_NAME ="order_type_name";
 
 
+    public static final String PRODUCT_CART_TABLE_NAME ="product_cart";
+    public static final String CART_ID ="cart_id";
+    public static final String CART_PRODUCT_ID ="product_id";
+    public static final String CART_PRODUCT_WEIGHT ="product_weight";
+    public static final String CART_PRODUCT_WEIGHT_UNIT ="product_weight_unit";
+    public static final String CART_PRODUCT_PRICE ="product_price";
+    public static final String PRODUCT_QTY ="product_qty";
+
+
+
+
 
 
 
@@ -204,6 +215,15 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
 
+        String product_cart_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CART_TABLE_NAME + "( " +CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                CART_PRODUCT_ID + " TEXT, " + CART_PRODUCT_WEIGHT + " TEXT , " + CART_PRODUCT_WEIGHT_UNIT + " TEXT , " + CART_PRODUCT_PRICE + " TEXT ," +
+                PRODUCT_QTY + " TEXT "  + " ) ";
+
+
+
+
+
+
 
         database.execSQL(regions_details_insert_query);
         database.execSQL(add_produce_insert_query);
@@ -216,6 +236,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(order_list_table_insert_query);
         database.execSQL(order_details_table_insert_query);
         database.execSQL(order_type_table_insert_query);
+        database.execSQL(product_cart_table_insert_query);
     }
 
     @Override
