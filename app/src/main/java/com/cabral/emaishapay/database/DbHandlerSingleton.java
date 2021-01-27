@@ -137,6 +137,23 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String CART_PRODUCT_PRICE = "product_price";
     public static final String PRODUCT_QTY = "product_qty";
 
+    public static final String CUSTOMERS_TABLE_NAME = "customers";
+    public static final String CUSTOMER_ID = "customer_id";
+    public static final String CUSTOMER_CUSTOMER_NAME = "customer_name";
+    public static final String CUSTOMER_CUSTOMER_CELL = "customer_cell";
+    public static final String CUSTOMER_CUSTOMER_EMAIL = "customer_email";
+    public static final String CUSTOMER_CUSTOMER_ADDRESS = "customer_address";
+    public static final String CUSTOMER_ADDRESS_TWO = "customer_address_two";
+    public static final String CUSTOMER_IMAGE = "customer_image";
+
+
+    public static final String PAYMENT_METHOD_TABLE_NAME = "payment_method";
+    public static final String PAYMENT_METHOD_ID = "payment_method_id";
+    public static final String PAYMENT_METHOD_NAME = "payment_method_name";
+
+
+
+
 
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
@@ -209,6 +226,16 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 CART_PRODUCT_ID + " TEXT, " + CART_PRODUCT_WEIGHT + " TEXT , " + CART_PRODUCT_WEIGHT_UNIT + " TEXT , " + CART_PRODUCT_PRICE + " TEXT ," +
                 PRODUCT_QTY + " TEXT " + " ) ";
 
+        String customers_table_insert_query = "CREATE TABLE IF NOT EXISTS " + CUSTOMERS_TABLE_NAME + "( " + CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                CUSTOMER_CUSTOMER_NAME + " TEXT, " + CUSTOMER_CUSTOMER_CELL + " TEXT , " + CUSTOMER_CUSTOMER_EMAIL + " TEXT , " + CUSTOMER_CUSTOMER_ADDRESS + " TEXT ," +
+                CUSTOMER_ADDRESS_TWO + " TEXT, " + CUSTOMER_IMAGE + " TEXT " + " ) ";
+
+        String payment_method_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PAYMENT_METHOD_TABLE_NAME + "( " + PAYMENT_METHOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                PAYMENT_METHOD_NAME + " TEXT " + " ) ";
+
+
+
+
 
         database.execSQL(regions_details_insert_query);
         database.execSQL(add_produce_insert_query);
@@ -222,6 +249,8 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(order_details_table_insert_query);
         database.execSQL(order_type_table_insert_query);
         database.execSQL(product_cart_table_insert_query);
+        database.execSQL(customers_table_insert_query);
+        database.execSQL(payment_method_table_insert_query);
     }
 
     @Override
