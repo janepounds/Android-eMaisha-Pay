@@ -592,7 +592,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/group_2" />
+                                        android:src="@drawable/id_number" />
 
                                     <TextView
                                         android:id="@+id/text_view_id_number"
@@ -1327,7 +1327,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:layout_gravity="end"
-                                        android:src="@drawable/ic_location_pin" />
+                                        android:src="@drawable/agent_and_merchant" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
