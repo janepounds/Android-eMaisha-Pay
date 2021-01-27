@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.fragments.shop_fragment;
+package com.cabral.emaishapay.DailogFragments.shop;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,19 +1,11 @@
 package com.cabral.emaishapay.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.customs.NotificationBadger;
-import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
@@ -22,9 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.drawable.WrappedDrawable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 

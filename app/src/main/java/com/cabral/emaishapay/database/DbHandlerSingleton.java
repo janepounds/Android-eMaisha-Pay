@@ -96,8 +96,37 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String LONGITUDE ="longitude";
 
 
+    public static final String ORDER_LIST_TABLE_NAME ="order_list";
+    public static final String ORDER_ID ="order_id";
+    public static final String INVOICE_ID ="invoice_id";
+    public static final String ORDER_DATE ="order_date";
+    public static final String ORDER_TIME ="order_time";
+    public static final String ORDER_TYPE ="order_type";
+    public static final String ORDER_PAYMENT_METHOD ="order_payment_method";
+    public static final String CUSTOMER_NAME ="customer_name";
+    public static final String STORAGE_STATUS ="storage_status";
+    public static final String DISCOUNT ="discount";
+    public static final String ORDER_STATUS ="order_status";
+    public static final String CUSTOMER_ADDRESS ="customer_address";
+    public static final String CUSTOMER_CELL ="customer_cell";
+    public static final String DELIVERY_FEE ="delivery_fee";
+    public static final String CUSTOMER_EMAIL ="customer_email";
 
 
+    public static final String ORDER_DETAILS_TABLE_NAME ="order_details";
+    public static final String ORDER_DETAILS_ID ="order_details_id";
+    public static final String ORDER_INVOICE_ID ="invoice_id";
+    public static final String ORDER_PRODUCT_NAME ="product_name";
+    public static final String ORDER_PRODUCT_WEIGHT ="product_weight";
+    public static final String ORDER_PRODUCT_QTY="product_qty";
+    public static final String PRODUCT_PRICE ="product_price";
+    public static final String ORDER_PRODUCT_IMAGE ="product_image";
+    public static final String PRODUCT_ORDER_DATE ="product_order_date";
+
+
+    public static final String ORDER_TYPE_TABLE_NAME ="order_type";
+    public static final String ORDER_TYPE_ID ="order_type_id";
+    public static final String ORDER_TYPE_NAME ="order_type_name";
 
 
 
@@ -158,6 +187,24 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
 
+        String order_list_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_LIST_TABLE_NAME + "( " +ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                INVOICE_ID + " TEXT, " + ORDER_DATE + " TEXT , " + ORDER_TIME + " TEXT , " + ORDER_TYPE + " TEXT ," +
+                ORDER_PAYMENT_METHOD + " TEXT, " + CUSTOMER_NAME + " TEXT , " + STORAGE_STATUS + " TEXT , " + DISCOUNT + " TEXT ," +
+                ORDER_STATUS + " TEXT, " + CUSTOMER_ADDRESS + " TEXT , " + CUSTOMER_CELL + " TEXT ,"  + DELIVERY_FEE + " TEXT , " + CUSTOMER_EMAIL + " TEXT " + " ) ";
+
+
+        String order_details_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_DETAILS_TABLE_NAME + "( " +ORDER_DETAILS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
+                ORDER_INVOICE_ID + " TEXT, " + ORDER_PRODUCT_NAME + " TEXT , " + ORDER_PRODUCT_WEIGHT + " TEXT , " + ORDER_PRODUCT_QTY + " TEXT ," +
+                PRODUCT_PRICE + " TEXT, " + ORDER_PRODUCT_IMAGE + " TEXT , " + PRODUCT_ORDER_DATE + " TEXT  "  + " ) ";
+
+
+
+        String order_type_table_insert_query = "CREATE TABLE IF NOT EXISTS " + ORDER_TYPE_TABLE_NAME + "( " + ORDER_TYPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                ORDER_TYPE_NAME + " TEXT " + " ) ";
+
+
+
+
         database.execSQL(regions_details_insert_query);
         database.execSQL(add_produce_insert_query);
         database.execSQL(market_price_insert_query);
@@ -166,6 +213,9 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(suppliers_table_insert_query);
         database.execSQL(product_weight_table_insert_query);
         database.execSQL(shop_insert_query);
+        database.execSQL(order_list_table_insert_query);
+        database.execSQL(order_details_table_insert_query);
+        database.execSQL(order_type_table_insert_query);
     }
 
     @Override
@@ -711,6 +761,136 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             return false;
         }
 
+    }
+
+
+    //delete order
+    public boolean deleteOrder(String invoice_id) {
+
+
+        long check = database.delete(ORDER_LIST_TABLE_NAME, ORDER_ID +"=?", new String[]{invoice_id});
+        long check2 = database.delete("order_details", "invoice_id=?", new String[]{invoice_id});
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public ArrayList<HashMap<String, String>> getOrderList() {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+ ORDER_LIST_TABLE_NAME +" ORDER BY " +  ORDER_ID + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(INVOICE_ID, cursor.getString(1));
+                map.put(ORDER_DATE, cursor.getString(2));
+                map.put(ORDER_TIME, cursor.getString(3));
+                map.put(ORDER_TYPE, cursor.getString(4));
+                map.put(ORDER_PAYMENT_METHOD, cursor.getString(5));
+                map.put(CUSTOMER_NAME, cursor.getString(6));
+                map.put(STORAGE_STATUS, cursor.getString(7));
+                map.put(ORDER_STATUS, cursor.getString(9));
+                map.put(CUSTOMER_ADDRESS, cursor.getString(10));
+                map.put(CUSTOMER_CELL, cursor.getString(11));
+                map.put(DELIVERY_FEE, cursor.getString(12));
+                map.put(CUSTOMER_EMAIL, cursor.getString(13));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+    public ArrayList<HashMap<String, String>> getOnlineOrderList() {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_list WHERE order_status LIKE'Pending%' AND storage_status LIKE '%online%' ORDER BY order_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("invoice_id", cursor.getString(1));
+                map.put("order_date", cursor.getString(2));
+                map.put("order_time", cursor.getString(3));
+                map.put("order_type", cursor.getString(4));
+                map.put("order_payment_method", cursor.getString(5));
+                map.put("customer_name", cursor.getString(6));
+                map.put("storage_status", cursor.getString(7));
+                map.put("order_status", cursor.getString(9));
+                map.put("customer_address", cursor.getString(10));
+                map.put("customer_cell", cursor.getString(11));
+                map.put("delivery_fee", cursor.getString(12));
+                map.put("customer_email", cursor.getString(13));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+    public ArrayList<HashMap<String, String>> searchOrderList(String s) {
+        ArrayList<HashMap<String, String>> orderList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_list WHERE customer_name LIKE '%" + s + "%' OR invoice_id LIKE '%" + s + "%' ORDER BY order_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("invoice_id", cursor.getString(1));
+                map.put("order_date", cursor.getString(2));
+                map.put("order_time", cursor.getString(3));
+                map.put("order_type", cursor.getString(4));
+                map.put("order_payment_method", cursor.getString(5));
+                map.put("customer_name", cursor.getString(6));
+
+
+                orderList.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orderList;
+    }
+
+
+    //get order history data
+    public ArrayList<HashMap<String, String>> getOrderDetailsList(String order_id) {
+        ArrayList<HashMap<String, String>> orderDetailsList = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM order_details WHERE invoice_id='" + order_id + "' ORDER BY order_details_id DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put("product_name", cursor.getString(2));
+                map.put("product_weight", cursor.getString(3));
+                map.put("product_qty", cursor.getString(4));
+                map.put("product_price", cursor.getString(5));
+                map.put("product_image", cursor.getString(6));
+
+                orderDetailsList.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        database.close();
+        return orderDetailsList;
     }
 }
 
