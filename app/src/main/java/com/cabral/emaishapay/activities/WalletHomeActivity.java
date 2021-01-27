@@ -39,6 +39,7 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.fragments.WalletTransactionsListFragment;
 import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.network.StartAppRequests;
@@ -51,7 +52,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 public class WalletHomeActivity extends AppCompatActivity{
     private static final String TAG = "WalletHomeActivity";
-    private  static Context context;
+    private static Context context;
     public static FragmentManager fm;
     public static Fragment currentFragment;
     public static ActionBar actionBar;
@@ -62,20 +63,13 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCES_PREPIN_ENCRYPTION = "12";
 
     public static final String PREFERENCES_FILE_NAME = "UserInfo";
-    public static final String FARM_NAME_PREFERENCES_ID = "farmname";
-    public static final String STREET_PREFERENCES_ID = "addressStreet";
-    public static final String CITY_PREFERENCES_ID = "addressCityOrTown";
-    public static final String USER_DEFAULT_ADDRESS_PREFERENCES_ID = "userDefaultAddressID";
-    public static final String COUNTRY_PREFERENCES_ID = "addressCountry";
     public static final String PREFERENCES_FIRST_NAME = "firstname";
     public static final String PREFERENCES_LAST_NAME = "lastname";
-    public static String RETRIEVED_USER_ID = "";
     public static final String PREFERENCES_USER_EMAIL = "email";
     public static final String PREFERENCES_PHONE_NUMBER = "phoneNumber";
     public static final String PREFERENCES_WALLET_ACCOUNT_ROLE = "accountRole";
 
     public static final String PREFERENCES_FIREBASE_TOKEN_SUBMITTED = "tokenSubmitted";
-    public static final String PREFERENCES_USER_BACKED_UP = "userBackedUp";
     public static final String PREFERENCES_USER_PASSWORD = "password";
 
     public static final String PREFERENCE_ACCOUNT_PERSONAL_DOB ="dob";
@@ -111,8 +105,8 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
 
     public static Fragment defaultHomeFragment;
-    WalletBuyFragment buysellFragment;
     public static WalletAccountFragment walletAccountFragment;
+    Fragment walletTransactionsListFragment;
     CardListFragment cardListFragment;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
@@ -469,18 +463,14 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     }
 
-
     public static void disableNavigation() {
       bottomNavigationView.setVisibility(View.GONE);
-
-
     }
 
     public static void setupMerchntNav() {
         bottomNavigationView.setVisibility(View.GONE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
-
     }
 
     public static void setupAgentNav() {
@@ -494,8 +484,21 @@ public class WalletHomeActivity extends AppCompatActivity{
                 switch (item.getItemId()){
 
                     case R.id.walletSettlementFragment:
+                        Fragment walletTransactionsListFragment = new WalletTransactionsListFragment(context.getString(R.string.settlements));
+                        if (currentFragment == null)
+                            fm.beginTransaction()
+                                    .add(R.id.wallet_home_container, walletTransactionsListFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
+                        else
+                            fm.beginTransaction()
+                                    .hide(currentFragment)
+                                    .add(R.id.wallet_home_container, walletTransactionsListFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
 
-                        return false;
+                        currentFragment = walletAccountFragment;
+                        return true;
 
                     case R.id.walletAccountFragment_agent :
                             walletAccountFragment = new WalletAccountFragment();

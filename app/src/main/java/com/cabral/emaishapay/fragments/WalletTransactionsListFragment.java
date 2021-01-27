@@ -36,14 +36,16 @@ public class WalletTransactionsListFragment extends Fragment {
     private static final String TAG = "WalletTransactionsList";
     private Context context;
 
-    AppBarConfiguration appBarConfiguration;
 
     RecyclerView.Adapter statementAdapter;
     private List<WalletTransactionResponse.TransactionData.Transactions> dataList = new ArrayList<>();
-
+    private String appTitle;
     Toolbar toolbar;
     RecyclerView recyclerView;
 
+    public WalletTransactionsListFragment(String appTitle){
+        this.appTitle=appTitle;
+    }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class WalletTransactionsListFragment extends Fragment {
         actualStatementData();
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Transactions");
+        toolbar.setTitle(this.appTitle);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         return view;
