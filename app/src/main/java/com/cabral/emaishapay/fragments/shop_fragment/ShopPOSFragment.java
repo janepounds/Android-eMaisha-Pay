@@ -57,6 +57,9 @@ public class ShopPOSFragment extends Fragment {
         this.shop = shopActivity;
     }
 
+    public ShopPOSFragment(boolean b) {
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

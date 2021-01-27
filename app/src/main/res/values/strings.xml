@@ -275,6 +275,12 @@
     <string name="attributes"> Attributes </string>
     <string name="attribute_name"> Attribute Name </string>
     <string name="product_description"> Product Description </string>
+    <string name="product_cart">Product Cart</string>
+    <string name="product_removed_from_cart">Product removed from cart</string>
+    <string name="no_product_in_cart">No Product in Cart</string>
+    <string name="select_payment_method">SELECT PAYMENT METHOD</string>
+    <string name="select_order_type">SELECT ORDER TYPE</string>
+    <string name="select_customer">SELECT CUSTOMER</string>
 
     <string name="order"> Order </string>
     <string name="order_id"> Order ID </string>
