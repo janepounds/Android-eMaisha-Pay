@@ -236,7 +236,7 @@
                             android:textSize="14sp" />
 
                         <EditText
-                            android:id="@+id/etxt_customer_withdraw_phone_number"
+                            android:id="@+id/et_customer_withdraw_phone_number"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"

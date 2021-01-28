@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.network.APIClient;
 
 
 public class AgentCustomerConfirmDetails extends DialogFragment {
@@ -62,6 +67,24 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         textTotalAmount = view.findViewById(R.id.txtTotalAmount);
         layoutReceiverAccount = view.findViewById(R.id.layout_receiver_account);
 
+        if(getArguments()!=null){
+            /**************WITHDRAW********************/
+            String key = getArguments().getString("key");
+            if(key.equalsIgnoreCase("withdraw")){
+                textTitleLabel.setText(getArguments().getString("title"));
+                textTitleAmount.setText("Amount Received");
+                textName.setText(getArguments().getString("customer"));
+                textReceiverAccount.setText("Customer");
+                textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
+                textAmount.setText("UGX "+getArguments().getString("amount"));
+                textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+
+            }
+
+
+
+        }
+
 
 
 
@@ -86,9 +109,22 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 confirm_pin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-
-
+                        //submit details
+//                        /***************RETROFIT IMPLEMENTATION************************/
+//                        Call<WalletTransactionResponse> call = APIClient.getWalletInstance().initiateWithdraw();
+//                        call.enqueue(new Callback<WalletTransactionResponse>() {
+//                            @Override
+//                            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
+//
+//                            }
+//                        });
+//
+//
                     }
                 });
                 builder.setView(view);

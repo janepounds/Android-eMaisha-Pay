@@ -666,6 +666,16 @@ public interface APIRequests {
     Call<WalletTransactionResponse> getSettlements(
             @Header("Authorization") String token
     );
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_withdraw")
+    Call<WalletTransactionResponse> initiateWithdraw(
+            @Header("Authorization") String token,
+            @Field("amount") String amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+
+    );
+
 
 
 }
