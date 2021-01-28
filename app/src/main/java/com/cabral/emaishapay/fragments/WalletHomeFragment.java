@@ -80,16 +80,24 @@ public class WalletHomeFragment extends Fragment {
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setupAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.layoutTransfer.setVisibility(View.INVISIBLE);
+            binding.layoutSettle.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setupMerchntNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.layoutTransfer.setVisibility(View.INVISIBLE);
+            binding.layoutSettle.setVisibility(View.VISIBLE);
         }else if(role.equalsIgnoreCase("agent merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.layoutTransfer.setVisibility(View.INVISIBLE);
+            binding.layoutSettle.setVisibility(View.VISIBLE);
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
+            binding.layoutTransfer.setVisibility(View.VISIBLE);
+            binding.layoutSettle.setVisibility(View.INVISIBLE);
         }
         return binding.getRoot();
     }
@@ -106,7 +114,25 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new TransferMoney(balance);
+                Fragment fragment = new TransferMoney(balance,getString(R.string.transactions));
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+
+            }
+        });
+        binding.layoutSettle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Fragment fragment = new TransferMoney(balance,getString(R.string.settlements));
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 if (((WalletHomeActivity) getActivity()).currentFragment != null)
                     fragmentManager.beginTransaction()
