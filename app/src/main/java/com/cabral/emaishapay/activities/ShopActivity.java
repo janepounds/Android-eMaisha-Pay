@@ -76,7 +76,7 @@ public class ShopActivity extends AppCompatActivity {
                 selectedFragment = new ShopPOSFragment(false);
                 break;
             case R.id.walletSalesFragment:
-                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
+
                 selectedFragment = new ShopSalesFragment(false);
                 break;
         }
