@@ -564,6 +564,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     case R.id.walletSettlementFragment:
 
+
                         return false;
 
                     case R.id.walletAccountFragment_agent :
