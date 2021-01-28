@@ -55,12 +55,13 @@ public class AgentCustomerWithdraw extends DialogFragment {
     private EditText customerPhoneNumber,amount,customer;
     private String  businessName;
     private String phone_no;
+    Context context;
+
 
     public AgentCustomerWithdraw() {
 
 
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -4,6 +4,7 @@ import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
+import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
@@ -668,7 +669,7 @@ public interface APIRequests {
     );
     @FormUrlEncoded
     @POST("wallet/merchant/initiate_withdraw")
-    Call<WalletTransactionResponse> initiateWithdraw(
+    Call<InitiateWithdrawResponse> initiateWithdraw(
             @Header("Authorization") String token,
             @Field("amount") String amount,
             @Field("pin") String pin,

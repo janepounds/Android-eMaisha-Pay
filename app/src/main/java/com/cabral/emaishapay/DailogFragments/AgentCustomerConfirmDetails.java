@@ -1,7 +1,9 @@
 package com.cabral.emaishapay.DailogFragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,6 +23,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 
@@ -30,11 +34,20 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
     CardView layoutReceiverAccount;
     Button txtSubmit;
+    Context context;
+
 
     public AgentCustomerConfirmDetails() {
 
 
     }
+
+    public AgentCustomerConfirmDetails(Context context) {
+    this.context = context;
+
+    }
+
+
 
 
     @Override
@@ -66,6 +79,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         textTitleTotalAmount = view.findViewById(R.id.text_title_total_amount);
         textTotalAmount = view.findViewById(R.id.txtTotalAmount);
         layoutReceiverAccount = view.findViewById(R.id.layout_receiver_account);
+        txtSubmit = view.findViewById(R.id.txt_card_confirm);
 
         if(getArguments()!=null){
             /**************WITHDRAW********************/
@@ -86,6 +100,53 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         }
 
 
+        txtSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.c);
+                    // Get the layout inflater
+                    LayoutInflater inflater = getLayoutInflater();
+                    // Inflate and set the layout for the dialog
+                    // Pass null as the parent view because its going in the dialog layout
+                    View view = inflater.inflate(R.layout.dialog_enter_pin, null);
+
+                    TextView confirm_pin = view.findViewById(R.id.txt_custom_add_agent_submit_pin);
+                    confirm_pin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                            //submit details
+                        /***************RETROFIT IMPLEMENTATION************************/
+                        Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().initiateWithdraw(access_token,textTotalAmount.getText().toString(),confirm_pin.getText().toString(),textPhoneNumber.getText().toString());
+                        call.enqueue(new Callback<InitiateWithdrawResponse>() {
+                            @Override
+                            public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                                if(response.body().getStatus().equalsIgnoreCase("1")){
+
+                                        //success message
+
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+
+                            }
+                        });
+//
+//
+                        }
+                    });
+                    builder.setView(view);
+                    Dialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(false);
+                    setCancelable(false);
+
+            }
+        });
 
 
 
@@ -94,49 +155,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         setCancelable(false);
 
-        txtSubmit = view.findViewById(R.id.txt_card_confirm);
-        txtSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                // Get the layout inflater
-                LayoutInflater inflater = requireActivity().getLayoutInflater();
-                // Inflate and set the layout for the dialog
-                // Pass null as the parent view because its going in the dialog layout
-                View view = inflater.inflate(R.layout.dialog_enter_pin, null);
-
-                TextView confirm_pin = view.findViewById(R.id.txt_custom_add_agent_submit_pin);
-                confirm_pin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //submit details
-//                        /***************RETROFIT IMPLEMENTATION************************/
-//                        Call<WalletTransactionResponse> call = APIClient.getWalletInstance().initiateWithdraw();
-//                        call.enqueue(new Callback<WalletTransactionResponse>() {
-//                            @Override
-//                            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
-//
-//                            }
-//                        });
-//
-//
-                    }
-                });
-                builder.setView(view);
-                Dialog dialog = builder.create();
-                dialog.setCanceledOnTouchOutside(false);
-                setCancelable(false);
-            }
-        });
-
-
-
         return dialog;
 
     }
+
+
+
+
 }
