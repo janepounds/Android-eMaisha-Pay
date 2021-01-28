@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class ProductCartFragment extends Fragment {
     private Context context;
     AlertDialog alertDialog;
     String order_type, order_payment_method, customer_name;
+    Toolbar toolbar;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,7 +62,8 @@ public class ProductCartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_product_cart, container, false);
-
+        toolbar = view.findViewById(R.id.toolbar_product_cart);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.product_cart);

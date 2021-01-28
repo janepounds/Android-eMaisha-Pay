@@ -62,7 +62,7 @@ public class SalesDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_sales_details, container, false);
-        toolbar = view.findViewById(R.id.toolbar_shop_products);
+        toolbar = view.findViewById(R.id.toolbar_sales_details);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

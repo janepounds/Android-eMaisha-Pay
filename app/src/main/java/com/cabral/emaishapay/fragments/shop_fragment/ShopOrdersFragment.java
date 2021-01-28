@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ public class ShopOrdersFragment extends Fragment {
     private OrderAdapter orderAdapter;
     private DbHandlerSingleton dbHandler;
     private Context context;
+    Toolbar toolbar;
 
     public ShopOrdersFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
     }
@@ -62,7 +64,9 @@ public class ShopOrdersFragment extends Fragment {
 
         imgNoProduct.setVisibility(View.GONE);
         txtNoProducts.setVisibility(View.GONE);
+        toolbar = view.findViewById(R.id.toolbar_orders);
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
         ((AppCompatActivity)requireActivity()). getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.order_history);
