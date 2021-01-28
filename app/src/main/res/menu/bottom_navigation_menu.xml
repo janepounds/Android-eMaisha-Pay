@@ -28,7 +28,7 @@
         android:id="@+id/walletCardsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_card_btm_nav"
-        android:title="CARD"
+        android:title="CARDS"
         app:showAsAction="ifRoom"/>
 
     <item

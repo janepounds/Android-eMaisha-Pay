@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_background"
     android:layout_margin="2dp"
-    tools:context=".DailogFragments.AgentCustomerDepositDetails">
+    tools:context=".DailogFragments.AgentCustomerConfirmDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:background="@drawable/top_rounded_blue">
 
                 <TextView
-                    android:id="@+id/agent_bal_inquiry_title_label"
+                    android:id="@+id/agent_confirm_details_title_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight=".1"
@@ -51,6 +51,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/text_title_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -59,6 +60,7 @@
                         android:textSize="20sp" />
 
                     <TextView
+                        android:id="@+id/text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -69,9 +71,44 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_phone"
+                android:id="@+id/layout_receiver_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Receiver Account"
+                        android:textColor="#929292"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/text_receiver_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:paddingTop="5dp"
+                        android:text="0112378934459034"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_layout_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -86,7 +123,7 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/txtType"
+                        android:id="@+id/text_title_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -95,7 +132,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/txtType_number"
+                        android:id="@+id/text_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -122,6 +159,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/text_title_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -130,7 +168,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/txtAmount"
+                        android:id="@+id/text_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -157,6 +195,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/text_title_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -165,6 +204,7 @@
                         android:textSize="20sp" />
 
                     <TextView
+                        android:id="@+id/text_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
@@ -191,6 +231,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/text_title_total_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
