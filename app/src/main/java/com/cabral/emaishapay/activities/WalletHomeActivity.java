@@ -467,13 +467,8 @@ public class WalletHomeActivity extends AppCompatActivity{
       bottomNavigationView.setVisibility(View.GONE);
     }
 
-    public static void setupMerchntNav() {
-        bottomNavigationView.setVisibility(View.GONE);
-        bottom_navigation_shop.setVisibility(View.VISIBLE);
-        bottom_navigation_shop.setItemIconTintList(null);
-    }
 
-    public static void setupAgentNav() {
+    public static void setUpMasterAgentNav() {
         bottomNavigationView.setVisibility(View.GONE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
@@ -482,6 +477,7 @@ public class WalletHomeActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
 
                 switch (item.getItemId()){
+
 
                     case R.id.walletSettlementFragment:
                         Fragment walletTransactionsListFragment = new WalletTransactionsListFragment(context.getString(R.string.settlements));
@@ -499,72 +495,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         currentFragment = walletAccountFragment;
                         return true;
-
-                    case R.id.walletAccountFragment_agent :
-                            walletAccountFragment = new WalletAccountFragment();
-                            if (currentFragment == null)
-                                fm.beginTransaction()
-                                        .add(R.id.wallet_home_container, walletAccountFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-                            else
-                                fm.beginTransaction()
-                                        .hide(currentFragment)
-                                        .add(R.id.wallet_home_container, walletAccountFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-
-                        currentFragment = walletAccountFragment;
-                        return true;
-
-                    case R.id.walletHomeFragment :
-                            defaultHomeFragment = new WalletHomeFragment();
-                            if (currentFragment == null)
-                                fm.beginTransaction()
-                                        .add(R.id.wallet_home_container, defaultHomeFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-                            else
-                                fm.beginTransaction()
-                                        .hide(currentFragment)
-                                        .add(R.id.wallet_home_container, defaultHomeFragment)
-                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                        .commit();
-
-                        currentFragment = defaultHomeFragment;
-                        return true;
-
-                    case R.id.walletShopFragment:
-
-                        Intent shop = new Intent(context, ShopActivity.class);
-                        context.startActivity(shop);
-
-                        return true;
-
-                    default:
-                        return false;
-
-
-                }
-
-            }
-        });
-    }
-
-
-    public static void setUpMasterAgentNav() {
-        bottomNavigationView.setVisibility(View.GONE);
-        bottom_navigation_shop.setVisibility(View.VISIBLE);
-        bottom_navigation_shop.setItemIconTintList(null);
-        bottom_navigation_shop.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {//walletAccountFragment
-
-                switch (item.getItemId()){
-
-                    case R.id.walletSettlementFragment:
-
-                        return false;
 
                     case R.id.walletAccountFragment_agent :
                         walletAccountFragment = new WalletAccountFragment();
