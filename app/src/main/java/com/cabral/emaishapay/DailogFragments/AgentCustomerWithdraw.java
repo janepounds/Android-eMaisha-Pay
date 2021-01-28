@@ -28,7 +28,7 @@ import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 
 
 public class AgentCustomerWithdraw extends DialogFragment {
-    LinearLayout layoutCustomerNumber, layoutRecipientNumber,layoutAccountNumber,layoutPhoneNumber;
+    LinearLayout layoutCustomerNumber,layoutAccountNumber,layoutPhoneNumber;
     Spinner spWithdrawFrom;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
@@ -64,7 +64,6 @@ public class AgentCustomerWithdraw extends DialogFragment {
         spWithdrawFrom = view.findViewById(R.id.sp_withdraw_from);
         layoutAccountNumber = view.findViewById(R.id.layout_withdraw_card_account_number);
         layoutCustomerNumber = view.findViewById(R.id.layout_customer_number);
-        layoutRecipientNumber = view.findViewById(R.id.layout_recipient_number);
         layoutPhoneNumber = view.findViewById(R.id.layout_withdraw_card_phonenumber);
 
         spWithdrawFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -78,19 +77,16 @@ public class AgentCustomerWithdraw extends DialogFragment {
                 }
                 if(position==0){
                     layoutCustomerNumber.setVisibility(View.GONE);
-                    layoutRecipientNumber.setVisibility(View.GONE);
                     layoutAccountNumber.setVisibility(View.GONE);
                     layoutPhoneNumber.setVisibility(View.GONE);
                 }
                 else if(position==1){
                     layoutCustomerNumber.setVisibility(View.VISIBLE);
-                    layoutRecipientNumber.setVisibility(View.VISIBLE);
                     layoutAccountNumber.setVisibility(View.GONE);
                     layoutPhoneNumber.setVisibility(View.GONE);
                 }
                 else if(position==2) {
                     layoutCustomerNumber.setVisibility(View.GONE);
-                    layoutRecipientNumber.setVisibility(View.GONE);
                     layoutAccountNumber.setVisibility(View.VISIBLE);
                     layoutPhoneNumber.setVisibility(View.VISIBLE);
 
