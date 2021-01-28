@@ -40,7 +40,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajts.androidmads.library.ExcelToSQLite;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
@@ -51,8 +50,6 @@ import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.network.APIClient;
-import com.google.android.gms.common.api.Api;
-import com.obsez.android.lib.filechooser.ChooserDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +73,7 @@ public class AddProductFragment extends DialogFragment {
     ProgressDialog loading;
     EditText etxtProductName, etxtProductCategory, etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight, etxtProductManufucturer;
     TextView txtAddProdcut;
-    ImageView imgScanCode;
+
     String mediaPath, encodedImage = "N/A";
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
@@ -783,92 +780,8 @@ public class AddProductFragment extends DialogFragment {
 
         return encImage;
     }
-    public void onImport(String path) {
-
-        String directory_path = path;
 
 
-        File file = new File(directory_path);
-        if (!file.exists()) {
-            Toast.makeText(getContext(), R.string.no_file_found, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Is used to import data from excel without dropping table
-//         ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(),DatabaseOpenHelper.DATABASE_NAME);
-
-        // if you want to add column in excel and import into DB, you must drop the table
-        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getContext(), DbHandlerSingleton.DATABASE_NAME, false);
-        // Import EXCEL FILE to SQLite
-        excelToSQLite.importFromFile(directory_path, new ExcelToSQLite.ImportListener() {
-            @Override
-            public void onStart() {
-
-                loading = new ProgressDialog(getContext());
-                loading.setMessage(getString(R.string.data_importing_please_wait));
-                loading.setCancelable(false);
-                loading.show();
-
-            }
-
-            @Override
-            public void onCompleted(String dbName) {
-
-
-                Handler mHand = new Handler();
-                mHand.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        loading.dismiss();
-                        Toasty.success(getContext(), R.string.data_successfully_imported, Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(getContext(), HomeActivity.class);
-//                        startActivity(intent);
-                        // finish();
-
-
-                    }
-                }, 5000);
-
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-                loading.dismiss();
-                Log.d("Error : ", "" + e.getMessage());
-                Toasty.error(getContext(), R.string.data_import_fail, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    public void fileChooser() {
-        new ChooserDialog(getContext())
-
-
-                .displayPath(true)
-                .withFilter(false, false, "xls") //filter file type
-
-                .withChosenListener(new ChooserDialog.Result() {
-                    @Override
-                    public void onChoosePath(String path, File pathFile) {
-//                        Toast.makeText(AddProductActivity.this, "FILE: " + path, Toast.LENGTH_SHORT).show();
-                        onImport(path);
-                    }
-                })
-                // to handle the back key pressed or clicked outside the dialog:
-                .withOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        Log.d("CANCEL", "CANCEL");
-                        dialog.cancel(); // MUST have
-                    }
-                })
-                .build()
-                .show();
-    }
 
 
     public void saveList(List<Category> categories) {

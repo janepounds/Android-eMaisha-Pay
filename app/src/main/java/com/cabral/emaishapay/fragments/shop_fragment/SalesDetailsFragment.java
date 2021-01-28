@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.Shop.SalesDetailsAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.pdf_report.TemplatePDF;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class SalesDetailsFragment extends Fragment {
     //how many headers or column you need, add here by using ,
     //headers and get clients para meter must be equal
     private String[] header = {"Description", "Price"};
-    private TemplatePDF templatePDF;
+
     FragmentManager fm;
     Activity shop;
     private Context context;
@@ -72,7 +71,7 @@ public class SalesDetailsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler);
         imgNoProduct = view.findViewById(R.id.image_no_product);
         txtTotalPrice = view.findViewById(R.id.txt_total_price);
-        txtPdfReceipt = view.findViewById(R.id.txt_pdf_receipt);
+
 
 
         txtNoProducts = view.findViewById(R.id.txt_no_products);
@@ -132,60 +131,11 @@ public class SalesDetailsFragment extends Fragment {
         longText = "Thanks for purchase. Visit again";
 
 
-        templatePDF = new TemplatePDF(getContext());
-        templatePDF.openDocument();
-        templatePDF.addMetaData("Order Receipt", "Order Receipt", "Smart POS");
-        templatePDF.addTitle(shop_name, shop_address + "\n Email: " + shop_email + "\nContact: " + shop_contact + "\nInvoice ID:" + order_id, order_time + " " + order_date);
-        //templatePDF.addTitle(getDrName,"Patient Prescription",getDate);
-        templatePDF.addParagraph(shortText);
-        // templatePDF.addParagraph(longText);
-
-
-        templatePDF.createTable(header, getClients());
-        templatePDF.addRightParagraph(longText);
-        templatePDF.closeDocument();
-
-
-        txtPdfReceipt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                templatePDF.viewPDF();
-            }
-        });
 
 
         return view;
     }
 
 
-    //for pdf
-    private ArrayList<String[]> getClients() {
-        ArrayList<String[]> rows = new ArrayList<>();
 
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
-
-        //get data from local database
-        List<HashMap<String, String>> orderDetailsList;
-        orderDetailsList = dbHandler.getOrderDetailsList(order_id);
-        String name, price, qty, weight;
-        double cost_total;
-
-        for (int i = 0; i < orderDetailsList.size(); i++) {
-            name = orderDetailsList.get(i).get("product_name");
-            price = orderDetailsList.get(i).get("product_price");
-            qty = orderDetailsList.get(i).get("product_qty");
-            weight = orderDetailsList.get(i).get("product_weight");
-
-            cost_total = Integer.parseInt(qty) * Double.parseDouble(price);
-
-            rows.add(new String[]{name + "\n" + weight + "\n" + "(" + qty + "x" + currency + price + ")", currency + cost_total});
-
-
-        }
-        rows.add(new String[]{"..........................................", ".................................."});
-        rows.add(new String[]{currency + "  " + total_price});
-//        you can add more row above format
-        return rows;
-    }
 }
