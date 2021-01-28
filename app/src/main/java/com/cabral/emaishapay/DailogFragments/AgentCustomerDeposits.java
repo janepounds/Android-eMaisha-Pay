@@ -23,6 +23,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
@@ -46,7 +49,7 @@ import retrofit2.Response;
 public class AgentCustomerDeposits extends DialogFragment {
     LinearLayout layoutMobileNumber, layoutWalletNumber,layoutAccountNumber;
     Spinner spDepositTo;
-    Button addMoneyImg;
+    Button addMoneyBtn;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
     static String PENDING_DEPOSIT_REFERENCE_NUMBER;
     TextView balanceTextView;
@@ -55,6 +58,7 @@ public class AgentCustomerDeposits extends DialogFragment {
     ProgressDialog dialog;
     Context activity;
     private RaveVerificationUtils verificationUtils;
+    FragmentManager fm;
 
     public AgentCustomerDeposits() {
 
@@ -82,6 +86,7 @@ public class AgentCustomerDeposits extends DialogFragment {
         layoutAccountNumber = view.findViewById(R.id.layout_account_number);
         layoutMobileNumber = view.findViewById(R.id.layout_mobile_number);
         layoutWalletNumber = view.findViewById(R.id.layout_wallet_number);
+        addMoneyBtn = view.findViewById(R.id.button_add_money);
 
         spDepositTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -118,6 +123,21 @@ public class AgentCustomerDeposits extends DialogFragment {
         });
 
 
+        addMoneyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                depositDialog.show(ft, "dialog");
+            }
+        });
 
         builder.setView(view);
         Dialog dialog = builder.create();
