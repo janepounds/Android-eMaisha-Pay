@@ -49,6 +49,9 @@ public class ShopSalesFragment extends Fragment {
         this.shop = shopActivity;
     }
 
+    public ShopSalesFragment(boolean b) {
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
