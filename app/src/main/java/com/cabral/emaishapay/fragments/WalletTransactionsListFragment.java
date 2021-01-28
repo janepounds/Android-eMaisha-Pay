@@ -126,4 +126,57 @@ public class WalletTransactionsListFragment extends Fragment {
 
 
     }
+
+    private void getSettlements(){
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("Please Wait..");
+        dialog.setCancelable(false);
+        dialog.show();
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
+        /**********RETROFIT IMPLEMENTATION************/
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<WalletTransactionResponse> call = apiRequests.getSettlements(access_token);
+
+        call.enqueue(new Callback<WalletTransactionResponse>() {
+            @Override
+            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
+                if (response.code() == 200) {
+                    try {
+                        WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
+                        dataList = walletTransactionResponseData.getTransactions();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        Log.w("Settlements",dataList.size()+"**********");
+
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());
+                        recyclerView.setAdapter(statementAdapter);
+                        statementAdapter.notifyDataSetChanged();
+                    }
+
+
+                    dialog.dismiss();
+                } else if (response.code() == 401) {
+
+                    TokenAuthActivity.startAuth(context, true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+    }
 }

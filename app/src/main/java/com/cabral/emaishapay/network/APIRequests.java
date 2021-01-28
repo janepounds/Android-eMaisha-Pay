@@ -662,5 +662,10 @@ public interface APIRequests {
 
     );
 
+    @GET("wallet/settlements/list")
+    Call<WalletTransactionResponse> getSettlements(
+            @Header("Authorization") String token
+    );
+
 
 }
