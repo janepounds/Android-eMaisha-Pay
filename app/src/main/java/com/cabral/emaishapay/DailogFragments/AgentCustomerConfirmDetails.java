@@ -37,6 +37,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
     CardView layoutReceiverAccount;
     Button txtSubmit;
+    String key = "";
 
 
     public AgentCustomerConfirmDetails() {
@@ -81,7 +82,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
         if(getArguments()!=null){
             /**************WITHDRAW********************/
-            String key = getArguments().getString("key");
+            key = getArguments().getString("key");
             if(key.equalsIgnoreCase("withdraw")){
                 textTitleLabel.setText(getArguments().getString("title"));
                 textTitleAmount.setText("Amount Received");
@@ -90,6 +91,14 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+
+            }else{
+
+                textName.setText(getArguments().getString("customer_name"));
+                textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
+                textAmount.setText("UGX "+getArguments().getString("amount"));
+                textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+
 
             }
 
@@ -111,6 +120,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 }
                 ft.addToBackStack(null);
                 Bundle bundle = new Bundle();
+                bundle.putString("key",key);
                 bundle.putString("amount",textTotalAmount.getText().toString());
                 bundle.putString("phone_number",textPhoneNumber.getText().toString());
 

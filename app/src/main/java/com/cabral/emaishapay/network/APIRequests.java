@@ -678,5 +678,12 @@ public interface APIRequests {
     );
 
 
-
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_deposit")
+    Call<InitiateWithdrawResponse>initiateDeposit(
+            @Header("Authorization") String token,
+            @Field("amount") int amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+    );
 }

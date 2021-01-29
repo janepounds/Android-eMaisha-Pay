@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -31,6 +32,7 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -54,11 +56,12 @@ public class AgentCustomerDeposits extends DialogFragment {
     static String PENDING_DEPOSIT_REFERENCE_NUMBER;
     TextView balanceTextView;
     double balance;
-    private String txRef;
+    private String txRef, business_name= "";
     ProgressDialog dialog;
     Context activity;
     private RaveVerificationUtils verificationUtils;
     FragmentManager fm;
+    private EditText walletNumber,depositAmount,phoneNumber;
 
     public AgentCustomerDeposits() {
 
@@ -87,6 +90,9 @@ public class AgentCustomerDeposits extends DialogFragment {
         layoutMobileNumber = view.findViewById(R.id.layout_mobile_number);
         layoutWalletNumber = view.findViewById(R.id.layout_wallet_number);
         addMoneyBtn = view.findViewById(R.id.button_add_money);
+        phoneNumber = view.findViewById(R.id.agent_deposit_mobile_no);
+        walletNumber = view.findViewById(R.id.txt_deposit_wallet_no);
+        depositAmount = view.findViewById(R.id.deposit_amount);
 
         spDepositTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,8 +132,17 @@ public class AgentCustomerDeposits extends DialogFragment {
         addMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
+                if(spDepositTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
+                    getReceiverName("0" + walletNumber.getText().toString());
+                }
+                FragmentManager fragmentManager = getChildFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                Bundle bundle = new Bundle();
+                bundle.putString("key","deposit");
+                bundle.putString("phone_number",walletNumber.getText().toString());
+                bundle.putString("amount",depositAmount.getText().toString());
+                bundle.putString("customer_name",business_name);
                 if (prev != null) {
                     ft.remove(prev);
                 }
@@ -135,6 +150,7 @@ public class AgentCustomerDeposits extends DialogFragment {
 
                 // Create and show the dialog.
                 DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                depositDialog.setArguments(bundle);
                 depositDialog.show(ft, "dialog");
             }
         });
@@ -155,5 +171,41 @@ public class AgentCustomerDeposits extends DialogFragment {
 
     }
 
+    public void getReceiverName(String receiverPhoneNumber){
 
+        /***************RETROFIT IMPLEMENTATION***********************/
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber);
+        call.enqueue(new Callback<MerchantInfoResponse>() {
+            @Override
+            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+                if(response.isSuccessful()){
+                    business_name = response.body().getData().getBusinessName();
+
+                }else if(response.code()==412) {
+                    business_name = response.body().getMessage();
+                    // confirmBtn.setEnabled(true);
+                }
+                else if(response.code()==401){
+                    TokenAuthActivity.startAuth(activity, true);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+
+                Log.e("info : ", t.getMessage());
+                Log.e("info : ", "Something got very very wrong");
+
+
+
+            }
+        });
+
+
+    }
 }
