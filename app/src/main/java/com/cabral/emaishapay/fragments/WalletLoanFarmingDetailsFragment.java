@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -105,6 +106,26 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        if(rbCrop.isChecked()){
+
+        } else if(rbPoultry.isChecked()){
+            layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+            layoutPoultry.setVisibility(View.VISIBLE);
+            layoutCrop.setVisibility(View.GONE);
+            layoutPiggery.setVisibility(View.GONE);
+            rbCrop.setChecked(false);
+            rbPiggery.setChecked(false);
+        } else if(rbPiggery.isChecked()){
+            layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+            layoutPiggery.setVisibility(View.VISIBLE);
+            layoutCrop.setVisibility(View.GONE);
+            layoutPoultry.setVisibility(View.GONE);
+            rbCrop.setChecked(false);
+            rbPoultry.setChecked(false);
+        } else {
+            rbCrop.setChecked(true);
+        }
+
 
         return view;
     }
@@ -116,27 +137,23 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             interest=localBundle.getFloat("interest");
         }
 
-         if(rbCrop.isChecked()){
-             layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-             layoutCrop.setVisibility(View.VISIBLE);
-             layoutPoultry.setVisibility(View.GONE);
-             layoutPiggery.setVisibility(View.GONE);
-         } else if(rbPoultry.isChecked()){
-             layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-             layoutPoultry.setVisibility(View.VISIBLE);
-             layoutCrop.setVisibility(View.GONE);
-             layoutPiggery.setVisibility(View.GONE);
-         } else if(rbPiggery.isChecked()){
-             layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-             layoutPiggery.setVisibility(View.VISIBLE);
-             layoutCrop.setVisibility(View.GONE);
-             layoutPoultry.setVisibility(View.GONE);
-         } else {
-             rbCrop.setChecked(true);
-         }
 
+        rbCrop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                if(isChecked){
+                    layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                    layoutCrop.setVisibility(View.VISIBLE);
+                    layoutPoultry.setVisibility(View.GONE);
+                    layoutPiggery.setVisibility(View.GONE);
+                    rbPoultry.setChecked(false);
+                    rbPiggery.setChecked(false);
+                }else{
 
+                }
+            }
+        });
 
 
 
