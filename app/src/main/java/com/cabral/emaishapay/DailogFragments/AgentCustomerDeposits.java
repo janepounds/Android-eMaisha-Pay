@@ -135,23 +135,7 @@ public class AgentCustomerDeposits extends DialogFragment {
                 if(spDepositTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
                     getReceiverName("0" + walletNumber.getText().toString());
                 }
-                FragmentManager fragmentManager = getChildFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                Fragment prev = fragmentManager.findFragmentByTag("dialog");
-                Bundle bundle = new Bundle();
-                bundle.putString("key","deposit");
-                bundle.putString("phone_number",walletNumber.getText().toString());
-                bundle.putString("amount",depositAmount.getText().toString());
-                bundle.putString("customer_name",business_name);
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
 
-                // Create and show the dialog.
-                DialogFragment depositDialog = new AgentCustomerConfirmDetails();
-                depositDialog.setArguments(bundle);
-                depositDialog.show(ft, "dialog");
             }
         });
 
@@ -185,8 +169,28 @@ public class AgentCustomerDeposits extends DialogFragment {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
 
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key","deposit");
+                    bundle.putString("phone_number",walletNumber.getText().toString());
+                    bundle.putString("amount",depositAmount.getText().toString());
+                    bundle.putString("customer_name",business_name);
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                    depositDialog.setArguments(bundle);
+                    depositDialog.show(ft, "dialog");
+
                 }else if(response.code()==412) {
-                    business_name = response.body().getMessage();
+                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
+                    //redirect to previous step
+                    getActivity().getSupportFragmentManager().popBackStack();
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
