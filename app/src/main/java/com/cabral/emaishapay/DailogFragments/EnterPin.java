@@ -3,6 +3,7 @@ package com.cabral.emaishapay.DailogFragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.APIClient;
 
@@ -81,11 +83,17 @@ public class EnterPin extends DialogFragment {
                                     if (response.body().getStatus().equalsIgnoreCase("1")) {
                                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                                         //success message
+                                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                        startActivity(intent);
                                         dialog.dismiss();
 
                                     } else {
                                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                                         //redirect to home;
+                                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                        startActivity(intent);
+
+
                                         dialog.dismiss();
 
                                     }
@@ -96,6 +104,9 @@ public class EnterPin extends DialogFragment {
 
                             @Override
                             public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                startActivity(intent);
                                 dialog.dismiss();
                             }
                         });
