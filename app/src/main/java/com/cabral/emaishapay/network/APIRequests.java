@@ -697,4 +697,14 @@ public interface APIRequests {
             @Field("receiverPhoneNumber") String receiverPhoneNumber
 
     );
+    @FormUrlEncoded
+    @POST("wallet/merchant/balance_inquiry")
+    Call<InitiateWithdrawResponse>balanceInquiry(
+            @Header("Authorization") String token,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+
+
+    );
+
 }

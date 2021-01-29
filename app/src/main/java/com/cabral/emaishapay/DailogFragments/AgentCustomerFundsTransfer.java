@@ -138,6 +138,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                     Fragment prev = fragmentManager.findFragmentByTag("dialog");
                     Bundle bundle = new Bundle();
                     bundle.putString("key","transfer");
+                    bundle.putString("title","Confirm Transfer Details");
                     bundle.putString("receipient_no",receipentNo.getText().toString());
                     bundle.putString("customer_no",customerNo.getText().toString());
                     bundle.putString("amount",amount.getText().toString());

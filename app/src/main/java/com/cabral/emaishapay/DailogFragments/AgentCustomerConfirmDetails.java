@@ -35,7 +35,7 @@ import com.cabral.emaishapay.network.APIClient;
 public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleLabel,textTitleName,textName,textReceiverAccount,textTitlePhoneNumber,textPhoneNumber,textTitleAmount,textAmount;
     TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
-    CardView layoutReceiverAccount;
+    CardView layoutReceiverAccount,totalAmount,charge,depositAmount;
     Button txtSubmit;
     String key = "",customerNo;
 
@@ -79,6 +79,9 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         textTitleTotalAmount = view.findViewById(R.id.text_title_total_amount);
         textTotalAmount = view.findViewById(R.id.txtTotalAmount);
         layoutReceiverAccount = view.findViewById(R.id.layout_receiver_account);
+        totalAmount = view.findViewById(R.id.card_total_amount);
+        charge = view.findViewById(R.id.card_transaction_charge);
+        depositAmount = view.findViewById(R.id.card_deposit_amount);
         txtSubmit = view.findViewById(R.id.txt_card_confirm);
 
         if(getArguments()!=null){
@@ -101,7 +104,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
 
-            }else{
+            }else if(key.equalsIgnoreCase("transfer")){
+                textTitleLabel.setText(getArguments().getString("title"));
                 textReceiverAccount.setText("Receiver");
                 textName.setText(getArguments().getString("customer_name"));
                 textTitlePhoneNumber.setText("Receiver Mobile");
@@ -113,6 +117,13 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTitleAmount.setText("Transfer Amount");
 
 
+            }else{
+                textTitleLabel.setText(getArguments().getString("title"));
+                textName.setText(getArguments().getString("customer_name"));
+                textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
+                totalAmount.setVisibility(View.GONE);
+                charge.setVisibility(View.GONE);
+                depositAmount.setVisibility(View.GONE);
             }
 
 

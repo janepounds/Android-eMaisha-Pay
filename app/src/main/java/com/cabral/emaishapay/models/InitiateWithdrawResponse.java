@@ -46,6 +46,18 @@ public class InitiateWithdrawResponse {
         @Expose
         private String status;
 
+        @SerializedName("balance")
+        @Expose
+        private double balance;
+
+        public double getBalance() {
+            return balance;
+        }
+
+        public void setBalance(double balance) {
+            this.balance = balance;
+        }
+
         public String getReferenceNumber() {
             return referenceNumber;
         }

@@ -3,6 +3,7 @@ package com.cabral.emaishapay.DailogFragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +23,13 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.APIClient;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +38,9 @@ public class EnterPin extends DialogFragment {
     private String totalAmount,phoneNumber;
     private Button submit;
     private EditText confirm_pin;
+    private double balance;
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -152,7 +161,7 @@ public class EnterPin extends DialogFragment {
                             dialog.dismiss();
                         }
                     });
-                }else{
+                }else if(getArguments().getString("key").equalsIgnoreCase("transfer")){
 
                     /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
                     String customer_no ="0"+ getArguments().getString("customer_no");
@@ -192,6 +201,61 @@ public class EnterPin extends DialogFragment {
                         }
                     });
 
+                }else{
+                    /***************RETROFIT IMPLEMENTATION FOR BALANCE INQUIRY************************/
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().balanceInquiry(access_token, "12"+confirm_pin.getText().toString(), phoneNumber);
+                    call.enqueue(new Callback<InitiateWithdrawResponse>() {
+                        @Override
+                        public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getStatus().equalsIgnoreCase("1")) {
+                                    balance = response.body().getData().getBalance();
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                    //call balance dialog
+                                    FragmentManager fragmentManager = getChildFragmentManager();
+
+                                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                                    if (prev != null) {
+                                        ft.remove(prev);
+                                    }
+                                    ft.addToBackStack(null);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("balance",balance+"");
+
+
+                                    // Create and show the dialog.
+                                    DialogFragment balanceDialog = new BalanceDialog();
+                                    balanceDialog.setArguments(bundle);
+
+                                    balanceDialog.show(ft, "dialog");
+
+                                    dialog.dismiss();
+
+                                } else {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    //redirect to home;
+                                    Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(intent);
+
+
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    });
                 }
             }
 
