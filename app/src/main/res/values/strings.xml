@@ -613,6 +613,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="internet_connection_error">check your internet connection and try again</string>
     <string name="iv">98765432</string>
+    <string name="customerFundTransfer">Customer Fund Transfer</string>
 
     <string-array name="spinner_gender">
         <item>Gender</item>

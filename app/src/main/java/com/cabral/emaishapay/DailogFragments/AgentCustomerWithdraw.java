@@ -12,22 +12,34 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.APIRequests;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 
 
 public class AgentCustomerWithdraw extends DialogFragment {
+    private static final String TAG = "AgentCustomerWithdraw";
     LinearLayout layoutCustomerNumber,layoutAccountNumber,layoutPhoneNumber;
     Spinner spWithdrawFrom;
     Button addMoneyImg;
@@ -39,12 +51,17 @@ public class AgentCustomerWithdraw extends DialogFragment {
     ProgressDialog dialog;
     Context activity;
     private RaveVerificationUtils verificationUtils;
+    private Button txt_withdraw_submit;
+    private EditText customerPhoneNumber,amount,customer;
+    private String  business_name = "";
+    private String phone_no;
+    Context context;
+
 
     public AgentCustomerWithdraw() {
 
 
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +82,9 @@ public class AgentCustomerWithdraw extends DialogFragment {
         layoutAccountNumber = view.findViewById(R.id.layout_withdraw_card_account_number);
         layoutCustomerNumber = view.findViewById(R.id.layout_customer_number);
         layoutPhoneNumber = view.findViewById(R.id.layout_withdraw_card_phonenumber);
+        txt_withdraw_submit = view.findViewById(R.id.txt_withdraw_submit);
+        customerPhoneNumber = view.findViewById(R.id.txt_withdraw_customer_no);
+         amount = view.findViewById(R.id.etxt_customer_withdraw_amount);
 
         spWithdrawFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,8 +128,79 @@ public class AgentCustomerWithdraw extends DialogFragment {
 
         ImageView close = view.findViewById(R.id.agent_deposit_money_close);
         close.setOnClickListener(v -> dismiss());
+        txt_withdraw_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getMethod to fetch customer name
+                if(spWithdrawFrom.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
+
+                 getReceiverName("0" + customerPhoneNumber.getText().toString());
+                }
+
+                //call confirm withdraw  details
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+
+                bundle.putString("key","withdraw");
+                bundle.putString("title","Confirm Withdraw Details");
+                bundle.putString("phone_number",customerPhoneNumber.getText().toString());
+                bundle.putString("amount",amount.getText().toString());
+                bundle.putString("customer_name",business_name);
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev =fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                // Create and show the dialog.
+                DialogFragment addCardDialog =new AgentCustomerConfirmDetails();
+                addCardDialog.setArguments(bundle);
+                addCardDialog.show( ft, "dialog");
+
+
+
+            }
+        });
 
         return dialog;
+
+    }
+
+    public void getReceiverName(String receiverPhoneNumber){
+
+        /***************RETROFIT IMPLEMENTATION***********************/
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber);
+        call.enqueue(new Callback<MerchantInfoResponse>() {
+            @Override
+            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+                if(response.isSuccessful()){
+                    business_name = response.body().getData().getBusinessName();
+
+                }else if(response.code()==412) {
+                    business_name = response.body().getMessage();
+                    // confirmBtn.setEnabled(true);
+                }
+                else if(response.code()==401){
+                    TokenAuthActivity.startAuth(activity, true);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+
+                Log.e("info : ", t.getMessage());
+                Log.e("info : ", "Something got very very wrong");
+
+
+
+            }
+        });
+
 
     }
 }

@@ -286,7 +286,7 @@
                         android:layout_weight="0.1" />
 
                     <EditText
-                        android:id="@+id/crop_add_money_amount"
+                        android:id="@+id/deposit_amount"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"

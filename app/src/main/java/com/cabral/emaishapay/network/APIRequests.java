@@ -4,6 +4,7 @@ import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
+import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
@@ -666,6 +667,44 @@ public interface APIRequests {
     Call<WalletTransactionResponse> getSettlements(
             @Header("Authorization") String token
     );
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_withdraw")
+    Call<InitiateWithdrawResponse> initiateWithdraw(
+            @Header("Authorization") String token,
+            @Field("amount") int amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
 
+    );
+
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_deposit")
+    Call<InitiateWithdrawResponse>initiateDeposit(
+            @Header("Authorization") String token,
+            @Field("amount") int amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_transfer")
+    Call<InitiateWithdrawResponse>initiateTransfer(
+            @Header("Authorization") String token,
+            @Field("amount") int amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber
+
+    );
+    @FormUrlEncoded
+    @POST("wallet/merchant/balance_inquiry")
+    Call<InitiateWithdrawResponse>balanceInquiry(
+            @Header("Authorization") String token,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+
+
+    );
 
 }
