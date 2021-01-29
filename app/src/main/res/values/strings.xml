@@ -615,6 +615,43 @@
     <string name="iv">98765432</string>
     <string name="customerFundTransfer">Customer Fund Transfer</string>
 
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_wallet_buy_sell">eMaisha Shop</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="AddPersonalInformation">Personal Information</string>
+    <string name="select_product_weight">Select product weight first!</string>
+
+    <string name="settlements">Settlements</string>
+    <string name="settle">Settle</string>
+    <string name="type_of_birds">Type of Birds</string>
+
+    <string name="date_of_hatch">Date of Hatch</string>
+    <string name="date_purchased">Date Purchased</string>
+    <string name="cost_per_chick">Cost Per Chick</string>
+    <string name="source">Source</string>
+
+    <string name="expected_disposal">Expected Disposal</string>
+    <string name="housing_system">Housing System</string>
+    <string name="records_kept">Records Kept</string>
+    <string name="source_of_feeds">Source of Feeds</string>
+    <string name="experience">Experience</string>
+
+    <string name="years">Years</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="farm_vet_personnel">Farm Vet Personnel</string>
+    <string name="vet_first_name">Vet First Name</string>
+    <string name="second_name">Second Name</string>
+    <string name="qualifications">Qualifications</string>
+    <string name="vet_phone_number">Vet Phone Number</string>
+    <string name="loan_purpose">Loan Purpose</string>
+    <string name="business_model">Business Model</string>
+    <string name="total_animals">Total Animals</string>
+    <string name="females">Females</string>
+    <string name="males">Males</string>
+    <string name="annual_revenue">Annual Revenue</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
@@ -645,7 +682,6 @@
         <item>Guardian</item>
         <item>Wife</item>
     </string-array>
-    <!-- Strings used for fragments for navigation -->
     <string-array name="loan_farming_details_crops_list">
         <item>Select</item>
         <item>Beans</item>
@@ -667,7 +703,6 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
-
     <string-array name="loan_durations">
         <item>Daily</item>
         <item>Weekly</item>
@@ -687,7 +722,6 @@
         <item>Mobile Money</item>
         <item>Bank</item>
     </string-array>
-
     <string-array name="deposit_to">
         <item>Select</item>
         <item>Wallet</item>
@@ -709,7 +743,6 @@
         <item>Litres</item>
         <item>Tones</item>
     </string-array>
-
     <string-array name="market_price_crops_list">
         <item>Select Crop</item>
         <item>Ginger</item>
@@ -748,43 +781,10 @@
         <item>650 ml - Bottle</item>
         <item>600 ml - Bottle</item>
     </string-array>
-
     <string-array name="spinner_id_type">
         <item>Select</item>
         <item>National Id</item>
         <item>Passport</item>
         <item>Driving Permit</item>
     </string-array>
-    <!-- Strings used for fragments for navigation -->
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_wallet_buy_sell">eMaisha Shop</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="AddPersonalInformation">Personal Information</string>
-    <string name="select_product_weight">Select product weight first!</string>
-    <string name="settlements">Settlements</string>
-    <string name="settle">Settle</string>
-    <string name="type_of_birds">Type of Birds</string>
-    <string name="date_of_hatch">Date of Hatch</string>
-    <string name="date_purchased">Date Purchased</string>
-    <string name="cost_per_chick">Cost Per Chick</string>
-    <string name="source">Source</string>
-    <string name="expected_disposal">Expected Disposal</string>
-    <string name="housing_system">Housing System</string>
-    <string name="records_kept">Records Kept</string>
-    <string name="source_of_feeds">Source of Feeds</string>
-    <string name="experience">Experience</string>
-    <string name="years">Years</string>
-    <string name="farm_vet_personnel">Farm Vet Personnel</string>
-    <string name="vet_first_name">Vet First Name</string>
-    <string name="second_name">Second Name</string>
-    <string name="qualifications">Qualifications</string>
-    <string name="vet_phone_number">Vet Phone Number</string>
-    <string name="loan_purpose">Loan Purpose</string>
-    <string name="business_model">Business Model</string>
-    <string name="total_animals">Total Animals</string>
-    <string name="females">Females</string>
-    <string name="males">Males</string>
-    <string name="annual_revenue">Annual Revenue</string>
 </resources>

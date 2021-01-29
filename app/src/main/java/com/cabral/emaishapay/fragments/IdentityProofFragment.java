@@ -128,28 +128,31 @@ public class IdentityProofFragment extends Fragment {
                 Log.d("Kin Relationship",next_of_kin_relationship);
                 Log.d("Kin Contact",next_of_kin_contact);
 
-                Intent intent = new Intent(getActivity(), CardDetail.class);
-                intent.putExtra("firstname", firstname);
-                intent.putExtra("lastname", lastname);
-                intent.putExtra("middlename", middlename);
-                intent.putExtra("date_of_birth", date_of_birth);
-                intent.putExtra("gender", gender);
-                intent.putExtra("district", district);
-                intent.putExtra("sub_county", sub_county);
-                intent.putExtra("village", village);
-                intent.putExtra("landmark", landmark);
-                intent.putExtra("phone_number", phone_number);
-                intent.putExtra("email", email);
-                intent.putExtra("next_of_kin_name", next_of_kin_name);
-                intent.putExtra("next_of_kin_second_name", next_of_kin_second_name);
-                intent.putExtra("next_of_kin_relationship", next_of_kin_relationship);
-                intent.putExtra("next_of_kin_contact", next_of_kin_contact);
-                intent.putExtra("nin", nin);
-                intent.putExtra("national_id_valid_upto", valid_upto);
-                intent.putExtra("national_id_photo", encodedImageID);
-                intent.putExtra("customer_photo", encodedImageCustomerPhoto);
-                intent.putExtra("customer_photo_with_id", encodedImagePhotoWithID);
-                startActivity(intent);
+                //call card details fragment
+                CardDetail cardDetail = new CardDetail();
+                Bundle bundle = new Bundle();
+                bundle.putString("firstname", firstname);
+                bundle.putString("lastname", lastname);
+                bundle.putString("middlename", middlename);
+                bundle.putString("date_of_birth", date_of_birth);
+                bundle.putString("gender", gender);
+                bundle.putString("district", district);
+                bundle.putString("sub_county", sub_county);
+                bundle.putString("village", village);
+                bundle.putString("landmark", landmark);
+                bundle.putString("phone_number", phone_number);
+                bundle.putString("email", email);
+                bundle.putString("next_of_kin_name", next_of_kin_name);
+                bundle.putString("next_of_kin_second_name", next_of_kin_second_name);
+                bundle.putString("next_of_kin_relationship", next_of_kin_relationship);
+                bundle.putString("next_of_kin_contact", next_of_kin_contact);
+                bundle.putString("nin", nin);
+                bundle.putString("national_id_valid_upto", valid_upto);
+                bundle.putString("national_id_photo", encodedImageID);
+                bundle.putString("customer_photo", encodedImageCustomerPhoto);
+                bundle.putString("customer_photo_with_id", encodedImagePhotoWithID);
+                cardDetail.setArguments(bundle);
+                openFragment(cardDetail);
             }
         });
 
