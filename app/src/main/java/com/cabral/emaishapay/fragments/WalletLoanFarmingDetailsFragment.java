@@ -11,8 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -92,7 +90,6 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         layoutRBCrop= view.findViewById(R.id.layout_crops);
         layoutRBPoultry= view.findViewById(R.id.layout_poultry);
         layoutRBPiggery= view.findViewById(R.id.layout_piggery);
-
         rbCrop= view.findViewById(R.id.radio_btn_crops);
         rbPoultry= view.findViewById(R.id.radio_btn_poultry);
         rbPiggery= view.findViewById(R.id.radio_btn_piggery);
@@ -103,7 +100,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        //toolbar.setTitle(getString(R.string.actionOrders));
+        toolbar.setTitle("Enter Farming Details");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -134,6 +131,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                  rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                  rbPoultry.setAlpha((float) 0.5);
                  rbPiggery.setAlpha((float) 0.5);
+                 rbCrop.setAlpha((float) 1.0);
              }
          });
         rbPoultry.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +148,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                 rbPiggery.setAlpha((float) 0.5);
                 rbCrop.setAlpha((float) 0.5);
+                rbPoultry.setAlpha((float) 1.0);
             }
         });
 
@@ -168,6 +167,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                         rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                         rbPoultry.setAlpha((float) 0.5);
                         rbCrop.setAlpha((float) 0.5);
+                        rbPiggery.setAlpha((float) 1.0);
                     }
                 });
 
