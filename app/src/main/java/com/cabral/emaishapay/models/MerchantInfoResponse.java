@@ -32,6 +32,18 @@ public class MerchantInfoResponse {
         @Expose
         private String businessName;
 
+        @SerializedName("message")
+        @Expose
+        private String message;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
         public String getBusinessName() {
             return businessName;
         }

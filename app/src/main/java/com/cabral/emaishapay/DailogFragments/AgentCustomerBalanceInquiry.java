@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
@@ -125,24 +126,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                 if(spAccountType.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
                     getReceiverName("0" + walletNo.getText().toString());
                 }
-                FragmentManager fragmentManager = getChildFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                Fragment prev = fragmentManager.findFragmentByTag("dialog");
-                Bundle bundle = new Bundle();
-                bundle.putString("key","balance inquiry");
-                bundle.putString("title","Confirm Balance Inquiry Details");
-                bundle.putString("customer_no",walletNo.getText().toString());
-                bundle.putString("customer_name",business_name);
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
 
-                // Create and show the dialog.
-                DialogFragment depositDialog = new AgentCustomerConfirmDetails();
-                depositDialog.setArguments(bundle);
-
-                depositDialog.show(ft, "dialog");
 
 
 
@@ -174,9 +158,29 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
             public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key","balance inquiry");
+                    bundle.putString("title","Confirm Balance Inquiry Details");
+                    bundle.putString("customer_no",walletNo.getText().toString());
+                    bundle.putString("customer_name",business_name);
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                    depositDialog.setArguments(bundle);
+
+                    depositDialog.show(ft, "dialog");
 
                 }else if(response.code()==412) {
-                    business_name = response.body().getMessage();
+                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
+                    //redirect to previous step
+                    getActivity().getSupportFragmentManager().popBackStack();
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){

@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
@@ -137,25 +138,7 @@ public class AgentCustomerWithdraw extends DialogFragment {
                  getReceiverName("0" + customerPhoneNumber.getText().toString());
                 }
 
-                //call confirm withdraw  details
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                Bundle bundle = new Bundle();
 
-                bundle.putString("key","withdraw");
-                bundle.putString("title","Confirm Withdraw Details");
-                bundle.putString("phone_number",customerPhoneNumber.getText().toString());
-                bundle.putString("amount",amount.getText().toString());
-                bundle.putString("customer_name",business_name);
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev =fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-                // Create and show the dialog.
-                DialogFragment addCardDialog =new AgentCustomerConfirmDetails();
-                addCardDialog.setArguments(bundle);
-                addCardDialog.show( ft, "dialog");
 
 
 
@@ -167,6 +150,7 @@ public class AgentCustomerWithdraw extends DialogFragment {
     }
 
     public void getReceiverName(String receiverPhoneNumber){
+
 
         /***************RETROFIT IMPLEMENTATION***********************/
 
@@ -180,8 +164,32 @@ public class AgentCustomerWithdraw extends DialogFragment {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
 
+                    //call confirm withdraw  details
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("key","withdraw");
+                    bundle.putString("title","Confirm Withdraw Details");
+                    bundle.putString("phone_number",customerPhoneNumber.getText().toString());
+                    bundle.putString("amount",amount.getText().toString());
+                    bundle.putString("customer_name",business_name);
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev =fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    // Create and show the dialog.
+                    DialogFragment addCardDialog =new AgentCustomerConfirmDetails();
+                    addCardDialog.setArguments(bundle);
+                    addCardDialog.show( ft, "dialog");
+
+
                 }else if(response.code()==412) {
-                    business_name = response.body().getMessage();
+
+                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
+                    //redirect to previous step
+                    getActivity().getSupportFragmentManager().popBackStack();
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){

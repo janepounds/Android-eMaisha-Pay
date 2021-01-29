@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
@@ -133,25 +134,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                     if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
                         getReceiverName("0" + receipentNo.getText().toString());
                     }
-                    FragmentManager fragmentManager = getChildFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
-                    Bundle bundle = new Bundle();
-                    bundle.putString("key","transfer");
-                    bundle.putString("title","Confirm Transfer Details");
-                    bundle.putString("receipient_no",receipentNo.getText().toString());
-                    bundle.putString("customer_no",customerNo.getText().toString());
-                    bundle.putString("amount",amount.getText().toString());
-                    bundle.putString("customer_name",business_name);
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
-                    ft.addToBackStack(null);
 
-                    // Create and show the dialog.
-                    DialogFragment depositDialog = new AgentCustomerConfirmDetails();
-                    depositDialog.setArguments(bundle);
-                    depositDialog.show(ft, "dialog");
                 }
             });
 
@@ -236,8 +219,30 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
 
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key","transfer");
+                    bundle.putString("title","Confirm Transfer Details");
+                    bundle.putString("receipient_no",receipentNo.getText().toString());
+                    bundle.putString("customer_no",customerNo.getText().toString());
+                    bundle.putString("amount",amount.getText().toString());
+                    bundle.putString("customer_name",business_name);
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                    depositDialog.setArguments(bundle);
+                    depositDialog.show(ft, "dialog");
+
                 }else if(response.code()==412) {
-                    business_name = response.body().getMessage();
+                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
+                    //redirect to previous step
+                    getActivity().getSupportFragmentManager().popBackStack();
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
