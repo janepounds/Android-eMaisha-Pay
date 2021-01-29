@@ -37,7 +37,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
     CardView layoutReceiverAccount;
     Button txtSubmit;
-    String key = "";
+    String key = "",customerNo;
+
 
 
     public AgentCustomerConfirmDetails() {
@@ -92,12 +93,24 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
-            }else{
+            }else if(key.equalsIgnoreCase("deposit")){
 
                 textName.setText(getArguments().getString("customer_name"));
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+
+
+            }else{
+                textReceiverAccount.setText("Receiver");
+                textName.setText(getArguments().getString("customer_name"));
+                textTitlePhoneNumber.setText("Receiver Mobile");
+                textPhoneNumber.setText("0"+getArguments().getString("receipient_no"));
+                textAmount.setText("UGX "+getArguments().getString("amount"));
+                textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+                customerNo = getArguments().getString("customer_no");
+                textTitleCharge.setText("Transfer Charge");
+                textTitleAmount.setText("Transfer Amount");
 
 
             }
@@ -120,6 +133,9 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 }
                 ft.addToBackStack(null);
                 Bundle bundle = new Bundle();
+                if(key.equalsIgnoreCase("transfer")){
+                    bundle.putString("customer_no",customerNo);
+                }
                 bundle.putString("key",key);
                 bundle.putString("amount",textTotalAmount.getText().toString());
                 bundle.putString("phone_number",textPhoneNumber.getText().toString());

@@ -152,6 +152,60 @@
                             android:paddingLeft="@dimen/dimen_10dp" />
                     </LinearLayout>
 
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/text_customer_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/josefin_sans"
+                    android:text="Customer Number"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/edittext_corner"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/edittext_left_corners_green"
+                        android:gravity="center"
+                        android:text="+256"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                    <EditText
+                        android:id="@+id/customer_no"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/josefin_sans"
+                        android:inputType="phone"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:tag="+256 "
+                        android:maxLength="9"
+                        android:layout_weight="0.5"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/black"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dimen_10dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

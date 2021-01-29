@@ -350,7 +350,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment fundsTransferDialog = new AgentCustomerFundsTransfer();
+        DialogFragment fundsTransferDialog = new AgentCustomerFundsTransfer(getString(R.string.customerFundTransfer));
         fundsTransferDialog.show(ft, "dialog");
     }
 

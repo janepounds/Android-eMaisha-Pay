@@ -686,4 +686,15 @@ public interface APIRequests {
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber
     );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/initiate_transfer")
+    Call<InitiateWithdrawResponse>initiateTransfer(
+            @Header("Authorization") String token,
+            @Field("amount") int amount,
+            @Field("pin") String pin,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber
+
+    );
 }

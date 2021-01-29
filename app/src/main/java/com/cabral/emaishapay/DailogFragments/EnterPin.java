@@ -115,8 +115,8 @@ public class EnterPin extends DialogFragment {
                     });
 //
 //
-                }else {
-                    /***************RETROFIT IMPLEMENTATION FOR WITHDRAW************************/
+                }else if(getArguments().getString("key").equalsIgnoreCase("deposit")) {
+                    /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
                     Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().initiateDeposit(access_token, Integer.parseInt(amount_only), "12"+confirm_pin.getText().toString(), phoneNumber);
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
@@ -152,6 +152,46 @@ public class EnterPin extends DialogFragment {
                             dialog.dismiss();
                         }
                     });
+                }else{
+
+                    /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
+                    String customer_no ="0"+ getArguments().getString("customer_no");
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().initiateTransfer(access_token, Integer.parseInt(amount_only), "12"+confirm_pin.getText().toString(),customer_no, phoneNumber);
+                    call.enqueue(new Callback<InitiateWithdrawResponse>() {
+                        @Override
+                        public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getStatus().equalsIgnoreCase("1")) {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    //success message
+                                    Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(intent);
+                                    dialog.dismiss();
+
+                                } else {
+                                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    //redirect to home;
+                                    Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(intent);
+
+
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    });
+
                 }
             }
 
