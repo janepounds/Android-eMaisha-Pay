@@ -64,6 +64,11 @@ public class AgentCustomerWithdraw extends DialogFragment {
 
     }
 
+    public AgentCustomerWithdraw(String business_name) {
+        this.business_name = business_name;
+
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

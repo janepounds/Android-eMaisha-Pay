@@ -118,31 +118,7 @@
                 android:visibility="gone" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Holder Name"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
-
-                <EditText
-                    android:id="@+id/add_money_holder_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
-                    android:textColor="@color/textColor"
-                    android:layout_marginTop="5dp"
-                    android:inputType="text"
-                    android:drawablePadding="@dimen/dimen_5dp"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,6 +173,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Holder Name"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/josefin_sans" />
+
+                <EditText
+                    android:id="@+id/add_money_holder_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:paddingStart="@dimen/dimen_10dp"
+                    android:background="@drawable/edittext_corner"
+                    android:textColor="@color/textColor"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text"
+                    android:drawablePadding="@dimen/dimen_5dp"/>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

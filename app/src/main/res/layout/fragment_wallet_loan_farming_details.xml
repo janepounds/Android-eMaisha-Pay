@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="?actionBarSize"
         android:paddingTop="10dp"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -65,19 +65,145 @@
             app:spb_stateNumberForegroundColor="#eeeeee"
             app:spb_stateLineThickness="4dp"/>
 
-
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_crops"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/top_curved_selected_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_poultry"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+            <RadioButton
+                android:id="@+id/radio_btn_crops"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text_crops"/>
+            <TextView
+                android:id="@+id/text_crops"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="CROPS"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_btn_crops"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_poultry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/layout_crops"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_piggery"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+            <RadioButton
+                android:id="@+id/radio_btn_poultry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text_poultry"/>
+            <TextView
+                android:id="@+id/text_poultry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Poultry"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_btn_poultry"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_piggery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/layout_poultry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+            <RadioButton
+                android:id="@+id/radio_btn_piggery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text_piggery"/>
+            <TextView
+                android:id="@+id/text_piggery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Piggery"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_btn_piggery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_round_white"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="15dp"
-                android:layout_marginTop="10dp">
+                android:padding="15dp">
+                <LinearLayout
+                    android:id="@+id/layout_form_poultry"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <include layout="@layout/layout_poultry_form"/>
 
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_form_piggery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <include layout="@layout/layout_piggery_form"/>
+
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_form_crops"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -439,77 +565,80 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:background="@drawable/round_corners_button_darkgray"
-                    android:layout_marginRight="@dimen/dimen_5dp">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/ic_left_chevron"/>
-                    <Button
-                        android:id="@+id/btn_previous"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:paddingStart="6dp"
-                        android:background="@color/transparent"
-                        android:text="@string/previous"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"
-                        android:textStyle="bold"
-                        android:paddingLeft="6dp" />
 
-
-
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/dimen_5dp"
-                    android:background="@drawable/rounded_corners_button"
-                    android:layout_marginLeft="@dimen/dimen_5dp">
-
-                    <Button
-                        android:id="@+id/btn_loan_next_step"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="@color/transparent"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="4dp"
-                        android:text="@string/next"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"
-                        android:textStyle="bold"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="4dp" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/ic_right_chevron">
-
-                    </ImageView>
-                </FrameLayout>
             </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/dimen_5dp"
+                        android:background="@drawable/round_corners_button_darkgray"
+                        android:layout_marginRight="@dimen/dimen_5dp">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_left_chevron"/>
+                        <Button
+                            android:id="@+id/btn_previous"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:paddingStart="6dp"
+                            android:background="@color/transparent"
+                            android:text="@string/previous"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/button_text_size"
+                            android:textStyle="bold"
+                            android:paddingLeft="6dp" />
+
+
+
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dimen_5dp"
+                        android:background="@drawable/rounded_corners_button"
+                        android:layout_marginLeft="@dimen/dimen_5dp">
+
+                        <Button
+                            android:id="@+id/btn_loan_next_step"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@color/transparent"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="4dp"
+                            android:text="@string/next"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/button_text_size"
+                            android:textStyle="bold"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="4dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_right_chevron">
+
+                        </ImageView>
+                    </FrameLayout>
+                </LinearLayout>
             </LinearLayout>
+
         </ScrollView>
     </LinearLayout>
 

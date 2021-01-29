@@ -167,7 +167,9 @@
                     android:inputType="number"
                     android:textColor="@color/textColor"
                     android:layout_marginTop="5dp"
-                    android:maxLength="19"/>
+                    android:maxLength="19"
+                    android:visibility="visible"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -226,8 +228,7 @@
                         android:inputType="number"
                         android:textColor="@color/textColor"
                         android:layout_marginTop="5dp"
-                        android:maxLength="3"
-                        />
+                        android:maxLength="3" />
                 </LinearLayout>
 
             </LinearLayout>

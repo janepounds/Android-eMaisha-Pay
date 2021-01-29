@@ -199,7 +199,7 @@ public class WalletLoanDetailsFragment extends Fragment {
                 loanApplication.setPayment_amount_on_schedule(Double.parseDouble(loanpayments_edtxt.getText().toString()));
 
                 Bundle bundle = new Bundle();
-                bundle.putFloat("interest", localBundle.getFloat("interest"));
+                bundle.putFloat("interest", interest);
                 bundle.putSerializable("loanApplication", loanApplication);
 
                 Log.d(TAG, "onViewCreated: LOAN APPLICATION"+ loanApplication);

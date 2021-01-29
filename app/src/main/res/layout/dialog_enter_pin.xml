@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/josefin_sans"
             android:padding="10dp"
-            android:text="ENTER AGENT'S PIN"
+            android:text="ENTER CUSTOMER'S PIN"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
