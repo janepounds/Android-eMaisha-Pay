@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,11 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,6 +98,9 @@ public class AddCardFragment extends DialogFragment {
 
         amountLayout.setVisibility(View.GONE);
         purporseLayout.setVisibility(View.GONE);
+
+
+
         if(getArguments()!=null){
             String account_name = getArguments().getString("account_name");
             String card_number = getArguments().getString("account_number");
@@ -99,6 +109,9 @@ public class AddCardFragment extends DialogFragment {
              id = getArguments().getString("id");
 
             //set corresponsding edit texts;
+            etCardNumber.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            etCvv.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
             etName.setText(account_name);
             etCardNumber.setText(card_number);
             etCvv.setText(cvv);
@@ -198,7 +211,8 @@ public class AddCardFragment extends DialogFragment {
 
 
 
-                    if (validateEntries()) {
+                                  if (validateEntries()) {
+
                         ProgressDialog dialog;
                         dialog = new ProgressDialog(context);
                         dialog.setIndeterminate(true);
@@ -316,7 +330,19 @@ public class AddCardFragment extends DialogFragment {
 
     public boolean validateEntries(){
 
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        DateFormat yearDateFormat = new SimpleDateFormat("yy");
+
+        int mm = Integer.parseInt(dateFormat.format(date));
+        int yy = Integer.parseInt(yearDateFormat.format(date));
+        String expMonth = etExpiryDate.getText().toString().substring(0,2);
+        String expYear = etExpiryDate.getText().toString().substring(etExpiryDate.getText().toString().length() - 2);
+
+
         boolean check = true;
+
+
         if (etName.getText().toString().trim() == null || etName.getText().toString().trim().isEmpty()) {
             check = false;
             etName.setError("Please enter valid value");
@@ -329,9 +355,10 @@ public class AddCardFragment extends DialogFragment {
 
         }
 
-        else if (etExpiryDate.getText().toString().trim() == null || etExpiryDate.getText().toString().trim().isEmpty()){
+        else if (etExpiryDate.getText().toString().trim() == null || etExpiryDate.getText().toString().trim().isEmpty() ||
+                etExpiryDate.getText().toString().length()<5){
             check = false;
-            etExpiryDate.setError("Please select valid value");
+            etExpiryDate.setError("Please enter valid value");
 
         }
 
@@ -340,10 +367,54 @@ public class AddCardFragment extends DialogFragment {
             check = false;
             etCardNumber.setError("Please enter valid value");
 
+        } else if(etExpiryDate.getText().toString().length()>4 && Integer.parseInt(expYear) < yy) {
+
+                check = false;
+                 etExpiryDate.setError("Card is expired");
+                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+                Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
+
         }
+
+        else if(etExpiryDate.getText().toString().length()>4 && (Integer.parseInt(expYear) == yy && Integer.parseInt(expMonth) <= mm )){
+                check = false;
+                etExpiryDate.setError("Card is expired");
+                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+                Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
+
+        }
+
         return check;
 
-
-
     }
+
+    public void validateExpiryDate(){
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        DateFormat yearDateFormat = new SimpleDateFormat("yy");
+
+        int mm = Integer.parseInt(dateFormat.format(date));
+        int yy = Integer.parseInt(yearDateFormat.format(date));
+        String expMonth = etExpiryDate.getText().toString().substring(0,2);
+        String expYear = etExpiryDate.getText().toString().substring(etExpiryDate.getText().toString().length() - 2);
+
+        int intExpMonth = Integer.parseInt(expMonth);
+        int intExpYear = Integer.parseInt(expYear);
+        if(etExpiryDate.getText().toString().length()>4) {
+
+            if( intExpYear < yy ){
+               //check = false;
+                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+                Log.d("CARD IS EXPIRED","DATE *"+intExpMonth+"/"+intExpYear+"* IS SAME OR LESS THAN *"+mm+"*/*"+yy+"*");
+            }
+            else if(intExpYear == yy && intExpMonth <= mm ){
+               // check = false;
+                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+                Log.d("CARD IS EXPIRED","DATE *"+intExpMonth+"/"+intExpYear+"* IS SAME OR LESS THAN *"+mm+"*/*"+yy+"*");
+            }
+
+
+        }
+    }
+
 }

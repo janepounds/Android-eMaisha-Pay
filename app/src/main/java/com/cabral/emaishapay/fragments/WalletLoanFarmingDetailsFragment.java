@@ -8,6 +8,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -15,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,6 +44,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     LoanApplication loanApplication;
     Float interest;
     AppBarConfiguration appBarConfiguration;
+    LinearLayout layoutCrop,layoutPoultry,layoutPiggery;
+    ConstraintLayout layoutRBCrop,layoutRBPoultry,layoutRBPiggery;
+    RadioButton rbCrop,rbPoultry,rbPiggery;
 
     public WalletLoanFarmingDetailsFragment(Bundle bundle) {
        this.localBundle=bundle;
@@ -75,6 +83,19 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         equipments_cb= view.findViewById(R.id.equipments_cb);
         seeds_cb= view.findViewById(R.id.seeds_cb);
 
+        layoutCrop= view.findViewById(R.id.layout_form_crops);
+        layoutPoultry= view.findViewById(R.id.layout_form_poultry);
+        layoutPiggery= view.findViewById(R.id.layout_form_piggery);
+
+        layoutRBCrop= view.findViewById(R.id.layout_crops);
+        layoutRBPoultry= view.findViewById(R.id.layout_poultry);
+        layoutRBPiggery= view.findViewById(R.id.layout_piggery);
+
+        rbCrop= view.findViewById(R.id.radio_btn_crops);
+        rbPoultry= view.findViewById(R.id.radio_btn_poultry);
+        rbPiggery= view.findViewById(R.id.radio_btn_piggery);
+
+
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
@@ -95,27 +116,31 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             interest=localBundle.getFloat("interest");
         }
 
-        previousBtn.setOnClickListener(view2 -> getParentFragmentManager().popBackStack());
+         if(rbCrop.isChecked()){
+             layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+             layoutCrop.setVisibility(View.VISIBLE);
+             layoutPoultry.setVisibility(View.GONE);
+             layoutPiggery.setVisibility(View.GONE);
+         } else if(rbPoultry.isChecked()){
+             layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+             layoutPoultry.setVisibility(View.VISIBLE);
+             layoutCrop.setVisibility(View.GONE);
+             layoutPiggery.setVisibility(View.GONE);
+         } else if(rbPiggery.isChecked()){
+             layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+             layoutPiggery.setVisibility(View.VISIBLE);
+             layoutCrop.setVisibility(View.GONE);
+             layoutPoultry.setVisibility(View.GONE);
+         } else {
+             rbCrop.setChecked(true);
+         }
 
 
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new WalletLoanPreviewRequestFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
 
-            }
-        });
+
+
+
         harvesting_unit_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
