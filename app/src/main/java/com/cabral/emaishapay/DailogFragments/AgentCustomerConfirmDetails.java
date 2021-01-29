@@ -134,6 +134,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         txtSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //call pin dialog
                 FragmentManager fragmentManager = getChildFragmentManager();
 
@@ -154,8 +155,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 // Create and show the dialog.
                 DialogFragment depositDialog = new EnterPin();
                 depositDialog.setArguments(bundle);
-
                 depositDialog.show(ft, "dialog");
+
             }
 
 

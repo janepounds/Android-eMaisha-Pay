@@ -225,12 +225,12 @@ public class EnterPin extends DialogFragment {
                                     bundle.putString("balance",balance+"");
 
 
+
                                     // Create and show the dialog.
                                     DialogFragment balanceDialog = new BalanceDialog();
                                     balanceDialog.setArguments(bundle);
 
                                     balanceDialog.show(ft, "dialog");
-
                                     dialog.dismiss();
 
                                 } else {
@@ -268,5 +268,11 @@ public class EnterPin extends DialogFragment {
 
         return dialog;
 
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        dismiss();
     }
 }

@@ -119,6 +119,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
         addMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //call confirm details layout
                 //call customer details dialog
                 if(spAccountType.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
@@ -140,7 +141,10 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                 // Create and show the dialog.
                 DialogFragment depositDialog = new AgentCustomerConfirmDetails();
                 depositDialog.setArguments(bundle);
+
                 depositDialog.show(ft, "dialog");
+
+
 
             }
         });
@@ -194,4 +198,6 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
 
 
     }
+
+
 }
