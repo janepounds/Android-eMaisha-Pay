@@ -53,7 +53,7 @@ public class AgentCustomerWithdraw extends DialogFragment {
     private RaveVerificationUtils verificationUtils;
     private Button txt_withdraw_submit;
     private EditText customerPhoneNumber,amount,customer;
-    private String  businessName;
+    private String  business_name = "";
     private String phone_no;
     Context context;
 
@@ -132,15 +132,20 @@ public class AgentCustomerWithdraw extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //getMethod to fetch customer name
-                getReceiverName("0" + customerPhoneNumber.getText().toString());
+                if(spWithdrawFrom.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
+
+                 getReceiverName("0" + customerPhoneNumber.getText().toString());
+                }
+
                 //call confirm withdraw  details
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 Bundle bundle = new Bundle();
-                bundle.putString("customer", businessName);
+
                 bundle.putString("key","withdraw");
                 bundle.putString("title","Confirm Withdraw Details");
                 bundle.putString("phone_number",customerPhoneNumber.getText().toString());
                 bundle.putString("amount",amount.getText().toString());
+                bundle.putString("customer_name",business_name);
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev =fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -162,6 +167,7 @@ public class AgentCustomerWithdraw extends DialogFragment {
     }
 
     public void getReceiverName(String receiverPhoneNumber){
+
         /***************RETROFIT IMPLEMENTATION***********************/
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
@@ -171,23 +177,16 @@ public class AgentCustomerWithdraw extends DialogFragment {
         call.enqueue(new Callback<MerchantInfoResponse>() {
             @Override
             public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
-                if(response.code()==200){
-                   businessName = response.body().getData().getBusinessName();
+                if(response.isSuccessful()){
+                    business_name = response.body().getData().getBusinessName();
 
                 }else if(response.code()==412) {
-                    String businessName = null;
-                    businessName = response.body().getMessage();
+                    business_name = response.body().getMessage();
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
                     TokenAuthActivity.startAuth(activity, true);
                 }
-                if (response.errorBody() != null) {
-                    Log.e("info", String.valueOf(response.errorBody()));
-                } else {
-                    Log.e("info", "Something got very very wrong");
-                }
-
 
             }
 

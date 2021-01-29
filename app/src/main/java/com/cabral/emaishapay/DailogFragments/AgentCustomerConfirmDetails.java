@@ -85,7 +85,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             if(key.equalsIgnoreCase("withdraw")){
                 textTitleLabel.setText(getArguments().getString("title"));
                 textTitleAmount.setText("Amount Received");
-                textName.setText(getArguments().getString("customer"));
+                textName.setText(getArguments().getString("customer_name"));
                 textReceiverAccount.setText("Customer");
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
