@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +37,6 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
     CardView layoutReceiverAccount;
     Button txtSubmit;
-    Context context;
 
 
     public AgentCustomerConfirmDetails() {
@@ -42,10 +44,6 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
     }
 
-    public AgentCustomerConfirmDetails(Context context) {
-    this.context = context;
-
-    }
 
 
 
@@ -103,49 +101,27 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         txtSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //call pin dialog
+                FragmentManager fragmentManager = getChildFragmentManager();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.c);
-                    // Get the layout inflater
-                    LayoutInflater inflater = getLayoutInflater();
-                    // Inflate and set the layout for the dialog
-                    // Pass null as the parent view because its going in the dialog layout
-                    View view = inflater.inflate(R.layout.dialog_enter_pin, null);
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                Bundle bundle = new Bundle();
+                bundle.putString("amount",textTotalAmount.getText().toString());
+                bundle.putString("phone_number",textPhoneNumber.getText().toString());
 
-                    TextView confirm_pin = view.findViewById(R.id.txt_custom_add_agent_submit_pin);
-                    confirm_pin.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-                            //submit details
-                        /***************RETROFIT IMPLEMENTATION************************/
-                        Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().initiateWithdraw(access_token,textTotalAmount.getText().toString(),confirm_pin.getText().toString(),textPhoneNumber.getText().toString());
-                        call.enqueue(new Callback<InitiateWithdrawResponse>() {
-                            @Override
-                            public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
-                                if(response.body().getStatus().equalsIgnoreCase("1")){
+                // Create and show the dialog.
+                DialogFragment depositDialog = new EnterPin();
+                depositDialog.setArguments(bundle);
 
-                                        //success message
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
-
-                            }
-                        });
-//
-//
-                        }
-                    });
-                    builder.setView(view);
-                    Dialog dialog = builder.create();
-                    dialog.setCanceledOnTouchOutside(false);
-                    setCancelable(false);
-
+                depositDialog.show(ft, "dialog");
             }
+
+
         });
 
 

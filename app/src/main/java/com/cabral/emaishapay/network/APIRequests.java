@@ -671,7 +671,7 @@ public interface APIRequests {
     @POST("wallet/merchant/initiate_withdraw")
     Call<InitiateWithdrawResponse> initiateWithdraw(
             @Header("Authorization") String token,
-            @Field("amount") String amount,
+            @Field("amount") int amount,
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber
 
