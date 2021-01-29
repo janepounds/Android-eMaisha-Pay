@@ -173,6 +173,7 @@ public class WalletLoansListFragment extends Fragment {
                                         Bundle bundle = new Bundle();
                                         bundle.putFloat("interest", interest);
 
+                                        Log.d(TAG, "onClick: interest"+interest);
                                         Fragment fragment = new WalletLoanDetailsFragment(bundle);
                                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                         if (((WalletHomeActivity) getActivity()).currentFragment != null)

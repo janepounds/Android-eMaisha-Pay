@@ -516,7 +516,7 @@
     <string name="temp_min">16.8&#xb0;C Min</string>
 
     <string name="crop">Crop</string>
-    <string name="label_confirm">Comfirm</string>
+    <string name="label_confirm">Confirm</string>
     <string name="variety">Variety</string>
     <string name="sponsors" translatable="false">Cabral Tech Ltd</string>
     <string name="tax"> Tax </string>

@@ -97,6 +97,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
             }else if(key.equalsIgnoreCase("deposit")){
+                /*****************DEPOSIT*************/
 
                 textName.setText(getArguments().getString("customer_name"));
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
@@ -105,6 +106,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
 
             }else if(key.equalsIgnoreCase("transfer")){
+                /*****************TRANSFER*************/
                 textTitleLabel.setText(getArguments().getString("title"));
                 textReceiverAccount.setText("Receiver");
                 textName.setText(getArguments().getString("customer_name"));
@@ -118,6 +120,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
 
             }else{
+                /*****************BALANCE INQUIRY*************/
                 textTitleLabel.setText(getArguments().getString("title"));
                 textName.setText(getArguments().getString("customer_name"));
                 textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
