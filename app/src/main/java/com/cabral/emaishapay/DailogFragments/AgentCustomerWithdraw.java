@@ -131,17 +131,12 @@ public class AgentCustomerWithdraw extends DialogFragment {
         txt_withdraw_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //getMethod to fetch customer name
+                getReceiverName("0" + customerPhoneNumber.getText().toString());
                 //call confirm withdraw  details
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 Bundle bundle = new Bundle();
-                    if(spWithdrawFrom.getSelectedItem().toString().equalsIgnoreCase("withdraw")) {
-                        //getMethod to fetch customer name
-                        getReceiverName("0" + customerPhoneNumber.getText().toString());
-                        bundle.putString("customer", businessName);
-
-
-                    }
+                bundle.putString("customer", businessName);
                 bundle.putString("key","withdraw");
                 bundle.putString("title","Confirm Withdraw Details");
                 bundle.putString("phone_number",customerPhoneNumber.getText().toString());
