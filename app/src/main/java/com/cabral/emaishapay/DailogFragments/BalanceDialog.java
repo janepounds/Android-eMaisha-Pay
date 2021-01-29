@@ -43,7 +43,7 @@ public class BalanceDialog extends DialogFragment {
         TextView title = view.findViewById(R.id.dialog_title);
         Button ok = view.findViewById(R.id.dialog_button);
         title.setText("Balance Inquiry");
-        passwordLayout.setVisibility(View.GONE);
+        passwordLayout.setVisibility(View.INVISIBLE);
         balanceLayout.setVisibility(View.VISIBLE);
         TextView bal = view.findViewById(R.id.balance);
         bal.setText(getArguments().getString("balance"));
