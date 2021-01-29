@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -47,7 +48,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     AppBarConfiguration appBarConfiguration;
     LinearLayout layoutCrop,layoutPoultry,layoutPiggery;
     ConstraintLayout layoutRBCrop,layoutRBPoultry,layoutRBPiggery;
-    RadioButton rbCrop,rbPoultry,rbPiggery;
+    ImageButton rbCrop,rbPoultry,rbPiggery;
 
     public WalletLoanFarmingDetailsFragment(Bundle bundle) {
        this.localBundle=bundle;
@@ -106,25 +107,6 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if(rbCrop.isChecked()){
-
-        } else if(rbPoultry.isChecked()){
-            layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-            layoutPoultry.setVisibility(View.VISIBLE);
-            layoutCrop.setVisibility(View.GONE);
-            layoutPiggery.setVisibility(View.GONE);
-            rbCrop.setChecked(false);
-            rbPiggery.setChecked(false);
-        } else if(rbPiggery.isChecked()){
-            layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-            layoutPiggery.setVisibility(View.VISIBLE);
-            layoutCrop.setVisibility(View.GONE);
-            layoutPoultry.setVisibility(View.GONE);
-            rbCrop.setChecked(false);
-            rbPoultry.setChecked(false);
-        } else {
-            rbCrop.setChecked(true);
-        }
 
 
         return view;
@@ -138,22 +120,57 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         }
 
 
-        rbCrop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+         rbCrop.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                 layoutCrop.setVisibility(View.VISIBLE);
+                 layoutPoultry.setVisibility(View.GONE);
+                 layoutPiggery.setVisibility(View.GONE);
+                 layoutRBPoultry.setBackgroundResource(0);
+                 layoutRBPiggery.setBackgroundResource(0);
+                 rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
+                 rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                 rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                 rbPoultry.setAlpha((float) 0.5);
+                 rbPiggery.setAlpha((float) 0.5);
+             }
+         });
+        rbPoultry.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked){
-                    layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
-                    layoutCrop.setVisibility(View.VISIBLE);
-                    layoutPoultry.setVisibility(View.GONE);
-                    layoutPiggery.setVisibility(View.GONE);
-                    rbPoultry.setChecked(false);
-                    rbPiggery.setChecked(false);
-                }else{
-
-                }
+            public void onClick(View v) {
+                layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                layoutPoultry.setVisibility(View.VISIBLE);
+                layoutCrop.setVisibility(View.GONE);
+                layoutPiggery.setVisibility(View.GONE);
+                layoutRBCrop.setBackgroundResource(0);
+                layoutRBPiggery.setBackgroundResource(0);
+                rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
+                rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                rbPiggery.setAlpha((float) 0.5);
+                rbCrop.setAlpha((float) 0.5);
             }
         });
+
+
+                rbPiggery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                        layoutPiggery.setVisibility(View.VISIBLE);
+                        layoutCrop.setVisibility(View.GONE);
+                        layoutPoultry.setVisibility(View.GONE);
+                        layoutRBCrop.setBackgroundResource(0);
+                        layoutRBPoultry.setBackgroundResource(0);
+                        rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
+                        rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                        rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
+                        rbPoultry.setAlpha((float) 0.5);
+                        rbCrop.setAlpha((float) 0.5);
+                    }
+                });
+
 
 
 
