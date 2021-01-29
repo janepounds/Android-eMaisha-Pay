@@ -55,7 +55,13 @@ public class WalletTransactionsListFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar_wallet_transactions_list);
         recyclerView = view.findViewById(R.id.statement_recycler_view);
 
-        actualStatementData();
+        if(appTitle.equalsIgnoreCase("settlements")){
+            getSettlements();
+        }else{
+            actualStatementData();
+        }
+
+
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(this.appTitle);
