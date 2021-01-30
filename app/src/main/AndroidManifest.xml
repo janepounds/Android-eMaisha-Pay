@@ -74,6 +74,10 @@
 
         <activity android:name=".activities.ShopActivity"
             android:label="Shop"/>
+
+
+        <activity android:name=".activities.AccountOpeningPinCreationActivity"
+            android:label="Pin Creation "/>
         <activity
             android:name=".activities.Login"
             android:label="Sign In" /> <!-- Firebase Notifications -->
