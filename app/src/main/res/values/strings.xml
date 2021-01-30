@@ -652,6 +652,7 @@
     <string name="females">Females</string>
     <string name="males">Males</string>
     <string name="annual_revenue">Annual Revenue</string>
+    <string name="incomes_expenses"><![CDATA[Income & Expenses]]></string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
@@ -787,4 +788,42 @@
         <item>Passport</item>
         <item>Driving Permit</item>
     </string-array>
+
+    <string-array name="spinner_type_of_birds">
+        <item>Select</item>
+        <item>Layers</item>
+        <item>Broilers</item>
+    </string-array>
+    <string-array name="sp_poultry_source">
+        <item>Select</item>
+        <item>Ugachick</item>
+        <item>Biyinzika</item>
+    </string-array>
+
+    <string-array name="spinner_housing_system">
+        <item>Select</item>
+        <item>Deep Litter</item>
+        <item>Cage System</item>
+    </string-array>
+
+    <string-array name="spinner_source_of_feeds">
+        <item>Select</item>
+        <item>Manufacture own feeds</item>
+        <item>Purchase</item>
+    </string-array>
+
+    <string-array name="spinner_qualifications">
+        <item>Select</item>
+        <item>Certificate</item>
+        <item>Diploma</item>
+        <item>Degree</item>
+    </string-array>
+
+    <string-array name="spinner_accept_payments_methods">
+        <item>Select</item>
+        <item>eMaisha Pay</item>
+        <item>Mobile Money</item>
+    </string-array>
+
+
 </resources>

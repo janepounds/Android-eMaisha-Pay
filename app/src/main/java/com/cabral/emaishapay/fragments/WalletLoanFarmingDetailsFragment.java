@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -34,8 +34,8 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     Toolbar toolbar;
     Button previousBtn, nextBtn;
-    TextView harvesting_unit_txt, per_harvesting_unit_txt;
-    Spinner harvesting_unit_spn, crop_spn, from_insurance_spn;
+    TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears;
+    Spinner harvesting_unit_spn, crop_spn, from_insurance_spn, poultryFarmVetPersonnelsp, piggeryFarmVetPersonnelsp ;
     EditText crop_area_edt, expected_yield_edt, expected_revenue_edt;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb;
     Bundle localBundle;
@@ -44,9 +44,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     LoanApplication loanApplication;
     Float interest;
     AppBarConfiguration appBarConfiguration;
-    LinearLayout layoutCrop,layoutPoultry,layoutPiggery;
+    LinearLayout layoutCrop,layoutPoultry,layoutPiggery,layoutVetDetails;
     ConstraintLayout layoutRBCrop,layoutRBPoultry,layoutRBPiggery;
     ImageButton rbCrop,rbPoultry,rbPiggery;
+    View viewCropsSelected,viewPoultrySelected,viewPiggerySelected;
 
     public WalletLoanFarmingDetailsFragment(Bundle bundle) {
        this.localBundle=bundle;
@@ -94,6 +95,25 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         rbPoultry= view.findViewById(R.id.radio_btn_poultry);
         rbPiggery= view.findViewById(R.id.radio_btn_piggery);
 
+        txtCrops= view.findViewById(R.id.text_crops);
+        txtPoultry= view.findViewById(R.id.text_poultry);
+        txtPiggery= view.findViewById(R.id.text_piggery);
+
+        viewCropsSelected= view.findViewById(R.id.crops_selected);
+        viewPoultrySelected= view.findViewById(R.id.poultry_selected);
+        viewPiggerySelected= view.findViewById(R.id.piggery_selected);
+
+        txtExperiencePoultryMonths = view.findViewById(R.id.tv_poultry_experience_months);
+        txtExperiencePoultryYears = view.findViewById(R.id.tv_poultry_experience_years);
+
+        txtExperiencePiggeryMonths = view.findViewById(R.id.tv_piggery_experience_months);
+        txtExperiencePiggeryYears = view.findViewById(R.id.tv_piggery_experience_years);
+
+        poultryFarmVetPersonnelsp = view.findViewById(R.id.sp_poultry_farm_vet_personnel);
+        piggeryFarmVetPersonnelsp = view.findViewById(R.id.sp_piggery_farm_vet_personnel);
+
+        layoutVetDetails = view.findViewById(R.id.layout_poultry_vet_details);
+
 
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
@@ -117,61 +137,152 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         }
 
 
-         rbCrop.setOnClickListener(new View.OnClickListener() {
+        rbCrop.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 layoutRBCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                 viewCropsSelected.setVisibility(View.VISIBLE);
                  layoutCrop.setVisibility(View.VISIBLE);
                  layoutPoultry.setVisibility(View.GONE);
                  layoutPiggery.setVisibility(View.GONE);
-                 layoutRBPoultry.setBackgroundResource(0);
-                 layoutRBPiggery.setBackgroundResource(0);
+                 viewPoultrySelected.setVisibility(View.INVISIBLE);
+                 viewPiggerySelected.setVisibility(View.INVISIBLE);
                  rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
                  rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                  rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                  rbPoultry.setAlpha((float) 0.5);
                  rbPiggery.setAlpha((float) 0.5);
                  rbCrop.setAlpha((float) 1.0);
+                 txtPoultry.setAlpha((float) 0.5);
+                 txtPiggery.setAlpha((float) 0.5);
+                 txtCrops.setAlpha((float) 1.0);
              }
          });
         rbPoultry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layoutRBPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                viewPoultrySelected.setVisibility(View.VISIBLE);
                 layoutPoultry.setVisibility(View.VISIBLE);
                 layoutCrop.setVisibility(View.GONE);
                 layoutPiggery.setVisibility(View.GONE);
-                layoutRBCrop.setBackgroundResource(0);
-                layoutRBPiggery.setBackgroundResource(0);
+                viewCropsSelected.setVisibility(View.INVISIBLE);
+                viewPiggerySelected.setVisibility(View.INVISIBLE);
                 rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
                 rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                 rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                 rbPiggery.setAlpha((float) 0.5);
                 rbCrop.setAlpha((float) 0.5);
                 rbPoultry.setAlpha((float) 1.0);
+                txtCrops.setAlpha((float) 0.5);
+                txtPiggery.setAlpha((float) 0.5);
+                txtPoultry.setAlpha((float) 1.0);
             }
         });
 
 
-                rbPiggery.setOnClickListener(new View.OnClickListener() {
+        rbPiggery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        layoutRBPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.top_curved_selected_white, null));
+                        viewPiggerySelected.setVisibility(View.VISIBLE);
                         layoutPiggery.setVisibility(View.VISIBLE);
                         layoutCrop.setVisibility(View.GONE);
                         layoutPoultry.setVisibility(View.GONE);
-                        layoutRBCrop.setBackgroundResource(0);
-                        layoutRBPoultry.setBackgroundResource(0);
+                        viewCropsSelected.setVisibility(View.INVISIBLE);
+                        viewPoultrySelected.setVisibility(View.INVISIBLE);
                         rbPiggery.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_selected, null));
                         rbCrop.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                         rbPoultry.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.radio_button_not_selected, null));
                         rbPoultry.setAlpha((float) 0.5);
                         rbCrop.setAlpha((float) 0.5);
                         rbPiggery.setAlpha((float) 1.0);
+                        txtCrops.setAlpha((float) 0.5);
+                        txtPoultry.setAlpha((float) 0.5);
+                        txtPiggery.setAlpha((float) 1.0);
                     }
                 });
 
 
+        txtExperiencePoultryMonths.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorStateList oldColors =  txtExperiencePoultryMonths.getTextColors();
+                txtExperiencePoultryMonths.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePoultryMonths.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                txtExperiencePoultryYears.setTextColor(oldColors);
+                txtExperiencePoultryYears.setBackgroundResource(0);
+            }
+        });
+
+        txtExperiencePoultryYears.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorStateList oldColors =  txtExperiencePoultryYears.getTextColors();
+                txtExperiencePoultryYears.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePoultryYears.setBackgroundResource(R.drawable.edittext_right_corners_green);
+                txtExperiencePoultryMonths.setTextColor(oldColors);
+                txtExperiencePoultryMonths.setBackgroundColor(getResources().getColor(R.color.transparent));
+            }
+        });
+
+
+        txtExperiencePiggeryMonths.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorStateList oldColors =  txtExperiencePiggeryMonths.getTextColors();
+                txtExperiencePiggeryMonths.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePiggeryMonths.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                txtExperiencePiggeryYears.setTextColor(oldColors);
+                txtExperiencePiggeryYears.setBackgroundResource(0);
+            }
+        });
+
+        txtExperiencePiggeryYears.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorStateList oldColors =  txtExperiencePoultryYears.getTextColors();
+                txtExperiencePiggeryYears.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePiggeryYears.setBackgroundResource(R.drawable.edittext_right_corners_green);
+                txtExperiencePiggeryMonths.setTextColor(oldColors);
+                txtExperiencePiggeryMonths.setBackgroundColor(getResources().getColor(R.color.transparent));
+            }
+        });
+
+        poultryFarmVetPersonnelsp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==1){
+                    layoutVetDetails.setVisibility(View.VISIBLE);
+                }
+                else {
+                    layoutVetDetails.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        piggeryFarmVetPersonnelsp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==1){
+                    layoutVetDetails.setVisibility(View.VISIBLE);
+                }
+                else {
+                    layoutVetDetails.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 
