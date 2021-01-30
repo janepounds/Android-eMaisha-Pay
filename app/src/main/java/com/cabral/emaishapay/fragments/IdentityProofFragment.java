@@ -49,6 +49,7 @@ public class IdentityProofFragment extends Fragment {
         sub_county = getArguments().getString("sub_county");
         village = getArguments().getString("village");
         landmark = getArguments().getString("landmark");
+        email = getArguments().getString("email");
         phone_number = getArguments().getString("phone_number");
         next_of_kin_name = getArguments().getString("next_of_kin_name");
         next_of_kin_second_name = getArguments().getString("next_of_kin_second_name");
@@ -135,7 +136,7 @@ public class IdentityProofFragment extends Fragment {
                 bundle.putString("lastname", lastname);
                 bundle.putString("middlename", middlename);
                 bundle.putString("date_of_birth", date_of_birth);
-                bundle.putString("gender", gender);
+                bundle.putString("customer_gender", gender);
                 bundle.putString("district", district);
                 bundle.putString("sub_county", sub_county);
                 bundle.putString("village", village);

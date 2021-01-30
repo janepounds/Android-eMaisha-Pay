@@ -706,5 +706,13 @@ public interface APIRequests {
 
 
     );
+    @FormUrlEncoded
+    @POST("wallet/merchant/AccountOpening")
+    Call<InitiateWithdrawResponse>openAccount(
+
+            @Body JSONObject object
+
+    );
+
 
 }

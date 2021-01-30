@@ -156,8 +156,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
 
-
-
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
     Context context;
