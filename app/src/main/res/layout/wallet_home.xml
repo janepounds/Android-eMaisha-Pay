@@ -33,6 +33,7 @@
         app:labelVisibilityMode="labeled"
         app:itemRippleColor="@color/gray_gray"
         app:itemIconTint="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_shop"
        app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
         app:layout_constraintBottom_toBottomOf="parent"
