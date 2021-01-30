@@ -20,7 +20,7 @@ import com.cabral.emaishapay.R;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 public class ContactDetailsFragment extends Fragment {
-    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof"};
+    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     String[] districts = {"Kampala", "Mukono", "Jinja", "Wakiso"};
     String[] sub_counties = {"Kasubi", "Nakulabye", "Bukoto"};
     String[] villages = {"Makerere", "Busabala", "Bukoto"};

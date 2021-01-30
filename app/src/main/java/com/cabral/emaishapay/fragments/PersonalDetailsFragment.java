@@ -28,7 +28,7 @@ import java.util.Calendar;
 
 
 public class PersonalDetailsFragment extends Fragment {
-    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof"};
+    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     String[] arrayForSpinner = {"Male", "Female"};
 
     public static void addDatePicker(final EditText ed_, final Context context) {

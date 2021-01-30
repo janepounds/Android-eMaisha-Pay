@@ -7,10 +7,48 @@
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
     tools:context=".activities.CardDetail">
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefin_sans"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10sp"
+        android:text="Enter Card Details"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+
+    <!-- Main content -->
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/your_state_progress_bar_card_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:spb_animateToCurrentProgressState="true"
+        app:spb_checkStateCompleted="true"
+        app:spb_currentStateDescriptionColor="@color/colorPrimary"
+        app:spb_currentStateNumber="four"
+        app:spb_maxStateNumber="four"
+        app:spb_animationDuration="500"
+        app:spb_maxDescriptionLines="2"
+        app:spb_stateDescriptionSize="18sp"
+        app:spb_stateBackgroundColor="#BDBDBD"
+        app:spb_stateDescriptionColor="#808080"
+        app:spb_stateForegroundColor="@color/colorPrimary"
+        app:spb_stateNumberBackgroundColor="#808080"
+        app:spb_stateNumberForegroundColor="#eeeeee"
+        tools:layout_editor_absoluteX="10dp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/your_state_progress_bar_card_details">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -122,46 +160,78 @@
 
 
             </LinearLayout>
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/layout_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right"
-                app:layout_constraintTop_toBottomOf="@id/imageView3"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <Button
-                    android:id="@+id/txt_card_submit"
-                    style="@style/Button_DW"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:backgroundTint="@color/textColor"
-                    android:text="@string/submit"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:background="@drawable/round_corners_button_darkgray"
+                    android:layout_marginRight="@dimen/dimen_5dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_left_chevron"/>
+                    <Button
+                        android:id="@+id/previous_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingStart="6dp"
+                        android:background="@color/transparent"
+                        android:text="@string/previous"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold"
+                        android:paddingLeft="6dp" />
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
 
-                </ImageView>
 
-            </FrameLayout>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:background="@drawable/rounded_corners_button"
+                    android:layout_marginLeft="@dimen/dimen_5dp">
+
+                    <Button
+                        android:id="@+id/txt_card_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="4dp"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="4dp" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_right_chevron">
+
+                    </ImageView>
+                </FrameLayout>
+            </LinearLayout>
+
 
 
 

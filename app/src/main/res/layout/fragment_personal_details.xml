@@ -34,7 +34,7 @@
         app:spb_checkStateCompleted="true"
         app:spb_currentStateDescriptionColor="@color/colorPrimary"
         app:spb_currentStateNumber="one"
-        app:spb_maxStateNumber="three"
+        app:spb_maxStateNumber="four"
         app:spb_animationDuration="500"
         app:spb_maxDescriptionLines="2"
         app:spb_stateDescriptionSize="18sp"

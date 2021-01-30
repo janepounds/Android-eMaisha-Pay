@@ -32,7 +32,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class IdentityProofFragment extends Fragment {
-    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof"};
+    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     String mediaPathNationalID, encodedImageID = "N/A", mediaPathCustomerPhoto, encodedImageCustomerPhoto = "N/A", mediaPathPhotoWithID, encodedImagePhotoWithID = "N/A";
     EditText etxt_national_id, etxt_customer_photo, etxt_photo_with_id;
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact;

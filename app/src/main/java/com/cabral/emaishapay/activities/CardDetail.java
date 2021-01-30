@@ -32,7 +32,7 @@ public class CardDetail extends Fragment {
     nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID;
     EditText account_no,card_no,expiry,cvv;
     Button next;
-
+    String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,8 +61,8 @@ public class CardDetail extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_identity_proof);
-//        stateProgressBar.setStateDescriptionData(descriptionData);
+        StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_card_details);
+        stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-Bold.ttf");
 
         Button next = view.findViewById(R.id.txt_next_submit);
