@@ -40,7 +40,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/thank_you_tv">
+        app:layout_constraintTop_toBottomOf="@id/thank_you_tv"
+        android:visibility="visible">
 
 
         <TextView
@@ -62,6 +63,39 @@
             android:textColor="#222222"
             android:textStyle="bold"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pop_content_accept_payment_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thank_you_tv"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/success_txt_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="You have successfully received payment from,"
+            android:textSize="16sp"
+            android:textColor="#222222"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/accept_payment_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="John Kiwanuka"
+            android:textSize="16sp"
+            android:textColor="#222222"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_ok"
@@ -74,7 +108,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_content" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

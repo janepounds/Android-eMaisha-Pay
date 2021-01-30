@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +48,8 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                          android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/spinner_type_of_birds"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -232,7 +236,8 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/sp_poultry_source"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -312,7 +317,8 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/spinner_housing_system"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -333,64 +339,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="10dp">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="5dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/records_kept"
-                    android:textSize="@dimen/dimen_16sp" />
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_corner"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <Spinner
-                        android:id="@+id/sp_poultry_records_kept"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        android:spinnerMode="dropdown" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_chevron_down" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginLeft="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -405,9 +363,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/edittext_corner"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -420,7 +375,8 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/spinner_source_of_feeds"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -475,27 +431,36 @@
                         android:inputType="numberDecimal"
                         android:paddingStart="@dimen/dimen_10dp"
                         android:paddingLeft="@dimen/dimen_10dp" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".01"
+                        android:background="#BDBEC2"
+                        android:visibility="visible"/>
                     <TextView
-                        android:id="@+id/crops_currency_b"
+                        android:id="@+id/tv_poultry_experience_months"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:background="@color/colorPrimary"
+                        android:layout_weight="0.08"
                         android:gravity="center"
                         android:padding="4dp"
                         android:text="@string/months"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".00001"
+                        android:background="#BDBEC2"
+                        android:visibility="visible"/>
                     <TextView
-                        android:id="@+id/per_harvesting_unit_txt"
+                        android:id="@+id/tv_poultry_experience_years"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15"
-                        android:background="@drawable/edittext_right_corners_green"
+                        android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:text="@string/years"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:text="years"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -522,9 +487,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/edittext_corner"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -537,7 +499,8 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/loan_farm_insurance"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -555,6 +518,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_poultry_vet_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -637,9 +607,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/edittext_corner"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -648,11 +615,11 @@
                         android:id="@+id/sp_poultry_qualifications"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/spinner_qualifications"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -726,6 +693,88 @@
             </LinearLayout>
 
         </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/records_kept"
+                android:textSize="@dimen/dimen_16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/edittext_corner">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/vaccination_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Vaccination"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                    <CheckBox
+                        android:id="@+id/production_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Production"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/mortality_records_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Mortality Records"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                    <CheckBox
+                        android:id="@+id/feed_consumption_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Feed Consumption"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/disease_incidences_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Disease Incidences"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                    <CheckBox
+                        android:id="@+id/poultry_none_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="None"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -738,37 +787,70 @@
                 android:text="@string/loan_purpose"
                 android:textSize="16sp"
                 android:layout_marginBottom="4dp"/>
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_corner"
-                android:orientation="horizontal">
-
-
-                <Spinner
-                    android:id="@+id/sp_poultry_loan_purpose"
+                android:orientation="vertical"
+                android:background="@drawable/edittext_corner">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="0.7"
-                    android:paddingLeft="@dimen/dimen_10dp"
-                    android:background="@android:color/transparent"
-                    android:inputType="numberDecimal"
-                    android:textSize="14sp"
-                    android:entries="@array/loan_farm_insurance" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dimen_10dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_weight="0.2"
-                    android:src="@drawable/ic_chevron_down" />
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/poultry_feeds_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Feeds"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                    <CheckBox
+                        android:id="@+id/poultry_medication_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Medication"
+                        android:checked="false"
+                        android:layout_weight="1"/>
 
-            </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/poultry_purchase_chicks_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Purchase Chicks"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                    <CheckBox
+                        android:id="@+id/poultry_shed_construction_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Shed Construction"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/poultry_equipment_purchase_cb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Equipment Purchase"
+                        android:checked="false"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
 
 
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>
