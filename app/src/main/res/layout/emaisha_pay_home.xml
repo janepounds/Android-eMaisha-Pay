@@ -132,6 +132,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/card_balance_label"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -588,7 +589,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:fontFamily="@font/josefin_sans"
-                            android:text="Deposits"
+                            android:text="Deposit"
                             android:textAllCaps="true"
                             android:textColor="#31244A"
                             android:textSize="10sp"
@@ -627,7 +628,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:fontFamily="@font/josefin_sans"
-                            android:text="Funds \n Transfers"
+                            android:text="Send"
                             android:textColor="#31244A"
                             android:textSize="10sp"
                             android:textStyle="bold"

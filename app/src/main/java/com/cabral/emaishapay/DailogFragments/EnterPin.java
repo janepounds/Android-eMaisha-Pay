@@ -38,7 +38,7 @@ public class EnterPin extends DialogFragment {
     private String totalAmount,phoneNumber;
     private Button submit;
     private EditText confirm_pin;
-    private double balance;
+    private double balance;  String key = "";
 
 
 
@@ -62,10 +62,12 @@ public class EnterPin extends DialogFragment {
         if(getArguments()!=null){
             totalAmount = getArguments().getString("amount");
             phoneNumber = getArguments().getString("phone_number");
-
-
+            key = getArguments().getString("key");
         }
-
+        if(key.equalsIgnoreCase("deposit")){
+            TextView dialog_title=view.findViewById(R.id.dialog_title);
+            dialog_title.setText("ENTER AGENT PIN");
+        }
 
 
         submit.setOnClickListener(new View.OnClickListener() {

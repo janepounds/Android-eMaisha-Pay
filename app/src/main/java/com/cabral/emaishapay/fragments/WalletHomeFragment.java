@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class WalletHomeFragment extends Fragment {
     private ProgressDialog progressDialog;
     private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
-    public static double balance = 0;
+    public static double balance = 0, commisionbalance=0;
     public static FragmentManager fm;
     public WalletHomeFragment(){}
 
@@ -82,22 +83,29 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
+            binding.cardBalanceLabel.setText("Commission");
+            updateCommisionBalance();
         }else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
+            binding.cardBalanceLabel.setText("Commission");
+            updateCommisionBalance();
         }else if(role.equalsIgnoreCase("agent merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
+            binding.cardBalanceLabel.setText("Commission");
+            updateCommisionBalance();
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
             binding.layoutSettle.setVisibility(View.INVISIBLE);
+            binding.cardBalanceLabel.setText("Card");
         }
         return binding.getRoot();
     }
@@ -320,10 +328,44 @@ public class WalletHomeFragment extends Fragment {
                     Log.d(TAG, "onSuccess: Balance = " + balance);
 
                     //save balance in shared preference
-                     WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), String.valueOf(balance), context);
+                    WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), String.valueOf(balance), context);
 
                     Log.d(TAG, "onResponse: "+WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
 
+
+                } else if (response.code() == 401) {
+                    Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getContext(), TokenAuthActivity.class));
+                    getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+                } else {
+                    Log.e("info", new String(String.valueOf(response.body().getMessage())));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<BalanceResponse> call, @NotNull Throwable t) {
+                progressDialog.dismiss();
+                Log.e("info : ", new String(String.valueOf(t.getMessage())));
+                Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
+                TokenAuthActivity.startAuth(context, false);
+            }
+        });
+    }
+
+    public void updateCommisionBalance() {
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<BalanceResponse> call = apiRequests.requestCommisionBalance(access_token);
+        call.enqueue(new Callback<BalanceResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {
+                progressDialog.dismiss();
+
+                if (response.code() == 200) {
+                    commisionbalance = response.body().getData().getBalance();
+
+                    Log.d(TAG, "onSuccess: commisionbalance = " + commisionbalance);
+                    binding.cardBalance.setText(getString(R.string.currency)+" "+commisionbalance);
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();

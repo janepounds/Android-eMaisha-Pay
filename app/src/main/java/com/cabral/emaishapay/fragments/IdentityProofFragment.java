@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.CardDetail;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import java.io.ByteArrayOutputStream;

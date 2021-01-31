@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.CardDetail;
 
 
 public class FingerPrintAuthenticationFragment extends Fragment {

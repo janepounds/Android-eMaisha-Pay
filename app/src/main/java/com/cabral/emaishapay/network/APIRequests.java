@@ -113,6 +113,10 @@ public interface APIRequests {
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token
     );
+    //request commission balance
+    @GET("wallet/commissionBalance/request")
+    Call<BalanceResponse> requestCommisionBalance(@Header("Authorization") String token
+    );
 
     //initiate transfer
     @FormUrlEncoded

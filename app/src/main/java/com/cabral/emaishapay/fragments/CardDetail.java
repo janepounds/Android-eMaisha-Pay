@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.activities;
+package com.cabral.emaishapay.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.braintreepayments.api.Card;
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.activities.AccountOpeningPinCreationActivity;
 import com.cabral.emaishapay.fragments.FingerPrintAuthenticationFragment;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.utils.CryptoUtil;
@@ -140,7 +141,7 @@ public class CardDetail extends Fragment {
                  card_number = card_no.getText().toString();
                  expiry_Date = expiry.getText().toString();
                  cvvv = cvv.getText().toString();
-                Intent intent = new Intent(getContext(),AccountOpeningPinCreationActivity.class);
+                Intent intent = new Intent(getContext(), AccountOpeningPinCreationActivity.class);
 
 
                 /**********ENCRIPT CARD DETAILS************/
