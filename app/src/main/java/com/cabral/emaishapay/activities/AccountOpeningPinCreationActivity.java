@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
@@ -25,11 +24,14 @@ import retrofit2.Response;
 
 public class AccountOpeningPinCreationActivity extends AppCompatActivity implements PinFragment.Listener {
     private Context context;
-    private AccountCreation accountCreation;
+    public static AccountCreation accountCreation;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_auth2);
         context = AccountOpeningPinCreationActivity.this;
+
+        if(getIntent().getExtras()!=null)
+        accountCreation= (AccountCreation) getIntent().getExtras().getSerializable("accountCreation");
 
         PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(context)
                 .validator(submission -> {
@@ -47,7 +49,6 @@ public class AccountOpeningPinCreationActivity extends AppCompatActivity impleme
                         //submit registration details to server
                         /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
                         JSONObject requestObject = new JSONObject();
-                        accountCreation = new AccountCreation();
 
                         //set account creation values
 

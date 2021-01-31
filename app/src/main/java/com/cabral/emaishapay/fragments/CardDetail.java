@@ -4,36 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.braintreepayments.api.Card;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.activities.AccountOpeningPinCreationActivity;
 import com.cabral.emaishapay.fragments.FingerPrintAuthenticationFragment;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.utils.CryptoUtil;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
 import com.kofigyan.stateprogressbar.StateProgressBar;
-
-import org.json.JSONObject;
 
 public class CardDetail extends Fragment {
     private static final String TAG = "CardDetail";
@@ -42,8 +30,8 @@ public class CardDetail extends Fragment {
     nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
     EditText account_no,card_no,expiry,cvv;
     Button next;
-    private AccountCreation accountCreation;
     private Context context;
+    AccountCreation accountCreation;
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
 
     @Override
@@ -75,9 +63,8 @@ public class CardDetail extends Fragment {
         encodedImageID = getArguments().getString("national_id_photo");
         encodedImageCustomerPhoto = getArguments().getString("customer_photo");
         encodedImagePhotoWithID = getArguments().getString("customer_photo_with_id");
-
-        accountCreation = new AccountCreation();
-
+        getArguments().clear();
+        accountCreation=new AccountCreation();
 
         String next_of_kin = next_of_kin_name + next_of_kin_second_name;
          account_name = firstname + lastname;
@@ -141,25 +128,29 @@ public class CardDetail extends Fragment {
                  card_number = card_no.getText().toString();
                  expiry_Date = expiry.getText().toString();
                  cvvv = cvv.getText().toString();
-                Intent intent = new Intent(getContext(), AccountOpeningPinCreationActivity.class);
 
 
                 /**********ENCRIPT CARD DETAILS************/
-                CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
-
-                String card_number_encripted = encrypter.encrypt(card_number);
-                String  expiry_encripted = encrypter.encrypt(expiry_Date);
-                String  account_name_encripted = encrypter.encrypt(account_name);
-                String cvv_encripted  = encrypter.encrypt(cvvv);
+//                CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
+//                String card_number_encripted = encrypter.encrypt(card_number);
+//                String  expiry_encripted = encrypter.encrypt(expiry_Date);
+//                String  account_name_encripted = encrypter.encrypt(account_name);
+//                String cvv_encripted  = encrypter.encrypt(cvvv);
 
                 //submit registration details to server
                 /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
+//                accountCreation.setCard_number(card_number_encripted );
+//                accountCreation.setCvv(cvv_encripted );
+//                accountCreation.setExpiry(expiry_encripted);
+//                accountCreation.setAccount_name(account_name_encripted );
 
-
-                accountCreation.setCard_number(card_number_encripted );
-                accountCreation.setCvv(cvv_encripted );
-                accountCreation.setExpiry(expiry_encripted);
-                accountCreation.setAccount_name(account_name_encripted );
+                Intent intent = new Intent(getActivity(), AccountOpeningPinCreationActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("accountCreation",accountCreation);
+//                bundle.putString("national_id_photo",encodedImageID);
+//                bundle.putString("customer_photo",encodedImageCustomerPhoto);
+//                bundle.putString("customer_photo_with_id",encodedImagePhotoWithID);
+                intent.putExtras(bundle);
                 startActivity(intent);
 
 

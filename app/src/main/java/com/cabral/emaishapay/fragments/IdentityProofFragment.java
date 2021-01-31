@@ -54,6 +54,7 @@ public class IdentityProofFragment extends Fragment {
         next_of_kin_second_name = getArguments().getString("next_of_kin_second_name");
         next_of_kin_relationship = getArguments().getString("next_of_kin_relationship");
         next_of_kin_contact = getArguments().getString("next_of_kin_contact");
+        getArguments().clear();
         return inflater.inflate(R.layout.fragment_identity_proof, container, false);
     }
 

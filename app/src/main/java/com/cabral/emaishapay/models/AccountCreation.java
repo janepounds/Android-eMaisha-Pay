@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AccountCreation {
+import java.io.Serializable;
+
+public class AccountCreation  implements Serializable {
             @SerializedName("user_id")
             @Expose
             private String user_id;
@@ -83,9 +85,7 @@ public class AccountCreation {
             @Expose
             private String pin;
 
-            public AccountCreation(){
-                
-            }
+            public AccountCreation(){ }
 
 
 
