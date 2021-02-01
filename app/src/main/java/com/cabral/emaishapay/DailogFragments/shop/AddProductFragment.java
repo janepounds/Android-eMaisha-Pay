@@ -50,6 +50,7 @@ import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -145,7 +146,7 @@ public class AddProductFragment extends DialogFragment {
         txtAddProdcut = view.findViewById(R.id.txt_add_product);
 
 
-        Call<ManufacturersResponse> call1 = APIClient
+        Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
                 .getManufacturers();
         call1.enqueue(new Callback<ManufacturersResponse>() {
@@ -170,7 +171,7 @@ public class AddProductFragment extends DialogFragment {
             }
         });
 
-        Call<CategoriesResponse> call = APIClient
+        Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
                 .getCategories();
         call.enqueue(new Callback<CategoriesResponse>() {
@@ -402,7 +403,7 @@ public class AddProductFragment extends DialogFragment {
                                 }
                             }
 
-                            Call<ProductResponse> call = APIClient
+                            Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
                                             category_id,
@@ -653,7 +654,7 @@ public class AddProductFragment extends DialogFragment {
                     etxtProductSupplier.requestFocus();
                 } else {
 
-                    Call<ResponseBody> call = APIClient
+                    Call<ResponseBody> call = BuyInputsAPIClient
                             .getInstance()
                             .postProduct(
                                     id,
