@@ -33,6 +33,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.fragments.AcceptPaymentFragment;
 import com.cabral.emaishapay.fragments.AccountOpeningFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.fragments.TransferMoney;
@@ -108,8 +109,9 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static Fragment defaultHomeFragment;
     public static WalletAccountFragment walletAccountFragment;
+    public static AcceptPaymentFragment acceptPaymentFragment;
     Fragment walletTransactionsListFragment;
-    CardListFragment cardListFragment;
+    CardListFragment cardListFragment;//
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backToast;
     Toolbar toolbar;
@@ -151,7 +153,14 @@ public class WalletHomeActivity extends AppCompatActivity{
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
 
-                WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+                if(role.equalsIgnoreCase("Default")) {
+                    WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+                }else{
+                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.VISIBLE);
+                    WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+                }
             }
 
             actionBar.setHomeButtonEnabled(true);
@@ -544,8 +553,23 @@ public class WalletHomeActivity extends AppCompatActivity{
                         context.startActivity(shop);
 
                         return true;
+                    case R.id.walletAcceptPaymentFragment :
+                        acceptPaymentFragment = new AcceptPaymentFragment();
+                        if (currentFragment == null)
+                            fm.beginTransaction()
+                                    .add(R.id.wallet_home_container, acceptPaymentFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
+                        else
+                            fm.beginTransaction()
+                                    .hide(currentFragment)
+                                    .add(R.id.wallet_home_container, acceptPaymentFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
 
-
+                        currentFragment = acceptPaymentFragment;
+                        return true;
+                   // AcceptPaymentFragment
                     default:
                         return false;
 
