@@ -476,86 +476,6 @@ public interface APIRequests {
 
 
     @FormUrlEncoded
-    @POST("registerMerchant")
-    Call<ResponseBody> registerShop(
-            @Field("shop_name") String shop_name,
-            @Field("shop_contact") String shop_contact,
-            @Field("shop_email") String shop_email,
-            @Field("shop_address") String shop_address,
-            @Field("shop_currency") String shop_currency,
-            @Field("latitude") String latitude,
-            @Field("longitude") String longitude,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("loginMerchant")
-    Call<ResponseBody> loginShop(
-            @Field("shop_contact") String shop_contact,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("postCustomer")
-    Call<ResponseBody> postCustomer(
-            @Field("shop_id") Integer shop_id,
-            @Field("customer_id") String customer_id,
-            @Field("customer_name") String customer_name,
-            @Field("customer_cell") String customer_cell,
-            @Field("customer_email") String customer_email,
-            @Field("customer_address") String customer_address,
-            @Field("customer_address_two") String customer_address_two,
-            @Field("customer_image") String customer_image
-    );
-
-    @FormUrlEncoded
-    @POST("postSuppliers")
-    Call<ResponseBody> postSupplier(
-            @Field("shop_id") Integer shop_id,
-            @Field("suppliers_id") String suppliers_id,
-            @Field("suppliers_name") String suppliers_name,
-            @Field("suppliers_contact_person") String suppliers_contact_person,
-            @Field("suppliers_cell") String suppliers_cell,
-            @Field("suppliers_email") String suppliers_email,
-            @Field("suppliers_address") String suppliers_address,
-            @Field("suppliers_address_two") String suppliers_address_two,
-            @Field("suppliers_image") String suppliers_image
-    );
-
-    @FormUrlEncoded
-    @POST("postExpenses")
-    Call<ResponseBody> postExpense(
-            @Field("shop_id") Integer shop_id,
-            @Field("expense_id") String expense_id,
-            @Field("expense_name") String expense_name,
-            @Field("expense_note") String expense_note,
-            @Field("expense_amount") String expense_amount,
-            @Field("expense_date") String expense_date,
-            @Field("expense_time") String expense_time
-    );
-
-    @FormUrlEncoded
-    @POST("postProductCategories")
-    Call<ResponseBody> postCategory(
-            @Field("shop_id") Integer shop_id,
-            @Field("category_id") String category_id,
-            @Field("category_name") String category_name
-    );
-
-    @FormUrlEncoded
-    @POST("stockMerchantProduct")
-    Call<ResponseBody> postProduct(
-            @Field("id") String id,
-            @Field("measure_id") int measure_id,
-            @Field("shop_id") Integer shop_id,
-            @Field("product_id") Integer product_id,
-            @Field("product_buy_price") String product_buy_price,
-            @Field("product_sell_price") String product_sell_price,
-            @Field("product_supplier") String product_supplier,
-            @Field("product_stock") int product_stock
-    );
-
-    @FormUrlEncoded
     @POST("postPaymentMethod")
     Call<ResponseBody> postPaymentMethod(
             @Field("shop_id") Integer shop_id,
@@ -605,37 +525,7 @@ public interface APIRequests {
             @Field("order_type_name") String order_type_name
     );
 
-    @GET("getCategories")
-    Call<CategoriesResponse> getCategories();
 
-    @GET("getProductsByCategoryAndManufacturer/{category_id}/{manufacturer_id}")
-    Call<ProductResponse> getProducts(
-            @Path("category_id") int category_id,
-            @Path("manufacturer_id") int manufacturer_id
-    );
-
-    @GET("getManufacturers")
-    Call<ManufacturersResponse> getManufacturers();
-
-    @GET("getBackup/{shop_id}")
-    Call<ResponseBody> getBackup(
-            @Path("shop_id") int id
-    );
-
-    @GET("getEMaishaAppOrders/{shop_id}")
-    Call<ResponseBody> getOrders(
-            @Path("shop_id") int id
-    );
-
-    @FormUrlEncoded
-    @POST("updatestatus_merchant")
-    Call<ResponseBody> updateOrderStatus(
-            @Field("orders_id") String order_id,
-            @Field("comment") String comment,
-            @Field("statuscode") Integer statuscode
-
-
-    );
 
     @FormUrlEncoded
     @POST("registermerchantdevices")
