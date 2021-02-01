@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.activities.AccountOpeningPinCreationActivity;
-import com.cabral.emaishapay.fragments.FingerPrintAuthenticationFragment;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.AccountCreation;
+import com.cabral.emaishapay.models.InitiateWithdrawResponse;
+import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.kofigyan.stateprogressbar.StateProgressBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CardDetail extends Fragment {
     private static final String TAG = "CardDetail";
@@ -131,28 +140,60 @@ public class CardDetail extends Fragment {
 
 
                 /**********ENCRIPT CARD DETAILS************/
-//                CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
-//                String card_number_encripted = encrypter.encrypt(card_number);
-//                String  expiry_encripted = encrypter.encrypt(expiry_Date);
-//                String  account_name_encripted = encrypter.encrypt(account_name);
-//                String cvv_encripted  = encrypter.encrypt(cvvv);
+                CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
+                String card_number_encripted = encrypter.encrypt(card_number);
+                String  expiry_encripted = encrypter.encrypt(expiry_Date);
+                String  account_name_encripted = encrypter.encrypt(account_name);
+                String cvv_encripted  = encrypter.encrypt(cvvv);
 
                 //submit registration details to server
                 /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
-//                accountCreation.setCard_number(card_number_encripted );
-//                accountCreation.setCvv(cvv_encripted );
-//                accountCreation.setExpiry(expiry_encripted);
-//                accountCreation.setAccount_name(account_name_encripted );
+                accountCreation.setCard_number(card_number_encripted );
+                accountCreation.setCvv(cvv_encripted );
+                accountCreation.setExpiry(expiry_encripted);
+                accountCreation.setAccount_name(account_name_encripted );
 
-                Intent intent = new Intent(getActivity(), AccountOpeningPinCreationActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("accountCreation",accountCreation);
-//                bundle.putString("national_id_photo",encodedImageID);
-//                bundle.putString("customer_photo",encodedImageCustomerPhoto);
-//                bundle.putString("customer_photo_with_id",encodedImagePhotoWithID);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
+                JSONObject requestObject = new JSONObject();
+                try {
+                    requestObject.put("accountParams", accountCreation);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance()
+                        .openAccount(requestObject);
+                call.enqueue(new Callback<InitiateWithdrawResponse>() {
+                    @Override
+                    public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getStatus().equalsIgnoreCase("1")) {
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                //success message
+                                Intent intent = new Intent(context, WalletHomeActivity.class);
+                                startActivity(intent);
 
+
+                            } else {
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                //redirect to home;
+                                Intent intent = new Intent(context, WalletHomeActivity.class);
+                                startActivity(intent);
+
+
+
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, WalletHomeActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
 
             }

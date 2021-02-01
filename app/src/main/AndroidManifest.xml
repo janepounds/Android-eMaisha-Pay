@@ -24,11 +24,7 @@
         <activity
             android:name=".activities.WalletBuySellActivity"
             android:label="@string/title_activity_wallet_buy_sell"></activity>
-        <activity
-            android:name=".fragments.CardDetail"
-            android:label="@string/title_activity_card_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.AccountOpeningActivity" />
+
         <activity android:name=".activities.Auth2Activity" />
 
         <meta-data
@@ -76,8 +72,6 @@
             android:label="Shop"/>
 
 
-        <activity android:name=".activities.AccountOpeningPinCreationActivity"
-            android:label="Pin Creation "/>
         <activity
             android:name=".activities.Login"
             android:label="Sign In" /> <!-- Firebase Notifications -->
