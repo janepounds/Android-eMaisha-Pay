@@ -65,7 +65,7 @@ public class PersonalDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_personal_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-Bold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         EditText first_name = view.findViewById(R.id.etxt_fullname);
         EditText middle_name = view.findViewById(R.id.etxt_middlename);

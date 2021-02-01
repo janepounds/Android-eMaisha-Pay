@@ -111,7 +111,7 @@ public class CardDetail extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_card_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-Bold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
 
          account_no = view.findViewById(R.id.etxt_card_account_number);

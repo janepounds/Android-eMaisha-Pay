@@ -32,9 +32,9 @@ public class WalletLoanDetailsFragment extends Fragment {
     private Context context;
     Bundle localBundle;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
-
+    String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     private Toolbar toolbar;
-    private StateProgressBar loanProgressBarId;
+    private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private Button btnLoanNextStep;
     private EditText txtLoanApplicationAmount,loanpayments_edtxt;
     TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units;
@@ -70,6 +70,10 @@ public class WalletLoanDetailsFragment extends Fragment {
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
+        //Second hidden progress bar for loan application with 5 states
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Apply for Loan");

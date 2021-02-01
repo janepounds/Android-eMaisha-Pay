@@ -29,11 +29,12 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
     private Context context;
 
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
+    String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     LoanApplication loanApplication;
     ProgressDialog dialog;
 
     private Toolbar toolbar;
-    private StateProgressBar loanProgressBarId;
+    private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private TextView textViewLoanPreviewAmount, textViewLoanPreviewInterestRate, textViewLoanPreviewDuration, textViewLoanPreviewDueDate,
             textViewLoanPreviewDueAmount, loan_type_or_schedule_txt,textViewErrorMessage, loan_purpose_txt;
     private Button btnLoanNextStep, btnPrevious;
@@ -59,6 +60,11 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        //Second hidden progress bar for loan application with 5 states
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
        if(getArguments() != null)
         loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
 
@@ -70,7 +76,7 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         }
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Loan Preview");
+        toolbar.setTitle("Apply for Loan");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

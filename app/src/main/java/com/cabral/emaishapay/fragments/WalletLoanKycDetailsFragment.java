@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -56,13 +57,14 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     ProgressDialog dialog;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
+    String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String filePath, encodedFrontIdImageID,encodedBackIdImageID,encodedSelfieIdImageID,encodedlfarmImage;
 
     Bitmap selectedImage;
     LoanApplication loanApplication;
 
     private Toolbar toolbar;
-    private StateProgressBar loanProgressBarId;
+    private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private Button btnLoanNextStep;
 
     private EditText first_name_edt1, first_name_edt2, last_name_edt1, last_name_edt2,guarantor_contact_edt1, guarantor_contact_edt2;
@@ -98,6 +100,11 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
         textViewErrorMessage = view.findViewById(R.id.text_view_error_message);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        //Second hidden progress bar for loan application with 5 states
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
         assert getArguments() != null;
          if (getArguments().getSerializable("loanApplication") != null) {
             loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
@@ -107,6 +114,12 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         }
 
         initializeActivity();
+
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Apply for Loan");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         return view;
     }

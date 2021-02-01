@@ -43,7 +43,7 @@ public class ContactDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_contact_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-Bold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         Button next = view.findViewById(R.id.txt_next_three);
         AutoCompleteTextView act_districts = view.findViewById(R.id.act_district);

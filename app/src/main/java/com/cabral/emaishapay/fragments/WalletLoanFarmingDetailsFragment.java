@@ -39,8 +39,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     EditText crop_area_edt, expected_yield_edt, expected_revenue_edt;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb;
     Bundle localBundle;
-    private StateProgressBar loanProgressBarId;
+    private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
+    String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     LoanApplication loanApplication;
     Float interest;
     AppBarConfiguration appBarConfiguration;
@@ -118,9 +119,13 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
+        //Second hidden progress bar for loan application with 5 states
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Enter Farming Details");
+        toolbar.setTitle("Apply for Loan");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

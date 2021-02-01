@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.UserDetailsFragment">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_loan_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_loan_application_user_details"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefin_sans"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="Enter User Details"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dimen_20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/appbar_loan_app"/>
+
+
+    <!-- Main content -->
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/loan_application_state_progress_bar_user_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:spb_animateToCurrentProgressState="true"
+        app:spb_checkStateCompleted="true"
+        app:spb_currentStateDescriptionColor="@color/colorPrimary"
+        app:spb_currentStateNumber="one"
+        app:spb_maxStateNumber="five"
+        app:spb_animationDuration="500"
+        app:spb_maxDescriptionLines="2"
+        app:spb_stateBackgroundColor="#BDBDBD"
+        app:spb_stateDescriptionColor="#808080"
+        app:spb_stateForegroundColor="@color/colorPrimary"
+        app:spb_stateNumberBackgroundColor="#808080"
+        app:spb_stateNumberForegroundColor="#eeeeee" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/loan_application_state_progress_bar_user_details">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First Name"
+                android:layout_marginTop="15dp"/>
+            <EditText
+                android:id="@+id/etxt_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_corner"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Name"
+                android:layout_marginTop="15dp"/>
+
+            <EditText
+                android:id="@+id/etxt_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="4dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_corner"
+                android:fontFamily="@font/josefin_sans"
+                android:inputType="text"
+                android:textColor="#000" />
+            <LinearLayout
+                android:id="@+id/layout_emaisha_acc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/josefin_sans"
+                    android:text="eMaisha Account"
+                    android:layout_marginBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/edittext_corner"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@drawable/edittext_left_corners_green"
+                            android:gravity="center"
+                            android:text="+256"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                        <EditText
+                            android:id="@+id/etxt_emaisha_account"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/josefin_sans"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/dimen_10dp"
+                            android:tag="+256 "
+                            android:maxLength="9"
+                            android:layout_weight="0.5"
+                            android:background="@android:color/transparent"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dimen_10dp" />
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_button"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/txt_next_two"
+                    style="@style/Button_DW"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:backgroundTint="@color/textColor"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="10dip"
+                    android:src="@drawable/ic_right_chevron">
+
+                </ImageView>
+
+            </FrameLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

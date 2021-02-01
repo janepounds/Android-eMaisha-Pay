@@ -45,7 +45,7 @@
                 android:fontFamily="@font/josefin_sans"
                 android:gravity="left"
                 android:text="Enter KYC Details"
-                android:textColor="@color/textColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -53,6 +53,7 @@
                 android:id="@+id/loan_app_photos_progress_bar_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 app:spb_animateToCurrentProgressState="true"
                 app:spb_checkStateCompleted="true"
                 app:spb_animationDuration="500"
@@ -65,6 +66,28 @@
                 app:spb_stateNumberBackgroundColor="#808080"
                 app:spb_stateNumberForegroundColor="#eeeeee"
                 app:spb_stateLineThickness="4dp" />
+            <com.kofigyan.stateprogressbar.StateProgressBar
+                android:id="@+id/loan_application_state_progress_bar_kyc_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spb_animateToCurrentProgressState="true"
+                app:spb_checkStateCompleted="true"
+                app:spb_currentStateDescriptionColor="@color/colorPrimary"
+                app:spb_currentStateNumber="five"
+                app:spb_maxStateNumber="five"
+                app:spb_animationDuration="500"
+                app:spb_maxDescriptionLines="2"
+                app:spb_stateBackgroundColor="#BDBDBD"
+                app:spb_stateDescriptionColor="#808080"
+                app:spb_stateForegroundColor="@color/colorPrimary"
+                app:spb_stateNumberBackgroundColor="#808080"
+                app:spb_stateNumberForegroundColor="#eeeeee"
+                android:visibility="gone"/>
+
 
             <ScrollView
                 android:layout_width="match_parent"
