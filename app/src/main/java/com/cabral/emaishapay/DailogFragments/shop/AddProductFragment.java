@@ -37,6 +37,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,9 +143,47 @@ public class AddProductFragment extends DialogFragment {
         etxtProductStock = view.findViewById(R.id.etxt_product_stock);
         etxtProductSupplier = view.findViewById(R.id.etxt_supplier);
         etxtProductManufucturer = view.findViewById(R.id.etxt_product_manufucturer);
-
+        Spinner quantityUnit = view.findViewById(R.id.product_units);
+        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
+        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         txtAddProdcut = view.findViewById(R.id.txt_add_product);
+        ImageView close = view.findViewById(R.id.add_product_close);
+        close.setOnClickListener(v -> dismiss());
 
+
+
+        quantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==0){
+                    quantitySellUnit.setText("/unit");
+                    quantityPurchaseUnit.setText("/unit");
+
+                }
+                else if(position==1){
+                    quantitySellUnit.setText("/kg");
+                    quantityPurchaseUnit.setText("/kg");
+                }
+                else if(position==2){
+                    quantitySellUnit.setText("/box");
+                    quantityPurchaseUnit.setText("/box");
+                }
+                else if(position==3){
+                    quantitySellUnit.setText("/ltr");
+                    quantityPurchaseUnit.setText("/ltr");
+                }
+                else if(position==4){
+                    quantitySellUnit.setText("/tonne");
+                    quantityPurchaseUnit.setText("/tonne");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()

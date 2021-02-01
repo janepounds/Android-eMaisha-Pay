@@ -14,17 +14,23 @@
         android:background="@drawable/top_rounded_blue">
 
         <TextView
-            android:id="@+id/agent_bal_inquiry_title_label"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".1"
             android:gravity="center"
-            android:text="Confirm Deposit Details"
+            android:text="ADD PRODUCT"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textAllCaps="true"/>
-
+        <ImageView
+            android:id="@+id/add_product_close"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight=".9"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:src="@drawable/close" />
 
     </LinearLayout>
 
@@ -65,12 +71,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/drop_down"
+                        android:drawableRight="@drawable/ic_add_circle"
                         android:fontFamily="@font/josefin_sans"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:textColor="@color/creditCardBackground"
-                        android:textSize="18sp"
                         android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
@@ -94,12 +98,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/drop_down"
+                        android:drawableRight="@drawable/ic_add_circle"
                         android:fontFamily="@font/josefin_sans"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:textColor="@color/creditCardBackground"
-                        android:textSize="18sp"
                         android:layout_marginBottom="10dp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -129,12 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/drop_down"
+                        android:drawableRight="@drawable/ic_add_circle"
                         android:fontFamily="@font/josefin_sans"
-                        android:inputType="text"
-                        android:textSize="18sp"
+                        android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:textColor="@color/creditCardBackground"
                         android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
@@ -171,10 +171,8 @@
                             android:layout_weight="2"
                             android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
-                            android:textSize="18sp"
                             android:padding="10dp"
-                            android:background="@android:color/transparent"
-                            android:textColor="@color/creditCardBackground" />
+                            android:background="@color/transparent" />
 
 
 
@@ -184,7 +182,8 @@
                             android:layout_height="40dp"
                             android:layout_weight="8"
                             android:layout_marginEnd="10dp"
-                            app:srcCompat="@drawable/new_barcode" />
+                            app:srcCompat="@drawable/new_barcode"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -193,7 +192,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,19 +208,36 @@
                         android:textSize="16sp" />
 
 
-                    <EditText
-                        android:id="@+id/etxt_product_units"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/drop_down"
-                        android:fontFamily="@font/josefin_sans"
-                        android:inputType="text"
-                        android:textSize="18sp"
-                        android:padding="10dp"
-                        android:textColor="@color/creditCardBackground"
-                        android:layout_marginBottom="10dp"/>
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="3.4dp">
 
+                        <Spinner
+                            android:id="@+id/product_units"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/crop_quantity_unit"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            tools:ignore="VectorDrawableCompat" />
+                    </RelativeLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,13 +265,12 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="3"
-                            android:background="@drawable/ugx_background"
+                            android:background="@drawable/edittext_left_corners_green"
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="UGX"
                             android:textColor="#ffffff"
-                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -265,9 +281,7 @@
                             android:background="@color/transparent"
                             android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
-                            android:padding="8dp"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:padding="8dp" />
                         <TextView
                             android:id="@+id/txt_selling_units"
                             android:layout_width="0dp"
@@ -276,10 +290,10 @@
                             android:background="@drawable/edittext_right_corners_green"
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
-                            android:text="/ unit"
+                            android:text="/unit"
                             android:textColor="#ffffff"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textAllCaps="false"/>
 
                     </LinearLayout>
 
@@ -315,13 +329,12 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="3"
-                            android:background="@drawable/ugx_background"
+                            android:background="@drawable/edittext_left_corners_green"
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="UGX"
                             android:textColor="#ffffff"
-                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -332,9 +345,7 @@
                             android:background="@color/transparent"
                             android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
-                            android:padding="8dp"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:padding="8dp" />
                         <TextView
                             android:id="@+id/txt_purchase_units"
                             android:layout_width="0dp"
@@ -343,10 +354,10 @@
                             android:background="@drawable/edittext_right_corners_green"
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
-                            android:text="/ unit"
+                            android:text="/unit"
                             android:textColor="#ffffff"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textAllCaps="false"/>
 
                     </LinearLayout>
 
@@ -379,21 +390,18 @@
                         android:fontFamily="@font/josefin_sans"
                         android:inputType="number"
                         android:padding="10dp"
-                        android:textColor="@color/creditCardBackground"
-                        android:textSize="18sp"
                         android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
+           <androidx.cardview.widget.CardView
                 android:id="@+id/image_view_holder"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:visibility="visible"
-                android:background="@drawable/edittext_corner">
-
+                app:cardCornerRadius="@dimen/dimen_5dp">
 
 
                 <ImageView
@@ -402,11 +410,11 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
                     android:padding="5dp"
-                    app:srcCompat="@drawable/image_placeholder"
+                    app:srcCompat="@drawable/add_default_image"
                     tools:ignore="VectorDrawableCompat" />
 
 
-            </LinearLayout>
+           </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -431,23 +439,33 @@
                 android:textSize="18sp"
                 android:visibility="gone"/>
 
-
-
-            <TextView
-                android:id="@+id/txt_add_product"
+            <LinearLayout
+                android:id="@+id/layout_submit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/balance_cards"
-                android:fontFamily="@font/josefin_sans"
-                android:gravity="center"
-                android:padding="13dp"
-                android:text="@string/add_product"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"/>
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_20dp"
+                android:background="@drawable/rounded_corners_button"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txt_add_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/submit"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="@color/transparent"
+                    app:drawableEndCompat="@drawable/ic_right_chevron" />
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

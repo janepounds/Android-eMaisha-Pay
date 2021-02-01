@@ -738,7 +738,7 @@
         <item>Bank Cards</item>
     </string-array>
     <string-array name="crop_quantity_unit">
-        <item> Unit</item>
+        <item> Select</item>
         <item>Kg</item>
         <item>Boxes</item>
         <item>Litres</item>
