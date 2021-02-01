@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
@@ -37,7 +38,7 @@ public class CardDetail extends Fragment {
 
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact,
     nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
-    EditText account_no,card_no,expiry,cvv;
+    EditText account_no,card_no,expiry,cvv,card_enter_pin,card_confirm_pin;
     Button next;
     private Context context;
     AccountCreation accountCreation;
@@ -118,6 +119,8 @@ public class CardDetail extends Fragment {
          card_no = view.findViewById(R.id.etxt_card_number);
          expiry = view.findViewById(R.id.etxt_card_expiry_date);
          cvv = view.findViewById(R.id.etxt_card_cvv);
+         card_enter_pin= view.findViewById(R.id.etxt_card_enter_pin);
+         card_confirm_pin= view.findViewById(R.id.etxt_card_confirm_pin);
          next  = view.findViewById(R.id.txt_card_submit);
 
         Log.d(TAG, "onViewCreated: "+"firstname\n"+firstname+"lastname\n"+lastname+"middlename\n"+
@@ -131,6 +134,9 @@ public class CardDetail extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
+                    card_enter_pin.setError("PIN Mismatch!");
+                }
 
                 //call pin creation Activity
                  account_number = account_no.getText().toString();
@@ -152,6 +158,7 @@ public class CardDetail extends Fragment {
                 accountCreation.setCvv(cvv_encripted );
                 accountCreation.setExpiry(expiry_encripted);
                 accountCreation.setAccount_name(account_name_encripted );
+                accountCreation.setPin(card_enter_pin.getText().toString());
 
                 /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
                 JSONObject requestObject = new JSONObject();
@@ -160,8 +167,10 @@ public class CardDetail extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                 Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance()
-                        .openAccount(requestObject);
+                        .openAccount(access_token,requestObject);
                 call.enqueue(new Callback<InitiateWithdrawResponse>() {
                     @Override
                     public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
