@@ -81,6 +81,7 @@ public class WalletHomeFragment extends Fragment {
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
@@ -89,6 +90,7 @@ public class WalletHomeFragment extends Fragment {
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
@@ -97,12 +99,14 @@ public class WalletHomeFragment extends Fragment {
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
+            binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
             updateCommisionBalance();
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
+            binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
             binding.layoutSettle.setVisibility(View.INVISIBLE);
             binding.cardBalanceLabel.setText("Card");

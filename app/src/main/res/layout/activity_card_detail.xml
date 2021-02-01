@@ -160,6 +160,46 @@
 
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/josefin_sans"
+                android:text="Enter Pin"
+                android:textSize="16sp" />
+            <EditText
+                android:id="@+id/etxt_card_enter_pin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edittext_corner"
+                android:fontFamily="@font/josefin_sans"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:padding="8dp"
+                android:textColor="#000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/josefin_sans"
+                android:text="Confirm Pin"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etxt_card_confirm_pin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edittext_corner"
+                android:fontFamily="@font/josefin_sans"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:padding="8dp"
+                android:textColor="#000" />
             <LinearLayout
                 android:id="@+id/layout_button"
                 android:layout_width="match_parent"
