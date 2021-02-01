@@ -37,6 +37,7 @@ import com.cabral.emaishapay.fragments.AcceptPaymentFragment;
 import com.cabral.emaishapay.fragments.AccountOpeningFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.fragments.TransferMoney;
+import com.cabral.emaishapay.fragments.UserDetailsFragment;
 import com.cabral.emaishapay.fragments.WalletAccountFragment;
 import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
@@ -384,6 +385,15 @@ public class WalletHomeActivity extends AppCompatActivity{
             fragmentManager.beginTransaction()
                     .add(R.id.wallet_home_container, fragment)
                     .addToBackStack(null).commit();
+
+    }
+    public void openAgentCustomerLoanApplication(View view) {
+        //call loan application fragment
+        Fragment fragment = new UserDetailsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.wallet_home_container, fragment)
+                .addToBackStack(null).commit();
 
     }
     public void editMyProduce(View view) {

@@ -16,8 +16,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="10sp"
         android:text="Enter Contact Details"
-        android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 

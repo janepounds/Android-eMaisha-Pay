@@ -648,7 +648,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/layout_deposits"
-                        app:layout_constraintTop_toBottomOf="@id/layout_account_opening">
+                        app:layout_constraintTop_toBottomOf="@id/layout_account_opening"
+                        android:onClick="openAgentCustomerLoanApplication">
 
                         <ImageView
                             android:id="@+id/image_loan_app"
