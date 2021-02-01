@@ -151,7 +151,14 @@ public class WalletHomeActivity extends AppCompatActivity{
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
 
-                WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+                if(role.equalsIgnoreCase("Default")) {
+                    WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+                }else{
+                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.VISIBLE);
+                    WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+                }
             }
 
             actionBar.setHomeButtonEnabled(true);
