@@ -43,12 +43,12 @@ public class AcceptPaymentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_accept_payment, container, false);
 
-        Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
+        Toolbar toolbar=view.findViewById(R.id.toolbar_accept_payment);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Accept Payment");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         txtPaymentMethod=view.findViewById(R.id.text_mobile_number);
         layoutMobileMoney=view.findViewById(R.id.layout_mobile_number);
