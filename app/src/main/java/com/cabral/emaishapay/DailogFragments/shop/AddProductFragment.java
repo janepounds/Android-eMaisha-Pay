@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -73,9 +74,9 @@ public class AddProductFragment extends DialogFragment {
     Context context;
     public static EditText etxtProductCode;
     ProgressDialog loading;
-    EditText etxtProductName, etxtProductCategory, etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight, etxtProductManufucturer;
+    EditText etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight;
     TextView txtAddProdcut;
-
+    AutoCompleteTextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;

@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight=".1"
             android:gravity="center"
-            android:text="Transfer"
+            android:text="Send"
             android:textColor="@color/white"
             android:textSize="22dp"
             android:textStyle="bold"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Transfer to"
+                    android:text="Send to"
                     android:textSize="16sp" />
 
                 <RelativeLayout

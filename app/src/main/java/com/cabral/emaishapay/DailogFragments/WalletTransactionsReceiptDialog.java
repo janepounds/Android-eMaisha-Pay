@@ -98,8 +98,15 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
                 statusTextView.setText(transaction.getStatus());
 
             receiptNumberTextView.setText(transaction.getReceiptNumber());
-            serviceTextView.setText(" "+transaction.getType());
 
+
+            if (transaction.getType().equalsIgnoreCase("merchantwithdraw")){
+                serviceTextView.setText("Merchant Withdraw");
+            }else if (transaction.getType().equalsIgnoreCase("merchantdeposit")){
+                serviceTextView.setText("Merchant Deposit");
+            }else{
+                serviceTextView.setText(transaction.getType());
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
