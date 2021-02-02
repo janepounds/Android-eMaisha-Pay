@@ -7,6 +7,23 @@
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
     tools:context=".fragments.CardDetail">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_account_opening"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_account_opening"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
@@ -18,7 +35,8 @@
         android:text="Enter Card Details"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@id/appbar_account_opening"/>
 
 
     <!-- Main content -->
