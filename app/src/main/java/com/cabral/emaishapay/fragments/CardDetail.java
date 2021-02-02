@@ -14,6 +14,8 @@ import com.cabral.emaishapay.utils.CryptoUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -123,12 +125,19 @@ public class CardDetail extends Fragment {
          card_confirm_pin= view.findViewById(R.id.etxt_card_confirm_pin);
          next  = view.findViewById(R.id.txt_card_submit);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbar_account_opening);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
+
         Log.d(TAG, "onViewCreated: "+"firstname\n"+firstname+"lastname\n"+lastname+"middlename\n"+
                 middlename+"gender\n" +gender+"dob\n"+date_of_birth+"district\n"+district+"village\n" +village+"sub_county\n"+sub_county+"landmark\n"+landmark
                 +"phone\n" +phone_number+"email\n"+email+"nok_f\n"+next_of_kin_name+"nok_l\n"+next_of_kin_second_name+"rlsp\n"+next_of_kin_relationship+"nok_contact\n"+ next_of_kin_contact
                 +"nin\n"+nin+"valid\n"+valid_upto+"nationid\n"+encodedImageID+"customer_pic\n"+encodedImageCustomerPhoto+"cust_pic_id\n"+encodedImagePhotoWithID);
 
-
+        Button previous = view.findViewById(R.id.previous_button);
+        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
 
 
         next.setOnClickListener(new View.OnClickListener() {
