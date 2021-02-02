@@ -40,10 +40,13 @@ public class WalletLoanDetailsFragment extends Fragment {
     TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units;
     private Spinner spLoanApplicationType;
     Float interest=0F;
+    private String title,firstname,lastname,phone;
 
     public WalletLoanDetailsFragment(Bundle bundle) {
     }
-
+    public WalletLoanDetailsFragment(String title) {
+        this.title = title;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,15 +73,24 @@ public class WalletLoanDetailsFragment extends Fragment {
         loanProgressBarId.setStateDescriptionData(descriptionData);
         loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
+
         //Second hidden progress bar for loan application with 5 states
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
         loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
         loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Apply for Loan");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(title.equalsIgnoreCase("Merchant Loan Details")){
+           firstname = getArguments().getString("firstname");
+           lastname = getArguments().getString("lastname");
+           phone = getArguments().getString("phone_no");
+
+        }else {
+
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            toolbar.setTitle("Apply for Loan");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         return view;
