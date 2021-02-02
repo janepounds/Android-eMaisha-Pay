@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -333,15 +334,14 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
                             // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
                             Fragment fragment = new WalletLoansListFragment();
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                            while(fragmentManager.getBackStackEntryCount()>2)//pop all fragements in back stack till there 2
+                                fragmentManager.popBackStackImmediate();
+
                             fragmentManager.beginTransaction()
-                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                    .add(R.id.wallet_home_container, fragment)
-                                    .addToBackStack(null).commit();
-                        else
-                            fragmentManager.beginTransaction()
-                                    .add(R.id.wallet_home_container, fragment)
+                                    .replace(R.id.wallet_home_container, fragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                     .addToBackStack(null).commit();
 
                     }

@@ -81,7 +81,7 @@ public class WalletLoansListFragment extends Fragment {
         walletPayLoanLayout.setVisibility(View.GONE);
         loansListRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        statementAdapter = new LoansListAdapter(dataList);
+        statementAdapter = new LoansListAdapter(getContext(),dataList);
         loansListRecyclerView.setAdapter(statementAdapter);
 
         walletApplyLoanBtn.setOnClickListener(new View.OnClickListener() {

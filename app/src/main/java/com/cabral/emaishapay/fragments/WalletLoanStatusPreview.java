@@ -68,10 +68,10 @@ public class WalletLoanStatusPreview extends Fragment {
         paymentSchedule = view.findViewById(R.id.payment_shedule_button);
         textViewLoanNumber = view.findViewById(R.id.loan_number);
 
-        assert getArguments() != null;
-        loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
-
-        initializeActivity();
+        if(getArguments() != null){
+            loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
+            initializeActivity();
+        }
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Loan Status Preview");

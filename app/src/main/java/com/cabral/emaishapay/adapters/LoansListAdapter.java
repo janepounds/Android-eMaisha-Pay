@@ -33,8 +33,9 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
     private List<LoanApplication> dataList;
     Context context;
 
-    public LoansListAdapter(List<LoanApplication> dataList) {
+    public LoansListAdapter(Context context,List<LoanApplication> dataList) {
         this.dataList = dataList;
+        this.context=context;
     }
 
 
@@ -123,18 +124,10 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("loanApplication", transaction);
-        //    navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanStatusPreview,bundle);
-
-//            FragmentManager fm = ((WalletHomeActivity) context).getSupportFragmentManager();
-//            FragmentTransaction ft = fm.beginTransaction();
-//            Fragment prev =fm.findFragmentByTag("dialog");
-//            if (prev != null) {
-//                ft.remove(prev);
-//            }
-//            ft.addToBackStack(null);
 
             Fragment fragment= new WalletLoanStatusPreview();
             FragmentManager fragmentManager=((WalletHomeActivity) context).getSupportFragmentManager();
+            fragment.setArguments(bundle);
             if (((WalletHomeActivity) context).currentFragment != null)
                 fragmentManager.beginTransaction()
                         .hide(((WalletHomeActivity) context).currentFragment)
