@@ -34,8 +34,8 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.AcceptPaymentFragment;
-import com.cabral.emaishapay.fragments.AccountOpeningFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.PersonalDetailsFragment;
 import com.cabral.emaishapay.fragments.TransferMoney;
 import com.cabral.emaishapay.fragments.UserDetailsFragment;
 import com.cabral.emaishapay.fragments.WalletAccountFragment;
@@ -380,7 +380,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
     public void openAgentCustomerAccountOpening(View view) {
         //call account opening fragment
-        Fragment fragment = new AccountOpeningFragment();
+        Fragment fragment = new PersonalDetailsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .add(R.id.wallet_home_container, fragment)

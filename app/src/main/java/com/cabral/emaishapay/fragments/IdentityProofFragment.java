@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import java.io.ByteArrayOutputStream;
@@ -78,6 +81,12 @@ public class IdentityProofFragment extends Fragment {
         etxt_customer_photo = view.findViewById(R.id.etxt_customer_photo);
         etxt_photo_with_id = view.findViewById(R.id.etxt_photo_with_id);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbar_account_opening);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
+
         txt_upload_national_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +126,10 @@ public class IdentityProofFragment extends Fragment {
                 openFragment(new FingerPrintAuthenticationFragment());
             }
         });
+
+
+        Button previous = view.findViewById(R.id.previous_button_two);
+        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,9 +231,18 @@ public class IdentityProofFragment extends Fragment {
 
 
     public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.open_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//        transaction.replace(R.id.wallet_home_container, fragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+        if (((WalletHomeActivity) getActivity()).currentFragment != null)
+            getFragmentManager().beginTransaction()
+                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                    .add(R.id.wallet_home_container, fragment)
+                    .addToBackStack(null).commit();
+        else
+            getFragmentManager().beginTransaction()
+                    .add(R.id.wallet_home_container, fragment)
+                    .addToBackStack(null).commit();
     }
 }

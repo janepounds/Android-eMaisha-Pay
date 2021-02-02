@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -14,6 +15,8 @@ import com.cabral.emaishapay.utils.CryptoUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +47,7 @@ public class CardDetail extends Fragment {
     AccountCreation accountCreation;
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
 
+    DialogLoader dialogLoader;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -123,13 +127,21 @@ public class CardDetail extends Fragment {
          card_confirm_pin= view.findViewById(R.id.etxt_card_confirm_pin);
          next  = view.findViewById(R.id.txt_card_submit);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbar_account_opening);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
+
         Log.d(TAG, "onViewCreated: "+"firstname\n"+firstname+"lastname\n"+lastname+"middlename\n"+
                 middlename+"gender\n" +gender+"dob\n"+date_of_birth+"district\n"+district+"village\n" +village+"sub_county\n"+sub_county+"landmark\n"+landmark
                 +"phone\n" +phone_number+"email\n"+email+"nok_f\n"+next_of_kin_name+"nok_l\n"+next_of_kin_second_name+"rlsp\n"+next_of_kin_relationship+"nok_contact\n"+ next_of_kin_contact
                 +"nin\n"+nin+"valid\n"+valid_upto+"nationid\n"+encodedImageID+"customer_pic\n"+encodedImageCustomerPhoto+"cust_pic_id\n"+encodedImagePhotoWithID);
 
+        Button previous = view.findViewById(R.id.previous_button);
+        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
 
-
+        dialogLoader = new DialogLoader(getContext());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +149,7 @@ public class CardDetail extends Fragment {
                 if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
                     card_enter_pin.setError("PIN Mismatch!");
                 }
-
+                dialogLoader.showProgressDialog();
                 //call pin creation Activity
                  account_number = account_no.getText().toString();
                  card_number = card_no.getText().toString();
@@ -180,15 +192,14 @@ public class CardDetail extends Fragment {
                                 //success message
                                 Intent intent = new Intent(context, WalletHomeActivity.class);
                                 startActivity(intent);
-
+                                dialogLoader.hideProgressDialog();
 
                             } else {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                 //redirect to home;
                                 Intent intent = new Intent(context, WalletHomeActivity.class);
                                 startActivity(intent);
-
-
+                                dialogLoader.hideProgressDialog();
 
                             }
                         }
@@ -201,6 +212,7 @@ public class CardDetail extends Fragment {
                         Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, WalletHomeActivity.class);
                         startActivity(intent);
+                        dialogLoader.hideProgressDialog();
                     }
                 });
 

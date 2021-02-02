@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
-    tools:context=".activities.AccountOpeningActivity">
+    android:background="@color/windowBackground">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_account_opening"
         android:layout_width="match_parent"
