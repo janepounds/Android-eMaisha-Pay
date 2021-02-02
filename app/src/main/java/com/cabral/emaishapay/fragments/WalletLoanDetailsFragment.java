@@ -76,8 +76,11 @@ public class WalletLoanDetailsFragment extends Fragment {
 
         //Second hidden progress bar for loan application with 5 states
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
-        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+//        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+//        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+//
+
+
 
         if(title.equalsIgnoreCase("Merchant Loan Details")){
            firstname = getArguments().getString("firstname");
