@@ -273,7 +273,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     }
                 });
 
-
+        rbCrop.setSelected(true);
         txtExperiencePoultryMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -413,6 +413,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             public void onClick(View v) {
                 if(rbCrop.isSelected()){
                     loanApplication.setCheck_selected("Crops");
+                    loanApplication.setCrop_data(new LoanApplication.Crop());
                     loanApplication.getCrop_data().setCrop(crop_spn.getSelectedItem().toString());
                     loanApplication.getCrop_data().setCrop_area( Double.parseDouble(crop_area_edt.getText().toString()) );
                     loanApplication.getCrop_data().setCrop_area_unit(getString(R.string.default_crop_area_units));
@@ -430,6 +431,8 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
                 }else if(rbPoultry.isSelected()){
                     loanApplication.setCheck_selected("Poultry");
+
+                    loanApplication.setPoultry_data(new LoanApplication.Poultry());
                     loanApplication.getPoultry_data().setType_of_birds(sp_poultry_type_of_birds.getSelectedItem().toString());
                     loanApplication.getPoultry_data().setDate_of_hatch(tv_poultry_date_of_hatch.getText().toString());
                     loanApplication.getPoultry_data().setDate_purchased(tv_poultry_date_purchased.getText().toString());
@@ -459,6 +462,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
                 }else if(rbPiggery.isSelected()){
                     loanApplication.setCheck_selected("Piggery");
+                    loanApplication.setPiggery_data(new LoanApplication.Piggery());
                   loanApplication.getPiggery_data().setTotal_Animals(Integer.parseInt(et_piggery_total_animals.getText().toString()));
                   loanApplication.getPiggery_data().setNo_of_females(Integer.parseInt(et_piggery_females.getText().toString()));
                   loanApplication.getPiggery_data().setNo_of_males(Integer.parseInt(et_poultry_no_of_birds_males.getText().toString()));
@@ -491,6 +495,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
                 if(title.equalsIgnoreCase("Merchant Loan Details")){
                     Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.merchant_loan_details));
+                    fragment.setArguments(bundle);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (((WalletHomeActivity) getActivity()).currentFragment != null)
                         fragmentManager.beginTransaction()
@@ -505,6 +510,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 }else{
 
                 Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.default_loan_details));
+                fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 if (((WalletHomeActivity) getActivity()).currentFragment != null)
                     fragmentManager.beginTransaction()

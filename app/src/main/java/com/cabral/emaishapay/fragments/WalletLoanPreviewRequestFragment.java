@@ -79,12 +79,14 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
             loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
         }
 
-       if(getArguments() != null)
-        loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
+       if(getArguments() != null){
+           loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
+           float interest=getArguments().getFloat("interest");
+           getArguments().clear();
+           loanApplication.setInterestRate((float) interest);
+       }
 
         if (loanApplication != null) {
-            float interest=getArguments().getFloat("interest");
-            loanApplication.setInterestRate((float) interest);
 
             initializeActivity();
         }
@@ -119,7 +121,8 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         textViewLoanPreviewAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getAmount()));
         textViewLoanPreviewInterestRate.setText(NumberFormat.getInstance().format(loanApplication.getInterestRate()) + "%");
         loan_type_or_schedule_txt.setText(loanApplication.getLoanType());
-        textViewLoanPreviewDuration.setText(loanApplication.getDuration() + " " + loanApplication.getDurationLabel());
+        textViewLoanPreviewDuration.setText(loanApplication.getDurationWithUnits());
+
         textViewLoanPreviewDueDate.setText(loanApplication.computeDueDate());
         textViewLoanPreviewDueAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.computeDueAmount()));
         if(loanApplication.getCrop_data().isPurpose_for_fetilizer()){

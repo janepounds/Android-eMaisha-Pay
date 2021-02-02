@@ -82,7 +82,7 @@ public class WalletLoanStatusPreview extends Fragment {
     }
 
     public void initializeActivity() {
-        textViewLoanStatusPreviewDuration.setText(loanApplication.getDuration() + " " + loanApplication.getDurationLabel());
+        textViewLoanStatusPreviewDuration.setText(loanApplication.getDurationWithUnits());
         //referee1ImageView, referee2ImageView
         textViewLoanStatusPreviewDueDate.setText(loanApplication.getDueDate());
         text_view_loan_status_preview_date.setText(loanApplication.getRequestDate());

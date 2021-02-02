@@ -284,4 +284,7 @@ public class WalletLoansListFragment extends Fragment {
         super.onResume();
         dataList.clear();
     }
+
+
+
 }

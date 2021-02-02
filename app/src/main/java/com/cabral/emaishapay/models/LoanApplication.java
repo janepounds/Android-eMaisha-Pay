@@ -81,9 +81,9 @@ public class LoanApplication implements Serializable {
     @SerializedName("dueAmount")
     @Expose
     private int dueAmount;
-    @SerializedName("check_selected")
+    @SerializedName("farming_details")
     @Expose
-    private String check_selected;
+    private String farming_details;
 
     //crop
     @SerializedName("crop_data")
@@ -110,11 +110,11 @@ public class LoanApplication implements Serializable {
     private String phone;
 
     public String getCheck_selected() {
-        return check_selected;
+        return farming_details;
     }
 
     public void setCheck_selected(String check_selected) {
-        this.check_selected = check_selected;
+        this.farming_details = check_selected;
     }
 
     public LoanApplication(){
@@ -367,12 +367,22 @@ public class LoanApplication implements Serializable {
     public int computeDueAmount(){
         return  Math. round(this.amount*(1+this.interestRate/100));
     }
-    public String getDurationLabel(){
+    public String getDurationWithUnits(){
 
         if(getLoanType().equals("Daily")){
-            return getLoanType().replace("il","")+(getDuration()==1?"":"s");
+            return this.getDuration()+" days";
+        }else if(getLoanType().equalsIgnoreCase("Weekly")){
+
+            return this.getDuration()+" weeks";
         }
-        return getLoanType().replace("ly","")+(getDuration()==1?"":"s");
+        else if(getLoanType().equalsIgnoreCase("After 3 months")){
+            return (3*this.getDuration())+" months";
+        }
+        else if(getLoanType().equalsIgnoreCase("After 6 months")){
+            return (6*this.getDuration())+" months";
+        }
+
+        return this.getDuration()+" months";
     }
 
     public String getPhone() {
@@ -407,7 +417,7 @@ public class LoanApplication implements Serializable {
         this.piggery_data = piggery_data;
     }
 
-    public class Crop {
+    public static class Crop {
         @SerializedName("crop")
         @Expose
         private String crop;
@@ -534,7 +544,7 @@ public class LoanApplication implements Serializable {
 
     }
 
-    public class Poultry{
+    public static class Poultry{
         @SerializedName("type_of_birds")
         @Expose
         private String type_of_birds;
@@ -773,7 +783,7 @@ public class LoanApplication implements Serializable {
         }
     }
 
-    public class Piggery {
+    public static class Piggery {
      @SerializedName("total_Animals")
      @Expose
      private int total_Animals;

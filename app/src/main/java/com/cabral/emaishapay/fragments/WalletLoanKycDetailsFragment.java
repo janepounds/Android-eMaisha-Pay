@@ -130,6 +130,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
          if (getArguments().getSerializable("loanApplication") != null) {
             loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
              double interest = loanApplication.getInterestRate();
+             getArguments().clear();
         } else {
             requireActivity().finish();
         }
@@ -350,7 +351,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                     TokenAuthActivity.startAuth(context, true);
                 } else if (response.code() == 500) {
                     textViewErrorMessage.setText("Error Occurred Try again later");
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 500", new String(String.valueOf(response.message())) + ", code: " + response.code());
                 } else if (response.code() == 400) {
                     Log.e("info 400", new String(String.valueOf(response.toString())) + ", code: " + response.code());
                     textViewErrorMessage.setText(response.body().getData().getMessage());
