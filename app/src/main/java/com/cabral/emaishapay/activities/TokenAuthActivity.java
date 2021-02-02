@@ -171,6 +171,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
     public static void startAuth(Context context, boolean sessionExpired) {
         Intent authenticate = new Intent(context, TokenAuthActivity.class);
         authenticate.putExtra("sessionExpired", sessionExpired);
+        authenticate.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(authenticate);
     }
 

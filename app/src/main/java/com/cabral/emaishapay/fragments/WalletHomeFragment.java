@@ -298,7 +298,7 @@ public class WalletHomeFragment extends Fragment {
                     dialog.dismiss();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(getContext(), true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -44,6 +45,7 @@ public class CardDetail extends Fragment {
     AccountCreation accountCreation;
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
 
+    DialogLoader dialogLoader;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -130,6 +132,7 @@ public class CardDetail extends Fragment {
 
 
 
+        dialogLoader = new DialogLoader(getContext());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +140,7 @@ public class CardDetail extends Fragment {
                 if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
                     card_enter_pin.setError("PIN Mismatch!");
                 }
-
+                dialogLoader.showProgressDialog();
                 //call pin creation Activity
                  account_number = account_no.getText().toString();
                  card_number = card_no.getText().toString();
@@ -180,15 +183,14 @@ public class CardDetail extends Fragment {
                                 //success message
                                 Intent intent = new Intent(context, WalletHomeActivity.class);
                                 startActivity(intent);
-
+                                dialogLoader.hideProgressDialog();
 
                             } else {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                 //redirect to home;
                                 Intent intent = new Intent(context, WalletHomeActivity.class);
                                 startActivity(intent);
-
-
+                                dialogLoader.hideProgressDialog();
 
                             }
                         }
@@ -201,6 +203,7 @@ public class CardDetail extends Fragment {
                         Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, WalletHomeActivity.class);
                         startActivity(intent);
+                        dialogLoader.hideProgressDialog();
                     }
                 });
 
