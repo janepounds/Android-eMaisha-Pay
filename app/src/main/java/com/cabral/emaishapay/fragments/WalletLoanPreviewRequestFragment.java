@@ -32,12 +32,19 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
     String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     LoanApplication loanApplication;
     ProgressDialog dialog;
+    private String title;
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private TextView textViewLoanPreviewAmount, textViewLoanPreviewInterestRate, textViewLoanPreviewDuration, textViewLoanPreviewDueDate,
             textViewLoanPreviewDueAmount, loan_type_or_schedule_txt,textViewErrorMessage, loan_purpose_txt;
     private Button btnLoanNextStep, btnPrevious;
+
+    public WalletLoanPreviewRequestFragment(String title){
+        this.title = title;
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,13 +65,20 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         btnLoanNextStep = view.findViewById(R.id.btn_loan_next_step);
         btnPrevious = view.findViewById(R.id.previous_btn);
 
-        loanProgressBarId.setStateDescriptionData(descriptionData);
-        loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
-
-        //Second hidden progress bar for loan application with 5 states
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_confirm_details);
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-//        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        if(title.equalsIgnoreCase("Merchant Loan Details")){
+            loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
+            loanProgressBarId.setVisibility(View.GONE);
+            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        }else{
+            loanProgressBarId.setStateDescriptionData(descriptionData);
+            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        }
+
        if(getArguments() != null)
         loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
 
@@ -108,27 +122,27 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         textViewLoanPreviewDuration.setText(loanApplication.getDuration() + " " + loanApplication.getDurationLabel());
         textViewLoanPreviewDueDate.setText(loanApplication.computeDueDate());
         textViewLoanPreviewDueAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.computeDueAmount()));
-        if(loanApplication.isPurpose_for_fetilizer()){
+        if(loanApplication.getCrop_data().isPurpose_for_fetilizer()){
             loan_purpose_txt.setText(getString(R.string.fertilizer_title));
             if(loan_purpose_txt.getText().toString().isEmpty())
                 loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.fertilizer_title));
             else
                 loan_purpose_txt.setText(getString(R.string.fertilizer_title));
         }
-        if(loanApplication.isPurpose_for_crop_protection()){
+        if(loanApplication.getCrop_data().isPurpose_for_crop_protection()){
             if(loan_purpose_txt.getText().toString().isEmpty())
                 loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.crop_protection));
             else
                 loan_purpose_txt.setText(getString(R.string.crop_protection));
         }
-        if(loanApplication.isPurpose_for_equipments()){
+        if(loanApplication.getCrop_data().isPurpose_for_equipments()){
             if(loan_purpose_txt.getText().toString().isEmpty())
                 loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.equipments));
             else
                 loan_purpose_txt.setText(getString(R.string.equipments));
         }
 
-        if(loanApplication.isPurpose_for_seeds()){
+        if(loanApplication.getCrop_data().isPurpose_for_seeds()){
             if(loan_purpose_txt.getText().toString().isEmpty())
                 loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.seeds));
             else
@@ -146,18 +160,34 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
         bundle.putSerializable("loanApplication", loanApplication);
        // navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
 
-        Fragment fragment = new WalletLoanKycDetailsFragment();
-        fragment.setArguments(bundle);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-            fragmentManager.beginTransaction()
-                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-        else
-            fragmentManager.beginTransaction()
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
+        if(title.equalsIgnoreCase("Merchant Loan Details")){
+            Fragment fragment = new WalletLoanKycDetailsFragment(getString(R.string.merchant_loan_details));
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                fragmentManager.beginTransaction()
+                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+        }else {
+
+            Fragment fragment = new WalletLoanKycDetailsFragment(getString(R.string.default_loan_details));
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                fragmentManager.beginTransaction()
+                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction()
+                        .add(R.id.wallet_home_container, fragment)
+                        .addToBackStack(null).commit();
+        }
 
 
     }

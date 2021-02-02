@@ -29,15 +29,19 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
 
+import java.security.acl.LastOwnerException;
+
 
 public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     Toolbar toolbar;
     Button previousBtn, nextBtn;
-    TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears;
-    Spinner harvesting_unit_spn, crop_spn, from_insurance_spn, poultryFarmVetPersonnelsp, piggeryFarmVetPersonnelsp ;
-    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt;
-    CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb;
+    TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears,tv_poultry_date_purchased,tv_poultry_date_of_hatch;
+    Spinner harvesting_unit_spn, crop_spn, from_insurance_spn, poultryFarmVetPersonnelsp, piggeryFarmVetPersonnelsp;
+    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt,et_poultry_no_of_birds,et_poultry_cost_per_chick,et_poultry_expected_disposal,sp_poultry_experience,tv_poultry_experience_years,tv_poultry_experience_months,
+    et_piggery_total_animals,et_piggery_females,et_poultry_no_of_birds_males,et_piggery_annual_revenue,et_piggery_experience;
+    CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb,vaccination_cb,production_cb,mortality_records_cb,feed_consumption_cb,disease_incidences_cb,poultry_none_cb,poultry_feeds_cb,poultry_medication_cb,poultry_purchase_chicks_cb,poultry_shed_construction_cb,poultry_equipment_purchase_cb,
+    selling_piglets_cb ,selling_breeding_cb,meat_production_cb ,feed_records_cb,incomes_expenses_cb ,medical_records_cb,breeding_records_cb, piggery_none_cb, piggery_feeds_cb, piggery_medication_cb,piggery_equipment_purchase_cb, breeding_stock_purchase_cb ;
     Bundle localBundle;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
@@ -49,9 +53,14 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     ConstraintLayout layoutRBCrop,layoutRBPoultry,layoutRBPiggery;
     ImageButton rbCrop,rbPoultry,rbPiggery;
     View viewCropsSelected,viewPoultrySelected,viewPiggerySelected;
+    Spinner sp_poultry_type_of_birds,sp_poultry_source,sp_poultry_housing_system,sp_poultry_source_of_seeds,sp_poultry_farm_vet_personnel,
+            sp_piggery_source_of_seeds,sp_piggery_farm_vet_personnel;
 
-    public WalletLoanFarmingDetailsFragment(Bundle bundle) {
+    private String title;
+
+    public WalletLoanFarmingDetailsFragment(Bundle bundle,String title) {
        this.localBundle=bundle;
+       this.title = title;
     }
 
     @Override
@@ -115,12 +124,71 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
         layoutVetDetails = view.findViewById(R.id.layout_poultry_vet_details);
 
+        sp_poultry_type_of_birds=view.findViewById(R.id.sp_poultry_type_of_birds);
+        tv_poultry_date_of_hatch = view.findViewById(R.id.tv_poultry_date_of_hatch);
+        tv_poultry_date_purchased = view.findViewById(R.id.tv_poultry_date_purchased);
+        et_poultry_no_of_birds = view.findViewById(R.id.et_poultry_no_of_birds);
+        et_poultry_cost_per_chick = view.findViewById(R.id.et_poultry_cost_per_chick);
+        sp_poultry_source = view.findViewById(R.id.sp_poultry_source);
+        et_poultry_expected_disposal = view.findViewById(R.id.et_poultry_expected_disposal);
+        sp_poultry_housing_system = view.findViewById(R.id.sp_poultry_housing_system);
+        sp_poultry_source_of_seeds = view.findViewById(R.id.sp_poultry_source_of_seeds);
+        sp_poultry_experience = view.findViewById(R.id.sp_poultry_experience);
+        sp_poultry_farm_vet_personnel = view.findViewById(R.id.sp_poultry_farm_vet_personnel);
+        vaccination_cb = view.findViewById(R.id.vaccination_cb);
+        production_cb = view.findViewById(R.id.production_cb);
+        mortality_records_cb = view.findViewById(R.id.mortality_records_cb);
+        feed_consumption_cb = view.findViewById(R.id.feed_consumption_cb);
+        disease_incidences_cb = view.findViewById(R.id.disease_incidences_cb);
+        poultry_none_cb = view.findViewById(R.id.poultry_none_cb);
+        poultry_feeds_cb = view.findViewById(R.id.poultry_feeds_cb);
+        poultry_medication_cb = view.findViewById(R.id.poultry_medication_cb);
+        poultry_purchase_chicks_cb = view.findViewById(R.id.poultry_purchase_chicks_cb);
+        poultry_shed_construction_cb = view.findViewById(R.id.poultry_shed_construction_cb);
+        poultry_equipment_purchase_cb = view.findViewById(R.id.poultry_equipment_purchase_cb);
 
-        loanProgressBarId.setStateDescriptionData(descriptionData);
-        loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        et_piggery_total_animals = view.findViewById(R.id.et_piggery_total_animals);
+        et_piggery_females = view.findViewById(R.id.et_piggery_females);
+        et_poultry_no_of_birds_males = view.findViewById(R.id.et_poultry_no_of_birds_males);
+        et_piggery_annual_revenue = view.findViewById(R.id.et_piggery_annual_revenue);
+        et_piggery_experience = view.findViewById(R.id.et_piggery_experience);
+        sp_piggery_source_of_seeds = view.findViewById(R.id.sp_piggery_source_of_seeds);
+        sp_piggery_farm_vet_personnel = view.findViewById(R.id.sp_piggery_farm_vet_personnel);
+        selling_piglets_cb = view.findViewById(R.id.selling_piglets_cb);
+        selling_breeding_cb = view.findViewById(R.id.selling_breeding_cb);
+        meat_production_cb = view.findViewById(R.id.meat_production_cb);
+        feed_records_cb = view.findViewById(R.id.feed_records_cb);
+        incomes_expenses_cb = view.findViewById(R.id.incomes_expenses_cb);
+        medical_records_cb = view.findViewById(R.id.medical_records_cb);
+        breeding_records_cb = view.findViewById(R.id.breeding_records_cb);
+        piggery_none_cb = view.findViewById(R.id.piggery_none_cb);
+        piggery_feeds_cb = view.findViewById(R.id.piggery_feeds_cb);
+        piggery_medication_cb = view.findViewById(R.id.piggery_medication_cb);
+        piggery_equipment_purchase_cb = view.findViewById(R.id.piggery_equipment_purchase_cb);
+        breeding_stock_purchase_cb = view.findViewById(R.id.breeding_stock_purchase_cb);
+
+
+
+
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_farming_details);
+
+        if(title.equalsIgnoreCase("Merchant Loan Details")){
+            loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
+            loanProgressBarId.setVisibility(View.GONE);
+            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+
+        }else {
+            loanProgressBarId.setStateDescriptionData(descriptionData);
+            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        }
+
 
         //Second hidden progress bar for loan application with 5 states
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
 //        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
@@ -343,20 +411,77 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loanApplication.setCrop(crop_spn.getSelectedItem().toString());
-                loanApplication.setCrop_area( Double.parseDouble(crop_area_edt.getText().toString()) );
-                loanApplication.setCrop_area_unit(getString(R.string.default_crop_area_units));
-                loanApplication.setYeild_units(harvesting_unit_spn.getSelectedItem().toString());
-                loanApplication.setExpected_yield(Double.parseDouble(expected_yield_edt.getText().toString()));
-                loanApplication.setExpected_revenue(Integer.parseInt(expected_revenue_edt.getText().toString()));
+                if(rbCrop.isSelected()){
+                    loanApplication.setCheck_selected("Crops");
+                    loanApplication.getCrop_data().setCrop(crop_spn.getSelectedItem().toString());
+                    loanApplication.getCrop_data().setCrop_area( Double.parseDouble(crop_area_edt.getText().toString()) );
+                    loanApplication.getCrop_data().setCrop_area_unit(getString(R.string.default_crop_area_units));
+                    loanApplication.getCrop_data().setYeild_units(harvesting_unit_spn.getSelectedItem().toString());
+                    loanApplication.getCrop_data().setExpected_yield(Double.parseDouble(expected_yield_edt.getText().toString()));
+                    loanApplication.getCrop_data().setExpected_revenue(Integer.parseInt(expected_revenue_edt.getText().toString()));
 
-                if(from_insurance_spn.getSelectedItem().toString().equalsIgnoreCase("yes")){
-                    loanApplication.setFrom_insurance(true);
+                    if(from_insurance_spn.getSelectedItem().toString().equalsIgnoreCase("yes")){
+                        loanApplication.getCrop_data().setFrom_insurance(true);
+                    }
+                    loanApplication.getCrop_data().setPurpose_for_crop_protection(crop_protection_cb.isChecked());
+                    loanApplication.getCrop_data().setPurpose_for_equipments(equipments_cb.isChecked());
+                    loanApplication.getCrop_data().setPurpose_for_seeds(seeds_cb.isChecked());
+                    loanApplication.getCrop_data().setPurpose_for_fetilizer(Fertilizers_cb.isChecked());
+
+                }else if(rbPoultry.isSelected()){
+                    loanApplication.setCheck_selected("Poultry");
+                    loanApplication.getPoultry_data().setType_of_birds(sp_poultry_type_of_birds.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setDate_of_hatch(tv_poultry_date_of_hatch.getText().toString());
+                    loanApplication.getPoultry_data().setDate_purchased(tv_poultry_date_purchased.getText().toString());
+                    loanApplication.getPoultry_data().setNo_of_birds_purchased(Integer.parseInt(et_poultry_no_of_birds.getText().toString()));
+                    loanApplication.getPoultry_data().setCost_per_chick(Double.parseDouble(et_poultry_cost_per_chick.getText().toString()));
+                    loanApplication.getPoultry_data().setSource(sp_poultry_source.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setExpected_disposal(et_poultry_expected_disposal.getText().toString());
+                    loanApplication.getPoultry_data().setHousing_system(sp_poultry_housing_system.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setSource_of_feeds(sp_poultry_source_of_seeds.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setExperience(sp_poultry_experience.getText().toString());
+                    loanApplication.getPoultry_data().setFarm_vet_personnel(sp_poultry_farm_vet_personnel.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setRecords_kept_vaccination(vaccination_cb.isChecked());
+                    loanApplication.getPoultry_data().setRecords_kept_production(production_cb.isChecked());
+                    loanApplication.getPoultry_data().setRecords_kept_mortality_records(mortality_records_cb.isChecked());
+                    loanApplication.getPoultry_data().setRecords_kept_feed_consumption(production_cb.isChecked());
+                    loanApplication.getPoultry_data().setRecords_kept_disease_incidences(disease_incidences_cb.isChecked());
+                    loanApplication.getPoultry_data().setLoan_purpose_feeds(poultry_feeds_cb.isChecked());
+                    loanApplication.getPoultry_data().setLoan_purpose_medication(poultry_medication_cb.isChecked());
+                    loanApplication.getPoultry_data().setLoan_purpose_purchase_chicks(poultry_purchase_chicks_cb.isChecked());
+                    loanApplication.getPoultry_data().setLoan_purpose_shed_construction(poultry_shed_construction_cb.isChecked());
+                    loanApplication.getPoultry_data().setLoan_purpose_equipment_purchase(poultry_equipment_purchase_cb.isChecked());
+
+
+
+
+
+
+                }else if(rbPiggery.isSelected()){
+                    loanApplication.setCheck_selected("Piggery");
+                  loanApplication.getPiggery_data().setTotal_Animals(Integer.parseInt(et_piggery_total_animals.getText().toString()));
+                  loanApplication.getPiggery_data().setNo_of_females(Integer.parseInt(et_piggery_females.getText().toString()));
+                  loanApplication.getPiggery_data().setNo_of_males(Integer.parseInt(et_poultry_no_of_birds_males.getText().toString()));
+                  loanApplication.getPiggery_data().setAnnual_revenue(Double.parseDouble(et_piggery_annual_revenue.getText().toString()));
+                  loanApplication.getPiggery_data().setExperience(et_piggery_experience.getText().toString());
+                  loanApplication.getPiggery_data().setSource_of_feeds(sp_piggery_source_of_seeds.getSelectedItem().toString());
+                  loanApplication.getPiggery_data().setFarm_vet_personnel(sp_piggery_farm_vet_personnel.getSelectedItem().toString());
+                  loanApplication.getPiggery_data().setBusiness_model_selling_piglets(selling_piglets_cb.isChecked());
+                  loanApplication.getPiggery_data().setBusiness_model_meat_production(meat_production_cb.isChecked());
+                  loanApplication.getPiggery_data().setBusiness_model_selling_breeding_stock(selling_breeding_cb.isChecked());
+                  loanApplication.getPiggery_data().setRecords_kept_feeds(feed_records_cb.isChecked());
+                  loanApplication.getPiggery_data().setRecords_kept_income_expenses(incomes_expenses_cb.isChecked());
+                  loanApplication.getPiggery_data().setRecords_kept_medical(medical_records_cb.isChecked());
+                  loanApplication.getPiggery_data().setRecords_kept_breeding(breeding_records_cb.isChecked());
+                  loanApplication.getPiggery_data().setLoan_purpose_feeds(piggery_feeds_cb.isChecked());
+                  loanApplication.getPiggery_data().setLoan_purpose_medication(piggery_medication_cb.isChecked());
+                  loanApplication.getPiggery_data().setLoan_purpose_equipment_purchase(piggery_equipment_purchase_cb.isChecked());
+                  loanApplication.getPiggery_data().setLoan_purpose_breeding_stock_purchase(breeding_stock_purchase_cb.isChecked());
+
+
                 }
-                loanApplication.setPurpose_for_crop_protection(crop_protection_cb.isChecked());
-                loanApplication.setPurpose_for_equipments(equipments_cb.isChecked());
-                loanApplication.setPurpose_for_seeds(seeds_cb.isChecked());
-                loanApplication.setPurpose_for_fetilizer(Fertilizers_cb.isChecked());
+
+
 
                 //expected_revenue_edt
                 Bundle bundle = new Bundle();
@@ -364,7 +489,22 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 bundle.putSerializable("loanApplication", loanApplication);
 //                navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
 
-                Fragment fragment = new WalletLoanPreviewRequestFragment();
+                if(title.equalsIgnoreCase("Merchant Loan Details")){
+                    Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.merchant_loan_details));
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+
+                }else{
+
+                Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.default_loan_details));
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 if (((WalletHomeActivity) getActivity()).currentFragment != null)
                     fragmentManager.beginTransaction()
@@ -377,6 +517,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                             .addToBackStack(null).commit();
 
             }
+        }
         });
 
 

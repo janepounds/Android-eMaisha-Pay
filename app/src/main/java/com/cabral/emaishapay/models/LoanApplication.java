@@ -81,41 +81,23 @@ public class LoanApplication implements Serializable {
     @SerializedName("dueAmount")
     @Expose
     private int dueAmount;
+    @SerializedName("check_selected")
+    @Expose
+    private String check_selected;
 
     //crop
-    @SerializedName("crop")
+    @SerializedName("crop_data")
     @Expose
-    private String crop;
-    @SerializedName("crop_area")
+    private Crop crop_data;
+
+    @SerializedName("poultry_data")
     @Expose
-    private double crop_area;
-    @SerializedName("crop_area_unit")
+    private Poultry poultry_data;
+
+    @SerializedName("piggery_data")
     @Expose
-    private String crop_area_unit;
-    @SerializedName("expected_yield")
-    @Expose
-    private double expected_yield;
-    @SerializedName("expected_revenue")
-    @Expose
-    private int expected_revenue;
-    @SerializedName("yeild_units")
-    @Expose
-    private String yeild_units;
-    @SerializedName("from_insurance")
-    @Expose
-    private boolean from_insurance;
-    @SerializedName("purpose_for_fetilizer")
-    @Expose
-    private boolean purpose_for_fetilizer;
-    @SerializedName("purpose_for_seeds")
-    @Expose
-    private boolean purpose_for_seeds;
-    @SerializedName("purpose_for_crop_protection")
-    @Expose
-    private boolean purpose_for_crop_protection;
-    @SerializedName("purpose_for_equipments")
-    @Expose
-    private boolean purpose_for_equipments;
+    private Piggery piggery_data;
+
     @SerializedName("loan_gaurantor1")
     @Expose
     private com.cabral.emaishapay.models.Referee loan_gaurantor1;
@@ -123,7 +105,17 @@ public class LoanApplication implements Serializable {
     @Expose
     private com.cabral.emaishapay.models.Referee loan_gaurantor2;
 
+    @SerializedName("merchant_no")
+    @Expose
+    private String phone;
 
+    public String getCheck_selected() {
+        return check_selected;
+    }
+
+    public void setCheck_selected(String check_selected) {
+        this.check_selected = check_selected;
+    }
 
     public LoanApplication(){
 
@@ -150,6 +142,10 @@ public class LoanApplication implements Serializable {
         setDueAmount((int)loanObject.getDouble("dueAmount"));
         setAmountPaid((double)loanObject.getDouble("totalPayments"));
         setPayment_amount_on_schedule((double)loanObject.getDouble("payment_amount_on_schedule"));
+        setPhone(loanObject.getString("merchant_no"));
+        setCrop_data((Crop)loanObject.get("crop_data"));
+        setPoultry_data((Poultry) loanObject.get("poultry_data"));
+        setPiggery_data((Piggery) loanObject.get("piggery_data"));
 
 
 
@@ -171,49 +167,7 @@ public class LoanApplication implements Serializable {
         return farm_photo;
     }
 
-    public String getCrop() {
-        return crop;
-    }
 
-    public double getCrop_area() {
-        return crop_area;
-    }
-
-    public String getCrop_area_unit() {
-        return crop_area_unit;
-    }
-
-    public double getExpected_yield() {
-        return expected_yield;
-    }
-
-    public int getExpected_revenue() {
-        return expected_revenue;
-    }
-
-    public String getYeild_units() {
-        return yeild_units;
-    }
-
-    public boolean isFrom_insurance() {
-        return from_insurance;
-    }
-
-    public boolean isPurpose_for_fetilizer() {
-        return purpose_for_fetilizer;
-    }
-
-    public boolean isPurpose_for_seeds() {
-        return purpose_for_seeds;
-    }
-
-    public boolean isPurpose_for_crop_protection() {
-        return purpose_for_crop_protection;
-    }
-
-    public boolean isPurpose_for_equipments() {
-        return purpose_for_equipments;
-    }
 
     public com.cabral.emaishapay.models.Referee getLoan_gaurantor1() {
         return loan_gaurantor1;
@@ -275,49 +229,7 @@ public class LoanApplication implements Serializable {
         this.status = status;
     }
 
-    public void setCrop(String crop) {
-        this.crop = crop;
-    }
 
-    public void setCrop_area(double crop_area) {
-        this.crop_area = crop_area;
-    }
-
-    public void setCrop_area_unit(String crop_area_unit) {
-        this.crop_area_unit = crop_area_unit;
-    }
-
-    public void setExpected_yield(double expected_yield) {
-        this.expected_yield = expected_yield;
-    }
-
-    public void setExpected_revenue(int expected_revenue) {
-        this.expected_revenue = expected_revenue;
-    }
-
-    public void setYeild_units(String yeild_units) {
-        this.yeild_units = yeild_units;
-    }
-
-    public void setFrom_insurance(boolean from_insurance) {
-        this.from_insurance = from_insurance;
-    }
-
-    public void setPurpose_for_fetilizer(boolean purpose_for_fetilizer) {
-        this.purpose_for_fetilizer = purpose_for_fetilizer;
-    }
-
-    public void setPurpose_for_seeds(boolean purpose_for_seeds) {
-        this.purpose_for_seeds = purpose_for_seeds;
-    }
-
-    public void setPurpose_for_crop_protection(boolean purpose_for_crop_protection) {
-        this.purpose_for_crop_protection = purpose_for_crop_protection;
-    }
-
-    public void setPurpose_for_equipments(boolean purpose_for_equipments) {
-        this.purpose_for_equipments = purpose_for_equipments;
-    }
 
     public float getInterestRate() {
         return interestRate;
@@ -463,7 +375,615 @@ public class LoanApplication implements Serializable {
         return getLoanType().replace("ly","")+(getDuration()==1?"":"s");
     }
 
-}
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Crop getCrop_data() {
+        return crop_data;
+    }
+
+    public void setCrop_data(Crop crop_data) {
+        this.crop_data = crop_data;
+    }
+
+    public Poultry getPoultry_data() {
+        return poultry_data;
+    }
+
+    public void setPoultry_data(Poultry poultry_data) {
+        this.poultry_data = poultry_data;
+    }
+
+    public Piggery getPiggery_data() {
+        return piggery_data;
+    }
+
+    public void setPiggery_data(Piggery piggery_data) {
+        this.piggery_data = piggery_data;
+    }
+
+    public class Crop {
+        @SerializedName("crop")
+        @Expose
+        private String crop;
+        @SerializedName("crop_area")
+        @Expose
+        private double crop_area;
+        @SerializedName("crop_area_unit")
+        @Expose
+        private String crop_area_unit;
+        @SerializedName("expected_yield")
+        @Expose
+        private double expected_yield;
+        @SerializedName("expected_revenue")
+        @Expose
+        private int expected_revenue;
+        @SerializedName("yeild_units")
+        @Expose
+        private String yeild_units;
+        @SerializedName("from_insurance")
+        @Expose
+        private boolean from_insurance;
+        @SerializedName("purpose_for_fetilizer")
+        @Expose
+        private boolean purpose_for_fetilizer;
+        @SerializedName("purpose_for_seeds")
+        @Expose
+        private boolean purpose_for_seeds;
+        @SerializedName("purpose_for_crop_protection")
+        @Expose
+        private boolean purpose_for_crop_protection;
+        @SerializedName("purpose_for_equipments")
+        @Expose
+        private boolean purpose_for_equipments;
+
+        public void setCrop(String crop) {
+            this.crop = crop;
+        }
+
+        public void setCrop_area(double crop_area) {
+            this.crop_area = crop_area;
+        }
+
+        public void setCrop_area_unit(String crop_area_unit) {
+            this.crop_area_unit = crop_area_unit;
+        }
+
+        public void setExpected_yield(double expected_yield) {
+            this.expected_yield = expected_yield;
+        }
+
+        public void setExpected_revenue(int expected_revenue) {
+            this.expected_revenue = expected_revenue;
+        }
+
+        public void setYeild_units(String yeild_units) {
+            this.yeild_units = yeild_units;
+        }
+
+        public void setFrom_insurance(boolean from_insurance) {
+            this.from_insurance = from_insurance;
+        }
+
+        public void setPurpose_for_fetilizer(boolean purpose_for_fetilizer) {
+            this.purpose_for_fetilizer = purpose_for_fetilizer;
+        }
+
+        public void setPurpose_for_seeds(boolean purpose_for_seeds) {
+            this.purpose_for_seeds = purpose_for_seeds;
+        }
+
+        public void setPurpose_for_crop_protection(boolean purpose_for_crop_protection) {
+            this.purpose_for_crop_protection = purpose_for_crop_protection;
+        }
+
+        public void setPurpose_for_equipments(boolean purpose_for_equipments) {
+            this.purpose_for_equipments = purpose_for_equipments;
+        }
+
+
+
+        public String getCrop() {
+            return crop;
+        }
+
+        public double getCrop_area() {
+            return crop_area;
+        }
+
+        public String getCrop_area_unit() {
+            return crop_area_unit;
+        }
+
+        public double getExpected_yield() {
+            return expected_yield;
+        }
+
+        public int getExpected_revenue() {
+            return expected_revenue;
+        }
+
+        public String getYeild_units() {
+            return yeild_units;
+        }
+
+        public boolean isFrom_insurance() {
+            return from_insurance;
+        }
+
+        public boolean isPurpose_for_fetilizer() {
+            return purpose_for_fetilizer;
+        }
+
+        public boolean isPurpose_for_seeds() {
+            return purpose_for_seeds;
+        }
+
+        public boolean isPurpose_for_crop_protection() {
+            return purpose_for_crop_protection;
+        }
+
+        public boolean isPurpose_for_equipments() {
+            return purpose_for_equipments;
+        }
+
+    }
+
+    public class Poultry{
+        @SerializedName("type_of_birds")
+        @Expose
+        private String type_of_birds;
+
+        @SerializedName("date_of_hatch")
+        @Expose
+        private String date_of_hatch;
+
+        @SerializedName("date_purchased")
+        @Expose
+        private String date_purchased;
+
+        @SerializedName("no_of_birds_purchased")
+        @Expose
+        private int no_of_birds_purchased;
+        @SerializedName("cost_per_chick")
+        @Expose
+        private double cost_per_chick;
+        @SerializedName("source")
+        @Expose
+        private String source;
+        @SerializedName("expected_disposal")
+        @Expose
+        private String expected_disposal;
+        @SerializedName("housing_system")
+        @Expose
+        private String housing_system;
+        @SerializedName("source_of_feeds")
+        @Expose
+        private String source_of_feeds;
+        @SerializedName("experience")
+        @Expose
+        private String experience;
+        @SerializedName("farm_vet_personnel")
+        @Expose
+        private String farm_vet_personnel;
+        @SerializedName("records_kept_vaccination")
+        @Expose
+        private boolean records_kept_vaccination;
+        @SerializedName("records_kept_production")
+        @Expose
+        private boolean records_kept_production;
+        @SerializedName("records_kept_mortality_records")
+        @Expose
+        private boolean records_kept_mortality_records;
+        @SerializedName("records_kept_feed_consumption")
+        @Expose
+        private boolean records_kept_feed_consumption;
+        @SerializedName("records_kept_disease_incidences")
+        @Expose
+        private boolean records_kept_disease_incidences;
+        @SerializedName("loan_purpose_feeds")
+        @Expose
+        private boolean loan_purpose_feeds;
+        @SerializedName("loan_purpose_medication")
+        @Expose
+        private boolean loan_purpose_medication;
+        @SerializedName("loan_purpose_purchase_chicks")
+        @Expose
+        private boolean loan_purpose_purchase_chicks;
+        @SerializedName("loan_purpose_shed_construction")
+        @Expose
+        private boolean loan_purpose_shed_construction;
+        @SerializedName("loan_purpose_equipment_purchase")
+        @Expose
+        private boolean loan_purpose_equipment_purchase;
+
+        public String getType_of_birds() {
+            return type_of_birds;
+        }
+
+        public void setType_of_birds(String type_of_birds) {
+            this.type_of_birds = type_of_birds;
+        }
+
+        public String getDate_of_hatch() {
+            return date_of_hatch;
+        }
+
+        public void setDate_of_hatch(String date_of_hatch) {
+            this.date_of_hatch = date_of_hatch;
+        }
+
+        public String getDate_purchased() {
+            return date_purchased;
+        }
+
+        public void setDate_purchased(String date_purchased) {
+            this.date_purchased = date_purchased;
+        }
+
+        public int getNo_of_birds_purchased() {
+            return no_of_birds_purchased;
+        }
+
+        public void setNo_of_birds_purchased(int no_of_birds_purchased) {
+            this.no_of_birds_purchased = no_of_birds_purchased;
+        }
+
+        public double getCost_per_chick() {
+            return cost_per_chick;
+        }
+
+        public void setCost_per_chick(double cost_per_chick) {
+            this.cost_per_chick = cost_per_chick;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
+        public String getExpected_disposal() {
+            return expected_disposal;
+        }
+
+        public void setExpected_disposal(String expected_disposal) {
+            this.expected_disposal = expected_disposal;
+        }
+
+        public String getHousing_system() {
+            return housing_system;
+        }
+
+        public void setHousing_system(String housing_system) {
+            this.housing_system = housing_system;
+        }
+
+        public String getSource_of_feeds() {
+            return source_of_feeds;
+        }
+
+        public void setSource_of_feeds(String source_of_feeds) {
+            this.source_of_feeds = source_of_feeds;
+        }
+
+        public String getExperience() {
+            return experience;
+        }
+
+        public void setExperience(String experience) {
+            this.experience = experience;
+        }
+
+        public String getFarm_vet_personnel() {
+            return farm_vet_personnel;
+        }
+
+        public void setFarm_vet_personnel(String farm_vet_personnel) {
+            this.farm_vet_personnel = farm_vet_personnel;
+        }
+
+        public boolean isRecords_kept_vaccination() {
+            return records_kept_vaccination;
+        }
+
+        public void setRecords_kept_vaccination(boolean records_kept_vaccination) {
+            this.records_kept_vaccination = records_kept_vaccination;
+        }
+
+        public boolean isRecords_kept_production() {
+            return records_kept_production;
+        }
+
+        public void setRecords_kept_production(boolean records_kept_production) {
+            this.records_kept_production = records_kept_production;
+        }
+
+        public boolean isRecords_kept_mortality_records() {
+            return records_kept_mortality_records;
+        }
+
+        public void setRecords_kept_mortality_records(boolean records_kept_mortality_records) {
+            this.records_kept_mortality_records = records_kept_mortality_records;
+        }
+
+        public boolean isRecords_kept_feed_consumption() {
+            return records_kept_feed_consumption;
+        }
+
+        public void setRecords_kept_feed_consumption(boolean records_kept_feed_consumption) {
+            this.records_kept_feed_consumption = records_kept_feed_consumption;
+        }
+
+        public boolean isRecords_kept_disease_incidences() {
+            return records_kept_disease_incidences;
+        }
+
+        public void setRecords_kept_disease_incidences(boolean records_kept_disease_incidences) {
+            this.records_kept_disease_incidences = records_kept_disease_incidences;
+        }
+
+
+
+        public boolean isLoan_purpose_feeds() {
+            return loan_purpose_feeds;
+        }
+
+        public void setLoan_purpose_feeds(boolean loan_purpose_feeds) {
+            this.loan_purpose_feeds = loan_purpose_feeds;
+        }
+
+        public boolean isLoan_purpose_medication() {
+            return loan_purpose_medication;
+        }
+
+        public void setLoan_purpose_medication(boolean loan_purpose_medication) {
+            this.loan_purpose_medication = loan_purpose_medication;
+        }
+
+        public boolean isLoan_purpose_purchase_chicks() {
+            return loan_purpose_purchase_chicks;
+        }
+
+        public void setLoan_purpose_purchase_chicks(boolean loan_purpose_purchase_chicks) {
+            this.loan_purpose_purchase_chicks = loan_purpose_purchase_chicks;
+        }
+
+        public boolean isLoan_purpose_shed_construction() {
+            return loan_purpose_shed_construction;
+        }
+
+        public void setLoan_purpose_shed_construction(boolean loan_purpose_shed_construction) {
+            this.loan_purpose_shed_construction = loan_purpose_shed_construction;
+        }
+
+        public boolean isLoan_purpose_equipment_purchase() {
+            return loan_purpose_equipment_purchase;
+        }
+
+        public void setLoan_purpose_equipment_purchase(boolean loan_purpose_equipment_purchase) {
+            this.loan_purpose_equipment_purchase = loan_purpose_equipment_purchase;
+        }
+    }
+
+    public class Piggery {
+     @SerializedName("total_Animals")
+     @Expose
+     private int total_Animals;
+
+     @SerializedName("no_of_females")
+     @Expose
+     private int no_of_females;
+
+     @SerializedName("no_of_males")
+     @Expose
+     private int no_of_males;
+
+     @SerializedName("annual_revenue")
+     @Expose
+     private double annual_revenue;
+     @SerializedName("experience")
+     @Expose
+     private String experience;
+     @SerializedName("source_of_feeds")
+     @Expose
+     private String source_of_feeds;
+     @SerializedName("farm_vet_personnel")
+     @Expose
+     private String farm_vet_personnel;
+     @SerializedName("business_model_selling_piglets")
+     @Expose
+     private boolean business_model_selling_piglets;
+     @SerializedName("business_model_meat_production")
+     @Expose
+     private boolean business_model_meat_production;
+     @SerializedName("business_model_selling_breeding_stock")
+     @Expose
+     private boolean business_model_selling_breeding_stock;
+     @SerializedName("records_kept_feeds")
+     @Expose
+     private boolean records_kept_feeds;
+     @SerializedName("records_kept_income_expenses")
+     @Expose
+     private boolean records_kept_income_expenses;
+     @SerializedName("records_kept_medical")
+     @Expose
+     private boolean records_kept_medical;
+     @SerializedName("records_kept_breeding")
+     @Expose
+     private boolean records_kept_breeding;
+
+     @SerializedName("loan_purpose_feeds")
+     @Expose
+     private boolean loan_purpose_feeds;
+     @SerializedName("loan_purpose_medication")
+     @Expose
+     private boolean loan_purpose_medication;
+     @SerializedName("loan_purpose_equipment_purchase")
+     @Expose
+     private boolean loan_purpose_equipment_purchase;
+     @SerializedName("loan_purpose_breeding_stock_purchase")
+     @Expose
+     private boolean loan_purpose_breeding_stock_purchase;
+     public int getTotal_Animals() {
+            return total_Animals;
+        }
+
+        public void setTotal_Animals(int total_Animals) {
+            this.total_Animals = total_Animals;
+        }
+
+        public int getNo_of_females() {
+            return no_of_females;
+        }
+
+        public void setNo_of_females(int no_of_females) {
+            this.no_of_females = no_of_females;
+        }
+
+        public int getNo_of_males() {
+            return no_of_males;
+        }
+
+        public void setNo_of_males(int no_of_males) {
+            this.no_of_males = no_of_males;
+        }
+
+        public double getAnnual_revenue() {
+            return annual_revenue;
+        }
+
+        public void setAnnual_revenue(double annual_revenue) {
+            this.annual_revenue = annual_revenue;
+        }
+
+        public String getExperience() {
+            return experience;
+        }
+
+        public void setExperience(String experience) {
+            this.experience = experience;
+        }
+
+        public String getSource_of_feeds() {
+            return source_of_feeds;
+        }
+
+        public void setSource_of_feeds(String source_of_feeds) {
+            this.source_of_feeds = source_of_feeds;
+        }
+
+        public String isFarm_vet_personnel() {
+            return farm_vet_personnel;
+        }
+
+        public void setFarm_vet_personnel(String farm_vet_personnel) {
+            this.farm_vet_personnel = farm_vet_personnel;
+        }
+
+        public boolean isBusiness_model_selling_piglets() {
+            return business_model_selling_piglets;
+        }
+
+        public void setBusiness_model_selling_piglets(boolean business_model_selling_piglets) {
+            this.business_model_selling_piglets = business_model_selling_piglets;
+        }
+
+        public boolean isBusiness_model_meat_production() {
+            return business_model_meat_production;
+        }
+
+        public void setBusiness_model_meat_production(boolean business_model_meat_production) {
+            this.business_model_meat_production = business_model_meat_production;
+        }
+
+        public boolean isBusiness_model_selling_breeding_stock() {
+            return business_model_selling_breeding_stock;
+        }
+
+        public void setBusiness_model_selling_breeding_stock(boolean business_model_selling_breeding_stock) {
+            this.business_model_selling_breeding_stock = business_model_selling_breeding_stock;
+        }
+
+        public boolean isRecords_kept_feeds() {
+            return records_kept_feeds;
+        }
+
+        public void setRecords_kept_feeds(boolean records_kept_feeds) {
+            this.records_kept_feeds = records_kept_feeds;
+        }
+
+        public boolean isRecords_kept_income_expenses() {
+            return records_kept_income_expenses;
+        }
+
+        public void setRecords_kept_income_expenses(boolean records_kept_income_expenses) {
+            this.records_kept_income_expenses = records_kept_income_expenses;
+        }
+
+        public boolean isRecords_kept_medical() {
+            return records_kept_medical;
+        }
+
+        public void setRecords_kept_medical(boolean records_kept_medical) {
+            this.records_kept_medical = records_kept_medical;
+        }
+
+        public boolean isRecords_kept_breeding() {
+            return records_kept_breeding;
+        }
+
+        public void setRecords_kept_breeding(boolean records_kept_breeding) {
+            this.records_kept_breeding = records_kept_breeding;
+        }
+
+
+
+
+
+        public boolean isLoan_purpose_feeds() {
+            return loan_purpose_feeds;
+        }
+
+        public void setLoan_purpose_feeds(boolean loan_purpose_feeds) {
+            this.loan_purpose_feeds = loan_purpose_feeds;
+        }
+
+        public boolean isLoan_purpose_medication() {
+            return loan_purpose_medication;
+        }
+
+        public void setLoan_purpose_medication(boolean loan_purpose_medication) {
+            this.loan_purpose_medication = loan_purpose_medication;
+        }
+
+        public boolean isLoan_purpose_equipment_purchase() {
+            return loan_purpose_equipment_purchase;
+        }
+
+        public void setLoan_purpose_equipment_purchase(boolean loan_purpose_equipment_purchase) {
+            this.loan_purpose_equipment_purchase = loan_purpose_equipment_purchase;
+        }
+
+        public boolean isLoan_purpose_breeding_stock_purchase() {
+            return loan_purpose_breeding_stock_purchase;
+        }
+
+        public void setLoan_purpose_breeding_stock_purchase(boolean loan_purpose_breeding_stock_purchase) {
+            this.loan_purpose_breeding_stock_purchase = loan_purpose_breeding_stock_purchase;
+        }
+    }
+
+
+    }
+
 
 
 

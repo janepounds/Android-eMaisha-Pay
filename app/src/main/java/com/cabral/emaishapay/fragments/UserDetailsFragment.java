@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -57,7 +58,7 @@ public class UserDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_user_details, container, false);
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
         loanApplicationStateProgressBar.setStateDescriptionData(descriptionData);
         loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
@@ -129,13 +130,12 @@ public class UserDetailsFragment extends Fragment {
                 if(response.code()==200){
                     businessName = response.body().getData().getBusinessName();
                     if(businessName.equalsIgnoreCase(account_name)){
+                        LoanApplication loanApplication = new LoanApplication();
+                        loanApplication.setPhone(phone);
                         //account exists
-                        WalletLoanDetailsFragment loanDetailsFragment = new WalletLoanDetailsFragment(getString(R.string.merchant_loan_details));
                         Bundle bundle = new Bundle();
-                        bundle.putString("firstname", etxtFirstName.getText().toString());
-                        bundle.putString("lastname", etxtSecondName.getText().toString());
-                        bundle.putString("phone_no", phone);
-                        loanDetailsFragment.setArguments(bundle);
+                        bundle.putSerializable("loanApplication", loanApplication);
+                        WalletLoanDetailsFragment loanDetailsFragment = new WalletLoanDetailsFragment(bundle,getString(R.string.merchant_loan_details));
                         openFragment(loanDetailsFragment);
 
                     }
@@ -144,7 +144,7 @@ public class UserDetailsFragment extends Fragment {
 
                     dialog.dismiss();
                 }else if(response.code()==412) {
-                    Toast.makeText(context,"account doesnot exist",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"account does not exist",Toast.LENGTH_LONG).show();
 
                     //redirect to home
                     Intent intent = new Intent(context, WalletHomeActivity.class);

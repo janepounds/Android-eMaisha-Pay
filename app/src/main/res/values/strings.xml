@@ -655,6 +655,7 @@
     <string name="incomes_expenses"><![CDATA[Income & Expenses]]></string>
 
     <string name="merchant_loan_details">Merchant Loan Details</string>
+    <string name="default_loan_details">Default Loan Details</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

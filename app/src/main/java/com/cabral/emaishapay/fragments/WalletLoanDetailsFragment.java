@@ -40,13 +40,14 @@ public class WalletLoanDetailsFragment extends Fragment {
     TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units;
     private Spinner spLoanApplicationType;
     Float interest=0F;
-    private String title,firstname,lastname,phone;
+    private String title;
+    LoanApplication loanApplication;
 
-    public WalletLoanDetailsFragment(Bundle bundle) {
-    }
-    public WalletLoanDetailsFragment(String title) {
+    public WalletLoanDetailsFragment(Bundle bundle,String title) {
         this.title = title;
+        this.localBundle = bundle;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,29 +71,31 @@ public class WalletLoanDetailsFragment extends Fragment {
         txtLoanApplicationAmount = view.findViewById(R.id.txt_loan_application_amount);
         spLoanApplicationType = view.findViewById(R.id.sp_loan_application_type);
         loanpayments_edtxt= view.findViewById(R.id.loanpayments_edtxt);
-        loanProgressBarId.setStateDescriptionData(descriptionData);
-        loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
 
 
         //Second hidden progress bar for loan application with 5 states
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
 //        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 //
 
-
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Apply for Loan");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if(title.equalsIgnoreCase("Merchant Loan Details")){
-           firstname = getArguments().getString("firstname");
-           lastname = getArguments().getString("lastname");
-           phone = getArguments().getString("phone_no");
+           loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
+           loanProgressBarId.setVisibility(View.GONE);
+           loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+           loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+           loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
 
         }else {
+            loanProgressBarId.setStateDescriptionData(descriptionData);
+            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            toolbar.setTitle("Apply for Loan");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
 
@@ -211,31 +214,56 @@ public class WalletLoanDetailsFragment extends Fragment {
             } else if (loanpayments_edtxt.getText().toString().trim() == null || txt_loan_application_duration.getText().toString().trim().isEmpty()) {
                 loanpayments_edtxt.setError("Please enter value");
             } else {
-                LoanApplication loanApplication = new LoanApplication();
-                loanApplication.setAmount(Float.valueOf(txtLoanApplicationAmount.getText().toString()));
-                loanApplication.setDuration(Integer.parseInt(txt_loan_application_duration.getText().toString()));
-                loanApplication.setLoanType(spLoanApplicationType.getSelectedItem().toString());
-                loanApplication.setPayment_amount_on_schedule(Double.parseDouble(loanpayments_edtxt.getText().toString()));
+                if(title.equalsIgnoreCase("Merchant Loan Details")){
+                    loanApplication.setAmount(Float.valueOf(txtLoanApplicationAmount.getText().toString()));
+                    loanApplication.setDuration(Integer.parseInt(txt_loan_application_duration.getText().toString()));
+                    loanApplication.setLoanType(spLoanApplicationType.getSelectedItem().toString());
+                    loanApplication.setPayment_amount_on_schedule(Double.parseDouble(loanpayments_edtxt.getText().toString()));
 
-                Bundle bundle = new Bundle();
-                bundle.putFloat("interest", interest);
-                bundle.putSerializable("loanApplication", loanApplication);
+                    Bundle bundle = new Bundle();
+                    bundle.putFloat("interest", interest);
+                    bundle.putSerializable("loanApplication", loanApplication);
 
-                Log.d(TAG, "onViewCreated: LOAN APPLICATION"+ loanApplication);
+                    Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle,getString(R.string.merchant_loan_details));
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
 
-                Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                }else{
+                    LoanApplication loanApplication = new LoanApplication();
+                    loanApplication.setAmount(Float.valueOf(txtLoanApplicationAmount.getText().toString()));
+                    loanApplication.setDuration(Integer.parseInt(txt_loan_application_duration.getText().toString()));
+                    loanApplication.setLoanType(spLoanApplicationType.getSelectedItem().toString());
+                    loanApplication.setPayment_amount_on_schedule(Double.parseDouble(loanpayments_edtxt.getText().toString()));
 
-            }
+                    Bundle bundle = new Bundle();
+                    bundle.putFloat("interest", interest);
+                    bundle.putSerializable("loanApplication", loanApplication);
+
+                    Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle,getString(R.string.default_loan_details));
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                        fragmentManager.beginTransaction()
+                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+                    else
+                        fragmentManager.beginTransaction()
+                                .add(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+
+                }
+
+
+                }
+
         });
     }
 
