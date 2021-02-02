@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -33,7 +34,9 @@ import com.cabral.emaishapay.utils.ValidateInputs;
 public class PayFragment extends Fragment {
     TextView mechantIdEdt, text_coupon;
     EditText totalAmountEdt, couponAmout, cardNumberEdt, expiryEdt, cvvEdt, mobileNumberEdt;
-
+    Spinner spinner_select_card;
+    LinearLayout card_details_layout;
+    CheckBox checkbox_save_card;
     LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards;
     Spinner spPaymentMethod;
     Button saveBtn;
@@ -79,6 +82,10 @@ public class PayFragment extends Fragment {
             layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
+
+        spinner_select_card = view.findViewById(R.id.spinner_select_card);
+        card_details_layout = view.findViewById(R.id.card_details_layout);
+        checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
 
             
             TextWatcher fieldValidatorTextWatcher = new TextWatcher() {

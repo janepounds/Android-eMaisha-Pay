@@ -123,14 +123,13 @@
                         android:layout_marginBottom="4dp"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etxt_id_expiry_date"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:padding="10dp"
                         android:background="@drawable/edittext_corner"
-                        android:inputType="date"
-                        android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                        android:drawableEnd="@drawable/ic_baseline_date_range_24"
                         android:textColor="#000" />
 
                 </LinearLayout>

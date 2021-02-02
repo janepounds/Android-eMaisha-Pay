@@ -1,5 +1,7 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,12 +14,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,9 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
@@ -76,7 +83,7 @@ public class IdentityProofFragment extends Fragment {
 
 
         EditText etxt_nin = view.findViewById(R.id.etxt_nin);
-        EditText etxt_nin_expiry_date = view.findViewById(R.id.etxt_id_expiry_date);
+        TextView etxt_nin_expiry_date = view.findViewById(R.id.etxt_id_expiry_date);
         etxt_national_id = view.findViewById(R.id.etxt_national_id);
         etxt_customer_photo = view.findViewById(R.id.etxt_customer_photo);
         etxt_photo_with_id = view.findViewById(R.id.etxt_photo_with_id);
@@ -86,6 +93,12 @@ public class IdentityProofFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
+        etxt_nin_expiry_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDatePicker(etxt_nin_expiry_date, getActivity());
+            }
+        });
 
         txt_upload_national_id.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,5 +257,28 @@ public class IdentityProofFragment extends Fragment {
             getFragmentManager().beginTransaction()
                     .add(R.id.wallet_home_container, fragment)
                     .addToBackStack(null).commit();
+    }
+
+    public static void addDatePicker(final TextView ed_, final Context context) {
+        ed_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog mDatePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        int month = selectedmonth + 1;
+                        NumberFormat formatter = new DecimalFormat("00");
+                        ed_.setText(selectedyear + "-" + formatter.format(month) + "-" + formatter.format(selectedday));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.show();
+
+            }
+        });
+        ed_.setInputType(InputType.TYPE_NULL);
     }
 }

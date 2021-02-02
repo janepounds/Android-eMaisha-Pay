@@ -21,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -29,34 +30,14 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class PersonalDetailsFragment extends Fragment {
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     String[] arrayForSpinner = {"Male", "Female"};
 
-    public static void addDatePicker(final EditText ed_, final Context context) {
-        ed_.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                final DatePickerDialog mDatePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        int month = selectedmonth + 1;
-                        NumberFormat formatter = new DecimalFormat("00");
-                        ed_.setText(selectedyear + "-" + formatter.format(month) + "-" + formatter.format(selectedday));
-                    }
-                }, mYear, mMonth, mDay);
-                mDatePicker.show();
-
-            }
-        });
-        ed_.setInputType(InputType.TYPE_NULL);
-    }
 
     @Nullable
     @Override
@@ -97,7 +78,7 @@ public class PersonalDetailsFragment extends Fragment {
         date_of_birth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDatePicker(date_of_birth, getActivity());
+                addDatePicker2(date_of_birth, getActivity());
             }
         });
 
@@ -124,11 +105,7 @@ public class PersonalDetailsFragment extends Fragment {
                     first_name.requestFocus();
                     return;
                 }
-                if (middlename.equals("")) {
-                    middle_name.setError("Middle Name is required");
-                    middle_name.requestFocus();
-                    return;
-                }
+
                 if (lastname.equals("")) {
                     last_name.setError("Last Name is required");
                     last_name.requestFocus();
@@ -150,7 +127,9 @@ public class PersonalDetailsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("firstname", firstname);
                 bundle.putString("lastname", lastname);
-                bundle.putString("middlename", middlename);
+                if (middle_name!=null) {
+                    bundle.putString("middlename", middlename);
+                }
                 bundle.putString("customer_gender", customer_gender);
                 bundle.putString("date_of_birth", date);
                 contactDetails.setArguments(bundle);
@@ -175,6 +154,27 @@ public class PersonalDetailsFragment extends Fragment {
             getFragmentManager().beginTransaction()
                     .add(R.id.wallet_home_container, fragment)
                     .addToBackStack(null).commit();
+    }
+    public void addDatePicker2(final TextView ed_, final Context context) {
+        ed_.setOnClickListener(view -> {
+            Calendar mCurrentDate = Calendar.getInstance();
+            mCurrentDate.add(Calendar.YEAR, -18);
+            int mYear = mCurrentDate.get(Calendar.YEAR);
+            int mMonth = mCurrentDate.get(Calendar.MONTH);
+            int mDay = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+
+            final DatePickerDialog mDatePicker = new DatePickerDialog(context, (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                int month = selectedMonth + 1;
+                NumberFormat formatter = new DecimalFormat("00");
+                ed_.setText(selectedYear + "-" + formatter.format(month) + "-" + formatter.format(selectedDay));
+
+
+            }, mYear, mMonth, mDay);
+
+            mDatePicker.show();
+        });
+        ed_.setInputType(InputType.TYPE_NULL);
     }
 
 

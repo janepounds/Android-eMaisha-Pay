@@ -259,8 +259,84 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Select Card"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/josefin_sans" />
 
 
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edittext_corner"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/spinner_select_card"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:background="@android:color/transparent"
+                                android:gravity="center"
+                                android:spinnerMode="dropdown"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_chevron_down" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/card_details_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Holder Name"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/josefin_sans" />
+
+                            <EditText
+                                android:id="@+id/add_money_holder_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:paddingStart="@dimen/dimen_10dp"
+                                android:background="@drawable/edittext_corner"
+                                android:textColor="@color/textColor"
+                                android:layout_marginTop="5dp"
+                                android:inputType="text"
+                                android:drawablePadding="@dimen/dimen_5dp"/>
+
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -272,7 +348,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Card Number"
                                 android:textSize="16sp"
-                                android:layout_marginBottom="5dp"
                                 android:fontFamily="@font/josefin_sans" />
 
                             <EditText
@@ -282,15 +357,18 @@
                                 android:paddingStart="@dimen/dimen_10dp"
                                 android:background="@drawable/edittext_corner"
                                 android:inputType="number"
-                                android:textColor="@color/textColor"/>
+                                android:textColor="@color/textColor"
+                                android:layout_marginTop="5dp"
+                                android:maxLength="19"
+                                android:drawablePadding="@dimen/dimen_5dp"/>
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
 
 
                             <LinearLayout
@@ -303,9 +381,8 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Card  Expiry"
+                                    android:text="Card Expiry"
                                     android:textSize="16sp"
-                                    android:layout_marginBottom="5dp"
                                     android:fontFamily="@font/josefin_sans" />
 
                                 <EditText
@@ -316,7 +393,9 @@
                                     android:background="@drawable/edittext_corner"
                                     android:inputType="date"
                                     android:maxLength="5"
-                                    android:textColor="@color/textColor" />
+                                    android:textColor="@color/textColor"
+                                    android:layout_marginTop="5dp"
+                                    android:drawablePadding="@dimen/dimen_5dp"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -331,7 +410,6 @@
                                     android:layout_height="wrap_content"
                                     android:text="Card CVV"
                                     android:textSize="16sp"
-                                    android:layout_marginBottom="5dp"
                                     android:fontFamily="@font/josefin_sans" />
 
                                 <EditText
@@ -340,11 +418,24 @@
                                     android:layout_height="45dp"
                                     android:paddingStart="@dimen/dimen_10dp"
                                     android:background="@drawable/edittext_corner"
-                                    android:inputType="numberDecimal"
-                                    android:textColor="@color/textColor"/>
+                                    android:inputType="number"
+                                    android:textColor="@color/textColor"
+                                    android:layout_marginTop="5dp"
+                                    android:maxLength="3"
+                                    android:drawablePadding="@dimen/dimen_5dp"/>
                             </LinearLayout>
 
+
                         </LinearLayout>
+                        <CheckBox
+                            android:id="@+id/checkbox_save_card"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Save Card"
+                            android:textSize="14sp"
+                            android:layout_gravity="end"/>
+                    </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
