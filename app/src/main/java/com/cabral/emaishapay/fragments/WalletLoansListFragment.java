@@ -91,7 +91,7 @@ public class WalletLoansListFragment extends Fragment {
                 bundle.putFloat("interest", interest);
                 bundle.putString("possible_action", possible_action);
 
-                Fragment fragment = new WalletLoanDetailsFragment(bundle);
+                Fragment fragment = new WalletLoanDetailsFragment(bundle,getString(R.string.default_loan_details));
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 if (((WalletHomeActivity) getActivity()).currentFragment != null)
                     fragmentManager.beginTransaction()
@@ -174,7 +174,7 @@ public class WalletLoansListFragment extends Fragment {
                                         bundle.putFloat("interest", interest);
 
                                         Log.d(TAG, "onClick: interest"+interest);
-                                        Fragment fragment = new WalletLoanDetailsFragment(bundle);
+                                        Fragment fragment = new WalletLoanDetailsFragment(bundle,getString(R.string.default_loan_details));
                                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                         if (((WalletHomeActivity) getActivity()).currentFragment != null)
                                             fragmentManager.beginTransaction()

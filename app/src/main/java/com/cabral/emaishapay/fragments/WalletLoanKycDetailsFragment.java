@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +63,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     Bitmap selectedImage;
     LoanApplication loanApplication;
+    private String title;
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
@@ -71,6 +73,11 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     private TextView textViewErrorMessage,front_id_photo_browse_tv, front_id_photo_tv,back_id_photo_tv, back_id_photo_browse_tv,
             selfie_id_photo_tv, selfie_id_photo_browse_tv,farm_photo_browse_tv, farm_photo_tv;
     private Spinner guarantor_relationship_spn1, guarantor_relationship_spn2;
+
+    public WalletLoanKycDetailsFragment(String title){
+        this.title = title;
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,10 +106,24 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         guarantor_contact_edt2= view.findViewById(R.id.guarantor_contact_edt2);
 
         textViewErrorMessage = view.findViewById(R.id.text_view_error_message);
-        loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
+
+
+        if(title.equalsIgnoreCase("Merchant Loan Details")){
+            loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
+            loanProgressBarId.setVisibility(View.GONE);
+            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+
+        }else{
+            loanProgressBarId.setStateDescriptionData(descriptionData);
+            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+
+        }
 
         //Second hidden progress bar for loan application with 5 states
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_user_details);
+
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
 //        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
         assert getArguments() != null;
@@ -297,13 +318,20 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             @Override
             public void onResponse(Call<RequestLoanresponse> call, Response<RequestLoanresponse> response) {
                 if (response.code() == 200) {
-                    if( response.body().getData().getLoanApplicationId().equals("0") ){
+                    if (response.body().getData().getLoanApplicationId().equals("0")) {
                         Log.e("info 200", new String(String.valueOf(response.toString())) + ", code: " + response.code());
                         textViewErrorMessage.setText(response.body().getData().getMessage());
-                    }else {
+                    } else {
+                        if (title.equalsIgnoreCase("merchant loan details")) {
+                            //redirect to wallet home activity
+                            Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context,WalletHomeActivity.class);
+                            startActivity(intent);
 
-                       // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
-                        Fragment fragment = new WalletLoansListFragment();
+                        } else{
+
+                            // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
+                            Fragment fragment = new WalletLoansListFragment();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         if (((WalletHomeActivity) getActivity()).currentFragment != null)
                             fragmentManager.beginTransaction()
@@ -316,6 +344,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                                     .addToBackStack(null).commit();
 
                     }
+                }
 
                 } else if (response.code() == 401) {
                     TokenAuthActivity.startAuth(context, true);

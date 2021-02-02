@@ -121,7 +121,7 @@
 
 
                     <EditText
-                        android:id="@+id/et_poultry_no_of_birds"
+                        android:id="@+id/et_poultry_no_of_birds_males"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_margin="0dp"
