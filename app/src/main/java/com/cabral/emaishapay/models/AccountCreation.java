@@ -9,9 +9,6 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class AccountCreation  implements Serializable {
-            @SerializedName("user_id")
-            @Expose
-            private String user_id;
             @SerializedName("dob")
             @Expose
             private String dob;
@@ -90,8 +87,6 @@ public class AccountCreation  implements Serializable {
 
 
     public AccountCreation(JSONObject accountObject) throws JSONException {
-
-        setUser_id(accountObject.getString("user_id"));
         setDob(accountObject.getString("dob") );
         setFirstname(accountObject.getString("firstname") );
         setLastname(accountObject.getString("lastname")  );
@@ -120,13 +115,6 @@ public class AccountCreation  implements Serializable {
 
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 
     public String getDob() {
         return dob;

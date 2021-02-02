@@ -600,12 +600,9 @@ public interface APIRequests {
 
 
     );
-    @FormUrlEncoded
+
     @POST("wallet/merchant/AccountOpening")
-    Call<InitiateWithdrawResponse>openAccount(
-
-            @Body JSONObject object
-
+    Call<InitiateWithdrawResponse>openAccount(@Header("Authorization") String token, @Body JSONObject object
     );
 
 
