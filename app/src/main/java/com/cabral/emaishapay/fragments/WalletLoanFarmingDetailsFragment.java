@@ -232,7 +232,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
            et_poultry_expected_disposal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDatePicker2(tv_poultry_date_purchased, getActivity());
+                addDatePicker2(et_poultry_expected_disposal, getActivity());
             }
         });
 

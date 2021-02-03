@@ -139,7 +139,7 @@ public class CardDetail extends Fragment {
                 +"nin\n"+nin+"valid\n"+valid_upto+"nationid\n"+encodedImageID+"customer_pic\n"+encodedImageCustomerPhoto+"cust_pic_id\n"+encodedImagePhotoWithID);
 
         Button previous = view.findViewById(R.id.previous_button);
-        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
+        previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
 
         dialogLoader = new DialogLoader(getContext());
 
