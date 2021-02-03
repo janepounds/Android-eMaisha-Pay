@@ -236,9 +236,14 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             }
         });
 
+        rbCrop.setSelected(true);
         rbCrop.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+
+                 rbCrop.setSelected(true);
+                 rbPoultry.setSelected(false);
+                 rbPiggery.setSelected(false);
                  viewCropsSelected.setVisibility(View.VISIBLE);
                  layoutCrop.setVisibility(View.VISIBLE);
                  layoutPoultry.setVisibility(View.GONE);
@@ -259,6 +264,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         rbPoultry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                rbPoultry.setSelected(true);
+                rbCrop.setSelected(false);
+                rbPiggery.setSelected(false);
                 viewPoultrySelected.setVisibility(View.VISIBLE);
                 layoutPoultry.setVisibility(View.VISIBLE);
                 layoutCrop.setVisibility(View.GONE);
@@ -281,6 +290,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         rbPiggery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        rbPiggery.setSelected(true);
+                        rbCrop.setSelected(false);
+                        rbPoultry.setSelected(false);
                         viewPiggerySelected.setVisibility(View.VISIBLE);
                         layoutPiggery.setVisibility(View.VISIBLE);
                         layoutCrop.setVisibility(View.GONE);
@@ -299,7 +312,6 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     }
                 });
 
-        rbCrop.setSelected(true);
         txtExperiencePoultryMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
