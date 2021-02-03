@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/solidwhite_shape">
+    android:orientation="vertical"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="0dp"
+    android:layout_margin="5dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,23 +40,16 @@
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Status "
+                        android:text="Status :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/text_view_id_type"
                         android:layout_width="0dp"
@@ -62,31 +58,30 @@
                         android:layout_weight="1"
                         android:text="Successful"
                         android:alpha="1.0"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Reference ID "
+                        android:text="Reference ID :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
-                    <TextView
+
+                     <TextView
                         android:id="@+id/text_view_id_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -95,29 +90,28 @@
                         android:text="123456789025"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textStyle="bold" />
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Receipt ID "
+                        android:text="Receipt ID :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/text_view_expiry_date"
                         android:layout_width="0dp"
@@ -127,29 +121,28 @@
                         android:text="001230"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Service"
+                        android:text="Service :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/text_view_purchase_service"
                         android:layout_width="0dp"
@@ -159,29 +152,28 @@
                         android:text="Purchase"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Paid To "
+                        android:text="Paid To :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/text_view_purchase_preview_name"
                         android:layout_width="0dp"
@@ -191,29 +183,28 @@
                         android:text="Kalin Farms"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Transaction Amount"
+                        android:text="Transaction Amount :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/txt_view_bill_preview_total"
                         android:layout_width="0dp"
@@ -223,29 +214,28 @@
                         android:text="UGX 0"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp">
+                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Purchase Date"
+                        android:text="Purchase Date :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:text=":"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"  />
+
                     <TextView
                         android:id="@+id/text_view_purchase_date_time"
                         android:layout_width="0dp"
@@ -255,12 +245,52 @@
                         android:text="2019/01/01  23:00pm"
                         android:alpha="1.0"
                         android:textSize="18sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textStyle="bold" />
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/filter_dialog_footer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp">
 
+                <Button
+                    android:id="@+id/cancel_btn"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ok"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_red_solid"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"/>
+
+
+                <Button
+                    android:id="@+id/button_add_money"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:text="Print Receipt"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_purple_solid"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -270,10 +300,11 @@
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:gravity="right"
+                android:visibility="gone">
 
                 <Button
-                    android:id="@+id/button_add_money"
+
                     style="@style/Button_DW"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
@@ -301,4 +332,4 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

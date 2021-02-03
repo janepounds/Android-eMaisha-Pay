@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,6 +74,8 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
         dateTextView = view.findViewById(R.id.text_view_purchase_date_time);
         referenceNoTextView = view.findViewById(R.id.text_view_id_number);
 
+        Button close = view.findViewById(R.id.cancel_btn);
+        close.setOnClickListener(v -> dismiss());
         totalTextView.setText( NumberFormat.getInstance().format(this.transaction.getAmount()));
         dateTextView.setText(this.transaction.getDate());
         referenceNoTextView.setText(this.transaction.getReferenceNumber());
