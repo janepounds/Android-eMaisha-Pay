@@ -267,13 +267,22 @@
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:orientation="horizontal">
+                        <TextView
 
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_left_corners_green"
+                            android:textColor="@color/white"
+                            android:text="@string/currency"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_weight="0.2" />
 
                         <EditText
                             android:id="@+id/loanpayments_edtxt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.7"
+                            android:layout_weight="0.5"
                             android:paddingLeft="@dimen/dimen_10dp"
                             android:paddingStart="10dp"
                             android:textColor="@color/textColor"

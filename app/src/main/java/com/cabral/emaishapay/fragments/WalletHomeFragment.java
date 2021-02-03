@@ -37,6 +37,8 @@ import com.cabral.emaishapay.utils.CryptoUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +78,10 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)));
 
+
+
+
+
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent")){
             WalletHomeActivity.disableNavigation();
@@ -104,6 +110,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
             updateCommisionBalance();
+
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.labelTransact.setVisibility(View.GONE);
@@ -327,14 +334,18 @@ public class WalletHomeFragment extends Fragment {
                 progressDialog.dismiss();
 
                 if (response.code() == 200) {
-                    balance = response.body().getData().getBalance();
+
+
+                  balance =  response.body().getData().getBalance();
+                  String b =  NumberFormat.getInstance().format(balance);
 
                     Log.d(TAG, "onSuccess: Balance = " + balance);
 
                     //save balance in shared preference
-                    WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), String.valueOf(balance), context);
+                    WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), b, context);
 
                     Log.d(TAG, "onResponse: "+WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
+
 
 
                 } else if (response.code() == 401) {
@@ -366,10 +377,9 @@ public class WalletHomeFragment extends Fragment {
                 progressDialog.dismiss();
 
                 if (response.code() == 200) {
-                    commisionbalance = response.body().getData().getBalance();
+                     commisionbalance =  response.body().getData().getBalance();
 
-                    Log.d(TAG, "onSuccess: commisionbalance = " + commisionbalance);
-                    binding.cardBalance.setText(getString(R.string.currency)+" "+commisionbalance);
+                    binding.cardBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(commisionbalance));
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
@@ -389,6 +399,9 @@ public class WalletHomeFragment extends Fragment {
             }
         });
     }
+
+
+
 
 
     private class MyTask extends AsyncTask<String, Void, String> {
