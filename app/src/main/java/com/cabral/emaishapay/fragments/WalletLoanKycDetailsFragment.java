@@ -307,7 +307,16 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 loanApplication.setLoan_gaurantor2(new Referee(first_name_edt2.getText().toString(), last_name_edt2.getText().toString(), guarantor_relationship_spn2.getSelectedItem().toString(), guarantor_contact_edt2.getText().toString()));
 
             }
-
+            if(loanApplication.getCheck_selected().equalsIgnoreCase("Crops")){
+                loanApplication.setPoultry_data(null);
+                loanApplication.setPiggery_data(null);
+            }else if(loanApplication.getCheck_selected().equalsIgnoreCase("Poultry")){
+                loanApplication.setCrop_data(null);
+                loanApplication.setPiggery_data(null);
+            }else if(loanApplication.getCheck_selected().equalsIgnoreCase("Piggery")){
+                loanApplication.setPoultry_data(null);
+                loanApplication.setCrop_data(null);
+            }
             requestObject.put("loanParams", loanApplication);
 
         }catch (Exception e){

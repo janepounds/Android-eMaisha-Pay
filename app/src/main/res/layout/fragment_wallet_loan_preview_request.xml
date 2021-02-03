@@ -187,7 +187,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:fontFamily="@font/josefin_sans"
-                        android:text="Fertilizers, Seeds"
+                        android:text="--"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
                 </LinearLayout>
