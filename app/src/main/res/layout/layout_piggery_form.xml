@@ -387,7 +387,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_poultry_vet_details"
+            android:id="@+id/layout_piggery_vet_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -417,7 +417,7 @@
 
 
                     <EditText
-                        android:id="@+id/et_poultry_vet_first_name"
+                        android:id="@+id/et_piggery_vet_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:inputType="text"
@@ -442,7 +442,7 @@
                         android:textSize="@dimen/dimen_16sp" />
 
                     <EditText
-                        android:id="@+id/et_poultry_second_name"
+                        android:id="@+id/et_piggery_second_name"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -479,7 +479,7 @@
                         android:orientation="horizontal">
 
                         <Spinner
-                            android:id="@+id/sp_poultry_qualifications"
+                            android:id="@+id/sp_piggery_qualifications"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
@@ -538,7 +538,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:id="@+id/et_poultry_vet_phone"
+                            android:id="@+id/et_piggery_vet_phone"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
