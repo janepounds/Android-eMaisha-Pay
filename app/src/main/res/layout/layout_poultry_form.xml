@@ -582,7 +582,7 @@
                     android:layout_height="45dp"
                     android:paddingLeft="@dimen/dimen_10dp"
                     android:background="@drawable/edittext_corner"
-                    android:inputType="numberDecimal" />
+                    android:inputType="text" />
 
             </LinearLayout>
 
