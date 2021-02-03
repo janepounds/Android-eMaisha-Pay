@@ -1,7 +1,11 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +34,13 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
 
 import java.security.acl.LastOwnerException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
 
 
 public class WalletLoanFarmingDetailsFragment extends Fragment {
+    private static final String TAG = "WalletLoanFarmingDetail";
 
     Toolbar toolbar;
     Button previousBtn, nextBtn;
@@ -208,7 +216,18 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
             interest=localBundle.getFloat("interest");
         }
-
+           tv_poultry_date_of_hatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDatePicker2(tv_poultry_date_of_hatch, getActivity());
+            }
+        });
+    tv_poultry_date_purchased.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDatePicker2(tv_poultry_date_purchased, getActivity());
+            }
+        });
 
         rbCrop.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -415,11 +434,29 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     loanApplication.setCheck_selected("Crops");
                     loanApplication.setCrop_data(new LoanApplication.Crop());
                     loanApplication.getCrop_data().setCrop(crop_spn.getSelectedItem().toString());
-                    loanApplication.getCrop_data().setCrop_area( Double.parseDouble(crop_area_edt.getText().toString()) );
+                    if(crop_area_edt.getText().toString().isEmpty()){
+                        loanApplication.getCrop_data().setCrop_area(0);
+                    }else{
+                        loanApplication.getCrop_data().setCrop_area( Double.parseDouble(crop_area_edt.getText().toString()));
+                    }
+
                     loanApplication.getCrop_data().setCrop_area_unit(getString(R.string.default_crop_area_units));
                     loanApplication.getCrop_data().setYeild_units(harvesting_unit_spn.getSelectedItem().toString());
-                    loanApplication.getCrop_data().setExpected_yield(Double.parseDouble(expected_yield_edt.getText().toString()));
-                    loanApplication.getCrop_data().setExpected_revenue(Integer.parseInt(expected_revenue_edt.getText().toString()));
+                    if(expected_yield_edt.getText().toString().isEmpty()){
+                        loanApplication.getCrop_data().setExpected_yield(0);
+                    }else{
+                        loanApplication.getCrop_data().setExpected_yield(Double.parseDouble(expected_yield_edt.getText().toString()));
+                    }
+
+                    if(expected_revenue_edt.getText().toString().isEmpty()){
+
+                        loanApplication.getCrop_data().setExpected_revenue(0);
+
+                    }else{
+                        loanApplication.getCrop_data().setExpected_revenue(Integer.parseInt(expected_revenue_edt.getText().toString()));
+
+                    }
+
 
                     if(from_insurance_spn.getSelectedItem().toString().equalsIgnoreCase("yes")){
                         loanApplication.getCrop_data().setFrom_insurance(true);
@@ -437,7 +474,12 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     loanApplication.getPoultry_data().setDate_of_hatch(tv_poultry_date_of_hatch.getText().toString());
                     loanApplication.getPoultry_data().setDate_purchased(tv_poultry_date_purchased.getText().toString());
                     loanApplication.getPoultry_data().setNo_of_birds_purchased(Integer.parseInt(et_poultry_no_of_birds.getText().toString()));
-                    loanApplication.getPoultry_data().setCost_per_chick(Double.parseDouble(et_poultry_cost_per_chick.getText().toString()));
+                    if(et_poultry_cost_per_chick.getText().toString().isEmpty()){
+                        loanApplication.getPoultry_data().setCost_per_chick(0);
+                    }else{
+                        loanApplication.getPoultry_data().setCost_per_chick(Double.parseDouble(et_poultry_cost_per_chick.getText().toString()));
+                    }
+
                     loanApplication.getPoultry_data().setSource(sp_poultry_source.getSelectedItem().toString());
                     loanApplication.getPoultry_data().setExpected_disposal(et_poultry_expected_disposal.getText().toString());
                     loanApplication.getPoultry_data().setHousing_system(sp_poultry_housing_system.getSelectedItem().toString());
@@ -456,8 +498,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     loanApplication.getPoultry_data().setLoan_purpose_equipment_purchase(poultry_equipment_purchase_cb.isChecked());
 
 
-
-
+                    Log.d(TAG, "onClick: "+loanApplication.getPoultry_data().getType_of_birds());
 
 
                 }else if(rbPiggery.isSelected()){
@@ -466,7 +507,12 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                   loanApplication.getPiggery_data().setTotal_Animals(Integer.parseInt(et_piggery_total_animals.getText().toString()));
                   loanApplication.getPiggery_data().setNo_of_females(Integer.parseInt(et_piggery_females.getText().toString()));
                   loanApplication.getPiggery_data().setNo_of_males(Integer.parseInt(et_poultry_no_of_birds_males.getText().toString()));
-                  loanApplication.getPiggery_data().setAnnual_revenue(Double.parseDouble(et_piggery_annual_revenue.getText().toString()));
+
+                  if(et_piggery_annual_revenue.getText().toString().isEmpty()) {
+                      loanApplication.getPiggery_data().setAnnual_revenue(0);
+                  }else{
+                      loanApplication.getPiggery_data().setAnnual_revenue(Double.parseDouble(et_piggery_annual_revenue.getText().toString()));
+                  }
                   loanApplication.getPiggery_data().setExperience(et_piggery_experience.getText().toString());
                   loanApplication.getPiggery_data().setSource_of_feeds(sp_piggery_source_of_seeds.getSelectedItem().toString());
                   loanApplication.getPiggery_data().setFarm_vet_personnel(sp_piggery_farm_vet_personnel.getSelectedItem().toString());
@@ -528,5 +574,25 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
 
     }
+    public void addDatePicker2(final TextView ed_, final Context context) {
+        ed_.setOnClickListener(view -> {
+            Calendar mCurrentDate = Calendar.getInstance();
+            mCurrentDate.add(Calendar.YEAR, -18);
+            int mYear = mCurrentDate.get(Calendar.YEAR);
+            int mMonth = mCurrentDate.get(Calendar.MONTH);
+            int mDay = mCurrentDate.get(Calendar.DAY_OF_MONTH);
 
+            final DatePickerDialog mDatePicker = new DatePickerDialog(context, (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                int month = selectedMonth + 1;
+                NumberFormat formatter = new DecimalFormat("00");
+                ed_.setText(selectedYear + "-" + formatter.format(month) + "-" + formatter.format(selectedDay));
+
+
+            }, mYear, mMonth, mDay);
+
+            mDatePicker.show();
+        });
+        ed_.setInputType(InputType.TYPE_NULL);
+    }
     }

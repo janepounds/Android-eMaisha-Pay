@@ -107,7 +107,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         guarantor_contact_edt2= view.findViewById(R.id.guarantor_contact_edt2);
 
         textViewErrorMessage = view.findViewById(R.id.text_view_error_message);
-        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
+        loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_kyc_details);
 
 
         if(title.equalsIgnoreCase("Merchant Loan Details")){

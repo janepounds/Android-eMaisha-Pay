@@ -43,12 +43,12 @@ public class LoanApplication implements Serializable {
     private String dateApproved;
 
     @SerializedName("payment_amount_on_schedule")
-    public double payment_amount_on_schedule;
+    public double payment_amount_on_schedule=0;
 
 
     @SerializedName("amountPaid")
     @Expose
-    private double amountPaid;
+    private double amountPaid=0;
     @SerializedName("isDue")
     @Expose
     private String isDue;
@@ -423,13 +423,13 @@ public class LoanApplication implements Serializable {
         private String crop;
         @SerializedName("crop_area")
         @Expose
-        private double crop_area;
+        private double crop_area = 0;
         @SerializedName("crop_area_unit")
         @Expose
         private String crop_area_unit;
         @SerializedName("expected_yield")
         @Expose
-        private double expected_yield;
+        private double expected_yield=0;
         @SerializedName("expected_revenue")
         @Expose
         private int expected_revenue;
@@ -562,7 +562,7 @@ public class LoanApplication implements Serializable {
         private int no_of_birds_purchased;
         @SerializedName("cost_per_chick")
         @Expose
-        private double cost_per_chick;
+        private double cost_per_chick=0;
         @SerializedName("source")
         @Expose
         private String source;
@@ -798,7 +798,7 @@ public class LoanApplication implements Serializable {
 
      @SerializedName("annual_revenue")
      @Expose
-     private double annual_revenue;
+     private double annual_revenue=0;
      @SerializedName("experience")
      @Expose
      private String experience;
