@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -327,8 +328,23 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                         if (title.equalsIgnoreCase("merchant loan details")) {
                             //redirect to wallet home activity
                             Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context,WalletHomeActivity.class);
-                            startActivity(intent);
+                            //call success dialog
+                            String loan_no = response.body().getData().getLoan_no();
+                            final Dialog dialog1 = new Dialog(context);
+                            dialog1.setContentView(R.layout.dialog_successful_message);
+                            TextView message = dialog1.findViewById(R.id.pop_up_content_account_name);
+                            message.setText("Loan "+loan_no);
+                            Button button = dialog1.findViewById(R.id.btn_ok);
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent intent = new Intent(context,WalletHomeActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            dialog1.show();
+
 
                         } else{
 
