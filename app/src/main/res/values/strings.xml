@@ -471,6 +471,7 @@
     <string name="default_crop_area_units">Acres</string>
     <string name="crop_protection">Pesticides/Crop Protection</string>
     <string name="equipments">Equipment</string>
+    <string name="feeds">Feeds</string>
     <string name="units">Units</string>
     <string name="per_unit">/ Unit</string>
     <string name="save_changes">Save</string>
@@ -548,6 +549,7 @@
     <string name="default_numeric_value">0</string>
     <string name="fertilizer_title">Fertilizer</string>
     <string name="seeds">Seeds</string>
+    <string name="breeding_stock_purchase">Breeding Stock Purchase</string>
     <string name="transactions">Transactions</string>
     <string name="invalid_number">Invalid Number</string>
     <string name="invalid_expiry">Invalid Expiry</string>
@@ -656,6 +658,9 @@
 
     <string name="merchant_loan_details">Merchant Loan Details</string>
     <string name="default_loan_details">Default Loan Details</string>
+    <string name="medication">Medication</string>
+    <string name="chick_purchase">Chicks Purchase</string>
+    <string name="shed_construction">Shed Construction</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

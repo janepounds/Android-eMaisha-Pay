@@ -125,32 +125,92 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
         textViewLoanPreviewDueDate.setText(loanApplication.computeDueDate());
         textViewLoanPreviewDueAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.computeDueAmount()));
-        if(loanApplication.getCrop_data().isPurpose_for_fetilizer()){
-            loan_purpose_txt.setText(getString(R.string.fertilizer_title));
-            if(loan_purpose_txt.getText().toString().isEmpty())
-                loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.fertilizer_title));
-            else
+        if(loanApplication.getCrop_data()!=null){
+            if(loanApplication.getCrop_data().isPurpose_for_fetilizer()){
                 loan_purpose_txt.setText(getString(R.string.fertilizer_title));
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.fertilizer_title));
+                else
+                    loan_purpose_txt.setText(getString(R.string.fertilizer_title));
+            }
+            if(loanApplication.getCrop_data().isPurpose_for_crop_protection()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.crop_protection));
+                else
+                    loan_purpose_txt.setText(getString(R.string.crop_protection));
+            }
+            if(loanApplication.getCrop_data().isPurpose_for_equipments()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.equipments));
+                else
+                    loan_purpose_txt.setText(getString(R.string.equipments));
+            }
+            if(loanApplication.getCrop_data().isPurpose_for_seeds()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.seeds));
+                else
+                    loan_purpose_txt.setText(getString(R.string.seeds));
+            }
         }
-        if(loanApplication.getCrop_data().isPurpose_for_crop_protection()){
-            if(loan_purpose_txt.getText().toString().isEmpty())
-                loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.crop_protection));
-            else
-                loan_purpose_txt.setText(getString(R.string.crop_protection));
+        else if(loanApplication.getPiggery_data()!=null){
+            if(loanApplication.getPiggery_data().isLoan_purpose_breeding_stock_purchase()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.breeding_stock_purchase));
+                else
+                    loan_purpose_txt.setText(getString(R.string.breeding_stock_purchase));
+            }
+            if(loanApplication.getPiggery_data().isLoan_purpose_feeds()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.feeds));
+                else
+                    loan_purpose_txt.setText(getString(R.string.feeds));
+            }
+            if(loanApplication.getPiggery_data().isLoan_purpose_medication()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.medication));
+                else
+                    loan_purpose_txt.setText(getString(R.string.medication));
+            }
+            if(loanApplication.getPiggery_data().isLoan_purpose_equipment_purchase()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.equipments));
+                else
+                    loan_purpose_txt.setText(getString(R.string.equipments));
+            }
         }
-        if(loanApplication.getCrop_data().isPurpose_for_equipments()){
-            if(loan_purpose_txt.getText().toString().isEmpty())
-                loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.equipments));
-            else
-                loan_purpose_txt.setText(getString(R.string.equipments));
+        else if(loanApplication.getPoultry_data()!=null){
+            if(loanApplication.getPoultry_data().isLoan_purpose_purchase_chicks()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.chick_purchase));
+                else
+                    loan_purpose_txt.setText(getString(R.string.chick_purchase));
+            }
+            if(loanApplication.getPoultry_data().isLoan_purpose_feeds()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.feeds));
+                else
+                    loan_purpose_txt.setText(getString(R.string.feeds));
+            }
+            if(loanApplication.getPoultry_data().isLoan_purpose_medication()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.medication));
+                else
+                    loan_purpose_txt.setText(getString(R.string.medication));
+            }
+            if(loanApplication.getPoultry_data().isLoan_purpose_equipment_purchase()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.equipments));
+                else
+                    loan_purpose_txt.setText(getString(R.string.equipments));
+            }
+            if(loanApplication.getPoultry_data().isLoan_purpose_shed_construction()){
+                if(loan_purpose_txt.getText().toString().isEmpty())
+                    loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.shed_construction));
+                else
+                    loan_purpose_txt.setText(getString(R.string.shed_construction));
+            }
         }
 
-        if(loanApplication.getCrop_data().isPurpose_for_seeds()){
-            if(loan_purpose_txt.getText().toString().isEmpty())
-                loan_purpose_txt.setText(loan_purpose_txt.getText().toString()+", "+getString(R.string.seeds));
-            else
-                loan_purpose_txt.setText(getString(R.string.seeds));
-        }
 
         btnPrevious.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
