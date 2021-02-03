@@ -49,6 +49,9 @@ public class RequestLoanresponse {
         @SerializedName("loanApplicationId")
         @Expose
         private int loanApplicationId;
+        @SerializedName("loan_no")
+        @Expose
+        private String loan_no;
 
         public String getMessage() {
             return message;
@@ -72,6 +75,14 @@ public class RequestLoanresponse {
 
         public void setLoanApplicationId(int loanApplicationId) {
             this.loanApplicationId = loanApplicationId;
+        }
+
+        public String getLoan_no() {
+            return loan_no;
+        }
+
+        public void setLoan_no(String loan_no) {
+            this.loan_no = loan_no;
         }
     }
 
