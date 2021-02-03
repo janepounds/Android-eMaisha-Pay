@@ -148,7 +148,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         mortality_records_cb = view.findViewById(R.id.mortality_records_cb);
         feed_consumption_cb = view.findViewById(R.id.feed_consumption_cb);
         disease_incidences_cb = view.findViewById(R.id.disease_incidences_cb);
-        poultry_none_cb = view.findViewById(R.id.poultry_none_cb);
+
         poultry_feeds_cb = view.findViewById(R.id.poultry_feeds_cb);
         poultry_medication_cb = view.findViewById(R.id.poultry_medication_cb);
         poultry_purchase_chicks_cb = view.findViewById(R.id.poultry_purchase_chicks_cb);
@@ -170,7 +170,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         incomes_expenses_cb = view.findViewById(R.id.incomes_expenses_cb);
         medical_records_cb = view.findViewById(R.id.medical_records_cb);
         breeding_records_cb = view.findViewById(R.id.breeding_records_cb);
-        piggery_none_cb = view.findViewById(R.id.piggery_none_cb);
+
         piggery_feeds_cb = view.findViewById(R.id.piggery_feeds_cb);
         piggery_medication_cb = view.findViewById(R.id.piggery_medication_cb);
         piggery_equipment_purchase_cb = view.findViewById(R.id.piggery_equipment_purchase_cb);
