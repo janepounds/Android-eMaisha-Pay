@@ -142,7 +142,7 @@ public class IdentityProofFragment extends Fragment {
 
 
         Button previous = view.findViewById(R.id.previous_button_two);
-        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
+        previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -106,7 +106,7 @@ public class ContactDetailsFragment extends Fragment {
         });
 
         Button previous = view.findViewById(R.id.previous_button);
-        previous.setOnClickListener(view2 -> getChildFragmentManager().popBackStack());
+        previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override

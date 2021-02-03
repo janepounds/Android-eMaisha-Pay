@@ -105,7 +105,7 @@ public class LoanApplication implements Serializable {
     @Expose
     private com.cabral.emaishapay.models.Referee loan_gaurantor2;
 
-    @SerializedName("merchant_no")
+    @SerializedName("customer_no")
     @Expose
     private String phone;
 
