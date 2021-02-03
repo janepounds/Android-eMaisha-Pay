@@ -44,9 +44,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     Toolbar toolbar;
     Button previousBtn, nextBtn;
-    TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears,tv_poultry_date_purchased,tv_poultry_date_of_hatch;
+    TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears,tv_poultry_date_purchased,tv_poultry_date_of_hatch,et_poultry_expected_disposal;
     Spinner harvesting_unit_spn, crop_spn, from_insurance_spn, poultryFarmVetPersonnelsp, piggeryFarmVetPersonnelsp;
-    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt,et_poultry_no_of_birds,et_poultry_cost_per_chick,et_poultry_expected_disposal,sp_poultry_experience,tv_poultry_experience_years,tv_poultry_experience_months,
+    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt,et_poultry_no_of_birds,et_poultry_cost_per_chick,sp_poultry_experience,tv_poultry_experience_years,tv_poultry_experience_months,
     et_piggery_total_animals,et_piggery_females,et_poultry_no_of_birds_males,et_piggery_annual_revenue,et_piggery_experience;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb,vaccination_cb,production_cb,mortality_records_cb,feed_consumption_cb,disease_incidences_cb,poultry_none_cb,poultry_feeds_cb,poultry_medication_cb,poultry_purchase_chicks_cb,poultry_shed_construction_cb,poultry_equipment_purchase_cb,
     selling_piglets_cb ,selling_breeding_cb,meat_production_cb ,feed_records_cb,incomes_expenses_cb ,medical_records_cb,breeding_records_cb, piggery_none_cb, piggery_feeds_cb, piggery_medication_cb,piggery_equipment_purchase_cb, breeding_stock_purchase_cb ;
@@ -222,7 +222,14 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 addDatePicker2(tv_poultry_date_of_hatch, getActivity());
             }
         });
-    tv_poultry_date_purchased.setOnClickListener(new View.OnClickListener() {
+        tv_poultry_date_purchased.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDatePicker2(tv_poultry_date_purchased, getActivity());
+            }
+        });
+
+           et_poultry_expected_disposal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addDatePicker2(tv_poultry_date_purchased, getActivity());
