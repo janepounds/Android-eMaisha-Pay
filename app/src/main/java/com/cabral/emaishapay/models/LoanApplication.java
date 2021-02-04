@@ -581,6 +581,15 @@ public class LoanApplication implements Serializable {
         @SerializedName("farm_vet_personnel")
         @Expose
         private String farm_vet_personnel;
+        @SerializedName("farm_vet_personnel_firstname")
+        @Expose
+        private String farm_vet_personnel_firstname;
+        @SerializedName("farm_vet_personnel_lastname")
+        @Expose
+        private String farm_vet_personnel_lastname;
+        @SerializedName("farm_vet_personnel_qualifications")
+        @Expose
+        private String farm_vet_personnel_qualifications;
         @SerializedName("records_kept_vaccination")
         @Expose
         private boolean records_kept_vaccination;
@@ -781,6 +790,30 @@ public class LoanApplication implements Serializable {
         public void setLoan_purpose_equipment_purchase(boolean loan_purpose_equipment_purchase) {
             this.loan_purpose_equipment_purchase = loan_purpose_equipment_purchase;
         }
+
+        public String getFarm_vet_personnel_firstname() {
+            return farm_vet_personnel_firstname;
+        }
+
+        public void setFarm_vet_personnel_firstname(String farm_vet_personnel_firstname) {
+            this.farm_vet_personnel_firstname = farm_vet_personnel_firstname;
+        }
+
+        public String getFarm_vet_personnel_lastname() {
+            return farm_vet_personnel_lastname;
+        }
+
+        public void setFarm_vet_personnel_lastname(String farm_vet_personnel_lastname) {
+            this.farm_vet_personnel_lastname = farm_vet_personnel_lastname;
+        }
+
+        public String getFarm_vet_personnel_qualifications() {
+            return farm_vet_personnel_qualifications;
+        }
+
+        public void setFarm_vet_personnel_qualifications(String farm_vet_personnel_qualifications) {
+            this.farm_vet_personnel_qualifications = farm_vet_personnel_qualifications;
+        }
     }
 
     public static class Piggery {
@@ -808,6 +841,15 @@ public class LoanApplication implements Serializable {
      @SerializedName("farm_vet_personnel")
      @Expose
      private String farm_vet_personnel;
+     @SerializedName("farm_vet_personnel_firstname")
+     @Expose
+     private String farm_vet_personnel_firstname;
+     @SerializedName("farm_vet_personnel_lastname")
+     @Expose
+     private String farm_vet_personnel_lastname;
+     @SerializedName("farm_vet_personnel_qualifications")
+     @Expose
+     private String farm_vet_personnel_qualifications;
      @SerializedName("business_model_selling_piglets")
      @Expose
      private boolean business_model_selling_piglets;
@@ -988,6 +1030,30 @@ public class LoanApplication implements Serializable {
 
         public void setLoan_purpose_breeding_stock_purchase(boolean loan_purpose_breeding_stock_purchase) {
             this.loan_purpose_breeding_stock_purchase = loan_purpose_breeding_stock_purchase;
+        }
+
+        public String getFarm_vet_personnel_firstname() {
+            return farm_vet_personnel_firstname;
+        }
+
+        public void setFarm_vet_personnel_firstname(String farm_vet_personnel_firstname) {
+            this.farm_vet_personnel_firstname = farm_vet_personnel_firstname;
+        }
+
+        public String getFarm_vet_personnel_lastname() {
+            return farm_vet_personnel_lastname;
+        }
+
+        public void setFarm_vet_personnel_lastname(String farm_vet_personnel_lastname) {
+            this.farm_vet_personnel_lastname = farm_vet_personnel_lastname;
+        }
+
+        public String getFarm_vet_personnel_qualifications() {
+            return farm_vet_personnel_qualifications;
+        }
+
+        public void setFarm_vet_personnel_qualifications(String farm_vet_personnel_qualifications) {
+            this.farm_vet_personnel_qualifications = farm_vet_personnel_qualifications;
         }
     }
 

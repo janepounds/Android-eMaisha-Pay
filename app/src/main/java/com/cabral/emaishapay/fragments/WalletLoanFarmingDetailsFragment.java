@@ -46,7 +46,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     Button previousBtn, nextBtn;
     TextView harvesting_unit_txt, per_harvesting_unit_txt, txtCrops, txtPoultry,txtPiggery, txtExperiencePoultryMonths,txtExperiencePiggeryMonths,txtExperiencePiggeryYears, txtExperiencePoultryYears,tv_poultry_date_purchased,tv_poultry_date_of_hatch,et_poultry_expected_disposal;
     Spinner harvesting_unit_spn, crop_spn, from_insurance_spn, poultryFarmVetPersonnelsp, piggeryFarmVetPersonnelsp;
-    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt,et_poultry_no_of_birds,et_poultry_cost_per_chick,sp_poultry_experience,tv_poultry_experience_years,tv_poultry_experience_months,
+    EditText crop_area_edt, expected_yield_edt, expected_revenue_edt,et_poultry_no_of_birds,et_poultry_cost_per_chick,sp_poultry_experience,tv_poultry_experience_years,tv_poultry_experience_months,et_poultry_second_name,et_poultry_vet_first_name,et_piggery_vet_first_name,et_piggery_second_name,
     et_piggery_total_animals,et_piggery_females,et_poultry_no_of_birds_males,et_piggery_annual_revenue,et_piggery_experience;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb,vaccination_cb,production_cb,mortality_records_cb,feed_consumption_cb,disease_incidences_cb,poultry_none_cb,poultry_feeds_cb,poultry_medication_cb,poultry_purchase_chicks_cb,poultry_shed_construction_cb,poultry_equipment_purchase_cb,
     selling_piglets_cb ,selling_breeding_cb,meat_production_cb ,feed_records_cb,incomes_expenses_cb ,medical_records_cb,breeding_records_cb, piggery_none_cb, piggery_feeds_cb, piggery_medication_cb,piggery_equipment_purchase_cb, breeding_stock_purchase_cb ;
@@ -62,7 +62,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     ImageButton rbCrop,rbPoultry,rbPiggery;
     View viewCropsSelected,viewPoultrySelected,viewPiggerySelected;
     Spinner sp_poultry_type_of_birds,sp_poultry_source,sp_poultry_housing_system,sp_poultry_source_of_seeds,sp_poultry_farm_vet_personnel,
-            sp_piggery_source_of_seeds,sp_piggery_farm_vet_personnel;
+            sp_piggery_source_of_seeds,sp_piggery_farm_vet_personnel,sp_poultry_qualifications,sp_piggery_qualifications;
 
     private String title;
 
@@ -143,6 +143,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         sp_poultry_source_of_seeds = view.findViewById(R.id.sp_poultry_source_of_seeds);
         sp_poultry_experience = view.findViewById(R.id.sp_poultry_experience);
         sp_poultry_farm_vet_personnel = view.findViewById(R.id.sp_poultry_farm_vet_personnel);
+        et_poultry_vet_first_name = view.findViewById(R.id.et_poultry_vet_first_name);
+        et_poultry_second_name = view.findViewById(R.id.et_poultry_second_name);
+        sp_poultry_qualifications = view.findViewById(R.id.sp_poultry_qualifications);
         vaccination_cb = view.findViewById(R.id.vaccination_cb);
         production_cb = view.findViewById(R.id.production_cb);
         mortality_records_cb = view.findViewById(R.id.mortality_records_cb);
@@ -163,6 +166,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         et_piggery_experience = view.findViewById(R.id.et_piggery_experience);
         sp_piggery_source_of_seeds = view.findViewById(R.id.sp_piggery_source_of_seeds);
         sp_piggery_farm_vet_personnel = view.findViewById(R.id.sp_piggery_farm_vet_personnel);
+        et_piggery_vet_first_name = view.findViewById(R.id.et_piggery_vet_first_name);
+        et_piggery_second_name = view.findViewById(R.id.et_piggery_second_name);
+        sp_piggery_qualifications = view.findViewById(R.id.sp_piggery_qualifications);
         selling_piglets_cb = view.findViewById(R.id.selling_piglets_cb);
         selling_breeding_cb = view.findViewById(R.id.selling_breeding_cb);
         meat_production_cb = view.findViewById(R.id.meat_production_cb);
@@ -505,6 +511,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                     loanApplication.getPoultry_data().setSource_of_feeds(sp_poultry_source_of_seeds.getSelectedItem().toString());
                     loanApplication.getPoultry_data().setExperience(sp_poultry_experience.getText().toString());
                     loanApplication.getPoultry_data().setFarm_vet_personnel(sp_poultry_farm_vet_personnel.getSelectedItem().toString());
+                    loanApplication.getPoultry_data().setFarm_vet_personnel_firstname(et_poultry_vet_first_name.getText().toString());
+                    loanApplication.getPoultry_data().setFarm_vet_personnel_lastname(et_poultry_second_name.getText().toString());
+                    loanApplication.getPoultry_data().setFarm_vet_personnel_qualifications(sp_poultry_qualifications.getSelectedItem().toString());
                     loanApplication.getPoultry_data().setRecords_kept_vaccination(vaccination_cb.isChecked());
                     loanApplication.getPoultry_data().setRecords_kept_production(production_cb.isChecked());
                     loanApplication.getPoultry_data().setRecords_kept_mortality_records(mortality_records_cb.isChecked());
@@ -535,6 +544,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                   loanApplication.getPiggery_data().setExperience(et_piggery_experience.getText().toString());
                   loanApplication.getPiggery_data().setSource_of_feeds(sp_piggery_source_of_seeds.getSelectedItem().toString());
                   loanApplication.getPiggery_data().setFarm_vet_personnel(sp_piggery_farm_vet_personnel.getSelectedItem().toString());
+                  loanApplication.getPiggery_data().setFarm_vet_personnel_firstname(et_piggery_vet_first_name.getText().toString());
+                  loanApplication.getPiggery_data().setFarm_vet_personnel_lastname(et_piggery_second_name.getText().toString());
+                  loanApplication.getPiggery_data().setFarm_vet_personnel_qualifications(sp_piggery_qualifications.getSelectedItem().toString());
                   loanApplication.getPiggery_data().setBusiness_model_selling_piglets(selling_piglets_cb.isChecked());
                   loanApplication.getPiggery_data().setBusiness_model_meat_production(meat_production_cb.isChecked());
                   loanApplication.getPiggery_data().setBusiness_model_selling_breeding_stock(selling_breeding_cb.isChecked());
