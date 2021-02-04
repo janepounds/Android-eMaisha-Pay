@@ -41,6 +41,7 @@ public class UserDetailsFragment extends Fragment {
     private Button nextBtn;
     private EditText etxtFirstName,etxtSecondName,etxteMaishaAcc;
     private String businessName,account_name,phone;
+    private float interest;
 
     public UserDetailsFragment() {
         // Required empty public constructor
@@ -135,6 +136,7 @@ public class UserDetailsFragment extends Fragment {
                         //account exists
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("loanApplication", loanApplication);
+                        bundle.putFloat("interest", interest);
                         WalletLoanDetailsFragment loanDetailsFragment = new WalletLoanDetailsFragment(bundle,getString(R.string.merchant_loan_details));
                         openFragment(loanDetailsFragment);
 

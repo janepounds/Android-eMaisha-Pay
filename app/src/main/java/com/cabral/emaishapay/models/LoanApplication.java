@@ -117,6 +117,12 @@ public class LoanApplication implements Serializable {
         this.farming_details = check_selected;
     }
 
+
+    @SerializedName("loan_no")
+    @Expose
+    public String loan_no;
+
+
     public LoanApplication(){
 
     }
@@ -150,6 +156,7 @@ public class LoanApplication implements Serializable {
 
 
 
+
     }
     public String getId() {
         return id;
@@ -167,7 +174,13 @@ public class LoanApplication implements Serializable {
         return farm_photo;
     }
 
+    public String getLoan_no() {
+        return loan_no;
+    }
 
+    public void setLoan_no(String loan_no) {
+        this.loan_no = loan_no;
+    }
 
     public com.cabral.emaishapay.models.Referee getLoan_gaurantor1() {
         return loan_gaurantor1;

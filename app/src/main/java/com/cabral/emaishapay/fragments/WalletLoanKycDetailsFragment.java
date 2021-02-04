@@ -356,6 +356,9 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
 
                         } else{
+                            //setLoan No
+                            String loan_no = response.body().getData().getLoan_no();
+                            loanApplication.setLoan_no(loan_no);
 
                             // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
                             Fragment fragment = new WalletLoansListFragment();
