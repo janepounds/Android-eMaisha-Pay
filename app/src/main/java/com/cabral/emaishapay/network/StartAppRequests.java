@@ -271,7 +271,7 @@ public class StartAppRequests {
                                 else {
 
                                     Log.i("notification", response.body().getMessage());
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
                                 }
                             }
                             else {
