@@ -377,11 +377,26 @@
 
 
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="5dp"
+                        >
+                        <fragment
+                            android:id="@+id/map"
+                            class="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:layout="@layout/buy_inputs_address" />
+                    </RelativeLayout>
                     </LinearLayout>
+
+
+
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginTop="@dimen/dimen_30dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/rounded_corners_button">
 
