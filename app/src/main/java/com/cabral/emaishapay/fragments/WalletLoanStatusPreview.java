@@ -88,7 +88,7 @@ public class WalletLoanStatusPreview extends Fragment {
         text_view_loan_status_preview_date.setText(loanApplication.getRequestDate());
         textViewLoanStatusPreviewStatus.setText(loanApplication.getStatus());
         textViewLoanStatusPreviewAmount.setText("UGX " + NumberFormat.getInstance().format(loanApplication.getAmount()));
-        textViewLoanNumber.setText("00"+loanApplication.getId());
+        textViewLoanNumber.setText(loanApplication.getLoan_no());
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()

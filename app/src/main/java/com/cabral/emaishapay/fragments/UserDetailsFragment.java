@@ -289,13 +289,6 @@ public class UserDetailsFragment extends Fragment {
                         dialog.getWindow().setAttributes(params);
                         dialog.show();
 
-
-
-
-
-
-
-
                     }
 
 
@@ -307,7 +300,7 @@ public class UserDetailsFragment extends Fragment {
                             snackBar.setAction("DISMISS", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    snackBar.dismiss();
+                                    //snackBar.dismiss();
                                 }
                             });
                             snackBar.show();
@@ -346,6 +339,8 @@ public class UserDetailsFragment extends Fragment {
         String phone ="0"+etxteMaishaAcc.getText().toString();
 
         if (sent_code.equalsIgnoreCase(code)) {
+
+            dialog.dismiss();
             //navigate to next fragment
             LoanApplication loanApplication = new LoanApplication();
             loanApplication.setPhone(phone);

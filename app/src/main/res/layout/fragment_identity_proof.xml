@@ -158,7 +158,7 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etxt_national_id"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -203,7 +203,7 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etxt_customer_photo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -248,7 +248,7 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etxt_photo_with_id"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
