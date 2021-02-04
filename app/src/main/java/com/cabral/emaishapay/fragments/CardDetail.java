@@ -162,6 +162,7 @@ public class CardDetail extends Fragment {
             public void onClick(View v) {
                 if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
                     card_enter_pin.setError("PIN Mismatch!");
+                    return;
                 }
                 dialogLoader.showProgressDialog();
                 //call pin creation Activity

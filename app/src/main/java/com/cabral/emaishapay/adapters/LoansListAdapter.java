@@ -53,7 +53,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
         LoanApplication data = dataList.get(position);
 
-        holder.numberTxt.setText(String.format("%04d", Integer.parseInt(data.getId())));
+        holder.numberTxt.setText(data.getLoan_no());
 
         SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat().replace("mm", "MM"), Locale.ENGLISH);
         localFormat.setTimeZone(TimeZone.getDefault());
