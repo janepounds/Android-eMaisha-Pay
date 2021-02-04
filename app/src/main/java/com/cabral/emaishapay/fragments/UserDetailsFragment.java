@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
@@ -43,7 +45,10 @@ public class UserDetailsFragment extends Fragment {
     private Button nextBtn;
     private EditText etxtFirstName,etxtSecondName,etxteMaishaAcc;
     private String businessName,account_name,phone;
-
+    private Dialog dialog;
+    private EditText code1,code2,code3,code4,code5,code6;
+    TextView resendtxtview;
+    private  String code, sms_code;
     RelativeLayout parentLayout;
 
     private float interest;
@@ -139,6 +144,8 @@ public class UserDetailsFragment extends Fragment {
                         LoanApplication loanApplication = new LoanApplication();
                         loanApplication.setPhone(phone);
                         //account exists
+                        //otp verification
+
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("loanApplication", loanApplication);
                         bundle.putFloat("interest", interest);
@@ -158,8 +165,8 @@ public class UserDetailsFragment extends Fragment {
                                 public void onClick(View v) {
                                     snackBar.dismiss();
                                 }
-                            })
-                            .show();
+                            });
+                            snackBar.show();
 
                     //redirect to home
 //                    Intent intent = new Intent(context, WalletHomeActivity.class);
