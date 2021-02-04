@@ -124,7 +124,7 @@ public class UserDetailsFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber);
+        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication");
         call.enqueue(new Callback<MerchantInfoResponse>() {
             @Override
             public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
