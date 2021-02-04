@@ -680,7 +680,7 @@
                                 android:layout_margin="10dp"
                                 android:src="@drawable/ic_left_chevron"/>
                             <Button
-
+                                android:id="@+id/previous_btn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"

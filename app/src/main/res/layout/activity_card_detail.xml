@@ -108,6 +108,7 @@
                 android:background="@drawable/edittext_corner"
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="number"
+                android:maxLength="19"
                 android:padding="8dp"
                 android:textColor="#000" />
 
@@ -132,7 +133,7 @@
                         android:text="Expiry Date"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etxt_card_expiry_date"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
@@ -140,10 +141,11 @@
                         android:layout_marginRight="5dp"
                         android:background="@drawable/edittext_corner"
                         android:drawableRight="@drawable/ic_baseline_date_range_24"
-                        android:fontFamily="@font/josefin_sans"
-                        android:inputType="text"
                         android:padding="8dp"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:focusableInTouchMode="false"
+                        android:clickable="true"
+                        android:focusable="true" />
 
                 </LinearLayout>
 
@@ -171,6 +173,7 @@
                         android:background="@drawable/edittext_corner"
                         android:fontFamily="@font/josefin_sans"
                         android:inputType="number"
+                        android:maxLength="3"
                         android:padding="8dp"
                         android:textColor="#000"/>
 

@@ -341,15 +341,38 @@
                     android:textSize="16sp"
                     android:layout_marginBottom="4dp"/>
 
-                <EditText
-                    android:id="@+id/etxt_kin_relationship"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
                     android:background="@drawable/edittext_corner"
-                    android:fontFamily="@font/josefin_sans"
-                    android:inputType="text"
-                    android:textColor="#000" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/sp_nok_relationship_spn1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/next_of_kin_relation"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_chevron_down" />
+
+                </RelativeLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

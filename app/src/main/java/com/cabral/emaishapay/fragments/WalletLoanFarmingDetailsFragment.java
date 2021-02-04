@@ -609,7 +609,6 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     public void addDatePicker2(final TextView ed_, final Context context) {
         ed_.setOnClickListener(view -> {
             Calendar mCurrentDate = Calendar.getInstance();
-            mCurrentDate.add(Calendar.YEAR, -18);
             int mYear = mCurrentDate.get(Calendar.YEAR);
             int mMonth = mCurrentDate.get(Calendar.MONTH);
             int mDay = mCurrentDate.get(Calendar.DAY_OF_MONTH);

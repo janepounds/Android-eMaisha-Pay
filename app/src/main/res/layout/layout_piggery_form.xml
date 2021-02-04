@@ -676,19 +676,7 @@
                         android:checked="false"
                         android:layout_weight="1"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <CheckBox
-                        android:id="@+id/piggery_none_cb"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="None"
-                        android:checked="false"
-                        android:layout_weight="1"/>
 
-                </LinearLayout>
 
             </LinearLayout>
 
