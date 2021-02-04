@@ -361,13 +361,18 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                             Fragment fragment = new WalletLoansListFragment();
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                            while(fragmentManager.getBackStackEntryCount()>2)//pop all fragements in back stack till there 2
+                            while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
                                 fragmentManager.popBackStackImmediate();
 
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.wallet_home_container, fragment)
-                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                    .addToBackStack(null).commit();
+                            if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                                fragmentManager.beginTransaction()
+                                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                        .add(R.id.wallet_home_container, fragment)
+                                        .addToBackStack(null).commit();
+                            else
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.wallet_home_container, fragment)
+                                        .addToBackStack(null).commit();
 
                     }
                 }

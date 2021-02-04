@@ -387,7 +387,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_poultry_vet_details"
+            android:id="@+id/layout_piggery_vet_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -538,7 +538,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:id="@+id/et_poultry_vet_phone"
+                            android:id="@+id/et_piggery_vet_phone"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"

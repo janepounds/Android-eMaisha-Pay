@@ -57,7 +57,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     LoanApplication loanApplication;
     Float interest;
     AppBarConfiguration appBarConfiguration;
-    LinearLayout layoutCrop,layoutPoultry,layoutPiggery,layoutVetDetails;
+    LinearLayout layoutCrop,layoutPoultry,layoutPiggery,layoutVetDetails,layoutVetDetailsPiggery;
     ConstraintLayout layoutRBCrop,layoutRBPoultry,layoutRBPiggery;
     ImageButton rbCrop,rbPoultry,rbPiggery;
     View viewCropsSelected,viewPoultrySelected,viewPiggerySelected;
@@ -131,6 +131,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         piggeryFarmVetPersonnelsp = view.findViewById(R.id.sp_piggery_farm_vet_personnel);
 
         layoutVetDetails = view.findViewById(R.id.layout_poultry_vet_details);
+        layoutVetDetailsPiggery = view.findViewById(R.id.layout_piggery_vet_details);
 
         sp_poultry_type_of_birds=view.findViewById(R.id.sp_poultry_type_of_birds);
         tv_poultry_date_of_hatch = view.findViewById(R.id.tv_poultry_date_of_hatch);
@@ -387,10 +388,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position==1){
-                    layoutVetDetails.setVisibility(View.VISIBLE);
+                    layoutVetDetailsPiggery.setVisibility(View.VISIBLE);
                 }
                 else {
-                    layoutVetDetails.setVisibility(View.GONE);
+                    layoutVetDetailsPiggery.setVisibility(View.GONE);
                 }
 
             }
