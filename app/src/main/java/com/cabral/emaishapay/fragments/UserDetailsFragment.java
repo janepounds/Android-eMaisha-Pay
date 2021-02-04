@@ -134,13 +134,14 @@ public class UserDetailsFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber);
+        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication");
         call.enqueue(new Callback<MerchantInfoResponse>() {
             @Override
             public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
                 if(response.code()==200){
                     businessName = response.body().getData().getBusinessName();
                     if(businessName.equalsIgnoreCase(account_name)){
+
                         LoanApplication loanApplication = new LoanApplication();
                         loanApplication.setPhone(phone);
                         //account exists

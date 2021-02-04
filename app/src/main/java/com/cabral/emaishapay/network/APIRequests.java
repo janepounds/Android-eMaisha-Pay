@@ -191,7 +191,8 @@ public interface APIRequests {
     //get merchant information
     @GET("wallet/user/get/receiver_by_phone/{phonenumber}")
     Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
-                                                   @Path("phonenumber") String phonenumber
+                                                   @Path("phonenumber") String phonenumber,
+                                                   @Path("purpose") String purpose
     );
 
     //get merchant receipt
