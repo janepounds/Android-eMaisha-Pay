@@ -189,7 +189,7 @@ public interface APIRequests {
     );
 
     //get merchant information
-    @GET("wallet/user/get/receiver_by_phone/{phonenumber}")
+    @GET("wallet/user/get/receiver_by_phone/{phonenumber}/{purpose}")
     Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
                                                    @Path("phonenumber") String phonenumber,
                                                    @Path("purpose") String purpose
