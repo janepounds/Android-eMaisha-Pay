@@ -136,6 +136,7 @@ public class UserDetailsFragment extends Fragment {
                 if(response.code()==200){
                     businessName = response.body().getData().getBusinessName();
                     if(businessName.equalsIgnoreCase(account_name)){
+
                         LoanApplication loanApplication = new LoanApplication();
                         loanApplication.setPhone(phone);
                         //account exists

@@ -32,6 +32,10 @@ public class MerchantInfoResponse {
         @Expose
         private String businessName;
 
+        @SerializedName("sms_code")
+        @Expose
+        private String smsCode;
+
         @SerializedName("message")
         @Expose
         private String message;
@@ -42,6 +46,14 @@ public class MerchantInfoResponse {
 
         public void setMessage(String message) {
             this.message = message;
+        }
+
+        public String getSmsCode() {
+            return smsCode;
+        }
+
+        public void setSmsCode(String smsCode) {
+            this.smsCode = smsCode;
         }
 
         public String getBusinessName() {
