@@ -69,7 +69,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
-    private Button btnLoanNextStep;
+    private Button btnLoanNextStep, previousBtn;
 
     private EditText first_name_edt1, first_name_edt2, last_name_edt1, last_name_edt2,guarantor_contact_edt1, guarantor_contact_edt2;
     private TextView textViewErrorMessage,front_id_photo_browse_tv, front_id_photo_tv,back_id_photo_tv, back_id_photo_browse_tv,
@@ -109,6 +109,9 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
         textViewErrorMessage = view.findViewById(R.id.text_view_error_message);
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_kyc_details);
+        previousBtn = view.findViewById(R.id.previous_btn);
+
+        previousBtn.setOnClickListener(view2 -> getParentFragmentManager().popBackStack());
 
 
         if(title.equalsIgnoreCase("Merchant Loan Details")){

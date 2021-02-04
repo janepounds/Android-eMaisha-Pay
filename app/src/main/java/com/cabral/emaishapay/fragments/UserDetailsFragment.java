@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
@@ -29,6 +30,7 @@ import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.google.android.material.snackbar.Snackbar;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 public class UserDetailsFragment extends Fragment {
@@ -41,7 +43,7 @@ public class UserDetailsFragment extends Fragment {
     private Button nextBtn;
     private EditText etxtFirstName,etxtSecondName,etxteMaishaAcc;
     private String businessName,account_name,phone;
-
+    RelativeLayout parentLayout;
     public UserDetailsFragment() {
         // Required empty public constructor
     }
@@ -67,7 +69,7 @@ public class UserDetailsFragment extends Fragment {
         etxtFirstName = view.findViewById(R.id.etxt_first_name);
         etxtSecondName = view.findViewById(R.id.etxt_lastname);
         etxteMaishaAcc = view.findViewById(R.id.etxt_emaisha_account);
-
+        parentLayout = view.findViewById(R.id.parent_layout);
 
 
 
@@ -144,11 +146,19 @@ public class UserDetailsFragment extends Fragment {
 
                     dialog.dismiss();
                 }else if(response.code()==412) {
-                    Toast.makeText(context,"account does not exist",Toast.LENGTH_LONG).show();
+                     //Toast.makeText(context,"account does not exist",Toast.LENGTH_LONG).show();
+                    final Snackbar snackBar = Snackbar.make(parentLayout, "Account does not exist!", Snackbar.LENGTH_LONG);
+                            snackBar.setAction("DISMISS", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    snackBar.dismiss();
+                                }
+                            })
+                            .show();
 
                     //redirect to home
-                    Intent intent = new Intent(context, WalletHomeActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(context, WalletHomeActivity.class);
+//                    startActivity(intent);
 
                 }
                 else if(response.code()==401){

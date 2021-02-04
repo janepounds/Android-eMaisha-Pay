@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -59,7 +61,7 @@ public class ContactDetailsFragment extends Fragment {
         EditText etxt_email = view.findViewById(R.id.etxt_email);
         EditText etxt_next_of_kin_name = view.findViewById(R.id.etxt_next_of_kin_name);
         EditText etxt_next_of_kin_second_name = view.findViewById(R.id.etxt_next_of_kin_second_name);
-        EditText etxt_next_of_kin_relationship = view.findViewById(R.id.etxt_kin_relationship);
+        Spinner sp_next_of_kin_relationship = view.findViewById(R.id.sp_nok_relationship_spn1);
         EditText etxt_next_of_kin_contact = view.findViewById(R.id.etxt_kin_contact);
 
 
@@ -119,7 +121,7 @@ public class ContactDetailsFragment extends Fragment {
                 String phonenumber = "0"+etxt_phonenumber.getText().toString().trim();
                 String next_of_kin_name = etxt_next_of_kin_name.getText().toString().trim();
                 String next_of_kin_second_name = etxt_next_of_kin_second_name.getText().toString().trim();
-                String next_of_kin_relationship = etxt_next_of_kin_relationship.getText().toString().trim();
+                String next_of_kin_relationship = sp_next_of_kin_relationship.getSelectedItem().toString().trim();
                 String next_of_kin_contact = "0"+etxt_next_of_kin_contact.getText().toString().trim();
                 if (district.equals("")) {
                     act_districts.setError("District is required");
@@ -161,9 +163,9 @@ public class ContactDetailsFragment extends Fragment {
                     etxt_next_of_kin_name.requestFocus();
                     return;
                 }
-                if (next_of_kin_relationship.equals("")) {
-                    etxt_next_of_kin_relationship.setError("Next of kin relationship is required");
-                    etxt_next_of_kin_relationship.requestFocus();
+                if (next_of_kin_relationship.equalsIgnoreCase("Select")) {
+                    Toast.makeText(getContext(), "Next of kin relationship is required", Toast.LENGTH_LONG).show();
+                    sp_next_of_kin_relationship.requestFocus();
                     return;
                 }
                 if (next_of_kin_contact.equals("")) {

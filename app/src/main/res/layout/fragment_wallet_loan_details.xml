@@ -276,7 +276,7 @@
                             android:text="@string/currency"
                             android:textSize="14sp"
                             android:gravity="center"
-                            android:layout_weight="0.2" />
+                            android:layout_weight="0.18" />
 
                         <EditText
                             android:id="@+id/loanpayments_edtxt"
@@ -400,13 +400,47 @@
 
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/layout_previous_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/round_corners_button_darkgray"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_left_chevron"/>
+                <Button
+                    android:id="@+id/previous_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:text="@string/previous"
+                    android:paddingStart="6dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold"
+                    android:paddingLeft="6dp" />
 
+
+
+            </FrameLayout>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="@dimen/dimen_30dp"
-
-                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corners_button">
 
                 <Button
@@ -430,6 +464,7 @@
 
                 </ImageView>
             </FrameLayout>
+            </LinearLayout>
         </LinearLayout>
         </ScrollView>
     </LinearLayout>

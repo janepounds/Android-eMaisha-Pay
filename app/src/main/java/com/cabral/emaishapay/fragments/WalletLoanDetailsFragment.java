@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class WalletLoanDetailsFragment extends Fragment {
     Float interest=0F;
     private String title;
     LoanApplication loanApplication;
+    LinearLayout layoutPreviousBtn;
 
     public WalletLoanDetailsFragment(Bundle bundle,String title) {
         this.title = title;
@@ -72,6 +74,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         spLoanApplicationType = view.findViewById(R.id.sp_loan_application_type);
         loanpayments_edtxt= view.findViewById(R.id.loanpayments_edtxt);
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
+        layoutPreviousBtn = view.findViewById(R.id.layout_previous_btn);
 
 
         //Second hidden progress bar for loan application with 5 states
@@ -88,6 +91,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         if(title.equalsIgnoreCase("Merchant Loan Details")){
            loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
            loanProgressBarId.setVisibility(View.GONE);
+           layoutPreviousBtn.setVisibility(View.VISIBLE);
            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
            loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
@@ -95,7 +99,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         }else {
             loanProgressBarId.setStateDescriptionData(descriptionData);
             loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
-
+            layoutPreviousBtn.setVisibility(View.GONE);
         }
 
 
@@ -206,7 +210,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         });
 
 
-
+        layoutPreviousBtn.setOnClickListener(view2 -> getParentFragmentManager().popBackStack());
         btnLoanNextStep.setOnClickListener(v -> {
             if (txtLoanApplicationAmount.getText().toString().trim() == null || txtLoanApplicationAmount.getText().toString().trim().isEmpty()) {
                 txtLoanApplicationAmount.setError("Please enter value");

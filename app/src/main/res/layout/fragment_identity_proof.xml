@@ -130,7 +130,10 @@
                         android:padding="10dp"
                         android:background="@drawable/edittext_corner"
                         android:drawableEnd="@drawable/ic_baseline_date_range_24"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:focusableInTouchMode="false"
+                        android:clickable="true"
+                        android:focusable="true"/>
 
                 </LinearLayout>
 
@@ -355,7 +358,8 @@
                 android:text="Fingerprint Authentication"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 

@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +19,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
@@ -31,6 +35,10 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +49,8 @@ public class CardDetail extends Fragment {
 
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact,
     nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
-    EditText account_no,card_no,expiry,cvv,card_enter_pin,card_confirm_pin;
+    EditText account_no,card_no,cvv,card_enter_pin,card_confirm_pin;
+    TextView expiry;
     Button next;
     private Context context;
     AccountCreation accountCreation;
@@ -138,8 +147,13 @@ public class CardDetail extends Fragment {
                 +"phone\n" +phone_number+"email\n"+email+"nok_f\n"+next_of_kin_name+"nok_l\n"+next_of_kin_second_name+"rlsp\n"+next_of_kin_relationship+"nok_contact\n"+ next_of_kin_contact
                 +"nin\n"+nin+"valid\n"+valid_upto+"nationid\n"+encodedImageID+"customer_pic\n"+encodedImageCustomerPhoto+"cust_pic_id\n"+encodedImagePhotoWithID);
 
+
+        expiry.setOnClickListener(view3 ->  addDatePicker2(expiry, getActivity()));
+
         Button previous = view.findViewById(R.id.previous_button);
         previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
+
+
 
         dialogLoader = new DialogLoader(getContext());
 
@@ -222,6 +236,26 @@ public class CardDetail extends Fragment {
 
 
 
+    }
+    public void addDatePicker2(final TextView ed_, final Context context) {
+        ed_.setOnClickListener(view -> {
+            Calendar mCurrentDate = Calendar.getInstance();
+            int mYear = mCurrentDate.get(Calendar.YEAR);
+            int mMonth = mCurrentDate.get(Calendar.MONTH);
+            int mDay = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+
+            final DatePickerDialog mDatePicker = new DatePickerDialog(context, (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                int month = selectedMonth + 1;
+                NumberFormat formatter = new DecimalFormat("00");
+                ed_.setText(selectedYear + "-" + formatter.format(month) + "-" + formatter.format(selectedDay));
+
+
+            }, mYear, mMonth, mDay);
+
+            mDatePicker.show();
+        });
+        ed_.setInputType(InputType.TYPE_NULL);
     }
 
 
