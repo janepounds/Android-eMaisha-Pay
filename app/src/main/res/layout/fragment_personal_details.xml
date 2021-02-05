@@ -159,7 +159,11 @@
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="text"
                 android:padding="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:longClickable="false"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

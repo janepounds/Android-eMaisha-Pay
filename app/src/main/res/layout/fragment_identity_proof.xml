@@ -131,6 +131,7 @@
                         android:background="@drawable/edittext_corner"
                         android:drawableEnd="@drawable/ic_baseline_date_range_24"
                         android:textColor="#000"
+                        android:textSize="14sp"
                         android:focusableInTouchMode="false"
                         android:clickable="true"
                         android:focusable="true"/>

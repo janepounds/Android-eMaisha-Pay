@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +38,14 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,8 +55,8 @@ public class CardDetail extends Fragment {
 
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact,
     nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
-    EditText account_no,card_no,cvv,card_enter_pin,card_confirm_pin;
-    TextView expiry;
+    EditText account_no,card_no,cvv,card_enter_pin,card_confirm_pin,expiry;
+
     Button next;
     private Context context;
     AccountCreation accountCreation;
@@ -142,6 +148,31 @@ public class CardDetail extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
 
+        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (filterLongEnough() && !expiry.getText().toString().contains("/")) {
+                    expiry.setText(expiry.getText().toString()+"/");
+                    int pos = expiry.getText().length();
+                    expiry.setSelection(pos);
+                }
+            }
+
+            private boolean filterLongEnough() {
+                return expiry.getText().toString().length() == 2;
+            }
+        };
+        expiry.addTextChangedListener(fieldValidatorTextWatcher);
+
+
         Log.d(TAG, "onViewCreated: "+"firstname\n"+firstname+"lastname\n"+lastname+"middlename\n"+
                 middlename+"gender\n" +gender+"dob\n"+date_of_birth+"district\n"+district+"village\n" +village+"sub_county\n"+sub_county+"landmark\n"+landmark
                 +"phone\n" +phone_number+"email\n"+email+"nok_f\n"+next_of_kin_name+"nok_l\n"+next_of_kin_second_name+"rlsp\n"+next_of_kin_relationship+"nok_contact\n"+ next_of_kin_contact
@@ -160,78 +191,77 @@ public class CardDetail extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
-                    card_enter_pin.setError("PIN Mismatch!");
-                    return;
-                }
-                dialogLoader.showProgressDialog();
-                //call pin creation Activity
-                 account_number = account_no.getText().toString();
-                 card_number = card_no.getText().toString();
-                 expiry_Date = expiry.getText().toString();
-                 cvvv = cvv.getText().toString();
+                if (validateEntries()) {
+
+                    dialogLoader.showProgressDialog();
+                    //call pin creation Activity
+                    account_number = account_no.getText().toString();
+                    card_number = card_no.getText().toString();
+                    expiry_Date = expiry.getText().toString();
+                    cvvv = cvv.getText().toString();
 
 
-                /**********ENCRIPT CARD DETAILS************/
-                CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
-                String card_number_encripted = encrypter.encrypt(card_number);
-                String  expiry_encripted = encrypter.encrypt(expiry_Date);
-                String  account_name_encripted = encrypter.encrypt(account_name);
-                String cvv_encripted  = encrypter.encrypt(cvvv);
+                    /**********ENCRIPT CARD DETAILS************/
+                    CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                    String card_number_encripted = encrypter.encrypt(card_number);
+                    String expiry_encripted = encrypter.encrypt(expiry_Date);
+                    String account_name_encripted = encrypter.encrypt(account_name);
+                    String cvv_encripted = encrypter.encrypt(cvvv);
 
-                //submit registration details to server
-                /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
-                accountCreation.setCard_number(card_number_encripted );
-                accountCreation.setCvv(cvv_encripted );
-                accountCreation.setExpiry(expiry_encripted);
-                accountCreation.setAccount_name(account_name_encripted );
-                accountCreation.setPin(card_enter_pin.getText().toString());
+                    //submit registration details to server
+                    /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
+                    accountCreation.setCard_number(card_number_encripted);
+                    accountCreation.setCvv(cvv_encripted);
+                    accountCreation.setExpiry(expiry_encripted);
+                    accountCreation.setAccount_name(account_name_encripted);
+                    accountCreation.setPin(card_enter_pin.getText().toString());
 
-                /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
-                JSONObject requestObject = new JSONObject();
-                try {
-                    requestObject.put("accountParams", accountCreation);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
+                    JSONObject requestObject = new JSONObject();
+                    try {
+                        requestObject.put("accountParams", accountCreation);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-                Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance()
-                        .openAccount(access_token,requestObject);
-                call.enqueue(new Callback<InitiateWithdrawResponse>() {
-                    @Override
-                    public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body().getStatus().equalsIgnoreCase("1")) {
-                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                //success message
-                                Intent intent = new Intent(context, WalletHomeActivity.class);
-                                startActivity(intent);
-                                dialogLoader.hideProgressDialog();
+                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance()
+                            .openAccount(access_token, requestObject);
+                    call.enqueue(new Callback<InitiateWithdrawResponse>() {
+                        @Override
+                        public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getStatus().equalsIgnoreCase("1")) {
+                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    //success message
+                                    Intent intent = new Intent(context, WalletHomeActivity.class);
+                                    startActivity(intent);
+                                    dialogLoader.hideProgressDialog();
 
-                            } else {
-                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                //redirect to home;
-                                Intent intent = new Intent(context, WalletHomeActivity.class);
-                                startActivity(intent);
-                                dialogLoader.hideProgressDialog();
+                                } else {
+                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    //redirect to home;
+                                    Intent intent = new Intent(context, WalletHomeActivity.class);
+                                    startActivity(intent);
+                                    dialogLoader.hideProgressDialog();
 
+                                }
                             }
+
+
                         }
 
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
-                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(context, WalletHomeActivity.class);
-                        startActivity(intent);
-                        dialogLoader.hideProgressDialog();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                            Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context, WalletHomeActivity.class);
+                            startActivity(intent);
+                            dialogLoader.hideProgressDialog();
+                        }
+                    });
 
 
+                }
             }
         });
 
@@ -258,6 +288,75 @@ public class CardDetail extends Fragment {
         });
         ed_.setInputType(InputType.TYPE_NULL);
     }
+    public boolean validateEntries(){
 
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        DateFormat yearDateFormat = new SimpleDateFormat("yy");
+
+        int mm = Integer.parseInt(dateFormat.format(date));
+        int yy = Integer.parseInt(yearDateFormat.format(date));
+        String expMonth = expiry.getText().toString().substring(0,2);
+        String expYear = expiry.getText().toString().substring(expiry.getText().toString().length() - 2);
+
+
+        boolean check = true;
+
+
+        if (account_no.getText().toString().trim() == null || account_no.getText().toString().trim().isEmpty()) {
+
+            account_no.setError("Please enter valid account number");
+            account_no.requestFocus();
+            check = false;
+
+        } else if (card_no.getText().toString().trim() == null || card_no.getText().toString().trim().isEmpty()
+                || card_no.getText().toString().trim().length()<13 ){
+
+            card_no.setError("Please enter valid value");
+            card_no.requestFocus();
+            check= false;
+        }
+
+        else if (expiry.getText().toString().trim() == null || expiry.getText().toString().trim().isEmpty() ||
+                expiry.getText().toString().length()<5){
+
+            expiry.setError("Please enter valid value");
+            expiry.requestFocus();
+            check= false;
+        } else if(expiry.getText().toString().length()>4 && Integer.parseInt(expYear) < yy) {
+
+
+            expiry.setError("Card is expired");
+            Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+          //  Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
+            expiry.requestFocus();
+            check= false;
+        }
+
+        else if(expiry.getText().toString().length()>4 && (Integer.parseInt(expYear) == yy && Integer.parseInt(expMonth) <= mm )){
+
+            expiry.setError("Card is expired");
+            Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
+          //  Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
+            expiry.requestFocus();
+            check= false;
+        }
+
+        else if (cvv.getText().toString().trim() == null || cvv.getText().toString().trim().isEmpty()
+                || cvv.getText().toString().trim().length()<3 ) {
+            cvv.setError("Please enter valid value");
+            cvv.requestFocus();
+            check= false;
+        }
+        else if(!card_enter_pin.getText().toString().equalsIgnoreCase(card_confirm_pin.getText().toString())){
+            card_enter_pin.setError("PIN Mismatch!");
+            card_confirm_pin.setError("PIN Mismatch!");
+            card_enter_pin.requestFocus();
+            check= false;
+        }
+
+        return check;
+
+    }
 
 }
