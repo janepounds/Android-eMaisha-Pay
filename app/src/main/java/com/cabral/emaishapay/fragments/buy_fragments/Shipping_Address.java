@@ -104,30 +104,14 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     String latitude, longitude;
     SharedPreferences pref;
 
-    long deliveryTimeInMillis = 0;
-    static long serverTime;
 
-    private int year;
-    private int month;
-    private int day;
-
-    private List<TimeSlotsList> timeSlotsLists;
-    ShippingTimeSlotsAdapter shippingTimeSlotsAdapter;
-    RecyclerView timeSlots;
-    static String deliveryTimeSlot;
     static String deliveryCost;
-    //DatePicker date_picker;
-    int FLAG_DAY = 0;
     My_Cart my_cart;
-
-
-    PlacesFieldSelector fieldSelector;
 
 
     private static final String TAG ="Maps Error";
     public static GoogleMap map;
     private CameraPosition cameraPosition;
-
     // The entry point to the Places API.
     private PlacesClient placesClient;
 
@@ -144,14 +128,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     public static Location lastKnownLocation;
-
-    // Keys for storing activity state.
     // [START maps_current_place_state_keys]
     public static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     // [END maps_current_place_state_keys]
-
-
     private LatLng mCenterLatLong;
 
 
@@ -187,11 +167,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         }
 
 
-        /*Edited  28-Dec-18*/
+        /*Edited  05/02/2021*/
         if (!Places.isInitialized()) {
             Places.initialize(getContext(), getString(R.string.place_picker_id));
         }
-        fieldSelector = new PlacesFieldSelector();
 
         /*Edited 28-Dec-18*/
 

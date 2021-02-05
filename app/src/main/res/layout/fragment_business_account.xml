@@ -352,7 +352,7 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_corner">
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/shop_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -383,7 +383,7 @@
                         android:layout_marginTop="5dp"
                         >
                         <fragment
-                            android:id="@+id/map"
+                            android:id="@+id/map_fragment"
                             class="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
