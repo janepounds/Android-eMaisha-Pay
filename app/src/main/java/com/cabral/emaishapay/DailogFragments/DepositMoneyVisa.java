@@ -58,6 +58,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +89,7 @@ public class DepositMoneyVisa extends DialogFragment implements
     private String expiryDate,cvv,card_no;
 
     double balance;
-    ProgressDialog dialog;
+    DialogLoader dialog;
     Context activity;
     public DepositMoneyVisa(Context context, double balance, FragmentManager fm){
         this.activity=context;
@@ -118,6 +119,8 @@ public class DepositMoneyVisa extends DialogFragment implements
     }
 
     public void initializeForm(View view) {
+
+        dialog = new DialogLoader(getContext());
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.wallet_add_money_amount);
         cardNumberTxt=view.findViewById(R.id.add_money_creditCardNumber);
@@ -158,6 +161,15 @@ public class DepositMoneyVisa extends DialogFragment implements
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+                    Snackbar.make(addMoneyImg, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
+                    return;
+                }else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+                    card_no = cardNumberTxt.getText().toString();
+                    cvv = cardccvTxt.getText().toString();
+                    expiryDate = cardexpiryTxt.getText().toString();
+                }
 
                 if(checkbox_save_card.isChecked()){
                     //save card
@@ -201,7 +213,8 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                     if(!addMoneyTxt.getText().toString().isEmpty() )
                         initiateDeposit();
-                }else{
+                }
+                else{
                     if(!addMoneyTxt.getText().toString().isEmpty() )
                         initiateDepositWithExistingCard();
                 }
@@ -220,7 +233,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                 else {
                     for(int i = 0; i<cardItems.size();i++){
                         if(cardItems.get(i).toString().equalsIgnoreCase(spinner_select_card.getSelectedItem().toString())){
-                           expiryDate =  cardItems.get(i).getExpiryDate();
+                            expiryDate =  cardItems.get(i).getExpiryDate();
                             card_no = cardItems.get(i).getCardNumber();
                             cvv = cardItems.get(i).getCvv();
 
@@ -241,15 +254,6 @@ public class DepositMoneyVisa extends DialogFragment implements
         spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
 
         getCards();
-        //get available cards
-
-
-
-
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Processing the transaction..");
-
 
     }
 
@@ -265,53 +269,28 @@ public class DepositMoneyVisa extends DialogFragment implements
                     try {
 
                         cardlists = response.body().getCardsList();
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Select Card";
+                            }
+                        });
                         for(int i =0; i<cardlists.size();i++){
-
-                                cardItems.add(new CardSpinnerItem() {
-                                    @Override
-                                    public String getCardNumber() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String getExpiryDate() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String getCvv() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String toString() {
-                                        return "Select Card";
-                                    }
-                                });
-
-                                cardItems.add(new CardSpinnerItem() {
-                                    @Override
-                                    public String getCardNumber() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String getExpiryDate() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String getCvv() {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public String toString() {
-                                        return "Add New";
-                                    }
-                                });
-
-
                                 //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
 
@@ -352,6 +331,28 @@ public class DepositMoneyVisa extends DialogFragment implements
                             });
                         }
 
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Add New";
+                            }
+                        });
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -359,7 +360,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
                         spinner_select_card.setAdapter(cardListAdapter);
-
+                        dialog.hideProgressDialog();
 
                     }
 
@@ -371,14 +372,14 @@ public class DepositMoneyVisa extends DialogFragment implements
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+                    dialog.hideProgressDialog();
                 }
 
             }
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialog.hideProgressDialog();
             }
         });
 
@@ -528,7 +529,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         Log.e("info", "Something got very very wrong, code: " + response.code());
                     }
                 }
-                dialog.dismiss();
+                dialog.hideProgressDialog();
             }
 
 
@@ -639,16 +640,10 @@ public class DepositMoneyVisa extends DialogFragment implements
     public void showProgressIndicator(boolean active) {
         try {
 
-            if (dialog == null) {
-                dialog = new ProgressDialog(activity);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setMessage("Please wait...");
-            }
-
-            if (active && !dialog.isShowing()) {
-                dialog.show();
+            if (active ) {
+                dialog.showProgressDialog();
             } else {
-                dialog.dismiss();
+                dialog.hideProgressDialog();
             }
         } catch (NullPointerException e) {
             e.printStackTrace();

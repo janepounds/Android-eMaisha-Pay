@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,16 +26,39 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.PurchasePreview;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PayFragment extends Fragment {
     TextView mechantIdEdt, text_coupon;
     EditText totalAmountEdt, couponAmout, cardNumberEdt, expiryEdt, cvvEdt, mobileNumberEdt;
     Spinner spinner_select_card;
+
+    DialogLoader dialog;
+    private List<CardResponse.Cards> cardlists = new ArrayList();
+    ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+    String decripted_card_number = null;
+
+    private String cardNo,cvv,expiry,mobileNo,methodOfPayment;
+
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
     LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards;
@@ -54,6 +78,7 @@ public class PayFragment extends Fragment {
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         this.context=getActivity();
         Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
+        dialog = new DialogLoader(getContext());
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Pay Merchant");
@@ -88,7 +113,7 @@ public class PayFragment extends Fragment {
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
 
             
-            TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -144,36 +169,74 @@ public class PayFragment extends Fragment {
             }
         });
 
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+                    //call add card
+                    card_details_layout.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    for(int i = 0; i<cardItems.size();i++){
+                        if(cardItems.get(i).toString().equalsIgnoreCase(spinner_select_card.getSelectedItem().toString())){
+                            expiry =  cardItems.get(i).getExpiryDate();
+                            cardNo = cardItems.get(i).getCardNumber();
+                            cvv = cardItems.get(i).getCvv();
+
+                        }
+                    }
+                   // Log.d(TAG, "onItemSelected: expiry"+expiryDate+"card_no"+card_no+"cvv"+cvv);
+                    card_details_layout.setVisibility(View.GONE);
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
+
+        getCards();
 
         text_coupon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(layout_coupon.getVisibility()== View.VISIBLE){
-                        layout_coupon.setVisibility(View.GONE);
-                        couponAmout.setText(null);
-                    }
-                    else{
-                        layout_coupon.setVisibility(View.VISIBLE);
-                    }
+            @Override
+            public void onClick(View v) {
+                if(layout_coupon.getVisibility()== View.VISIBLE){
+                    layout_coupon.setVisibility(View.GONE);
+                    couponAmout.setText(null);
                 }
-            });
-            saveBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    processPayment();
+                else{
+                    layout_coupon.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processPayment();
 
-                }
-            });
+            }
+        });
     }
 
     public void processPayment(){
         float amount = Float.parseFloat(totalAmountEdt.getText().toString());
-        String cardNo = cardNumberEdt.getText().toString();
-        String cvv = cvvEdt.getText().toString();
-        String expiry = expiryEdt.getText().toString();
-        String mobileNo = mobileNumberEdt.getText().toString();
-        String methodOfPayment= spPaymentMethod.getSelectedItem().toString();
+        if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+            Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
+            return;
+        }else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+            cardNo = cardNumberEdt.getText().toString();
+            cvv = cvvEdt.getText().toString();
+            expiry = expiryEdt.getText().toString();
+            mobileNo = mobileNumberEdt.getText().toString();
+        }
+        methodOfPayment= spPaymentMethod.getSelectedItem().toString();
 
         if(methodOfPayment.equals("Wallet"))
             validateWalletPurchase();
@@ -255,6 +318,135 @@ public class PayFragment extends Fragment {
         }  else {
             return true;
         }
+    }
+
+    public void getCards(){
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        /******************RETROFIT IMPLEMENTATION***********************/
+        dialog.showProgressDialog();
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token);
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        cardlists = response.body().getCardsList();
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Select Card";
+                            }
+                        });
+                        for(int i =0; i<cardlists.size();i++){
+                            //decript card number
+                            CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
+
+
+                            String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                            String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
+                            String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
+
+                            if(card_number.length()>4) {
+
+                                String first_four_digits = (card_number.substring(0,  4));
+                                String last_four_digits = (card_number.substring(card_number.length() - 4));
+                                decripted_card_number = first_four_digits + "*******"+last_four_digits;
+
+                            }
+
+                            cardItems.add(new CardSpinnerItem() {
+                                @Override
+                                public String getCardNumber() {
+                                    return card_number;
+                                }
+
+                                @Override
+                                public String getExpiryDate() {
+                                    return decripted_expiryDate;
+                                }
+
+                                @Override
+                                public String getCvv() {
+                                    return cvv;
+                                }
+
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return decripted_card_number;
+                                }
+                            });
+                        }
+
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Add New";
+                            }
+                        });
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+//                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
+                        spinner_select_card.setAdapter(cardListAdapter);
+                        dialog.hideProgressDialog();
+
+                    }
+
+                }else if (response.code() == 401) {
+
+                    TokenAuthActivity.startAuth(getContext(), true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialog.hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialog.hideProgressDialog();
+            }
+        });
+
     }
 
     @Override
