@@ -366,7 +366,9 @@ public interface APIRequests {
             @Field("proprietor_nin") String proprietor_nin,
             @Field("national_id_front") String national_id_front,
             @Field("national_id_back") String national_id_back,
-            @Field("role") String role
+            @Field("role") String role,
+            @Field("latitude") double latitude,
+            @Field("longitude") double longitude
     );
 
 

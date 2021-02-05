@@ -661,6 +661,7 @@
     <string name="medication">Medication</string>
     <string name="chick_purchase">Chicks Purchase</string>
     <string name="shed_construction">Shed Construction</string>
+    <string name="search_shop_location">Search Shop Location</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
