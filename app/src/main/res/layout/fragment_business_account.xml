@@ -352,7 +352,7 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_corner">
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/shop_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

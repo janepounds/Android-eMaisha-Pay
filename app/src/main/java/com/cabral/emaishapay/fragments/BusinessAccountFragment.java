@@ -16,21 +16,32 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.adapters.PlaceAutocompleteAdapter;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.io.ByteArrayOutputStream;
 
@@ -50,6 +61,9 @@ public class BusinessAccountFragment extends Fragment {
     private ProgressDialog progressDialog;
     Bundle localBundle;
 
+    PlaceAutocompleteAdapter mAdapter;
+   AutoCompleteTextView autoCompleteTextView;
+
     public BusinessAccountFragment(Bundle bundle) {
         this.localBundle=bundle;
     }
@@ -67,6 +81,14 @@ public class BusinessAccountFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         initializeViews();
+
+        AutocompleteSessionToken autocompleteSessionToken; autocompleteSessionToken= AutocompleteSessionToken.newInstance();
+        PlacesClient placesClient;
+        placesClient= Places.createClient(getActivity().getApplicationContext());
+        mAdapter = new PlaceAutocompleteAdapter(getContext(), placesClient,autocompleteSessionToken);
+        autoCompleteTextView=binding.shopLocation;
+        autoCompleteTextView.setAdapter(mAdapter);
+
         return binding.getRoot();
     }
 
