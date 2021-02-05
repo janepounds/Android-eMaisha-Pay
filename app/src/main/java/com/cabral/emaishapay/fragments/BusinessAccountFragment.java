@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,11 +17,16 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -133,17 +139,20 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 //        placesClient= Places.createClient(getActivity().getApplicationContext());
 //        mAdapter = new PlaceAutocompleteAdapter(getContext(), placesClient,autocompleteSessionToken);
 //        autoCompleteTextView=binding.shopLocation;
+
         binding.shopLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
                 // Start the autocomplete intent.
                 Intent intent = new Autocomplete.IntentBuilder(
-                        AutocompleteActivityMode.FULLSCREEN, fields).setHint(getString(R.string.search_shop_location)).setCountry("UG") //UGANDA
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setHint(getString(R.string.search_shop_location)).setCountry("UG") //UGANDA
                         .build(getContext());
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
+
 
         return binding.getRoot();
     }
