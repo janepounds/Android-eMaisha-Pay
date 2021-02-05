@@ -35,6 +35,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
+import es.dmoral.toasty.Toasty;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,8 +44,9 @@ import static android.app.Activity.RESULT_OK;
 public class IdentityProofFragment extends Fragment {
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
     String mediaPathNationalID, encodedImageID = "N/A", mediaPathCustomerPhoto, encodedImageCustomerPhoto = "N/A", mediaPathPhotoWithID, encodedImagePhotoWithID = "N/A";
-    TextView etxt_national_id, etxt_customer_photo, etxt_photo_with_id;
+    TextView etxt_national_id, etxt_customer_photo, etxt_photo_with_id,etxt_nin_expiry_date;
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact;
+    EditText etxt_nin;
 
     @Nullable
     @Override
@@ -82,8 +84,8 @@ public class IdentityProofFragment extends Fragment {
         TextView txt_upload_photo_with_id = view.findViewById(R.id.txt_browse_photo_with_id);
 
 
-        EditText etxt_nin = view.findViewById(R.id.etxt_nin);
-        TextView etxt_nin_expiry_date = view.findViewById(R.id.etxt_id_expiry_date);
+        etxt_nin = view.findViewById(R.id.etxt_nin);
+        etxt_nin_expiry_date = view.findViewById(R.id.etxt_id_expiry_date);
         etxt_national_id = view.findViewById(R.id.etxt_national_id);
         etxt_customer_photo = view.findViewById(R.id.etxt_customer_photo);
         etxt_photo_with_id = view.findViewById(R.id.etxt_photo_with_id);
@@ -110,7 +112,27 @@ public class IdentityProofFragment extends Fragment {
                 startActivityForResult(intent, 1231);
             }
         });
+        etxt_national_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+                intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                startActivityForResult(intent, 1231);
+            }
+        });
         txt_upload_customer_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+                intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                startActivityForResult(intent, 1232);
+            }
+        });
+        etxt_customer_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
@@ -122,6 +144,16 @@ public class IdentityProofFragment extends Fragment {
         });
 
         txt_upload_photo_with_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+                intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                startActivityForResult(intent, 1233);
+            }
+        });
+        etxt_photo_with_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
@@ -147,39 +179,41 @@ public class IdentityProofFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nin = etxt_nin.getText().toString().trim();
-                String valid_upto = etxt_nin_expiry_date.getText().toString().trim();
+                if(validateEntries()) {
+                    String nin = etxt_nin.getText().toString().trim();
+                    String valid_upto = etxt_nin_expiry_date.getText().toString().trim();
 
-                Log.d("Kin Name",next_of_kin_name);
-                Log.d("Kin Second Name",next_of_kin_second_name);
-                Log.d("Kin Relationship",next_of_kin_relationship);
-                Log.d("Kin Contact",next_of_kin_contact);
+                    Log.d("Kin Name", next_of_kin_name);
+                    Log.d("Kin Second Name", next_of_kin_second_name);
+                    Log.d("Kin Relationship", next_of_kin_relationship);
+                    Log.d("Kin Contact", next_of_kin_contact);
 
-                //call card details fragment
-                CardDetail cardDetail = new CardDetail();
-                Bundle bundle = new Bundle();
-                bundle.putString("firstname", firstname);
-                bundle.putString("lastname", lastname);
-                bundle.putString("middlename", middlename);
-                bundle.putString("date_of_birth", date_of_birth);
-                bundle.putString("customer_gender", gender);
-                bundle.putString("district", district);
-                bundle.putString("sub_county", sub_county);
-                bundle.putString("village", village);
-                bundle.putString("landmark", landmark);
-                bundle.putString("phone_number", phone_number);
-                bundle.putString("email", email);
-                bundle.putString("next_of_kin_name", next_of_kin_name);
-                bundle.putString("next_of_kin_second_name", next_of_kin_second_name);
-                bundle.putString("next_of_kin_relationship", next_of_kin_relationship);
-                bundle.putString("next_of_kin_contact", next_of_kin_contact);
-                bundle.putString("nin", nin);
-                bundle.putString("national_id_valid_upto", valid_upto);
-                bundle.putString("national_id_photo", encodedImageID);
-                bundle.putString("customer_photo", encodedImageCustomerPhoto);
-                bundle.putString("customer_photo_with_id", encodedImagePhotoWithID);
-                cardDetail.setArguments(bundle);
-                openFragment(cardDetail);
+                    //call card details fragment
+                    CardDetail cardDetail = new CardDetail();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("firstname", firstname);
+                    bundle.putString("lastname", lastname);
+                    bundle.putString("middlename", middlename);
+                    bundle.putString("date_of_birth", date_of_birth);
+                    bundle.putString("customer_gender", gender);
+                    bundle.putString("district", district);
+                    bundle.putString("sub_county", sub_county);
+                    bundle.putString("village", village);
+                    bundle.putString("landmark", landmark);
+                    bundle.putString("phone_number", phone_number);
+                    bundle.putString("email", email);
+                    bundle.putString("next_of_kin_name", next_of_kin_name);
+                    bundle.putString("next_of_kin_second_name", next_of_kin_second_name);
+                    bundle.putString("next_of_kin_relationship", next_of_kin_relationship);
+                    bundle.putString("next_of_kin_contact", next_of_kin_contact);
+                    bundle.putString("nin", nin);
+                    bundle.putString("national_id_valid_upto", valid_upto);
+                    bundle.putString("national_id_photo", encodedImageID);
+                    bundle.putString("customer_photo", encodedImageCustomerPhoto);
+                    bundle.putString("customer_photo_with_id", encodedImagePhotoWithID);
+                    cardDetail.setArguments(bundle);
+                    openFragment(cardDetail);
+                }
             }
         });
 
@@ -280,5 +314,45 @@ public class IdentityProofFragment extends Fragment {
             }
         });
         ed_.setInputType(InputType.TYPE_NULL);
+    }
+
+    public boolean validateEntries(){
+        boolean check = true;
+
+
+        if (etxt_nin.getText().toString().trim() == null || etxt_nin.getText().toString().trim().isEmpty()) {
+
+            etxt_nin.setError("Please enter valid NIN");
+            etxt_nin.requestFocus();
+            check = false;
+
+         }
+
+        else if (etxt_nin_expiry_date.getText().toString().trim() == null || etxt_nin_expiry_date.getText().toString().trim().isEmpty()){
+
+            etxt_nin_expiry_date.setError("Please select valid date");
+            etxt_nin_expiry_date.requestFocus();
+            check = false;
+        }
+
+        else if (etxt_national_id.getText().toString().trim() == null || etxt_national_id.getText().toString().trim().isEmpty()) {
+
+            etxt_national_id.setError("Please upload national ID photo");
+            etxt_national_id.requestFocus();
+            check = false;
+        }
+        else if (etxt_customer_photo.getText().toString().trim() == null || etxt_customer_photo.getText().toString().trim().isEmpty()) {
+
+            etxt_customer_photo.setError("Please upload customer photo");
+            etxt_customer_photo.requestFocus();
+            check = false;
+        }
+        else if (etxt_photo_with_id.getText().toString().trim() == null || etxt_photo_with_id.getText().toString().trim().isEmpty()) {
+
+            etxt_photo_with_id.setError("Please upload customer photo with ID");
+            etxt_photo_with_id.requestFocus();
+            check = false;
+        }
+        return check;
     }
 }

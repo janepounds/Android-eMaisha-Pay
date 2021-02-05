@@ -123,6 +123,8 @@ public class PersonalDetailsFragment extends Fragment {
                     return;
                 }
 
+                act_gender.setError(null);
+                date_of_birth.setError(null);
                 ContactDetailsFragment contactDetails = new ContactDetailsFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("firstname", firstname);

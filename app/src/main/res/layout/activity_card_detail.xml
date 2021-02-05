@@ -89,7 +89,7 @@
                 android:background="@drawable/edittext_corner"
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="number"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="#000"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="number"
                 android:maxLength="19"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="#000" />
 
             <LinearLayout
@@ -133,19 +133,17 @@
                         android:text="Expiry Date"
                         android:textSize="16sp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/etxt_card_expiry_date"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/ic_baseline_date_range_24"
-                        android:padding="8dp"
+                        android:inputType="date"
+                        android:padding="10dp"
                         android:textColor="#000"
-                        android:focusableInTouchMode="false"
-                        android:clickable="true"
-                        android:focusable="true" />
+                        android:maxLength="5"/>
 
                 </LinearLayout>
 
@@ -162,7 +160,8 @@
                         android:layout_marginRight="10dp"
                         android:fontFamily="@font/josefin_sans"
                         android:text="CVV"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:layout_marginStart="5dp"/>
 
                     <EditText
                         android:id="@+id/etxt_card_cvv"
@@ -174,7 +173,7 @@
                         android:fontFamily="@font/josefin_sans"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:padding="8dp"
+                        android:padding="10dp"
                         android:textColor="#000"/>
 
                 </LinearLayout>
@@ -199,7 +198,7 @@
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="#000"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -219,7 +218,7 @@
                 android:fontFamily="@font/josefin_sans"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="#000" />
             <LinearLayout
                 android:id="@+id/layout_button"
