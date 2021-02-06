@@ -164,8 +164,8 @@ public class SettingsFragment extends Fragment {
                 final Dialog fullscreenDialog = new Dialog(getContext());
                 fullscreenDialog.setContentView(R.layout.dialog_change_password);
 
-                oldPassword = fullscreenDialog.findViewById(R.id.current_password);
-                newPassword = fullscreenDialog.findViewById(R.id.new_password);
+                oldPassword = fullscreenDialog.findViewById(R.id.current_pin);
+                newPassword = fullscreenDialog.findViewById(R.id.new_pin);
                 Button saveButton = fullscreenDialog.findViewById(R.id.dialog_button);
 
                 saveButton.setOnClickListener(new View.OnClickListener() {

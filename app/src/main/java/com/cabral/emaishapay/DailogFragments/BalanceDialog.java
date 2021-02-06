@@ -35,16 +35,12 @@ public class BalanceDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.dialog_change_password, null);
+        View view = inflater.inflate(R.layout.dialog_balance_inquiry_response, null);
 
 
-        LinearLayout balanceLayout = view.findViewById(R.id.balance_layout);
-        LinearLayout passwordLayout = view.findViewById(R.id.edittextlayout);
-        TextView title = view.findViewById(R.id.dialog_title);
+
         Button ok = view.findViewById(R.id.dialog_button);
-        title.setText("Balance Inquiry");
-        passwordLayout.setVisibility(View.INVISIBLE);
-        balanceLayout.setVisibility(View.VISIBLE);
+
         TextView bal = view.findViewById(R.id.balance);
         bal.setText(getArguments().getString("balance"));
         ok.setOnClickListener(new View.OnClickListener() {

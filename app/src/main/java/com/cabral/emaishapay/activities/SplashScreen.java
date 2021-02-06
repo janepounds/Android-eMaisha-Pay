@@ -10,7 +10,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +30,7 @@ import com.cabral.emaishapay.utils.Utilities;
  * SplashScreen activity, appears on App Startup
  **/
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity implements Animation.AnimationListener {
     private static final String TAG = "SplashScreen";
 
     View rootView;
@@ -36,6 +40,9 @@ public class SplashScreen extends AppCompatActivity {
     StartAppRequests startAppRequests;
     MyAppPrefsManager myAppPrefsManager;
 
+    ImageView logo;
+    TextView appName;
+    Animation animFade;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,13 @@ public class SplashScreen extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         rootView = findViewById(R.id.mainView);
+        logo =findViewById(R.id.logo);
+        appName =findViewById(R.id.logo_title);
+        animFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+        animFade.setAnimationListener(this);
+
+        logo.startAnimation(animFade);
+        appName.startAnimation(animFade);
 
         // Initializing StartAppRequests and PreferencesManager
         startAppRequests = new StartAppRequests(this);
@@ -145,6 +159,21 @@ public class SplashScreen extends AppCompatActivity {
             ConstantValues.DEFAULT_PRODUCT_CARD_STYLE = 18;
             ConstantValues.DEFAULT_BANNER_STYLE = 1;
         }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     /************* MyTask is Inner Class, that handles StartAppRequests on Background Thread *************/

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +26,8 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
+import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -45,6 +48,7 @@ public class WalletAccountFragment extends Fragment {
     private FragmentWalletAccountBinding binding;
     private Context context;
     private String label_details;
+    FragmentManager fm;
 
 
     public WalletAccountFragment(){}
@@ -536,6 +540,18 @@ public class WalletAccountFragment extends Fragment {
 
         }
 
+
+
+        binding.layoutSecurity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Create and show the dialog.
+                DialogFragment depositDialog = new ChangePassword();
+                depositDialog.show(getFragmentManager(), "dialog");
+
+            }
+        });
             binding.layoutAgent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

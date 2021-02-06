@@ -282,7 +282,7 @@ public class ContactDetailsFragment extends Fragment {
                     return;
                 }
 
-                if (email.equals("") || !email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
+                if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
                     etxt_email.setError("Enter valid email");
                     etxt_email.requestFocus();
                     return;
