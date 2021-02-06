@@ -525,6 +525,7 @@ public class WalletAccountFragment extends Fragment {
             });
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
+            binding.agentMerchant.setText("Super Agent");
             binding.layoutAgent.setVisibility(View.GONE);
             binding.layoutMerchant.setVisibility(View.GONE);
 
