@@ -209,14 +209,14 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
         binding.businessName.setText(business_name);
         binding.registrationNumber.setText(reg_no);
-        Glide.with(requireContext()).load(reg_cert).apply(options).into(binding.registrationCertificate);
-        Glide.with(requireContext()).load(trade_license).apply(options).into(binding.tradeLicense);
-        Glide.with(requireContext()).load(id_front).apply(options).into(binding.imgNidFront);
-        Glide.with(requireContext()).load(id_back).apply(options).into(binding.imgNidBack);
+        Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+reg_cert).apply(options).into(binding.registrationCertificate);
+        Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+trade_license).apply(options).into(binding.tradeLicense);
+        Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+id_front).apply(options).into(binding.imgNidFront);
+        Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+id_back).apply(options).into(binding.imgNidBack);
         binding.registrationNumber.setText(reg_no);
         binding.shopLocation.setText(business_location);
 
-        Log.d(TAG, "initializeViews: reg_cert"+reg_cert +"trade_linse"+trade_license+"id_front"+id_front+"id_back"+id_back);
+        Log.d("check", "initializeViews: reg_cert"+reg_cert +"trade_linse"+trade_license+"id_front"+id_front+"id_back"+id_back);
 
 
 

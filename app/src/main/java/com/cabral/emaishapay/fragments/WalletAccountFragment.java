@@ -215,7 +215,7 @@ public class WalletAccountFragment extends Fragment {
                 binding.textViewIdType.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
                 binding.textViewIdNumber.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
                 binding.textViewExpiryDate.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
-                Glide.with(requireContext()).load(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
+                Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
 
             }
 
