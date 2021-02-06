@@ -18,6 +18,7 @@
     <color name="darkBorderColor">#6B6E77</color>
 
 
+    <color name="textRed">#C42947</color>
     <color name="white">#ffffff</color>
     <color name="creditCardBackground">#557F5F</color>
     <color name="faintred">#FFCCCB</color>
