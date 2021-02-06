@@ -93,6 +93,8 @@ public class WalletAccountFragment extends Fragment {
                 binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
             }
             if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+                //check logged in role
+
                 binding.agentMerchant.setVisibility(View.VISIBLE);
                 binding.viewBusinessAccount.setVisibility(View.VISIBLE);
                 binding.layoutBusinessAccount.setVisibility(View.GONE);
@@ -521,6 +523,17 @@ public class WalletAccountFragment extends Fragment {
 
 
             });
+        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
+            binding.layoutAgent.setVisibility(View.GONE);
+            binding.layoutMerchant.setVisibility(View.GONE);
+
+        }else if(role.equalsIgnoreCase("agent merchant")){
+            binding.layoutAgent.setVisibility(View.GONE);
+            binding.layoutMerchant.setVisibility(View.GONE);
+            binding.layoutAgentMerchant.setVisibility(View.GONE);
+
+        }
 
             binding.layoutAgent.setOnClickListener(new View.OnClickListener() {
                 @Override
