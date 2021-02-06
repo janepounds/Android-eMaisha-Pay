@@ -219,7 +219,7 @@ public class WalletAccountFragment extends Fragment {
                 binding.textViewIdType.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
                 binding.textViewIdNumber.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
                 binding.textViewExpiryDate.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
-                Glide.with(requireContext()).load(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
+                Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
 
             }
 
@@ -529,7 +529,7 @@ public class WalletAccountFragment extends Fragment {
             });
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
-            binding.agentMerchant.setText("Super Agent");
+            binding.agentMerchant.setText("Master Agent");
             binding.layoutAgent.setVisibility(View.GONE);
             binding.layoutMerchant.setVisibility(View.GONE);
 
@@ -599,7 +599,7 @@ public class WalletAccountFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    label_details = "Agent & Merchant Details";
+                    label_details = "Master Agent Details";
                     bundle.putString("AgentMerchant", label_details);
 
                     Fragment fragment = new BusinessAccountFragment(bundle);

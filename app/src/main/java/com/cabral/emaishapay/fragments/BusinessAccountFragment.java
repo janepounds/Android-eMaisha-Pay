@@ -33,8 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -179,12 +183,83 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
             }else if(localBundle.getString("AgentMerchant")!=null) {
                 binding.toolbar.setTitle(localBundle.getString("AgentMerchant"));
+                //set business info
                 role = "AGENT_MERCHANT";
 
             }
 
 
         }
+        //set business info
+        String business_name = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME,getContext());
+        String business_location =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION,getContext());
+        String reg_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO,getContext());
+        String license_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER,getContext());
+        String reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
+        String trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
+        String id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
+        String id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.add_default_image)
+                .error(R.drawable.add_default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH);
+        if(business_name!=null){
+
+            binding.businessName.setText(business_name);
+        } if(reg_no!=null){
+            binding.registrationNumber.setText(reg_no);
+        } if(business_location!=null){
+            binding.shopLocation.setText(business_location);
+        } if(trade_license!=null){
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+trade_license).apply(options).into(binding.tradeLicense);
+//            //encode trade lisence
+//            Bitmap imageBitmap1;
+//
+//            imageBitmap1 = BitmapFactory.decodeFile(ConstantValues.WALLET_DOMAIN+trade_license);
+//            ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
+//            imageBitmap1.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream1);
+//            byte[] c = byteArrayOutputStream1.toByteArray();
+//            encodedIdtradelicense = Base64.encodeToString(c, Base64.DEFAULT);
+        } if(reg_cert!=null){
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+reg_cert).apply(options).into(binding.registrationCertificate);
+            //encode registration certificate
+//            Bitmap imageBitmap;
+//
+//            imageBitmap = BitmapFactory.decodeFile(ConstantValues.WALLET_DOMAIN+reg_cert);
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//            byte[] b = byteArrayOutputStream.toByteArray();
+//            encodedIdreg_cert = Base64.encodeToString(b, Base64.DEFAULT);
+        } if(id_front!=null){
+
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+id_front).apply(options).into(binding.imgNidFront);
+            //encode id front
+//            Bitmap imageBitmap2;
+//
+//            imageBitmap2 = BitmapFactory.decodeFile(ConstantValues.WALLET_DOMAIN+id_front);
+//            ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+//            imageBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream2);
+//            byte[] d = byteArrayOutputStream2.toByteArray();
+//            encodedIdFront = Base64.encodeToString(d, Base64.DEFAULT);
+        } if(id_back!=null){
+
+            Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+id_back).apply(options).into(binding.imgNidBack);
+            //encode id back
+//            Bitmap imageBitmap3;
+//
+//            imageBitmap3 = BitmapFactory.decodeFile(ConstantValues.WALLET_DOMAIN+id_back);
+//            ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
+//            imageBitmap3.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream3);
+//            byte[] e = byteArrayOutputStream3.toByteArray();
+//            encodedIdBack = Base64.encodeToString(e, Base64.DEFAULT);
+        }
+
+
+
+
         binding.imgNidFront.setOnClickListener(v -> {
             imageView = binding.imgNidFront;
             chooseImage();
