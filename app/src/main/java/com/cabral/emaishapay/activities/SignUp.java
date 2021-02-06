@@ -42,6 +42,7 @@ import com.cabral.emaishapay.databinding.SignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -113,7 +114,7 @@ public class SignUp extends AppCompatActivity {
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(this).build();
         //noInternetDialog.show();
-
+        FirebaseApp.initializeApp(context);
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
 
@@ -435,6 +436,97 @@ public class SignUp extends AppCompatActivity {
         code4= dialog.findViewById(R.id.otp_code4_et);
         code5=dialog.findViewById(R.id.otp_code5_et);
         code6= dialog.findViewById(R.id.otp_code6_et);
+              code1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code2.requestFocus();
+            }
+        });
+
+
+        code2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code3.requestFocus();
+            }
+        });
+
+        code3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code4.requestFocus();
+            }
+        });
+
+        code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code5.requestFocus();
+            }
+        });
+
+        code5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code6.requestFocus();
+            }
+        });
+
+
+        code6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                verifyVerificationCode(code1.getText().toString()+code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString());
+            }
+        });
         dialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
