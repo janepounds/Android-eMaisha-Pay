@@ -525,7 +525,7 @@ public class WalletAccountFragment extends Fragment {
             });
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
-            binding.agentMerchant.setText("Super Agent");
+            binding.agentMerchant.setText("Master Agent");
             binding.layoutAgent.setVisibility(View.GONE);
             binding.layoutMerchant.setVisibility(View.GONE);
 
@@ -583,7 +583,7 @@ public class WalletAccountFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    label_details = "Agent & Merchant Details";
+                    label_details = "Master Agent Details";
                     bundle.putString("AgentMerchant", label_details);
 
                     Fragment fragment = new BusinessAccountFragment(bundle);

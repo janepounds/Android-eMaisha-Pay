@@ -33,8 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -179,12 +183,43 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
             }else if(localBundle.getString("AgentMerchant")!=null) {
                 binding.toolbar.setTitle(localBundle.getString("AgentMerchant"));
+                //set business info
                 role = "AGENT_MERCHANT";
 
             }
 
 
         }
+        //set business info
+        String business_name = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME,getContext());
+        String business_location =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION,getContext());
+        String reg_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO,getContext());
+        String license_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER,getContext());
+        String reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
+        String trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
+        String id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
+        String id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.add_default_image)
+                .error(R.drawable.add_default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH);
+
+        binding.businessName.setText(business_name);
+        binding.registrationNumber.setText(reg_no);
+        Glide.with(requireContext()).load(reg_cert).apply(options).into(binding.registrationCertificate);
+        Glide.with(requireContext()).load(trade_license).apply(options).into(binding.tradeLicense);
+        Glide.with(requireContext()).load(id_front).apply(options).into(binding.imgNidFront);
+        Glide.with(requireContext()).load(id_back).apply(options).into(binding.imgNidBack);
+        binding.registrationNumber.setText(reg_no);
+        binding.shopLocation.setText(business_location);
+
+        Log.d(TAG, "initializeViews: reg_cert"+reg_cert +"trade_linse"+trade_license+"id_front"+id_front+"id_back"+id_back);
+
+
+
         binding.imgNidFront.setOnClickListener(v -> {
             imageView = binding.imgNidFront;
             chooseImage();
