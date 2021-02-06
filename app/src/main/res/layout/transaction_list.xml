@@ -69,9 +69,17 @@
                         android:layout_marginEnd="12dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_cashin" />
+                            android:id="@+id/arrow_cash_in"
+                            android:layout_width="37.82dp"
+                            android:layout_height="37.82dp"
+                            android:src="@drawable/ic_cashin"
+                            android:visibility="visible"/>
+                        <ImageView
+                            android:id="@+id/img_mobile_money"
+                            android:layout_width="37.82dp"
+                            android:layout_height="37.82dp"
+                            android:src="@drawable/card_mobile_money"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 
@@ -81,13 +89,25 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txt_cash_in"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="Cash In"
                             android:textColor="#101436"
                             android:textSize="14sp"
-                            app:autoSizeTextType="uniform" />
+                            app:autoSizeTextType="uniform"
+                            android:visibility="visible"/>
+                        <TextView
+                            android:id="@+id/txt_mobile_money"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Mobile Money"
+                            android:textColor="#101436"
+                            android:textSize="14sp"
+                            app:autoSizeTextType="uniform"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/wallet_cash_in"
@@ -134,9 +154,17 @@
                         android:layout_marginEnd="12dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_diagonal_arrow" />
+                            android:id="@+id/arrow_cash_out"
+                            android:layout_width="37.82dp"
+                            android:layout_height="37.82dp"
+                            android:src="@drawable/ic_diagonal_arrow"
+                            android:visibility="visible"/>
+                        <ImageView
+                            android:id="@+id/img_bank"
+                            android:layout_width="37.82dp"
+                            android:layout_height="37.82dp"
+                            android:src="@drawable/bank"
+                            android:visibility="gone"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -145,13 +173,25 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_cash_out"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="Cash Out"
                             android:textColor="#101436"
                             android:textSize="14sp"
-                            app:autoSizeTextType="uniform" />
+                            app:autoSizeTextType="uniform"
+                            android:visibility="visible"/>
+                        <TextView
+                            android:id="@+id/text_bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Bank"
+                            android:textColor="#101436"
+                            android:textSize="14sp"
+                            app:autoSizeTextType="uniform"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/wallet_cash_out"

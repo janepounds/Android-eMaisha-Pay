@@ -7,12 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,8 @@ public class WalletTransactionsListFragment extends Fragment {
     private String appTitle;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    ImageView arrowCashIn,arrowCashOut;
+    TextView cashInText,cashOutText,walletCashIn,walletCashOut;
 
     public WalletTransactionsListFragment(String appTitle){
         this.appTitle=appTitle;
@@ -54,10 +57,28 @@ public class WalletTransactionsListFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_wallet_transactions_list);
         recyclerView = view.findViewById(R.id.statement_recycler_view);
+        arrowCashIn = view.findViewById(R.id.arrow_cash_in);
+        arrowCashOut = view.findViewById(R.id.arrow_cash_out);
+        cashInText = view.findViewById(R.id.txt_cash_in);
+        cashOutText = view.findViewById(R.id.text_cash_out);
+        walletCashIn = view.findViewById(R.id.wallet_cash_in);
+        walletCashOut = view.findViewById(R.id.wallet_cash_out);
 
         if(appTitle.equalsIgnoreCase("settlements")){
+            arrowCashIn.setImageResource(R.drawable.bank);
+            arrowCashOut.setImageResource(R.drawable.ic_account_opening);
+            cashInText.setText("Mobile Money");
+            cashOutText.setText("Bank");
+            walletCashIn.setTextColor(getResources().getColor(R.color.textRed));
+            walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
             getSettlements();
         }else{
+            arrowCashIn.setImageResource(R.drawable.ic_cashin);
+            arrowCashOut.setImageResource(R.drawable.ic_diagonal_arrow);
+            cashInText.setText("Cash In");
+            cashOutText.setText("Cash Out");
+            walletCashIn.setTextColor(getResources().getColor(R.color.colorPrimary));
+            walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
             actualStatementData();
         }
 
@@ -65,8 +86,8 @@ public class WalletTransactionsListFragment extends Fragment {
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(this.appTitle);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
         return view;
     }
 
