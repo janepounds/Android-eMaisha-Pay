@@ -35,6 +35,23 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <TextView
+            android:id="@+id/tv_add_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Add New "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/ic_add_white_24dp"
+            android:drawablePadding="10dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:background="@drawable/rectangular_green_solid"/>
+
         <EditText
             android:id="@+id/dialog_input"
             android:layout_width="match_parent"
@@ -50,35 +67,22 @@
             android:textColor="@color/textColorSecondaryLight"
             android:textColorHint="@color/textColorPrimaryDark"
             android:textSize="16sp" />
-        <TextView
-            android:id="@+id/tv_add_new_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Add New Manufacturer"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            app:drawableStartCompat="@drawable/ic_add_white_24dp"
-            android:drawablePadding="10dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="center"
-            android:background="@drawable/rectangular_green_solid"/>
+
         <EditText
             android:id="@+id/et_add_new_item"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/rounded_corners_edittext_light"
             android:drawablePadding="5dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/josefin_sans"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions"
             android:padding="10dp"
             android:textSize="16sp"
             android:layout_marginBottom="10dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:hint="Add new"/>
         <ListView
             android:id="@+id/dialog_list"
             android:layout_width="match_parent"
