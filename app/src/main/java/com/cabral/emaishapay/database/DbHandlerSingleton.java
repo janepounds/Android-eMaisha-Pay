@@ -1323,6 +1323,70 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    //get offline manufacturers
+    //get customer data
+    public ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+        ArrayList<HashMap<String, String>> manufacturers = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_MANUFACTURER_TABLE_NAME +  " ORDER BY " + MANUFACTURER_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(MANUFACTURER_NAME, cursor.getString(1));
+
+
+
+
+                manufacturers.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return manufacturers;
+    }
+
+    //get offline product categories
+    public ArrayList<HashMap<String, String>> getOfflineProductCategories() {
+        ArrayList<HashMap<String, String>> categories = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME +  " ORDER BY " + CATEGORY_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(CATEGORY_NAME, cursor.getString(1));
+
+
+
+                categories.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return categories;
+    }
+    //get offline product names
+    public ArrayList<HashMap<String, String>> getOfflineProductNames() {
+        ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_NAME_TABLE_NAME +  " ORDER BY " + PRODUCT_NAME_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(PRODUCT_NAME_NAME, cursor.getString(1));
+
+
+
+                productnames.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return productnames;
+    }
 }
 
 

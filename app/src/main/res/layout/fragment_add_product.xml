@@ -402,7 +402,7 @@
 
 
                 <ImageView
-                    android:id="@+id/produce_image"
+                    android:id="@+id/product_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
