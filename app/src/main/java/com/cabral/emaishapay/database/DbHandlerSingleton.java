@@ -155,6 +155,11 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String PAYMENT_METHOD_NAME = "payment_method_name";
 
 
+    public static final String PRODUCT_MANUFACTURER_TABLE_NAME = "manufacturers";
+    public static final String MANUFACTURER_ID = "manufacturer_id";
+    public static final String MANUFACTURER_NAME = "manufacturer_name";
+
+
 
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
@@ -235,6 +240,10 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 PAYMENT_METHOD_NAME + " TEXT " + " ) ";
 
 
+        String product_manufacturer_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_MANUFACTURER_TABLE_NAME + "( " + MANUFACTURER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                MANUFACTURER_NAME + " TEXT " + " ) ";
+
+
 
 
 
@@ -252,6 +261,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(product_cart_table_insert_query);
         database.execSQL(customers_table_insert_query);
         database.execSQL(payment_method_table_insert_query);
+        database.execSQL(product_manufacturer_table_insert_query);
     }
 
     @Override
@@ -1247,6 +1257,46 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         cursor.close();
         database.close();
         return customer;
+    }
+
+    //add manufacturers
+    public boolean addManufacturers(String manufacturer_name) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+
+        values.put(MANUFACTURER_NAME, manufacturer_name);
+
+
+        long check = database.insert(PRODUCT_MANUFACTURER_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //add product categories
+    public boolean addProductCategory(String category_name) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+
+        values.put(CATEGORY_NAME, category_name);
+
+
+        long check = database.insert(PRODUCT_CATEGORY_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

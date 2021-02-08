@@ -301,6 +301,7 @@ public class AddProductFragment extends DialogFragment {
                 ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
                 TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
                 EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
+                Button update = dialogView.findViewById(R.id.button_update);
 
 
                 dialog_title.setText("Manufacturers");
@@ -314,7 +315,23 @@ public class AddProductFragment extends DialogFragment {
                     }
                 });
 
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!dialog_add_edit_text.getText().toString().isEmpty()){
+                            boolean check = dbHandler.addManufacturers(dialog_add_edit_text.getText().toString());
+                            if(check){
 
+                                manufacturersAdapter.add(dialog_add_edit_text.getText().toString());
+                                manufacturersAdapter.notifyDataSetChanged();
+                                dialog_add_edit_text.getText().clear();
+                            }else{
+                                Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                            }
+
+                        }
+                    }
+                });
                 dialog_input.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -400,6 +417,7 @@ public class AddProductFragment extends DialogFragment {
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
                     TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
                     EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
+                    Button update = dialogView.findViewById(R.id.button_update);
 
                     dialog_title.setText(R.string.product_category);
                     dialog_list.setVerticalScrollBarEnabled(true);
@@ -410,6 +428,24 @@ public class AddProductFragment extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             dialog_add_edit_text.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                    update.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!dialog_add_edit_text.getText().toString().isEmpty()){
+                                boolean check = dbHandler.addProductCategory(dialog_add_edit_text.getText().toString());
+                                if(check){
+
+                                    categoryAdapter.add(dialog_add_edit_text.getText().toString());
+                                    categoryAdapter.notifyDataSetChanged();
+                                    dialog_add_edit_text.getText().clear();
+                                }else{
+                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                                }
+
+                            }
                         }
                     });
 
