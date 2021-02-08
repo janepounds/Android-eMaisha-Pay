@@ -560,9 +560,34 @@ public class AddProductFragment extends DialogFragment {
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
                     TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
                     Button dialog_update_button = dialogView.findViewById(R.id.button_update);
-                    dialog_add_btn.setVisibility(View.GONE);
-                    dialog_update_button.setVisibility(View.GONE);
+                    EditText add_product = dialogView.findViewById(R.id.et_add_new_item);
 
+
+                    dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            add_product.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                    dialog_update_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!add_product.getText().toString().isEmpty()){
+                                boolean check = dbHandler.addProductName(add_product.getText().toString());
+                                if(check){
+
+                                    productAdapter.add(add_product.getText().toString());
+                                    productAdapter.notifyDataSetChanged();
+                                    add_product.getText().clear();
+                                }else{
+                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                                }
+
+                            }
+                        }
+                    });
 
                     dialog_title.setText("Products");
                     dialog_list.setVerticalScrollBarEnabled(true);
