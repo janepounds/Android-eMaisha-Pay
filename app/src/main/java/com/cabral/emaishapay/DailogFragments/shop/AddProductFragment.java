@@ -76,7 +76,7 @@ public class AddProductFragment extends DialogFragment {
     ProgressDialog loading;
     EditText etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight;
     TextView txtAddProdcut;
-    AutoCompleteTextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
+    TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
@@ -299,11 +299,21 @@ public class AddProductFragment extends DialogFragment {
                 EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                 TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                 ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
+                TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
 
 
                 dialog_title.setText("Manufacturers");
                 dialog_list.setVerticalScrollBarEnabled(true);
                 dialog_list.setAdapter(manufacturersAdapter);
+
+                dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_add_edit_text.setVisibility(View.VISIBLE);
+                    }
+                });
+
 
                 dialog_input.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -388,12 +398,20 @@ public class AddProductFragment extends DialogFragment {
                     EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                     TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
-
+                    TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                    EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
 
                     dialog_title.setText(R.string.product_category);
                     dialog_list.setVerticalScrollBarEnabled(true);
                     dialog_list.setAdapter(categoryAdapter);
 
+                    dialog_add_btn.setText("Add New Category");
+                    dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog_add_edit_text.setVisibility(View.VISIBLE);
+                        }
+                    });
 
                     dialog_input.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -504,6 +522,10 @@ public class AddProductFragment extends DialogFragment {
                     EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                     TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
+                    TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                    Button dialog_update_button = dialogView.findViewById(R.id.button_update);
+                    dialog_add_btn.setVisibility(View.GONE);
+                    dialog_update_button.setVisibility(View.GONE);
 
 
                     dialog_title.setText("Products");

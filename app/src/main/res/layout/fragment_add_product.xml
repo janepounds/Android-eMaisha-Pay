@@ -66,14 +66,15 @@
 
 
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/etxt_product_manufucturer"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:drawableEnd="@drawable/ic_add_circle"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -91,14 +92,15 @@
                         android:textColor="@color/textColorSecondaryLight"
                         android:textSize="16sp" />
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/etxt_product_category"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:drawableEnd="@drawable/ic_add_circle"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -122,14 +124,15 @@
                         android:textSize="16sp" />
 
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/etxt_product_name"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
                         android:inputType="textCapWords"
                         android:padding="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:drawableEnd="@drawable/ic_add_circle"/>
 
                 </LinearLayout>
                 <LinearLayout
