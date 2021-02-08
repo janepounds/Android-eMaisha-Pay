@@ -29,6 +29,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
@@ -146,9 +147,9 @@ public class IdInformationFragment extends Fragment {
     public void saveInfo() {
         progressDialog.show();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storeIdInfo(userId, binding.idType.getSelectedItem().toString(), binding.idNumber.getText().toString(),
+                .storeIdInfo(access_token,userId, binding.idType.getSelectedItem().toString(), binding.idNumber.getText().toString(),
                         binding.expiryDate.getText().toString(), encodedIdFront, encodedIdBack);
         call.enqueue(new Callback<AccountResponse>() {
             @Override

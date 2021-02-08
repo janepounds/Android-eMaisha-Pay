@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -166,10 +167,10 @@ public class My_Orders extends Fragment {
     public void RequestMyOrders() {
 
         dialogLoader.showProgressDialog();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .getOrders
-                        (
+                        (access_token,
                                 customerID,
                                 ConstantValues.LANGUAGE_ID,
                                 ConstantValues.CURRENCY_CODE
@@ -217,12 +218,12 @@ public class My_Orders extends Fragment {
     //*********** Request User's cancel order ********//
     
     public void RequestMyOrdersCancel(int orderID) {
-        
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .updatestatus
-                        (
+                        (access_token,
                                 customerID,
                                 orderID
                         );

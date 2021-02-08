@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.MerchantsListAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -140,12 +141,12 @@ public class Nearby_Merchants extends Fragment {
         }
         dialogLoader.showProgressDialog();
         Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String product_names_str = new Gson().toJson(product_names);
         Log.w( "CartData",product_names_str);
         Call<MerchantData> call = BuyInputsAPIClient.getInstance()
                 .getNearbyMerchants
-                        (
+                        (       access_token,
                                 String.valueOf(shippingAddress.getLatitude()),String.valueOf( shippingAddress.getLongitude()),product_names_str
                         );
 

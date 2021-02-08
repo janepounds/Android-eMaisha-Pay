@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapterRemovable;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -162,10 +163,10 @@ public class RecentlyViewed extends Fragment {
         getAllProducts.setProductsId(String.valueOf(products_id));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
 

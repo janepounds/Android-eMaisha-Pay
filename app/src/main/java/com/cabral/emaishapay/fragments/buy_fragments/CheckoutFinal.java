@@ -28,6 +28,7 @@ import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CheckoutItemsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CouponsAdapter;
@@ -932,9 +933,9 @@ public class CheckoutFinal extends Fragment {
     //*********** Request the Server to Generate BrainTreeToken ********//
 
     private void GenerateBrainTreeToken() {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken();
+                .generateBraintreeToken(access_token);
 
 
         call.enqueue(new Callback<GetBrainTreeToken>() {
@@ -975,10 +976,10 @@ public class CheckoutFinal extends Fragment {
     //*********** Request the Server to Generate BrainTreeToken ********//
 
     private void GetCouponInfo(String coupon_code) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<CouponsData> call = BuyInputsAPIClient.getInstance()
                 .getCouponInfo
-                        (
+                        (access_token,
                                 coupon_code
                         );
 
@@ -1061,12 +1062,12 @@ public class CheckoutFinal extends Fragment {
     //*********** Request the Server to Place User's Order ********//
 
     private void PlaceOrderNow(PostOrder postOrder) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String str = new Gson().toJson(postOrder);
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .addToOrder
-                        (
+                        (access_token,
                                 postOrder
                         );
 

@@ -235,9 +235,9 @@ public class AddCardFragment extends DialogFragment {
 
                         //check if the button text is save card
                         if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
-
+                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

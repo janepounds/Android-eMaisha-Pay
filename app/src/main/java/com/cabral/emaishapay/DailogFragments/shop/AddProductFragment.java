@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
@@ -205,10 +206,10 @@ public class AddProductFragment extends DialogFragment {
         //get offline product names
         offlineProductNames = new ArrayList<>();
         offlineProductNames = dbHandler.getOfflineProductNames();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
-                .getManufacturers();
+                .getManufacturers(access_token);
         call1.enqueue(new Callback<ManufacturersResponse>() {
             @Override
             public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
@@ -233,7 +234,7 @@ public class AddProductFragment extends DialogFragment {
 
         Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
-                .getCategories();
+                .getCategories(access_token);
         call.enqueue(new Callback<CategoriesResponse>() {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
@@ -532,10 +533,11 @@ public class AddProductFragment extends DialogFragment {
                                     category_name = categories.get(i).getCategories_slug();
                                 }
                             }
-
+                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
+                                            access_token,
                                             category_id,
                                             selectedManufacturersID
                                     );
@@ -792,7 +794,7 @@ public class AddProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
 
-
+                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                 if (product_name == null || product_name.isEmpty()) {
                     etxtProductName.setError(getString(R.string.product_name_cannot_be_empty));
                     etxtProductName.requestFocus();
@@ -822,6 +824,7 @@ public class AddProductFragment extends DialogFragment {
                     Call<ResponseBody> call = BuyInputsAPIClient
                             .getInstance()
                             .postProduct(
+                                    access_token,
                                     id,
                                     measure_id,
                                     shop_id,

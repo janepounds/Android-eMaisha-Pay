@@ -37,6 +37,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
@@ -298,11 +299,11 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String registration_no = binding.registrationNumber.getText().toString();
         String proprietor_name = binding.proprietorName.getText().toString();
         String proprietor_nin = binding.proprietorNin.getText().toString();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         //**************RETROFIT IMPLEMENTATION******************//
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .applyForBusiness(user_Id,business_name,registration_no,
+                .applyForBusiness(access_token,user_Id,business_name,registration_no,
                         encodedIdreg_cert,encodedIdtradelicense,proprietor_name,
                         proprietor_nin,encodedIdFront,encodedIdBack,role,mCenterLatLong.latitude,mCenterLatLong.longitude);
         call.enqueue(new Callback<AccountResponse>() {

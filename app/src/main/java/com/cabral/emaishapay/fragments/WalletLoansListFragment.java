@@ -139,7 +139,7 @@ public class WalletLoansListFragment extends Fragment {
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 
-        Call<LoanListResponse> call = apiRequests.getUserLoans(userId);
+        Call<LoanListResponse> call = apiRequests.getUserLoans(access_token,userId);
 
         call.enqueue(new Callback<LoanListResponse>() {
             @Override
@@ -255,7 +255,7 @@ public class WalletLoansListFragment extends Fragment {
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 
-        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(userId);
+        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(access_token,userId);
         call.enqueue(new Callback<CancelLoanResponse>() {
             @Override
             public void onResponse(Call<CancelLoanResponse> call, Response<CancelLoanResponse> response) {

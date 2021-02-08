@@ -49,6 +49,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -129,7 +130,9 @@ public interface APIRequestsForBuyInputs {
 
     @FormUrlEncoded
     @POST("getalladdress")
-    Call<AddressData> getAllAddress(@Field("customers_id") String customers_id);
+    Call<AddressData> getAllAddress(
+            @Header("Authorization") String token,
+            @Field("customers_id") String customers_id);
 
     @FormUrlEncoded
     @POST("getregions")
@@ -137,7 +140,9 @@ public interface APIRequestsForBuyInputs {
 
     @FormUrlEncoded
     @POST("addshippingaddress")
-    Call<AddressData> addUserAddress(@Field("customers_id") String customers_id,
+    Call<AddressData> addUserAddress(
+                                    @Header("Authorization") String token,
+                                     @Field("customers_id") String customers_id,
                                      @Field("entry_firstname") String entry_firstname,
                                      @Field("entry_lastname") String entry_lastname,
                                      @Field("entry_street_address") String entry_street_address,
@@ -151,7 +156,9 @@ public interface APIRequestsForBuyInputs {
 
     @FormUrlEncoded
     @POST("updateshippingaddress")
-    Call<AddressData> updateUserAddress(@Field("customers_id") String customers_id,
+    Call<AddressData> updateUserAddress(
+                                        @Header("Authorization") String token,
+                                         @Field("customers_id") String customers_id,
                                         @Field("address_id") String address_id,
                                         @Field("entry_firstname") String entry_firstname,
                                         @Field("entry_lastname") String entry_lastname,
@@ -166,12 +173,16 @@ public interface APIRequestsForBuyInputs {
 
     @FormUrlEncoded
     @POST("updatedefaultaddress")
-    Call<AddressData> updateDefaultAddress(@Field("customers_id") String customers_id,
+    Call<AddressData> updateDefaultAddress(
+                                         @Header("Authorization") String token,
+                                         @Field("customers_id") String customers_id,
                                            @Field("address_book_id") String address_book_id);
 
     @FormUrlEncoded
     @POST("deleteshippingaddress")
-    Call<AddressData> deleteUserAddress(@Field("customers_id") String customers_id,
+    Call<AddressData> deleteUserAddress(
+                                        @Header("Authorization") String token,
+                                        @Field("customers_id") String customers_id,
                                         @Field("address_book_id") String address_book_id);
 //Merchant shop methods from
 
@@ -245,6 +256,7 @@ public interface APIRequestsForBuyInputs {
     @FormUrlEncoded
     @POST("stockMerchantProduct")
     Call<ResponseBody> postProduct(
+            @Header("Authorization") String token,
             @Field("id") String id,
             @Field("measure_id") int measure_id,
             @Field("shop_id") Integer shop_id,
@@ -256,16 +268,17 @@ public interface APIRequestsForBuyInputs {
     );
 
     @GET("getCategories")
-    Call<CategoriesResponse> getCategories();
+    Call<CategoriesResponse> getCategories(@Header("Authorization") String token);
 
     @GET("getProductsByCategoryAndManufacturer/{category_id}/{manufacturer_id}")
     Call<ProductResponse> getProducts(
+            @Header("Authorization") String token,
             @Path("category_id") int category_id,
             @Path("manufacturer_id") int manufacturer_id
     );
 
     @GET("getManufacturers")
-    Call<ManufacturersResponse> getManufacturers();
+    Call<ManufacturersResponse> getManufacturers(@Header("Authorization")String token);
 
     @GET("getBackup/{shop_id}")
     Call<ResponseBody> getBackup(
@@ -289,63 +302,85 @@ public interface APIRequestsForBuyInputs {
     //******************** OrderProductCategory Data ********************//
     @FormUrlEncoded
     @POST("allcategories")
-    Call<CategoryData> getAllCategories(@Field("language_id") int language_id);
+    Call<CategoryData> getAllCategories(
+            @Header("Authorization") String token,
+            @Field("language_id") int language_id);
 
     //******************** Product Data ********************//
 
     @POST("getallproducts")
-    Call<ProductData> getAllProducts(@Body GetAllProducts getAllProducts);
+    Call<ProductData> getAllProducts(
+            @Header("Authorization") String token,
+            @Body GetAllProducts getAllProducts);
 
     @POST("getquantity")
-    Call<ProductStock> getProductStock(@Body GetStock getStock);
+    Call<ProductStock> getProductStock(
+            @Header("Authorization") String token,
+            @Body GetStock getStock);
 
     @FormUrlEncoded
     @POST("likeproduct")
-    Call<ProductData> likeProduct(@Field("liked_products_id") int liked_products_id,
-                                  @Field("liked_customers_id") String liked_customers_id);
+    Call<ProductData> likeProduct(
+                                @Header("Authorization") String token,
+                                @Field("liked_products_id") int liked_products_id,
+                                @Field("liked_customers_id") String liked_customers_id);
 
     @FormUrlEncoded
     @POST("unlikeproduct")
-    Call<ProductData> unlikeProduct(@Field("liked_products_id") int liked_products_id,
+    Call<ProductData> unlikeProduct(
+                                    @Header("Authorization") String token,
+                                    @Field("liked_products_id") int liked_products_id,
                                     @Field("liked_customers_id") String liked_customers_id);
 
     @FormUrlEncoded
     @POST("getfilters")
-    Call<FilterData> getFilters(@Field("categories_id") int categories_id,
+    Call<FilterData> getFilters(
+                                @Header("Authorization") String token,
+                                @Field("categories_id") int categories_id,
                                 @Field("language_id") int language_id);
 
     @FormUrlEncoded
     @POST("getsearchdata")
-    Call<SearchData> getSearchData(@Field("searchValue") String searchValue,
+    Call<SearchData> getSearchData(
+                                    @Header("Authorization") String token,
+                                    @Field("searchValue") String searchValue,
                                    @Field("language_id") int language_id,
                                    @Field("currency_code") String currency_code);
 
     //******************** Order Data ********************//
 
     @POST("addtoorder")
-    Call<OrderData> addToOrder(@Body PostOrder postOrder);
+    Call<OrderData> addToOrder(
+            @Header("Authorization") String token,
+            @Body PostOrder postOrder);
 
     @FormUrlEncoded
     @POST("getorders")
-    Call<OrderData> getOrders(@Field("customers_id") String customers_id,
-                              @Field("language_id") int language_id,
-                              @Field("currency_code") String currency_code);
+    Call<OrderData> getOrders(
+                            @Header("Authorization") String token,
+                            @Field("customers_id") String customers_id,
+                            @Field("language_id") int language_id,
+                            @Field("currency_code") String currency_code);
 
     @FormUrlEncoded
     @POST("updatestatus")
-    Call<OrderData> updatestatus(@Field("customers_id") String customers_id,
-                                 @Field("orders_id") int orders_id);
+    Call<OrderData> updatestatus(
+                                @Header("Authorization") String token,
+                                @Field("customers_id") String customers_id,
+                                @Field("orders_id") int orders_id);
 
     @FormUrlEncoded
     @POST("getcoupon")
-    Call<CouponsData> getCouponInfo(@Field("code") String code);
+    Call<CouponsData> getCouponInfo(
+            @Header("Authorization") String token,
+            @Field("code") String code);
 
     @FormUrlEncoded
     @POST("getpaymentmethods")
     Call<PaymentMethodsData> getPaymentMethods(@Field("language_id") int language_id);
 
     @GET("getbanners")
-    Call<BannerData> getBanners();
+    Call<BannerData> getBanners(  @Header("Authorization") String token);
 
     //******************** Tax & Shipping Data ********************//
 
@@ -363,7 +398,7 @@ public interface APIRequestsForBuyInputs {
     //******************** Languages Data ********************//
 
     @GET("getlanguages")
-    Call<LanguageData> getLanguages();
+    Call<LanguageData> getLanguages(  @Header("Authorization") String token);
 
     //******************** App Settings Data ********************//
 
@@ -393,23 +428,31 @@ public interface APIRequestsForBuyInputs {
 
     @FormUrlEncoded
     @POST("notify_me")
-    Call<ContactUsData> notify_me(@Field("is_notify") String is_notify,
-                                  @Field("device_id") String device_id);
+    Call<ContactUsData> notify_me(
+                                @Header("Authorization") String token,
+                                @Field("is_notify") String is_notify,
+                                @Field("device_id") String device_id);
 
     @GET("generatebraintreetoken")
-    Call<GetBrainTreeToken> generateBraintreeToken();
+    Call<GetBrainTreeToken> generateBraintreeToken(  @Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("givereview")
-    Call<GiveRating> giveRating(@FieldMap Map<String, String> stringMap);
+    Call<GiveRating> giveRating(
+            @Header("Authorization") String token,
+            @FieldMap Map<String, String> stringMap);
 
     @GET("getreviews")
-    Call<GetRatings> getProductReviews(@Query("products_id") String product_id,
-                                       @Query("languages_id") String languages_id);
+    Call<GetRatings> getProductReviews(
+                                    @Header("Authorization") String token,
+                                    @Query("products_id") String product_id,
+                                    @Query("languages_id") String languages_id);
 
     // This Api will give us City bounds
     @GET("getlocation")
-    Call<GoogleAPIResponse> getCityBounds(@Query(value = "address", encoded = true) String address);
+    Call<GoogleAPIResponse> getCityBounds(
+            @Header("Authorization") String token,
+            @Query(value = "address", encoded = true) String address);
 
     // Upload Image
     @Multipart
@@ -418,16 +461,20 @@ public interface APIRequestsForBuyInputs {
 
     // Update Password
     @GET("updatepassword")
-    Call<UserData> updatePassword(@Query("oldpassword") String oldPassword,
-                                  @Query("newpassword") String newPassword,
-                                  @Query("customers_id") String customers_id);
+    Call<UserData> updatePassword(
+                                @Header("Authorization") String token,
+                                @Query("oldpassword") String oldPassword,
+                                @Query("newpassword") String newPassword,
+                                @Query("customers_id") String customers_id);
 
     //Change Currency
     @GET("getcurrencies")
-    Call<CurrencyModel> getCurrency();
+    Call<CurrencyModel> getCurrency(@Header("Authorization") String token);
 
     @GET("get_feasible_selling_shops")
-    Call<MerchantData> getNearbyMerchants(@Query("latitude") String latitude, @Query("longitude") String longitude, @Query("productlist") String productlist);
+    Call<MerchantData> getNearbyMerchants(
+            @Header("Authorization") String token,
+            @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("productlist") String productlist);
 
     @GET("get_sellPrices_by_shopId")
     Call<MerchantData> getMerchantsProductData(@Query("shopID") String shopID, @Query("productlist") String productlist);

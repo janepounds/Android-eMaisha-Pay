@@ -27,6 +27,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
@@ -159,9 +160,9 @@ public class BusinessInformationFragment extends Fragment {
     public void saveInfo() {
         progressDialog.show();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .storeBusinessInfo(userId, binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
+                .storeBusinessInfo(access_token,userId, binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
                         encodedTradeLicence, binding.licenceNumber.getText().toString(), encodedRegistrationCertificate);
         call.enqueue(new Callback<AccountResponse>() {
             @Override

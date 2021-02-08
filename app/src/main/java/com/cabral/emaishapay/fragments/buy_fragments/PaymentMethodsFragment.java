@@ -40,6 +40,7 @@ import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.SupportedCardTypesView;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -440,12 +441,12 @@ public class PaymentMethodsFragment extends Fragment {
     }
 
     private void PlaceOrderNow(PostOrder postOrder) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String str = new Gson().toJson(postOrder);
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .addToOrder
-                        (
+                        (access_token,
                                 postOrder
                         );
 
@@ -520,8 +521,9 @@ public class PaymentMethodsFragment extends Fragment {
     }
 
     private void GenerateBrainTreeToken() {
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken();
+                .generateBraintreeToken(access_token);
 
         call.enqueue(new Callback<GetBrainTreeToken>() {
             @Override

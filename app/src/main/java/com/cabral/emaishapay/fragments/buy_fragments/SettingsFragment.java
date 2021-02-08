@@ -36,6 +36,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
@@ -167,14 +168,14 @@ public class SettingsFragment extends Fragment {
                 oldPassword = fullscreenDialog.findViewById(R.id.current_pin);
                 newPassword = fullscreenDialog.findViewById(R.id.new_pin);
                 Button saveButton = fullscreenDialog.findViewById(R.id.dialog_button);
-
+                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if (validatePasswordForm()) {
                             dialogLoader.showProgressDialog();
-                            Call<UserData> call = BuyInputsAPIClient.getInstance().updatePassword(oldPassword.getText().toString().trim(),
+                            Call<UserData> call = BuyInputsAPIClient.getInstance().updatePassword(access_token,oldPassword.getText().toString().trim(),
                                     newPassword.getText().toString().trim(),
                                     WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext())
                             );
@@ -575,10 +576,10 @@ public class SettingsFragment extends Fragment {
 
         deviceID = FirebaseInstanceId.getInstance().getToken();
 
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ContactUsData> call = BuyInputsAPIClient.getInstance()
                 .notify_me
-                        (
+                        (access_token,
                                 notify,
                                 deviceID
                         );
