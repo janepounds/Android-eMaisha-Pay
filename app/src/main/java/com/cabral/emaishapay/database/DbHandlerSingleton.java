@@ -777,7 +777,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     //get product name
     public String getCurrency() {
-
+        this.database = this.getWritableDatabase();
         String currency = "n/a";
         Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
 
@@ -800,7 +800,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     //get product weight unit name
     public String getSupplierName(String supplier_id) {
-
+        this.database = this.getWritableDatabase();
         String supplier_name = "n/a";
         Cursor cursor = database.rawQuery("SELECT * FROM " + SUPPLIERS_TABLE_NAME + " WHERE " + SUPPLIERS_ID + "=" + supplier_id + "", null);
 
