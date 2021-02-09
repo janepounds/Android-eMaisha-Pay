@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -161,7 +162,7 @@ public class My_Cart extends Fragment {
             // Go back to previous fragment(wallet home)
             requireActivity().onBackPressed();
         });
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         // Handle Click event of cart_checkout_btn Button
         cart_checkout_btn.setOnClickListener(view -> {
 //            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
@@ -417,10 +418,10 @@ public class My_Cart extends Fragment {
         getAllProducts.setProductsId(String.valueOf(products_id));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
         Response<ProductData> response = call.execute();
@@ -445,7 +446,8 @@ public class My_Cart extends Fragment {
         GetStock getStockParams = new GetStock();
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
-        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(getStockParams);
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
         try {
             Response<ProductStock> response = call.execute();
             if (response.isSuccessful()) {

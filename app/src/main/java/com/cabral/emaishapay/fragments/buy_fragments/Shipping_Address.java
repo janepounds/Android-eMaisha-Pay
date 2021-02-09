@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.Maps.PlacesFieldSelector;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ShippingTimeSlotsAdapter;
@@ -591,12 +592,12 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
         dialogLoader.showProgressDialog();
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String[] names = input_name.getText().toString().trim().split(" ");
 
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .addUserAddress
-                        (
+                        (       access_token,
                                 customerID,
                                 names[0],
                                 JoinStrings(Arrays.copyOfRange(names, 1, names.length)),
@@ -660,11 +661,11 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public void updateUserAddress(String addressID, AddressDetails addressDetails) {
         dialogLoader.showProgressDialog();
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String[] names = input_name.getText().toString().trim().split(" ");
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .updateUserAddress
-                        (
+                        (       access_token,
                                 customerID,
                                 addressID,
                                 names[0],

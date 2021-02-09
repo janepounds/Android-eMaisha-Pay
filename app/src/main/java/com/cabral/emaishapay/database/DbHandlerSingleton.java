@@ -155,6 +155,14 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String PAYMENT_METHOD_NAME = "payment_method_name";
 
 
+    public static final String PRODUCT_MANUFACTURER_TABLE_NAME = "manufacturers";
+    public static final String MANUFACTURER_ID = "manufacturer_id";
+    public static final String MANUFACTURER_NAME = "manufacturer_name";
+
+
+    public static final String PRODUCT_NAME_TABLE_NAME = "product_names";
+    public static final String PRODUCT_NAME_ID = "product_id";
+    public static final String PRODUCT_NAME_NAME = "product_name";
 
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
@@ -235,6 +243,11 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 PAYMENT_METHOD_NAME + " TEXT " + " ) ";
 
 
+        String product_manufacturer_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_MANUFACTURER_TABLE_NAME + "( " + MANUFACTURER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                MANUFACTURER_NAME + " TEXT " + " ) ";
+
+        String product_names_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_NAME_TABLE_NAME + "( " + PRODUCT_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                PRODUCT_NAME_NAME + " TEXT " + " ) ";
 
 
 
@@ -252,6 +265,8 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(product_cart_table_insert_query);
         database.execSQL(customers_table_insert_query);
         database.execSQL(payment_method_table_insert_query);
+        database.execSQL(product_manufacturer_table_insert_query);
+        database.execSQL(product_names_table_insert_query);
     }
 
     @Override
@@ -1247,6 +1262,130 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         cursor.close();
         database.close();
         return customer;
+    }
+
+    //add manufacturers
+    public boolean addManufacturers(String manufacturer_name) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+
+        values.put(MANUFACTURER_NAME, manufacturer_name);
+
+
+        long check = database.insert(PRODUCT_MANUFACTURER_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //add product categories
+    public boolean addProductCategory(String category_name) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+
+        values.put(CATEGORY_NAME, category_name);
+
+
+        long check = database.insert(PRODUCT_CATEGORY_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //add product names
+    public boolean addProductName(String product_name) {
+
+        ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
+
+        values.put(PRODUCT_NAME_NAME, product_name);
+
+
+        long check = database.insert(PRODUCT_NAME_TABLE_NAME, null, values);
+        database.close();
+
+        //if data insert success, its return 1, if failed return -1
+        if (check == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //get offline manufacturers
+    //get customer data
+    public ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+        ArrayList<HashMap<String, String>> manufacturers = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_MANUFACTURER_TABLE_NAME +  " ORDER BY " + MANUFACTURER_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(MANUFACTURER_NAME, cursor.getString(1));
+
+
+
+
+                manufacturers.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return manufacturers;
+    }
+
+    //get offline product categories
+    public ArrayList<HashMap<String, String>> getOfflineProductCategories() {
+        ArrayList<HashMap<String, String>> categories = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_CATEGORY_TABLE_NAME +  " ORDER BY " + CATEGORY_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(CATEGORY_NAME, cursor.getString(1));
+
+
+
+                categories.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return categories;
+    }
+    //get offline product names
+    public ArrayList<HashMap<String, String>> getOfflineProductNames() {
+        ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCT_NAME_TABLE_NAME +  " ORDER BY " + PRODUCT_NAME_NAME + " DESC ", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put(PRODUCT_NAME_NAME, cursor.getString(1));
+
+
+
+                productnames.add(map);
+            } while (cursor.moveToNext());
+        }
+//        cursor.close();
+//        database.close();
+        return productnames;
     }
 }
 

@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
@@ -423,10 +424,10 @@ public class Category_Products extends Fragment {
         getAllProducts.setCategoriesId(String.valueOf(categoryID));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
         getAllProducts.setType(sortBy);
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         productsCall = BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
 
@@ -493,10 +494,10 @@ public class Category_Products extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String data = new Gson().toJson(getAllProducts);
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
 
@@ -542,10 +543,10 @@ public class Category_Products extends Fragment {
     //*********** Request Filters of the given OrderProductCategory ********//
 
     private void RequestFilters(int categories_id) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         filterCAll = BuyInputsAPIClient.getInstance()
                 .getFilters
-                        (
+                        (access_token,
                                 categories_id,
                                 ConstantValues.LANGUAGE_ID
                         );

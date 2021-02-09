@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CurrencyAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
@@ -201,8 +202,9 @@ public class CurrencyFrag extends Fragment {
     
     public void RequestCurrency() {
         dialogLoader.showProgressDialog();
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<CurrencyModel> call = BuyInputsAPIClient.getInstance()
-                .getCurrency();
+                .getCurrency(access_token);
         
         call.enqueue(new Callback<CurrencyModel>() {
             @Override

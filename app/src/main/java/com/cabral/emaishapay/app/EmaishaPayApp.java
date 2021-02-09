@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
@@ -176,11 +177,11 @@ public class EmaishaPayApp extends MultiDexApplication {
     }
 
     public static  void checkWalletAccount(String email, String phonenumber) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         if(ConstantValues.IS_USER_LOGGED_IN){
             Call<TokenResponse> call = APIClient.getWalletInstance()
                     .checkWalletAccount
-                            (
+                            (       access_token,
                                     email,
                                     phonenumber
                             );

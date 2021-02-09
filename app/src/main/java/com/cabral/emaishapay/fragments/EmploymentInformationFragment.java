@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentEmploymentInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
@@ -71,9 +72,9 @@ public class EmploymentInformationFragment extends Fragment {
         binding.submitButton.setOnClickListener(v -> {
             progressDialog.show();
             String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-
+            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
             Call<AccountResponse> call = APIClient.getWalletInstance()
-                    .storeEmploymentInfo(userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
+                    .storeEmploymentInfo(access_token,userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
                             "+256 " + binding.contact.getText().toString(), binding.employerId.getText().toString());
             call.enqueue(new Callback<AccountResponse>() {
                 @Override

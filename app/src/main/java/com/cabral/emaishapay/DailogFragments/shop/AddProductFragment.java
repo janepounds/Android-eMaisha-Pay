@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.DailogFragments.shop;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -42,7 +43,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
@@ -69,14 +72,14 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class AddProductFragment extends DialogFragment {
-
+    private static final String TAG = "AddProductFragment";
 
     Context context;
     public static EditText etxtProductCode;
     ProgressDialog loading;
     EditText etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight;
     TextView txtAddProdcut;
-    AutoCompleteTextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
+    TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
@@ -94,6 +97,11 @@ public class AddProductFragment extends DialogFragment {
     private List<String> manufacturersNames;
     private int measure_id;
     private DbHandlerSingleton dbHandler;
+    private ImageView produce_image;
+    private ArrayList<HashMap<String, String>>offlineManufacturers;
+    private ArrayList<HashMap<String, String>>offlineCategories;
+    private ArrayList<HashMap<String, String>>offlineProductNames;
+
 
 
 
@@ -147,6 +155,7 @@ public class AddProductFragment extends DialogFragment {
         Spinner quantityUnit = view.findViewById(R.id.product_units);
         TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
         TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
+        produce_image = view.findViewById(R.id.product_image);
         txtAddProdcut = view.findViewById(R.id.txt_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
         close.setOnClickListener(v -> dismiss());
@@ -185,10 +194,22 @@ public class AddProductFragment extends DialogFragment {
 
             }
         });
+        //get offline manufacturers;
 
+        offlineManufacturers = new ArrayList<>();
+        offlineManufacturers = dbHandler.getOfflineManufacturers();
+
+        //get offline product categories
+        offlineCategories = new ArrayList<>();
+        offlineCategories = dbHandler.getOfflineProductCategories();
+
+        //get offline product names
+        offlineProductNames = new ArrayList<>();
+        offlineProductNames = dbHandler.getOfflineProductNames();
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
-                .getManufacturers();
+                .getManufacturers(access_token);
         call1.enqueue(new Callback<ManufacturersResponse>() {
             @Override
             public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
@@ -213,7 +234,7 @@ public class AddProductFragment extends DialogFragment {
 
         Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
-                .getCategories();
+                .getCategories(access_token);
         call.enqueue(new Callback<CategoriesResponse>() {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
@@ -241,7 +262,12 @@ public class AddProductFragment extends DialogFragment {
         weightUnitNames = new ArrayList<>();
 
 
-
+        produce_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
+        });
 
         //get data from local database
         final List<HashMap<String, String>> productCategory, productSupplier, weightUnit;
@@ -283,12 +309,20 @@ public class AddProductFragment extends DialogFragment {
                 if(manufacturers!=null) {
                     for (int i = 0; i < manufacturers.size(); i++) {
                         manufacturersNames.add(manufacturers.get(i).getManufacturer_name());
+
                     }
                 }
 
                 manufacturersAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_row);
                 manufacturersAdapter.addAll(manufacturersNames);
 
+                //add offline manufacturers
+                for(int i=0;i<offlineManufacturers.size();i++){
+                    String manufacturer = offlineManufacturers.get(i).get("manufacturer_name");
+                    manufacturersAdapter.add(manufacturer);
+                }
+
+                Log.d(TAG, "onClick: offline manufacturers"+offlineManufacturers);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_list_search, null);
@@ -299,12 +333,38 @@ public class AddProductFragment extends DialogFragment {
                 EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                 TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                 ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
+                TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
+                Button update = dialogView.findViewById(R.id.button_update);
 
 
                 dialog_title.setText("Manufacturers");
                 dialog_list.setVerticalScrollBarEnabled(true);
                 dialog_list.setAdapter(manufacturersAdapter);
 
+                dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_add_edit_text.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!dialog_add_edit_text.getText().toString().isEmpty()){
+                            boolean check = dbHandler.addManufacturers(dialog_add_edit_text.getText().toString());
+                            if(check){
+
+                                manufacturersAdapter.notifyDataSetChanged();
+                                dialog_add_edit_text.getText().clear();
+                            }else{
+                                Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                            }
+
+                        }
+                    }
+                });
                 dialog_input.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -377,7 +437,11 @@ public class AddProductFragment extends DialogFragment {
 
                     categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_row);
                     categoryAdapter.addAll(catNames);
-
+                    //add offline categories
+                    for(int i=0;i<offlineCategories.size();i++){
+                        String category_name = offlineCategories.get(i).get("category_name");
+                        categoryAdapter.add(category_name);
+                    }
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     View dialogView = getLayoutInflater().inflate(R.layout.dialog_list_search, null);
@@ -388,12 +452,39 @@ public class AddProductFragment extends DialogFragment {
                     EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                     TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
-
+                    TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                    EditText dialog_add_edit_text = dialogView.findViewById(R.id.et_add_new_item);
+                    Button update = dialogView.findViewById(R.id.button_update);
 
                     dialog_title.setText(R.string.product_category);
                     dialog_list.setVerticalScrollBarEnabled(true);
                     dialog_list.setAdapter(categoryAdapter);
 
+                    dialog_add_btn.setText("Add New Category");
+                    dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog_add_edit_text.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                    update.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!dialog_add_edit_text.getText().toString().isEmpty()){
+                                boolean check = dbHandler.addProductCategory(dialog_add_edit_text.getText().toString());
+                                if(check){
+
+
+                                    categoryAdapter.notifyDataSetChanged();
+                                    dialog_add_edit_text.getText().clear();
+                                }else{
+                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                                }
+
+                            }
+                        }
+                    });
 
                     dialog_input.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -442,10 +533,11 @@ public class AddProductFragment extends DialogFragment {
                                     category_name = categories.get(i).getCategories_slug();
                                 }
                             }
-
+                            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
+                                            access_token,
                                             category_id,
                                             selectedManufacturersID
                                     );
@@ -486,14 +578,20 @@ public class AddProductFragment extends DialogFragment {
                 productNames = new ArrayList<>();
                 Log.d("Products", String.valueOf(products));
                 if (validateProductCategory()) {
-                    for (int i = 0; i < products.size(); i++) {
-                        productNames.add(products.get(i).getProducts_name()+ " "+ products.get(i).getProducts_weight()+ products.get(i).getProducts_weight_unit());
-                        measure_id = products.get(i).getMeasure_id();
+                    if(products!=null) {
+                        for (int i = 0; i < products.size(); i++) {
+                            productNames.add(products.get(i).getProducts_name() + " " + products.get(i).getProducts_weight() + products.get(i).getProducts_weight_unit());
+                            measure_id = products.get(i).getMeasure_id();
+                        }
                     }
 
                     productAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_row);
                     productAdapter.addAll(productNames);
-
+                    //add offline product names
+                    for(int i=0;i<offlineProductNames.size();i++){
+                        String product_name = offlineProductNames.get(i).get("product_name");
+                        productAdapter.add(product_name);
+                    }
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     View dialogView = getLayoutInflater().inflate(R.layout.dialog_list_search, null);
@@ -504,11 +602,40 @@ public class AddProductFragment extends DialogFragment {
                     EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
                     TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
                     ListView dialog_list = dialogView.findViewById(R.id.dialog_list);
+                    TextView dialog_add_btn = dialogView.findViewById(R.id.tv_add_new_item);
+                    Button dialog_update_button = dialogView.findViewById(R.id.button_update);
+                    EditText add_product = dialogView.findViewById(R.id.et_add_new_item);
+
 
 
                     dialog_title.setText("Products");
                     dialog_list.setVerticalScrollBarEnabled(true);
                     dialog_list.setAdapter(productAdapter);
+                    dialog_add_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            add_product.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                    dialog_update_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!add_product.getText().toString().isEmpty()){
+                                boolean check = dbHandler.addProductName(add_product.getText().toString());
+                                if(check){
+
+
+                                    productAdapter.notifyDataSetChanged();
+                                    add_product.getText().clear();
+                                }else{
+                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                                }
+
+                            }
+                        }
+                    });
 
 
                     dialog_input.addTextChangedListener(new TextWatcher() {
@@ -667,7 +794,7 @@ public class AddProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
 
-
+                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                 if (product_name == null || product_name.isEmpty()) {
                     etxtProductName.setError(getString(R.string.product_name_cannot_be_empty));
                     etxtProductName.requestFocus();
@@ -697,6 +824,7 @@ public class AddProductFragment extends DialogFragment {
                     Call<ResponseBody> call = BuyInputsAPIClient
                             .getInstance()
                             .postProduct(
+                                    access_token,
                                     id,
                                     measure_id,
                                     shop_id,
@@ -794,7 +922,7 @@ public class AddProductFragment extends DialogFragment {
         try {
 
             // When an Image is picked
-            if (requestCode == 1213 && resultCode == RESULT_OK && null != data) {
+            if (resultCode == Activity.RESULT_OK && requestCode == 1) {
 
 
                 mediaPath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
@@ -803,7 +931,7 @@ public class AddProductFragment extends DialogFragment {
 
                 encodedImage = encodeImage(selectedImage);
 
-
+                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedImage, Base64.DEFAULT)).placeholder(R.drawable.add_default_image).into(produce_image);
             }
 
 
@@ -822,6 +950,13 @@ public class AddProductFragment extends DialogFragment {
         return encImage;
     }
 
+    private void chooseImage() {
+        Intent intent = new Intent(getActivity(), ImageSelectActivity.class);
+        intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
+        intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
+        intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
+        startActivityForResult(intent, 1);
+    }
 
 
 

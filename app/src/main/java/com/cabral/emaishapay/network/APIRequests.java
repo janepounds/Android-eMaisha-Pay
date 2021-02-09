@@ -76,7 +76,10 @@ public interface APIRequests {
     /**************  WALLET REQUESTS *******************************/
     @FormUrlEncoded
     @POST("user/check_account")
-    Call<TokenResponse> checkWalletAccount(@Field("email") String email, @Field("phoneNumber") String phonenumber);
+    Call<TokenResponse> checkWalletAccount(
+            @Header("Authorization") String token,
+            @Field("email") String email,
+            @Field("phoneNumber") String phonenumber);
 
 
     //wallet authentication
@@ -203,14 +206,18 @@ public interface APIRequests {
 
     //get user loans
     @GET("wallet/loan/user/loans")
-    Call<LoanListResponse> getUserLoans(@Query("userId") String userId
+    Call<LoanListResponse> getUserLoans(
+            @Header("Authorization") String token,
+            @Query("userId") String userId
             /*@Header("Authorization") String token*/
     );
 
     //cancel loan
 
     @POST("wallet/loan/cancelRequest")
-    Call<CancelLoanResponse> cancelLoanRequest(@Query("userId") String userId
+    Call<CancelLoanResponse> cancelLoanRequest(
+            @Header("Authorization") String token,
+            @Query("userId") String userId
             /*@Header("Authorization") String token*/
     );
 
@@ -263,7 +270,9 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("processforgotpassword")
-    Call<UserData> processForgotPassword(@Field("email") String customers_email_address);
+    Call<UserData> processForgotPassword(
+            @Header("Authorization") String token,
+            @Field("email") String customers_email_address);
 
     @FormUrlEncoded
     @POST("updatecustomerinfo")
@@ -301,6 +310,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_personal_info")
     Call<AccountResponse> storePersonalInfo(
+            @Header("Authorization") String token,
             @Field("user_id") String user_id,
             @Field("dob") String dob,
             @Field("gender") String gender,
@@ -312,6 +322,7 @@ public interface APIRequests {
     //getAccount info
     @GET("user/account_data/{userId}")
     Call<AccountResponse>getAccountInfo(
+            @Header("Authorization") String token,
             @Path("userId") String userId
     );
 
@@ -319,6 +330,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_id_info")
     Call<AccountResponse> storeIdInfo(
+            @Header("Authorization")String token,
             @Field("user_id") String user_id,
             @Field("id_type") String id_type,
             @Field("id_number") String id_number,
@@ -331,6 +343,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_employment_info")
     Call<AccountResponse> storeEmploymentInfo(
+            @Header("Authorization")String token,
             @Field("user_id") String user_id,
             @Field("employer") String employer,
             @Field("designation") String designation,
@@ -343,6 +356,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("store_user_business_info")
     Call<AccountResponse> storeBusinessInfo(
+            @Header("Authorization")String token,
             @Field("user_id") String user_id,
             @Field("business_name") String business_name,
             @Field("business_location") String location,
@@ -357,6 +371,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("apply_for_business")
     Call<AccountResponse> applyForBusiness(
+            @Header("Authorization") String token,
             @Field("user_id") String user_id,
             @Field("business_name") String business_name,
             @Field("registration_no") String reg_no,
@@ -375,6 +390,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/add_device_info")
     Call<UserData> registerDeviceToFCM(
+            @Header("Authorization") String token,
             @Field("device_id") String device_id,
             @Field("device_type") String device_type,
             @Field("user_id") String user_id,
@@ -392,6 +408,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/add_card_info")
     Call<CardResponse>saveCardInfo(
+            @Header("Authorization")String token,
             @Field("identifier") String user_id,
             @Field("card_number") String card_number,
             @Field("cvv") String cvv,

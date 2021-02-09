@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -93,11 +94,11 @@ public class PopularProductsFragment extends Fragment {
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("top seller");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
 

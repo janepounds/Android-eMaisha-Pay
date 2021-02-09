@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
@@ -180,10 +181,10 @@ public class My_Addresses extends Fragment {
     public void RequestAllAddresses(View rootView) {
 
         dialogLoader.showProgressDialog();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .getAllAddress
-                        (
+                        (       access_token,
                                 customerID
                         );
 
@@ -223,10 +224,10 @@ public class My_Addresses extends Fragment {
     //*********** Request to Delete the given User's Address ********//
 
     public void DeleteAddress(final String customerID, final String addressID, final Context context, final View view) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .deleteUserAddress
-                        (
+                        (access_token,
                                 customerID,
                                 addressID
                         );
@@ -267,10 +268,10 @@ public class My_Addresses extends Fragment {
 
         final DialogLoader dialogLoader = new DialogLoader(context);
         dialogLoader.showProgressDialog();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .updateDefaultAddress
-                        (
+                        (       access_token,
                                 customerID,
                                 addressID
                         );

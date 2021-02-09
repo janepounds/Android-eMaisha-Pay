@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
@@ -110,9 +111,9 @@ public class StartAppRequests {
     //*********** API Request Method to Fetch App Banners ********//
 
     public void RequestBanners() {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<BannerData> call = BuyInputsAPIClient.getInstance()
-                .getBanners();
+                .getBanners(access_token);
 
         try {
             Response<BannerData> response = call.execute();
@@ -137,10 +138,10 @@ public class StartAppRequests {
     //*********** API Request Method to Fetch All Categories ********//
 
     public void RequestAllCategories() {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<CategoryData> call = BuyInputsAPIClient.getInstance()
                 .getAllCategories
-                        (
+                        (access_token,
                                 ConstantValues.LANGUAGE_ID
                         );
 
@@ -242,10 +243,10 @@ public class StartAppRequests {
                 @Override
                 public void onSuccess(InstanceIdResult instanceIdResult) {
                     String deviceID =instanceIdResult.getToken();
-
+                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                     Call<UserData> call = APIClient.getWalletInstance()
                             .registerDeviceToFCM
-                                    (
+                                    (       access_token,
                                             deviceID,
                                             device.getDeviceType(),
                                             user_id,

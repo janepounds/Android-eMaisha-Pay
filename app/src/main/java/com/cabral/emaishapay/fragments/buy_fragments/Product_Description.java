@@ -45,6 +45,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAttributesAdapter;
@@ -992,10 +993,10 @@ public class Product_Description extends Fragment {
         getAllProducts.setCustomersId(customerID);
         getAllProducts.setProductsId(String.valueOf(productID));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
-                        (
+                        (access_token,
                                 getAllProducts
                         );
 
@@ -1041,10 +1042,10 @@ public class Product_Description extends Fragment {
         getStock.setProductsId(String.valueOf(productID));
         getStock.setAttributes(attributes);
 
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductStock> call = BuyInputsAPIClient.getInstance()
                 .getProductStock
-                        (
+                        (access_token,
                                 getStock
                         );
 
@@ -1082,10 +1083,10 @@ public class Product_Description extends Fragment {
     //*********** Request the Server to Like the Product based on productID and customerID ********//
 
     public static void LikeProduct(int productID, String customerID, final Context context, final View view) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .likeProduct
-                        (
+                        (access_token,
                                 productID,
                                 customerID
                         );
@@ -1124,10 +1125,10 @@ public class Product_Description extends Fragment {
     //*********** Request the Server to Unlike the Product based on productID and customerID ********//
 
     public static void UnlikeProduct(int productID, String customerID, final Context context, final View view) {
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .unlikeProduct
-                        (
+                        (access_token,
                                 productID,
                                 customerID
                         );
@@ -1286,10 +1287,10 @@ public class Product_Description extends Fragment {
     private void getProductReviews(final String productID, final ProductReviewsAdapter adapter) {
 
         dialogLoader.showProgressDialog();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .getProductReviews
-                        (
+                        (       access_token,
                                 productID,
                                 "" + ConstantValues.LANGUAGE_ID
                         );
@@ -1335,8 +1336,8 @@ public class Product_Description extends Fragment {
         map.put("languages_id", languages_id);
         map.put("reviews_text", reviews_text);
 
-
-        Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(map);
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map);
 
         call.enqueue(new Callback<GiveRating>() {
             @Override
@@ -1403,7 +1404,8 @@ public class Product_Description extends Fragment {
         GetStock getStockParams = new GetStock();
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
-        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(getStockParams);
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
         try {
             Response<ProductStock> response = call.execute();
             if (response.isSuccessful()) {

@@ -30,6 +30,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.Login;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -662,8 +663,9 @@ public class WalletAccountFragment extends Fragment {
 
     public void retrieveAccountInfo(){
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .getAccountInfo(userId);
+                .getAccountInfo(access_token,userId);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {

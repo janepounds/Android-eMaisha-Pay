@@ -290,9 +290,9 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     private void processForgotPassword(String email) {
         dialogLoader.showProgressDialog();
-
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         Call<UserData> call = apiRequests
-                .processForgotPassword(email);
+                .processForgotPassword(access_token,email);
 
         call.enqueue(new Callback<UserData>() {
             @Override
