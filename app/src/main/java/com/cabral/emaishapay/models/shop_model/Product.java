@@ -7,9 +7,9 @@ public class Product {
     private double products_weight;
     private String products_weight_unit;
     private double products_price;
-    private int measure_id;
+    private String measure_id;
 
-    public Product(Integer products_id, String products_slug, String products_name, double products_weight, String products_weight_unit, double products_price, int measure_id) {
+    public Product(Integer products_id, String products_slug, String products_name, double products_weight, String products_weight_unit, double products_price, String measure_id) {
         this.products_id = products_id;
         this.products_slug = products_slug;
         this.products_name = products_name;
@@ -43,7 +43,7 @@ public class Product {
         return products_price;
     }
 
-    public int getMeasure_id() {
+    public String getMeasure_id() {
         return measure_id;
     }
 }

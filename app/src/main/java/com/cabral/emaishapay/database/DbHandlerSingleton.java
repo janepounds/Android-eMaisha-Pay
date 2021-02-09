@@ -54,17 +54,23 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     public static final String PRODUCTS_TABLE_NAME = "products";
     public static final String PRODUCT_ID = "product_id";
+    public static final String PRODUCT_UNIQUE_ID = "unique_id";
+    public static final String PRODUCT_MEASURE_ID = "measure_id";
+    public static final String PRODUCT_USER_ID = "user_id";
+    public static final String SELECTED_PRODUCT_ID = "selected_product_id";
+    public static final String PRODUCT_MANUFACTURER = "product_manufacturer";
     public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_CODE = "product_code";
+    public static final String SELECT_PRODUCT_CATEGORY_ID = "selected_category_id";
     public static final String PRODUCT_CATEGORY = "product_category";
-    public static final String PRODUCT_DESCRIPTION = "product_description";
     public static final String PRODUCT_BUY_PRICE = "product_buy_price";
     public static final String PRODUCT_SELL_PRICE = "product_sell_price";
     public static final String PRODUCT_SUPPLIER = "product_supplier";
     public static final String PRODUCT_IMAGE = "product_image";
     public static final String PRODUCT_STOCK = "product_stock";
-    public static final String PRODUCT_WEIGHT_UNIT = "product_weight_unit";
-    public static final String PRODUCT_WEIGHT = "product_weight";
+    public static final String PRODUCT_UNITS = "product_unit";
+    public static final String SYNC_STATUS = "sync_status";
+
 
 
     public static final String PRODUCT_CATEGORY_TABLE_NAME = "product_category";
@@ -195,9 +201,12 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 MARKET_PRICE_CROP + " TEXT NOT NULL, " + MARKET_PRICE_TABLE_MARKET + " TEXT NOT NULL, " + MARKET_PRICE_RETAIL + " TEXT NOT NULL, " + MARKET_PRICE_WHOLESALE + " TEXT NOT NULL " + " ) ";
 
         String products_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "( " + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                PRODUCT_NAME + " TEXT, " + PRODUCT_CODE + " TEXT , " + PRODUCT_CATEGORY + " TEXT , " + PRODUCT_DESCRIPTION + " TEXT ," +
+                PRODUCT_UNIQUE_ID + " TEXT, "+ PRODUCT_MEASURE_ID + " TEXT, "+ PRODUCT_USER_ID +" TEXT, " + SELECTED_PRODUCT_ID + " TEXT, "+ PRODUCT_MANUFACTURER + " TEXT, "+
+                PRODUCT_NAME + " TEXT, " + PRODUCT_CODE + " TEXT , "+SELECT_PRODUCT_CATEGORY_ID + " TEXT, " + PRODUCT_CATEGORY + " TEXT , " +
                 PRODUCT_BUY_PRICE + " TEXT, " + PRODUCT_SELL_PRICE + " TEXT , " + PRODUCT_SUPPLIER + " TEXT , " + PRODUCT_IMAGE + " TEXT ," +
-                PRODUCT_STOCK + " TEXT, " + PRODUCT_WEIGHT_UNIT + " TEXT , " + PRODUCT_WEIGHT + " TEXT  " + " ) ";
+                PRODUCT_STOCK + " TEXT, " + PRODUCT_UNITS + " TEXT , " + SYNC_STATUS +" TEXT " + " ) ";
+
+
 
         String product_category_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_CATEGORY_TABLE_NAME + "( " + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 CATEGORY_NAME + " TEXT " + " ) ";
@@ -572,17 +581,23 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
                 map.put(PRODUCT_ID, cursor.getString(0));
-                map.put(PRODUCT_NAME, cursor.getString(1));
-                map.put(PRODUCT_CODE, cursor.getString(2));
-                map.put(PRODUCT_CATEGORY, cursor.getString(3));
-                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
-                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
-                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
-                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
-                map.put(PRODUCT_IMAGE, cursor.getString(8));
-                map.put(PRODUCT_STOCK, cursor.getString(9));
-                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
-                map.put(PRODUCT_WEIGHT, cursor.getString(11));
+                map.put(PRODUCT_UNIQUE_ID, cursor.getString(1));
+                map.put(PRODUCT_MEASURE_ID, cursor.getString(2));
+                map.put(PRODUCT_USER_ID, cursor.getString(3));
+                map.put(SELECTED_PRODUCT_ID, cursor.getString(4));
+                map.put(PRODUCT_MANUFACTURER, cursor.getString(5));
+                map.put(PRODUCT_NAME, cursor.getString(6));
+                map.put(PRODUCT_CODE, cursor.getString(7));
+                map.put(SELECT_PRODUCT_CATEGORY_ID, cursor.getString(8));
+                map.put(PRODUCT_CATEGORY, cursor.getString(9));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(10));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(11));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(12));
+                map.put(PRODUCT_IMAGE, cursor.getString(13));
+                map.put(PRODUCT_STOCK, cursor.getString(14));
+                map.put(PRODUCT_UNITS, cursor.getString(15));
+                map.put(SYNC_STATUS, cursor.getString(16));
+
 
 
                 product.add(map);
@@ -603,17 +618,21 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                 HashMap<String, String> map = new HashMap<String, String>();
 
                 map.put(PRODUCT_ID, cursor.getString(0));
-                map.put(PRODUCT_NAME, cursor.getString(1));
-                map.put(PRODUCT_CODE, cursor.getString(2));
-                map.put(PRODUCT_CATEGORY, cursor.getString(3));
-                map.put(PRODUCT_DESCRIPTION, cursor.getString(4));
-                map.put(PRODUCT_BUY_PRICE, cursor.getString(5));
-                map.put(PRODUCT_SELL_PRICE, cursor.getString(6));
-                map.put(PRODUCT_SUPPLIER, cursor.getString(7));
-                map.put(PRODUCT_IMAGE, cursor.getString(8));
-                map.put(PRODUCT_STOCK, cursor.getString(9));
-                map.put(PRODUCT_WEIGHT_UNIT, cursor.getString(10));
-                map.put(PRODUCT_WEIGHT, cursor.getString(11));
+                map.put(PRODUCT_UNIQUE_ID, cursor.getString(1));
+                map.put(PRODUCT_MEASURE_ID, cursor.getString(2));
+                map.put(PRODUCT_USER_ID, cursor.getString(3));
+                map.put(SELECTED_PRODUCT_ID, cursor.getString(4));
+                map.put(PRODUCT_MANUFACTURER, cursor.getString(5));
+                map.put(PRODUCT_NAME, cursor.getString(6));
+                map.put(PRODUCT_CODE, cursor.getString(7));
+                map.put(SELECT_PRODUCT_CATEGORY_ID, cursor.getString(8));
+                map.put(PRODUCT_CATEGORY, cursor.getString(9));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(10));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(11));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(12));
+                map.put(PRODUCT_IMAGE, cursor.getString(13));
+                map.put(PRODUCT_STOCK, cursor.getString(14));
+                map.put(PRODUCT_UNITS, cursor.getString(15));
 
 
                 product.add(map);
@@ -723,22 +742,27 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
     //insert products
-    public boolean addProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_stock, String product_supplier, String product_image, String weight_unit, String product_weight) {
+    public boolean addProduct(String product_unique_id, String measure_id, String userId, String selected_product_id, String product_name, String product_code, String selected_category_id, String product_buy_price, String product_sell_price, String product_stock,String product_supplier , String product_image, String product_unit,String product_manufacturer,String product_category,String sync_status) {
 
         ContentValues values = new ContentValues();
         this.database = this.getWritableDatabase();
-        values.put(PRODUCT_ID, product_id);
+        values.put(PRODUCT_UNIQUE_ID, product_unique_id);
+        values.put(PRODUCT_MEASURE_ID, measure_id);
+        values.put(PRODUCT_USER_ID, userId);
+        values.put(SELECTED_PRODUCT_ID, selected_product_id);
         values.put(PRODUCT_NAME, product_name);
         values.put(PRODUCT_CODE, product_code);
-        values.put(PRODUCT_CATEGORY, product_category);
-        values.put(PRODUCT_DESCRIPTION, product_description);
+        values.put(SELECT_PRODUCT_CATEGORY_ID, selected_category_id);
         values.put(PRODUCT_BUY_PRICE, product_buy_price);
         values.put(PRODUCT_SELL_PRICE, product_sell_price);
+        values.put(PRODUCT_STOCK, product_stock);
         values.put(PRODUCT_SUPPLIER, product_supplier);
         values.put(PRODUCT_IMAGE, product_image);
-        values.put(PRODUCT_STOCK, product_stock);
-        values.put(PRODUCT_WEIGHT_UNIT, weight_unit);
-        values.put(PRODUCT_WEIGHT, product_weight);
+        values.put(PRODUCT_UNITS, product_unit);
+        values.put(PRODUCT_MANUFACTURER, product_manufacturer);
+        values.put(PRODUCT_CATEGORY, product_category);
+        values.put(SYNC_STATUS, sync_status);
+
 
         long check = database.insert(PRODUCTS_TABLE_NAME, null, values);
         database.close();
@@ -753,7 +777,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     //get product name
     public String getCurrency() {
-
+        this.database = this.getWritableDatabase();
         String currency = "n/a";
         Cursor cursor = database.rawQuery("SELECT * FROM " + SHOP_TABLE_NAME + "", null);
 
@@ -776,7 +800,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     //get product weight unit name
     public String getSupplierName(String supplier_id) {
-
+        this.database = this.getWritableDatabase();
         String supplier_name = "n/a";
         Cursor cursor = database.rawQuery("SELECT * FROM " + SUPPLIERS_TABLE_NAME + " WHERE " + SUPPLIERS_ID + "=" + supplier_id + "", null);
 
@@ -1015,7 +1039,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             do {
 
 
-                product_name = cursor.getString(1);
+                product_name = cursor.getString(6);
 
 
             } while (cursor.moveToNext());
@@ -1038,7 +1062,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             do {
 
 
-                image = cursor.getString(8);
+                image = cursor.getString(13);
 
 
             } while (cursor.moveToNext());
@@ -1386,6 +1410,64 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 //        cursor.close();
 //        database.close();
         return productnames;
+    }
+
+
+    //get unsynced products
+    public ArrayList<HashMap<String, String>> getUnsyncedProducts(String sync_status) {
+        ArrayList<HashMap<String, String>> product = new ArrayList<>();
+        this.database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCTS_TABLE_NAME +" WHERE "+ SYNC_STATUS + " = '" + sync_status + "'", null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+
+                map.put(PRODUCT_ID, cursor.getString(0));
+                map.put(PRODUCT_UNIQUE_ID, cursor.getString(1));
+                map.put(PRODUCT_MEASURE_ID, cursor.getString(2));
+                map.put(PRODUCT_USER_ID, cursor.getString(3));
+                map.put(SELECTED_PRODUCT_ID, cursor.getString(4));
+                map.put(PRODUCT_MANUFACTURER, cursor.getString(5));
+                map.put(PRODUCT_NAME, cursor.getString(6));
+                map.put(PRODUCT_CODE, cursor.getString(7));
+                map.put(SELECT_PRODUCT_CATEGORY_ID, cursor.getString(8));
+                map.put(PRODUCT_CATEGORY, cursor.getString(9));
+                map.put(PRODUCT_BUY_PRICE, cursor.getString(10));
+                map.put(PRODUCT_SELL_PRICE, cursor.getString(11));
+                map.put(PRODUCT_SUPPLIER, cursor.getString(12));
+                map.put(PRODUCT_IMAGE, cursor.getString(13));
+                map.put(PRODUCT_STOCK, cursor.getString(14));
+                map.put(PRODUCT_UNITS, cursor.getString(15));
+                map.put(SYNC_STATUS, cursor.getString(16));
+
+
+
+                product.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return product;
+    }
+
+    //delete product
+    public boolean updateProductSyncStatus(String product_id,String sync_status) {
+        ContentValues values = new ContentValues();
+
+        values.put("sync_status", sync_status);
+
+        long check = database.update("products", values, "product_id=?", new String[]{product_id});
+
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
 

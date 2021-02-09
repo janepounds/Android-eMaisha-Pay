@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
@@ -81,6 +82,7 @@ public class AddProductFragment extends DialogFragment {
     TextView txtAddProdcut;
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
+    Spinner quantityUnit;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
     Integer selectedCategoryID;
@@ -95,7 +97,10 @@ public class AddProductFragment extends DialogFragment {
     private List<Manufacturer> manufacturers;
     private List<String> productNames;
     private List<String> manufacturersNames;
-    private int measure_id;
+    private List<String> offlinemanufacturersNames;
+    private List<String> offlineCategoryNames;
+    private List<String> offlineProductsName;
+    private String measure_id;
     private DbHandlerSingleton dbHandler;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers;
@@ -152,11 +157,11 @@ public class AddProductFragment extends DialogFragment {
         etxtProductStock = view.findViewById(R.id.etxt_product_stock);
         etxtProductSupplier = view.findViewById(R.id.etxt_supplier);
         etxtProductManufucturer = view.findViewById(R.id.etxt_product_manufucturer);
-        Spinner quantityUnit = view.findViewById(R.id.product_units);
+         quantityUnit = view.findViewById(R.id.product_units);
         TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
         TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
-        txtAddProdcut = view.findViewById(R.id.txt_add_product);
+        txtAddProdcut = view.findViewById(R.id.tx_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
         close.setOnClickListener(v -> dismiss());
 
@@ -317,10 +322,14 @@ public class AddProductFragment extends DialogFragment {
                 manufacturersAdapter.addAll(manufacturersNames);
 
                 //add offline manufacturers
+                offlinemanufacturersNames = new ArrayList<>();
+
                 for(int i=0;i<offlineManufacturers.size();i++){
                     String manufacturer = offlineManufacturers.get(i).get("manufacturer_name");
-                    manufacturersAdapter.add(manufacturer);
+                    offlinemanufacturersNames.add(manufacturer);
+
                 }
+                manufacturersAdapter.addAll(offlinemanufacturersNames);
 
                 Log.d(TAG, "onClick: offline manufacturers"+offlineManufacturers);
 
@@ -431,17 +440,21 @@ public class AddProductFragment extends DialogFragment {
                 Log.d("Categories", String.valueOf(categories));
                 catNames = new ArrayList<>();
                 if (validateManufacturer()) {
-                    for (int i = 0; i < categories.size(); i++) {
-                        catNames.add(categories.get(i).getCategories_slug());
+                    if(categories!=null) {
+                        for (int i = 0; i < categories.size(); i++) {
+                            catNames.add(categories.get(i).getCategories_slug());
+                        }
                     }
 
                     categoryAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_row);
                     categoryAdapter.addAll(catNames);
                     //add offline categories
+                    offlineCategoryNames = new ArrayList<>();
                     for(int i=0;i<offlineCategories.size();i++){
                         String category_name = offlineCategories.get(i).get("category_name");
-                        categoryAdapter.add(category_name);
+                        offlineCategoryNames.add(category_name);
                     }
+                    categoryAdapter.addAll(offlineCategoryNames);
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     View dialogView = getLayoutInflater().inflate(R.layout.dialog_list_search, null);
@@ -588,10 +601,12 @@ public class AddProductFragment extends DialogFragment {
                     productAdapter = new ArrayAdapter<String>(getContext(), R.layout.list_row);
                     productAdapter.addAll(productNames);
                     //add offline product names
+                    offlineProductsName = new ArrayList<>();
                     for(int i=0;i<offlineProductNames.size();i++){
                         String product_name = offlineProductNames.get(i).get("product_name");
-                        productAdapter.add(product_name);
+                        offlineProductsName.add(product_name);
                     }
+                    productAdapter.addAll(offlineProductsName);
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     View dialogView = getLayoutInflater().inflate(R.layout.dialog_list_search, null);
@@ -776,13 +791,12 @@ public class AddProductFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
+
                 // Toasty.warning(AddProductActivity.this, "Add Product is disable in demo version. Please purchase from Codecanyon.Thank you ", Toast.LENGTH_SHORT).show();
 
-                List<HashMap<String, String>> shop_information = dbHandler.getShopInformation();
+                String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                String shop_name = shop_information.get(0).get("shop_name");
-                String id = shop_name.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
-                Integer shop_id = Integer.parseInt(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_SHOP_ID, context));
+                String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
                 Integer product_id = selectedProductID;
                 String product_name = etxtProductName.getText().toString().trim();
                 String product_code = etxtProductCode.getText().toString().trim();
@@ -793,6 +807,12 @@ public class AddProductFragment extends DialogFragment {
                 String product_stock = etxtProductStock.getText().toString().trim();
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
+                String manufacturer_name = etxtProductManufucturer.getText().toString().trim();
+                String units =  quantityUnit.getSelectedItem().toString().trim();
+                String sync_status = "0";
+
+                Log.d(TAG, "onClick: timestamp"+timestamp);
+
 
                 String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                 if (product_name == null || product_name.isEmpty()) {
@@ -816,94 +836,56 @@ public class AddProductFragment extends DialogFragment {
                 } else if (Integer.parseInt(product_stock) <= 0) {
                     etxtProductStock.setError("Stock should be greater than zero");
                     etxtProductStock.requestFocus();
-                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
-                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
-                    etxtProductSupplier.requestFocus();
-                } else {
-
-                    Call<ResponseBody> call = BuyInputsAPIClient
-                            .getInstance()
-                            .postProduct(
-                                    access_token,
-                                    id,
-                                    measure_id,
-                                    shop_id,
-                                    product_id,
-                                    product_buy_price,
-                                    product_sell_price,
-                                    product_supplier,
-                                    Integer.parseInt(product_stock)
-                            );
+                }else{
+//                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
+//                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
+//                    etxtProductSupplier.requestFocus();
+//                } else {
 
                     ProgressDialog progressDialog = new ProgressDialog(getContext());
                     progressDialog.setMessage("Loading...");
                     progressDialog.setTitle("Please Wait");
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.isSuccessful()) {
-                                progressDialog.dismiss();
-                                Log.d("Product Save", "Product successfully saved");
-                                String s = null;
-                                try {
-                                    s = response.body().string();
-                                    if (s != null) {
-                                        JSONObject jsonObject = new JSONObject(s);
-                                        boolean check = dbHandler.addProduct(product_id.toString(), product_name, product_code, product_category_id, jsonObject.getJSONObject("data").getString("product_description"), product_buy_price, product_sell_price, product_stock, product_supplier, jsonObject.getJSONObject("data").getString("product_image"), jsonObject.getJSONObject("data").getString("product_weight_unit"), jsonObject.getJSONObject("data").getString("products_weight"));
 
-                                        if (check) {
-                                            Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
-
-                                            getChildFragmentManager().popBackStack();
-//                                            Intent intent = new Intent(getContext(), ProductActivity.class);
-//                                            startActivity(intent);
-                                            // finish();
-                                        } else {
-                                            Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    }
-
-                                } catch (IOException | JSONException e) {
-                                    e.printStackTrace();
-                                }
+                    //save product info in the database
+                    boolean check = dbHandler.addProduct(
+                            unique_id,
+                            measure_id,
+                            userId,
+                            product_id.toString(),
+                            product_name,
+                            product_code,
+                            product_category_id,
+                            product_buy_price,
+                            product_sell_price,
+                            product_stock,
+                            product_supplier,
+                            encodedImage,
+                            units,
+                            manufacturer_name,
+                            product_category_name,sync_status
+                           );
 
 
-                            } else {
-                                progressDialog.dismiss();
-                                Toasty.error(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    if (check) {
+                        progressDialog.dismiss();
+                        Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
 
+                      Intent intent = new Intent(getContext(), ShopActivity.class);
+                      startActivity(intent);
+                        // finish();
+                    } else {
+                        progressDialog.dismiss();
+                        Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
 
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_SHORT).show();
-                            Log.e("Add Product Error:", t.getMessage());
-
-                        }
-                    });
+                    }
 
 
                 }
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
