@@ -214,7 +214,7 @@ public class CardDetail extends Fragment {
                     accountCreation.setCvv(cvv_encripted);
                     accountCreation.setExpiry(expiry_encripted);
                     accountCreation.setAccount_name(account_name_encripted);
-                    accountCreation.setPin(card_enter_pin.getText().toString());
+                    accountCreation.setPin(WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+card_enter_pin.getText().toString());
 
                     /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
                     JSONObject requestObject = new JSONObject();
