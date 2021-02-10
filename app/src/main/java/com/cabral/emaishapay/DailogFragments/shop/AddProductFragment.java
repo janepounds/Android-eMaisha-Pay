@@ -365,6 +365,7 @@ public class AddProductFragment extends DialogFragment {
                             boolean check = dbHandler.addManufacturers(dialog_add_edit_text.getText().toString());
                             if(check){
 
+                                manufacturersAdapter.add(dialog_add_edit_text.getText().toString());
                                 manufacturersAdapter.notifyDataSetChanged();
                                 dialog_add_edit_text.getText().clear();
                             }else{
@@ -488,7 +489,7 @@ public class AddProductFragment extends DialogFragment {
                                 boolean check = dbHandler.addProductCategory(dialog_add_edit_text.getText().toString());
                                 if(check){
 
-
+                                    categoryAdapter.add(dialog_add_edit_text.getText().toString());
                                     categoryAdapter.notifyDataSetChanged();
                                     dialog_add_edit_text.getText().clear();
                                 }else{
@@ -640,8 +641,7 @@ public class AddProductFragment extends DialogFragment {
                             if(!add_product.getText().toString().isEmpty()){
                                 boolean check = dbHandler.addProductName(add_product.getText().toString());
                                 if(check){
-
-
+                                    productAdapter.add(add_product.getText().toString());
                                     productAdapter.notifyDataSetChanged();
                                     add_product.getText().clear();
                                 }else{
