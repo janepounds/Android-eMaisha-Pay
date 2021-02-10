@@ -3,10 +3,9 @@
     android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_gravity="center_vertical"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/gradient_splash">
+
 
     <ImageView
         android:id="@+id/logo"
@@ -14,7 +13,8 @@
         android:src="@drawable/emaishapay_logo_icon"
         android:layout_width="match_parent"
         android:paddingBottom="@dimen/dimen_20dp"
-        android:layout_height="140dp" />
+        android:layout_height="140dp"
+        android:layout_centerInParent="true"/>
 
     <TextView
         android:id="@+id/logo_title"
@@ -24,7 +24,9 @@
         android:gravity="center"
         android:layout_below="@id/logo"
         android:textSize="40sp"
-        android:textStyle="bold"/>
+        android:textColor="#110D47"
+        android:textStyle="bold"
+        android:alpha=".8"/>
 
 
 

@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash);
-
+        overridePendingTransition(R.anim.slide_down, R.anim.bt_slide_in_up);
         MyAppPrefsManager prefsManager = new MyAppPrefsManager(this);
         Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
