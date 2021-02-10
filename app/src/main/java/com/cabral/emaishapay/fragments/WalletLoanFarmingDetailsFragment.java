@@ -244,7 +244,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         });
 
         rbCrop.setSelected(true);
-        rbCrop.setOnClickListener(new View.OnClickListener() {
+        layoutRBCrop.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
 
@@ -268,7 +268,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                  txtCrops.setAlpha((float) 1.0);
              }
          });
-        rbPoultry.setOnClickListener(new View.OnClickListener() {
+        layoutRBPoultry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -294,7 +294,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         });
 
 
-        rbPiggery.setOnClickListener(new View.OnClickListener() {
+        layoutRBPiggery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
