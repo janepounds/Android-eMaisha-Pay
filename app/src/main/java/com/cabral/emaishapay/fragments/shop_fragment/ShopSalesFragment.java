@@ -125,7 +125,7 @@ public class ShopSalesFragment extends Fragment {
                 if (searchOrder.size() <= 0) {
                     recyclerView.setVisibility(View.GONE);
                     imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.no_data);
+                    imgNoProduct.setImageResource(R.drawable.no_product);
 
 
                 } else {

@@ -110,7 +110,7 @@ public class ShopProductsFragment extends Fragment {
 
         if (productData.size() <= 0) {
             Toasty.info(context, R.string.no_product_found, Toast.LENGTH_SHORT).show();
-            imgNoProduct.setImageResource(R.drawable.no_data);
+            imgNoProduct.setImageResource(R.drawable.no_product);
         } else {
 
 
@@ -148,7 +148,7 @@ public class ShopProductsFragment extends Fragment {
 
                     recyclerView.setVisibility(View.GONE);
                     imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.no_data);
+                    imgNoProduct.setImageResource(R.drawable.no_product);
                     //  txtNoProducts.setVisibility(View.VISIBLE);
 
 
