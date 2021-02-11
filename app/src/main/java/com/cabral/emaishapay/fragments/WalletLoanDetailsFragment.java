@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.LoanApplication;
@@ -39,7 +41,7 @@ public class WalletLoanDetailsFragment extends Fragment {
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private Button btnLoanNextStep;
     private EditText txtLoanApplicationAmount,loanpayments_edtxt;
-    TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units;
+    TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units,txtv_maximum;
     private Spinner spLoanApplicationType;
     Float interest=0F;
     private String title;
@@ -78,6 +80,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
         layoutPreviousBtn = view.findViewById(R.id.layout_previous_btn);
         previous_btn = view.findViewById(R.id.previous_btn);
+        txtv_maximum = view.findViewById(R.id.txtv_maximum);
 
 
         //Second hidden progress bar for loan application with 5 states
@@ -152,6 +155,7 @@ public class WalletLoanDetailsFragment extends Fragment {
             }
         });
 
+        String[] maximum_amount = txtv_maximum.getText().toString().split("\\s+");
         txtLoanApplicationAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -163,21 +167,32 @@ public class WalletLoanDetailsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!txtLoanApplicationAmount.getText().toString().isEmpty() ){
-                    int applicationAmount= Integer.parseInt(txtLoanApplicationAmount.getText().toString());
-                    int amountDue= (int) ((int) applicationAmount*( (interest+100)/100));
-                    amount_due_txtview.setText(amountDue+"");
-                    Log.e("intrestbug",interest+"");
+                if (!txtLoanApplicationAmount.getText().toString().isEmpty()) {
+                    int applicationAmount = Integer.parseInt(txtLoanApplicationAmount.getText().toString());
+                    if (applicationAmount > Integer.parseInt(maximum_amount[1])) {
+
+                        txtLoanApplicationAmount.getText().clear();
+                        txtLoanApplicationAmount.setError("Your loan limit " + maximum_amount[1]);
+                        txtLoanApplicationAmount.requestFocus();
+                    }else{
+                        txtLoanApplicationAmount.setError(null);
+                        int amountDue = (int) ((int) applicationAmount * ((interest + 100) / 100));
+                        amount_due_txtview.setText(amountDue + "");
+                        Log.e("intrestbug", interest + "");
+                    }
+
+
                 }
-                if(!amount_due_txtview.toString().isEmpty() && !loanpayments_edtxt.getText().toString().isEmpty()){
+                if (!amount_due_txtview.toString().isEmpty() && !loanpayments_edtxt.getText().toString().isEmpty()) {
 
-                    Float amount_due= Float.parseFloat(amount_due_txtview.getText().toString());
-                    Float loanpayments = Float.parseFloat( loanpayments_edtxt.getText().toString());
-                    int loanduration_integer=(int) Math.ceil(amount_due/loanpayments);
+                    Float amount_due = Float.parseFloat(amount_due_txtview.getText().toString());
+                    Float loanpayments = Float.parseFloat(loanpayments_edtxt.getText().toString());
+                    int loanduration_integer = (int) Math.ceil(amount_due / loanpayments);
 
 
-                    txt_loan_application_duration.setText(loanduration_integer+"");
+                    txt_loan_application_duration.setText(loanduration_integer + "");
                 }
+
             }
         });
 

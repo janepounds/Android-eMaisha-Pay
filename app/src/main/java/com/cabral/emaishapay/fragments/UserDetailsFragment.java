@@ -147,9 +147,6 @@ public class UserDetailsFragment extends Fragment {
 
                     businessName = response.body().getData().getBusinessName();
 
-
-
-
                     if(businessName.equalsIgnoreCase(account_name)){
 
 
