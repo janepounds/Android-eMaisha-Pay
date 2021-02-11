@@ -82,6 +82,8 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             final TextView dialog_forgotText = dialogView.findViewById(R.id.forgot_password_text);
             final EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
             final ImageView dismiss_button = dialogView.findViewById(R.id.dismissButton);
+            final TextView dialog_title = dialogView.findViewById(R.id.title_text);
+            dialog_title.setText("Forgot Password");
             dialog_forgotText.setVisibility(View.VISIBLE);
             dialog_button.setText(getString(R.string.sendemail));
 
