@@ -27,6 +27,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
@@ -53,8 +54,9 @@ public class WalletHomeFragment extends Fragment {
     private ProgressDialog progressDialog;
     private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
-    public static double balance = 0, commisionbalance=0;
+    public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
+    DialogLoader dialog;
     public WalletHomeFragment(){}
 
     @Override
@@ -62,18 +64,13 @@ public class WalletHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.emaisha_pay_home, container, false);
-
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
+        dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
 
         getTransactionsData();
+        getBalanceAndCommission();
 
-        binding.walletBalance.setText("UGX " +WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
-        new MyTask(WalletHomeFragment.this).execute();
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
 
         binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)));
@@ -91,7 +88,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
-            updateCommisionBalance();
+
         }else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
@@ -100,7 +97,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
-            updateCommisionBalance();
+
         }else if(role.equalsIgnoreCase("agent merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
@@ -109,7 +106,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
-            updateCommisionBalance();
+
 
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
@@ -252,12 +249,9 @@ public class WalletHomeFragment extends Fragment {
     }
 
     private void getTransactionsData() {
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        DialogLoader dialog;
+        dialog = new DialogLoader(context);
+        dialog.showProgressDialog();
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
@@ -302,7 +296,7 @@ public class WalletHomeFragment extends Fragment {
                     }
 
 
-                    dialog.dismiss();
+                    dialog.hideProgressDialog();
                 } else if (response.code() == 401) {
 
                     TokenAuthActivity.startAuth(getContext(), true);
@@ -311,74 +305,38 @@ public class WalletHomeFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+                    dialog.hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialog.hideProgressDialog();
             }
         });
 
 
     }
 
-    public void updateBalance() {
+    public void getBalanceAndCommission() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<BalanceResponse> call = apiRequests.requestBalance(access_token);
         call.enqueue(new Callback<BalanceResponse>() {
             @Override
             public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {
-                progressDialog.dismiss();
+                dialog.hideProgressDialog();
 
                 if (response.code() == 200) {
 
 
                   balance =  response.body().getData().getBalance();
-                  String b =  NumberFormat.getInstance().format(balance);
+                  commisionbalance = response.body().getData().getCommission();
+                  totalBalance = response.body().getData().getTotalBalance();
 
-                    Log.d(TAG, "onSuccess: Balance = " + balance);
-
-                    //save balance in shared preference
-                    WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), b, context);
-
-                    Log.d(TAG, "onResponse: "+WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
-
-
-
-                } else if (response.code() == 401) {
-                    Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getContext(), TokenAuthActivity.class));
-                    getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-                } else {
-                    Log.e("info", new String(String.valueOf(response.body().getMessage())));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<BalanceResponse> call, @NotNull Throwable t) {
-                progressDialog.dismiss();
-                Log.e("info : ", new String(String.valueOf(t.getMessage())));
-                Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
-                TokenAuthActivity.startAuth(context, false);
-            }
-        });
-    }
-
-    public void updateCommisionBalance() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<BalanceResponse> call = apiRequests.requestCommisionBalance(access_token);
-        call.enqueue(new Callback<BalanceResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {
-                progressDialog.dismiss();
-
-                if (response.code() == 200) {
-                     commisionbalance =  response.body().getData().getBalance();
-
+                  //set balance and commision
+                    binding.totalBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(totalBalance));
+                    binding.walletBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(balance));
                     binding.cardBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(commisionbalance));
 
                 } else if (response.code() == 401) {
@@ -392,7 +350,7 @@ public class WalletHomeFragment extends Fragment {
 
             @Override
             public void onFailure(@NotNull Call<BalanceResponse> call, @NotNull Throwable t) {
-                progressDialog.dismiss();
+                dialog.hideProgressDialog();
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
                 TokenAuthActivity.startAuth(context, false);
@@ -404,52 +362,10 @@ public class WalletHomeFragment extends Fragment {
 
 
 
-    private class MyTask extends AsyncTask<String, Void, String> {
-        private WeakReference<WalletHomeFragment> fragmentReference;
-        private Context context;
-
-        // only retain a weak reference to the activity
-        MyTask(WalletHomeFragment context) {
-            fragmentReference = new WeakReference<>(context);
-            progressDialog = new ProgressDialog(context.context);
-            this.context = context.context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            //update balance
-            updateBalance();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-
-                        //get balanace from shared preference and update it in textview
-
-                        binding.walletBalance.setText("UGX " + WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), context));
-
-                        Log.d(TAG, "run: reached !!");
-
-
-                }
-            }, 3000);
 
 
 
-        }
-    }
+
 
   
 }

@@ -31,12 +31,12 @@ public class BalanceResponse {
         @SerializedName("balance")
         @Expose
         private double balance;
-        @SerializedName("credits")
+        @SerializedName("commission")
         @Expose
-        private double credits;
-        @SerializedName("debits")
+        private double commission;
+        @SerializedName("TotalBalance")
         @Expose
-        private double debits;
+        private double TotalBalance;
 
         public double getBalance() {
             return balance;
@@ -46,20 +46,20 @@ public class BalanceResponse {
             this.balance = balance;
         }
 
-        public double getCredits() {
-            return credits;
+        public double getCommission() {
+            return commission;
         }
 
-        public void setCredits(double credits) {
-            this.credits = credits;
+        public void setCommission(double commission) {
+            this.commission = commission;
         }
 
-        public double getDebits() {
-            return debits;
+        public double getTotalBalance() {
+            return TotalBalance;
         }
 
-        public void setDebits(double debits) {
-            this.debits = debits;
+        public void setTotalBalance(double totalBalance) {
+            TotalBalance = totalBalance;
         }
     }
 

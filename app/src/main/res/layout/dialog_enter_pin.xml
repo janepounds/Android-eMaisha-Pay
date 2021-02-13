@@ -35,7 +35,8 @@
             android:inputType="numberPassword"
             android:padding="8dp"
             android:textColor="#000"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:maxLength="4"/>
 
 
 

@@ -58,7 +58,7 @@ import retrofit2.Response;
 public class TransferMoney extends Fragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name;
     Button addMoneyImg;
-    TextView mobile_numberTxt, addMoneyTxt;
+    TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
@@ -96,6 +96,8 @@ public class TransferMoney extends Fragment {
         toolbar.setTitle("Transfer Money");
         if(this.action.equalsIgnoreCase(getString(R.string.settlements))){
             toolbar.setTitle("Settle Money");
+            transferTotxt.setText("Settle To");
+            addMoneyImg.setText("SETTLE");
         }
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,6 +111,7 @@ public class TransferMoney extends Fragment {
         etMobileMoneyNumber = view.findViewById(R.id.money_mobile_no);
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.crop_add_money_amount);
+        transferTotxt = view.findViewById(R.id.text_transfer_to);
         mobile_numberTxt = view.findViewById(R.id.text_mobile_number);
         spTransferTo = view.findViewById(R.id.sp_transfer_to);
         spSelectBank = view.findViewById(R.id.sp_bank);

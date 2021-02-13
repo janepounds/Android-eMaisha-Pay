@@ -31,11 +31,15 @@ import com.cabral.emaishapay.utils.Utilities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.Header;
 
 
 /**
@@ -48,6 +52,7 @@ public class StartAppRequests {
     private DbHandlerSingleton dbHandler;
     private static BuyInputsDB_Handler db_handler;
     private Context context;
+    private List<HashMap<String, String>> productList;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
@@ -71,6 +76,7 @@ public class StartAppRequests {
         //RequestBanners();
         RequestAllRegions();
         RequestStaticPagesData();
+        SyncProductData();
         
     }
 
@@ -108,6 +114,73 @@ public class StartAppRequests {
 
     }
 
+    public void SyncProductData() {
+        if (Connectivity.isConnected(context)) {
+            String sync_status = "0";
+            productList = dbHandler.getUnsyncedProducts(sync_status);
+            for (int i = 0; i < productList.size(); i++) {
+                saveProductList(
+                        productList.get(i).get("product_id"),
+                        productList.get(i).get("unique_id"),
+                        productList.get(i).get("measure_id"),
+                        productList.get(i).get("user_id"),
+                        productList.get(i).get("selected_product_id"),
+                        productList.get(i).get("product_manufacturer"),
+                        productList.get(i).get("product_name"),
+                        productList.get(i).get("product_code"),
+                        productList.get(i).get("selected_category_id"),
+                        productList.get(i).get("product_category"),
+                        productList.get(i).get("product_buy_price"),
+                        productList.get(i).get("product_sell_price"),
+                        productList.get(i).get("product_supplier"),
+                        productList.get(i).get("product_image"),
+                        productList.get(i).get("product_stock"),
+                        productList.get(i).get("product_unit"),
+                        productList.get(i).get("sync_status")
+
+                );
+
+
+            }
+        }
+
+    }
+
+    public void saveProductList(String product_id,String unique_product_id,String measure_id,String user_id,String selected_product_id,String product_manufacturer,
+                                String product_name,String product_code,String selected_category_id,String  product_category,String product_buy_price, String product_sell_price,
+                                String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Call<ResponseBody> call = BuyInputsAPIClient
+                .getInstance()
+                .postProduct(access_token,unique_product_id,measure_id,user_id,selected_product_id,product_buy_price,product_sell_price,
+                        product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name
+                );
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    //update product status
+                    boolean check = dbHandler.updateProductSyncStatus(product_id,"1");
+                    if(check){
+                        Log.d("Sync Status", "Product Synced");
+
+                    }else{
+
+                        Log.d("Sync Status", "Sync Failed");
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: Sync Failed"+ t.getMessage());
+
+            }
+        });
+    }
     //*********** API Request Method to Fetch App Banners ********//
 
     public void RequestBanners() {

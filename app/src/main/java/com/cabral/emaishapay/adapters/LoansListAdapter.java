@@ -79,6 +79,23 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
             holder.amountTxt.setText("UGX " + NumberFormat.getInstance().format(data.getAmount()));
             holder.statusTxt.setText(data.generateStatus());
 
+            //check status
+            if(data.generateStatus().equalsIgnoreCase("Rejected")){
+                holder.pending.setVisibility(View.GONE);
+                holder.rejected.setVisibility(View.VISIBLE);
+                holder.appTx.setText("Rejected On");
+
+            }else if(data.generateStatus().equalsIgnoreCase("Pending")){
+                holder.pending.setVisibility(View.VISIBLE);
+                holder.rejected.setVisibility(View.GONE);
+
+            }else{
+
+                holder.pending.setVisibility(View.GONE);
+                holder.completed.setVisibility(View.VISIBLE);
+                holder.appTx.setText("Completed On");
+            }
+
 //            if (data.getDueDate() != null) {
 //
 //                holder.dueDateTxt.setText(data.getDueDate());
@@ -100,9 +117,10 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView numberTxt, dateTxt, amountTxt, dueDateTxt, statusTxt;
+        TextView numberTxt, dateTxt, amountTxt, dueDateTxt, statusTxt,appTx;
 
         ConstraintLayout Layout;
+        LinearLayout pending,rejected,completed;
 
         public MyViewHolder(View v) {
             super(v);
@@ -112,6 +130,10 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
             dueDateTxt = v.findViewById(R.id.text_view_loan_application_due_on);
             statusTxt = v.findViewById(R.id.text_view_loan_application_status);
             Layout = v.findViewById(R.id.card_layout_id);
+            pending = v.findViewById(R.id.layout_pending);
+            rejected = v.findViewById(R.id.layout_disapproved);
+            completed = v.findViewById(R.id.layout_completed_on);
+            appTx = v.findViewById(R.id.text_view_applied_on);
 
             Layout.setOnClickListener(this);
         }
