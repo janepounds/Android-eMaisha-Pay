@@ -4,7 +4,7 @@ package com.cabral.emaishapay.models;
 public class ApiPaths {
 
     public final static String LOCAL_URL = "http://197.221.132.254";
-    public final static String LIVE_SERVER_URL = "http://emaishawallet.myfarmnow.com";
+    public final static String LIVE_SERVER_URL = "http://emaishapayapi.emaisha.com";
 
     public final static String SERVER_URL = LIVE_SERVER_URL;
 

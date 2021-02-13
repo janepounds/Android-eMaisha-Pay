@@ -23,7 +23,7 @@ public class APIClient {
 
     public final static String LOCAL_URL = "http://10.0.2.2:8000";
     private static final String BASE_URL ="https://emaisha.com/api/";
-    private static final String BASE_URL_WALLET ="http://emaishawallet.myfarmnow.com/api/";
+    private static final String BASE_URL_WALLET ="http://emaishapayapi.emaisha.com/api/";
 
     private static APIRequests apiRequests;
     private  final String TAG="Retrofit2 Errors";

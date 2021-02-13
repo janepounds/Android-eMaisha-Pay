@@ -12,7 +12,7 @@ import java.util.Enumeration;
 
 public class ConstantValues {
 
-    public static String WALLET_DOMAIN = "http://emaishawallet.myfarmnow.com";
+    public static String WALLET_DOMAIN = "http://emaishapayapi.emaisha.com";
     private static String TAG = "Consumer_IP";
 
     public static final String CODE_VERSION = "4.0.12";
