@@ -1454,6 +1454,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //delete product
     public boolean updateProductSyncStatus(String product_id,String sync_status) {
         ContentValues values = new ContentValues();
+        this.database = this.getWritableDatabase();
 
         values.put("sync_status", sync_status);
 
