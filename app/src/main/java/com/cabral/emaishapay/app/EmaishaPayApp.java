@@ -176,51 +176,6 @@ public class EmaishaPayApp extends MultiDexApplication {
         return null;
     }
 
-    public static  void checkWalletAccount(String email, String phonenumber) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        if(ConstantValues.IS_USER_LOGGED_IN){
-            Call<TokenResponse> call = APIClient.getWalletInstance()
-                    .checkWalletAccount
-                            (       access_token,
-                                    email,
-                                    phonenumber
-                            );
-
-            call.enqueue(new Callback<TokenResponse>() {
-                @Override
-                public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-
-
-                    if (response.isSuccessful()) {
-
-                        if (response.body().getMessage().equalsIgnoreCase("Wallet Account found") ) {
-                            ConstantValues.CUSTOMER_HAS_WALLET=true;
-                        }
-                        else{
-                            // Get the Error Message from Response
-                            ConstantValues.CUSTOMER_HAS_WALLET=false;
-                            String message = response.body().getMessage();
-                            Log.e("CheckWalletAccountError",message);
-                        }
-
-                    } else {
-                        // Show the Error Message
-                        ConstantValues.CUSTOMER_HAS_WALLET=false;
-                       // Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<TokenResponse> call, Throwable t) {
-
-                    Toast.makeText(context, "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-                }
-
-
-            });
-        }
-
-    }
 //    @Override
 //    protected void attachBaseContext(Context base) {
 //        super.attachBaseContext(base);

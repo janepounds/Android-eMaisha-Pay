@@ -73,15 +73,6 @@ public interface APIRequests {
                           @Field("password") String password
     );
 
-    /**************  WALLET REQUESTS *******************************/
-    @FormUrlEncoded
-    @POST("user/check_account")
-    Call<TokenResponse> checkWalletAccount(
-            @Header("Authorization") String token,
-            @Field("email") String email,
-            @Field("phoneNumber") String phonenumber);
-
-
     //wallet authentication
     @FormUrlEncoded
     @POST("authenticate/emaishapay_app_user/login")
@@ -91,18 +82,6 @@ public interface APIRequests {
     @POST("emaishawallet/user/authenticate")
     Call<WalletAuthentication>authenticate(@Field("phoneNumber")String phoneNumber,@Field("password")String pin);
 
-    //wallet registration
-    @FormUrlEncoded
-    @POST("emaishawallet/user/create")
-    Call<WalletUserRegistration> create(@Field("firstname") String firstname,
-                                        @Field("lastname") String lastname,
-                                        @Field("email") String email,
-                                        @Field("password") String password,
-                                        @Field("phoneNumber") String phoneNumber,
-                                        @Field("district") String district,
-                                        @Field("subCounty") String subCounty,
-                                        @Field("village") String village
-    );
 
     //refresh token
     @FormUrlEncoded
@@ -301,10 +280,6 @@ public interface APIRequests {
     Call<Regions> getAllRegions(@Field("latest_id") int latest_id);
 
 
-    //******************** Static Pages Data ********************//
-    @FormUrlEncoded
-    @POST("getallpages")
-    Call<PagesData> getStaticPages(@Field("language_id") int language_id);
 
     //store personal info
     @FormUrlEncoded

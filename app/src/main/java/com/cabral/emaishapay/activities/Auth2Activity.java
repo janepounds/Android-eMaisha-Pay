@@ -236,7 +236,6 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
         // Set isLogged_in of ConstantValues
         ConstantValues.IS_USER_LOGGED_IN = myAppPrefsManager.isUserLoggedIn();
 
-        EmaishaPayApp.checkWalletAccount(userDetails.getEmail(), userDetails.getPhoneNumber());
 
         // Navigate back to MainActivity
         Intent i = new Intent(context, WalletHomeActivity.class);
