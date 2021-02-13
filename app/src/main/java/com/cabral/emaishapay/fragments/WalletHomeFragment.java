@@ -77,8 +77,6 @@ public class WalletHomeFragment extends Fragment {
 
 
 
-
-
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent")){
             WalletHomeActivity.disableNavigation();
@@ -114,6 +112,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.VISIBLE);
             binding.layoutSettle.setVisibility(View.INVISIBLE);
             binding.cardBalanceLabel.setText("Card");
+            Log.d(TAG, "onCreateView: *"+role+"*");
         }
         return binding.getRoot();
     }
