@@ -10,6 +10,9 @@ public class WalletAuthentication {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("access_token")
+    @Expose
+    private String access_token;
     @SerializedName("data")
     @Expose
     private UserData data;
@@ -36,6 +39,14 @@ public class WalletAuthentication {
 
     public void setData(UserData data) {
         this.data = data;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
     public class UserData {
@@ -69,6 +80,9 @@ public class WalletAuthentication {
         @SerializedName("firebaseToken")
         @Expose
         private String firebaseToken;
+        @SerializedName("business_role")
+        @Expose
+        private String business_role;
         @SerializedName("isVerified")
         @Expose
         private String isVerified;
@@ -185,6 +199,14 @@ public class WalletAuthentication {
 
         public void setCreated_at(String created_at) {
             this.created_at = created_at;
+        }
+
+        public String getAccountRole() {
+            return  business_role;
+        }
+
+        public String setAccountRole(String business_role) {
+           return  this.business_role=business_role;
         }
     }
 }

@@ -43,6 +43,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
+
 public class ConfirmActivity extends AppCompatActivity implements PinFragment.Listener {
     private static final String TAG = "TokenAuthActivity";
     static TextView errorTextView;
@@ -76,6 +78,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         errorTextView = findViewById(R.id.text_view_crop_user_error);
         context = ConfirmActivity.this;
         dialogLoader = new DialogLoader(this);
+        apiRequests = APIClient.getWalletInstance();
 
         if ( ConfirmActivity.ACTION_CODE == 1) {
 
@@ -240,7 +243,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //resendLoginOtp(password,ConfirmActivity.phonenumber,otp_code);
+                processLogin(password,ConfirmActivity.phonenumber);
             }
         });
         otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
@@ -259,14 +262,14 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         otpDialog.show();
     }
 
-    public void processLogin(String phonenumber, String password) {
+    public void processLogin(String password, String phonenumber) {
         //call the otp end point
         dialogLoader.showProgressDialog();
-        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber,password);
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful() && response.body().getStatus()==1 ){
                     smsResults =response.body().getData().getSms_results();
 
                     //Call the OTP Dialog
@@ -280,7 +283,8 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
             @Override
             public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
-                Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(errorTextView,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                dialogLoader.hideProgressDialog();
             }
         });
 
@@ -288,7 +292,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
 
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword);
 
@@ -327,11 +331,14 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
                             Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
 
-                            if(Connectivity.isConnected(context)){
-                                TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
-                            }else{
-                                Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
-                            }
+                            String accessToken = response.body().getAccess_token();
+                            String accountRole = userDetails.getAccountRole();
+                            Log.d(TAG, accessToken);
+                            TokenAuthActivity.WALLET_ACCESS_TOKEN = accessToken;
+                            WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
+                            if (dialogLoader != null)
+                                dialogLoader.hideProgressDialog();
+                            WalletHomeActivity.startHome(context);
 
 
                         } catch (Exception e) {

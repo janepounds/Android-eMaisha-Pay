@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class WalletAuthenticationResponse {
     @SerializedName("status")
     @Expose
-    private String status;
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
@@ -14,11 +14,11 @@ public class WalletAuthenticationResponse {
     @Expose
     private ResposeData data;
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

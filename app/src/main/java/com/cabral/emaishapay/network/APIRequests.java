@@ -76,7 +76,8 @@ public interface APIRequests {
     //wallet authentication
     @FormUrlEncoded
     @POST("authenticate/emaishapay_app_user/login")
-    Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber);
+    Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber,
+                                                   @Field("password")String password);
 
     @FormUrlEncoded
     @POST("authenticate/verify/code")

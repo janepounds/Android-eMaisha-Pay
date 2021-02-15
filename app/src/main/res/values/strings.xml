@@ -152,6 +152,7 @@
     <string name="weight">Weight:</string>
     <string name="price">Price</string>
     <string name="error">Error</string>
+    <string name="error_occured">Error Ocurred Please Try again later!</string>
     <string name="order_receipt">Order Receipt</string>
     <string name="print">Print</string>
     <string name="share">Share</string>
