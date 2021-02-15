@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,12 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Auth2Activity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
-import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;

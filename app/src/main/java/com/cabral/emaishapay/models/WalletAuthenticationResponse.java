@@ -39,16 +39,16 @@ public class WalletAuthenticationResponse {
     }
 
     public class ResposeData{
-        @SerializedName("sms_code")
+        @SerializedName("sms_results")
         @Expose
-        private String sms_code;
+        private String sms_results;
 
-        public String getSms_code() {
-            return sms_code;
+        public String getSms_results() {
+            return sms_results;
         }
 
-        public void setSms_code(String sms_code) {
-            this.sms_code = sms_code;
+        public void setSms_results(String sms_code) {
+            this.sms_results = sms_code;
         }
     }
 }

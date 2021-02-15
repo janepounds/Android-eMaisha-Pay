@@ -2,28 +2,32 @@ package com.cabral.emaishapay.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.models.WalletAuthentication;
+import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
-import com.cabral.emaishapay.models.user_model.UserDetails;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.Connectivity;
-import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.venmo.android.pin.PinFragment;
@@ -39,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Auth2Activity extends AppCompatActivity implements PinFragment.Listener {
+public class ConfirmActivity extends AppCompatActivity implements PinFragment.Listener {
     private static final String TAG = "TokenAuthActivity";
     static TextView errorTextView;
     private static String userFirstname;
@@ -54,6 +58,12 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
     SharedPreferences.Editor editor;
     User_Info_DB userInfoDB;
     DialogLoader dialogLoader;
+    private Dialog otpDialog;
+
+    private EditText code1,code2,code3,code4,code5,code6;
+    TextView resendtxtview;
+    APIRequests apiRequests;
+    private  String otp_code, sms_code,smsResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +74,10 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
         userInfoDB = new User_Info_DB();
 
         errorTextView = findViewById(R.id.text_view_crop_user_error);
-        context = Auth2Activity.this;
+        context = ConfirmActivity.this;
         dialogLoader = new DialogLoader(this);
 
-        if ( Auth2Activity.ACTION_CODE == 1) {
+        if ( ConfirmActivity.ACTION_CODE == 1) {
 
             PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(context)
                     .validator(submission -> {
@@ -78,10 +88,8 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                             Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
                         }else {
-                            //login and get token
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
-                            checkLogin(WalletPass, phonenumber,  context, dialogLoader, sharedPreferences);
-
+                            //Initialise Login Process
+                            processLogin(WalletPass, ConfirmActivity.phonenumber);
 
                         }
                         return WalletPass.equals(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, context));
@@ -92,7 +100,7 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                     .replace(R.id.container, toShow )
                     .commit();
 
-        }else if ( Auth2Activity.ACTION_CODE == 2){
+        }else if ( ConfirmActivity.ACTION_CODE == 2){
 
             PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(context)
                     .validator(submission -> {
@@ -121,11 +129,168 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
 
     }
 
+    private void getOTPFromUser(String password) {
+        otpDialog  = new Dialog(context);
+        otpDialog.setContentView(R.layout.login_dialog_otp);
+        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        otpDialog.setCancelable(false);
 
-    public  void checkLogin(final String rawpassword,final String phoneNumber, final Context context, final   DialogLoader dialogLoader, SharedPreferences sharedPreferences) {
+        code1= otpDialog.findViewById(R.id.otp_code1_et);
+        code2= otpDialog.findViewById(R.id.otp_code2_et);
+        code3= otpDialog.findViewById(R.id.otp_code3_et);
+        code4= otpDialog.findViewById(R.id.otp_code4_et);
+        code5=otpDialog.findViewById(R.id.otp_code5_et);
+        code6= otpDialog.findViewById(R.id.otp_code6_et);
+        resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
 
+
+        code1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code2.requestFocus();
+            }
+        });
+
+
+        code2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code3.requestFocus();
+            }
+        });
+
+        code3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code4.requestFocus();
+            }
+        });
+
+        code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code5.requestFocus();
+            }
+        });
+
+        code5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code6.requestFocus();
+            }
+        });
+
+
+        code6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
+                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+            }
+        });
+
+        otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //resendLoginOtp(password,ConfirmActivity.phonenumber,otp_code);
+            }
+        });
+        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpDialog.dismiss();
+                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
+                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+            }
+        });
+        otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
+
+        params.x = 100; // Here is the param to set your dialog position. Same with params.x
+        otpDialog.getWindow().setAttributes(params);
+        otpDialog.show();
+    }
+
+    public void processLogin(String phonenumber, String password) {
+        //call the otp end point
+        dialogLoader.showProgressDialog();
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber);
+        call.enqueue(new Callback<WalletAuthenticationResponse>() {
+            @Override
+            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
+                if(response.isSuccessful()){
+                    smsResults =response.body().getData().getSms_results();
+
+                    //Call the OTP Dialog
+                    getOTPFromUser(password);
+                }else{
+                    Snackbar.make(errorTextView,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+                Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+    public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletAuthentication> call = apiRequests.authenticate(phoneNumber, rawpassword);
+        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword);
 
         dialogLoader.showProgressDialog();
         call.enqueue(new Callback<WalletAuthentication>() {
@@ -138,7 +303,8 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
 
-                    }else{
+                    }
+                    else if(response.body().getStatus() == 1){
                         try {
                             Gson gson = new Gson();
                             String user = gson.toJson(response.body().getData());
@@ -156,16 +322,15 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                             Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
                             Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
                             Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-
+                            otpDialog.dismiss();
                             loginUser(userDetails, rawpassword);
 
                             Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+
                             if(Connectivity.isConnected(context)){
                                 TokenAuthActivity.getLoginToken(rawpassword, phoneNumber, context, dialogLoader);
                             }else{
                                 Snackbar.make(errorTextView,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
-
-
                             }
 
 
@@ -183,9 +348,9 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
                 else {
                     dialogLoader.hideProgressDialog();
 
-                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String message = response.body().getMessage();
-                    //Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
                 }
 
 
@@ -304,23 +469,24 @@ public class Auth2Activity extends AppCompatActivity implements PinFragment.List
     }
 
     public static void startAuth(Context context,String phonenumber,int ACTION_CODE) {
-        Auth2Activity.phonenumber=phonenumber;
-        Auth2Activity.ACTION_CODE=ACTION_CODE;
-        Intent authenticate = new Intent(context, Auth2Activity.class);
+        ConfirmActivity.phonenumber=phonenumber;
+        ConfirmActivity.ACTION_CODE=ACTION_CODE;
+        Intent authenticate = new Intent(context, ConfirmActivity.class);
         context.startActivity(authenticate);
     }
 
     public static void processFurtherRegistration(Context context,String phonenumber, String userFirstname, String userLastname, String village, String subCounty, String district,int ACTION_CODE) {
-        Auth2Activity.phonenumber=phonenumber;
-        Auth2Activity.userFirstname=userFirstname;
-        Auth2Activity.userLastname=userLastname;
-        Auth2Activity.village=village;
-        Auth2Activity.subCounty=subCounty;
-        Auth2Activity.district=district;
-        Auth2Activity.ACTION_CODE=ACTION_CODE;
-        Intent authenticate = new Intent(context, Auth2Activity.class);
+        ConfirmActivity.phonenumber=phonenumber;
+        ConfirmActivity.userFirstname=userFirstname;
+        ConfirmActivity.userLastname=userLastname;
+        ConfirmActivity.village=village;
+        ConfirmActivity.subCounty=subCounty;
+        ConfirmActivity.district=district;
+        ConfirmActivity.ACTION_CODE=ACTION_CODE;
+        Intent authenticate = new Intent(context, ConfirmActivity.class);
         context.startActivity(authenticate);
     }
+
 
     @Override
     public void onValidated() {

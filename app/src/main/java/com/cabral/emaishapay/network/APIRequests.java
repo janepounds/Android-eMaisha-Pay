@@ -79,8 +79,10 @@ public interface APIRequests {
     Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber);
 
     @FormUrlEncoded
-    @POST("emaishawallet/user/authenticate")
-    Call<WalletAuthentication>authenticate(@Field("phoneNumber")String phoneNumber,@Field("password")String pin);
+    @POST("authenticate/verify/code")
+    Call<WalletAuthentication>confirmLogin(@Field("phoneNumber")String phoneNumber,
+                                           @Field("otp") String otp,
+                                           @Field("password")String pin);
 
 
     //refresh token
@@ -94,10 +96,6 @@ public interface APIRequests {
     //request balance
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token
-    );
-    //request commission balance
-    @GET("wallet/commissionBalance/request")
-    Call<BalanceResponse> requestCommisionBalance(@Header("Authorization") String token
     );
 
     //initiate transfer

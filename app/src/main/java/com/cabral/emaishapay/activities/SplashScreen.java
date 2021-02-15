@@ -210,12 +210,6 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
             if (!prefsManager.isUserLoggedIn()) {
                 startActivity(new Intent(getBaseContext(), com.cabral.emaishapay.activities.Login.class));
             } else {
-
-                SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
-                String email=sharedPreferences.getString(WalletHomeActivity.PREFERENCES_USER_EMAIL, "");
-                String phoneNumber=sharedPreferences.getString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, "");
-
-                EmaishaPayApp.checkWalletAccount(email, phoneNumber);
                 startActivity(new Intent(getBaseContext(), WalletHomeActivity.class));
             }
 

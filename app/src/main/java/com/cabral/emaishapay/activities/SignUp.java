@@ -627,7 +627,7 @@ public class SignUp extends AppCompatActivity {
 //                            dialogOTP.dismiss();
 
                             //Final Registration Call to API
-                            Auth2Activity.processFurtherRegistration(SignUp.this, "0"+binding.userMobile.getText().toString(),
+                            ConfirmActivity.processFurtherRegistration(SignUp.this, "0"+binding.userMobile.getText().toString(),
                                     binding.userFirstname.getText().toString(),
                                     binding.userLastname.getText().toString(),
                                     binding.villageSpinner.getText().toString(),
