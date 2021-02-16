@@ -340,7 +340,7 @@ public class WalletHomeFragment extends Fragment {
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getContext(), TokenAuthActivity.class));
+                    startActivity(new Intent(getActivity(), TokenAuthActivity.class));
                     getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));

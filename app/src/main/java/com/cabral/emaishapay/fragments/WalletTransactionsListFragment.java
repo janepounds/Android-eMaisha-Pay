@@ -26,6 +26,7 @@ import com.cabral.emaishapay.network.APIRequests;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +120,11 @@ public class WalletTransactionsListFragment extends Fragment {
                     try {
                         WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
                         dataList = walletTransactionResponseData.getTransactions();
-
+                        double cashout = walletTransactionResponseData.getCashout();
+                        double cashin = walletTransactionResponseData.getCashin();
+                        walletCashIn.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(cashin) );
+                        walletCashOut.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(cashout));
+                        Log.e("Cahsout_In",cashout+" "+cashin);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {

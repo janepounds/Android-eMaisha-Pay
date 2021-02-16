@@ -90,14 +90,12 @@ public class MyProduceFragment extends Fragment {
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
         getAllProduce();
-        Log.d(TAG, "onCreateView: " + produceList);
+        Log.d(TAG, "onCreateView: " + produceList.size());
 
-        if (produceList.size() != 0) {
-            layoutEmptyProduceList.setVisibility(View.GONE);
-           // layoutEmptyProduceList.setVisibility(View.GONE);
-        } else {
+        if (produceList.size() == 0) {
             layoutEmptyProduceList.setVisibility(View.VISIBLE);
-           // layoutEmptyProduceList.setVisibility(View.VISIBLE);
+        } else {
+            layoutEmptyProduceList.setVisibility(View.GONE);
         }
 
         addProduce.setOnClickListener(v -> addProduce());
@@ -255,11 +253,11 @@ public class MyProduceFragment extends Fragment {
             ArrayList<MyProduce> produce = fragmentReference.get().dbHandler.getAllProduce();
             fragmentReference.get().produceList = produce;
 
-//            MyProduce myProduce = produce.get(0);
-
-//            Log.d(TAG, "doInBackground: " + produce);
-//            Log.d(TAG, "doInBackground: Name = " + myProduce.getName());
-//            Log.d(TAG, "doInBackground: Variety = " + myProduce.getVariety());
+            if (produce.size() == 0) {
+                fragmentReference.get().layoutEmptyProduceList.setVisibility(View.VISIBLE);
+            } else {
+                fragmentReference.get().layoutEmptyProduceList.setVisibility(View.GONE);
+            }
             return true;
         }
 

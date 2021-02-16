@@ -165,7 +165,7 @@ public class WalletBuyFragment extends Fragment {
         categoryBundle.putBoolean("home_9", true);
         Fragment categories = new Categories_3();
         categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.home9_categories, categories).commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, categories).commit();
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");

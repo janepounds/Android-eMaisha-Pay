@@ -33,6 +33,28 @@ public class WalletTransactionResponse {
         @SerializedName("transactions")
         @Expose
         private List<Transactions> transactions;
+        @SerializedName("cashin")
+        @Expose
+        private double cashin;
+        @SerializedName("cashout")
+        @Expose
+        private double cashout;
+
+        public double getCashin() {
+            return cashin;
+        }
+
+        public void setCashin(double cashin) {
+            this.cashin = cashin;
+        }
+
+        public double getCashout() {
+            return cashout;
+        }
+
+        public void setCashout(double cashout) {
+            this.cashout = cashout;
+        }
 
         public List<Transactions> getTransactions() {
             return transactions;

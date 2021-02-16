@@ -98,7 +98,7 @@ public class SearchFragment extends Fragment {
 
                         recyclerView.setAdapter(adapter);
 
-                        Log.d(TAG, "onResponse: Result = " + response.body().getProductData().getProducts().get(0).getProductsName());
+                       // Log.d(TAG, "onResponse: Result = " + response.body().getProductData().getProducts().get(0).getProductsName());
 
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(requireView(), response.body().getMessage(), Snackbar.LENGTH_LONG).show();
