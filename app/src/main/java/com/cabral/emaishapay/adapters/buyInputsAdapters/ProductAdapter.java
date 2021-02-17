@@ -41,6 +41,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Recents_BuyInputsDB;
 import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
+import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -69,6 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     long end;
     long server;
     CountDownTimer mCountDownTimer;
+    GetAllProducts getAllProducts;
 
     public ProductAdapter(Activity context, FragmentManager fragmentManager, List<ProductDetails> productList, Boolean isHorizontal, Boolean isFlash) {
         this.context = context;
@@ -78,6 +80,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         recents_db = new User_Recents_BuyInputsDB();
         this.fragmentManager = fragmentManager;
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+
     }
 
     public ProductAdapter(Activity context, List<ProductDetails> productList, Boolean isHorizontal) {
@@ -415,6 +418,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             }
 
+            //check for product type in order to show or hide percentage sale off
+//            if(getAllProducts.getType().equalsIgnoreCase("special")){
+//                holder.percentageOff.setVisibility(View.VISIBLE);
+//            }else {
+//                holder.percentageOff.setVisibility(View.GONE);
+//            }
+
+          //  Log.d(TAG, "onBindViewHolder: PRODUCT TYPE IN ADAPTER: " +getAllProducts.getType());
 
         }
 
@@ -445,7 +456,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         RelativeLayout product_like_layout;
         LinearLayout product_container;
         ImageView product_thumbnail;
-        TextView product_title, product_price_old, product_price_new;
+        TextView product_title, product_price_old, product_price_new,percentageOff;
         Spinner product_weight_spn;
         ShimmerFrameLayout shimmerProgress;
 
@@ -463,6 +474,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             product_price_new = itemView.findViewById(R.id.product_price_new);
             product_thumbnail = itemView.findViewById(R.id.product_cover);
             // product_tag_new = itemView.findViewById(R.id.product_item_tag_new);
+            percentageOff = itemView.findViewById(R.id.percentage_sale_off);
 
             shimmerProgress = itemView.findViewById(R.id.shimmerFrame);
         }
