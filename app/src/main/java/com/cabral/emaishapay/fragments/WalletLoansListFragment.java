@@ -230,7 +230,7 @@ public class WalletLoansListFragment extends Fragment {
                 Log.e("info : ", "Something got very wrong");
 
                 dialog.dismiss();
-                TokenAuthActivity.startAuth(context, true);
+                TokenAuthActivity.startAuth(getActivity(), true);
             }
         });
     }

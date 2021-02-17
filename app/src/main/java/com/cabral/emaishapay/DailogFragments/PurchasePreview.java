@@ -178,7 +178,7 @@ public class PurchasePreview extends DialogFragment implements
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                 }
 
 

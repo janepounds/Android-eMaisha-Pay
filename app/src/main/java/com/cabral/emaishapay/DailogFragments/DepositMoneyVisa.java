@@ -366,7 +366,7 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                 }else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getContext(), true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -492,7 +492,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(activity, true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();

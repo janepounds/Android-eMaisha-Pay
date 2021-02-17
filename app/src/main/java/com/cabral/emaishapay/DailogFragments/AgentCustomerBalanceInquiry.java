@@ -184,7 +184,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(getContext(), true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                 }
 
             }

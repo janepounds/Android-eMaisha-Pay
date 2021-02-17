@@ -212,7 +212,7 @@ public class DepositMoneyMobile extends DialogFragment {
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                        TokenAuthActivity.startAuth(activity, true);
+                        TokenAuthActivity.startAuth(getActivity(), true);
                     } else if (response.code() == 500) {
                         if (response.errorBody() != null) {
                             Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();

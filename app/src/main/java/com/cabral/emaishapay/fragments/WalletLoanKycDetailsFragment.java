@@ -384,7 +384,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 }
 
                 } else if (response.code() == 401) {
-                    TokenAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                 } else if (response.code() == 500) {
                     textViewErrorMessage.setText("Error Occurred Try again later");
                     Log.e("info 500", new String(String.valueOf(response.message())) + ", code: " + response.code());

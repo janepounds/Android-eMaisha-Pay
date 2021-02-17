@@ -51,7 +51,6 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private EmaishaPayHomeBinding binding;
     private Context context;
-    private ProgressDialog progressDialog;
     private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0, commisionbalance=0,totalBalance=0;
@@ -67,7 +66,6 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
-
         getTransactionsData();
         getBalanceAndCommission();
 
@@ -298,7 +296,7 @@ public class WalletHomeFragment extends Fragment {
                     dialog.hideProgressDialog();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getContext(), true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -340,8 +338,7 @@ public class WalletHomeFragment extends Fragment {
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getActivity(), TokenAuthActivity.class));
-                    getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+                    TokenAuthActivity.startAuth(getActivity(), false);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
@@ -352,7 +349,7 @@ public class WalletHomeFragment extends Fragment {
                 dialog.hideProgressDialog();
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
-                TokenAuthActivity.startAuth(context, false);
+                TokenAuthActivity.startAuth(getActivity(), false);
             }
         });
     }

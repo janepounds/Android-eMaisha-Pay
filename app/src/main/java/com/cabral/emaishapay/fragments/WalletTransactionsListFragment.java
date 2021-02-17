@@ -140,7 +140,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     dialog.dismiss();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -195,7 +195,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     dialog.dismiss();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(context, true);
+                    TokenAuthActivity.startAuth(getActivity(), true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {

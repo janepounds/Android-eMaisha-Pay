@@ -161,7 +161,7 @@ public class AddCardFragment extends DialogFragment {
                             Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
 
                             //redirect to auth
-                            TokenAuthActivity.startAuth(context, true);
+                            TokenAuthActivity.startAuth(getActivity(), true);
                         }
                     }
 
@@ -298,7 +298,7 @@ public class AddCardFragment extends DialogFragment {
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                                         //redirect to auth
-                                        TokenAuthActivity.startAuth(context, true);
+                                        TokenAuthActivity.startAuth(getActivity(), true);
                                     }
                                 }
 
