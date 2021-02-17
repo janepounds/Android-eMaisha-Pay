@@ -335,12 +335,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
 
                 <Button
-                    android:id="@+id/delete_address"
+                    android:id="@+id/delete_produce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
@@ -353,7 +353,7 @@
                     android:textSize="16sp"
                     android:drawableEnd="@drawable/ic_right_chevron" />
                 <Button
-                    android:id="@+id/edit_address"
+                    android:id="@+id/edit_Produce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

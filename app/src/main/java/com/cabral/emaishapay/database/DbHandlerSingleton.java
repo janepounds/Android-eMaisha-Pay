@@ -44,6 +44,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String ADD_PRODUCE_PRICE = "price";
     public static final String ADD_PRODUCE_DATE = "date";
     public static final String ADD_PRODUCE_IMAGE = "image";
+    public static final String ADD_PRODUCE_UNITS = "units";
 
     public static final String MARKET_PRICE_TABLE_NAME = "market_price";
     public static final String MARKET_PRICE_ID = "id";
@@ -195,7 +196,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         String add_produce_insert_query = " CREATE TABLE IF NOT EXISTS " + ADD_PRODUCE_TABLE_NAME + " ( " + ADD_PRODUCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 ADD_PRODUCE_NAME + " TEXT, " + ADD_PRODUCE_VARIETY + " TEXT NOT NULL, " + ADD_PRODUCE_QUANTITY + " TEXT NOT NULL, " + ADD_PRODUCE_PRICE + " TEXT, " +
-                ADD_PRODUCE_DATE + " TEXT NOT NULL, " + ADD_PRODUCE_IMAGE + " TEXT NOT NULL " + " ) ";
+                ADD_PRODUCE_DATE + " TEXT NOT NULL, " + ADD_PRODUCE_IMAGE + " TEXT NOT NULL, "+ ADD_PRODUCE_UNITS + " TEXT NOT NULL ) ";
 
         String market_price_insert_query = " CREATE TABLE IF NOT EXISTS " + MARKET_PRICE_TABLE_NAME + " ( " + MARKET_PRICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 MARKET_PRICE_CROP + " TEXT NOT NULL, " + MARKET_PRICE_TABLE_MARKET + " TEXT NOT NULL, " + MARKET_PRICE_RETAIL + " TEXT NOT NULL, " + MARKET_PRICE_WHOLESALE + " TEXT NOT NULL " + " ) ";
@@ -448,9 +449,35 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         contentValues.put(ADD_PRODUCE_PRICE, produce.getPrice());
         contentValues.put(ADD_PRODUCE_DATE, produce.getDate());
         contentValues.put(ADD_PRODUCE_IMAGE, produce.getImage());
+        contentValues.put(ADD_PRODUCE_UNITS, produce.getUnits());
         database.insert(ADD_PRODUCE_TABLE_NAME, null, contentValues);
 
         closeDB();
+    }
+
+    public Boolean updateProduce(MyProduce produce,String produce_id) {
+        openDB();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ADD_PRODUCE_NAME, produce.getName());
+        contentValues.put(ADD_PRODUCE_VARIETY, produce.getVariety());
+        contentValues.put(ADD_PRODUCE_QUANTITY, produce.getQuantity());
+        contentValues.put(ADD_PRODUCE_PRICE, produce.getPrice());
+        contentValues.put(ADD_PRODUCE_DATE, produce.getDate());
+        contentValues.put(ADD_PRODUCE_IMAGE, produce.getImage());
+        contentValues.put(ADD_PRODUCE_UNITS, produce.getUnits());
+
+
+        long check = database.update(ADD_PRODUCE_TABLE_NAME, contentValues, ADD_PRODUCE_ID+"=?", new String[]{produce_id});
+
+
+        database.close();
+
+        if (check == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public ArrayList<MyProduce> getAllProduce() {
@@ -472,6 +499,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
                     model.setPrice(cursor.getString(cursor.getColumnIndex(ADD_PRODUCE_PRICE)));
                     model.setDate(cursor.getString(cursor.getColumnIndex(ADD_PRODUCE_DATE)));
                     model.setImage(cursor.getString(cursor.getColumnIndex(ADD_PRODUCE_IMAGE)));
+                    model.setUnits(cursor.getString(cursor.getColumnIndex(ADD_PRODUCE_UNITS)));
 
                     produceArrayList.add(model);
 

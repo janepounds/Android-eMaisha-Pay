@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,7 +55,7 @@ public class MyProduceFragment extends Fragment {
     private static final String TAG = "MyProduceFragment";
     private Context context;
 
-    private ArrayList<MyProduce> produceList = new ArrayList<>();
+    public ArrayList<MyProduce> produceList = new ArrayList<>();
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -64,7 +65,7 @@ public class MyProduceFragment extends Fragment {
     //permission code
     private static final int PERMISSION_CODE = 1;
 
-    Dialog dialog;
+    private Dialog dialog;
     private Uri produceImageUri = null;
     private Bitmap produceImageBitmap = null;
     private String encodedImage;
@@ -75,7 +76,7 @@ public class MyProduceFragment extends Fragment {
     private DbHandlerSingleton dbHandler;
 
     private RecyclerView recyclerView;
-    private LinearLayout layoutEmptyProduceList;
+    LinearLayout layoutEmptyProduceList;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -103,7 +104,7 @@ public class MyProduceFragment extends Fragment {
         return view;
     }
 
-    private void getAllProduce() {
+    public void getAllProduce() {
         new getAllProduceTask(MyProduceFragment.this).execute();
     }
 
@@ -132,6 +133,35 @@ public class MyProduceFragment extends Fragment {
         close.setOnClickListener(view -> dialog.dismiss());
 
         quantity.setOnClickListener(view -> quantityMeasure.setText(quantityUnit.getSelectedItem().toString()));
+
+        quantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem=quantityUnit.getSelectedItem().toString();
+
+                if(position==0){
+                    quantityMeasure.setText("/unit");
+
+                }
+                else if(position==1){
+                    quantityMeasure.setText("/kg");
+                }
+                else if(position==2){
+                    quantityMeasure.setText("/box");
+                }
+                else if(position==3){
+                    quantityMeasure.setText("/ltr");
+                }
+                else if(position==4){
+                    quantityMeasure.setText("/tonne");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         image.setOnClickListener(v -> {
             produceImageView = image;
@@ -171,7 +201,7 @@ public class MyProduceFragment extends Fragment {
 
                 myProduce = new MyProduce(name.getSelectedItem().toString(),
                         variety.getText().toString(), quantity.getText().toString(),
-                        price.getText().toString(), encodedImage, date
+                        price.getText().toString(), encodedImage, date,quantityUnit.getSelectedItem().toString()
                 );
 
                 // create worker thread to insert data into database
@@ -253,11 +283,7 @@ public class MyProduceFragment extends Fragment {
             ArrayList<MyProduce> produce = fragmentReference.get().dbHandler.getAllProduce();
             fragmentReference.get().produceList = produce;
 
-            if (produce.size() == 0) {
-                fragmentReference.get().layoutEmptyProduceList.setVisibility(View.VISIBLE);
-            } else {
-                fragmentReference.get().layoutEmptyProduceList.setVisibility(View.GONE);
-            }
+
             return true;
         }
 
@@ -267,10 +293,16 @@ public class MyProduceFragment extends Fragment {
                 fragmentReference.get().requireActivity().runOnUiThread(() -> {
                     fragmentReference.get().recyclerView.setHasFixedSize(true);
                     fragmentReference.get().layoutManager = new LinearLayoutManager(context);
-                    fragmentReference.get().adapter = new MyProduceListAdapter(context, fragmentReference.get().produceList);
+                    fragmentReference.get().adapter = new MyProduceListAdapter(context, fragmentReference);
 
                     fragmentReference.get().recyclerView.setLayoutManager(fragmentReference.get().layoutManager);
                     fragmentReference.get().recyclerView.setAdapter(fragmentReference.get().adapter);
+
+                    if (fragmentReference.get().produceList.size() == 0) {
+                        fragmentReference.get().layoutEmptyProduceList.setVisibility(View.VISIBLE);
+                    } else {
+                        fragmentReference.get().layoutEmptyProduceList.setVisibility(View.GONE);
+                    }
                 });
                 Log.d(TAG, "onPostExecute: Complete");
             }
@@ -302,7 +334,7 @@ public class MyProduceFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            Log.d(TAG, "doInBackground: Executing");
+            Log.d(TAG, "doInBackground: Executing"+myProduce.getUnits());
             fragmentReference.get().dbHandler.insertProduce(myProduce);
             return true;
         }
@@ -320,4 +352,5 @@ public class MyProduceFragment extends Fragment {
             }
         }
     }
+
 }

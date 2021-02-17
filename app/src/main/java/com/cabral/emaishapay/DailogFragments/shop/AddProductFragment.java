@@ -157,7 +157,7 @@ public class AddProductFragment extends DialogFragment {
         etxtProductStock = view.findViewById(R.id.etxt_product_stock);
         etxtProductSupplier = view.findViewById(R.id.etxt_supplier);
         etxtProductManufucturer = view.findViewById(R.id.etxt_product_manufucturer);
-         quantityUnit = view.findViewById(R.id.product_units);
+        quantityUnit = view.findViewById(R.id.product_units);
         TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
         TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
@@ -170,6 +170,7 @@ public class AddProductFragment extends DialogFragment {
         quantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem=quantityUnit.getSelectedItem().toString();
 
                 if(position==0){
                     quantitySellUnit.setText("/unit");
@@ -893,9 +894,6 @@ public class AddProductFragment extends DialogFragment {
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
         setCancelable(true);
-
-
-
         return dialog;
 
     }

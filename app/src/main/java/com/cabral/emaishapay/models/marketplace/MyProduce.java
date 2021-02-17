@@ -16,16 +16,19 @@ public class MyProduce {
 
     public String date;
 
+    public String units;
+
     public MyProduce() {
     }
 
-    public MyProduce(String name, String variety, String quantity, String price, String image, String date) {
+    public MyProduce(String name, String variety, String quantity, String price, String image, String date, String units) {
         this.name = name;
         this.variety = variety;
         this.quantity = quantity;
         this.price = price;
         this.image = image;
         this.date = date;
+        this.units=units;
     }
 
     public int getId() {
@@ -82,5 +85,13 @@ public class MyProduce {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }
