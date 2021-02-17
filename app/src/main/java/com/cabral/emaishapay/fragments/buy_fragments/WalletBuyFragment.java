@@ -11,8 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +44,7 @@ import java.util.Objects;
 
 import am.appwise.components.ni.NoInternetDialog;
 
-public class WalletBuyFragment extends Fragment {
+public class WalletBuyFragment extends Fragment implements Animation.AnimationListener{
     private Context context;
     private static final String TAG = "WalletBuyFragment";
     StartAppRequests startAppRequests;
@@ -60,6 +63,9 @@ public class WalletBuyFragment extends Fragment {
     TopDealsFragment topDeals;
     ViewAllTopDeals viewAllTopDeals;
     TextView view_all_most_popular,view_all_deals,text_categories_placeholder;
+    Animation animRotate;
+    ImageView imgCategoriesPlaceholder;
+    LinearLayout layoutCategoriesPlaceholder;
 
     public WalletBuyFragment(Context context, FragmentManager fragmentManager) {
         this.context=context;
@@ -72,12 +78,20 @@ public class WalletBuyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buy_home, container, false);
         setHasOptionsMenu(true);
+
         toolbar = view.findViewById(R.id.toolbar_orders_home);
         searchView = view.findViewById(R.id.buy_inputs_search_view);
         searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
         view_all_most_popular = view.findViewById(R.id.btn_view_all_most_popular);
         view_all_deals = view.findViewById(R.id.btn_view_all_deals);
         text_categories_placeholder = view.findViewById(R.id.text_categories_placeholder);
+        imgCategoriesPlaceholder = view.findViewById(R.id.img_categories_placeholder);
+        layoutCategoriesPlaceholder = view.findViewById(R.id.layout_categories_placeholder);
+
+        animRotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        animRotate.setAnimationListener(this);
+
+
         //text_categories_placeholder
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
@@ -139,6 +153,7 @@ public class WalletBuyFragment extends Fragment {
 
         if (allCategoriesList.isEmpty()) {
             new MyTask().execute();
+
         }
 
         else
@@ -165,13 +180,13 @@ public class WalletBuyFragment extends Fragment {
         categoryBundle.putBoolean("home_9", true);
         Fragment categories = new Categories_3();
         categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, categories).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_fragment_container, categories).commit();
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
-        text_categories_placeholder.setVisibility(View.GONE);
+        imgCategoriesPlaceholder.clearAnimation();
+        layoutCategoriesPlaceholder.setVisibility(View.GONE);
     }
-
 
 
 
@@ -184,6 +199,7 @@ public class WalletBuyFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             dialogLoader.showProgressDialog();
+            imgCategoriesPlaceholder.startAnimation(animRotate);
         }
 
         @Override
@@ -227,5 +243,18 @@ public class WalletBuyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

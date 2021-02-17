@@ -58,7 +58,8 @@
                 android:text="16% OFF"
                 android:textColor="@android:color/white"
                 app:autoSizeTextType="uniform"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"/>
 
         </RelativeLayout>
         <TextView
