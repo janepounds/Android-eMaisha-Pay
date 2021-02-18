@@ -3,6 +3,9 @@ package com.cabral.emaishapay.network;
 
 import android.util.Log;
 
+import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.utils.Utilities;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -40,22 +43,28 @@ public class APIClient {
                    });
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            String authToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJDQUJSQUwgQ09NUEFOWSBMVEQiLCJpYXQiOjE2MTM0MDk0ODcsIm5iZiI6MTYxMzQwOTQ5NywiZXhwIjoxNjIxODk5MzQ3LCJhdWQiOiJJTlQiLCJwYXJhbXMiOnsidmVuZG9yIjoiQ0FCUkFMMjAyMSIsImVtYWlsIjoiY2FicmFsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiUGFzc3dvcmRAMTAifX0.WVncZ4NMeCs2itjbyyJH7YfKTPD5aPHrYPMr-RSV7moI3tnqvSpSbv_WYqCc6rYOnzXYDtgDzMrn9i0NcXAR2A";
+            EmaishapayAPI_Interceptor apiInterceptor = new EmaishapayAPI_Interceptor.Builder()
+                    .consumerKey(authToken)
+                    .consumerSecret(Utilities.getMd5Hash(ConstantValues.ECOMMERCE_CONSUMER_SECRET))
+                    .consumerIP(ConstantValues.getLocalIpAddress())
+                    .build();
 
             OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                     .connectTimeout(120, TimeUnit.SECONDS)
                     .readTimeout(120, TimeUnit.SECONDS)
                     .writeTimeout(120, TimeUnit.SECONDS)
-                    //.addInterceptor(apiInterceptor)
                     .addInterceptor(httpLoggingInterceptor)
                     .addNetworkInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
                             Request request = chain.request().newBuilder()
-                                    // .addHeader(Constant.Header, authToken)
+                                     //.addHeader(header, authToken)
                                     .build();
                             return chain.proceed(request);
                         }
                     })
+                    .addInterceptor(apiInterceptor)
                     .build();
 
 
