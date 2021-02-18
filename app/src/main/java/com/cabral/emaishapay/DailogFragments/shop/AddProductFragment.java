@@ -48,6 +48,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
@@ -77,8 +78,7 @@ public class AddProductFragment extends DialogFragment {
 
     Context context;
     public static EditText etxtProductCode;
-    ProgressDialog loading;
-    EditText etxtProductDescription, etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier, etxtProdcutWeightUnit, etxtProductWeight;
+    EditText  etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier;
     TextView txtAddProdcut;
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
@@ -89,7 +89,7 @@ public class AddProductFragment extends DialogFragment {
     Integer selectedManufacturersID;
     Integer selectedProductID;
     String selectedSupplierID;
-    String selectedWeightUnitID;
+
     String selectectedCategoryName, selectedProductName, selectedManufacturerName;
     private List<Category> categories;
     private List<Product> products;
@@ -106,12 +106,12 @@ public class AddProductFragment extends DialogFragment {
     private ArrayList<HashMap<String, String>>offlineManufacturers;
     private ArrayList<HashMap<String, String>>offlineCategories;
     private ArrayList<HashMap<String, String>>offlineProductNames;
+    DialogLoader dialogLoader;
 
 
 
-
-    public AddProductFragment() {
-        // Required empty public constructor
+    public AddProductFragment(List<Manufacturer> manufacturers) {
+        this.manufacturers=manufacturers;
     }
 
 
@@ -128,16 +128,9 @@ public class AddProductFragment extends DialogFragment {
     }
 
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_add_product, container, false);
-//    }
-
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
+        dialogLoader = new DialogLoader(getContext());
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -145,13 +138,9 @@ public class AddProductFragment extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.fragment_add_product, null);
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-
-
-
         etxtProductName = view.findViewById(R.id.etxt_product_name);
         etxtProductCode = view.findViewById(R.id.etxt_product_code);
         etxtProductCategory = view.findViewById(R.id.etxt_product_category);
-//        etxtProductDescription = view.findViewById(R.id.etxt_product_description);
         etxtProductBuyPrice = view.findViewById(R.id.etxt_buy_price);
         etxtProductSellPrice = view.findViewById(R.id.etxt_product_sell_price);
         etxtProductStock = view.findViewById(R.id.etxt_product_stock);
@@ -201,42 +190,15 @@ public class AddProductFragment extends DialogFragment {
             }
         });
         //get offline manufacturers;
-
         offlineManufacturers = new ArrayList<>();
         offlineManufacturers = dbHandler.getOfflineManufacturers();
-
         //get offline product categories
         offlineCategories = new ArrayList<>();
         offlineCategories = dbHandler.getOfflineProductCategories();
-
         //get offline product names
         offlineProductNames = new ArrayList<>();
         offlineProductNames = dbHandler.getOfflineProductNames();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<ManufacturersResponse> call1 = BuyInputsAPIClient
-                .getInstance()
-                .getManufacturers(access_token);
-        call1.enqueue(new Callback<ManufacturersResponse>() {
-            @Override
-            public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
-                if (response.isSuccessful()) {
-                    manufacturers = response.body().getManufacturers();
-                    saveManufacturersList(manufacturers);
-                    Log.d("Categories", String.valueOf(categories));
-
-                } else {
-                    Log.d("Failed", "Manufacturers Fetch failed");
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ManufacturersResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.d("Failed", "Manufacturers Fetch failed");
-
-            }
-        });
 
         Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
@@ -287,21 +249,18 @@ public class AddProductFragment extends DialogFragment {
         weightUnit = dbHandler.getWeightUnit();
 
         for (int i = 0; i < productCategory.size(); i++) {
-
             // Get the ID of selected Country
             categoryNames.add(productCategory.get(i).get("category_name"));
 
         }
 
         for (int i = 0; i < productSupplier.size(); i++) {
-
             // Get the ID of selected supplier
             supplierNames.add(productSupplier.get(i).get("suppliers_name"));
 
         }
 
         for (int i = 0; i < weightUnit.size(); i++) {
-
             // Get the ID of selected weight unit
             weightUnitNames.add(weightUnit.get(i).get("weight_unit"));
 
@@ -548,6 +507,8 @@ public class AddProductFragment extends DialogFragment {
                                     category_name = categories.get(i).getCategories_slug();
                                 }
                             }
+
+                            dialogLoader.showProgressDialog();
                             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
@@ -563,16 +524,16 @@ public class AddProductFragment extends DialogFragment {
                                         products = response.body().getProducts();
                                         savePtdList(products);
                                         Log.d("Products", String.valueOf(products));
-
                                     } else {
                                         Log.d("Product Fetch", "Product Fetch failed");
-
                                     }
+                                    dialogLoader.hideProgressDialog();
                                 }
 
                                 @Override
                                 public void onFailure(Call<ProductResponse> call, Throwable t) {
                                     t.printStackTrace();
+                                    dialogLoader.hideProgressDialog();
                                 }
                             });
 
@@ -791,8 +752,6 @@ public class AddProductFragment extends DialogFragment {
         txtAddProdcut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 // Toasty.warning(AddProductActivity.this, "Add Product is disable in demo version. Please purchase from Codecanyon.Thank you ", Toast.LENGTH_SHORT).show();
 
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
@@ -888,8 +847,6 @@ public class AddProductFragment extends DialogFragment {
             }
         });
 
-
-
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
@@ -897,6 +854,7 @@ public class AddProductFragment extends DialogFragment {
         return dialog;
 
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
@@ -921,6 +879,7 @@ public class AddProductFragment extends DialogFragment {
         }
 
     }
+
     private String encodeImage(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -938,18 +897,12 @@ public class AddProductFragment extends DialogFragment {
         startActivityForResult(intent, 1);
     }
 
-
-
     public void saveList(List<Category> categories) {
         this.categories = categories;
     }
 
     public void savePtdList(List<Product> products) {
         this.products = products;
-    }
-
-    public void saveManufacturersList(List<Manufacturer> manufacturers) {
-        this.manufacturers = manufacturers;
     }
 
     public boolean validateManufacturer() {

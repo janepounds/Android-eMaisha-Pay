@@ -542,7 +542,7 @@ public class WalletAccountFragment extends Fragment {
 
 
 
-        binding.layoutSecurity.setOnClickListener(new View.OnClickListener() {
+            binding.layoutSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -552,6 +552,7 @@ public class WalletAccountFragment extends Fragment {
 
             }
         });
+
             binding.layoutAgent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -763,7 +764,6 @@ public class WalletAccountFragment extends Fragment {
                 requireActivity().finish();
                 // Open login
                 startActivity(new Intent(requireActivity(), Login.class));
-                requireActivity().finish();
             }
         }).setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
 

@@ -107,8 +107,6 @@ public class WalletLoansListFragment extends Fragment {
 
         actualStatementData();
 
-
-
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Loan History");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

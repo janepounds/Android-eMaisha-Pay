@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,8 +33,14 @@ import android.widget.Toast;
 import com.cabral.emaishapay.DailogFragments.shop.AddProductFragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
+import com.cabral.emaishapay.models.shop_model.Manufacturer;
+import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
@@ -44,12 +53,13 @@ public class ShopProductsFragment extends Fragment {
     ImageView imgNoProduct;
     EditText etxtSearch;
     FloatingActionButton fabAdd;
-    ProgressDialog loading;
     private RecyclerView recyclerView;
     FragmentManager fm;
     Activity shop;
     private Context context;
     private DbHandlerSingleton dbHandler;
+    private List<Manufacturer> manufacturers;
+
     public ShopProductsFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
         this.fm = supportFragmentManager;
         this.shop = shopActivity;
@@ -64,6 +74,8 @@ public class ShopProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getOnlineManufacturers();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shop_products, container, false);
         toolbar = view.findViewById(R.id.toolbar_shop_products);
@@ -71,7 +83,6 @@ public class ShopProductsFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Products");
-
         dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
         fabAdd = view.findViewById(R.id.fab_add);
         etxtSearch = view.findViewById(R.id.etxt_search);
@@ -96,7 +107,7 @@ public class ShopProductsFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment addProductDialog = new AddProductFragment();
+                DialogFragment addProductDialog = new AddProductFragment(manufacturers);
                 addProductDialog.show(ft, "dialog");
             }
         });
@@ -166,5 +177,42 @@ public class ShopProductsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private  void getOnlineManufacturers(){
+        DialogLoader dialogLoader = new DialogLoader(getContext());
+        dialogLoader.showProgressDialog();
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        Call<ManufacturersResponse> call1 = BuyInputsAPIClient
+                .getInstance()
+                .getManufacturers(access_token);
+        call1.enqueue(new Callback<ManufacturersResponse>() {
+            @Override
+            public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
+                if (response.isSuccessful()) {
+
+                    saveManufacturersList(response.body().getManufacturers());
+                    //Log.d("Categories", String.valueOf(categories));
+
+                } else {
+                    Log.d("Failed", "Manufacturers Fetch failed");
+
+                }
+                dialogLoader.hideProgressDialog();
+            }
+
+            @Override
+            public void onFailure(Call<ManufacturersResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.d("Failed", "Manufacturers Fetch failed");
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    public void saveManufacturersList(List<Manufacturer> manufacturers) {
+        this.manufacturers = manufacturers;
     }
 }
