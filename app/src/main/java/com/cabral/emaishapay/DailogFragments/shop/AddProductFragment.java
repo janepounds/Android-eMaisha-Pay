@@ -147,8 +147,8 @@ public class AddProductFragment extends DialogFragment {
         etxtProductSupplier = view.findViewById(R.id.etxt_supplier);
         etxtProductManufucturer = view.findViewById(R.id.etxt_product_manufucturer);
         quantityUnit = view.findViewById(R.id.product_units);
-        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
-        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
+//        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
+//        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
         txtAddProdcut = view.findViewById(R.id.tx_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
@@ -160,28 +160,28 @@ public class AddProductFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem=quantityUnit.getSelectedItem().toString();
-
-                if(position==0){
-                    quantitySellUnit.setText("/unit");
-                    quantityPurchaseUnit.setText("/unit");
-
-                }
-                else if(position==1){
-                    quantitySellUnit.setText("/kg");
-                    quantityPurchaseUnit.setText("/kg");
-                }
-                else if(position==2){
-                    quantitySellUnit.setText("/box");
-                    quantityPurchaseUnit.setText("/box");
-                }
-                else if(position==3){
-                    quantitySellUnit.setText("/ltr");
-                    quantityPurchaseUnit.setText("/ltr");
-                }
-                else if(position==4){
-                    quantitySellUnit.setText("/tonne");
-                    quantityPurchaseUnit.setText("/tonne");
-                }
+//
+//                if(position==0){
+//                    quantitySellUnit.setText("/unit");
+//                    quantityPurchaseUnit.setText("/unit");
+//
+//                }
+//                else if(position==1){
+//                    quantitySellUnit.setText("/kg");
+//                    quantityPurchaseUnit.setText("/kg");
+//                }
+//                else if(position==2){
+//                    quantitySellUnit.setText("/box");
+//                    quantityPurchaseUnit.setText("/box");
+//                }
+//                else if(position==3){
+//                    quantitySellUnit.setText("/ltr");
+//                    quantityPurchaseUnit.setText("/ltr");
+//                }
+//                else if(position==4){
+//                    quantitySellUnit.setText("/tonne");
+//                    quantityPurchaseUnit.setText("/tonne");
+//                }
             }
 
             @Override
