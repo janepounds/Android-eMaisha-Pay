@@ -11,8 +11,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+
+import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
@@ -168,10 +174,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
         @Override
         public void onClick(View view) {
-            //got to edit product
-//            Intent i = new Intent(context, EditProductActivity.class);
-//            i.putExtra("product_id", productData.get(getAdapterPosition()).get("product_id"));
-//            context.startActivity(i);
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.product_details, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(false);
+
+            ImageView dialog_close_button = dialogView.findViewById(R.id.product_close);
+
+            final AlertDialog alertDialog = dialog.create();
+            dialog_close_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            alertDialog.show();
+
 
         }
     }

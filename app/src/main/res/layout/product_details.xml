@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:cardCornerRadius="6dp"
-    app:cardElevation="0dp"
-    android:layout_margin="5dp">
+    android:layout_margin="10dp"
+    android:background="@color/windowBackground"
+    app:cardCornerRadius="5dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+
+        android:background="@color/windowBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp"
-            android:layout_margin="10dp">
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/layout_add_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/top_rounded_blue">
 
+                <TextView
+                    android:id="@+id/produce_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:gravity="center"
+                    android:text="Title"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"/>
+                <ImageView
+                    android:id="@+id/product_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".9"
+                    android:layout_gravity="end"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/close" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,16 +54,7 @@
                 android:orientation="vertical"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp">
-                <TextView
-                    android:id="@+id/text_view_purchase_preview_error"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Error ..."
-                    android:visibility="gone"
-                    android:textColor="@color/device_problem"
-                    android:textSize="14sp"
-                    android:gravity="center_horizontal" />
+
 
                 <LinearLayout
                     android:layout_height="wrap_content"
@@ -46,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Status :"
+                        android:text="Manufacturer :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
@@ -56,7 +75,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="Successful"
+                        android:text="Manufacturer"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -77,17 +96,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Reference ID :"
+                        android:text="Category :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
-                     <TextView
+                    <TextView
                         android:id="@+id/text_view_id_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="123456789025"
+                        android:text="Category"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -108,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Receipt ID :"
+                        android:text="Product Code :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
@@ -118,7 +137,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="001230"
+                        android:text="Product Code"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -139,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Service :"
+                        android:text="Selling Price :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
@@ -149,7 +168,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="Purchase"
+                        android:text="Selling Price"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -170,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Paid To :"
+                        android:text="Purchase Price :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
@@ -180,7 +199,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="Kalin Farms"
+                        android:text="Purchase Price"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -201,7 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Transaction Amount :"
+                        android:text="Stock :"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"/>
 
@@ -211,42 +230,12 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:text="UGX 0"
+                        android:text="Stock"
                         android:alpha="1.0"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_margin="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:text="Purchase Date :"
-                        android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:id="@+id/text_view_purchase_date_time"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="2019/01/01  23:00pm"
-                        android:alpha="1.0"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -260,76 +249,56 @@
                 android:id="@+id/filter_dialog_footer"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="5dp">
+
+
 
                 <Button
-                    android:id="@+id/cancel_btn"
+                    android:id="@+id/button_re_stock"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:text="Re-Stock"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_purple_solid"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"/>
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:text="Edit"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_green_solid"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"/>
+                <Button
+                    android:id="@+id/btn_delete"
                     android:layout_weight="0.33"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/ok"
-                    android:textAllCaps="true"
+                    android:text="@string/bt_delete"
+                    android:textAllCaps="false"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:background="@drawable/rectangular_red_solid"
                     android:gravity="center"
+                    android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
 
-
-                <Button
-                    android:id="@+id/button_add_money"
-                    android:layout_weight="0.33"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:text="Print Receipt"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:background="@drawable/rectangular_purple_solid"
-                    android:gravity="center" />
-
             </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right"
-                android:visibility="gone">
-
-                <Button
-
-                    style="@style/Button_DW"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:backgroundTint="@color/textColor"
-                    android:text="Print Receipt"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
-
-            </FrameLayout>
-
         </LinearLayout>
     </ScrollView>
+
 </androidx.cardview.widget.CardView>
