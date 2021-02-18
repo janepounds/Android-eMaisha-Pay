@@ -57,6 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
         final String product_id = productData.get(position).get("product_id");
         String name = productData.get(position).get("product_name");
+        String category = productData.get(position).get("product_category");
         String supplier_id = productData.get(position).get("product_supplier");
         String buy_price = productData.get(position).get("product_buy_price");
         String sell_price = productData.get(position).get("product_sell_price");
@@ -64,16 +65,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         String productstock = productData.get(position).get("product_stock");
 
 
-        String currency = dbHandler.getCurrency();
+        String currency =context.getString(R.string.currency);
 
         String supplier_name = dbHandler.getSupplierName(supplier_id);
 
         holder.txtProductName.setText(name);
+        holder.categoryName.setText(category);
         holder.txt_product_stock.setText(productstock);
         holder.txtSupplierName.setText(supplier_name);
         holder.txtBuyPrice.setText(currency + " " + buy_price);
         holder.txtSellPrice.setText(currency + " " + sell_price);
-
+        holder.txt_per_unit.setText(productData.get(position).get("product_weight_unit"));
 
         if (base64Image != null) {
             if (base64Image.length() < 6) {
@@ -143,7 +145,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView txtProductName, txtSupplierName, txtBuyPrice, txtSellPrice, txt_product_stock;
+        TextView txtProductName, txtSupplierName, txtBuyPrice, txtSellPrice, txt_product_stock, categoryName,txt_per_unit;
         ImageView imgDelete, product_image;
         LinearLayout img_delete_shadow;
 
@@ -156,10 +158,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             txtSellPrice = itemView.findViewById(R.id.txt_product_sell_price_value);
             txt_product_stock = itemView.findViewById(R.id.txt_product_stock_value);
             img_delete_shadow = itemView.findViewById(R.id.img_delete_shadow);
-
             imgDelete = itemView.findViewById(R.id.img_delete);
             product_image = itemView.findViewById(R.id.product_image);
-
+            categoryName = itemView.findViewById(R.id.category_name);
+            txt_per_unit= itemView.findViewById(R.id.txt_per_unit);
             itemView.setOnClickListener(this);
 
 
