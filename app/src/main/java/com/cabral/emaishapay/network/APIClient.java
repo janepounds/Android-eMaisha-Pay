@@ -3,6 +3,10 @@ package com.cabral.emaishapay.network;
 
 import android.util.Log;
 
+import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.utils.Utilities;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -40,22 +44,27 @@ public class APIClient {
                    });
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            EmaishapayAPI_Interceptor apiInterceptor = new EmaishapayAPI_Interceptor.Builder()
+                    .consumerKey(BuildConfig.EMAISHAPAY_API_KEY)
+                    .consumerSecret(Utilities.getMd5Hash(ConstantValues.ECOMMERCE_CONSUMER_SECRET))
+                    .consumerIP(ConstantValues.getLocalIpAddress())
+                    .build();
 
             OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                     .connectTimeout(120, TimeUnit.SECONDS)
                     .readTimeout(120, TimeUnit.SECONDS)
                     .writeTimeout(120, TimeUnit.SECONDS)
-                    //.addInterceptor(apiInterceptor)
                     .addInterceptor(httpLoggingInterceptor)
                     .addNetworkInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
                             Request request = chain.request().newBuilder()
-                                    // .addHeader(Constant.Header, authToken)
+                                     //.addHeader(header, authToken)
                                     .build();
                             return chain.proceed(request);
                         }
                     })
+                    .addInterceptor(apiInterceptor)
                     .build();
 
 

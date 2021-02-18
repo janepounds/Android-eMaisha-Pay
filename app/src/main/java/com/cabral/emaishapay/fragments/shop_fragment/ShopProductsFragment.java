@@ -65,7 +65,7 @@ public class ShopProductsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_shop_products, container, false);
+        View view = inflater.inflate(R.layout.fragment_shop_products, container, false);
         toolbar = view.findViewById(R.id.toolbar_shop_products);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
@@ -112,14 +112,10 @@ public class ShopProductsFragment extends Fragment {
             Toasty.info(context, R.string.no_product_found, Toast.LENGTH_SHORT).show();
             imgNoProduct.setImageResource(R.drawable.no_product);
         } else {
-
-
             imgNoProduct.setVisibility(View.GONE);
             productAdapter = new ProductAdapter(context, productData);
 
             recyclerView.setAdapter(productAdapter);
-
-
         }
 
 
@@ -133,13 +129,7 @@ public class ShopProductsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
-                //  searchData(s.toString());
-
-
-                //get data from local database
                 List<HashMap<String, String>> searchProductList;
-
                 searchProductList = dbHandler.getSearchProducts(s.toString());
 
 
@@ -153,8 +143,6 @@ public class ShopProductsFragment extends Fragment {
 
 
                 } else {
-
-
                     recyclerView.setVisibility(View.VISIBLE);
                     imgNoProduct.setVisibility(View.GONE);
 

@@ -23,6 +23,8 @@ android {
         buildConfigField("String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY'])
         buildConfigField("String", "ENCRYPTION_KEY", apikeyProperties['ENCRYPTION_KEY'])
         buildConfigField("String", "SECRET_KEY", apikeyProperties['SECRET_KEY'])
+        buildConfigField("String", "EMAISHAPAY_API_KEY", apikeyProperties['EMAISHAPAY_API_KEY'])
+
         def secureProps = new Properties()
         if (file("../apikey.properties").exists()) {
             file("../apikey.properties")?.withInputStream { secureProps.load(it) }
