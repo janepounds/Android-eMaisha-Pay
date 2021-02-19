@@ -11,6 +11,12 @@
         android:paddingTop="5dp"
         android:paddingBottom="20dp">
 
+        <LinearLayout
+            android:id="@+id/layout_enter_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
         <TextView
             android:id="@+id/dialog_title"
             android:layout_width="wrap_content"
@@ -37,45 +43,130 @@
             android:textColor="#000"
             android:textSize="16sp"
             android:maxLength="4"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_corners_button"
+                android:gravity="right"
+                android:visibility="visible">
 
+                <Button
+                    android:id="@+id/txt_custom_add_agent_submit_pin"
+                    style="@style/Button_DW"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:backgroundTint="@color/textColor"
+                    android:text="@string/submit"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
 
+                <ImageView
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="10dip"
+                    android:src="@drawable/ic_right_chevron">
 
-        <FrameLayout
+                </ImageView>
+
+            </FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_product_restock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginRight="@dimen/margin_10"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/rounded_corners_button"
-            android:gravity="right">
+            android:orientation="vertical"
+            android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Quantity"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/margin_15"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:background="@drawable/edittext_corner"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/txt_custom_add_agent_submit_pin"
-                style="@style/Button_DW"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:backgroundTint="@color/textColor"
-                android:text="@string/submit"
-                android:textStyle="bold"
-                android:textAllCaps="true"
+            <EditText
+                android:id="@+id/produce_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/josefin_sans"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/product_units"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:background="@drawable/edittext_right_corners_green"
+                android:fontFamily="@font/josefin_sans"
+                android:gravity="center"
+                android:text="Kg"
                 android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
-            <ImageView
-                android:layout_width="30dip"
-                android:layout_height="30dip"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="right|center_vertical"
-                android:layout_margin="10dip"
-                android:src="@drawable/ic_right_chevron">
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp">
 
-            </ImageView>
+                <Button
+                    android:id="@+id/cancel_btn"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_red_solid"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"/>
 
-        </FrameLayout>
+
+                <Button
+                    android:id="@+id/button_submit"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_green_solid"
+                    android:gravity="center" />
+
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
