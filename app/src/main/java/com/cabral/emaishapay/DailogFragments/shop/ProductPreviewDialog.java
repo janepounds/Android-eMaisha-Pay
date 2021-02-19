@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -73,7 +74,7 @@ public class ProductPreviewDialog extends DialogFragment {
         product_purchase_price_txt = view.findViewById(R.id.product_purchase_price);
         product_stock_txt = view.findViewById(R.id.product_stock);
 
-        Button close = view.findViewById(R.id.btn_delete);
+        ImageView close = view.findViewById(R.id.product_close);
         close.setOnClickListener(v -> dismiss());
 
         produce_title_txt.setText(this.productData.get("product_name"));
