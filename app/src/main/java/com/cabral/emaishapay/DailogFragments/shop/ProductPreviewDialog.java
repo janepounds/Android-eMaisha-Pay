@@ -33,6 +33,7 @@ public class ProductPreviewDialog extends DialogFragment {
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     private Context context;
     private HashMap<String, String>  productData;
+    Button delete_button;
 
    public ProductPreviewDialog(HashMap<String, String> productData){
        this.productData =productData;
@@ -73,9 +74,17 @@ public class ProductPreviewDialog extends DialogFragment {
         product_sell_price_txt = view.findViewById(R.id.product_sell_price);
         product_purchase_price_txt = view.findViewById(R.id.product_purchase_price);
         product_stock_txt = view.findViewById(R.id.product_stock);
+        delete_button = view.findViewById(R.id.btn_delete);
 
         ImageView close = view.findViewById(R.id.product_close);
         close.setOnClickListener(v -> dismiss());
+
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         produce_title_txt.setText(this.productData.get("product_name"));
         product_manufacturer_txt.setText(this.productData.get("product_manufacturer"));

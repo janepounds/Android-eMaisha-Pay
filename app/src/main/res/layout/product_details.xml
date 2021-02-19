@@ -8,7 +8,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@color/windowBackground"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="7dp"
+    app:cardElevation="0dp">
 
     <ScrollView
         android:layout_width="match_parent"
