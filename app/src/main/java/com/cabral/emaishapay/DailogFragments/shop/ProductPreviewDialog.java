@@ -80,8 +80,8 @@ public class ProductPreviewDialog extends DialogFragment {
         product_manufacturer_txt.setText(this.productData.get("product_manufacturer"));
         product_category_txt.setText(this.productData.get("product_category"));
         product_code_txt.setText(this.productData.get("product_code"));
-        product_sell_price_txt.setText( NumberFormat.getInstance().format(this.productData.get("product_sell_price")));
-        product_purchase_price_txt.setText( NumberFormat.getInstance().format(this.productData.get("product_buy_price")));
+        product_sell_price_txt.setText(this.productData.get("product_sell_price"));
+        product_purchase_price_txt.setText(  this.productData.get("product_buy_price"));//NumberFormat.getInstance().format()
         product_stock_txt.setText(this.productData.get("product_stock"));
 
     }
