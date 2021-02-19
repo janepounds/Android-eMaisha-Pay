@@ -211,7 +211,7 @@ public class AddCardFragment extends DialogFragment {
 
 
 
-                                  if (validateEntries()) {
+                       if (validateEntries()) {
 
                         ProgressDialog dialog;
                         dialog = new ProgressDialog(context);

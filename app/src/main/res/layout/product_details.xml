@@ -70,7 +70,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/text_view_id_type"
+                        android:id="@+id/product_manufacturer"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -101,7 +101,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/text_view_id_number"
+                        android:id="@+id/product_category"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -132,7 +132,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/text_view_expiry_date"
+                        android:id="@+id/product_code"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -163,7 +163,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/text_view_purchase_service"
+                        android:id="@+id/product_sell_price"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -194,7 +194,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/text_view_purchase_preview_name"
+                        android:id="@+id/product_purchase_price"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"
@@ -225,7 +225,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/txt_view_bill_preview_total"
+                        android:id="@+id/product_stock"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/dimen_10dp"

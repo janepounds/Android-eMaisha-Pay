@@ -107,11 +107,17 @@ public class AddProductFragment extends DialogFragment {
     private ArrayList<HashMap<String, String>>offlineCategories;
     private ArrayList<HashMap<String, String>>offlineProductNames;
     DialogLoader dialogLoader;
-
+    List<HashMap<String, String>> productData;
 
 
     public AddProductFragment(List<Manufacturer> manufacturers) {
         this.manufacturers=manufacturers;
+    }
+
+
+    public AddProductFragment(List<Manufacturer> manufacturers, List<HashMap<String, String>> productData) {
+        this.manufacturers=manufacturers;
+        this.productData=productData;
     }
 
 

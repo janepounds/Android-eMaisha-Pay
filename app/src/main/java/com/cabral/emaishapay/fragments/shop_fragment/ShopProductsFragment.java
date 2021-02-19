@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -37,7 +36,6 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -124,7 +122,8 @@ public class ShopProductsFragment extends Fragment {
             imgNoProduct.setImageResource(R.drawable.no_product);
         } else {
             imgNoProduct.setVisibility(View.GONE);
-            productAdapter = new ProductAdapter(context, productData);
+
+            productAdapter = new ProductAdapter(context, productData, getActivity().getSupportFragmentManager(),manufacturers);
 
             recyclerView.setAdapter(productAdapter);
         }
@@ -158,7 +157,7 @@ public class ShopProductsFragment extends Fragment {
                     imgNoProduct.setVisibility(View.GONE);
 
 
-                    productAdapter = new ProductAdapter(getContext(), searchProductList);
+                    productAdapter = new ProductAdapter(getContext(), searchProductList, getActivity().getSupportFragmentManager(), manufacturers);
 
                     recyclerView.setAdapter(productAdapter);
 

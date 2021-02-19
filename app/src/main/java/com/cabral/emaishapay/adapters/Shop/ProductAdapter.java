@@ -1,9 +1,9 @@
 package com.cabral.emaishapay.adapters.Shop;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
@@ -11,19 +11,23 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cabral.emaishapay.DailogFragments.shop.AddProductFragment;
+import com.cabral.emaishapay.DailogFragments.shop.ProductPreviewDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.models.shop_model.Manufacturer;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
@@ -39,12 +43,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private List<HashMap<String, String>> productData;
     private Context context;
     private DbHandlerSingleton dbHandler;
+    private List<Manufacturer> manufacturers;
+    FragmentManager fm;
 
 
-    public ProductAdapter(Context context, List<HashMap<String, String>> productData) {
+    public ProductAdapter(Context context, List<HashMap<String, String>> productData, FragmentManager supportFragmentManager, List<Manufacturer> manufacturers) {
         this.context = context;
         this.productData = productData;
-
+        this.fm=supportFragmentManager;
     }
 
 
@@ -177,22 +183,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         @Override
         public void onClick(View view) {
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.product_details, null);
-            dialog.setView(dialogView);
-            dialog.setCancelable(false);
+            HashMap<String, String> productDetails = productData.get(getAdapterPosition());
+            //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
+            if (fm!=null ){
+                ProductPreviewDialog productPreviewDialog = new ProductPreviewDialog(productDetails);
 
-            ImageView dialog_close_button = dialogView.findViewById(R.id.product_close);
+                productPreviewDialog.show(fm, "productPreviewDialog");
 
-            final AlertDialog alertDialog = dialog.create();
-            dialog_close_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                }
-            });
+            }
 
-            alertDialog.show();
+//            FragmentTransaction ft = fm.beginTransaction();
+//            Fragment prev = fm.findFragmentByTag("dialog");
+//            if (prev != null) {
+//                ft.remove(prev);
+//            }
+//            ft.addToBackStack(null);
+//
+//            // Create and show the dialog.
+//            DialogFragment addProductDialog = new AddProductFragment(manufacturers,productData);
+//            addProductDialog.show(ft, "dialog");
 
 
         }
