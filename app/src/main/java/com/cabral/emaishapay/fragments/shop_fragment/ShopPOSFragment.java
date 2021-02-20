@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.shop_fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,21 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +42,7 @@ public class ShopPOSFragment extends Fragment {
     ConstraintLayout layoutCart;
     ImageView imgNoProduct, imgScanner;
     private RecyclerView recyclerView;
-    Toolbar toolbar;
+    Toolbar toolbar; String userId;
     private DbHandlerSingleton dbHandler;
 
 
@@ -122,7 +119,8 @@ public class ShopPOSFragment extends Fragment {
 
                 //get data from local database
                 List<HashMap<String, String>> productList;
-                productList = dbHandler.getProducts();
+                userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                productList = dbHandler.getProducts(userId);
 
                 if (productList.size() <= 0) {
 
@@ -153,8 +151,6 @@ public class ShopPOSFragment extends Fragment {
         layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ShopPOSFragment.this, ProductCart.class);
-//                startActivity(intent);
 
                 ProductCartFragment nextFrag= new ProductCartFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -193,7 +189,7 @@ public class ShopPOSFragment extends Fragment {
                 //get data from local database
                 List<HashMap<String, String>> searchProductList;
 
-                searchProductList = dbHandler.getSearchProducts(s.toString());
+                searchProductList = dbHandler.getSearchProducts(s.toString(), userId);
 
 
                 if (searchProductList.size() <= 0) {

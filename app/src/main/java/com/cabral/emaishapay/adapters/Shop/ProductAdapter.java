@@ -75,8 +75,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         String sell_price = productData.get(position).get("product_sell_price");
         String base64Image = productData.get(position).get("product_image");
         String productstock = productData.get(position).get("product_stock");
-
-
         String currency =context.getString(R.string.currency);
 
         String supplier_name = dbHandler.getSupplierName(supplier_id);

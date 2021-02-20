@@ -46,8 +46,6 @@ public class APIClient {
 
             EmaishapayAPI_Interceptor apiInterceptor = new EmaishapayAPI_Interceptor.Builder()
                     .consumerKey(BuildConfig.EMAISHAPAY_API_KEY)
-                    .consumerSecret(Utilities.getMd5Hash(ConstantValues.ECOMMERCE_CONSUMER_SECRET))
-                    .consumerIP(ConstantValues.getLocalIpAddress())
                     .build();
                     
 

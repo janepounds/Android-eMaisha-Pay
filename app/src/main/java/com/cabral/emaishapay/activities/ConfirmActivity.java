@@ -421,17 +421,9 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
         dialogLoader.showProgressDialog();
 
-        RequestBody fName = RequestBody.create(MediaType.parse("text/plain"),userFirstname);
-        RequestBody lName = RequestBody.create(MediaType.parse("text/plain"), userLastname);
-        RequestBody customersTelephone = RequestBody.create(MediaType.parse("text/plain"), phoneNumber);
-        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), userPassword);
-        RequestBody countryCode = RequestBody.create(MediaType.parse("text/plain"), getResources().getString(R.string.ugandan_code));
-        RequestBody addressStreet = RequestBody.create(MediaType.parse("text/plain"), village);
-        RequestBody addressCityOrTown = RequestBody.create(MediaType.parse("text/plain"), subCounty);
-        RequestBody addressDistrict = RequestBody.create(MediaType.parse("text/plain"), district);
-
+        String countryCode = getResources().getString(R.string.ugandan_code);
         Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration(fName, lName, password, countryCode, customersTelephone, addressStreet, addressCityOrTown, addressDistrict);
+                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district);
 
         call.enqueue(new Callback<UserData>() {
             @Override

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,23 +54,29 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
     public void onBindViewHolder(@NonNull final PosProductAdapter.MyViewHolder holder, int position) {
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        String currency = dbHandler.getCurrency();
-
         final String product_id = productData.get(position).get("product_id");
         String name = productData.get(position).get("product_name");
+        String category = productData.get(position).get("product_category");
+        String supplier_id = productData.get(position).get("product_supplier");
+        String buy_price = productData.get(position).get("product_buy_price");
+        String sell_price = productData.get(position).get("product_sell_price");
+        String base64Image = productData.get(position).get("product_image");
+        String productstock = productData.get(position).get("product_stock");
+        String currency =context.getString(R.string.currency);
         final String product_weight = productData.get(position).get("product_weight");
         final String product_price = productData.get(position).get("product_sell_price");
         final String weight_unit_name = productData.get(position).get("product_weight_unit");
-        String base64Image = productData.get(position).get("product_image");
 
 
-       // databaseAccess.open();
-//        final String weight_unit_name = databaseAccess.getWeightUnitName(weight_unit_id);
+        String supplier_name = dbHandler.getSupplierName(supplier_id);
 
-        holder.txtProductName.setText(name + product_weight);
-//        holder.txtWeight.setText(product_weight + " " + weight_unit_name);
-        holder.txtPrice.setText(currency + " " + product_price);
-
+        holder.txtProductName.setText(name);
+        holder.categoryName.setText(category);
+        holder.txt_product_stock.setText(productstock);
+        holder.txtSupplierName.setText(supplier_name);
+        holder.txtBuyPrice.setText(currency + " " + buy_price);
+        holder.txtSellPrice.setText(currency + " " + sell_price);
+        holder.txt_per_unit.setText(productData.get(position).get("product_weight_unit"));
 
         if (base64Image != null) {
             if (base64Image.length() < 6) {
@@ -121,22 +128,29 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtProductName, txtWeight, txtPrice;
+        TextView txtProductName, txtSupplierName, txtBuyPrice, txtSellPrice, txt_product_stock, categoryName,txt_per_unit;
        // Button btnAddToCart;
         ImageView product_image, imgDelete;
         CardView cardProductItem;
+        LinearLayout img_delete_shadow;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtProductName = itemView.findViewById(R.id.txt_product_name);
-            //txtWeight = itemView.findViewById(R.id.txt_weight);
-            txtPrice = itemView.findViewById(R.id.txt_product_sell_price_value);
+            txtSupplierName = itemView.findViewById(R.id.txt_product_supplier_value);
+            txtBuyPrice = itemView.findViewById(R.id.txt_product_buy_price_value);
+            txtSellPrice = itemView.findViewById(R.id.txt_product_sell_price_value);
+            txt_product_stock = itemView.findViewById(R.id.txt_product_stock_value);
+            img_delete_shadow = itemView.findViewById(R.id.img_delete_shadow);
+            imgDelete = itemView.findViewById(R.id.img_delete);
             product_image = itemView.findViewById(R.id.product_image);
-            cardProductItem = itemView.findViewById(R.id.card_product_item);
+            categoryName = itemView.findViewById(R.id.category_name);
+            txt_per_unit= itemView.findViewById(R.id.txt_per_unit);
             imgDelete = itemView.findViewById(R.id.img_delete);
             imgDelete.setVisibility(View.GONE);
            // btnAddToCart = itemView.findViewById(R.id.btn_add_cart);
+            cardProductItem = itemView.findViewById(R.id.card_product_item);
 
             cardProductItem.setOnClickListener(new View.OnClickListener() {
                 @Override

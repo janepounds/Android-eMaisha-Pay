@@ -472,6 +472,7 @@ public class WalletAccountFragment extends Fragment {
 
         });
 
+
         binding.layoutCustomerSupport.setOnClickListener(view12 -> {
 
             if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
@@ -532,11 +533,9 @@ public class WalletAccountFragment extends Fragment {
             binding.agentMerchant.setText("Master Agent");
             binding.layoutAgent.setVisibility(View.GONE);
             binding.layoutMerchant.setVisibility(View.GONE);
-
-        }else if(role.equalsIgnoreCase("agent merchant")){
-            binding.layoutAgent.setVisibility(View.GONE);
-            binding.layoutMerchant.setVisibility(View.GONE);
-            binding.layoutAgentMerchant.setVisibility(View.GONE);
+            binding.businessAccountLayout.setVisibility(View.VISIBLE);
+        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+            binding.businessAccountLayout.setVisibility(View.GONE);
 
         }
 
