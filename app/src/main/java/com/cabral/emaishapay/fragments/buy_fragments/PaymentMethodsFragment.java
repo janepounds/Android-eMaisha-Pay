@@ -70,7 +70,7 @@ import retrofit2.Callback;
 public class PaymentMethodsFragment extends Fragment {
     private static final String TAG = "PaymentMethodsFragment";
     private View rootView;
-    private RadioButton cashOnDelivery, eMaishaWallet, eMaishaCard, Visa, MobileMoney;
+    private RadioButton  eMaishaWallet, eMaishaCard, Visa, MobileMoney;
     private LinearLayout merchantCard, VisaCard, MobileM;
     private EditText cardNumber, cardExpiry, cvv;
     Button continuePayment;
@@ -119,7 +119,7 @@ public class PaymentMethodsFragment extends Fragment {
         shippingAddress = ((EmaishaPayApp) requireContext().getApplicationContext()).getShippingAddress();
         userInfo = user_info_BuyInputs_db.getUserData(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext()));
         dialogLoader = new DialogLoader(getContext());
-        cashOnDelivery = rootView.findViewById(R.id.radio_btn_cash_on_delivery);
+
         eMaishaWallet = rootView.findViewById(R.id.radio_btn_emaisha_wallet);
         eMaishaCard = rootView.findViewById(R.id.radio_btn_merchant_card);
         Visa = rootView.findViewById(R.id.radio_btn_visa_card);
@@ -133,18 +133,9 @@ public class PaymentMethodsFragment extends Fragment {
         cvv = rootView.findViewById(R.id.visa_card_cvv);
         brainTreeSupportedCards = rootView.findViewById(R.id.supported_card_types);
 
-        cashOnDelivery.setOnClickListener(v -> {
-            MobileMoney.setChecked(false);
-            eMaishaWallet.setChecked(false);
-            eMaishaCard.setChecked(false);
-            Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
-        });
 
         eMaishaWallet.setOnClickListener(v -> {
-            cashOnDelivery.setChecked(false);
+
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
@@ -155,7 +146,6 @@ public class PaymentMethodsFragment extends Fragment {
 
         eMaishaCard.setOnClickListener(v -> {
             merchantCard.setVisibility(v.VISIBLE);
-            cashOnDelivery.setChecked(false);
             eMaishaWallet.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(false);
@@ -165,7 +155,6 @@ public class PaymentMethodsFragment extends Fragment {
 
         Visa.setOnClickListener(v -> {
             VisaCard.setVisibility(v.VISIBLE);
-            cashOnDelivery.setChecked(false);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             MobileMoney.setChecked(false);
@@ -175,7 +164,6 @@ public class PaymentMethodsFragment extends Fragment {
 
         MobileMoney.setOnClickListener(v -> {
             MobileM.setVisibility(v.VISIBLE);
-            cashOnDelivery.setChecked(false);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
@@ -262,12 +250,7 @@ public class PaymentMethodsFragment extends Fragment {
 //        progressDialog.setCancelable(false);
 
         continuePayment.setOnClickListener(v -> {
-            if (cashOnDelivery.isChecked()) {
-                //navigate to thank you
-                selectedPaymentMethod = "cod";
-                proceedOrder();
-
-            } else if (eMaishaWallet.isChecked()) {
+             if (eMaishaWallet.isChecked()) {
                 //
                 selectedPaymentMethod = "eMaisha Wallet";
                 proceedOrder();

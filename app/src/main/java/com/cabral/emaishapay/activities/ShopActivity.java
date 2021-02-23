@@ -2,6 +2,7 @@ package com.cabral.emaishapay.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -17,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 public class ShopActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -60,6 +64,24 @@ public class ShopActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        KeyboardVisibilityEvent.setEventListener(
+                this,
+                new KeyboardVisibilityEventListener() {
+                    @Override
+                    public void onVisibilityChanged(boolean isOpen) {
+                        Log.d("SHOP ACTIVITY","onVisibilityChanged: Keyboard visibility changed");
+                        if(isOpen){
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
+                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
+                        }else{
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
+                            bottomNavigationView.setVisibility(View.VISIBLE);
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
+                        }
+                    }
+                });
         setupDefaultHomePage();
     }
 
@@ -85,6 +107,10 @@ public class ShopActivity extends AppCompatActivity {
         currentFragment=selectedFragment;
         return true;
     };
+
+
+
+
 
     private void setupDefaultHomePage() {
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment3, defaultHomeFragment).commit();

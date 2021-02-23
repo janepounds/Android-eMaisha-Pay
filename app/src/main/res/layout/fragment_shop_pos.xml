@@ -172,7 +172,7 @@
                 android:layout_height="3dp"
                 android:layout_weight="1"
                 android:layout_marginBottom="10dp"
-                android:background="@color/textColorPrimaryDark"
+                android:background="#31244A"
                 android:visibility="visible"/>
             <View
                 android:id="@+id/items_selected"

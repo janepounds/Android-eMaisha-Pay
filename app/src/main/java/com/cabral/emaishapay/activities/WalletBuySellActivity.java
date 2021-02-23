@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,9 @@ import androidx.core.graphics.drawable.WrappedDrawable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 public class WalletBuySellActivity extends AppCompatActivity {
 
@@ -75,6 +79,23 @@ public class WalletBuySellActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        KeyboardVisibilityEvent.setEventListener(
+                this,
+                new KeyboardVisibilityEventListener() {
+                    @Override
+                    public void onVisibilityChanged(boolean isOpen) {
+                        Log.d("SHOP ACTIVITY","onVisibilityChanged: Keyboard visibility changed");
+                        if(isOpen){
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
+                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
+                        }else{
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
+                            bottomNavigationView.setVisibility(View.VISIBLE);
+                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
+                        }
+                    }
+                });
         setupDefaultHomePage();
     }
 
