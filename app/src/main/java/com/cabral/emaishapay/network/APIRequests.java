@@ -73,7 +73,7 @@ public interface APIRequests {
                           @Field("password") String password
     );
 
-    //wallet authentication
+    ////wallet authentication
     @FormUrlEncoded
     @POST("authenticate/emaishapay_app_user/login")
     Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber,
@@ -86,7 +86,7 @@ public interface APIRequests {
                                            @Field("password")String pin);
 
 
-    //refresh token
+   // //refresh token
     @FormUrlEncoded
     @POST("wallet/token/get")
     Call<TokenResponse> getToken(
@@ -94,12 +94,12 @@ public interface APIRequests {
             @Field("password") String password
     );
 
-    //request balance
+    // //request balance
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token
     );
 
-    //initiate transfer
+    // //initiate transfer
     @FormUrlEncoded
     @POST("wallet/transfer/initiate")
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
@@ -107,7 +107,7 @@ public interface APIRequests {
                                                     @Field("receiverPhoneNumber") String receiverPhoneNumber
     );
 
-    //initiate transfer
+    // //initiate transfer settlement
     @FormUrlEncoded
     @POST("wallet/transfer/settlement")
     Call<SettlementResponse> recordSettlementTransfer(@Header("Authorization") String token,
@@ -123,17 +123,17 @@ public interface APIRequests {
                                                       @Field("third_party_id") String third_party_id
                                                       );
 
-    //wallet transaction list
+    // //wallet transaction list
     @GET("wallet/transactions/list")
     Call<WalletTransactionResponse> transactionList(@Header("Authorization") String token);
-    //wallet transaction list2
 
+    // //wallet transaction list2
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
     @POST("wallet/transactions")
     Call<WalletTransactionResponse> transactionList2(@Header("Authorization") String token, @Field("limit") int limit);
 
-    //make transaction
+    // //make transaction
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
     @POST("wallet/payments/merchant")
@@ -143,7 +143,7 @@ public interface APIRequests {
                                                  @Field("coupon") String coupon
     );
 
-    //make transaction
+    //credit merchant sale
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
     @POST("wallet/external_payment/merchant")
@@ -154,7 +154,7 @@ public interface APIRequests {
                                                  @Field("reference") String reference
     );
 
-    //confirm payment
+    // /confirm payment
     @FormUrlEncoded
     @POST("wallet/payments/comfirm_paymerchant")
     Call<WalletPurchaseConfirmResponse> confirmPayment(
@@ -163,13 +163,13 @@ public interface APIRequests {
             @Field("coupon") String coupon
     );
 
-    //get merchant information
+    // //get merchant information
     @GET("wallet/merchant/{merchantId}")
     Call<MerchantInfoResponse> getMerchant(@Header("Authorization") String token,
                                            @Path("merchantId") int merchantId
     );
 
-    //get merchant information
+    // //get user business name
     @GET("wallet/user/get/receiver_by_phone/{phonenumber}/{purpose}")
     Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
                                                    @Path("phonenumber") String phonenumber,
@@ -182,7 +182,7 @@ public interface APIRequests {
                                                       @Path("referenceNumber") String referenceNumber
     );
 
-    //get user loans
+    // //get user loans
     @GET("wallet/loan/user/loans")
     Call<LoanListResponse> getUserLoans(
             @Header("Authorization") String token,
@@ -190,8 +190,7 @@ public interface APIRequests {
             /*@Header("Authorization") String token*/
     );
 
-    //cancel loan
-
+    // //cancel loan
     @POST("wallet/loan/cancelRequest")
     Call<CancelLoanResponse> cancelLoanRequest(
             @Header("Authorization") String token,
@@ -201,14 +200,14 @@ public interface APIRequests {
 
 
 
-    //request loans
+    // //request loans
     @POST("wallet/loan/user/request")
     Call<RequestLoanresponse> requestLoans(@Header("Authorization") String token,
                                            @Body JSONObject object
     );
 
 
-    //create user credit
+    // //create user credit
     @FormUrlEncoded
     @POST("wallet/flutter/payment/credituser")
     Call<WalletTransaction> creditUser(@Header("Authorization") String token,
@@ -217,7 +216,7 @@ public interface APIRequests {
                                        @Field("referenceNumber") String referenceNumber
     );
 
-    //voucher deposit
+    // //voucher deposit
     @FormUrlEncoded
     @POST("wallet/payment/voucherdeposit")
     Call<CouponsData> voucherDeposit(@Header("Authorization") String token,
@@ -226,7 +225,7 @@ public interface APIRequests {
                                      @Field("codeEntered") String codeEntered
     );
 
-    //loan pay
+    // //loan pay
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
     @POST("wallet/payments/loanpay")
@@ -246,6 +245,7 @@ public interface APIRequests {
             @Field("addressCityOrTown") String addressCityOrTown,
             @Field("address_district") String addressDistrict);
 
+    // /forgot password
     @FormUrlEncoded
     @POST("processforgotpassword")
     Call<UserData> processForgotPassword(
@@ -280,7 +280,7 @@ public interface APIRequests {
 
 
 
-    //store personal info
+    // /store personal info
     @FormUrlEncoded
     @POST("store_personal_info")
     Call<AccountResponse> storePersonalInfo(
@@ -293,14 +293,14 @@ public interface APIRequests {
             @Field("pic") String picture
     );
 
-    //getAccount info
+    // //getAccount info
     @GET("user/account_data/{userId}")
     Call<AccountResponse>getAccountInfo(
             @Header("Authorization") String token,
             @Path("userId") String userId
     );
 
-    //store id info
+    // //store id info
     @FormUrlEncoded
     @POST("store_user_id_info")
     Call<AccountResponse> storeIdInfo(
@@ -313,7 +313,7 @@ public interface APIRequests {
             @Field("back") String back
     );
 
-    //store employment info
+    // //store employment info
     @FormUrlEncoded
     @POST("store_user_employment_info")
     Call<AccountResponse> storeEmploymentInfo(
@@ -326,7 +326,7 @@ public interface APIRequests {
             @Field("employee_id") String employee_id
     );
 
-    //store business info
+    // //store business info
     @FormUrlEncoded
     @POST("store_user_business_info")
     Call<AccountResponse> storeBusinessInfo(
@@ -341,7 +341,7 @@ public interface APIRequests {
     );
 
 
-
+    // / apply for business account
     @FormUrlEncoded
     @POST("apply_for_business")
     Call<AccountResponse> applyForBusiness(
@@ -360,7 +360,7 @@ public interface APIRequests {
             @Field("longitude") double longitude
     );
 
-
+    // /
     @FormUrlEncoded
     @POST("wallet/add_device_info")
     Call<UserData> registerDeviceToFCM(
@@ -378,7 +378,7 @@ public interface APIRequests {
 
     );
 
-    //store card info
+    // //store card info
     @FormUrlEncoded
     @POST("wallet/add_card_info")
     Call<CardResponse>saveCardInfo(
@@ -393,7 +393,7 @@ public interface APIRequests {
 
     );
 
-    //update card info
+    // //update card info
     @FormUrlEncoded
     @POST("wallet/update_card_info")
     Call<CardResponse>updateCardInfo(
@@ -407,6 +407,8 @@ public interface APIRequests {
 
 
     );
+
+    // //delete card
     @FormUrlEncoded
     @POST("wallet_delete_card")
     Call<CardResponse>deleteCard(
@@ -551,10 +553,13 @@ public interface APIRequests {
 
     );
 
+    // //get settlements
     @GET("wallet/settlements/list")
     Call<WalletTransactionResponse> getSettlements(
             @Header("Authorization") String token
     );
+
+    // //initiate withdraw
     @FormUrlEncoded
     @POST("wallet/merchant/initiate_withdraw")
     Call<InitiateWithdrawResponse> initiateWithdraw(
@@ -566,6 +571,7 @@ public interface APIRequests {
     );
 
 
+    // //initiate deposit
     @FormUrlEncoded
     @POST("wallet/merchant/initiate_deposit")
     Call<InitiateWithdrawResponse>initiateDeposit(
@@ -575,6 +581,7 @@ public interface APIRequests {
             @Field("customerPhoneNumber") String customerPhoneNumber
     );
 
+    // //initiate transfer
     @FormUrlEncoded
     @POST("wallet/merchant/initiate_transfer")
     Call<InitiateWithdrawResponse>initiateTransfer(
@@ -585,6 +592,8 @@ public interface APIRequests {
             @Field("receiverPhoneNumber") String receiverPhoneNumber
 
     );
+
+    // //balance inquiry
     @FormUrlEncoded
     @POST("wallet/merchant/balance_inquiry")
     Call<InitiateWithdrawResponse>balanceInquiry(
@@ -595,6 +604,7 @@ public interface APIRequests {
 
     );
 
+    
     @POST("wallet/merchant/AccountOpening")
     Call<InitiateWithdrawResponse>openAccount(@Header("Authorization") String token, @Body JSONObject object
     );
