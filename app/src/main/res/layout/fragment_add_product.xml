@@ -125,6 +125,7 @@
                         android:drawableEnd="@drawable/ic_add_circle"/>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -172,7 +173,10 @@
                             android:visibility="gone"/>
                     </LinearLayout>
                 </LinearLayout>
-        <LinearLayout
+
+
+            <LinearLayout
+            android:id="@+id/measurement_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -231,7 +235,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
-                        android:entries="@array/crop_quantity_unit"
+                        android:entries="@array/product_measurement_unit"
                         android:gravity="center"
                         android:spinnerMode="dropdown" />
 
@@ -249,6 +253,7 @@
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

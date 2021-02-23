@@ -411,8 +411,97 @@ public class User_Cart_BuyInputsDB {
         
         return cartProduct;
     }
-    
-    
+
+
+    public CartProduct getCartProduct2(String product_id, String product_name) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CART + " WHERE " + CART_PRODUCT_ID + " = ? OR " + CART_PRODUCT_NAME + " = ?", new String[]{product_id,product_name});
+
+        CartProduct cartProduct = new CartProduct();
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            ProductDetails product = new ProductDetails();
+
+            product.setProductsId(cursor.getInt(1));
+            product.setProductsName(cursor.getString(2));
+            product.setProductsImage(cursor.getString(3));
+            product.setProductsUrl(cursor.getString(4));
+            product.setProductsModel(cursor.getString(5));
+            product.setSelectedProductsWeight(cursor.getString(6));
+            product.setSelectedProductsWeightUnit(cursor.getString(7));
+            product.setProductsQuantity(cursor.getInt(8));
+            product.setCustomersBasketQuantity(cursor.getInt(9));
+            product.setProductsPrice(cursor.getString(10));
+            product.setAttributesPrice(cursor.getString(11));
+            product.setProductsFinalPrice(cursor.getString(12));
+            product.setTotalPrice(cursor.getString(13));
+            product.setProductsDescription(cursor.getString(14));
+            product.setCategoryIDs(cursor.getString(15));
+            product.setCategoryNames(cursor.getString(16));
+            product.setManufacturersId(cursor.getInt(17));
+            product.setManufacturersName(cursor.getString(18));
+            product.setTaxClassId(cursor.getInt(19));
+            product.setTaxDescription(cursor.getString(20));
+            product.setTaxClassTitle(cursor.getString(21));
+            product.setTaxClassDescription(cursor.getString(22));
+            product.setIsSaleProduct(cursor.getString(23));
+
+
+            cartProduct.setCustomersBasketId(cursor.getInt(0));
+            cartProduct.setCustomersBasketDateAdded(cursor.getString(24));
+
+            cartProduct.setCustomersBasketProduct(product);
+
+            ///////////////////////////////////////////////////
+
+            List<CartProductAttributes> cartProductAttributesList = new ArrayList<>();
+
+            Cursor c =  db.rawQuery( "SELECT * FROM "+ TABLE_CART_ATTRIBUTES +" WHERE "+ CART_TABLE_ID +" = ?", new String[]{String.valueOf(cursor.getInt(0))});
+
+            if (c.moveToFirst()) {
+                do {
+                    CartProductAttributes cartProductAttributes = new CartProductAttributes();
+                    Option option = new Option();
+                    Value value = new Value();
+                    List<Value> valuesList = new ArrayList<>();
+
+                    option.setId(c.getInt(1));
+                    option.setName(c.getString(2));
+                    value.setId(c.getInt(3));
+                    value.setValue(c.getString(4));
+                    value.setPrice(c.getString(5));
+                    value.setPricePrefix(c.getString(6));
+                    value.setProducts_attributes_id(Integer.parseInt(c.getString(7)));
+
+                    valuesList.add(value);
+
+                    cartProductAttributes.setProductsId(c.getString(0));
+                    cartProductAttributes.setOption(option);
+                    cartProductAttributes.setValues(valuesList);
+                    cartProductAttributes.setCustomersBasketId(c.getInt(8));
+
+                    cartProductAttributesList.add(cartProductAttributes);
+
+                } while (c.moveToNext());
+            }
+
+            // close cursor
+            c.close();
+
+
+            cartProduct.setCustomersBasketProductAttributes(cartProductAttributesList);
+        }
+
+        // close cursor and DB
+        cursor.close();
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+
+        return cartProduct;
+    }
     
     //*********** Fetch All Recent Items ********//
     
@@ -609,8 +698,45 @@ public class User_Cart_BuyInputsDB {
         // close the Database
         BuyInputsDB_Manager.getInstance().closeDatabase();
     }
-    
-    
+
+    //Cart Product Exists
+    public Boolean checkCartProduct(int product_id, String product_name) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CART + " WHERE " + CART_PRODUCT_ID + " = ? OR "+CART_PRODUCT_NAME+" = ?", new String[]{String.valueOf(product_id),String.valueOf(product_name)});
+
+        CartProduct cartProduct = new CartProduct();
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if(!cursor.isAfterLast())
+                return true;
+
+        }
+
+        // close cursor and DB
+        cursor.close();
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+
+        return false;
+    }
+
+
+    public void updateCartItem2(CartProduct cart) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(CART_PRODUCT_QUANTITY,         cart.getCustomersBasketProduct().getCustomersBasketQuantity());
+
+        db.update(TABLE_CART, values, CART_PRODUCT_ID +" = ? OR "+CART_PRODUCT_NAME+" = ?", new String[]{String.valueOf(cart.getCustomersBasketProduct().getProductsId()),String.valueOf(cart.getCustomersBasketProduct().getProductsName())});
+
+        // close the Database
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+    }
+
     //*********** Initialize Details of the Cart ********//
     
     public static void initCartInstance() {

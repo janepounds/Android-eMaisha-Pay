@@ -8,8 +8,9 @@ public class Product {
     private String products_weight_unit;
     private double products_price;
     private String measure_id;
+    private String imageUrl;
 
-    public Product(Integer products_id, String products_slug, String products_name, double products_weight, String products_weight_unit, double products_price, String measure_id) {
+    public Product(Integer products_id, String products_slug, String products_name, double products_weight, String products_weight_unit, double products_price, String measure_id, String imageUrl) {
         this.products_id = products_id;
         this.products_slug = products_slug;
         this.products_name = products_name;
@@ -17,6 +18,7 @@ public class Product {
         this.products_weight_unit = products_weight_unit;
         this.products_price = products_price;
         this.measure_id = measure_id;
+        this.imageUrl = imageUrl;
     }
 
     public Integer getProducts_id() {
@@ -45,5 +47,9 @@ public class Product {
 
     public String getMeasure_id() {
         return measure_id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

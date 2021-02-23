@@ -663,6 +663,7 @@
     <string name="chick_purchase">Chicks Purchase</string>
     <string name="shed_construction">Shed Construction</string>
     <string name="search_shop_location">Search Shop Location</string>
+    <string name="measuremets">Measurements</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
@@ -752,6 +753,15 @@
         <item>Kg</item>
         <item>Boxes</item>
         <item>Litres</item>
+        <item>Tones</item>
+    </string-array>
+    <string-array name="product_measurement_unit">
+        <item>Select</item>
+        <item>Kg</item>
+        <item>g</item>
+        <item>ml</item>
+        <item>l</item>
+        <item>Boxes</item>
         <item>Tones</item>
     </string-array>
     <string-array name="market_price_crops_list">

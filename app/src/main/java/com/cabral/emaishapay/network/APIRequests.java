@@ -233,18 +233,17 @@ public interface APIRequests {
                                   @Field("amount") double amount,
                                   @Field("userId") String userId);
 
-    // /
-    @Multipart
+    @FormUrlEncoded
     @POST("processregistration")
     Call<UserData> processRegistration(
-            @Part("firstname") RequestBody firstName,
-            @Part("lastname") RequestBody lastName,
-            @Part("password") RequestBody password,
-            @Part("country_code") RequestBody countryCode,
-            @Part("phoneNumber") RequestBody phoneNumber,
-            @Part("addressStreet") RequestBody addressStreet,
-            @Part("addressCityOrTown") RequestBody addressCityOrTown,
-            @Part("address_district") RequestBody addressDistrict);
+            @Field("firstname") String firstName,
+            @Field("lastname") String lastName,
+            @Field("password") String password,
+            @Field("country_code") String countryCode,
+            @Field("phoneNumber") String phoneNumber,
+            @Field("addressStreet") String addressStreet,
+            @Field("addressCityOrTown") String addressCityOrTown,
+            @Field("address_district") String addressDistrict);
 
     // /forgot password
     @FormUrlEncoded

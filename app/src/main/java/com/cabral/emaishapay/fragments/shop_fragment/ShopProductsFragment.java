@@ -33,6 +33,7 @@ import com.cabral.emaishapay.DailogFragments.shop.AddProductFragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
@@ -41,6 +42,7 @@ import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class ShopProductsFragment extends Fragment {
     FloatingActionButton fabAdd;
     private RecyclerView recyclerView;
     FragmentManager fm;
-    Activity shop;
+    Activity shop; String userId;
     private Context context;
     private DbHandlerSingleton dbHandler;
     private List<Manufacturer> manufacturers;
@@ -94,9 +96,6 @@ public class ShopProductsFragment extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ProductActivity.this, AddProductActivity.class);
-//                startActivity(intent);
-
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev = fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -112,8 +111,9 @@ public class ShopProductsFragment extends Fragment {
 
 
         //get data from local database
-        List<HashMap<String, String>> productData;
-        productData = dbHandler.getProducts();
+        userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        List<HashMap<String, String>> productData= new ArrayList();
+        productData = dbHandler.getProducts(userId);
 
         Log.d("data", "" + productData.size());
 
@@ -140,7 +140,7 @@ public class ShopProductsFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 List<HashMap<String, String>> searchProductList;
-                searchProductList = dbHandler.getSearchProducts(s.toString());
+                searchProductList = dbHandler.getSearchProducts(s.toString(),userId);
 
 
                 if (searchProductList.size() <= 0) {

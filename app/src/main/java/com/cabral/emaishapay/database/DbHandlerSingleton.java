@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.address_model.RegionDetails;
 import com.cabral.emaishapay.models.marketplace.MarketPrice;
 import com.cabral.emaishapay.models.marketplace.MarketPriceSubItem;
@@ -599,10 +598,10 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
     //get product data
-    public ArrayList<HashMap<String, String>> getProducts() {
+    public ArrayList<HashMap<String, String>> getProducts(String userId) {
         ArrayList<HashMap<String, String>> product = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_ID + " DESC ", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PRODUCTS_TABLE_NAME + " WHERE " + PRODUCT_USER_ID + " = "+userId+ " ORDER BY " + PRODUCT_ID + " DESC ", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -637,10 +636,10 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     }
 
     //get product data
-    public ArrayList<HashMap<String, String>> getSearchProducts(String s) {
+    public ArrayList<HashMap<String, String>> getSearchProducts(String s, String userId) {
         ArrayList<HashMap<String, String>> product = new ArrayList<>();
         this.database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_name LIKE '%" + s + "%' OR product_code LIKE '%" + s + "%' ORDER BY product_id DESC", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE ( product_name LIKE '%" + s + "%' OR product_code LIKE '%" + s + "%' ) AND "+ PRODUCT_USER_ID + " = "+userId+" ORDER BY product_id DESC", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();

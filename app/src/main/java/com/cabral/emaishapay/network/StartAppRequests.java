@@ -72,7 +72,6 @@ public class StartAppRequests {
     //*********** Contains all methods to Execute on Startup ********//
 
     public void StartRequests(){
-
         //RequestBanners();
         RequestAllRegions();
         RequestStaticPagesData();
@@ -183,32 +182,7 @@ public class StartAppRequests {
     }
     //*********** API Request Method to Fetch App Banners ********//
 
-    public void RequestBanners() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<BannerData> call = BuyInputsAPIClient.getInstance()
-                .getBanners(access_token);
 
-        try {
-            Response<BannerData> response = call.execute();
-
-            BannerData bannerData = new BannerData();
-
-            if (response.isSuccessful()) {
-
-                bannerData = response.body();
-
-                if (!TextUtils.isEmpty(bannerData.getSuccess()))
-                    emaishaPayApp.setBannersList(bannerData.getData());
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    //*********** API Request Method to Fetch All Categories ********//
 
     public void RequestAllCategories() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;

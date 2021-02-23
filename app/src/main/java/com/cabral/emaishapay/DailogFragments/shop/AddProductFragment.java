@@ -38,6 +38,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -78,16 +79,19 @@ public class AddProductFragment extends DialogFragment {
 
     Context context;
     public static EditText etxtProductCode;
-    EditText  etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier;
+    EditText  etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier,etxtproductMeasurement;
     TextView txtAddProdcut;
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
     String mediaPath, encodedImage = "N/A";
     Spinner quantityUnit;
+    LinearLayout measurement_layout,spn_measurements_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
-    Integer selectedCategoryID;
-    Integer selectedManufacturersID;
+
+    private String selected_measure_id;
     Integer selectedProductID;
+    Integer selectedManufacturersID;
+    Integer selectedCategoryID;
     String selectedSupplierID;
 
     String selectectedCategoryName, selectedProductName, selectedManufacturerName;
@@ -153,6 +157,8 @@ public class AddProductFragment extends DialogFragment {
         etxtProductSupplier = view.findViewById(R.id.etxt_supplier);
         etxtProductManufucturer = view.findViewById(R.id.etxt_product_manufucturer);
         quantityUnit = view.findViewById(R.id.product_units);
+        etxtproductMeasurement = view.findViewById(R.id.etxt_product_measurement);
+        measurement_layout= view.findViewById(R.id.measurement_layout);
 //        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
 //        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
@@ -160,41 +166,6 @@ public class AddProductFragment extends DialogFragment {
         ImageView close = view.findViewById(R.id.add_product_close);
         close.setOnClickListener(v -> dismiss());
 
-
-
-        quantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem=quantityUnit.getSelectedItem().toString();
-//
-//                if(position==0){
-//                    quantitySellUnit.setText("/unit");
-//                    quantityPurchaseUnit.setText("/unit");
-//
-//                }
-//                else if(position==1){
-//                    quantitySellUnit.setText("/kg");
-//                    quantityPurchaseUnit.setText("/kg");
-//                }
-//                else if(position==2){
-//                    quantitySellUnit.setText("/box");
-//                    quantityPurchaseUnit.setText("/box");
-//                }
-//                else if(position==3){
-//                    quantitySellUnit.setText("/ltr");
-//                    quantityPurchaseUnit.setText("/ltr");
-//                }
-//                else if(position==4){
-//                    quantitySellUnit.setText("/tonne");
-//                    quantityPurchaseUnit.setText("/tonne");
-//                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         //get offline manufacturers;
         offlineManufacturers = new ArrayList<>();
         offlineManufacturers = dbHandler.getOfflineManufacturers();
@@ -558,8 +529,9 @@ public class AddProductFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 productNames = new ArrayList<>();
-                Log.d("Products", String.valueOf(products));
+
                 if (validateProductCategory()) {
+
                     if(products!=null) {
                         for (int i = 0; i < products.size(); i++) {
                             productNames.add(products.get(i).getProducts_name() + " " + products.get(i).getProducts_weight() + products.get(i).getProducts_weight_unit());
@@ -656,22 +628,28 @@ public class AddProductFragment extends DialogFragment {
                             alertDialog.dismiss();
                             final String selectedItem = productAdapter.getItem(position);
 
-                            Integer product_id = 0;
-                            String product_name = "";
                             etxtProductName.setText(selectedItem);
 
-
+                            //Need to use hashMap to reduce Order to O(1)
                             for (int i = 0; i < productNames.size(); i++) {
                                 if (productNames.get(i).equalsIgnoreCase(selectedItem)) {
                                     // Get the ID of selected Country
-                                    product_id = products.get(i).getProducts_id();
-                                    product_name = products.get(i).getProducts_name()+ " "+ products.get(i).getProducts_weight()+ products.get(i).getProducts_weight_unit();
+                                    selectedProductID = products.get(i).getProducts_id();
+                                    selected_measure_id= products.get(i).getMeasure_id();
+                                    selectedProductName = products.get(i).getProducts_name()+ " "+ products.get(i).getProducts_weight()+ products.get(i).getProducts_weight_unit();
+                                    //measurement_layout.setVisibility(View.GONE);
+                                    //spn_measurements_layout.setVisibility(View.VISIBLE);
+                                    etxtproductMeasurement.setText(products.get(i).getProducts_weight()+"");
+                                    etxtProductCode.setText(selectedProductName);
+                                    etxtProductSellPrice.setText(products.get(i).getProducts_price()+"");
+                                    etxtProductBuyPrice.setText(products.get(i).getProducts_price()+"");
+                                    setSelectionValue(products.get(i).getProducts_weight_unit(),quantityUnit,R.array.product_measurement_unit);
+                                    //String encodedImage=products.get(i).getImage();
+
                                 }
                             }
 
-                            selectedProductID = product_id;
-                            selectedProductName = product_name;
-                            Log.d("Product ID", String.valueOf(product_id));
+
                         }
                     });
                 }
@@ -763,7 +741,7 @@ public class AddProductFragment extends DialogFragment {
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
-                Integer product_id = selectedProductID;
+
                 String product_name = etxtProductName.getText().toString().trim();
                 String product_code = etxtProductCode.getText().toString().trim();
                 String product_category_name = etxtProductCategory.getText().toString().trim();
@@ -774,8 +752,11 @@ public class AddProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
                 String manufacturer_name = etxtProductManufucturer.getText().toString().trim();
-                String units =  quantityUnit.getSelectedItem().toString().trim();
+                String units =  etxtproductMeasurement.getText().toString().trim()+quantityUnit.getSelectedItem().toString().trim();
                 String sync_status = "0";
+                if(quantityUnit.getSelectedItem().toString().equalsIgnoreCase("Select") || etxtproductMeasurement.getText().toString().equalsIgnoreCase("")){
+                    units=null;
+                }
 
                 Log.d(TAG, "onClick: timestamp"+timestamp);
 
@@ -817,9 +798,9 @@ public class AddProductFragment extends DialogFragment {
                     //save product info in the database
                     boolean check = dbHandler.addProduct(
                             unique_id,
-                            measure_id,
+                            selected_measure_id,
                             userId,
-                            product_id.toString(),
+                            selectedProductID+"",
                             product_name,
                             product_code,
                             product_category_id,
@@ -928,6 +909,15 @@ public class AddProductFragment extends DialogFragment {
         } else {
             etxtProductCategory.setError(null);
             return true;
+        }
+    }
+    private void setSelectionValue(String compareValue,Spinner mSpinner, int array_ressouce_id){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,array_ressouce_id, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        if (compareValue != null) {
+            int spinnerPosition = adapter.getPosition(compareValue);
+            mSpinner.setSelection(spinnerPosition);
         }
     }
 

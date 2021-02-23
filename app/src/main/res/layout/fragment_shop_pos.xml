@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/chevron">
             <TextView
-
+                android:id="@+id/total_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_sans"
@@ -70,7 +70,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/tv_payment_method"
+                android:id="@+id/tv_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_sans"
@@ -104,7 +104,7 @@
         android:drawableEnd="@drawable/ic_check"
         android:ems="10"
         android:fontFamily="@font/josefin_sans"
-        android:text="Charge UGX 0"
+        android:hint="Charge UGX 0"
         android:textColor="#6F6F6F"
         android:textStyle="bold"
         android:inputType="number"

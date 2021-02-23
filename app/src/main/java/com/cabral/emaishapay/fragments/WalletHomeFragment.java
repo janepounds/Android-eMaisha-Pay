@@ -94,7 +94,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
-        }else if(role.equalsIgnoreCase("agent merchant")){
+        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);

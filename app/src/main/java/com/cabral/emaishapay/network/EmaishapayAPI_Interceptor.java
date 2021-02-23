@@ -20,23 +20,13 @@ import okhttp3.Response;
 public class EmaishapayAPI_Interceptor implements Interceptor {
 
     private static final String EMAISHAPAY_CONSUMER_KEY = "authorizationKey";
-    private static final String ECOMMERCE_CONSUMER_SECRET = "consumer-secret";
-    private static final String ECOMMERCE_CONSUMER_NONCE = "consumer-nonce";
-    private static final String ECOMMERCE_CONSUMER_DEVICE_ID = "consumer-device-id";
-    private static final String ECOMMERCE_COMSUMER_IP = "consumer-ip";
 
     private String consumerKey;
-    private String consumerSecret;
-    private String consumerNonce;
-    private String consumerDeviceID;
-    private String consumerIP;
 
 
 
-    private EmaishapayAPI_Interceptor(String consumerKey, String consumerSecret, String consumerIP) {
+    private EmaishapayAPI_Interceptor(String consumerKey) {
         this.consumerKey = consumerKey;
-        this.consumerSecret = consumerSecret;
-        this.consumerIP = consumerIP;
     }
 
 
@@ -45,8 +35,6 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
         Request original = chain.request();
         HttpUrl originalHttpUrl = original.url();
 
-        consumerNonce = getRandomNonce(32);
-
 
         HttpUrl url = originalHttpUrl.newBuilder().build();
 
@@ -54,11 +42,6 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .addHeader("Content-Type", "application/json")
                 .addHeader(EMAISHAPAY_CONSUMER_KEY, consumerKey)
-//                .addHeader(ECOMMERCE_CONSUMER_SECRET, consumerSecret)
-//                .addHeader(ECOMMERCE_COMSUMER_IP,consumerIP)
-//                .addHeader(ECOMMERCE_CONSUMER_NONCE, consumerNonce)
-//                .addHeader(ECOMMERCE_CONSUMER_DEVICE_ID, "")
-
                 .url(url);
 
 
@@ -87,8 +70,6 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
     public static final class Builder {
 
         private String consumerKey;
-        private String consumerSecret;
-        private String consumerIP;
 
         public Builder consumerKey(String consumerKey) {
             if (consumerKey == null) throw new NullPointerException("consumerKey = null");
@@ -96,26 +77,12 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
             return this;
         }
 
-        public Builder consumerSecret(String consumerSecret) {
-            if (consumerSecret == null) throw new NullPointerException("consumerSecret = null");
-            this.consumerSecret = consumerSecret;
-            return this;
-        }
-
-        public Builder consumerIP(String consumerIP){
-            if (consumerIP == null) throw new NullPointerException("consumer-ip = null");
-            this.consumerIP = consumerIP;
-            return this;
-        }
-
 
         public EmaishapayAPI_Interceptor build() {
 
             if (consumerKey == null) throw new IllegalStateException("consumerKey not set");
-            if (consumerSecret == null) throw new IllegalStateException("consumerSecret not set");
-            if (consumerIP == null) throw new IllegalStateException("consumerIP not set");
 
-            return new EmaishapayAPI_Interceptor(consumerKey, consumerSecret,consumerIP);
+            return new EmaishapayAPI_Interceptor(consumerKey);
         }
     }
 
