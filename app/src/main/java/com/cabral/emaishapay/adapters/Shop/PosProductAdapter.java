@@ -189,15 +189,13 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         ProductPrice.setText( currency+" "+productData.get("product_sell_price")  );
 
         CartProduct cartProduct=GetCartProduct(productData.get("product_id"),productData.get("product_name"));
-        if(cartProduct!=null && cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()!=0){
+        if(cartProduct!=null && cartProduct.getCustomersBasketProduct()!=null && cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()!=0){
             Log.e("error",cartProduct.getCustomersBasketProduct().getProductsName());
             txtQty.setText(cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()+"");
         }
 
-
         int productQTY=Integer.parseInt(txtQty.getText().toString());
         totalPriceTxt.setText(currency+" "+(productQTY*sell_price));
-
 
         LinearLayout plusButton= dialogView.findViewById(R.id.plus);
         LinearLayout minusButton= dialogView.findViewById(R.id.minus);
@@ -221,9 +219,6 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
                 totalPriceTxt.setText(currency+" "+(productQTY*sell_price));
             }
         });
-
-
-
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -28,7 +28,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
-import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 
@@ -167,7 +166,7 @@ public class ShopPOSFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ProductCartFragment nextFrag= new ProductCartFragment();
+                ShopPayments nextFrag= new ShopPayments();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
                         .addToBackStack(null)

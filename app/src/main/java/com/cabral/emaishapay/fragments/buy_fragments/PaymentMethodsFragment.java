@@ -74,8 +74,8 @@ public class PaymentMethodsFragment extends Fragment {
     private LinearLayout merchantCard, VisaCard, MobileM;
     private EditText cardNumber, cardExpiry, cvv;
     Button continuePayment;
-    private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD, CardType.MAESTRO,
-            CardType.UNIONPAY, CardType.AMEX};
+    private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
+            CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
     private BraintreeFragment braintreeFragment;
     SupportedCardTypesView brainTreeSupportedCards;

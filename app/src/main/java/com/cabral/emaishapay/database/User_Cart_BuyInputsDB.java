@@ -425,75 +425,80 @@ public class User_Cart_BuyInputsDB {
             cursor.moveToFirst();
 
             ProductDetails product = new ProductDetails();
+            if(!cursor.isAfterLast()){
+                product.setProductsId(cursor.getInt(1));
+                product.setProductsName(cursor.getString(2));
+                product.setProductsImage(cursor.getString(3));
+                product.setProductsUrl(cursor.getString(4));
+                product.setProductsModel(cursor.getString(5));
+                product.setSelectedProductsWeight(cursor.getString(6));
+                product.setSelectedProductsWeightUnit(cursor.getString(7));
+                product.setProductsQuantity(cursor.getInt(8));
+                product.setCustomersBasketQuantity(cursor.getInt(9));
+                product.setProductsPrice(cursor.getString(10));
+                product.setAttributesPrice(cursor.getString(11));
+                product.setProductsFinalPrice(cursor.getString(12));
+                product.setTotalPrice(cursor.getString(13));
+                product.setProductsDescription(cursor.getString(14));
+                product.setCategoryIDs(cursor.getString(15));
+                product.setCategoryNames(cursor.getString(16));
+                product.setManufacturersId(cursor.getInt(17));
+                product.setManufacturersName(cursor.getString(18));
+                product.setTaxClassId(cursor.getInt(19));
+                product.setTaxDescription(cursor.getString(20));
+                product.setTaxClassTitle(cursor.getString(21));
+                product.setTaxClassDescription(cursor.getString(22));
+                product.setIsSaleProduct(cursor.getString(23));
 
-            product.setProductsId(cursor.getInt(1));
-            product.setProductsName(cursor.getString(2));
-            product.setProductsImage(cursor.getString(3));
-            product.setProductsUrl(cursor.getString(4));
-            product.setProductsModel(cursor.getString(5));
-            product.setSelectedProductsWeight(cursor.getString(6));
-            product.setSelectedProductsWeightUnit(cursor.getString(7));
-            product.setProductsQuantity(cursor.getInt(8));
-            product.setCustomersBasketQuantity(cursor.getInt(9));
-            product.setProductsPrice(cursor.getString(10));
-            product.setAttributesPrice(cursor.getString(11));
-            product.setProductsFinalPrice(cursor.getString(12));
-            product.setTotalPrice(cursor.getString(13));
-            product.setProductsDescription(cursor.getString(14));
-            product.setCategoryIDs(cursor.getString(15));
-            product.setCategoryNames(cursor.getString(16));
-            product.setManufacturersId(cursor.getInt(17));
-            product.setManufacturersName(cursor.getString(18));
-            product.setTaxClassId(cursor.getInt(19));
-            product.setTaxDescription(cursor.getString(20));
-            product.setTaxClassTitle(cursor.getString(21));
-            product.setTaxClassDescription(cursor.getString(22));
-            product.setIsSaleProduct(cursor.getString(23));
+                cartProduct.setCustomersBasketId(cursor.getInt(0));
+                cartProduct.setCustomersBasketDateAdded(cursor.getString(24));
 
 
-            cartProduct.setCustomersBasketId(cursor.getInt(0));
-            cartProduct.setCustomersBasketDateAdded(cursor.getString(24));
 
-            cartProduct.setCustomersBasketProduct(product);
+                cartProduct.setCustomersBasketProduct(product);
 
-            ///////////////////////////////////////////////////
+                ///////////////////////////////////////////////////
 
-            List<CartProductAttributes> cartProductAttributesList = new ArrayList<>();
+                List<CartProductAttributes> cartProductAttributesList = new ArrayList<>();
 
-            Cursor c =  db.rawQuery( "SELECT * FROM "+ TABLE_CART_ATTRIBUTES +" WHERE "+ CART_TABLE_ID +" = ?", new String[]{String.valueOf(cursor.getInt(0))});
+                Cursor c =  db.rawQuery( "SELECT * FROM "+ TABLE_CART_ATTRIBUTES +" WHERE "+ CART_TABLE_ID +" = ?", new String[]{String.valueOf(cursor.getInt(0))});
 
-            if (c.moveToFirst()) {
-                do {
-                    CartProductAttributes cartProductAttributes = new CartProductAttributes();
-                    Option option = new Option();
-                    Value value = new Value();
-                    List<Value> valuesList = new ArrayList<>();
+                if (c.moveToFirst()) {
+                    do {
+                        CartProductAttributes cartProductAttributes = new CartProductAttributes();
+                        Option option = new Option();
+                        Value value = new Value();
+                        List<Value> valuesList = new ArrayList<>();
 
-                    option.setId(c.getInt(1));
-                    option.setName(c.getString(2));
-                    value.setId(c.getInt(3));
-                    value.setValue(c.getString(4));
-                    value.setPrice(c.getString(5));
-                    value.setPricePrefix(c.getString(6));
-                    value.setProducts_attributes_id(Integer.parseInt(c.getString(7)));
+                        option.setId(c.getInt(1));
+                        option.setName(c.getString(2));
+                        value.setId(c.getInt(3));
+                        value.setValue(c.getString(4));
+                        value.setPrice(c.getString(5));
+                        value.setPricePrefix(c.getString(6));
+                        value.setProducts_attributes_id(Integer.parseInt(c.getString(7)));
 
-                    valuesList.add(value);
+                        valuesList.add(value);
 
-                    cartProductAttributes.setProductsId(c.getString(0));
-                    cartProductAttributes.setOption(option);
-                    cartProductAttributes.setValues(valuesList);
-                    cartProductAttributes.setCustomersBasketId(c.getInt(8));
+                        cartProductAttributes.setProductsId(c.getString(0));
+                        cartProductAttributes.setOption(option);
+                        cartProductAttributes.setValues(valuesList);
+                        cartProductAttributes.setCustomersBasketId(c.getInt(8));
 
-                    cartProductAttributesList.add(cartProductAttributes);
+                        cartProductAttributesList.add(cartProductAttributes);
 
-                } while (c.moveToNext());
+                    } while (c.moveToNext());
+                }
+
+                // close cursor
+                c.close();
+
+
+                cartProduct.setCustomersBasketProductAttributes(cartProductAttributesList);
             }
 
-            // close cursor
-            c.close();
 
 
-            cartProduct.setCustomersBasketProductAttributes(cartProductAttributesList);
         }
 
         // close cursor and DB
