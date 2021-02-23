@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,13 @@ import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
+import com.cabral.emaishapay.models.cart_model.CartProduct;
+import com.cabral.emaishapay.models.product_model.ProductDetails;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,14 +45,21 @@ public class ShopPOSFragment extends Fragment {
     public static EditText etxtSearch, etxtCharge;
     PosProductAdapter productAdapter;
     TextView txtNoProducts, txtEnter, txtItems;
+    public  TextView totalItems,totalprice;
     View enterView, itemsView;
     ConstraintLayout layoutCart;
     ImageView imgNoProduct, imgScanner;
     private RecyclerView recyclerView;
     Toolbar toolbar; String userId;
     private DbHandlerSingleton dbHandler;
+    private WeakReference<ShopPOSFragment> fragmentReference;
 
 
+    User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+
+    List<CartProduct> cartItemsList = new ArrayList<>();
+    List<CartProduct> finalCartItemsList = new ArrayList<>();
+    List<ProductDetails> cartProducts = new ArrayList<>();
     public ShopPOSFragment() {
     }
 
@@ -86,6 +100,9 @@ public class ShopPOSFragment extends Fragment {
         enterView = view.findViewById(R.id.enter_selected);
         itemsView = view.findViewById(R.id.items_selected);
         layoutCart = view.findViewById(R.id.layout_cart);
+        totalprice = view.findViewById(R.id.tv_total_price);
+        totalItems = view.findViewById(R.id.total_items);
+        fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
         //for interstitial ads show
 //        Utils utils=new Utils();
@@ -131,13 +148,11 @@ public class ShopPOSFragment extends Fragment {
 
 
                 } else {
-
-
                     recyclerView.setVisibility(View.VISIBLE);
                     imgNoProduct.setVisibility(View.GONE);
                     txtNoProducts.setVisibility(View.GONE);
 
-                    productAdapter = new PosProductAdapter(getContext(), productList);
+                    productAdapter = new PosProductAdapter(getContext(), productList,fragmentReference);
 
                     recyclerView.setAdapter(productAdapter);
 
@@ -207,7 +222,7 @@ public class ShopPOSFragment extends Fragment {
                     imgNoProduct.setVisibility(View.GONE);
                     txtNoProducts.setVisibility(View.GONE);
 
-                    productAdapter = new PosProductAdapter(getContext(), searchProductList);
+                    productAdapter = new PosProductAdapter(getContext(), searchProductList, fragmentReference);
 
                     recyclerView.setAdapter(productAdapter);
 
@@ -224,7 +239,32 @@ public class ShopPOSFragment extends Fragment {
 
 
         });
+        refreshCartProducts();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        refreshCartProducts();
+        super.onResume();
+    }
+
+    public void refreshCartProducts() {
+
+        int itemsCounter=0; double priceCounter=0;
+        cartItemsList = user_cart_BuyInputs_db.getCartItems();
+
+        for (int i = 0; i < cartItemsList.size(); i++) {
+            ProductDetails product=cartItemsList.get(i).getCustomersBasketProduct();
+            itemsCounter=itemsCounter+product.getCustomersBasketQuantity();
+            priceCounter=priceCounter+(product.getCustomersBasketQuantity() * Double.parseDouble(product.getProductsPrice() ));
+            Log.e("CartProduct",product.getProductsName()+" "+product.getCustomersBasketQuantity()+" "+Double.parseDouble(product.getProductsPrice()));
+        }
+        String currency =context.getString(R.string.currency);
+
+        totalItems.setText(itemsCounter+" Items");
+        totalprice.setText(currency+" "+priceCounter);
+
+
+    }
 }

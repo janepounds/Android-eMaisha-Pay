@@ -40,6 +40,7 @@
                             android:paddingStart="10dp"
                             android:paddingTop="10dp"/>
                         <TextView
+                            android:id="@+id/txt_product_price"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/josefin_sans"
@@ -78,7 +79,7 @@
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp"/>
                         <TextView
-
+                            android:id="@+id/product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/josefin_sans"
@@ -136,13 +137,14 @@
                                 android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/txt_product_qty"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:fontFamily="@font/josefin_sans"
                                 android:gravity="center"
                                 android:padding="2dp"
-                                android:text="0"
+                                android:text="1"
                                 android:textColor="@color/textColorPrimaryDark"
                                 android:textSize="28sp"
                                 android:textStyle="bold" />

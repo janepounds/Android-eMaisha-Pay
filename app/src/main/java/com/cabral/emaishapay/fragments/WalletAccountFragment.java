@@ -34,6 +34,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -755,7 +756,7 @@ public class WalletAccountFragment extends Fragment {
 
             // change the login status to false
             prefsManager.logOutUser();
-
+            ClearUserCart();
             // check if has been changed to false
             if (!prefsManager.isUserLoggedIn()) {
                 Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
@@ -768,5 +769,10 @@ public class WalletAccountFragment extends Fragment {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public static void ClearUserCart() {
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        user_cart_BuyInputs_db.clearCart();
     }
 }
