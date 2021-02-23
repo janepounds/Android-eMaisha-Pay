@@ -162,7 +162,6 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
             }
         });
 
-
         code2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -235,8 +234,12 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
             @Override
             public void afterTextChanged(Editable s) {
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
+                otp_code = otp_code.replaceAll("\\s+", "");
+                if(otp_code.length()>=6){
+                    confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+                }
+
             }
         });
 
