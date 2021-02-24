@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
@@ -50,7 +51,8 @@ public class DepositMoneyMobile extends DialogFragment {
     TextView balanceTextView;
     double balance;
     private String txRef;
-    ProgressDialog dialog;
+
+    private DialogLoader dialogLoader;;
     Context activity;
     private RaveVerificationUtils verificationUtils;
 
@@ -83,7 +85,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
         ImageView close = view.findViewById(R.id.wallet_transfer_money_close);
         close.setOnClickListener(v -> dismiss());
-
+        dialogLoader = new DialogLoader(getContext());
         return builder.create();
 
     }
@@ -112,11 +114,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
     public void initiateDeposit() {
       
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Processing transaction..");
-        dialog.setCancelable(false);
-
+        dialogLoader.showProgressDialog();
         String phoneNumber = phoneNumberTxt.getText().toString();
         String amountEntered = addMoneyTxt.getText().toString();
 
@@ -142,17 +140,11 @@ public class DepositMoneyMobile extends DialogFragment {
             public void showProgressIndicator(boolean active) {
                 try {
 
-                    if (dialog == null) {
-                        dialog = new ProgressDialog(activity);
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setMessage("Please wait...");
+                    if (dialogLoader == null) {
+                        dialogLoader = new DialogLoader(getContext());
+                        dialogLoader.showProgressDialog();
                     }
 
-                    if (active && !dialog.isShowing()) {
-                        dialog.show();
-                    } else {
-                        //dialog.dismiss();
-                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -160,13 +152,13 @@ public class DepositMoneyMobile extends DialogFragment {
 
             @Override
             public void onError(String errorMessage, @Nullable String flwRef) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Log.e("MobileMoneypaymentError", errorMessage);
             }
 
             @Override
             public void onSuccessful(String flwRef) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Log.e("Success code :", flwRef);
                 Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
                 creditAfterDeposit(flwRef);
@@ -186,10 +178,9 @@ public class DepositMoneyMobile extends DialogFragment {
 
     public void creditAfterDeposit(String txRef) {
         /******************RETROFIT IMPLEMENTATION**************************/
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Crediting Account..");
-        dialog.show();
+     
+        
+        dialogLoader.showProgressDialog();
 
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
@@ -203,11 +194,8 @@ public class DepositMoneyMobile extends DialogFragment {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
                 if(response.code() == 200){
-                    dialog.cancel();
 
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
+                    dialogLoader.hideProgressDialog();
 
                     refreshActivity();
                 }else if(response.code() == 401){
@@ -249,7 +237,7 @@ public class DepositMoneyMobile extends DialogFragment {
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
                     }
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
 
 

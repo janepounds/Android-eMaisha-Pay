@@ -51,6 +51,7 @@ public class ShopPOSFragment extends Fragment {
     private RecyclerView recyclerView;
     Toolbar toolbar; String userId;
     private DbHandlerSingleton dbHandler;
+    public double chargeAmount;
     private WeakReference<ShopPOSFragment> fragmentReference;
 
 
@@ -166,7 +167,7 @@ public class ShopPOSFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ShopPayments nextFrag= new ShopPayments();
+                ShopPayments nextFrag= new ShopPayments(chargeAmount);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -249,7 +250,7 @@ public class ShopPOSFragment extends Fragment {
     }
 
     public void refreshCartProducts() {
-
+        ClearCart();
         int itemsCounter=0; double priceCounter=0;
         cartItemsList = user_cart_BuyInputs_db.getCartItems();
 
@@ -265,5 +266,9 @@ public class ShopPOSFragment extends Fragment {
         totalprice.setText(currency+" "+priceCounter);
 
 
+    }
+    public static void ClearCart() {
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        user_cart_BuyInputs_db.clearCart();
     }
 }

@@ -293,5 +293,6 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         }
         fragmentReference.get().totalItems.setText(itemsCounter+" Items");
         fragmentReference.get().totalprice.setText(currency+" "+priceCounter);
+        fragmentReference.get().chargeAmount=priceCounter;
     }
 }

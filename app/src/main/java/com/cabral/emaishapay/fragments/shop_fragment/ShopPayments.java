@@ -3,9 +3,11 @@ package com.cabral.emaishapay.fragments.shop_fragment;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -33,23 +35,39 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.SupportedCardTypesView;
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.CartAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.models.WalletTransaction;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.APIRequests;
+import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
+import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
+import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
+import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShopPayments extends Fragment {
 
@@ -61,7 +79,7 @@ public class ShopPayments extends Fragment {
 
     private RadioButton eMaishaWallet, eMaishaCard, Visa, MobileMoney;
     private LinearLayout merchantCard, VisaCard, MobileM;
-    private EditText cardNumber, cardExpiry, cvv;
+    private EditText cardNumber, cardExpiry, cvv, monileMoneyPhoneEdtx;
     Button continuePayment;
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
@@ -73,6 +91,15 @@ public class ShopPayments extends Fragment {
     private CardBuilder brainTreeCard;
     private String brainTreeToken;
     private DialogLoader dialogLoader;
+    String txRef;
+    double chargeAmount;
+
+
+    private RaveVerificationUtils verificationUtils;
+
+    public ShopPayments(double chargeAmount) {
+        this.chargeAmount=chargeAmount;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -100,6 +127,7 @@ public class ShopPayments extends Fragment {
         merchantCard = rootView.findViewById(R.id.layout_merchant_card_details);
         VisaCard = rootView.findViewById(R.id.layout_visa_card_details);
         MobileM = rootView.findViewById(R.id.layout_mobile_money_number);
+        monileMoneyPhoneEdtx = rootView.findViewById(R.id.mobile_money_phone_number);
         continuePayment = rootView.findViewById(R.id.btn_payment_methods);
         cardExpiry = rootView.findViewById(R.id.visa_card_expiry);
         cardNumber = rootView.findViewById(R.id.txt_visa_card_number);
@@ -217,10 +245,8 @@ public class ShopPayments extends Fragment {
             return false;
         });
 
-//        progressDialog = new ProgressDialog(getActivity());
-//        progressDialog.setTitle(getString(R.string.processing));
-//        progressDialog.setMessage(getString(R.string.please_wait));
-//        progressDialog.setCancelable(false);
+        this.txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.context) + (new Date().getTime());
+        verificationUtils = new RaveVerificationUtils(this, false, BuildConfig.PUBLIC_KEY);
 
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
@@ -239,6 +265,7 @@ public class ShopPayments extends Fragment {
 
             } else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
+                initiateMobileMoneyCharge( "0"+monileMoneyPhoneEdtx.getText().toString(),chargeAmount);
                 //proceedOrder();
             }
         });
@@ -249,6 +276,141 @@ public class ShopPayments extends Fragment {
 
 
 
+    public void initiateMobileMoneyCharge(String phoneNumber,double amount) {
 
+        dialogLoader.showProgressDialog();
+
+        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.context) + (new Date().getTime());
+        String eMaishaPayServiceMail="info@cabraltech.com";
+        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
+                .setCurrency("UGX")
+                .setEmail(eMaishaPayServiceMail)
+                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.context))
+                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.context))
+                .setPhoneNumber("0" + phoneNumber)
+                .setNarration("eMaisha Pay")
+                .setPublicKey(BuildConfig.PUBLIC_KEY)
+                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
+                .setTxRef(txRef)
+                .onStagingEnv(false)
+                .isPreAuth(true)
+                .initialize();
+
+        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
+            @Override
+            public void showProgressIndicator(boolean active) {
+                try {
+
+                    if (dialogLoader == null) {
+                        dialogLoader = new DialogLoader(getContext());
+                        dialogLoader.showProgressDialog();
+                    }
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage, @Nullable String flwRef) {
+                dialogLoader.hideProgressDialog();
+                Log.e("MobileMoneypaymentError", errorMessage);
+            }
+
+            @Override
+            public void onSuccessful(String flwRef) {
+                dialogLoader.hideProgressDialog();
+                Log.e("Success code :", flwRef);
+                Toast.makeText(context, "Transaction Successful", Toast.LENGTH_LONG).show();
+                creditAfterDeposit(flwRef,amount);
+            }
+
+            @Override
+            public void showAuthenticationWebPage(String authenticationUrl) {
+                Log.e("Loading auth web page: ", authenticationUrl);
+                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
+            }
+        };
+        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
+
+        mobilePayManager.charge();
+    }
+
+
+    public void creditAfterDeposit(String txRef, double amount) {
+        /******************RETROFIT IMPLEMENTATION**************************/
+        dialogLoader.showProgressDialog();
+
+        String referenceNumber = txRef;
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,userId,amount,referenceNumber);
+        call.enqueue(new Callback<WalletTransaction>() {
+            @Override
+            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                if(response.code() == 200){
+
+                    dialogLoader.hideProgressDialog();
+
+                    refreshActivity();
+                }else if(response.code() == 401){
+
+                    TokenAuthActivity.startAuth(getActivity(), true);
+                } else if (response.code() == 500) {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else if (response.code() == 400) {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else if (response.code() == 406) {
+                    if (response.errorBody() != null) {
+
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else {
+
+                    if (response.errorBody() != null) {
+
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                }
+                dialogLoader.hideProgressDialog();
+            }
+
+
+            @Override
+            public void onFailure(Call<WalletTransaction> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+    public void refreshActivity() {
+        Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+        startActivity(goToWallet);
+    }
 
 }
