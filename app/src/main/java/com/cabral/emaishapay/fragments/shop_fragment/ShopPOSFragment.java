@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class ShopPOSFragment extends Fragment {
     private DbHandlerSingleton dbHandler;
     public double chargeAmount;
     private WeakReference<ShopPOSFragment> fragmentReference;
+    FrameLayout posChargeLayout;
 
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -94,6 +96,7 @@ public class ShopPOSFragment extends Fragment {
         txtNoProducts = view.findViewById(R.id.txt_no_products);
         //imgScanner = view.findViewById(R.id.img_scanner);
 
+        posChargeLayout = view.findViewById(R.id.layout_pos_charge);
         etxtCharge = view.findViewById(R.id.pos_charge);
         txtEnter = view.findViewById(R.id.txt_enter);
         txtItems = view.findViewById(R.id.txt_items);
@@ -117,7 +120,7 @@ public class ShopPOSFragment extends Fragment {
                 etxtSearch.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 layoutCart.setVisibility(View.GONE);
-                etxtCharge.setVisibility(View.VISIBLE);
+                posChargeLayout.setVisibility(View.VISIBLE);
                 etxtCharge.requestFocus();
 
             }
@@ -130,7 +133,7 @@ public class ShopPOSFragment extends Fragment {
                 etxtSearch.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
                 layoutCart.setVisibility(View.VISIBLE);
-                etxtCharge.setVisibility(View.GONE);
+                posChargeLayout.setVisibility(View.GONE);
                 etxtCharge.clearFocus();
 
 
