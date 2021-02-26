@@ -153,6 +153,7 @@ public class DepositMoneyMobile extends DialogFragment {
             @Override
             public void onError(String errorMessage, @Nullable String flwRef) {
                 dialogLoader.hideProgressDialog();
+                Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
                 Log.e("MobileMoneypaymentError", errorMessage);
             }
 
@@ -161,7 +162,7 @@ public class DepositMoneyMobile extends DialogFragment {
                 dialogLoader.hideProgressDialog();
                 Log.e("Success code :", flwRef);
                 Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-                creditAfterDeposit(flwRef);
+                creditAfterDeposit(flwRef,"0" + phoneNumber);
             }
 
             @Override
@@ -176,7 +177,7 @@ public class DepositMoneyMobile extends DialogFragment {
     }
 
 
-    public void creditAfterDeposit(String txRef) {
+    public void creditAfterDeposit(String txRef, String phonumber) {
         /******************RETROFIT IMPLEMENTATION**************************/
      
         
@@ -185,11 +186,10 @@ public class DepositMoneyMobile extends DialogFragment {
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
         String referenceNumber = txRef;
-        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,userId,amount,referenceNumber);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,amount,referenceNumber,"Deposit","flutterwave",phonumber);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {

@@ -209,11 +209,13 @@ public interface APIRequests {
 
     // //create user credit
     @FormUrlEncoded
-    @POST("wallet/flutter/payment/credituser")
+    @POST("wallet/payment/credituser")
     Call<WalletTransaction> creditUser(@Header("Authorization") String token,
-                                       @Field("user_id") String user_id,
                                        @Field("amount") Double amount,
-                                       @Field("referenceNumber") String referenceNumber
+                                       @Field("referenceNumber") String referenceNumber,
+                                       @Field("type") String type,
+                                       @Field("thirdParty") String thirdParty,
+                                       @Field("thirdParty_id") String thirdParty_id
     );
 
     // //voucher deposit

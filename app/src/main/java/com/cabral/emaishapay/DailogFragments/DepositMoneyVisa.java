@@ -471,18 +471,17 @@ public class DepositMoneyVisa extends DialogFragment implements
         //cardPayManager.onWebpageAuthenticationComplete();
 
     }
-    public void creditAfterDeposit(String txRef){
+    public void creditAfterDeposit(String txRef,String thirdparty_id){
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
 
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
-        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
         /************RETROFIT IMPLEMENTATION*******************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,userId,amount,txRef);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,amount,txRef,"Deposit","flutterwave",thirdparty_id);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -671,7 +670,7 @@ public class DepositMoneyVisa extends DialogFragment implements
     public void onSuccessful(String flwRef) {
         Log.e("Success code :",flwRef);
         Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-        creditAfterDeposit(flwRef);
+        creditAfterDeposit(flwRef,card_no);
     }
 
     @Override

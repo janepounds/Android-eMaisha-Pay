@@ -55,6 +55,7 @@ public class ShopPOSFragment extends Fragment {
     public double chargeAmount;
     private WeakReference<ShopPOSFragment> fragmentReference;
     FrameLayout posChargeLayout;
+    ImageView imageTick;
 
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -105,6 +106,7 @@ public class ShopPOSFragment extends Fragment {
         layoutCart = view.findViewById(R.id.layout_cart);
         totalprice = view.findViewById(R.id.tv_total_price);
         totalItems = view.findViewById(R.id.total_items);
+        imageTick = view.findViewById(R.id.img_check);
         fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
         //for interstitial ads show
@@ -179,7 +181,19 @@ public class ShopPOSFragment extends Fragment {
 
             }
         });
+        imageTick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                ShopPayments nextFrag= new ShopPayments( Double.parseDouble(etxtCharge.getText().toString()) );
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+
+
+            }
+        });
 
 
         imgNoProduct.setVisibility(View.GONE);
