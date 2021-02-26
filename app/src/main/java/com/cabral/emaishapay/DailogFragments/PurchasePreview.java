@@ -28,6 +28,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.MerchantInfoResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
+import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -66,7 +67,7 @@ public class PurchasePreview extends DialogFragment implements
     TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView,
             mechantNameTextView,errorTextView, discountTextView;
 
-    String businessName ="";
+    String businessName ="", cardNumber;
     Context activity;
 
     ProgressDialog dialog;
@@ -277,7 +278,7 @@ public class PurchasePreview extends DialogFragment implements
                 dialog.dismiss();
                 Log.e("Success code :", flwRef);
                 Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-                recordPurchase(flwRef);
+                recordPurchase(flwRef,"0" + mobileNumber);
             }
 
             @Override
@@ -295,7 +296,7 @@ public class PurchasePreview extends DialogFragment implements
     private void processCardPayment() {
 
         String expiryDate= WalletTransactionInitiation.getInstance().getCardExpiry();
-        String cardNumber= WalletTransactionInitiation.getInstance().getCardNumber();
+        cardNumber= WalletTransactionInitiation.getInstance().getCardNumber();
         String cardccv= WalletTransactionInitiation.getInstance().getCvv();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
@@ -531,7 +532,7 @@ public class PurchasePreview extends DialogFragment implements
     public void onSuccessful(String flwRef) {
         Log.e("Success code :",flwRef);
         Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-        recordPurchase(flwRef);
+        recordPurchase(flwRef, cardNumber);
     }
 
     @Override
@@ -546,7 +547,7 @@ public class PurchasePreview extends DialogFragment implements
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 
-    private void recordPurchase(String flwRef) {
+    private void recordPurchase(String flwRef, String thirdparty_id) {
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
 
@@ -558,13 +559,14 @@ public class PurchasePreview extends DialogFragment implements
 
 
 
-        Call<WalletPurchaseResponse> call = apiRequests.creditMerchantSale(access_token,merchantId,amount,"flutterwave",flwRef);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id);
 
-        call.enqueue(new Callback<WalletPurchaseResponse>() {
+        call.enqueue(new Callback<WalletTransaction>() {
             @Override
-            public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
+            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
                 if(response.code()== 200){
                     dialogLoader.hideProgressDialog();
+
                     final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -595,8 +597,9 @@ public class PurchasePreview extends DialogFragment implements
                 }
             }
 
+
             @Override
-            public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
+            public void onFailure(Call<WalletTransaction> call, Throwable t) {
 
                 Log.e("info 1A: ", t.getMessage());
                 Log.e("info 1A: ", "Something got very very wrong");

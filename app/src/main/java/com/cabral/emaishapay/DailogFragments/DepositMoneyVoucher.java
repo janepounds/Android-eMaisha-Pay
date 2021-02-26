@@ -100,12 +100,10 @@ public class DepositMoneyVoucher extends DialogFragment {
         dialog.show();
         /************RETROFIT IMPLEMENTATION*************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String email = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL,this.activity);
-        String phoneNumber =  WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,this.activity);
         String codeEntered = voucherTxt.getText().toString();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<CouponsData> call = apiRequests.voucherDeposit(access_token,email,phoneNumber,codeEntered);
+        Call<CouponsData> call = apiRequests.voucherDeposit(access_token,codeEntered);
         call.enqueue(new Callback<CouponsData>() {
             @Override
             public void onResponse(Call<CouponsData> call, Response<CouponsData> response) {

@@ -143,17 +143,6 @@ public interface APIRequests {
                                                  @Field("coupon") String coupon
     );
 
-    //credit merchant sale
-    @FormUrlEncoded
-    @Headers({"Accept: application/json"})
-    @POST("wallet/external_payment/merchant")
-    Call<WalletPurchaseResponse> creditMerchantSale(@Header("Authorization") String token,
-                                                 @Field("merchantId") int merchantId,
-                                                 @Field("amount") Double amount,
-                                                 @Field("thirdParty") String thirdParty,
-                                                 @Field("reference") String reference
-    );
-
     // /confirm payment
     @FormUrlEncoded
     @POST("wallet/payments/comfirm_paymerchant")
@@ -211,6 +200,7 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/payment/credituser")
     Call<WalletTransaction> creditUser(@Header("Authorization") String token,
+                                       @Field("merchant_id") String receiver_id,
                                        @Field("amount") Double amount,
                                        @Field("referenceNumber") String referenceNumber,
                                        @Field("type") String type,
@@ -222,8 +212,6 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("wallet/payment/voucherdeposit")
     Call<CouponsData> voucherDeposit(@Header("Authorization") String token,
-                                     @Field("email") String email,
-                                     @Field("phoneNumber") String phoneNumber,
                                      @Field("codeEntered") String codeEntered
     );
 
