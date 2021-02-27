@@ -401,6 +401,7 @@ public class ShopPayments extends Fragment implements
                 }else if(response.code() == 401){
 
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();

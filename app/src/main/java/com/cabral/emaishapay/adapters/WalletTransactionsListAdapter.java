@@ -118,10 +118,10 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
 
             Log.w("TransactionType",data.getType());
-            if(data.getType().equalsIgnoreCase("Deposit") || (data.getType().equalsIgnoreCase("Transfer") && !userName.equalsIgnoreCase( data.getSender() ) ) ) {
+            if( data.getAmount()>0 ) {
                 holder.textAmount.setText("+ UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#2E84BE"));
-                if(data.getSender()!=null){
+                if(data.getSender()!=null && !data.getSender().isEmpty()){
                     holder.initials.setText(getNameInitials(data.getSender()));
                     holder.textPaidTo.setText(data.getSender());
                 }
@@ -131,7 +131,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
                 }
             }
             else {
-                holder.textAmount.setText("- UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
+                holder.textAmount.setText("- UGX "+ NumberFormat.getInstance().format(0-data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#dc4436"));
                 holder.initials.setText(getNameInitials(data.getReceiver()));
                 holder.textPaidTo.setText(data.getReceiver());

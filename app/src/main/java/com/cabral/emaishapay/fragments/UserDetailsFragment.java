@@ -305,6 +305,7 @@ public class UserDetailsFragment extends Fragment {
                 }
                 else if(response.code()==401){
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));

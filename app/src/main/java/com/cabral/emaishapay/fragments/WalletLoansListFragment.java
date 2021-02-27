@@ -229,6 +229,7 @@ public class WalletLoansListFragment extends Fragment {
 
                 dialog.dismiss();
                 TokenAuthActivity.startAuth(getActivity(), true);
+                getActivity().finishAffinity();
             }
         });
     }

@@ -66,6 +66,7 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
+
         getTransactionsData();
         getBalanceAndCommission();
 
@@ -296,7 +297,8 @@ public class WalletHomeFragment extends Fragment {
                     dialog.hideProgressDialog();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthActivity.startAuth(getActivity(), false);
+                    getActivity().finish();
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -325,8 +327,6 @@ public class WalletHomeFragment extends Fragment {
                 dialog.hideProgressDialog();
 
                 if (response.code() == 200) {
-
-
                   balance =  response.body().getData().getBalance();
                   commisionbalance = response.body().getData().getCommission();
                   totalBalance = response.body().getData().getTotalBalance();
@@ -339,6 +339,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     TokenAuthActivity.startAuth(getActivity(), false);
+                    getActivity().finish();
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
@@ -350,6 +351,7 @@ public class WalletHomeFragment extends Fragment {
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
                 TokenAuthActivity.startAuth(getActivity(), false);
+                getActivity().finish();
             }
         });
     }
