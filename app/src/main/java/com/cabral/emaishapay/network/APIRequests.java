@@ -572,17 +572,17 @@ public interface APIRequests {
             @Field("customerPhoneNumber") String customerPhoneNumber
     );
 
-  // //initiate transfer
-  @FormUrlEncoded
-  @POST("wallet/merchant/initiate_transfer")
-  Call<InitiateWithdrawResponse>initiateTransfer(
-          @Header("Authorization") String token,
-          @Field("amount") int amount,
-          @Field("pin") String pin,
-          @Field("customerPhoneNumber") String customerPhoneNumber,
-          @Field("receiverPhoneNumber") String receiverPhoneNumber
 
-  );
+ @FormUrlEncoded
+ @POST("wallet/merchant/confirm_transfer")
+ Call<InitiateWithdrawResponse>confirmAgentTransfer(
+         @Header("Authorization") String token,
+         @Field("amount") double amount,
+         @Field("otp") String otpCode,
+         @Field("customerPhoneNumber") String customerPhoneNumber,
+         @Field("receiverPhoneNumber") String receiverPhoneNumber
+
+ );
 
   //initiate agent transaction
   @FormUrlEncoded

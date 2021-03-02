@@ -41,11 +41,21 @@ public class DialogLoader {
     }
 
     public void showProgressDialog() {
-        alertDialog.show();
+        try {
+            alertDialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void hideProgressDialog() {
-        alertDialog.dismiss();
+
+        try {
+            alertDialog.dismiss();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 
