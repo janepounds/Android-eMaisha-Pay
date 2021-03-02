@@ -78,6 +78,56 @@
                 android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+            <LinearLayout
+                android:id="@+id/layout_emaishapay_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/radio_btn_emaisha_wallet">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/emaishaAccount"
+                    android:textColor="#515C6F"
+                    android:textSize="@dimen/dimen_16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/edittext_corner"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:background="@drawable/edittext_left_corners_green"
+                        android:gravity="center"
+                        android:text="+256"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/emaishapay_phone_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/josefin_sans"
+                        android:inputType="phone"
+                        android:maxLength="9"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:tag="+256 "
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -507,6 +557,7 @@
                 app:layout_constraintTop_toBottomOf="@id/radio_btn_mobile_money">
 
                 <TextView
+                    android:id="@+id/edt_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"

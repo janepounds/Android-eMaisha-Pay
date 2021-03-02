@@ -167,7 +167,8 @@ public class EnterPin extends DialogFragment {
 
                     /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
                     String customer_no ="0"+ getArguments().getString("customer_no");
-                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().initiateTransfer(access_token, Integer.parseInt(amount_only), "12"+confirm_pin.getText().toString(),customer_no, phoneNumber);
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().
+                            initiateTransfer(access_token, Integer.parseInt(amount_only), "12"+confirm_pin.getText().toString(),customer_no, phoneNumber);
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
                         public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
