@@ -143,7 +143,80 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout_sender_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/text_title_sender_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Sender"
+                        android:textColor="#929292"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/text_sender_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:paddingTop="5dp"
+                        android:text="John Zimula"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_layout_sender_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/text_title_sender_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:text="Sender Mobile"
+                        android:textColor="#929292"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/text_sender_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/josefin_sans"
+                        android:paddingTop="5dp"
+                        android:text="0750532902"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_deposit_amount"
                 android:layout_width="match_parent"
@@ -254,44 +327,47 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:orientation="horizontal"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/change_pin_buttons">
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/round_button_red"
+                    android:text="@string/cancel"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:drawableEnd="@drawable/ic_right_chevron" />
+
 
                 <Button
                     android:id="@+id/txt_card_confirm"
-                    style="@style/Button_DW"
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:backgroundTint="@color/textColor"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/round_button_dark_green"
                     android:text="@string/label_confirm"
                     android:textStyle="bold"
-                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:drawableEnd="@drawable/ic_right_chevron"/>
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
+            </LinearLayout>
 
-                </ImageView>
-
-            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -34,9 +34,9 @@ import com.cabral.emaishapay.network.APIClient;
 
 public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleLabel,textTitleName,textName,textReceiverAccount,textTitlePhoneNumber,textPhoneNumber,textTitleAmount,textAmount;
-    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount;
-    CardView layoutReceiverAccount,totalAmount,charge,depositAmount;
-    Button txtSubmit;
+    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount,textSenderName,textSenderMobile;
+    CardView layoutReceiverAccount,totalAmount,charge,depositAmount,layoutSenderName,layoutSenderMobile;
+    Button txtSubmit,btnCancel;
     String key = "",customerNo;
 
 
@@ -83,6 +83,12 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         charge = view.findViewById(R.id.card_transaction_charge);
         depositAmount = view.findViewById(R.id.card_deposit_amount);
         txtSubmit = view.findViewById(R.id.txt_card_confirm);
+        textSenderName = view.findViewById(R.id.text_sender_name);
+        textSenderMobile = view.findViewById(R.id.text_sender_phone_number);
+        layoutSenderMobile = view.findViewById(R.id.card_layout_sender_phone);
+        layoutSenderName = view.findViewById(R.id.layout_sender_name);
+        btnCancel = view.findViewById(R.id.cancel);
+
 
         if(getArguments()!=null){
             /**************WITHDRAW********************/
@@ -109,7 +115,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 /*****************TRANSFER*************/
                 textTitleLabel.setText(getArguments().getString("title"));
                 textReceiverAccount.setText("Receiver");
-                textName.setText(getArguments().getString("customer_name"));
+                textName.setText(getArguments().getString("receiver_name"));
                 textTitlePhoneNumber.setText("Receiver Mobile");
                 textPhoneNumber.setText("0"+getArguments().getString("receipient_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
@@ -117,6 +123,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 customerNo = getArguments().getString("customer_no");
                 textTitleCharge.setText("Transfer Charge");
                 textTitleAmount.setText("Transfer Amount");
+                textTitleName.setText("Receiver");
+                layoutSenderName.setVisibility(View.VISIBLE);
+                layoutSenderMobile.setVisibility(View.VISIBLE);
+                textSenderName.setText(getArguments().getString("customer_name"));
+                textSenderMobile.setText("0"+getArguments().getString("customer_no"));
 
 
             }else{
@@ -132,6 +143,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
 
         }
+
 
 
         txtSubmit.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +184,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         setCancelable(false);
 
+        btnCancel.setOnClickListener(v -> dismiss());
         return dialog;
 
     }

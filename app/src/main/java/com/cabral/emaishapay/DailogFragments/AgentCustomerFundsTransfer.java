@@ -49,6 +49,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
     Spinner spTransferTo, spSelectBank,spSelectBankBranch;
     String key;
     EditText receipentNo,customerNo,amount;
+    TextView customerNoTitle;
     String business_name = "";
 
     public AgentCustomerFundsTransfer(String key) {
@@ -83,7 +84,9 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         addMoney =view.findViewById(R.id.button_add_money);
         receipentNo = view.findViewById(R.id.mobile_money_recipients_no);
         customerNo = view.findViewById(R.id.customer_no);
+        customerNoTitle = view.findViewById(R.id.text_customer_number);
         amount = view.findViewById(R.id.money_amount);
+        customerNoTitle.setText("Sender's Number");
 
         if(key.equalsIgnoreCase("Customer Fund Transfer")){
             String[] transfer_to = {"Select","Wallet","eMaisha Card"};
@@ -103,6 +106,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                         layoutEmaishaCard.setVisibility(View.GONE);
                         layoutBank.setVisibility(View.GONE);
                         walletLayout.setVisibility(View.GONE);
+
 
                     }
                     else if(position==1){
@@ -229,6 +233,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                     bundle.putString("customer_no",customerNo.getText().toString());
                     bundle.putString("amount",amount.getText().toString());
                     bundle.putString("customer_name",business_name);
+                    bundle.putString("receiver_name",business_name);
                     if (prev != null) {
                         ft.remove(prev);
                     }
