@@ -180,6 +180,7 @@ public class PurchasePreview extends DialogFragment implements
                 }
                 else if(response.code()==401){
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 }
 
 

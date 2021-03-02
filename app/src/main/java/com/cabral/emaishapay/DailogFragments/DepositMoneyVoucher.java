@@ -111,6 +111,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                     refreshActivity();
                 }else if(response.code()==401){
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 }else if(response.code()==500){
                     if (response.errorBody() != null) {
                         errorMsgTxt.setText(response.body().getMessage());

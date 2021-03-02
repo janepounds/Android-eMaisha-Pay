@@ -162,6 +162,7 @@ public class AddCardFragment extends DialogFragment {
 
                             //redirect to auth
                             TokenAuthActivity.startAuth(getActivity(), true);
+                            getActivity().finishAffinity();
                         }
                     }
 
@@ -299,6 +300,7 @@ public class AddCardFragment extends DialogFragment {
 
                                         //redirect to auth
                                         TokenAuthActivity.startAuth(getActivity(), true);
+                                        getActivity().finishAffinity();
                                     }
                                 }
 

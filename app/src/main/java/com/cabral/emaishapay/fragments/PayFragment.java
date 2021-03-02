@@ -431,6 +431,7 @@ public class PayFragment extends Fragment {
                 }else if (response.code() == 401) {
 
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {

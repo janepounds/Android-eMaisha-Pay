@@ -203,6 +203,7 @@ public class ConfirmTransfer extends DialogFragment {
                 }
                 else if(response.code()==401){
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));
@@ -423,6 +424,7 @@ public class ConfirmTransfer extends DialogFragment {
                 }
                 else if(response.code() == 401) {
                     TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
                 }
                     else if (response.code() == 500) {
                         errorTextView.setText("Error Occurred Try again later");

@@ -99,6 +99,7 @@ public interface APIRequests {
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token
     );
 
+
     // //initiate transfer
     @FormUrlEncoded
     @POST("wallet/transfer/initiate")
@@ -571,17 +572,37 @@ public interface APIRequests {
             @Field("customerPhoneNumber") String customerPhoneNumber
     );
 
-    // //initiate transfer
-    @FormUrlEncoded
-    @POST("wallet/merchant/initiate_transfer")
-    Call<InitiateWithdrawResponse>initiateTransfer(
-            @Header("Authorization") String token,
-            @Field("amount") int amount,
-            @Field("pin") String pin,
-            @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("receiverPhoneNumber") String receiverPhoneNumber
 
-    );
+ @FormUrlEncoded
+ @POST("wallet/merchant/confirm_transfer")
+ Call<InitiateWithdrawResponse>confirmAgentTransfer(
+         @Header("Authorization") String token,
+         @Field("amount") double amount,
+         @Field("otp") String otpCode,
+         @Field("customerPhoneNumber") String customerPhoneNumber,
+         @Field("receiverPhoneNumber") String receiverPhoneNumber
+
+ );
+
+  //initiate agent transaction
+  @FormUrlEncoded
+  @POST("wallet/agent/initiate_transcation")
+  Call<InitiateTransferResponse> initiateAgentTransaction(@Header("Authorization") String token,
+                                                          @Field("amount") Double amount,
+                                                          @Field("customerPhoneNumber") String customerPhoneNumber,
+                                                          @Field("type") String type
+  );
+
+  // Comfirm Accept Payment
+  @FormUrlEncoded
+  @POST("wallet/agent/confirm_payment")
+  Call<InitiateWithdrawResponse>confirmAcceptPayment(
+          @Header("Authorization") String token,
+          @Field("amount") double amount,
+          @Field("customerPhoneNumber") String customerPhoneNumber,
+          @Field("otp") String OTPCode
+
+  );
 
     // //balance inquiry
     @FormUrlEncoded

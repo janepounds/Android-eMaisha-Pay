@@ -664,6 +664,7 @@
     <string name="shed_construction">Shed Construction</string>
     <string name="search_shop_location">Search Shop Location</string>
     <string name="measuremets">Measurements</string>
+    <string name="emaishaAccount">eMaisha Pay Account</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
