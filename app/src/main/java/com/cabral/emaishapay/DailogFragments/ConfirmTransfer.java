@@ -27,7 +27,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
@@ -183,10 +183,10 @@ public class ConfirmTransfer extends DialogFragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer");
-        call.enqueue(new Callback<MerchantInfoResponse>() {
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer");
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
-            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.code()==200){
                     businessName = response.body().getData().getBusinessName();
                     receiverNameTextView.setText(businessName);
@@ -215,7 +215,7 @@ public class ConfirmTransfer extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");

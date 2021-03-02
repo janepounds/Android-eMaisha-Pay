@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,21 +27,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
-import com.cabral.emaishapay.models.WalletTransaction;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
-import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
-
-import java.text.NumberFormat;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -162,10 +152,10 @@ public class AgentCustomerDeposits extends DialogFragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantDeposit");
-        call.enqueue(new Callback<MerchantInfoResponse>() {
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantDeposit");
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
-            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
 
@@ -201,7 +191,7 @@ public class AgentCustomerDeposits extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");

@@ -2,8 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,21 +32,16 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
-import com.cabral.emaishapay.models.external_transfer_model.Bank;
-import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
-import com.flutterwave.raveutils.verification.RaveVerificationUtils;
-
-import java.util.ArrayList;
 
 public class AgentCustomerFundsTransfer extends DialogFragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_nam,walletLayout;
     Button addMoney;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch;
     String key;
-    EditText receipentNo,customerNo,amount;
+    EditText receipentNo,customerNo,amountEdt;
     TextView customerNoTitle;
     String business_name = "";
 
@@ -85,7 +78,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         receipentNo = view.findViewById(R.id.mobile_money_recipients_no);
         customerNo = view.findViewById(R.id.customer_no);
         customerNoTitle = view.findViewById(R.id.text_customer_number);
-        amount = view.findViewById(R.id.money_amount);
+        amountEdt = view.findViewById(R.id.money_amount);
         customerNoTitle.setText("Sender's Number");
 
         if(key.equalsIgnoreCase("Customer Fund Transfer")){
@@ -136,7 +129,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                 public void onClick(View v) {
                     //call customer details dialog
                     if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
-                        getReceiverName("0" + receipentNo.getText().toString());
+                        getReceiverName("0" + receipentNo.getText().toString(),"0" + customerNo.getText().toString());
                     }
 
                 }
@@ -209,17 +202,18 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         return dialog;
 
     }
-    public void getReceiverName(String receiverPhoneNumber){
+    public void getReceiverName(String receiverPhoneNumber, String customerPhoneNumber){
 
         /***************RETROFIT IMPLEMENTATION***********************/
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        double amount = Double.parseDouble(amountEdt.getText().toString());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantSendMoney");
-        call.enqueue(new Callback<MerchantInfoResponse>() {
+        Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount);
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
-            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.isSuccessful()){
                     business_name = response.body().getData().getBusinessName();
 
@@ -258,7 +252,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");

@@ -30,7 +30,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
@@ -135,10 +135,10 @@ public class UserDetailsFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication");
-        call.enqueue(new Callback<MerchantInfoResponse>() {
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication");
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
-            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.code()==200){
 
                     businessName = response.body().getData().getBusinessName();
@@ -317,7 +317,7 @@ public class UserDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");

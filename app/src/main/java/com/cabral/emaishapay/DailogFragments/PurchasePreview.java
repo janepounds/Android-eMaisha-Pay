@@ -26,7 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -160,10 +160,10 @@ public class PurchasePreview extends DialogFragment implements
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<MerchantInfoResponse> call = apiRequests.getMerchant(access_token,merchantId);
-        call.enqueue(new Callback<MerchantInfoResponse>() {
+        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId);
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
-            public void onResponse(Call<MerchantInfoResponse> call, Response<MerchantInfoResponse> response) {
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.code()==200){
                     businessName = response.body().getData().getBusinessName();
                     mechantNameTextView.setText(businessName);
@@ -188,7 +188,7 @@ public class PurchasePreview extends DialogFragment implements
             }
 
             @Override
-            public void onFailure(Call<MerchantInfoResponse> call, Throwable t) {
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
 
                     Log.e("info : ", t.getMessage());
                     Log.e("info : ", "Something got very very wrong");

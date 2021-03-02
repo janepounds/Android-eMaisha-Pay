@@ -14,7 +14,7 @@ import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
 import com.cabral.emaishapay.models.LoanPayResponse;
-import com.cabral.emaishapay.models.MerchantInfoResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.models.WalletAuthentication;
@@ -22,18 +22,12 @@ import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.WalletUserRegistration;
 import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
-import com.cabral.emaishapay.models.pages_model.PagesData;
-import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
-import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
-import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.WalletTransaction;
 
 import org.json.JSONObject;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -42,9 +36,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -155,16 +147,26 @@ public interface APIRequests {
 
     // //get merchant information
     @GET("wallet/merchant/{merchantId}")
-    Call<MerchantInfoResponse> getMerchant(@Header("Authorization") String token,
-                                           @Path("merchantId") int merchantId
+    Call<ConfirmationDataResponse> getMerchant(@Header("Authorization") String token,
+                                               @Path("merchantId") int merchantId
     );
 
-    // //get user business name
-    @GET("wallet/user/get/receiver_by_phone/{phonenumber}/{purpose}")
-    Call<MerchantInfoResponse> getUserBusinessName(@Header("Authorization") String token,
-                                                   @Path("phonenumber") String phonenumber,
-                                                   @Path("purpose") String purpose
-    );
+  // //get user business name
+  @GET("wallet/user/get/receiver_by_phone/{phonenumber}/{purpose}")
+  Call<ConfirmationDataResponse> getUserBusinessName(@Header("Authorization") String token,
+                                                     @Path("phonenumber") String phonenumber,
+                                                     @Path("purpose") String purpose
+  );
+
+
+  //get receiver business name,sender business name and Transaction charge
+  @FormUrlEncoded
+  @POST("wallet/validateAgentFundsTransfer")
+  Call<ConfirmationDataResponse> validateAgentFundsTransfer(@Header("Authorization") String token,
+                                                            @Field("sendernumber") String phonenumber,
+                                                            @Field("receivernumber") String receivernumber,
+                                                            @Field("amount") double amount
+  );
 
     //get merchant receipt
     @GET("wallet/payments/receipt/{referenceNumber}")

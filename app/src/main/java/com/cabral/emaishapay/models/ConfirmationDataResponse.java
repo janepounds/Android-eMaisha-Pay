@@ -3,7 +3,7 @@ package com.cabral.emaishapay.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MerchantInfoResponse {
+public class ConfirmationDataResponse {
     @SerializedName("message")
     @Expose
     private String message;
@@ -31,6 +31,10 @@ public class MerchantInfoResponse {
         @SerializedName("businessName")
         @Expose
         private String businessName;
+
+        @SerializedName("customerName")
+        @Expose
+        private String customerName;
 
         @SerializedName("sms_code")
         @Expose
@@ -62,6 +66,14 @@ public class MerchantInfoResponse {
 
         public void setBusinessName(String businessName) {
             this.businessName = businessName;
+        }
+
+        public String getCustomerName(){
+            return customerName;
+        }
+
+        public void setCustomerName(String customerName) {
+            this.customerName = customerName;
         }
     }
 
