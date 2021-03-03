@@ -117,13 +117,12 @@ public interface APIRequests {
                                                       );
 
     // //wallet transaction list
-    @GET("wallet/transactions/list")
+    @POST("wallet/transactions/list")
     Call<WalletTransactionResponse> transactionList(@Header("Authorization") String token);
 
     // //wallet transaction list2
     @FormUrlEncoded
-    @Headers({"Accept: application/json"})
-    @POST("wallet/transactions")
+    @POST("wallet/transactions/list")
     Call<WalletTransactionResponse> transactionList2(@Header("Authorization") String token, @Field("limit") int limit);
 
     // //make transaction
