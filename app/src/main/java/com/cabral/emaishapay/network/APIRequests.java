@@ -145,9 +145,9 @@ public interface APIRequests {
     );
 
     // //get merchant information
-    @GET("wallet/merchant/{merchantId}")
+    @GET("wallet/agent/get-name{AgentId}")
     Call<ConfirmationDataResponse> getMerchant(@Header("Authorization") String token,
-                                               @Path("merchantId") int merchantId
+                                               @Path("AgentId") String merchantId
     );
 
   // //get user business name
@@ -381,8 +381,6 @@ public interface APIRequests {
             @Field("expiry") String expiry,
             @Field("account_name") String account_name
 
-
-
     );
 
     // //update card info
@@ -551,31 +549,21 @@ public interface APIRequests {
             @Header("Authorization") String token
     );
 
-    // //initiate withdraw
-    @FormUrlEncoded
-    @POST("wallet/merchant/initiate_withdraw")
-    Call<InitiateWithdrawResponse> initiateWithdraw(
-            @Header("Authorization") String token,
-            @Field("amount") int amount,
-            @Field("pin") String pin,
-            @Field("customerPhoneNumber") String customerPhoneNumber
-
-    );
 
 
     // //initiate deposit
     @FormUrlEncoded
-    @POST("wallet/merchant/initiate_deposit")
-    Call<InitiateWithdrawResponse>initiateDeposit(
+    @POST("wallet/agent/confirm-deposit")
+    Call<InitiateWithdrawResponse>confrmDeposit(
             @Header("Authorization") String token,
-            @Field("amount") int amount,
+            @Field("amount") double amount,
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber
     );
 
 
  @FormUrlEncoded
- @POST("wallet/merchant/confirm_transfer")
+ @POST("wallet/agent/confirm-transfer")
  Call<InitiateWithdrawResponse>confirmAgentTransfer(
          @Header("Authorization") String token,
          @Field("amount") double amount,
@@ -585,9 +573,20 @@ public interface APIRequests {
 
  );
 
+    // //initiate withdraw
+    @FormUrlEncoded
+    @POST("wallet/agent/confirm-withdraw")
+    Call<InitiateWithdrawResponse> confirmAgentWithdraw(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("otp") String otp_code,
+            @Field("customerPhoneNumber") String customerPhoneNumber
+
+    );
+
   //initiate agent transaction
   @FormUrlEncoded
-  @POST("wallet/agent/initiate_transcation")
+  @POST("wallet/agent/initiate-transcation")
   Call<InitiateTransferResponse> initiateAgentTransaction(@Header("Authorization") String token,
                                                           @Field("amount") Double amount,
                                                           @Field("customerPhoneNumber") String customerPhoneNumber,
@@ -596,7 +595,7 @@ public interface APIRequests {
 
   // Comfirm Accept Payment
   @FormUrlEncoded
-  @POST("wallet/agent/confirm_payment")
+  @POST("wallet/agent/confirm-payment")
   Call<InitiateWithdrawResponse>confirmAcceptPayment(
           @Header("Authorization") String token,
           @Field("amount") double amount,
@@ -607,17 +606,15 @@ public interface APIRequests {
 
     // //balance inquiry
     @FormUrlEncoded
-    @POST("wallet/merchant/balance_inquiry")
+    @POST("wallet/agent/balance-inquiry")
     Call<InitiateWithdrawResponse>balanceInquiry(
             @Header("Authorization") String token,
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber
-
-
     );
 
     
-    @POST("wallet/merchant/AccountOpening")
+    @POST("wallet/agent/account-opening")
     Call<InitiateWithdrawResponse>openAccount(@Header("Authorization") String token, @Body JSONObject object
     );
 

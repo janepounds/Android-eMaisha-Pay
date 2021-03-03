@@ -158,7 +158,7 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
+        String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId);
         call.enqueue(new Callback<ConfirmationDataResponse>() {

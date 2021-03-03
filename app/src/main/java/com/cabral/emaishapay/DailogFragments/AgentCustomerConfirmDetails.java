@@ -110,7 +110,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTitleAmount.setText("Amount Received");
                 textName.setText(getArguments().getString("customer_name"));
                 textReceiverAccount.setText("Customer");
-                textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
+                textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
@@ -119,8 +119,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
                 textName.setText(getArguments().getString("customer_name"));
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
-                textAmount.setText("UGX "+getArguments().getString("amount"));
-                textTotalAmount.setText("UGX "+getArguments().getString("amount"));
+                textAmount.setText("UGX "+this.transferAmount);
+                textTotalAmount.setText("UGX "+this.transferAmount);
 
 
             }else if(key.equalsIgnoreCase("transfer")){
@@ -162,13 +162,34 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                //call pin dialog
-                           // Create and show the dialog.
-//                DialogFragment depositDialog = new EnterPin();
-//                depositDialog.setArguments(bundle);
-//                depositDialog.show(ft, "dialog");
+                if(key.equalsIgnoreCase("deposit")){
+                    //call pin dialog
+                    // Create and show the dialog.
+                    FragmentManager fragmentManager = getChildFragmentManager();
 
-                initiateFundsTransfer(customerNo,transferAmount );
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    if(key.equalsIgnoreCase("transfer")){
+                        bundle.putString("customer_no",customerNo);
+                    }
+                    bundle.putString("key",key);
+                    bundle.putString("amount",textTotalAmount.getText().toString());
+                    bundle.putString("phone_number",textPhoneNumber.getText().toString());
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new EnterPin();
+                    depositDialog.setArguments(bundle);
+                    depositDialog.show(ft, "dialog");
+
+                }else{
+                    initiateFundsTransfer(customerNo,transferAmount );
+                }
+
             }
 
 
@@ -340,7 +361,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
                 otp_code = otp_code.replaceAll("\\s+", "");
                 if(otp_code.length()>=6){
-                    comfirmAgentFundsTransfer(otp_code,customerNumber,amount);
+                    if(key.equalsIgnoreCase("transfer")){
+                        comfirmAgentFundsTransfer(otp_code,customerNumber,amount);
+                    }else if(key.equalsIgnoreCase("withdraw")){
+                        comfirmAgentWithdraw(otp_code,customerNumber,amount);
+                    }
                 }
 
             }
@@ -368,6 +393,47 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
         Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().
                 confirmAgentTransfer(access_token, amount, otp_code,customerNumber, receiverPhoneNumber);
+        call.enqueue(new Callback<InitiateWithdrawResponse>() {
+            @Override
+            public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().equalsIgnoreCase("1")) {
+                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        //success message
+                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                        startActivity(intent);
+                        dialogLoader.hideProgressDialog();
+
+                    } else {
+                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        //redirect to home;
+                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                        startActivity(intent);
+
+                        dialogLoader.hideProgressDialog();
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                startActivity(intent);
+                dialogLoader.hideProgressDialog();
+            }
+        });
+    }
+
+    private  void comfirmAgentWithdraw(String otp_code, String customerNumber, double amount){
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        dialogLoader.showProgressDialog();
+
+        Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().
+                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber);
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {

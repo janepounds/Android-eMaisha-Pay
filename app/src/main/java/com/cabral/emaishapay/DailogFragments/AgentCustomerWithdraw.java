@@ -45,11 +45,9 @@ public class AgentCustomerWithdraw extends DialogFragment {
     Spinner spWithdrawFrom;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    static String PENDING_DEPOSIT_REFERENCE_NUMBER;
     TextView balanceTextView;
     double balance;
     private String txRef;
-    ProgressDialog dialog;
     Context activity;
     private RaveVerificationUtils verificationUtils;
     private Button txt_withdraw_submit;
@@ -175,7 +173,7 @@ public class AgentCustomerWithdraw extends DialogFragment {
 
                     bundle.putString("key","withdraw");
                     bundle.putString("title","Confirm Withdraw Details");
-                    bundle.putString("phone_number",customerPhoneNumber.getText().toString());
+                    bundle.putString("customer_no",customerPhoneNumber.getText().toString());
                     bundle.putString("amount",amount.getText().toString());
                     bundle.putString("customer_name",business_name);
                     FragmentTransaction ft = fm.beginTransaction();

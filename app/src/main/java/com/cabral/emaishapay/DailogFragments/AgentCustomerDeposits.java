@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -43,14 +44,12 @@ public class AgentCustomerDeposits extends DialogFragment {
     Spinner spDepositTo;
     Button addMoneyBtn;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    static String PENDING_DEPOSIT_REFERENCE_NUMBER;
     TextView balanceTextView;
     double balance;
     private String txRef, business_name= "";
     ProgressDialog dialog;
     Context activity;
-    private RaveVerificationUtils verificationUtils;
-    FragmentManager fm;
+    DialogLoader dialogLoader;
     private EditText walletNumber,depositAmount,phoneNumber;
 
     public AgentCustomerDeposits() {
@@ -67,13 +66,13 @@ public class AgentCustomerDeposits extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.dialog_agent_customer_deposit, null);
+        dialogLoader = new DialogLoader(getContext());
 
         spDepositTo = view.findViewById(R.id.sp_deposit_to);
         layoutAccountNumber = view.findViewById(R.id.layout_account_number);
@@ -118,7 +117,6 @@ public class AgentCustomerDeposits extends DialogFragment {
             }
         });
 
-
         addMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,10 +135,6 @@ public class AgentCustomerDeposits extends DialogFragment {
         ImageView close = view.findViewById(R.id.agent_deposit_money_close);
         close.setOnClickListener(v -> dismiss());
 
-
-
-
-
         return dialog;
 
     }
@@ -148,7 +142,7 @@ public class AgentCustomerDeposits extends DialogFragment {
     public void getReceiverName(String receiverPhoneNumber){
 
         /***************RETROFIT IMPLEMENTATION***********************/
-
+        dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
@@ -176,16 +170,17 @@ public class AgentCustomerDeposits extends DialogFragment {
                     DialogFragment depositDialog = new AgentCustomerConfirmDetails();
                     depositDialog.setArguments(bundle);
                     depositDialog.show(ft, "dialog");
-
+                    dialogLoader.hideProgressDialog();
                 }else if(response.code()==412) {
                     Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
                     //redirect to previous step
                     getActivity().getSupportFragmentManager().popBackStack();
-                    // confirmBtn.setEnabled(true);
+                    dialogLoader.hideProgressDialog();
                 }
                 else if(response.code()==401){
                     TokenAuthActivity.startAuth(getActivity(), true);
                     getActivity().finishAffinity();
+                    dialogLoader.hideProgressDialog();
                 }
 
             }
@@ -195,9 +190,7 @@ public class AgentCustomerDeposits extends DialogFragment {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");
-
-
-
+                dialogLoader.hideProgressDialog();
             }
         });
 
