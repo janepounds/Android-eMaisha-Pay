@@ -110,6 +110,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTitleAmount.setText("Amount Received");
                 textName.setText(getArguments().getString("customer_name"));
                 textReceiverAccount.setText("Customer");
+                customerNo = "0"+getArguments().getString("customer_no");
                 textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
@@ -186,8 +187,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     depositDialog.setArguments(bundle);
                     depositDialog.show(ft, "dialog");
 
+                }else if(key.equalsIgnoreCase("withdraw")){
+
+                    initiateFundsTransfer(customerNo,transferAmount,"Agent Withdraw" );
                 }else{
-                    initiateFundsTransfer(customerNo,transferAmount );
+                    initiateFundsTransfer(customerNo,transferAmount,"Agent Transfer" );
                 }
 
             }
@@ -208,14 +212,14 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     }
 
 
-    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount) {
+    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type) {
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,customerPhoneNumber,"Agent Transfer");
+        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,customerPhoneNumber,type);
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
