@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class InitiateTransferResponse {
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
@@ -27,6 +30,14 @@ public class InitiateTransferResponse {
 
     public void setData(InitiateTransferData data) {
         this.data = data;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public class InitiateTransferData {

@@ -161,10 +161,10 @@ public interface APIRequests {
 
   //get receiver business name,sender business name and Transaction charge
   @FormUrlEncoded
-  @POST("wallet/validateAgentFundsTransfer")
+  @POST("agent/funds-transfer/metadata")
   Call<ConfirmationDataResponse> validateAgentFundsTransfer(@Header("Authorization") String token,
-                                                            @Field("sendernumber") String phonenumber,
-                                                            @Field("receivernumber") String receivernumber,
+                                                            @Field("senderNumber") String senderNumber,
+                                                            @Field("receiverNumber") String receiverNumber,
                                                             @Field("amount") double amount
   );
 

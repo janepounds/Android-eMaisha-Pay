@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -44,10 +45,10 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
     EditText receipentNo,customerNo,amountEdt;
     TextView customerNoTitle;
     String business_name = "";
+    DialogLoader dialogLoader;
 
     public AgentCustomerFundsTransfer(String key) {
         this.key = key;
-
 
     }
 
@@ -62,6 +63,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        dialogLoader = new DialogLoader(getContext());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
@@ -137,9 +139,8 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
 
 
 
-        }else {
-
-
+        }
+        else {
             spTransferTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -183,10 +184,6 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
 
                 }
             });
-
-
-
-
         }
 
         builder.setView(view);
@@ -205,7 +202,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
     public void getReceiverName(String receiverPhoneNumber, String customerPhoneNumber){
 
         /***************RETROFIT IMPLEMENTATION***********************/
-
+        dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         double amount = Double.parseDouble(amountEdt.getText().toString());
 
@@ -215,36 +212,43 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if(response.isSuccessful()){
-                    business_name = response.body().getData().getBusinessName();
+                    if(response.body().getStatus().equalsIgnoreCase("1")){
+                        String receiverBusinessName = response.body().getData().getReceiverBusinessName();
+                        String sendBusinessName = response.body().getData().getSenderBusinessName();
+                        FragmentManager fragmentManager = getChildFragmentManager();
+                        FragmentTransaction ft = fragmentManager.beginTransaction();
+                        Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                        Bundle bundle = new Bundle();
+                        bundle.putString("key","transfer");
+                        bundle.putString("title","Confirm Transfer Details");
+                        bundle.putString("receipient_no",receipentNo.getText().toString());
+                        bundle.putString("customer_no",customerNo.getText().toString());
+                        bundle.putString("amount",amount+"");
+                        bundle.putString("customer_name",sendBusinessName);
+                        bundle.putString("receiver_name",receiverBusinessName);
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
 
-                    FragmentManager fragmentManager = getChildFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
-                    Bundle bundle = new Bundle();
-                    bundle.putString("key","transfer");
-                    bundle.putString("title","Confirm Transfer Details");
-                    bundle.putString("receipient_no",receipentNo.getText().toString());
-                    bundle.putString("customer_no",customerNo.getText().toString());
-                    bundle.putString("amount",amount.getText().toString());
-                    bundle.putString("customer_name",business_name);
-                    bundle.putString("receiver_name",business_name);
-                    if (prev != null) {
-                        ft.remove(prev);
+                        // Create and show the dialog.
+                        DialogFragment depositDialog = new AgentCustomerConfirmDetails();
+                        depositDialog.setArguments(bundle);
+                        depositDialog.show(ft, "dialog");
+                    }else{
+                        Toast.makeText(getContext(),response.body().getData().getMessage(),Toast.LENGTH_LONG).show();
                     }
-                    ft.addToBackStack(null);
 
-                    // Create and show the dialog.
-                    DialogFragment depositDialog = new AgentCustomerConfirmDetails();
-                    depositDialog.setArguments(bundle);
-                    depositDialog.show(ft, "dialog");
+                    dialogLoader.hideProgressDialog();
 
                 }else if(response.code()==412) {
-                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
+                    Log.e("Error",response.errorBody()+"");
                     //redirect to previous step
                     getActivity().getSupportFragmentManager().popBackStack();
-                    // confirmBtn.setEnabled(true);
+                    dialogLoader.hideProgressDialog();
                 }
                 else if(response.code()==401){
+                    dialogLoader.hideProgressDialog();
                     TokenAuthActivity.startAuth(getActivity(), true);
                     getActivity().finishAffinity();
                 }
@@ -253,11 +257,10 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
 
             @Override
             public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");
 
-
+                dialogLoader.hideProgressDialog();
 
             }
         });

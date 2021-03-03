@@ -55,6 +55,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     private EditText code1,code2,code3,code4,code5,code6;
     TextView resendtxtview;
     private  String otp_code, sms_code;
+    double transferAmount;
 
     public AgentCustomerConfirmDetails() {
 
@@ -103,6 +104,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         if(getArguments()!=null){
             /**************WITHDRAW********************/
             key = getArguments().getString("key");
+            this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
             if(key.equalsIgnoreCase("withdraw")){
                 textTitleLabel.setText(getArguments().getString("title"));
                 textTitleAmount.setText("Amount Received");
@@ -130,7 +132,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textPhoneNumber.setText("0"+getArguments().getString("receipient_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
-                customerNo = getArguments().getString("customer_no");
+                customerNo = "0"+getArguments().getString("customer_no");
                 textTitleCharge.setText("Transfer Charge");
                 textTitleAmount.setText("Transfer Amount");
                 textTitleName.setText("Receiver");
@@ -166,7 +168,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 //                depositDialog.setArguments(bundle);
 //                depositDialog.show(ft, "dialog");
 
-                initiateFundsTransfer(customerNo,Double.parseDouble(textTotalAmount.getText().toString()) );
+                initiateFundsTransfer(customerNo,transferAmount );
             }
 
 
@@ -197,17 +199,17 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
                 if(response.code() ==200){
+                    if( response.body().getStatus().equalsIgnoreCase("0") ){
+                        Toast.makeText(getContext(),response.body().getMessage()+"",Toast.LENGTH_LONG).show();
+                    }else{
+                        getOTPFromUser(customerPhoneNumber,amount);
+                    }
                     dialogLoader.hideProgressDialog();
-                    getOTPFromUser(customerPhoneNumber,amount);
 
                 }
                 else if(response.code() == 401) {
                     TokenAuthActivity.startAuth(getActivity(), true);
                     getActivity().finish();
-                }
-                else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
                 }
                 else if (response.code() == 500) {
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());

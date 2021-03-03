@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ConfirmationDataResponse {
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
@@ -27,14 +30,26 @@ public class ConfirmationDataResponse {
         this.data = data;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public class InfoData{
         @SerializedName("businessName")
         @Expose
         private String businessName;
 
-        @SerializedName("customerName")
+        @SerializedName("senderBusinessName")
         @Expose
-        private String customerName;
+        private String senderBusinessName;
+
+        @SerializedName("receiverBusinessName")
+        @Expose
+        private String receiverBusinessName;
 
         @SerializedName("sms_code")
         @Expose
@@ -68,12 +83,20 @@ public class ConfirmationDataResponse {
             this.businessName = businessName;
         }
 
-        public String getCustomerName(){
-            return customerName;
+        public String getSenderBusinessName() {
+            return senderBusinessName;
         }
 
-        public void setCustomerName(String customerName) {
-            this.customerName = customerName;
+        public void setSenderBusinessName(String senderBusinessName) {
+            this.senderBusinessName = senderBusinessName;
+        }
+
+        public String getReceiverBusinessName() {
+            return receiverBusinessName;
+        }
+
+        public void setReceiverBusinessName(String receiverBusinessName) {
+            this.receiverBusinessName = receiverBusinessName;
         }
     }
 
