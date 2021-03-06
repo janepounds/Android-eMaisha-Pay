@@ -145,7 +145,7 @@ public interface APIRequests {
     );
 
     // //get merchant information
-    @GET("wallet/agent/get-name{AgentId}")
+    @GET("wallet/agent/get-name/{AgentId}")
     Call<ConfirmationDataResponse> getMerchant(@Header("Authorization") String token,
                                                @Path("AgentId") String merchantId
     );

@@ -118,6 +118,7 @@ public class StartAppRequests {
             String sync_status = "0";
             productList = dbHandler.getUnsyncedProducts(sync_status);
             for (int i = 0; i < productList.size(); i++) {
+                Log.e("WAlletIDError",productList.get(i).get("user_id")+"");
                 saveProductList(
                         productList.get(i).get("product_id"),
                         productList.get(i).get("unique_id"),

@@ -232,7 +232,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
                     // Navigate to Product_Description of selected Product
                     Fragment fragment = new Product_Description();
                     fragment.setArguments(itemInfo);
-                    FragmentManager fragmentManager = ((WalletHomeActivity) context).getSupportFragmentManager();
+                    FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
                     fragmentManager.beginTransaction()
                             .add(R.id.nav_host_fragment2, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -294,7 +294,6 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
     
     
     //********** Return the view type of the item at position for the purposes of view recycling *********//
-    
     @Override
     public int getItemViewType(int position) {
         return (position == cartItemsList.size()) ? R.layout.buy_inputs_button : R.layout.buy_inputs_card_cart_items;
@@ -303,7 +302,6 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
 
 
     //*********** Calculate and Set the Cart's Total Price ********//
-
     public void setCartTotal() {
 
         double finalPrice = 0;
@@ -322,7 +320,6 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
 
 
     /********** Custom ViewHolder provides a direct reference to each of the Views within a Data_Item *********/
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
     
         private Button custom_button;
