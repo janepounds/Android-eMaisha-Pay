@@ -86,6 +86,33 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
+            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.GONE);
+                    binding.layoutTransfer.setVisibility(View.GONE);
+                    binding.layoutSettle.setVisibility(View.GONE);
+                    binding.layoutLoan.setVisibility(View.GONE);
+                    binding.layoutPay.setVisibility(View.GONE);
+                    binding.layoutMoreItems.setVisibility(View.GONE);
+                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
+                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
+                }
+            });
+            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.VISIBLE);
+                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
+                    binding.layoutSettle.setVisibility(View.VISIBLE);
+                    binding.layoutLoan.setVisibility(View.VISIBLE);
+                    binding.layoutPay.setVisibility(View.VISIBLE);
+                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
+                    binding.layoutPreviousItems.setVisibility(View.GONE);
+                    binding.layoutBeneficiaries.setVisibility(View.GONE);
+                }
+            });
+
         }else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
@@ -94,6 +121,33 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
+
+            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.GONE);
+                    binding.layoutTransfer.setVisibility(View.GONE);
+                    binding.layoutSettle.setVisibility(View.GONE);
+                    binding.layoutLoan.setVisibility(View.GONE);
+                    binding.layoutPay.setVisibility(View.GONE);
+                    binding.layoutMoreItems.setVisibility(View.GONE);
+                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
+                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
+                }
+            });
+            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.VISIBLE);
+                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
+                    binding.layoutSettle.setVisibility(View.VISIBLE);
+                    binding.layoutLoan.setVisibility(View.VISIBLE);
+                    binding.layoutPay.setVisibility(View.VISIBLE);
+                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
+                    binding.layoutPreviousItems.setVisibility(View.GONE);
+                    binding.layoutBeneficiaries.setVisibility(View.GONE);
+                }
+            });
 
         }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
             WalletHomeActivity.disableNavigation();
@@ -104,6 +158,32 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
+            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.GONE);
+                    binding.layoutTransfer.setVisibility(View.GONE);
+                    binding.layoutSettle.setVisibility(View.GONE);
+                    binding.layoutLoan.setVisibility(View.GONE);
+                    binding.layoutPay.setVisibility(View.GONE);
+                    binding.layoutMoreItems.setVisibility(View.GONE);
+                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
+                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
+                }
+            });
+            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.VISIBLE);
+                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
+                    binding.layoutSettle.setVisibility(View.VISIBLE);
+                    binding.layoutLoan.setVisibility(View.VISIBLE);
+                    binding.layoutPay.setVisibility(View.VISIBLE);
+                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
+                    binding.layoutPreviousItems.setVisibility(View.GONE);
+                    binding.layoutBeneficiaries.setVisibility(View.GONE);
+                }
+            });
 
         }else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
@@ -112,6 +192,33 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.INVISIBLE);
             binding.cardBalanceLabel.setText("Card");
             Log.d(TAG, "onCreateView: *"+role+"*");
+
+            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.GONE);
+                    binding.layoutTransfer.setVisibility(View.GONE);
+                    binding.layoutSettle.setVisibility(View.GONE);
+                    binding.layoutLoan.setVisibility(View.GONE);
+                    binding.layoutPay.setVisibility(View.GONE);
+                    binding.layoutMoreItems.setVisibility(View.GONE);
+                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
+                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
+                }
+            });
+            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.layoutTopUp.setVisibility(View.VISIBLE);
+                    binding.layoutTransfer.setVisibility(View.VISIBLE);
+                    binding.layoutSettle.setVisibility(View.INVISIBLE);
+                    binding.layoutLoan.setVisibility(View.VISIBLE);
+                    binding.layoutPay.setVisibility(View.VISIBLE);
+                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
+                    binding.layoutPreviousItems.setVisibility(View.GONE);
+                    binding.layoutBeneficiaries.setVisibility(View.GONE);
+                }
+            });
         }
         return binding.getRoot();
     }
@@ -230,6 +337,26 @@ public class WalletHomeFragment extends Fragment {
                             .addToBackStack(null).commit();
             }
         });
+
+        binding.layoutBeneficiaries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //To BeneficiariesListFragment
+                Fragment fragment= new BeneficiariesListFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                if (((WalletHomeActivity) getActivity()).currentFragment != null)
+                    fragmentManager.beginTransaction()
+                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .add(R.id.wallet_home_container, fragment)
+                            .addToBackStack(null).commit();
+            }
+        });
+
+
 
     }
 
