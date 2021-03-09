@@ -27,9 +27,6 @@ public class ProductDetails implements Parcelable {
     @SerializedName("products_image")
     @Expose
     private String productsImage;
-    @SerializedName("products_price")
-    @Expose
-    private String productsPrice;
     @SerializedName("discount_price")
     @Expose
     private String discountPrice;
@@ -196,6 +193,7 @@ public class ProductDetails implements Parcelable {
     @SerializedName("vendors_id")
     @Expose
     private int vendors_id;
+    private String selectedproductsPrice;
 
     private  String seletedProductsWeightUnits,seletedProductsWeight;
 
@@ -319,11 +317,12 @@ public class ProductDetails implements Parcelable {
     }
 
     public String getProductsPrice() {
-        return productsPrice;
+
+            return selectedproductsPrice;
     }
 
     public void setProductsPrice(String productsPrice) {
-        this.productsPrice = productsPrice;
+        this.selectedproductsPrice = productsPrice;
     }
 
     public String getDiscountPrice() {
@@ -710,7 +709,6 @@ public class ProductDetails implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
     //********** Writes the values to the Parcel *********//
 
     @Override
@@ -737,7 +735,6 @@ public class ProductDetails implements Parcelable {
         parcel_out.writeString(productsImage);
         parcel_out.writeString(productsUrl);
         parcel_out.writeString(productsDescription);
-        parcel_out.writeString(productsPrice);
         parcel_out.writeString(discountPrice);
         parcel_out.writeString(attributesPrice);
         parcel_out.writeString(productsFinalPrice);
@@ -808,7 +805,6 @@ public class ProductDetails implements Parcelable {
         this.productsImage = parcel_in.readString();
         this.productsUrl = parcel_in.readString();
         this.productsDescription = parcel_in.readString();
-        this.productsPrice = parcel_in.readString();
         this.discountPrice = parcel_in.readString();
         this.attributesPrice = parcel_in.readString();
         this.productsFinalPrice = parcel_in.readString();

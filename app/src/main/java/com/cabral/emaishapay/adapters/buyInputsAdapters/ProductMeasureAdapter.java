@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
 import com.cabral.emaishapay.models.search_model.Product;
+import com.cabral.emaishapay.utils.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             String []weight = measure.split("\\s+");
             selected_measure = holder.weight.getText().toString();
             new_price.setText("UGX " + productMeasure.getProducts_price());
+            Product_Description.selected_price=productMeasure.getProducts_price();
 
             String []products_price = new_price.getText().toString().split("\\s+");
 
@@ -114,6 +117,28 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
 
             }
 
+//            // Check Discount on Product with the help of static method of Helper class
+//            String discount = Utilities.checkDiscount(productMeasure.getProducts_price(), productDetails.getDiscountPrice());
+//
+//            if (discount != null) {
+//                productDetails.setIsSaleProduct("1");
+//
+//                // Set Discount Tag
+//                product_tag_discount.setVisibility(View.VISIBLE);
+//                product_tag_discount.setText(discount + " " + getString(R.string.OFF));
+//                // Set Price info based on Discount
+//                price_old.setVisibility(View.VISIBLE);
+//                price_old.setText(ConstantValues.CURRENCY_SYMBOL + productDetails.getProductsPrice());
+//                productBasePrice = Double.parseDouble(productDetails.getDiscountPrice().replace(",", ""));
+//
+//            } else {
+//                productDetails.setIsSaleProduct("0");
+//
+//                price_old.setVisibility(View.GONE);
+//                product_tag_discount.setVisibility(View.GONE);
+//                productBasePrice = Double.parseDouble(productDetails.getProductsPrice());
+//            }
+
             productMeasure.setChecked(true);
             holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_green_background));
             holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
@@ -126,14 +151,6 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
 
             productDescription.showMeasuresRecyclerView();
 
-
-
-            for (ProductMeasure productMeasure1 : productMeasures) {
-                Log.d(TAG, "onBindViewHolder: AfterClickCheck = " + productMeasure1.isChecked());
-                Log.d(TAG, "onBindViewHolder: AfterClickCheckischecked = " + isChecked);
-
-
-            }
         });
     }
 

@@ -128,7 +128,7 @@ public class Product_Description extends Fragment {
     private ProductMeasureAdapter productMeasureAdapter;
     private List<ProductMeasure> productMeasures;
     private Context context;
-    public static String selected_measure;
+    public static String selected_measure,selected_price;
     private  String []products_price;
 
     ImageView checkImageView;
@@ -392,7 +392,7 @@ public class Product_Description extends Fragment {
     }
 
     private  void  addProductToCart(ProductDetails product){
-        if(Product_Description.selected_measure==null){
+        if(Product_Description.selected_measure==null || Product_Description.selected_price==null ){
             Snackbar.make(requireActivity().findViewById(android.R.id.content), context.getString(R.string.select_product_weight), Snackbar.LENGTH_SHORT).show();
 
             return;
@@ -401,7 +401,7 @@ public class Product_Description extends Fragment {
 
         double productBasePrice, productFinalPrice = 0.0, attributesPrice = 0;
         List<CartProductAttributes> selectedAttributesList = new ArrayList<>();
-
+        product.setProductsPrice(Product_Description.selected_price);
         // Check Discount on Product with the help of static method of Helper class
         final String discount = Utilities.checkDiscount(product.getProductsPrice(), product.getDiscountPrice());
 
@@ -588,28 +588,6 @@ public class Product_Description extends Fragment {
         }
 
 
-        // Check Discount on Product with the help of static method of Helper class
-        String discount = Utilities.checkDiscount(productDetails.getProductsPrice(), productDetails.getDiscountPrice());
-
-        if (discount != null) {
-            productDetails.setIsSaleProduct("1");
-
-            // Set Discount Tag
-            product_tag_discount.setVisibility(View.VISIBLE);
-            product_tag_discount.setText(discount + " " + getString(R.string.OFF));
-            // Set Price info based on Discount
-            price_old.setVisibility(View.VISIBLE);
-            price_old.setText(ConstantValues.CURRENCY_SYMBOL + productDetails.getProductsPrice());
-            productBasePrice = Double.parseDouble(productDetails.getDiscountPrice().replace(",", ""));
-
-        } else {
-            productDetails.setIsSaleProduct("0");
-
-            price_old.setVisibility(View.GONE);
-            product_tag_discount.setVisibility(View.GONE);
-            productBasePrice = Double.parseDouble(productDetails.getProductsPrice());
-        }
-
         // Check if the Product is Out of Stock
         if (productDetails.getProductsType() == 0)
             RequestProductStock(productDetails.getProductsId(), null);
@@ -751,66 +729,6 @@ public class Product_Description extends Fragment {
             }
         });
 
-//        // Handle Click event of productCartBtn Button
-//        addCart.setOnClickListener(view -> {
-//
-//            if (productDetails.getProductsType() == 2) {
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(productDetails.getProductsUrl())));
-//            } else {
-//                if (Integer.parseInt(pdtQty.getText().toString()) > 0) {
-//
-//                    CartProduct cartProduct = new CartProduct();
-//
-//                    // Set Product's Price, Quantity and selected Attributes Info
-//                    double finalPrice = productFinalPrice;
-//                    productDetails.setCustomersBasketQuantity(1);
-//                    productDetails.setProductsPrice(String.valueOf(productBasePrice));
-//                    productDetails.setAttributesPrice(String.valueOf(attributesPrice));
-//                    productDetails.setProductsFinalPrice(String.valueOf(productFinalPrice));
-//                    productDetails.setTotalPrice(String.valueOf(productFinalPrice));
-//                    cartProduct.setCustomersBasketProduct(productDetails);
-//                    cartProduct.setCustomersBasketProductAttributes(selectedAttributesList);
-//
-//
-//                    // Add the Product to User's Cart with the help of static method of My_Cart class
-//                    My_Cart.AddCartItem
-//                            (
-//                                    cartProduct
-//                            );
-//
-//
-//                    // Recreate the OptionsMenu
-//                    ((DashboardActivity) getContext()).invalidateOptionsMenu();
-//
-//                    Snackbar.make(view, getContext().getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-//                    checkImageView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//
-//            CartProduct cartProduct = new CartProduct();
-//
-//            // Set Product's Price, Quantity and selected Attributes Info
-//            double finalPrice = productFinalPrice;
-//            productDetails.setCustomersBasketQuantity(1);
-//            productDetails.setProductsPrice(String.valueOf(productBasePrice));
-//            productDetails.setAttributesPrice(String.valueOf(attributesPrice));
-//            productDetails.setProductsFinalPrice(String.valueOf(productFinalPrice));
-//            productDetails.setTotalPrice(String.valueOf(productFinalPrice));
-//            cartProduct.setCustomersBasketProduct(productDetails);
-//            cartProduct.setCustomersBasketProductAttributes(selectedAttributesList);
-//
-//            // Add the Product to User's Cart with the help of static method of My_Cart class
-//            My_Cart.AddCartItem
-//                    (
-//                            cartProduct
-//                    );
-//
-//            // Recreate the OptionsMenu
-//            ((DashboardActivity) getContext()).invalidateOptionsMenu();
-//
-//            Snackbar.make(view, getContext().getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-//            checkImageView.setVisibility(View.VISIBLE);
-//        });
     }
 
     public void showMeasuresRecyclerView() {

@@ -35,9 +35,9 @@ public class ConstantValues {
     public static int DEFAULT_PRODUCT_CARD_STYLE;
     public static int DEFAULT_BANNER_STYLE;
 
-    public static int LANGUAGE_ID;
+    public static int LANGUAGE_ID=1;
     public static String LANGUAGE_CODE= "en";;
-    public static String CURRENCY_SYMBOL;
+    public static String CURRENCY_SYMBOL="UGX";
     public static String CURRENCY_CODE="UGX";
     public static String PACKING_CHARGE;
     public static long NEW_PRODUCT_DURATION;
@@ -69,7 +69,7 @@ public class ConstantValues {
 
     public static final String PHONE_PATTERN = "^[987]\\d{9}$";
 
-    public static final String ECOMMERCE_URL = "https://emaisha.com/";
+    public static final String ECOMMERCE_URL = "http://emaishashop.api.emaisha.com/";
 
     public static final String ECOMMERCE_CONSUMER_KEY = "dadb7a7c1557917902724bbbf5";
     public static final String ECOMMERCE_CONSUMER_SECRET = "3ba77f821557917902b1d57373";

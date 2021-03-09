@@ -138,7 +138,6 @@ public class CheckoutFinal extends Fragment {
     CouponsAdapter couponsAdapter;
     CheckoutItemsAdapter checkoutItemsAdapter;
 
-    User_Cart_BuyInputsDB user_cart_BuyInputs_db;
     User_Info_BuyInputsDB user_info_BuyInputs_db = new User_Info_BuyInputsDB();
 
 
@@ -157,12 +156,14 @@ public class CheckoutFinal extends Fragment {
     String orderID, shop_id;
     My_Cart my_cart;
 
-    public CheckoutFinal() {
-    }
 
     public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId) {
+
+    }
+
+    public CheckoutFinal(My_Cart my_cart, List<CartProduct> checkoutItemsList, String merchantId) {
         this.my_cart = my_cart;
-        this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
+        this.checkoutItemsList = checkoutItemsList;
         this.shop_id = merchantId;
     }
 
@@ -220,12 +221,10 @@ public class CheckoutFinal extends Fragment {
         dialogLoader = new DialogLoader(getContext());
 
         couponsList = new ArrayList<>();
-        checkoutItemsList = new ArrayList<>();
         paymentMethodsList = new ArrayList<>();
 
-        // Get checkoutItems from Local Databases User_Cart_DB
-        checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
+        Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
         //ProductsName Array intialize
         productsName = new ArrayList<>();
 
@@ -239,7 +238,7 @@ public class CheckoutFinal extends Fragment {
         // Request Payment Methods
 //        RequestPaymentMethods();
 
-        Log.d(TAG, "onCreateView: " + checkoutItemsList);
+
         // Initialize the CheckoutItemsAdapter for RecyclerView
         checkoutItemsAdapter = new CheckoutItemsAdapter(context, checkoutItemsList);
 
@@ -258,7 +257,10 @@ public class CheckoutFinal extends Fragment {
         couponsAdapter.notifyDataSetChanged();
 
         checkoutTax = Double.parseDouble(tax);
-        packingCharges = Double.parseDouble("" + ConstantValues.PACKING_CHARGE);
+        if(ConstantValues.PACKING_CHARGE!=null)
+            packingCharges = Double.parseDouble("" + ConstantValues.PACKING_CHARGE);
+        else
+            packingCharges=0;
 
         // Set Billing Details
         shipping_name.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
@@ -275,7 +277,7 @@ public class CheckoutFinal extends Fragment {
         progressDialog.setCancelable(false);
 
         payment_method.setOnClickListener(v -> {
-            Fragment fragment = new PaymentMethodsFragment(my_cart, user_cart_BuyInputs_db, shop_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
+            Fragment fragment = new PaymentMethodsFragment(my_cart, shop_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
                     checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

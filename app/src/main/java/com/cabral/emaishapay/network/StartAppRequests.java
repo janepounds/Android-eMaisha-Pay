@@ -187,6 +187,7 @@ public class StartAppRequests {
 
     public void RequestAllCategories() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        ConstantValues.LANGUAGE_ID=1;
         Call<CategoryData> call = BuyInputsAPIClient.getInstance()
                 .getAllCategories
                         (access_token,

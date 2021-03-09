@@ -586,8 +586,6 @@
 
             </LinearLayout>
 
-
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
@@ -595,10 +593,6 @@
         android:layout_height="?actionBarSize"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
-
-
-
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/product_cart_btn"

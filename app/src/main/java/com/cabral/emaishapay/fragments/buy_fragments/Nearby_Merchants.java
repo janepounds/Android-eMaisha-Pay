@@ -147,7 +147,8 @@ public class Nearby_Merchants extends Fragment {
         Call<MerchantData> call = BuyInputsAPIClient.getInstance()
                 .getNearbyMerchants
                         (       access_token,
-                                String.valueOf(shippingAddress.getLatitude()),String.valueOf( shippingAddress.getLongitude()),product_names_str
+                                String.valueOf(shippingAddress.getLatitude()),String.valueOf( shippingAddress.getLongitude()),
+                                product_names_str
                         );
 
         call.enqueue(new Callback<MerchantData>() {

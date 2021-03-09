@@ -167,7 +167,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             //holder.product_category.setText(product.getCategoryNames());
 
             // Calculate the Discount on Product with static method of Helper class
-            final String discount = Utilities.checkDiscount(product.getProductsPrice(), product.getDiscountPrice());
+            final String discount = Utilities.checkDiscount(product.getProductsMeasure().get(0).getProducts_price(), product.getDiscountPrice());
 
             if (discount != null) {
                 // Set Product's Price
@@ -185,7 +185,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 String thisprice = nf.format(Double.parseDouble());
 */
 
-                double thisprice = Double.parseDouble(product.getProductsPrice().replace(",", ""));
+                double thisprice = Double.parseDouble(product.getProductsMeasure().get(0).getProducts_price().replace(",", ""));
                 Log.e("NumberFormat: ", thisprice + "");
                 holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(thisprice));
             }

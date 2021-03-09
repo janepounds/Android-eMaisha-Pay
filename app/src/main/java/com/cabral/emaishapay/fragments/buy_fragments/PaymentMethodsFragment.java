@@ -87,18 +87,16 @@ public class PaymentMethodsFragment extends Fragment {
     private ProgressDialog progressDialog;
     private UserDetails userInfo;
     private My_Cart my_cart;
-    final User_Cart_BuyInputsDB user_cart_BuyInputs_db;
     private String brainTreeToken;
     private DialogLoader dialogLoader;
 
     private AddressDetails shippingAddress;
     User_Info_BuyInputsDB user_info_BuyInputs_db = new User_Info_BuyInputsDB();
 
-    public PaymentMethodsFragment(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId, String shipping, Double tax, Double shipping_cost,
+    public PaymentMethodsFragment(My_Cart my_cart, String merchantId, String shipping, Double tax, Double shipping_cost,
                                   Double discount, List couponList, Double subtotal, Double total, List productList, String orderId) {
         // Required empty public constructor
         this.my_cart = my_cart;
-        this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
         this.shop_id = merchantId;
         this.shipping = shipping;
         this.tax = tax;
