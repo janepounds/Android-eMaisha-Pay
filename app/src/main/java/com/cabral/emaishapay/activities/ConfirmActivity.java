@@ -387,6 +387,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         // Save necessary details in SharedPrefs
         editor = sharedPreferences.edit();
         editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId() + "");
+        editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, userDetails.getBalance());
         editor.putString(WalletHomeActivity.PREFERENCES_USER_EMAIL, userDetails.getEmail());
         editor.putString(WalletHomeActivity.PREFERENCES_FIRST_NAME, userDetails.getFirstname());
         editor.putString(WalletHomeActivity.PREFERENCES_LAST_NAME, userDetails.getLastname());

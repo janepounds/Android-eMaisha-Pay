@@ -65,6 +65,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
     public static final String PREFERENCES_USER_PIN = "";
     public static final String PREFERENCES_PREPIN_ENCRYPTION = "12";
+    public static final String PREFERENCES_USER_BALANCE = "0";
 
     public static final String PREFERENCES_FILE_NAME = "UserInfo";
     public static final String PREFERENCES_FIRST_NAME = "firstname";
