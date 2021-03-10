@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +59,11 @@ public class Thank_You extends Fragment {
             // Navigate to My_Orders Fragment
             Fragment fragment = new My_Orders();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
+                fragmentManager.popBackStackImmediate();
+
+
             fragmentManager.beginTransaction()
                     .add(R.id.nav_host_fragment2, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -66,22 +74,17 @@ public class Thank_You extends Fragment {
         // Binding Layout Views
         continue_shopping_btn.setOnClickListener(view -> {
             // Navigate to HomePage Fragment
-
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            Fragment buyinputshome = new WalletBuyFragment(getContext(),fragmentManager);
-
-            fragmentManager.beginTransaction()
-                    //.hide(currentFragment)
-                    .add(R.id.nav_host_fragment2, buyinputshome)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(getString(R.string.actionHome)).commit();
-
+            refreshActivity();
 
         });
 
         return rootView;
     }
 
+    public void refreshActivity() {
+        Intent goToWallet = new Intent(getActivity(), WalletBuySellActivity.class);
+        startActivity(goToWallet);
+    }
     @Override
     public void onPrepareOptionsMenu(@NotNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
