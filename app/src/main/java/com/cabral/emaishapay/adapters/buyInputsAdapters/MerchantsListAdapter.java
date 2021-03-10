@@ -126,7 +126,8 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                     ProductDetails product_details = checkoutItemsList.get(i).getCustomersBasketProduct();
                     CartProduct cart_product = checkoutItemsList.get(i);
                     Log.d(TAG, "onBindViewHoldername: "+product_details.getProductsName());
-                    String[] productpricedetails=productList.get(product_details.getProductsName()+" " + product_details.getSelectedProductsWeight() + "" + product_details.getSelectedProductsWeightUnit());
+                    String productKey=product_details.getProductsName()+" " + product_details.getSelectedProductsWeight();
+                    String[] productpricedetails=productList.get(productKey);
 
                     //NB:CONVENTION product price in the producttList is also null if product is out of stoke
                     if ( productpricedetails!=null ){//Merchant sells the product
@@ -159,7 +160,7 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingService(shippingService);
 
                 // Navigate to CheckoutFinal Fragment
-                Fragment fragment = new CheckoutFinal(my_cart, checkoutItemsList, merchantsDetails.getMerchantId() + "");
+                Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "");
                 fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment, context.getString(R.string.checkout))
                         .addToBackStack(null).commit();
             }
