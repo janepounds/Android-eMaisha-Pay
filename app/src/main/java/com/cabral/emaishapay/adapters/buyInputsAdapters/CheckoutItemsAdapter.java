@@ -67,6 +67,7 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
         holder.checkout_item_title.setText(cartProduct.getCustomersBasketProduct().getProductsName());
         holder.checkout_item_quantity.setText(String.valueOf(cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()));
         holder.checkout_item_price.setText(ConstantValues.CURRENCY_SYMBOL + cartProduct.getCustomersBasketProduct().getProductsPrice());
+        cartProduct.getCustomersBasketProduct().setTotalPrice( ""+( Integer.parseInt(""+cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity())* Integer.parseInt(cartProduct.getCustomersBasketProduct().getProductsPrice()) ) );
         holder.checkout_item_price_final.setText(ConstantValues.CURRENCY_SYMBOL + cartProduct.getCustomersBasketProduct().getTotalPrice());
         holder.checkout_item_category.setText(cartProduct.getCustomersBasketProduct().getCategoryNames());
     

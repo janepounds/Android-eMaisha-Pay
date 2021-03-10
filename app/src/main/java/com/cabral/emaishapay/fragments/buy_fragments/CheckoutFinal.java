@@ -139,7 +139,7 @@ public class CheckoutFinal extends Fragment {
     CheckoutItemsAdapter checkoutItemsAdapter;
 
     User_Info_BuyInputsDB user_info_BuyInputs_db = new User_Info_BuyInputsDB();
-
+    User_Cart_BuyInputsDB user_cart_BuyInputs_db;
 
     CardBuilder braintreeCard;
     BraintreeFragment braintreeFragment;
@@ -158,7 +158,9 @@ public class CheckoutFinal extends Fragment {
 
 
     public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId) {
-
+        this.my_cart = my_cart;
+        this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
+        this.shop_id = merchantId;
     }
 
     public CheckoutFinal(My_Cart my_cart, List<CartProduct> checkoutItemsList, String merchantId) {
@@ -222,6 +224,8 @@ public class CheckoutFinal extends Fragment {
 
         couponsList = new ArrayList<>();
         paymentMethodsList = new ArrayList<>();
+        // Get checkoutItems from Local Databases User_Cart_DB
+        checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
 
         Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
