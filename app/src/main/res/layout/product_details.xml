@@ -7,15 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@color/windowBackground"
-    app:cardCornerRadius="7dp"
+    android:background="@drawable/dialog_background"
+    app:cardCornerRadius="5dp"
     app:cardElevation="0dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="@color/windowBackground">
+        android:background="@drawable/dialog_background">
 
         <LinearLayout
             android:layout_width="match_parent"

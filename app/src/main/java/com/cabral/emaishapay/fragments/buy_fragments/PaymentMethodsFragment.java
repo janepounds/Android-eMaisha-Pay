@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -16,6 +19,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,10 +76,10 @@ import retrofit2.Callback;
 public class PaymentMethodsFragment extends Fragment {
     private static final String TAG = "PaymentMethodsFragment";
     private View rootView;
-    private RadioButton  eMaishaWallet, eMaishaCard, Visa, MobileMoney;
+    private RadioButton  eMaishaWallet, eMaishaCard, Visa, MobileMoney,COD;
     private LinearLayout merchantCard, VisaCard, MobileM;
     private EditText cardNumber, cardExpiry, cvv;
-    Button continuePayment;
+    Button continuePayment, cancel;
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
@@ -89,6 +95,8 @@ public class PaymentMethodsFragment extends Fragment {
     private My_Cart my_cart;
     private String brainTreeToken;
     private DialogLoader dialogLoader;
+    private Toolbar toolbar;
+    private ConstraintLayout codLayout,ePayLayout,eCardLayout,bankLayout,mmLayout;
 
     private AddressDetails shippingAddress;
     User_Info_BuyInputsDB user_info_BuyInputs_db = new User_Info_BuyInputsDB();
@@ -131,9 +139,100 @@ public class PaymentMethodsFragment extends Fragment {
         cvv = rootView.findViewById(R.id.visa_card_cvv);
         brainTreeSupportedCards = rootView.findViewById(R.id.supported_card_types);
 
+        codLayout = rootView.findViewById(R.id.layout_cod);
+        COD = rootView.findViewById(R.id.radio_btn_cash_on_delivery);
+        ePayLayout = rootView.findViewById(R.id.layout_emaisha_pay);
+        eCardLayout = rootView.findViewById(R.id.layout_merchant_card);
+        mmLayout = rootView.findViewById(R.id.layout_mobile_money);
+        bankLayout = rootView.findViewById(R.id.layout_bank_card);
+
+        toolbar = rootView.findViewById(R.id.toolbar_payment_methods);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+        toolbar.setTitle(getString(R.string.payment_methods));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        cancel = rootView.findViewById(R.id.payments_cancel_btn);
+        // Handle the Click event of checkout_cancel_btn Button
+        cancel.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
+
+        codLayout.setOnClickListener(v -> {
+            COD.setChecked(true);
+            eMaishaWallet.setChecked(false);
+            MobileMoney.setChecked(false);
+            eMaishaCard.setChecked(false);
+            Visa.setChecked(false);
+            MobileM.setVisibility(v.GONE);
+            VisaCard.setVisibility(v.GONE);
+            merchantCard.setVisibility(v.GONE);
+        });
+
+        ePayLayout.setOnClickListener(v -> {
+            COD.setChecked(false);
+            eMaishaWallet.setChecked(true);
+            MobileMoney.setChecked(false);
+            eMaishaCard.setChecked(false);
+            Visa.setChecked(false);
+            MobileM.setVisibility(v.GONE);
+            VisaCard.setVisibility(v.GONE);
+            merchantCard.setVisibility(v.GONE);
+        });
+
+        eCardLayout.setOnClickListener(v -> {
+            merchantCard.setVisibility(v.VISIBLE);
+            eMaishaCard.setChecked(true);
+            eMaishaWallet.setChecked(false);
+            MobileMoney.setChecked(false);
+            Visa.setChecked(false);
+            MobileM.setVisibility(v.GONE);
+            VisaCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
+        });
+
+        bankLayout.setOnClickListener(v -> {
+            VisaCard.setVisibility(v.VISIBLE);
+            eMaishaWallet.setChecked(false);
+            eMaishaCard.setChecked(false);
+            MobileMoney.setChecked(false);
+            Visa.setChecked(true);
+            MobileM.setVisibility(v.GONE);
+            merchantCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
+        });
+
+        mmLayout.setOnClickListener(v -> {
+
+            MobileM.setVisibility(v.VISIBLE);
+            eMaishaWallet.setChecked(false);
+            eMaishaCard.setChecked(false);
+            Visa.setChecked(false);
+            MobileMoney.setChecked(true);
+            VisaCard.setVisibility(v.GONE);
+            merchantCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
+        });
+
+
+        //radiobuttons
+
+        COD.setOnClickListener(v -> {
+           // COD.setChecked(true);
+            eMaishaWallet.setChecked(false);
+            MobileMoney.setChecked(false);
+            eMaishaCard.setChecked(false);
+            Visa.setChecked(false);
+            MobileM.setVisibility(v.GONE);
+            VisaCard.setVisibility(v.GONE);
+            merchantCard.setVisibility(v.GONE);
+        });
 
         eMaishaWallet.setOnClickListener(v -> {
-
+            COD.setChecked(false);
+           // eMaishaWallet.setChecked(true);
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
@@ -144,11 +243,14 @@ public class PaymentMethodsFragment extends Fragment {
 
         eMaishaCard.setOnClickListener(v -> {
             merchantCard.setVisibility(v.VISIBLE);
+           // eMaishaCard.setChecked(true);
             eMaishaWallet.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(false);
             MobileM.setVisibility(v.GONE);
             VisaCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
         });
 
         Visa.setOnClickListener(v -> {
@@ -156,18 +258,26 @@ public class PaymentMethodsFragment extends Fragment {
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             MobileMoney.setChecked(false);
+            //Visa.setChecked(true);
             MobileM.setVisibility(v.GONE);
             merchantCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
         });
 
         MobileMoney.setOnClickListener(v -> {
+
             MobileM.setVisibility(v.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
+           // MobileMoney.setChecked(true);
             VisaCard.setVisibility(v.GONE);
             merchantCard.setVisibility(v.GONE);
+            COD.setChecked(false);
+
         });
+
 
         brainTreeSupportedCards.setSupportedCardTypes(SUPPORTED_CARD_TYPES);
 
@@ -539,5 +649,16 @@ public class PaymentMethodsFragment extends Fragment {
                 Log.d("BRAINTREE TOKEN CALL", "onFailure: \"NetworkCallFailure : \"+t");
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+
+//        searchItem.setVisible(false);
+        cartItem.setVisible(false);
     }
 }

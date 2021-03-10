@@ -33,8 +33,59 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_round_white"
         android:isScrollContainer="true"
-        android:layout_margin="15dp"
+        android:layout_margin="10dp"
         android:padding="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_cod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <ImageView
+                android:id="@+id/image_cash_on_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cash_icon"
+                android:padding="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/text_cash_on_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Cash on delivery"
+                android:textColor="@color/textColorPrimaryDark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/image_cash_on_delivery"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RadioButton
+                android:id="@+id/radio_btn_cash_on_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <View
+            android:id="@+id/view_cash_on_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#31244A"
+            android:alpha=".1"
+            app:layout_constraintTop_toBottomOf="@id/layout_cod" />
+
 
 
 
@@ -45,7 +96,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/view_cash_on_delivery">
             <ImageView
                 android:id="@+id/image_emaisha_wallet"
                 android:layout_width="wrap_content"
@@ -56,8 +107,7 @@
                 android:paddingBottom="5dp"
                 android:src="@drawable/ic_card_pay"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="VectorDrawableCompat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_emaisha_wallet"
@@ -155,8 +205,7 @@
                 android:padding="6dp"
                 android:src="@drawable/ic_credit"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="VectorDrawableCompat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_merchant_card"
@@ -336,8 +385,7 @@
                 android:paddingBottom="5dp"
                 android:src="@drawable/ic_card_payment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="VectorDrawableCompat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_visa_card"
@@ -525,8 +573,7 @@
                 android:paddingBottom="5dp"
                 android:src="@drawable/card_mobile_money"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="VectorDrawableCompat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_mobile_money"
@@ -607,22 +654,53 @@
             android:layout_marginTop="@dimen/dimen_10dp"
             android:background="@color/grey_light"
             app:layout_constraintTop_toBottomOf="@id/layout_mobile_money" />
-
-        <Button
-            android:id="@+id/btn_payment_methods"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/buy_inputs_checkout_buttons"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_30dp"
-            android:layout_marginEnd="@dimen/dimen_10dp"
-            android:background="@drawable/round_button_dark_green"
-            android:drawableEnd="@drawable/ic_right_chevron"
-            android:paddingEnd="15dp"
-            android:text="@string/btn_continue_payment"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/view_mobile_money" />
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_mobile_money" >
+
+            <Button
+                android:id="@+id/payments_cancel_btn"
+                android:layout_width="0dip"
+                android:layout_height="45dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/round_corners_button_darkgray"
+                android:drawableStart="@drawable/ic_left_chevron"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_payment_methods"
+                android:layout_width="0dip"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/rounded_corners_button"
+                android:drawableEnd="@drawable/ic_right_chevron"
+                android:paddingEnd="10dp"
+                android:text="@string/btn_continue"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>

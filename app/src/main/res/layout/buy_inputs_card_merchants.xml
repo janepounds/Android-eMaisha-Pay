@@ -28,7 +28,8 @@
                 android:layout_width="18dp"
                 android:layout_height="17dp"
                 android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/ic_home_nearby_merchants" />
+                app:srcCompat="@drawable/ic_home_nearby_merchants"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/text_businessName"
@@ -61,7 +62,8 @@
                 android:layout_width="17dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/ic_location_nearby_merchants" />
+                app:srcCompat="@drawable/ic_location_nearby_merchants"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/text_location_address"
@@ -149,10 +151,11 @@
             <Button
                 android:id="@+id/select_btn"
                 android:layout_width="0dp"
-                android:layout_height="32dp"
+                android:layout_height="45dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:background="@drawable/rectangular_green_solid"
                 android:text="Select"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -169,10 +172,11 @@
             <Button
                 android:id="@+id/ignore_btn"
                 android:layout_width="0dp"
-                android:layout_height="32dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:background="@drawable/rectangular_black_solid"
                 android:text="Ignore"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

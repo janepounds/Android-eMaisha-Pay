@@ -17,6 +17,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Value;
+import com.google.android.material.appbar.AppBarLayout;
 
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
         holder.checkout_item_price.setText(ConstantValues.CURRENCY_SYMBOL + cartProduct.getCustomersBasketProduct().getProductsPrice());
         holder.checkout_item_price_final.setText(ConstantValues.CURRENCY_SYMBOL + cartProduct.getCustomersBasketProduct().getTotalPrice());
         holder.checkout_item_category.setText(cartProduct.getCustomersBasketProduct().getCategoryNames());
+        holder.appBarLayout.setVisibility(View.GONE);
     
     
         List<Value> selectedAttributeValues= new ArrayList<>();
@@ -110,6 +112,7 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
         private ImageView checkout_item_cover;
         private RecyclerView attributes_recycler;
         private TextView checkout_item_title, checkout_item_quantity, checkout_item_price, checkout_item_price_final, checkout_item_category;
+        private AppBarLayout appBarLayout;
 
 
         public MyViewHolder(final View itemView) {
@@ -123,6 +126,8 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
             checkout_item_category = itemView.findViewById(R.id.checkout_item_category);
     
             attributes_recycler = itemView.findViewById(R.id.order_item_attributes_recycler);
+            appBarLayout = itemView.findViewById(R.id.product_app_bar);
+
         }
     }
 

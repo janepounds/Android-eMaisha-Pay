@@ -7,6 +7,7 @@
     android:clickable="true"
     android:id="@+id/checkout_item">
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/product_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -25,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:paddingTop="5dp"
+        android:paddingStart="5dp">
 
         <TextView
             android:id="@+id/checkout_item_title"
@@ -34,7 +36,6 @@
             android:maxLines="2"
             android:text="@string/product_title"
             android:textSize="16sp"
-            android:textStyle="bold"
             android:textColor="@color/textColorSecondaryDark"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp" />
@@ -53,7 +54,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
