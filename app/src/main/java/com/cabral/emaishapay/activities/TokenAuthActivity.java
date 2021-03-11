@@ -92,7 +92,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
         }
         else {
             WalletHomeActivity.startHome(getApplicationContext());
-
+            finish();
         }
 
     }

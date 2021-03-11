@@ -82,8 +82,8 @@ public class Thank_You extends Fragment {
     }
 
     public void refreshActivity() {
-        Intent goToWallet = new Intent(getActivity(), WalletBuySellActivity.class);
-        startActivity(goToWallet);
+        Intent goToShop = new Intent(getActivity(), WalletBuySellActivity.class);
+        startActivity(goToShop);
     }
     @Override
     public void onPrepareOptionsMenu(@NotNull Menu menu) {

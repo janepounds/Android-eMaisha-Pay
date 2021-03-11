@@ -8,6 +8,8 @@
         <item name="android:fontFamily">@font/josefin_sans</item>
         <item name="fontFamily">@font/josefin_sans</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="Button" parent="Base.TextAppearance.AppCompat.Button">
