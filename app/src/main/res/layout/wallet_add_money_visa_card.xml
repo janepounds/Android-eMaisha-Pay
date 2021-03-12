@@ -167,7 +167,7 @@
 
             </LinearLayout>
 
-        <LinearLayout
+            <LinearLayout
             android:id="@+id/card_details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -297,6 +297,7 @@
                 android:textSize="14sp"
                 android:layout_gravity="end"/>
 </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_purpose"
                 android:layout_width="match_parent"
@@ -333,6 +334,7 @@
                         android:textSize="16sp"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/add_money_amount_layout"
                 android:layout_width="match_parent"

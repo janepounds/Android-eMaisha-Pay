@@ -560,7 +560,7 @@ public class PurchasePreview extends DialogFragment implements
 
 
 
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id,false);
 
         call.enqueue(new Callback<WalletTransaction>() {
             @Override

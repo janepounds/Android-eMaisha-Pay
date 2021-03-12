@@ -160,7 +160,7 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingService(shippingService);
 
                 // Navigate to CheckoutFinal Fragment
-                Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "");
+                Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "",merchantsDetails.getMerchant_wallet_id());
                 fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment, context.getString(R.string.checkout))
                         .addToBackStack(null).commit();
             }

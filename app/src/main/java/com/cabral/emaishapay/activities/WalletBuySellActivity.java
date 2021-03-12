@@ -20,6 +20,7 @@ import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
 import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 import com.cabral.emaishapay.fragments.sell_fragment.SellFragment;
+import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,6 +42,8 @@ public class WalletBuySellActivity extends AppCompatActivity {
     public static ActionBar actionBar;
     public static BottomNavigationView bottomNavigationView;
     public Fragment currentFragment, defaultHomeFragment;
+
+    public static PostOrder postOrder = new PostOrder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

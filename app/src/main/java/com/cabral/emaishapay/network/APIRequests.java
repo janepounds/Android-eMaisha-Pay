@@ -207,7 +207,8 @@ public interface APIRequests {
                                        @Field("referenceNumber") String referenceNumber,
                                        @Field("type") String type,
                                        @Field("thirdParty") String thirdParty,
-                                       @Field("thirdParty_id") String thirdParty_id
+                                       @Field("thirdParty_id") String thirdParty_id,
+                                       @Field("isPending") Boolean isPending
     );
 
     // //voucher deposit

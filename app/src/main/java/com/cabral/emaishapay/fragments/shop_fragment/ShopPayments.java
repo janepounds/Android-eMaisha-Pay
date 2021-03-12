@@ -141,7 +141,7 @@ public class ShopPayments extends Fragment implements
         monileMoneyPhoneEdtx = rootView.findViewById(R.id.mobile_money_phone_number);
         continuePayment = rootView.findViewById(R.id.btn_payment_methods);
         cardExpiry = rootView.findViewById(R.id.visa_card_expiry);
-        cardNumber = rootView.findViewById(R.id.txt_visa_card_number);
+        cardNumber = rootView.findViewById(R.id.visa_card_number);
         cvv = rootView.findViewById(R.id.visa_card_cvv);
         brainTreeSupportedCards = rootView.findViewById(R.id.supported_card_types);
 
@@ -287,7 +287,6 @@ public class ShopPayments extends Fragment implements
             }
         });
 
-
         return rootView;
     }
 
@@ -404,7 +403,7 @@ public class ShopPayments extends Fragment implements
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,false);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -605,8 +604,7 @@ public class ShopPayments extends Fragment implements
 
     public boolean validateEntries(){
 
-         if (cardNumber.getText().toString().trim() == null || cardNumber.getText().toString().trim().isEmpty()
-                || cardNumber.getText().toString().trim().length()<13 ){
+         if (cardNumber.getText().toString().trim() == null || cardNumber.getText().toString().trim().isEmpty()  || cardNumber.getText().toString().trim().length()<13 ){
             cardNumber.setError("Please enter valid value");
             return false;
         }

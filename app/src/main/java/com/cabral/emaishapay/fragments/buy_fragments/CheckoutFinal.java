@@ -29,6 +29,7 @@ import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CheckoutItemsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CouponsAdapter;
@@ -153,14 +154,16 @@ public class CheckoutFinal extends Fragment {
     List<String> productsName;
 
     //Add order id for payment methods
-    String orderID, shop_id;
+    String orderID, shop_id,merchant_wallet_id;
     My_Cart my_cart;
+    PostOrder PaymentOrderDetails;
 
 
-    public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId) {
+    public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId, String merchantWalletId) {
         this.my_cart = my_cart;
         this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
         this.shop_id = merchantId;
+        this.merchant_wallet_id = merchantWalletId;
     }
 
     public CheckoutFinal(My_Cart my_cart, List<CartProduct> checkoutItemsList, String merchantId) {
@@ -281,7 +284,7 @@ public class CheckoutFinal extends Fragment {
         progressDialog.setCancelable(false);
 
         payment_method.setOnClickListener(v -> {
-            Fragment fragment = new PaymentMethodsFragment(my_cart, shop_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
+            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
                     checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -398,8 +401,18 @@ public class CheckoutFinal extends Fragment {
             if (payment_method.getText().toString().equals("Payment Method")) {
                 payment_method.setError("Required");
             } else {
-                progressDialog.show();
-                proceedOrder();
+                if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Mobile Money") ){
+                    //check whether payment is made
+                    if(PaymentOrderDetails.getPaymentMade()){
+                        progressDialog.show();
+                        proceedOrder();
+                    }
+                }else{
+                    //No payment Needed
+                    progressDialog.show();
+                    proceedOrder();
+                }
+
             }
 
 //            if (selectedPaymentMethod.equalsIgnoreCase("cod")) {
@@ -554,14 +567,15 @@ public class CheckoutFinal extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        PostOrder postOrder = WalletHomeActivity.postOrder;
-        Log.d(TAG, "onResume: Method = " + postOrder.getPaymentMethod());
+        PaymentOrderDetails = WalletBuySellActivity.postOrder;
+        Log.d(TAG, "onResume: Method = " + PaymentOrderDetails.getPaymentMethod());
         Log.d(TAG, "onResume: Resume Called");
 
-        if (postOrder.getPaymentMethod() != null) {
-            payment_method.setText(postOrder.getPaymentMethod());
-        }
+        if (PaymentOrderDetails.getPaymentMethod() != null) {
 
+            payment_method.setText(PaymentOrderDetails.getPaymentMethod());
+        }
+        WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
 //        // Disable the bottom navigation from showing when you come back from payment methods fragment
 //        WalletHomeActivity dashboardActivity = new WalletHomeActivity();
 //        dashboardActivity.setupTitle();

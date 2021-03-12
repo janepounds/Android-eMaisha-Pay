@@ -164,7 +164,8 @@ public class DepositMoneyVisa extends DialogFragment implements
                 if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
                     Snackbar.make(addMoneyImg, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
                     return;
-                }else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+                }
+                else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
 
                     card_no = cardNumberTxt.getText().toString();
                     cvv = cardccvTxt.getText().toString();
@@ -471,6 +472,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         //cardPayManager.onWebpageAuthenticationComplete();
 
     }
+
     public void creditAfterDeposit(String txRef,String thirdparty_id){
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
@@ -481,7 +483,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         /************RETROFIT IMPLEMENTATION*******************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,txRef,"Deposit","flutterwave",thirdparty_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,txRef,"Deposit","flutterwave",thirdparty_id, false);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {

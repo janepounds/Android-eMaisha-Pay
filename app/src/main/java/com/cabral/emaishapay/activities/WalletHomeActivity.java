@@ -106,7 +106,6 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final double PREFERENCE_WALLET_BALANCE = 0;
 
 
-    public static PostOrder postOrder = new PostOrder();
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
 
     public static Fragment defaultHomeFragment;

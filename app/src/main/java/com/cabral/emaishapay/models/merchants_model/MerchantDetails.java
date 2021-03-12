@@ -46,6 +46,12 @@ public class MerchantDetails {
     @SerializedName("productPrices")
     @Expose
     private Map<String, String[]> productPrices;
+    @SerializedName("emaisha_wallet")
+    @Expose
+    private String merchant_wallet_id;
+    @SerializedName("emaisha_wallet_business_id")
+    @Expose
+    private String merchant_id;
 
     public final static Parcelable.Creator<MerchantDetails> CREATOR = new Parcelable.Creator<MerchantDetails>() {
 
@@ -75,6 +81,8 @@ public class MerchantDetails {
         this.updated_at = ((String) in.readValue((String.class.getClassLoader())));
         this.distance = ((String) in.readValue((String.class.getClassLoader())));
         this.productPrices = ((Map) in.readValue((Map.class.getClassLoader())));
+        this.merchant_wallet_id = ((String) in.readValue((String.class.getClassLoader())));
+        this.merchant_id = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public long getMerchantId() {
@@ -133,5 +141,13 @@ public class MerchantDetails {
                 total+= ( Integer.parseInt(entry.getValue()[0])*Integer.parseInt(entry.getValue()[1]) );
         }
         return total;
+    }
+
+    public String getMerchant_wallet_id() {
+        return merchant_wallet_id;
+    }
+
+    public String getMerchant_id() {
+        return merchant_id;
     }
 }

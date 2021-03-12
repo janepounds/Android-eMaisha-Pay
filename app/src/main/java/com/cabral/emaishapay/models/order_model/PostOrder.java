@@ -154,6 +154,9 @@ public class PostOrder implements Serializable
     @SerializedName("total_tax")
     @Expose
     private Double totalTax;
+    @SerializedName("is_payment_made")
+    @Expose
+    private Boolean isPaymentMade;
 
 
     private final static long serialVersionUID = -2721986212560631035L;
@@ -564,5 +567,13 @@ public class PostOrder implements Serializable
 
     public int getshop_id() {
         return shop_id;
+    }
+
+    public Boolean getPaymentMade() {
+        return isPaymentMade;
+    }
+
+    public void setPaymentMade(Boolean paymentMade) {
+        isPaymentMade = paymentMade;
     }
 }

@@ -113,7 +113,8 @@ public class WalletHomeFragment extends Fragment {
                 }
             });
 
-        }else if(role.equalsIgnoreCase("merchant")){
+        }
+        else if(role.equalsIgnoreCase("merchant")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
@@ -149,7 +150,8 @@ public class WalletHomeFragment extends Fragment {
                 }
             });
 
-        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+        }
+        else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
             WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
@@ -185,7 +187,8 @@ public class WalletHomeFragment extends Fragment {
                 }
             });
 
-        }else{
+        }
+        else{
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
