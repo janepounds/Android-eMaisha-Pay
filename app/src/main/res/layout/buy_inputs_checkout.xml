@@ -38,15 +38,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:padding="5dp">
+                        android:padding="5dp"
+                        android:background="#d0e5f4">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/shipping_address"
                             android:textColor="#222222"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textSize="18sp" />
 
                         <ImageButton
                             android:id="@+id/checkout_edit_shipping"
@@ -67,7 +67,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corners_edittext_white"
+                        android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="5dp">
 
@@ -130,12 +130,12 @@
                         android:text="@string/order_summary"
                         android:textColor="@color/textColorSecondaryDark"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:background="#d0e5f4"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corners_edittext_white"
+                        android:background="@color/white"
                         android:padding="@dimen/dimen_5dp">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -164,12 +164,12 @@
                         android:text="@string/subtotal"
                         android:textColor="@color/textColorSecondaryDark"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:background="#d0e5f4"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corners_edittext_white"
+                        android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="10dp">
 
@@ -186,8 +186,7 @@
                                 android:maxLines="1"
                                 android:text="@string/subtotal"
                                 android:textColor="#333333"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/checkout_subtotal"
@@ -219,8 +218,7 @@
                                 android:maxLines="1"
                                 android:text="@string/packing_charge"
                                 android:textColor="#333333"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/checkout_packing_charges"
@@ -251,8 +249,7 @@
                                 android:maxLines="1"
                                 android:text="@string/shipping"
                                 android:textColor="#333333"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/checkout_shipping_charge"
@@ -283,8 +280,7 @@
                                 android:maxLines="1"
                                 android:text="@string/discount"
                                 android:textColor="#333333"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/checkout_discount"
@@ -315,8 +311,7 @@
                                 android:maxLines="1"
                                 android:text="@string/total"
                                 android:textColor="#333333"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/checkout_total"
@@ -355,12 +350,12 @@
                 android:text="@string/promo_code"
                 android:textColor="@color/textColorSecondaryDark"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:background="#d0e5f4"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corners_edittext_white"
+                android:background="@color/white"
                 android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="5dp"
@@ -430,13 +425,13 @@
                 android:text="@string/payment_method"
                 android:textColor="@color/textColorSecondaryDark"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:background="#d0e5f4"/>
 
             <TextView
                 android:id="@+id/payment_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corners_edittext_white"
+                android:background="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"

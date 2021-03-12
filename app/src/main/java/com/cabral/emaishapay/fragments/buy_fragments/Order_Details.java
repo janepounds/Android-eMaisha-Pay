@@ -3,12 +3,16 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -51,6 +55,7 @@ public class Order_Details extends Fragment {
 
     List<String> items;
     public StateProgressBar stateProgressBar;
+    Toolbar toolbar;
 
 
     @Nullable
@@ -66,7 +71,14 @@ public class Order_Details extends Fragment {
         
         
         // Set the Title of Toolbar
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.order_details));
+        setHasOptionsMenu(true);
+        toolbar = rootView.findViewById(R.id.toolbar_product_home);
+        // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
+        //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.order_details));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         
 
         // Binding Layout Views
@@ -213,6 +225,17 @@ public class Order_Details extends Fragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Hide Cart Icon in the Toolbar
+
+//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
+
+//        searchItem.setVisible(false);
+        cartItem.setVisible(false);
     }
 
 }
