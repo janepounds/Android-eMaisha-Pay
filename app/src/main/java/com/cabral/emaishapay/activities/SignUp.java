@@ -35,6 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.cabral.emaishapay.R;
@@ -350,17 +351,27 @@ public class SignUp extends AppCompatActivity {
         // Handle Click event of signUpBtn Button
         binding.signUpBtn.setOnClickListener(v -> {
             // Validate Login Form Inputs
-            boolean isValidData = validateForm();
+//            boolean isValidData = validateForm();
+//
+//            if (isValidData) {
+//                // Proceed User Registration
+//
+//                sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
+//            }
 
-            if (isValidData) {
-                // Proceed User Registration
+            binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
+            binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
+            binding.layoutSignUp.setVisibility(View.GONE);
+            binding.layoutSecurityQns.setVisibility(View.VISIBLE);
+        });
 
-                sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
+        binding.btnBack.setOnClickListener(v -> {
 
 
-
-
-            }
+            binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
+            binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
+            binding.layoutSecurityQns.setVisibility(View.GONE);
+            binding.layoutSignUp.setVisibility(View.VISIBLE);
         });
     }
 

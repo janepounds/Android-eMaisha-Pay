@@ -70,12 +70,28 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="39dp"
-                        android:layout_height="5dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/rounded_corners_button" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <View
+                            android:id="@+id/selected_sign_up"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="12dp"
+                            android:background="@drawable/rounded_corners_button" />
+                        <View
+                            android:id="@+id/selected_security_qns"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="12dp"
+                            android:background="@drawable/rounded_cornor_bg" />
+
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="match_parent"
@@ -86,6 +102,7 @@
                         android:background="@color/light_gray" />
 
                     <LinearLayout
+                        android:id="@+id/layout_sign_up"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -93,7 +110,8 @@
                         android:layout_marginEnd="15dp"
                         android:background="@drawable/rounded_corners_edittext_white"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -385,41 +403,264 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </RelativeLayout>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dip"
+                            android:background="@drawable/rounded_corners_button">
 
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/signUpBtn"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dip"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:fontFamily="@font/josefin_sans"
+                                android:text="@string/next"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/button_text_size"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="30dip"
+                                android:layout_height="30dip"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_margin="10dip"
+                                android:src="@drawable/ic_right_arrow">
+
+                            </ImageView>
+
+                        </FrameLayout>
                     </LinearLayout>
-
-                    <FrameLayout
+                    <LinearLayout
+                        android:id="@+id/layout_security_qns"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dip"
-                        android:background="@drawable/rounded_corners_button">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/signUpBtn"
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:background="@color/transparent"
-                            android:fontFamily="@font/josefin_sans"
-                            android:text="@string/register"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/button_text_size"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20dp"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/dimen_20dp"
+                            android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="30dip"
-                            android:layout_height="30dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="right|center_vertical"
-                            android:layout_margin="10dip"
-                            android:src="@drawable/ic_right_arrow">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="First Security Question"
+                                    android:textSize="@dimen/dimen_16sp" />
 
-                        </ImageView>
 
-                    </FrameLayout>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="3.4dp">
+
+                                    <Spinner
+                                        android:id="@+id/sp_first_security_qn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:background="@android:color/transparent"
+                                        android:entries="@array/spinner_first_security_questions"
+                                        android:gravity="center"
+                                        android:spinnerMode="dropdown" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_marginRight="10dp"
+                                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                        tools:ignore="VectorDrawableCompat" />
+                                </RelativeLayout>
+                                <EditText
+                                    android:id="@+id/etxt_first_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:fontFamily="@font/josefin_sans"
+                                    android:inputType="text"
+                                    android:padding="10dp"
+                                    android:textColor="#000"
+                                    android:layout_marginTop="10dp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_marginTop="15dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="Second Security Question"
+                                    android:textSize="@dimen/dimen_16sp" />
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="3.4dp">
+
+                                    <Spinner
+                                        android:id="@+id/sp_second_security_qn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:background="@android:color/transparent"
+                                        android:entries="@array/spinner_second_security_questions"
+                                        android:gravity="center"
+                                        android:spinnerMode="dropdown" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_marginRight="10dp"
+                                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                        tools:ignore="VectorDrawableCompat" />
+                                </RelativeLayout>
+                                <EditText
+                                    android:id="@+id/etxt_second_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:fontFamily="@font/josefin_sans"
+                                    android:inputType="text"
+                                    android:padding="10dp"
+                                    android:textColor="#000"
+                                    android:layout_marginTop="10dp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_marginTop="15dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="Third Security Question"
+                                    android:textSize="@dimen/dimen_16sp" />
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="3.4dp">
+
+                                    <Spinner
+                                        android:id="@+id/sp_third_security_qn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:background="@android:color/transparent"
+                                        android:entries="@array/spinner_third_security_questions"
+                                        android:gravity="center"
+                                        android:spinnerMode="dropdown" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_marginRight="10dp"
+                                        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                        tools:ignore="VectorDrawableCompat" />
+                                </RelativeLayout>
+                                <EditText
+                                    android:id="@+id/etxt_third_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/edittext_corner"
+                                    android:fontFamily="@font/josefin_sans"
+                                    android:inputType="text"
+                                    android:padding="10dp"
+                                    android:textColor="#000"
+                                    android:layout_marginTop="10dp"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/buttons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+
+
+                            <Button
+                                android:id="@+id/btn_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:paddingStart="10dp"
+                                android:background="@drawable/round_button_red"
+                                android:text="@string/previous"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:drawableStart="@drawable/ic_left_chevron" />
+                            <Button
+                                android:id="@+id/btn_submit_security_qn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_margin="15dp"
+                                android:paddingEnd="10dp"
+                                android:background="@drawable/round_button_dark_green"
+                                android:text="@string/submit"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:drawableEnd="@drawable/ic_right_chevron"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
