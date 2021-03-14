@@ -846,5 +846,25 @@
         <item>Mobile Money</item>
     </string-array>
 
+    <string-array name="spinner_first_security_questions">
+        <item>Select</item>
+        <item>What was your childhood nickname? </item>
+        <item>What is your oldest sibling\'s middle name?</item>
+        <item>What is the middle name of your youngest child?</item>
+    </string-array>
+    <string-array name="spinner_second_security_questions">
+        <item>Select</item>
+        <item>What was your dream job as a child?  </item>
+        <item>What was your favorite place to visit as a child?</item>
+        <item>What was the first concert you attended?</item>
+    </string-array>
+    <string-array name="spinner_third_security_questions">
+        <item>Select</item>
+        <item>What is your favorite animal?</item>
+        <item>What is your favorite football team?</item>
+        <item>What was your favorite sport in high school?</item>
+
+    </string-array>
+
 
 </resources>
