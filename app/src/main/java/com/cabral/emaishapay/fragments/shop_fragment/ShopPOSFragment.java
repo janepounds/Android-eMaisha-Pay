@@ -167,7 +167,6 @@ public class ShopPOSFragment extends Fragment {
             }
         });
 
-
         layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,6 +180,7 @@ public class ShopPOSFragment extends Fragment {
 
             }
         });
+
         imageTick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

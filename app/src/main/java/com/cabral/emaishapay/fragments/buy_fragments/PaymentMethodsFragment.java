@@ -94,7 +94,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     CardType cardType;
     private BraintreeFragment braintreeFragment;
     SupportedCardTypesView brainTreeSupportedCards;
-    private String selectedPaymentMethod, shop_id, shipping, orderId;
+    private String selectedPaymentMethod, merchantWalletId, shipping, orderId;
     private CardBuilder brainTreeCard;
     private List couponList, productList;
     private Double subtotal, total, tax, shipping_cost, discount;
@@ -127,7 +127,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                                   Double discount, List couponList, Double subtotal, Double total, List productList, String orderId) {
         // Required empty public constructor
         this.my_cart = my_cart;
-        this.shop_id = merchantWalletId;
+        this.merchantWalletId = merchantWalletId;
         this.shipping = shipping;
         this.tax = tax;
         this.shipping_cost = shipping_cost;
@@ -385,7 +385,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             if (eMaishaWallet.isChecked()) {
                 //
                 selectedPaymentMethod = "eMaisha Wallet";
-                proceedOrder(false);
+                recordEmaishaPayPurchase(txRef,this.chargeAmount);
 //                GenerateBrainTreeToken();
             }else if (COD.isChecked()) {
                 //
@@ -551,7 +551,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         orderDetails.setCustomersName(userInfo.getFirstName());
         orderDetails.setCustomersTelephone(shippingAddress.getPhone());
         orderDetails.setEmail(userInfo.getEmail());
-        orderDetails.setShopId(shop_id);
 
         // Set Shipping  Info
         orderDetails.setDeliveryFirstname(shippingAddress.getFirstname());
@@ -778,7 +777,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String merchantWalletId = WalletTransactionInitiation.getInstance().getMechantId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true);
@@ -842,6 +840,76 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
 
     }
+
+    public void recordEmaishaPayPurchase(String txRef, double amount) {
+        /******************RETROFIT IMPLEMENTATION**************************/
+        dialogLoader.showProgressDialog();
+
+        String referenceNumber = txRef;
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+
+        APIRequests apiRequests = APIClient.getWalletInstance();
+        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true);
+        call.enqueue(new Callback<WalletTransaction>() {
+            @Override
+            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                if(response.code() == 200){
+
+                    dialogLoader.hideProgressDialog();
+                    proceedOrder(true);
+                }else if(response.code() == 401){
+
+                    TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
+                } else if (response.code() == 500) {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very wrong, code: " + response.code());
+                    }
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else if (response.code() == 400) {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very wrong, code: " + response.code());
+                    }
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else if (response.code() == 406) {
+                    if (response.errorBody() != null) {
+
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                } else {
+
+                    if (response.errorBody() != null) {
+
+                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else {
+
+                        Log.e("info", "Something got very very wrong, code: " + response.code());
+                    }
+                }
+                dialogLoader.hideProgressDialog();
+            }
+
+
+            @Override
+            public void onFailure(Call<WalletTransaction> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 
     public void makeCardPayment(){
         String expiryDate=cardExpiry.getText().toString();

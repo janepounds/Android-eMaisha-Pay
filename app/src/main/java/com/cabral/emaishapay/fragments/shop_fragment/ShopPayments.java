@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -79,7 +80,7 @@ public class ShopPayments extends Fragment implements
     List<String> customerNames, orderTypeNames, paymentMethodNames;
     ArrayAdapter<String> customerAdapter, orderTypeAdapter, paymentMethodAdapter;
     private Context context;
-    AlertDialog alertDialog;
+    ConstraintLayout layoutCod;
     String order_type, order_payment_method, customer_name;
 
     private RadioButton eMaishaWallet, eMaishaCard, Visa, MobileMoney;
@@ -130,6 +131,8 @@ public class ShopPayments extends Fragment implements
         dialogLoader = new DialogLoader(getContext());
 
         eMaishaWallet = rootView.findViewById(R.id.radio_btn_emaisha_wallet);
+        layoutCod= rootView.findViewById(R.id.layout_cod);
+        layoutCod.setVisibility(View.GONE);
         eMaishaCard = rootView.findViewById(R.id.radio_btn_merchant_card);
         Visa = rootView.findViewById(R.id.radio_btn_visa_card);
         MobileMoney = rootView.findViewById(R.id.radio_btn_mobile_money);

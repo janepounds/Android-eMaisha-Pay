@@ -210,6 +210,15 @@ public interface APIRequests {
                                        @Field("thirdParty_id") String thirdParty_id,
                                        @Field("isPending") Boolean isPending
     );
+    // //create user credit
+    @FormUrlEncoded
+    @POST("wallet/payment/eMaishaPayPayment")
+    Call<WalletTransaction> eMaishaPayUserPayment(@Header("Authorization") String token,
+                                       @Field("merchant_wallet_id") String receiver_id,
+                                       @Field("amount") Double amount,
+                                       @Field("referenceNumber") String referenceNumber,
+                                       @Field("isPending") Boolean isPending
+    );
 
     // //voucher deposit
     @FormUrlEncoded
