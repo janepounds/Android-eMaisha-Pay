@@ -176,10 +176,11 @@ public class AddProductFragment extends DialogFragment {
         offlineProductNames = new ArrayList<>();
         offlineProductNames = dbHandler.getOfflineProductNames();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
-                .getCategories(access_token);
+                .getCategories(access_token,request_id);
         call.enqueue(new Callback<CategoriesResponse>() {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
@@ -487,12 +488,14 @@ public class AddProductFragment extends DialogFragment {
 
                             dialogLoader.showProgressDialog();
                             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                            String request_id = WalletHomeActivity.generateRequestId();
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
                                             access_token,
                                             category_id,
-                                            selectedManufacturersID
+                                            selectedManufacturersID,
+                                            request_id
                                     );
                             call.enqueue(new Callback<ProductResponse>() {
                                 @Override

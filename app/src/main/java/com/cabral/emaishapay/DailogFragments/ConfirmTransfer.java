@@ -37,6 +37,7 @@ import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.ExternalAPIRequests;
 import com.cabral.emaishapay.network.FlutterwaveV3APIClient;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
+import com.cabral.emaishapay.utils.CryptoUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ConfirmTransfer extends DialogFragment {
+    private static final String TAG = "ConfirmTransfer";
 
     Button confirmBtn;
     TextView serviceTextView, datetimeTextView, totalTextView, receiverPhoneNumber,
@@ -396,8 +398,14 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         /*****RETROFIT IMPLEMENTATION*****/
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, requireContext());
+        //encript service code
+        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, requireContext().getString(R.string.iv));
+        String service_code_encripted = encrypter.encrypt(service_code);
+        Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code_encripted);
+
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id);
+        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,service_code_encripted);
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {

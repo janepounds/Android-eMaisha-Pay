@@ -954,8 +954,9 @@ public class CheckoutFinal extends Fragment {
 
     private void GenerateBrainTreeToken() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken(access_token);
+                .generateBraintreeToken(access_token,request_id);
 
 
         call.enqueue(new Callback<GetBrainTreeToken>() {
@@ -997,10 +998,11 @@ public class CheckoutFinal extends Fragment {
 
     private void GetCouponInfo(String coupon_code) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<CouponsData> call = BuyInputsAPIClient.getInstance()
                 .getCouponInfo
                         (access_token,
-                                coupon_code
+                                coupon_code,request_id
                         );
 
 
@@ -1083,12 +1085,14 @@ public class CheckoutFinal extends Fragment {
 
     private void PlaceOrderNow(PostOrder postOrder) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String str = new Gson().toJson(postOrder);
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .addToOrder
                         (access_token,
-                                postOrder
+                                postOrder,
+                                request_id
                         );
 
         call.enqueue(new Callback<OrderData>() {

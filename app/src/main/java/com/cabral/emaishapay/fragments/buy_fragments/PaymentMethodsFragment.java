@@ -613,8 +613,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
     private void GenerateBrainTreeToken() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken(access_token);
+                .generateBraintreeToken(access_token,request_id);
 
         call.enqueue(new Callback<GetBrainTreeToken>() {
             @Override

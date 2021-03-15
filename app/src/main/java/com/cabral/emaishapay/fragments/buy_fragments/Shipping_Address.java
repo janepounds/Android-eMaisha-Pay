@@ -593,6 +593,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         dialogLoader.showProgressDialog();
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String[] names = input_name.getText().toString().trim().split(" ");
 
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
@@ -609,7 +610,8 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                                 addressDetails.getLatitude()+"",
                                 addressDetails.getLongitude()+"",
                                 addressDetails.getPhone()+"",
-                                customers_default_address_id
+                                customers_default_address_id,
+                                request_id
                         );
 
 
@@ -662,6 +664,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         dialogLoader.showProgressDialog();
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String[] names = input_name.getText().toString().trim().split(" ");
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .updateUserAddress
@@ -677,7 +680,8 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                                 addressDetails.getLatitude()+"",
                                 addressDetails.getLongitude()+"",
                                 addressDetails.getPhone()+"",
-                                customers_default_address_id
+                                customers_default_address_id,
+                                request_id
                         );
 
         call.enqueue(new Callback<AddressData>() {

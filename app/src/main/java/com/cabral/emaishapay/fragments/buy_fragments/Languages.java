@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.LanguagesAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
@@ -206,8 +207,9 @@ public class Languages extends Fragment {
     
     public void RequestLanguages() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<LanguageData> call = BuyInputsAPIClient.getInstance()
-                .getLanguages(access_token);
+                .getLanguages(access_token,request_id);
         dialogLoader.showProgressDialog();
         call.enqueue(new Callback<LanguageData>() {
             @Override

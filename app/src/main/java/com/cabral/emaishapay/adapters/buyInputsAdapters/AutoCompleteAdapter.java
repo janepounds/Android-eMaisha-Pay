@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.googleMap.GoogleAPIResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.gms.common.api.ApiException;
@@ -250,7 +251,8 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
     private void RequestAutoCompleteBounds(String city){
      //  String _city = city.replaceAll(" ","%20");
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<GoogleAPIResponse> call = BuyInputsAPIClient.getInstance().getCityBounds(access_token,city);
+        String request_id = WalletHomeActivity.generateRequestId();
+        Call<GoogleAPIResponse> call = BuyInputsAPIClient.getInstance().getCityBounds(access_token,city,request_id);
         call.enqueue(new Callback<GoogleAPIResponse>() {
             @Override
             public void onResponse(Call<GoogleAPIResponse> call, Response<GoogleAPIResponse> response) {

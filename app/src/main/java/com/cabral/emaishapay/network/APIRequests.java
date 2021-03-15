@@ -103,7 +103,8 @@ public interface APIRequests {
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
                                                     @Field("amount") Double amount,
                                                     @Field("receiverPhoneNumber") String receiverPhoneNumber,
-                                                    @Field("request_id") String request_id
+                                                    @Field("request_id") String request_id,
+                                                    @Field("service_code") String service_code
     );
 
     // //initiate transfer settlement

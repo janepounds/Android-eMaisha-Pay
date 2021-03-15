@@ -169,6 +169,7 @@ public class SettingsFragment extends Fragment {
                 newPassword = fullscreenDialog.findViewById(R.id.new_pin);
                 Button saveButton = fullscreenDialog.findViewById(R.id.dialog_button);
                 String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                String request_id = WalletHomeActivity.generateRequestId();
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -177,7 +178,7 @@ public class SettingsFragment extends Fragment {
                             dialogLoader.showProgressDialog();
                             Call<UserData> call = BuyInputsAPIClient.getInstance().updatePassword(access_token,oldPassword.getText().toString().trim(),
                                     newPassword.getText().toString().trim(),
-                                    WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext())
+                                    WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext()),request_id
                             );
 
                             call.enqueue(new Callback<UserData>() {
@@ -577,11 +578,12 @@ public class SettingsFragment extends Fragment {
         deviceID = FirebaseInstanceId.getInstance().getToken();
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ContactUsData> call = BuyInputsAPIClient.getInstance()
                 .notify_me
                         (access_token,
                                 notify,
-                                deviceID
+                                deviceID,request_id
                         );
 
         call.enqueue(new Callback<ContactUsData>() {

@@ -168,12 +168,14 @@ public class My_Orders extends Fragment {
 
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .getOrders
                         (access_token,
                                 customerID,
                                 ConstantValues.LANGUAGE_ID,
-                                ConstantValues.CURRENCY_CODE
+                                ConstantValues.CURRENCY_CODE,
+                                request_id
                         );
 
         call.enqueue(new Callback<OrderData>() {
@@ -219,13 +221,15 @@ public class My_Orders extends Fragment {
     
     public void RequestMyOrdersCancel(int orderID) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         dialogLoader.showProgressDialog();
         
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .updatestatus
                         (access_token,
                                 customerID,
-                                orderID
+                                orderID,
+                                request_id
                         );
         
         call.enqueue(new Callback<OrderData>() {
