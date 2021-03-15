@@ -382,10 +382,11 @@ public class WalletHomeFragment extends Fragment {
         dialog.showProgressDialog();
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit,request_id);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
@@ -449,8 +450,9 @@ public class WalletHomeFragment extends Fragment {
 
     public void getBalanceAndCommission() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<BalanceResponse> call = apiRequests.requestBalance(access_token);
+        Call<BalanceResponse> call = apiRequests.requestBalance(access_token,request_id);
         call.enqueue(new Callback<BalanceResponse>() {
             @Override
             public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {

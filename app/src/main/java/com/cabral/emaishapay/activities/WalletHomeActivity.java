@@ -54,6 +54,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.sql.Timestamp;
+import java.util.Random;
+
 public class WalletHomeActivity extends AppCompatActivity{
     private static final String TAG = "WalletHomeActivity";
     private static Context context;
@@ -596,6 +599,21 @@ public class WalletHomeActivity extends AppCompatActivity{
         currentFragment = defaultHomeFragment;
 
        // actionBar.setTitle(getString(R.string.app_name));
+    }
+
+    //generate unique request id
+    public static String generateRequestId(){
+        String request_id = "";
+        Random rand = new Random();
+
+        // Generate random integers in range 0 to 999
+        int rand_int = rand.nextInt(1000);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String timestamp_ = timestamp.toString();
+        String result = timestamp_.replaceAll("\\p{Punct}|\\s", "");
+        request_id ="E"+ result + rand_int;
+
+        return request_id;
     }
 
 }

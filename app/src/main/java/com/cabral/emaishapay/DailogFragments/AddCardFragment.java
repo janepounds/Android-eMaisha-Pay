@@ -130,8 +130,9 @@ public class AddCardFragment extends DialogFragment {
 
                 //call retrofit method for deleting card
                 String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                String request_id = WalletHomeActivity.generateRequestId();
                 /*************RETROFIT IMPLEMENTATION**************/
-                Call<CardResponse> call = APIClient.getWalletInstance().deleteCard(id,access_token);
+                Call<CardResponse> call = APIClient.getWalletInstance().deleteCard(id,access_token,request_id);
                 call.enqueue(new Callback<CardResponse>() {
                     @Override
                     public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -237,8 +238,9 @@ public class AddCardFragment extends DialogFragment {
                         //check if the button text is save card
                         if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
                             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                            String request_id = WalletHomeActivity.generateRequestId();
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -272,8 +274,9 @@ public class AddCardFragment extends DialogFragment {
                     }else{
                             //call update card endpoint
                             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                            String request_id = WalletHomeActivity.generateRequestId();
                             /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance().updateCardInfo(access_token,id,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                            Call<CardResponse> call = APIClient.getWalletInstance().updateCardInfo(access_token,id,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id);
                             call.enqueue(new Callback<CardResponse>() {
                                 @Override
                                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

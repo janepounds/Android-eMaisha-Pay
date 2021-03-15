@@ -37,6 +37,10 @@ import com.venmo.android.pin.PinSaver;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -265,9 +269,12 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
     }
 
     public void processLogin(String password, String phonenumber) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        Log.d(TAG, "processLogin: request_id"+request_id);
+
         //call the otp end point
         dialogLoader.showProgressDialog();
-        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber,password);
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber,password,request_id);
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
@@ -294,9 +301,10 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
 
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
-
+        String request_id = WalletHomeActivity.generateRequestId();
+        Log.d(TAG, "processLogin: request_id"+request_id);
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword);
+        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword,request_id);
 
         dialogLoader.showProgressDialog();
         call.enqueue(new Callback<WalletAuthentication>() {
@@ -421,12 +429,12 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
 
     private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district, DialogLoader dialogLoader) {
-
+        String request_id = WalletHomeActivity.generateRequestId();
         dialogLoader.showProgressDialog();
 
         String countryCode = getResources().getString(R.string.ugandan_code);
         Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district);
+                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,request_id);
 
         call.enqueue(new Callback<UserData>() {
             @Override

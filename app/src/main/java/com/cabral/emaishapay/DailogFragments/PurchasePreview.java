@@ -158,9 +158,10 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId);
+        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId,request_id);
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -346,6 +347,7 @@ public class PurchasePreview extends DialogFragment implements
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         ProgressDialog dialog;
         dialog = new ProgressDialog(activity);
@@ -354,7 +356,7 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setCancelable(false);
         dialog.show();
 
-        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon);
+        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id);
 
         call.enqueue(new Callback<WalletPurchaseResponse>() {
             @Override
@@ -557,10 +559,11 @@ public class PurchasePreview extends DialogFragment implements
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
 
 
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id,false);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id,false,request_id);
 
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
