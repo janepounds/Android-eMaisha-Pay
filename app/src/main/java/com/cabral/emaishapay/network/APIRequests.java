@@ -91,9 +91,10 @@ public interface APIRequests {
     );
 
     // //request balance
+
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token,
-                                         @Field("request_id") String request_id
+                                         @Query("request_id") String request_id
     );
 
 
@@ -159,7 +160,7 @@ public interface APIRequests {
     @GET("wallet/agent/get-name/{AgentId}")
     Call<ConfirmationDataResponse> getMerchant(@Header("Authorization") String token,
                                                @Path("AgentId") String merchantId,
-                                               @Field("request_id") String request_id
+                                               @Query("request_id") String request_id
     );
 
   // //get user business name
@@ -167,7 +168,7 @@ public interface APIRequests {
   Call<ConfirmationDataResponse> getUserBusinessName(@Header("Authorization") String token,
                                                      @Path("phonenumber") String phonenumber,
                                                      @Path("purpose") String purpose,
-                                                     @Field("request_id") String request_id
+                                                     @Query("request_id") String request_id
   );
 
 
@@ -185,7 +186,7 @@ public interface APIRequests {
     @GET("wallet/payments/receipt/{referenceNumber}")
     Call<WalletTransactionReceiptResponse> getReceipt(@Header("Authorization") String token,
                                                       @Path("referenceNumber") String referenceNumber,
-                                                      @Field("request_id") String request_id
+                                                      @Query("request_id") String request_id
     );
 
     // //get user loans
@@ -193,7 +194,7 @@ public interface APIRequests {
     Call<LoanListResponse> getUserLoans(
             @Header("Authorization") String token,
             @Query("userId") String userId,
-             @Field("request_id") String request_id
+             @Query("request_id") String request_id
             /*@Header("Authorization") String token*/
     );
 
@@ -326,7 +327,7 @@ public interface APIRequests {
     Call<AccountResponse>getAccountInfo(
             @Header("Authorization") String token,
             @Path("userId") String userId,
-            @Field("request_id") String request_id
+            @Query("request_id") String request_id
     );
 
     // //store id info
@@ -457,7 +458,7 @@ public interface APIRequests {
 
     //get card info
     @GET("wallet/cards/list")
-    Call<CardResponse>getCards(@Header("Authorization") String token, @Field("request_id") String request_id);
+    Call<CardResponse>getCards(@Header("Authorization") String token, @Query("request_id") String request_id);
 
 
 
@@ -594,7 +595,7 @@ public interface APIRequests {
     @GET("wallet/settlements/list")
     Call<WalletTransactionResponse> getSettlements(
             @Header("Authorization") String token,
-            @Field("request_id") String request_id
+            @Query("request_id") String request_id
     );
 
 
