@@ -293,46 +293,45 @@ public class DepositMoneyVisa extends DialogFragment implements
                                 return "Select Card";
                             }
                         });
+
                         for(int i =0; i<cardlists.size();i++){
-                                //decript card number
+
+                            //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
+                            if(encrypter.decrypt(cardlists.get(i).getCard_number()).length()>4){
+                                final  String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                                final  String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
+                                final  String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
 
+                                String first_four_digits = (card_number.substring(0,  4));
+                                String last_four_digits = (card_number.substring(card_number.length() - 4));
+                                final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
+                                //  Log.w("CardNumber","**********>>>>"+decripted_card_number);
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getCardNumber() {
+                                        return card_number;
+                                    }
 
-                             String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                            String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return decripted_expiryDate;
+                                    }
 
-                            if(card_number.length()>4) {
+                                    @Override
+                                    public String getCvv() {
+                                        return cvv;
+                                    }
 
-                               String first_four_digits = (card_number.substring(0,  4));
-                               String last_four_digits = (card_number.substring(card_number.length() - 4));
-                               decripted_card_number = first_four_digits + "*******"+last_four_digits;
-                             
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return decripted_card_number;
+                                    }
+                                });
                             }
-
-                            cardItems.add(new CardSpinnerItem() {
-                                @Override
-                                public String getCardNumber() {
-                                    return card_number;
-                                }
-
-                                @Override
-                                public String getExpiryDate() {
-                                    return decripted_expiryDate;
-                                }
-
-                                @Override
-                                public String getCvv() {
-                                    return cvv;
-                                }
-
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return decripted_card_number;
-                                }
-                            });
                         }
+
 
                         cardItems.add(new CardSpinnerItem() {
                             @Override
