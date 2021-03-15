@@ -120,7 +120,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     private RaveVerificationUtils verificationUtils;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
-    String decripted_card_number = null;
+
     private String expiryDate,cvv_,card_no;
 
     public PaymentMethodsFragment(My_Cart my_cart, String merchantWalletId, String shipping, Double tax, Double shipping_cost,
@@ -1026,44 +1026,41 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                             }
                         });
                         for(int i =0; i<cardlists.size();i++){
+
                             //decript card number
                             CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
-
-
-                            String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                            String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
-
-                            if(card_number.length()>4) {
+                            if(encrypter.decrypt(cardlists.get(i).getCard_number()).length()>4){
+                                final  String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                                final  String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
+                                final  String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
 
                                 String first_four_digits = (card_number.substring(0,  4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));
-                                decripted_card_number = first_four_digits + "*******"+last_four_digits;
+                                final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
+                                //  Log.w("CardNumber","**********>>>>"+decripted_card_number);
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getCardNumber() {
+                                        return card_number;
+                                    }
 
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return decripted_expiryDate;
+                                    }
+
+                                    @Override
+                                    public String getCvv() {
+                                        return cvv;
+                                    }
+
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return decripted_card_number;
+                                    }
+                                });
                             }
-
-                            cardItems.add(new CardSpinnerItem() {
-                                @Override
-                                public String getCardNumber() {
-                                    return card_number;
-                                }
-
-                                @Override
-                                public String getExpiryDate() {
-                                    return decripted_expiryDate;
-                                }
-
-                                @Override
-                                public String getCvv() {
-                                    return cvv;
-                                }
-
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return decripted_card_number;
-                                }
-                            });
                         }
 
                         cardItems.add(new CardSpinnerItem() {
