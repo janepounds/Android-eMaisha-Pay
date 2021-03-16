@@ -124,8 +124,9 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Call<UserData> call = apiRequests
-                .processForgotPassword(access_token,email,request_id);
+                .processForgotPassword(access_token,email,request_id,category,"");
 
         call.enqueue(new Callback<UserData>() {
             @Override

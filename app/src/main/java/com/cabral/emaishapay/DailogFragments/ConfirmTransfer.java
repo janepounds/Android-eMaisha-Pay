@@ -184,9 +184,10 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id);
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id,category,"getReceiverForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -403,9 +404,10 @@ public class ConfirmTransfer extends DialogFragment {
         CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, requireContext().getString(R.string.iv));
         String service_code_encripted = encrypter.encrypt(service_code);
         Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code_encripted);
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,service_code_encripted);
+        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,category,service_code_encripted,"customerInitiateFundsTransfer");
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
@@ -477,6 +479,7 @@ public class ConfirmTransfer extends DialogFragment {
         String reference=transferResponse.getReference();
         String third_party_id=transferResponse.getId();
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
@@ -490,7 +493,7 @@ public class ConfirmTransfer extends DialogFragment {
                 destination_name,
                 reference,
                 third_party_status,
-                third_party_id,request_id);
+                third_party_id,request_id,category,"transferOutCallback");
 
         call.enqueue(new Callback<SettlementResponse>() {
             @Override

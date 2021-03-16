@@ -432,8 +432,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         String hash_account_name = encrypter.encrypt(account_name);
                         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
+                        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id);
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -780,9 +781,10 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true,request_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -851,9 +853,10 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id);
+        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id,category,"userEmaishaPayPaymentment");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -999,8 +1002,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     public void getCards(){
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id);
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id,category,"getCards");
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

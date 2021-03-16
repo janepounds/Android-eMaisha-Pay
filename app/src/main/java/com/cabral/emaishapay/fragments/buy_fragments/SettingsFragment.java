@@ -579,6 +579,7 @@ public class SettingsFragment extends Fragment {
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ContactUsData> call = BuyInputsAPIClient.getInstance()
                 .notify_me
                         (access_token,

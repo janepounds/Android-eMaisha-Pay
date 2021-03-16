@@ -188,9 +188,10 @@ public class DepositMoneyMobile extends DialogFragment {
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,referenceNumber,"Deposit","flutterwave",phonumber,false,request_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,referenceNumber,"Deposit","flutterwave",phonumber,false,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {

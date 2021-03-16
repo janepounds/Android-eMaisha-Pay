@@ -1086,6 +1086,7 @@ public class CheckoutFinal extends Fragment {
     private void PlaceOrderNow(PostOrder postOrder) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         String str = new Gson().toJson(postOrder);
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()

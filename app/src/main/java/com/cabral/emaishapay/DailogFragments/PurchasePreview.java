@@ -159,9 +159,10 @@ public class PurchasePreview extends DialogFragment implements
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId,request_id);
+        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -348,6 +349,7 @@ public class PurchasePreview extends DialogFragment implements
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         ProgressDialog dialog;
         dialog = new ProgressDialog(activity);
@@ -356,7 +358,7 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setCancelable(false);
         dialog.show();
 
-        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id);
+        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant");
 
         call.enqueue(new Callback<WalletPurchaseResponse>() {
             @Override
@@ -560,10 +562,11 @@ public class PurchasePreview extends DialogFragment implements
         APIRequests apiRequests = APIClient.getWalletInstance();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
 
 
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id,false,request_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantId+"",amount,flwRef,"External Purchase","flutterwave",thirdparty_id,false,request_id,category,"creditUserAfterTransaction");
 
         call.enqueue(new Callback<WalletTransaction>() {
             @Override

@@ -301,12 +301,13 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String proprietor_nin = binding.proprietorNin.getText().toString();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         //**************RETROFIT IMPLEMENTATION******************//
         Call<AccountResponse> call = APIClient.getWalletInstance()
                 .applyForBusiness(access_token,user_Id,business_name,registration_no,
                         encodedIdreg_cert,encodedIdtradelicense,proprietor_name,
-                        proprietor_nin,encodedIdFront,encodedIdBack,role,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id);
+                        proprietor_nin,encodedIdFront,encodedIdBack,role,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id,category,"applyForBusinessAccount");
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {

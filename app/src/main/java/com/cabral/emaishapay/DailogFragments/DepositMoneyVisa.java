@@ -190,8 +190,9 @@ public class DepositMoneyVisa extends DialogFragment implements
                         String hash_account_name = encrypter.encrypt(account_name);
                         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
+                        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id);
+                            Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
                             call.enqueue(new Callback<CardResponse>() {
                                 @Override
                                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -262,8 +263,9 @@ public class DepositMoneyVisa extends DialogFragment implements
     public void getCards(){
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id);
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id,category,"getCards");
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -484,8 +486,9 @@ public class DepositMoneyVisa extends DialogFragment implements
         /************RETROFIT IMPLEMENTATION*******************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,txRef,"Deposit","flutterwave",thirdparty_id, false,request_id);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,txRef,"Deposit","flutterwave",thirdparty_id, false,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
