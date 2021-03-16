@@ -1,4 +1,4 @@
-package com.cabral.emaishamerchantsapp.adapter;
+package com.cabral.emaishapay.adapters.Shop;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cabral.emaishamerchantsapp.R;
+import com.cabral.emaishapay.R;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class OnlineOrderDetailsAdapter extends RecyclerView.Adapter<OnlineOrderDetailsAdapter.MyViewHolder> {
+public class OnlineOrderDetailsAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.Shop.OnlineOrderDetailsAdapter.MyViewHolder> {
 
 
     Context context;

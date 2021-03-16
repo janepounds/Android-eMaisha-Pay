@@ -32,8 +32,9 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:src="@drawable/ic_user" />
+                    android:layout_weight="1.2"
+                    android:src="@drawable/ic_profile"
+                    app:tint="#31244A"/>
 
                 <TextView
                     android:id="@+id/txt_order_customer_name"
@@ -43,8 +44,9 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Zimula John"
                     android:textColor="#31244A"
-                    android:textSize="18dp"
-                    android:textStyle="bold"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"/>
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -65,7 +67,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.2"
                     android:src="@drawable/ic_office_building" />
 
                 <TextView
@@ -76,7 +78,8 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Nansana, Wakiso"
                     android:textColor="#B9B9B9"
-                    android:textSize="18dp" />
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -91,7 +94,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.2"
                     android:src="@drawable/ic_pending__1_" />
 
                 <TextView
@@ -102,7 +105,8 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Pending"
                     android:textColor="#B9B9B9"
-                    android:textSize="18dp" />
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
         </LinearLayout>

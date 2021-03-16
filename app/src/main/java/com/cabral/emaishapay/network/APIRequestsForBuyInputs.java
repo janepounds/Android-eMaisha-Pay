@@ -275,8 +275,9 @@ public interface APIRequestsForBuyInputs {
             @Field("request_id") String request_id
     );
 
+
     @GET("getManufacturers")
-    Call<ManufacturersResponse> getManufacturers(@Header("Authorization")String token,@Field("request_id") String request_id);
+    Call<ManufacturersResponse> getManufacturers(@Header("Authorization")String token);
 
     @GET("getBackup/{shop_id}")
     Call<ResponseBody> getBackup(
