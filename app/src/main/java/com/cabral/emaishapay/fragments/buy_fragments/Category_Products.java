@@ -548,6 +548,7 @@ public class Category_Products extends Fragment {
     private void RequestFilters(int categories_id) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         filterCAll = BuyInputsAPIClient.getInstance()
                 .getFilters
                         (access_token,

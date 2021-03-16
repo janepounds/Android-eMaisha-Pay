@@ -206,10 +206,11 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         double amount = Double.parseDouble(amountEdt.getText().toString());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount,request_id);
+        Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount,request_id,category,"fundsTransferMetadata");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {

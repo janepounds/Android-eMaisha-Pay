@@ -217,9 +217,10 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,customerPhoneNumber,type,request_id);
+        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,customerPhoneNumber,type,request_id,category,"initiateAgentTransaction");
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
@@ -394,10 +395,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         String receiverPhoneNumber=textPhoneNumber.getText().toString();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
 
         Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().
-                confirmAgentTransfer(access_token, amount, otp_code,customerNumber, receiverPhoneNumber,request_id);
+                confirmAgentTransfer(access_token, amount, otp_code,customerNumber, receiverPhoneNumber,request_id,category,"confirmAgentTransfer");
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -436,10 +438,11 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     private  void comfirmAgentWithdraw(String otp_code, String customerNumber, double amount){
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
 
         Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().
-                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id);
+                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"confirmMerchantWithdraw");
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {

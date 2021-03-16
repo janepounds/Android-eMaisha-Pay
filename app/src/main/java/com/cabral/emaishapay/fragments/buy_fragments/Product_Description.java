@@ -963,6 +963,7 @@ public class Product_Description extends Fragment {
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ProductStock> call = BuyInputsAPIClient.getInstance()
                 .getProductStock
                         (access_token,
@@ -1005,6 +1006,7 @@ public class Product_Description extends Fragment {
     public static void LikeProduct(int productID, String customerID, final Context context, final View view) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .likeProduct
                         (access_token,
@@ -1054,6 +1056,7 @@ public class Product_Description extends Fragment {
                                 productID,
                                 customerID,
                                 request_id
+
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -1331,6 +1334,7 @@ public class Product_Description extends Fragment {
         getStockParams.setAttributes(attributes);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams,request_id);
         try {
             Response<ProductStock> response = call.execute();

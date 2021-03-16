@@ -151,6 +151,7 @@ public class StartAppRequests {
                                 String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ResponseBody> call = BuyInputsAPIClient
                 .getInstance()
                 .postProduct(access_token,unique_product_id,measure_id,user_id,selected_product_id,product_buy_price,product_sell_price,
@@ -297,6 +298,7 @@ public class StartAppRequests {
                     String deviceID =instanceIdResult.getToken();
                     String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
                     Call<UserData> call = APIClient.getWalletInstance()
                             .registerDeviceToFCM
                                     (       access_token,
@@ -310,7 +312,10 @@ public class StartAppRequests {
                                             device.getDeviceModel(),
                                             device.getDeviceManufacturer(),
                                             device.getDeviceSystemOS(),
-                                            request_id
+                                            request_id,
+                                            category,
+                                            "registerdevices"
+
                                     );
 
                     call.enqueue(new Callback<UserData>() {

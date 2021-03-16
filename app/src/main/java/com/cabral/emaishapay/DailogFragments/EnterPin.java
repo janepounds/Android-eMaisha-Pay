@@ -74,6 +74,7 @@ public class EnterPin extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String request_id = WalletHomeActivity.generateRequestId();
+                String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
                 ProgressDialog dialog;
                 dialog = new ProgressDialog(v.getContext());
@@ -88,7 +89,7 @@ public class EnterPin extends DialogFragment {
 
                 if(getArguments().getString("key").equalsIgnoreCase("deposit")) {
                     /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
-                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().confrmDeposit(access_token, Double.parseDouble(amount_only), "12"+confirm_pin.getText().toString(), phoneNumber,request_id);
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().confrmDeposit(access_token, Double.parseDouble(amount_only), "12"+confirm_pin.getText().toString(), phoneNumber,request_id,category,"merchantInitiateDeposit");
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
                         public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -125,7 +126,7 @@ public class EnterPin extends DialogFragment {
                     });
                 }else{
                     /***************RETROFIT IMPLEMENTATION FOR BALANCE INQUIRY************************/
-                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().balanceInquiry(access_token, "12"+confirm_pin.getText().toString(), phoneNumber,request_id);
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance().balanceInquiry(access_token, "12"+confirm_pin.getText().toString(), phoneNumber,request_id,category,"merchantBalanceInquiry");
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
                         public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {

@@ -226,8 +226,9 @@ public class CardDetail extends Fragment {
 
                     String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance()
-                            .openAccount(access_token, requestObject,request_id);
+                            .openAccount(access_token, requestObject,request_id,category,"merchantAccountOpening");
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
                         public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {

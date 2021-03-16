@@ -449,6 +449,7 @@ public class My_Cart extends Fragment {
         getStockParams.setAttributes(attributes);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams,request_id);
         try {
             Response<ProductStock> response = call.execute();

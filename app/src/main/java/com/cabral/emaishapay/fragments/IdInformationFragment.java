@@ -149,9 +149,10 @@ public class IdInformationFragment extends Fragment {
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         Call<AccountResponse> call = APIClient.getWalletInstance()
                 .storeIdInfo(access_token,userId, binding.idType.getSelectedItem().toString(), binding.idNumber.getText().toString(),
-                        binding.expiryDate.getText().toString(), encodedIdFront, encodedIdBack,request_id);
+                        binding.expiryDate.getText().toString(), encodedIdFront, encodedIdBack,request_id,category,"storeUserIDInfo");
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {

@@ -137,8 +137,9 @@ public class WalletLoansListFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        Call<LoanListResponse> call = apiRequests.getUserLoans(access_token,userId,request_id);
+        Call<LoanListResponse> call = apiRequests.getUserLoans(access_token,userId,request_id,category,"getUserLoans");
 
         call.enqueue(new Callback<LoanListResponse>() {
             @Override
@@ -255,8 +256,8 @@ public class WalletLoansListFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
-
-        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(access_token,userId,request_id);
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(access_token,userId,request_id,category,"cancelRequest");
         call.enqueue(new Callback<CancelLoanResponse>() {
             @Override
             public void onResponse(Call<CancelLoanResponse> call, Response<CancelLoanResponse> response) {
