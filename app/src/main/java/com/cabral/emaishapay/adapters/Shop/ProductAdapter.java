@@ -85,7 +85,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.txtSupplierName.setText(supplier_name);
         holder.txtBuyPrice.setText(currency + " " + buy_price);
         holder.txtSellPrice.setText(currency + " " + sell_price);
-        holder.txt_per_unit.setText(productData.get(position).get("product_weight_unit"));
+        if(productData.get(position).get("product_weight")!=null && !productData.get(position).get("product_weight").equalsIgnoreCase("null") ){
+            holder.txt_per_unit.setText("/"+productData.get(position).get("product_weight")+productData.get(position).get("product_weight_unit"));
+            holder.txtProductName.setText(holder.txtProductName.getText()+" "+productData.get(position).get("product_weight")+productData.get(position).get("product_weight_unit"));
+        }
+
 
         if (base64Image != null) {
             if (base64Image.length() < 6) {

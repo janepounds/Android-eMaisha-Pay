@@ -265,7 +265,7 @@ public interface APIRequestsForBuyInputs {
     );
 
     @GET("getCategories")
-    Call<CategoriesResponse> getCategories(@Header("Authorization") String token,@Field("request_id") String request_id);
+    Call<CategoriesResponse> getCategories(@Header("Authorization") String token);
 
     @GET("getProductsByCategoryAndManufacturer/{category_id}/{manufacturer_id}")
     Call<ProductResponse> getProducts(
@@ -279,9 +279,9 @@ public interface APIRequestsForBuyInputs {
     @GET("getManufacturers")
     Call<ManufacturersResponse> getManufacturers(@Header("Authorization")String token);
 
-    @GET("getBackup/{shop_id}")
+    @GET("getBackup/{wallet_id}")
     Call<ResponseBody> getBackup(
-            @Path("shop_id") int id
+            @Path("wallet_id") String id
     );
 
     @GET("getEMaishaAppOrders/{wallet_id}")

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.SalesAdapter;
+import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 
 import java.util.HashMap;
@@ -38,10 +39,12 @@ public class ShopSalesFragment extends Fragment {
     private DbHandlerSingleton dbHandler;
     Toolbar toolbar;
     ImageView imgNoProduct;
-    TextView txtNoProducts;
     EditText etxtSearch;
-    private RecyclerView recyclerView;
     private SalesAdapter salesAdapter;
+    TextView txtNoProducts, txtTotalPrice;
+    List<HashMap<String, String>> orderDetailsList;
+    double total_price;
+    private RecyclerView recyclerView;
 
 
     public ShopSalesFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
@@ -69,7 +72,7 @@ public class ShopSalesFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Sales");
 
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
+
         recyclerView = view.findViewById(R.id.recycler);
         imgNoProduct = view.findViewById(R.id.image_no_product);
 
@@ -83,11 +86,12 @@ public class ShopSalesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
         recyclerView.setHasFixedSize(true);
+        final DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
+        databaseAccess.open();
+        List<HashMap<String, String>> orderDetailsList;
+        orderDetailsList = databaseAccess.getAllSalesItems();
 
-        List<HashMap<String, String>> orderList;
-        orderList = dbHandler.getOrderList();
-
-        if (orderList.size() <= 0) {
+        if (orderDetailsList.size() <= 0) {
             //if no data in local db, then load data from server
             Toasty.info(getContext(), "No Order Found", Toast.LENGTH_SHORT).show();
             recyclerView.setVisibility(View.GONE);
@@ -95,7 +99,7 @@ public class ShopSalesFragment extends Fragment {
             imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
             txtNoProducts.setVisibility(View.VISIBLE);
         } else {
-            salesAdapter = new SalesAdapter(getContext(), orderList);
+            salesAdapter = new SalesAdapter(getContext(), orderDetailsList);
 
             recyclerView.setAdapter(salesAdapter);
         }

@@ -118,10 +118,11 @@ public class ShopProductsFragment extends Fragment {
             }
         });
 
-
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
+        databaseAccess.open();
         //get data from local database
         List<HashMap<String, String>> productData= new ArrayList();
-        productData = dbHandler.getProducts(wallet_id);
+        productData = databaseAccess.getProducts();
 
         Log.d("data", "" + productData.size());
 
@@ -221,14 +222,11 @@ public class ShopProductsFragment extends Fragment {
 
     }
 
-
     private  void getOnlineOrders(){
         //NetworkStateChecker.RegisterDeviceForFCM(HomeActivity.this);
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
         databaseAccess.open();
-
-
 
         Call<ResponseBody> call1 = BuyInputsAPIClient
                 .getInstance()
@@ -284,6 +282,7 @@ public class ShopProductsFragment extends Fragment {
             }
         });
     }
+
     public void saveManufacturersList(List<Manufacturer> manufacturers) {
         this.manufacturers = manufacturers;
     }
