@@ -224,19 +224,6 @@ public interface APIRequestsForBuyInputs {
             @Field("customer_image") String customer_image
     );
 
-    @FormUrlEncoded
-    @POST("postSuppliers")
-    Call<ResponseBody> postSupplier(
-            @Field("shop_id") Integer shop_id,
-            @Field("suppliers_id") String suppliers_id,
-            @Field("suppliers_name") String suppliers_name,
-            @Field("suppliers_contact_person") String suppliers_contact_person,
-            @Field("suppliers_cell") String suppliers_cell,
-            @Field("suppliers_email") String suppliers_email,
-            @Field("suppliers_address") String suppliers_address,
-            @Field("suppliers_address_two") String suppliers_address_two,
-            @Field("suppliers_image") String suppliers_image
-    );
 
     @FormUrlEncoded
     @POST("postExpenses")
@@ -296,9 +283,9 @@ public interface APIRequestsForBuyInputs {
             @Path("shop_id") int id
     );
 
-    @GET("getEMaishaAppOrders/{shop_id}")
+    @GET("getEMaishaAppOrders/{wallet_id}")
     Call<ResponseBody> getOrders(
-            @Path("shop_id") int id
+            @Path("wallet_id") String id
     );
 
     @FormUrlEncoded
