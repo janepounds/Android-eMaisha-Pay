@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -63,7 +64,8 @@ public class TransferMoney extends Fragment {
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
     FragmentManager fm;
-    EditText etMobileMoneyNumber,etBeneficiaryName;
+    EditText etMobileMoneyNumber;
+    AutoCompleteTextView etBeneficiaryName;
     private Context context;
     private Toolbar toolbar;
     DialogLoader dialogLoader;
