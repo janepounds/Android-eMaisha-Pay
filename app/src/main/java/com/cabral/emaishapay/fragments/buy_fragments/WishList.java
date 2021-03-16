@@ -184,10 +184,12 @@ public class WishList extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts
+                                getAllProducts,
+                                request_id
                         );
 
         call.enqueue(new Callback<ProductData>() {

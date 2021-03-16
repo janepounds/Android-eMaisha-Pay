@@ -419,10 +419,11 @@ public class My_Cart extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts
+                                getAllProducts,request_id
                         );
         Response<ProductData> response = call.execute();
 
@@ -447,7 +448,8 @@ public class My_Cart extends Fragment {
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
+        String request_id = WalletHomeActivity.generateRequestId();
+        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams,request_id);
         try {
             Response<ProductStock> response = call.execute();
             if (response.isSuccessful()) {

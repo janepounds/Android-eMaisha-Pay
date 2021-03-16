@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -204,10 +205,11 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         /***************RETROFIT IMPLEMENTATION***********************/
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         double amount = Double.parseDouble(amountEdt.getText().toString());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount);
+        Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount,request_id);
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {

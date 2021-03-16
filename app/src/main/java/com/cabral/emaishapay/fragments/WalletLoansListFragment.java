@@ -134,10 +134,11 @@ public class WalletLoansListFragment extends Fragment {
         /*************RETROFIT IMPLEMENTATION********************/
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 
-        Call<LoanListResponse> call = apiRequests.getUserLoans(access_token,userId);
+        Call<LoanListResponse> call = apiRequests.getUserLoans(access_token,userId,request_id);
 
         call.enqueue(new Callback<LoanListResponse>() {
             @Override
@@ -251,10 +252,11 @@ public class WalletLoansListFragment extends Fragment {
     public void cancelLoan(){
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance();
 
-        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(access_token,userId);
+        Call<CancelLoanResponse> call = apiRequests.cancelLoanRequest(access_token,userId,request_id);
         call.enqueue(new Callback<CancelLoanResponse>() {
             @Override
             public void onResponse(Call<CancelLoanResponse> call, Response<CancelLoanResponse> response) {

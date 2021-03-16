@@ -37,6 +37,7 @@ import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.ExternalAPIRequests;
 import com.cabral.emaishapay.network.FlutterwaveV3APIClient;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
+import com.cabral.emaishapay.utils.CryptoUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ConfirmTransfer extends DialogFragment {
+    private static final String TAG = "ConfirmTransfer";
 
     Button confirmBtn;
     TextView serviceTextView, datetimeTextView, totalTextView, receiverPhoneNumber,
@@ -181,9 +183,10 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer");
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id);
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -387,6 +390,7 @@ public class ConfirmTransfer extends DialogFragment {
     public void initiateWalletTransfer(final String phoneNumber, final double amount) {
         ProgressDialog dialog;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
         dialog = new ProgressDialog(activity);
         dialog.setIndeterminate(true);
@@ -394,8 +398,14 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         /*****RETROFIT IMPLEMENTATION*****/
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, requireContext());
+        //encript service code
+        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, requireContext().getString(R.string.iv));
+        String service_code_encripted = encrypter.encrypt(service_code);
+        Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code_encripted);
+
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber);
+        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,service_code_encripted);
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
@@ -466,6 +476,7 @@ public class ConfirmTransfer extends DialogFragment {
         String destination_name=transferResponse.getBank_name();
         String reference=transferResponse.getReference();
         String third_party_id=transferResponse.getId();
+        String request_id = WalletHomeActivity.generateRequestId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
         Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
@@ -479,7 +490,7 @@ public class ConfirmTransfer extends DialogFragment {
                 destination_name,
                 reference,
                 third_party_status,
-                third_party_id);
+                third_party_id,request_id);
 
         call.enqueue(new Callback<SettlementResponse>() {
             @Override

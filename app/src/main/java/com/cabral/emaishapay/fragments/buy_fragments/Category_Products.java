@@ -425,10 +425,12 @@ public class Category_Products extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
         getAllProducts.setType(sortBy);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         productsCall = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts
+                                getAllProducts,
+                                request_id
                         );
 
         productsCall.enqueue(new Callback<ProductData>() {
@@ -495,10 +497,11 @@ public class Category_Products extends Fragment {
 
         String data = new Gson().toJson(getAllProducts);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts
+                                getAllProducts,request_id
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -544,11 +547,13 @@ public class Category_Products extends Fragment {
 
     private void RequestFilters(int categories_id) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         filterCAll = BuyInputsAPIClient.getInstance()
                 .getFilters
                         (access_token,
                                 categories_id,
-                                ConstantValues.LANGUAGE_ID
+                                ConstantValues.LANGUAGE_ID,
+                                request_id
                         );
 
         filterCAll.enqueue(new Callback<FilterData>() {

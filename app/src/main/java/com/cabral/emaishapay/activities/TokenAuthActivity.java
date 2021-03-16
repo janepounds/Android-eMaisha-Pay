@@ -102,8 +102,9 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
             dialogLoader.showProgressDialog();
 
         /****RETROFIT IMPLEMENTATION*******/
+        String request_id = WalletHomeActivity.generateRequestId();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<TokenResponse> call = apiRequests.getToken(phonenumber, password);
+        Call<TokenResponse> call = apiRequests.getToken(phonenumber, password,request_id);
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {

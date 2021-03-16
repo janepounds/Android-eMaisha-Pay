@@ -193,9 +193,10 @@ public class ShopProductsFragment extends Fragment {
         dialogLoader.showProgressDialog();
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
-                .getManufacturers(access_token);
+                .getManufacturers(access_token,request_id);
         call1.enqueue(new Callback<ManufacturersResponse>() {
             @Override
             public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {

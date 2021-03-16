@@ -161,9 +161,10 @@ public class BusinessInformationFragment extends Fragment {
         progressDialog.show();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<AccountResponse> call = APIClient.getWalletInstance()
                 .storeBusinessInfo(access_token,userId, binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
-                        encodedTradeLicence, binding.licenceNumber.getText().toString(), encodedRegistrationCertificate);
+                        encodedTradeLicence, binding.licenceNumber.getText().toString(), encodedRegistrationCertificate,request_id);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {

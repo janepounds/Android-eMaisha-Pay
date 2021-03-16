@@ -288,6 +288,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         JSONObject requestObject = new JSONObject();
         try {
@@ -328,7 +329,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<RequestLoanresponse> call = apiRequests.requestLoans(access_token, requestObject);
+        Call<RequestLoanresponse> call = apiRequests.requestLoans(access_token, requestObject,request_id);
         call.enqueue(new Callback<RequestLoanresponse>() {
             @Override
             public void onResponse(Call<RequestLoanresponse> call, Response<RequestLoanresponse> response) {

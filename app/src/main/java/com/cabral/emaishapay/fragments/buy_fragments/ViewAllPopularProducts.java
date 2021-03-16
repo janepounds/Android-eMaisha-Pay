@@ -129,10 +129,11 @@ public class ViewAllPopularProducts extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         productsCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts
+                                getAllProducts,request_id
                         );
 
         productsCall.enqueue(new Callback<ProductData>() {

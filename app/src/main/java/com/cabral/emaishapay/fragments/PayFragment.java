@@ -322,9 +322,10 @@ public class PayFragment extends Fragment {
 
     public void getCards(){
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         /******************RETROFIT IMPLEMENTATION***********************/
         dialog.showProgressDialog();
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token);
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id);
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

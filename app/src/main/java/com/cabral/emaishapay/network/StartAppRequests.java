@@ -150,10 +150,11 @@ public class StartAppRequests {
                                 String product_name,String product_code,String selected_category_id,String  product_category,String product_buy_price, String product_sell_price,
                                 String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<ResponseBody> call = BuyInputsAPIClient
                 .getInstance()
                 .postProduct(access_token,unique_product_id,measure_id,user_id,selected_product_id,product_buy_price,product_sell_price,
-                        product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name
+                        product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name,request_id
                 );
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -187,11 +188,13 @@ public class StartAppRequests {
 
     public void RequestAllCategories() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         ConstantValues.LANGUAGE_ID=1;
         Call<CategoryData> call = BuyInputsAPIClient.getInstance()
                 .getAllCategories
                         (access_token,
-                                ConstantValues.LANGUAGE_ID
+                                ConstantValues.LANGUAGE_ID,
+                                request_id
                         );
 
         try {
@@ -293,6 +296,7 @@ public class StartAppRequests {
                 public void onSuccess(InstanceIdResult instanceIdResult) {
                     String deviceID =instanceIdResult.getToken();
                     String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String request_id = WalletHomeActivity.generateRequestId();
                     Call<UserData> call = APIClient.getWalletInstance()
                             .registerDeviceToFCM
                                     (       access_token,
@@ -305,7 +309,8 @@ public class StartAppRequests {
                                             device.getDeviceLocation(),
                                             device.getDeviceModel(),
                                             device.getDeviceManufacturer(),
-                                            device.getDeviceSystemOS()
+                                            device.getDeviceSystemOS(),
+                                            request_id
                                     );
 
                     call.enqueue(new Callback<UserData>() {

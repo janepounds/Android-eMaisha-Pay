@@ -431,8 +431,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         String hash_expiry = encrypter.encrypt(expiry);
                         String hash_account_name = encrypter.encrypt(account_name);
                         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                        String request_id = WalletHomeActivity.generateRequestId();
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name);
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -612,8 +613,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
     private void GenerateBrainTreeToken() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken(access_token);
+                .generateBraintreeToken(access_token,request_id);
 
         call.enqueue(new Callback<GetBrainTreeToken>() {
             @Override
@@ -777,9 +779,10 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true);
+        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true,request_id);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -847,9 +850,10 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         String referenceNumber = txRef;
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true);
+        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id);
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -994,8 +998,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
     public void getCards(){
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token);
+        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id);
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

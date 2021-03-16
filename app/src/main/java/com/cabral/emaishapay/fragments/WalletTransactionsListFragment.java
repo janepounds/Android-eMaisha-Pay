@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -108,10 +109,11 @@ public class WalletTransactionsListFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList(access_token);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList(access_token,request_id);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
@@ -168,10 +170,11 @@ public class WalletTransactionsListFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.getSettlements(access_token);
+        Call<WalletTransactionResponse> call = apiRequests.getSettlements(access_token,request_id);
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
