@@ -20,6 +20,10 @@
     <string name="order_type">Order Type</string>
 
 
+    <string name="backup_completed_successfully">Backup Completed Successfully</string>
+    <string name="unable_to_backup_database_retry">Unable to backup database. Retry</string>
+    <string name="database_Import_completed">Database Import Completed</string>
+    <string name="unable_to_import_database_retry">Unable to import database. Retry</string>
     <string name="lorem_ipsum">
         No Minimum Order - Order in for yourself or for the group, with no restrictions.
         Deliveries made in a flash. Anytime, anywhere.
