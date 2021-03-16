@@ -184,54 +184,7 @@ public interface APIRequestsForBuyInputs {
                                         @Header("Authorization") String token,
                                         @Field("customers_id") String customers_id,
                                         @Field("address_book_id") String address_book_id);
-//Merchant shop methods from
 
-    @FormUrlEncoded
-    @POST("registerMerchant")
-    Call<ResponseBody> registerShop(
-            @Field("shop_name") String shop_name,
-            @Field("shop_contact") String shop_contact,
-            @Field("shop_email") String shop_email,
-            @Field("shop_address") String shop_address,
-            @Field("shop_currency") String shop_currency,
-            @Field("latitude") String latitude,
-            @Field("longitude") String longitude,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("loginMerchant")
-    Call<ResponseBody> loginShop(
-            @Field("shop_contact") String shop_contact,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("postCustomer")
-    Call<ResponseBody> postCustomer(
-            @Field("shop_id") Integer shop_id,
-            @Field("customer_id") String customer_id,
-            @Field("customer_name") String customer_name,
-            @Field("customer_cell") String customer_cell,
-            @Field("customer_email") String customer_email,
-            @Field("customer_address") String customer_address,
-            @Field("customer_address_two") String customer_address_two,
-            @Field("customer_image") String customer_image
-    );
-
-    @FormUrlEncoded
-    @POST("postSuppliers")
-    Call<ResponseBody> postSupplier(
-            @Field("shop_id") Integer shop_id,
-            @Field("suppliers_id") String suppliers_id,
-            @Field("suppliers_name") String suppliers_name,
-            @Field("suppliers_contact_person") String suppliers_contact_person,
-            @Field("suppliers_cell") String suppliers_cell,
-            @Field("suppliers_email") String suppliers_email,
-            @Field("suppliers_address") String suppliers_address,
-            @Field("suppliers_address_two") String suppliers_address_two,
-            @Field("suppliers_image") String suppliers_image
-    );
 
     @FormUrlEncoded
     @POST("postExpenses")
@@ -289,9 +242,9 @@ public interface APIRequestsForBuyInputs {
             @Path("shop_id") int id
     );
 
-    @GET("getEMaishaAppOrders/{shop_id}")
+    @GET("getEMaishaAppOrders/{wallet_id}")
     Call<ResponseBody> getOrders(
-            @Path("shop_id") int id
+            @Path("wallet_id") String id
     );
 
     @FormUrlEncoded

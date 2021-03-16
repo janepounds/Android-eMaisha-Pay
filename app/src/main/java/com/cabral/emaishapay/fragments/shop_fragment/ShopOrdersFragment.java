@@ -11,9 +11,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import es.dmoral.toasty.Toasty;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +30,20 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.OrderAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +57,7 @@ public class ShopOrdersFragment extends Fragment {
     private OrderAdapter orderAdapter;
     private DbHandlerSingleton dbHandler;
     private Context context;
-    Toolbar toolbar;
+    Toolbar toolbar;String wallet_id;
 
     public ShopOrdersFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
     }
@@ -82,7 +98,9 @@ public class ShopOrdersFragment extends Fragment {
 
         //get data from local database
         List<HashMap<String, String>> orderList;
-        orderList = dbHandler.getOrderList();
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
+        databaseAccess.open();
+        orderList = databaseAccess.getOrderList();
 
         if (orderList.size() <= 0) {
             //if no data in local db, then load data from server
@@ -148,6 +166,9 @@ public class ShopOrdersFragment extends Fragment {
 
 
         });
+
+
+
         return  view;
     }
 
@@ -165,5 +186,7 @@ public class ShopOrdersFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     }
