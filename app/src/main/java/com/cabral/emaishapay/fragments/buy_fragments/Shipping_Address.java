@@ -254,6 +254,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                         new LatLng(selectedLocation.latitude,
                                 selectedLocation.longitude), DEFAULT_ZOOM));
                 mCenterLatLong = selectedLocation;
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
             }
 
 
@@ -262,6 +263,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                 // TODO: Handle the error.
                 Log.e(TAG, "An error occurred: " + status);
 
+                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
             }
         });
 
