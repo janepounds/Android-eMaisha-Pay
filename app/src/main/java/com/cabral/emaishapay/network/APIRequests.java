@@ -760,4 +760,21 @@ public interface APIRequests {
     );
 
 
+    // //update card info
+    @FormUrlEncoded
+    @POST("wallet/save_beneficiary")
+    Call<CardResponse>saveBeneficiary(
+            @Header("Authorization")String token,
+            @Field("beneficary_type") String beneficary_type,
+            @Field("beneficiary_name") String beneficiary_name,
+            @Field("beneficiary_number") String beneficiary_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
+
+
+
+
+    );
+
 }

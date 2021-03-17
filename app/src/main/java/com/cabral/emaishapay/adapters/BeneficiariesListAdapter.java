@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,13 +25,25 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     private List<BeneficiaryResponse.Beneficiaries> dataList;
     private FragmentManager fm;
     Context context;
+    private String beneficary_name, initials,cvv,expiry_date,id;
 
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        TextView initials,benefaciary_name,date,beneficiary_type,beneficiary_number;
+        ImageView close;
+        ConstraintLayout constraintLayoutAmount;
 
         public MyViewHolder(View v, FragmentManager fm) {
             super(v);
+            initials = v.findViewById(R.id.initials);
+            benefaciary_name = v.findViewById(R.id.user_name);
+            beneficiary_type  = v.findViewById(R.id.beneficiary_type);
+            beneficiary_number = v.findViewById(R.id.beneficiary_number);
+            date = v.findViewById(R.id.date);
+            close = v.findViewById(R.id.img_beneficiary_close);
+            constraintLayoutAmount = v.findViewById(R.id.layout_amount);
+
         }
 
 
@@ -57,7 +72,15 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     @Override
     public void onBindViewHolder(BeneficiariesListAdapter.MyViewHolder holder, int position) {
         BeneficiaryResponse.Beneficiaries data = dataList.get(position);
+        holder.constraintLayoutAmount.setVisibility(View.GONE);
+        holder.date.setVisibility(View.GONE);
+        holder.close.setVisibility(View.VISIBLE);
+        holder.beneficiary_type.setVisibility(View.VISIBLE);
 
+        holder.beneficiary_type.setText(data.getBeneficiary_type());
+        holder.initials.setText(data.getInitials());
+        holder.benefaciary_name.setText(data.getBeneficiary_name());
+        holder.beneficiary_number.setText(data.getBeneficiary_number());
 
     }
 
