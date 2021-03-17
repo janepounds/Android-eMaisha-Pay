@@ -18,6 +18,7 @@ import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
+import com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address;
 import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
 import com.cabral.emaishapay.fragments.sell_fragment.SellFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
@@ -41,7 +42,8 @@ public class WalletBuySellActivity extends AppCompatActivity {
     Toolbar toolbar;
     public static ActionBar actionBar;
     public static BottomNavigationView bottomNavigationView;
-    public Fragment currentFragment, defaultHomeFragment;
+    public static Fragment currentFragment;
+    public Fragment defaultHomeFragment;
 
     public static PostOrder postOrder = new PostOrder();
 
@@ -66,9 +68,11 @@ public class WalletBuySellActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
                 // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
                 actionBar.setDisplayShowTitleEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-                actionBar.setDisplayHomeAsUpEnabled(false);
-                WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                if(currentFragment instanceof Shipping_Address)
+                    WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
+                else
+                    WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+
             }
 
             actionBar.setHomeButtonEnabled(true);

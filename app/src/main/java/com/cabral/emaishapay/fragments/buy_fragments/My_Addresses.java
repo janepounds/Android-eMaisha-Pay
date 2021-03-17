@@ -118,6 +118,7 @@ public class My_Addresses extends Fragment {
                 fragmentManager.beginTransaction()
                         .add(R.id.nav_host_fragment2, fragment)
                         .addToBackStack(null).commit();
+            WalletBuySellActivity.currentFragment=fragment;
         });
 
         // Handle Click event of add_address_fab FAB
