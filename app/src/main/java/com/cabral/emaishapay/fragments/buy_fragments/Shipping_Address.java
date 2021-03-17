@@ -142,9 +142,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         toolbar = rootView.findViewById(R.id.add_address_Toolbar);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("My Address");
+        toolbar.setTitle("Add New Address");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // noInternetDialog.show();
         WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         if (getArguments() != null) {
