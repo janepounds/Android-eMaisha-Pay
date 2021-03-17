@@ -10,8 +10,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,28 +20,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.cabral.emaishapay.Maps.PlacesFieldSelector;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ShippingTimeSlotsAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
-import com.cabral.emaishapay.models.shipping_model.TimeSlotsList;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.gms.common.ConnectionResult;
@@ -75,7 +66,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,12 +82,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     int selectedZoneID, selectedCountryID;
     TextView proceed_checkout_btn;
     LinearLayout save_address_layout;
-
     EditText input_name,  input_phone;
     DialogLoader dialogLoader;
 
     Toolbar toolbar;
-    public static ActionBar actionBar;
 
     //LocationPicker.
     /*Edited  28-Dec-18*/
@@ -151,14 +139,12 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_address, container, false);
 
-        setHasOptionsMenu(true);
-        toolbar = rootView.findViewById(R.id.main_Toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle(getString(R.string.actionOrders));
+        toolbar = rootView.findViewById(R.id.add_address_Toolbar);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("My Address");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         // noInternetDialog.show();
         WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         if (getArguments() != null) {
@@ -166,7 +152,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                 isUpdate = getArguments().getBoolean("isUpdate", false);
             }
         }
-
 
         /*Edited  05/02/2021*/
         if (!Places.isInitialized()) {
@@ -262,7 +247,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
-                // TODO: Get info about the selected place.
                 Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -387,8 +371,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                 Log.e("ShippingAddress","Error in data fetching");
             }
 
-
-
+            WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         }
     }
 
@@ -413,16 +396,9 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public void onPause() {
         //  mGoogleApiClient.stopAutoManage(getActivity());
         //   mGoogleApiClient.disconnect();
-
         super.onPause();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Hide Cart Icon in the Toolbar
-//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-//        searchItem.setVisible(false);
-    }
 
     /**
      * Saves the state of the map when the activity is paused.
@@ -479,10 +455,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
      */
     // [START maps_current_place_get_device_location]
     private void getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
@@ -551,12 +523,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         }
         updateLocationUI();
     }
-    // [END maps_current_place_on_request_permissions_result]
 
-    /**
-     * Updates the map's UI settings based on whether the user has granted location permission.
-     */
-    // [START maps_current_place_update_location_ui]
     private void updateLocationUI() {
         if (map == null) {
             return;
