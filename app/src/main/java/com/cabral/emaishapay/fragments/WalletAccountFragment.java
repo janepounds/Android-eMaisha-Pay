@@ -665,8 +665,9 @@ public class WalletAccountFragment extends Fragment {
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         Call<AccountResponse> call = APIClient.getWalletInstance()
-                .getAccountInfo(access_token,userId,request_id);
+                .getAccountInfo(access_token,userId,request_id,category,"getAllUserData");
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {

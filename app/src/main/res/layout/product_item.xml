@@ -161,6 +161,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
                         android:text="pcs"
+                        android:visibility="gone"
                         android:textColor="#B9B9B9"
                         android:textSize="14sp"
                         android:layout_marginStart="5dp"/>

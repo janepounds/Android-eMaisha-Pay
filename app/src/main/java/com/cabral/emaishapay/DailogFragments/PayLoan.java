@@ -104,13 +104,14 @@ public class PayLoan extends DialogFragment {
 
             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
             String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
             String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, activity);
             
 
             /*********RETROFIT IMPLEMENTATION*************/
             APIRequests apiRequests = APIClient.getWalletInstance();
-            Call<LoanPayResponse> call = apiRequests.loanPay(access_token,amount,userId,request_id);
+            Call<LoanPayResponse> call = apiRequests.loanPay(access_token,amount,userId,request_id,category,"payLoan");
             call.enqueue(new Callback<LoanPayResponse>() {
                 @Override
                 public void onResponse(Call<LoanPayResponse> call, Response<LoanPayResponse> response) {

@@ -270,11 +270,12 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
     public void processLogin(String password, String phonenumber) {
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Log.d(TAG, "processLogin: request_id"+request_id);
 
         //call the otp end point
         dialogLoader.showProgressDialog();
-        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber,password,request_id);
+        Call<WalletAuthenticationResponse>call = apiRequests.authenticate(phonenumber,password,request_id,category,"initiateUserLogin");
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
@@ -302,9 +303,10 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Log.d(TAG, "processLogin: request_id"+request_id);
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword,request_id);
+        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword,request_id,category,"comfirmUserLogin");
 
         dialogLoader.showProgressDialog();
         call.enqueue(new Callback<WalletAuthentication>() {
@@ -430,11 +432,13 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
     private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district, DialogLoader dialogLoader) {
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        String action_id = "storeUser";
         dialogLoader.showProgressDialog();
 
         String countryCode = getResources().getString(R.string.ugandan_code);
         Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,request_id);
+                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,request_id,category,action_id);
 
         call.enqueue(new Callback<UserData>() {
             @Override

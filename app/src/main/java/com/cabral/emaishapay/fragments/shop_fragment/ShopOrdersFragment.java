@@ -4,21 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import es.dmoral.toasty.Toasty;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,24 +19,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
 import com.cabral.emaishapay.adapters.Shop.OrderAdapter;
-import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,7 +37,7 @@ public class ShopOrdersFragment extends Fragment {
     TextView txtNoProducts;
     EditText etxtSearch;
     private RecyclerView recyclerView;
-    private OrderAdapter orderAdapter;
+    private OnlineOrdersAdapter orderAdapter;
     private DbHandlerSingleton dbHandler;
     private Context context;
     Toolbar toolbar;String wallet_id;
@@ -82,10 +65,7 @@ public class ShopOrdersFragment extends Fragment {
         txtNoProducts.setVisibility(View.GONE);
         toolbar = view.findViewById(R.id.toolbar_orders);
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
-        ((AppCompatActivity)requireActivity()). getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
-        ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.order_history);
+
 
         // set a GridLayoutManager with default vertical orientation and 3 number of columns
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -110,7 +90,7 @@ public class ShopOrdersFragment extends Fragment {
             imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
             txtNoProducts.setVisibility(View.VISIBLE);
         } else {
-            orderAdapter = new OrderAdapter(context, orderList);
+            orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
 
             recyclerView.setAdapter(orderAdapter);
         }

@@ -70,7 +70,10 @@ public interface APIRequests {
     @POST("authenticate/emaishapay_app_user/login")
     Call<WalletAuthenticationResponse>authenticate(@Field("phoneNumber")String phoneNumber,
                                                    @Field("password")String password,
-                                                   @Field("request_id") String request_id
+                                                   @Field("request_id") String request_id,
+                                                   @Field("category") String category,
+                                                   @Field("action_id") String action_id
+
     );
 
     @FormUrlEncoded
@@ -78,7 +81,9 @@ public interface APIRequests {
     Call<WalletAuthentication>confirmLogin(@Field("phoneNumber")String phoneNumber,
                                            @Field("otp") String otp,
                                            @Field("password")String pin,
-                                           @Field("request_id") String request_id);
+                                           @Field("request_id") String request_id,
+                                           @Field("category") String category,
+                                           @Field("action_id")String action_id);
 
 
    // //refresh token
@@ -87,14 +92,18 @@ public interface APIRequests {
     Call<TokenResponse> getToken(
             @Field("phoneNumber") String phoneNumber,
             @Field("password") String password,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // //request balance
 
     @GET("wallet/balance/request")
     Call<BalanceResponse> requestBalance(@Header("Authorization") String token,
-                                         @Query("request_id") String request_id
+                                         @Query("request_id") String request_id,
+                                         @Query("category") String category,
+                                         @Query("action_id")String action_id
     );
 
 
@@ -105,7 +114,9 @@ public interface APIRequests {
                                                     @Field("amount") Double amount,
                                                     @Field("receiverPhoneNumber") String receiverPhoneNumber,
                                                     @Field("request_id") String request_id,
-                                                    @Field("service_code") String service_code
+                                                    @Field("category") String category,
+                                                    @Field("service_code") String service_code,
+                                                    @Field("action_id")String action_id
     );
 
     // //initiate transfer settlement
@@ -122,18 +133,23 @@ public interface APIRequests {
                                                       @Field("reference") String reference,
                                                       @Field("third_party_status") String third_party_status,
                                                       @Field("third_party_id") String third_party_id,
-                                                      @Field("request_id") String request_id
+                                                      @Field("request_id") String request_id,
+                                                      @Field("category") String category,
+                                                      @Field("action_id")String action_id
                                                       );
 
     // //wallet transaction list
     @POST("wallet/transactions/list")
     Call<WalletTransactionResponse> transactionList(@Header("Authorization") String token,
-                                                    @Field("request_id") String request_id);
+                                                    @Field("request_id") String request_id,
+                                                    @Field("category") String category,
+                                                    @Field("action_id")String action_id);
 
     // //wallet transaction list2
     @FormUrlEncoded
     @POST("wallet/transactions/list")
-    Call<WalletTransactionResponse> transactionList2(@Header("Authorization") String token, @Field("limit") int limit, @Field("request_id") String request_id);
+    Call<WalletTransactionResponse> transactionList2(@Header("Authorization") String token, @Field("limit") int limit, @Field("request_id") String request_id, @Field("category") String category,
+                                                     @Field("action_id")String action_id);
 
     // //make transaction
     @FormUrlEncoded
@@ -143,7 +159,9 @@ public interface APIRequests {
                                                  @Field("merchantId") int merchantId,
                                                  @Field("amount") Double amount,
                                                  @Field("coupon") String coupon,
-                                                 @Field("request_id") String request_id
+                                                 @Field("request_id") String request_id,
+                                                 @Field("category") String category,
+                                                 @Field("action_id")String action_id
     );
 
     // /confirm payment
@@ -160,7 +178,9 @@ public interface APIRequests {
     @GET("wallet/agent/get-name/{AgentId}")
     Call<ConfirmationDataResponse> getMerchant(@Header("Authorization") String token,
                                                @Path("AgentId") String merchantId,
-                                               @Query("request_id") String request_id
+                                               @Query("request_id") String request_id,
+                                               @Query("category") String category,
+                                               @Query("action_id")String action_id
     );
 
   // //get user business name
@@ -168,7 +188,9 @@ public interface APIRequests {
   Call<ConfirmationDataResponse> getUserBusinessName(@Header("Authorization") String token,
                                                      @Path("phonenumber") String phonenumber,
                                                      @Path("purpose") String purpose,
-                                                     @Query("request_id") String request_id
+                                                     @Query("request_id") String request_id,
+                                                     @Query("category") String category,
+                                                     @Query("action_id")String action_id
   );
 
 
@@ -179,14 +201,18 @@ public interface APIRequests {
                                                             @Field("senderNumber") String senderNumber,
                                                             @Field("receiverNumber") String receiverNumber,
                                                             @Field("amount") double amount,
-                                                            @Field("request_id") String request_id
+                                                            @Field("request_id") String request_id,
+                                                            @Field("category") String category,
+                                                            @Field("action_id")String action_id
   );
 
     //get merchant receipt
     @GET("wallet/payments/receipt/{referenceNumber}")
     Call<WalletTransactionReceiptResponse> getReceipt(@Header("Authorization") String token,
                                                       @Path("referenceNumber") String referenceNumber,
-                                                      @Query("request_id") String request_id
+                                                      @Query("request_id") String request_id,
+                                                      @Query("category") String category,
+                                                      @Query("action_id")String action_id
     );
 
     // //get user loans
@@ -194,7 +220,9 @@ public interface APIRequests {
     Call<LoanListResponse> getUserLoans(
             @Header("Authorization") String token,
             @Query("userId") String userId,
-             @Query("request_id") String request_id
+             @Query("request_id") String request_id,
+            @Query("category") String category,
+            @Query("action_id")String action_id
             /*@Header("Authorization") String token*/
     );
 
@@ -203,7 +231,9 @@ public interface APIRequests {
     Call<CancelLoanResponse> cancelLoanRequest(
             @Header("Authorization") String token,
             @Query("userId") String userId,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
             /*@Header("Authorization") String token*/
     );
 
@@ -213,7 +243,9 @@ public interface APIRequests {
     @POST("wallet/loan/user/request")
     Call<RequestLoanresponse> requestLoans(@Header("Authorization") String token,
                                            @Body JSONObject object,
-                                           @Field("request_id") String request_id
+                                           @Field("request_id") String request_id,
+                                           @Field("category") String category,
+                                           @Field("action_id")String action_id
     );
 
 
@@ -228,7 +260,9 @@ public interface APIRequests {
                                        @Field("thirdParty") String thirdParty,
                                        @Field("thirdParty_id") String thirdParty_id,
                                        @Field("isPending") Boolean isPending,
-                                       @Field("request_id") String request_id
+                                       @Field("request_id") String request_id,
+                                       @Field("category") String category,
+                                       @Field("action_id")String action_id
     );
     // //create user credit
     @FormUrlEncoded
@@ -238,7 +272,9 @@ public interface APIRequests {
                                        @Field("amount") Double amount,
                                        @Field("referenceNumber") String referenceNumber,
                                        @Field("isPending") Boolean isPending,
-                                       @Field("request_id") String request_id
+                                       @Field("request_id") String request_id,
+                                        @Field("category") String category,
+                                        @Field("action_id")String action_id
     );
 
     // //voucher deposit
@@ -246,7 +282,9 @@ public interface APIRequests {
     @POST("wallet/payment/voucherdeposit")
     Call<CouponsData> voucherDeposit(@Header("Authorization") String token,
                                      @Field("codeEntered") String codeEntered,
-                                     @Field("request_id") String request_id
+                                     @Field("request_id") String request_id,
+                                     @Field("category") String category,
+                                     @Field("action_id")String action_id
     );
 
     // //loan pay
@@ -256,7 +294,9 @@ public interface APIRequests {
     Call<LoanPayResponse> loanPay(@Header("Authorization") String token,
                                   @Field("amount") double amount,
                                   @Field("userId") String userId,
-                                  @Field("request_id") String request_id);
+                                  @Field("request_id") String request_id,
+                                  @Field("category") String category,
+                                  @Field("action_id")String action_id);
 
     @FormUrlEncoded
     @POST("processregistration")
@@ -269,7 +309,9 @@ public interface APIRequests {
             @Field("addressStreet") String addressStreet,
             @Field("addressCityOrTown") String addressCityOrTown,
             @Field("address_district") String addressDistrict,
-            @Field("request_id") String request_id);
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id);
 
     // /forgot password
     @FormUrlEncoded
@@ -277,7 +319,9 @@ public interface APIRequests {
     Call<UserData> processForgotPassword(
             @Header("Authorization") String token,
             @Field("email") String customers_email_address,
-            @Field("request_id") String request_id);
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id);
 
     @FormUrlEncoded
     @POST("updatecustomerinfo")
@@ -319,7 +363,9 @@ public interface APIRequests {
             @Field("next_of_kin") String next_of_kin,
             @Field("next_of_kin_contact") String next_of_kin_contact,
             @Field("pic") String picture,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // //getAccount info
@@ -327,7 +373,9 @@ public interface APIRequests {
     Call<AccountResponse>getAccountInfo(
             @Header("Authorization") String token,
             @Path("userId") String userId,
-            @Query("request_id") String request_id
+            @Query("request_id") String request_id,
+            @Query("category") String category,
+            @Query("action_id")String action_id
     );
 
     // //store id info
@@ -341,7 +389,9 @@ public interface APIRequests {
             @Field("expiry_date") String expiry_date,
             @Field("front") String front,
             @Field("back") String back,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // //store employment info
@@ -355,7 +405,9 @@ public interface APIRequests {
             @Field("location") String location,
             @Field("employment_contact") String contact,
             @Field("employee_id") String employee_id,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // //store business info
@@ -370,7 +422,9 @@ public interface APIRequests {
             @Field("trade_license") String trade_license,
             @Field("license_no") String license_number,
             @Field("registration_cert") String reg_certificate,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
 
@@ -391,7 +445,9 @@ public interface APIRequests {
             @Field("role") String role,
             @Field("latitude") double latitude,
             @Field("longitude") double longitude,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // /
@@ -409,7 +465,9 @@ public interface APIRequests {
             @Field("device_model") String device_model,
             @Field("manufacturer") String manufacturer,
             @Field("operating_system") String operating_system,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
 
     );
 
@@ -423,7 +481,9 @@ public interface APIRequests {
             @Field("cvv") String cvv,
             @Field("expiry") String expiry,
             @Field("account_name") String account_name,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
 
     );
 
@@ -438,7 +498,9 @@ public interface APIRequests {
             @Field("cvv") String cvv,
             @Field("expiry") String expiry,
             @Field("account_name") String account_name,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
 
 
     );
@@ -449,7 +511,9 @@ public interface APIRequests {
     Call<CardResponse>deleteCard(
             @Field("id") String id,
             @Header("Authorization") String token,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
 
@@ -458,7 +522,8 @@ public interface APIRequests {
 
     //get card info
     @GET("wallet/cards/list")
-    Call<CardResponse>getCards(@Header("Authorization") String token, @Query("request_id") String request_id);
+    Call<CardResponse>getCards(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
+                               @Query("action_id")String action_id);
 
 
 
@@ -560,18 +625,18 @@ public interface APIRequests {
     );
 
 
-
-    @FormUrlEncoded
-    @POST("registermerchantdevices")
-    Call<UserData> registerDeviceToFCM(@Field("device_id") String device_id,
-                                       @Field("device_type") String device_type,
-                                       @Field("ram") String ram,
-                                       @Field("processor") String processor,
-                                       @Field("device_os") String device_os,
-                                       @Field("location") String location,
-                                       @Field("device_model") String device_model,
-                                       @Field("manufacturer") String manufacturer,
-                                       @Field("shop_id") String shop_id);
+//
+//    @FormUrlEncoded
+//    @POST("registermerchantdevices")
+//    Call<UserData> registerDeviceToFCM(@Field("device_id") String device_id,
+//                                       @Field("device_type") String device_type,
+//                                       @Field("ram") String ram,
+//                                       @Field("processor") String processor,
+//                                       @Field("device_os") String device_os,
+//                                       @Field("location") String location,
+//                                       @Field("device_model") String device_model,
+//                                       @Field("manufacturer") String manufacturer,
+//                                       @Field("shop_id") String shop_id);
 
 
     @FormUrlEncoded
@@ -595,7 +660,9 @@ public interface APIRequests {
     @GET("wallet/settlements/list")
     Call<WalletTransactionResponse> getSettlements(
             @Header("Authorization") String token,
-            @Query("request_id") String request_id
+            @Query("request_id") String request_id,
+            @Query("category") String category,
+            @Query("action_id")String action_id
     );
 
 
@@ -608,7 +675,9 @@ public interface APIRequests {
             @Field("amount") double amount,
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
 
@@ -620,7 +689,9 @@ public interface APIRequests {
          @Field("otp") String otpCode,
          @Field("customerPhoneNumber") String customerPhoneNumber,
          @Field("receiverPhoneNumber") String receiverPhoneNumber,
-         @Field("request_id") String request_id
+         @Field("request_id") String request_id,
+         @Field("category") String category,
+         @Field("action_id")String action_id
 
  );
 
@@ -632,7 +703,9 @@ public interface APIRequests {
             @Field("amount") double amount,
             @Field("otp") String otp_code,
             @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
 
     );
 
@@ -643,7 +716,9 @@ public interface APIRequests {
                                                           @Field("amount") Double amount,
                                                           @Field("customerPhoneNumber") String customerPhoneNumber,
                                                           @Field("type") String type,
-                                                          @Field("request_id") String request_id
+                                                          @Field("request_id") String request_id,
+                                                          @Field("category") String category,
+                                                          @Field("action_id")String action_id
   );
 
   // Comfirm Accept Payment
@@ -654,7 +729,9 @@ public interface APIRequests {
           @Field("amount") double amount,
           @Field("customerPhoneNumber") String customerPhoneNumber,
           @Field("otp") String OTPCode,
-          @Field("request_id") String request_id
+          @Field("request_id") String request_id,
+          @Field("category") String category,
+          @Field("action_id")String action_id
 
   );
 
@@ -665,12 +742,15 @@ public interface APIRequests {
             @Header("Authorization") String token,
             @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     
     @POST("wallet/agent/account-opening")
-    Call<InitiateWithdrawResponse>openAccount(@Header("Authorization") String token, @Body JSONObject object, @Field("request_id") String request_id
+    Call<InitiateWithdrawResponse>openAccount(@Header("Authorization") String token, @Body JSONObject object, @Field("request_id") String request_id, @Field("category") String category,
+                                              @Field("action_id")String action_id
     );
 
 

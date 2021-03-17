@@ -178,9 +178,10 @@ public class AddProductFragment extends DialogFragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
+
         Call<CategoriesResponse> call = BuyInputsAPIClient
                 .getInstance()
-                .getCategories(access_token,request_id);
+                .getCategories(access_token);
         call.enqueue(new Callback<CategoriesResponse>() {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {

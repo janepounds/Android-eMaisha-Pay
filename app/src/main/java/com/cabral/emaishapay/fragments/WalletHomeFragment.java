@@ -383,10 +383,11 @@ public class WalletHomeFragment extends Fragment {
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         /**********RETROFIT IMPLEMENTATION************/
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit,request_id);
+        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit,request_id,category,"getTransactionLogs");
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
             @Override
@@ -451,8 +452,9 @@ public class WalletHomeFragment extends Fragment {
     public void getBalanceAndCommission() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<BalanceResponse> call = apiRequests.requestBalance(access_token,request_id);
+        Call<BalanceResponse> call = apiRequests.requestBalance(access_token,request_id,category,"getBalance");
         call.enqueue(new Callback<BalanceResponse>() {
             @Override
             public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {
