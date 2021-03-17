@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.network;
 
 import com.cabral.emaishapay.models.AccountResponse;
+import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
@@ -525,6 +526,11 @@ public interface APIRequests {
     Call<CardResponse>getCards(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
                                @Query("action_id")String action_id);
 
+
+    //get beneficiaries info
+    @GET("wallet/beneficiaries/list")
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
+                                              @Query("action_id")String action_id);
 
 
     /***********************SHOP REQUESTS**********************************/
