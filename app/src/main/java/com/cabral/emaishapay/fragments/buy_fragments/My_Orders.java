@@ -174,8 +174,7 @@ public class My_Orders extends Fragment {
                         (access_token,
                                 customerID,
                                 ConstantValues.LANGUAGE_ID,
-                                ConstantValues.CURRENCY_CODE,
-                                request_id
+                                ConstantValues.CURRENCY_CODE
                         );
 
         call.enqueue(new Callback<OrderData>() {
@@ -228,8 +227,7 @@ public class My_Orders extends Fragment {
                 .updatestatus
                         (access_token,
                                 customerID,
-                                orderID,
-                                request_id
+                                orderID
                         );
         
         call.enqueue(new Callback<OrderData>() {

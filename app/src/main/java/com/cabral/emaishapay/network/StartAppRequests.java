@@ -155,7 +155,7 @@ public class StartAppRequests {
         Call<ResponseBody> call = BuyInputsAPIClient
                 .getInstance()
                 .postProduct(access_token,unique_product_id,measure_id,user_id,selected_product_id,product_buy_price,product_sell_price,
-                        product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name,request_id
+                        product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name
                 );
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -194,8 +194,7 @@ public class StartAppRequests {
         Call<CategoryData> call = BuyInputsAPIClient.getInstance()
                 .getAllCategories
                         (access_token,
-                                ConstantValues.LANGUAGE_ID,
-                                request_id
+                                ConstantValues.LANGUAGE_ID
                         );
 
         try {

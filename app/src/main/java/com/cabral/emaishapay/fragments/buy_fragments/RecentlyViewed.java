@@ -164,11 +164,11 @@ public class RecentlyViewed extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
+
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,request_id
+                                getAllProducts
                         );
 
         call.enqueue(new Callback<ProductData>() {

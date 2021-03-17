@@ -84,8 +84,7 @@ public class SearchFragment extends Fragment {
                         (access_token,
                                 searchValue,
                                 ConstantValues.LANGUAGE_ID,
-                                ConstantValues.CURRENCY_CODE,
-                                request_id
+                                ConstantValues.CURRENCY_CODE
                         );
 
         call.enqueue(new Callback<SearchData>() {

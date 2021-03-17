@@ -423,7 +423,7 @@ public class My_Cart extends Fragment {
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,request_id
+                                getAllProducts
                         );
         Response<ProductData> response = call.execute();
 
@@ -450,7 +450,7 @@ public class My_Cart extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
-        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams,request_id);
+        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
         try {
             Response<ProductStock> response = call.execute();
             if (response.isSuccessful()) {

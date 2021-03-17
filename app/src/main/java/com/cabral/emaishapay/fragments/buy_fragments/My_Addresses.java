@@ -182,13 +182,10 @@ public class My_Addresses extends Fragment {
 
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .getAllAddress
-                        (       access_token,
-                                customerID,
-                                request_id
+                        (       access_token
 
                         );
 
@@ -235,8 +232,7 @@ public class My_Addresses extends Fragment {
                 .deleteUserAddress
                         (access_token,
                                 customerID,
-                                addressID,
-                                request_id
+                                addressID
                         );
 
         call.enqueue(new Callback<AddressData>() {
@@ -282,8 +278,7 @@ public class My_Addresses extends Fragment {
                 .updateDefaultAddress
                         (       access_token,
                                 customerID,
-                                addressID,
-                                request_id
+                                addressID
                         );
 
         call.enqueue(new Callback<AddressData>() {

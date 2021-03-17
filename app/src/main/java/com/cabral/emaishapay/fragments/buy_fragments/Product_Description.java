@@ -916,7 +916,7 @@ public class Product_Description extends Fragment {
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,request_id
+                                getAllProducts
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -967,7 +967,7 @@ public class Product_Description extends Fragment {
         Call<ProductStock> call = BuyInputsAPIClient.getInstance()
                 .getProductStock
                         (access_token,
-                                getStock,request_id
+                                getStock
                         );
 
         call.enqueue(new Callback<ProductStock>() {
@@ -1005,13 +1005,12 @@ public class Product_Description extends Fragment {
 
     public static void LikeProduct(int productID, String customerID, final Context context, final View view) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .likeProduct
                         (access_token,
                                 productID,
-                                customerID,request_id
+                                customerID
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -1049,14 +1048,11 @@ public class Product_Description extends Fragment {
 
     public static void UnlikeProduct(int productID, String customerID, final Context context, final View view) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .unlikeProduct
                         (access_token,
                                 productID,
-                                customerID,
-                                request_id
-
+                                customerID
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -1214,12 +1210,11 @@ public class Product_Description extends Fragment {
 
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .getProductReviews
                         (       access_token,
                                 productID,
-                                "" + ConstantValues.LANGUAGE_ID,request_id
+                                "" + ConstantValues.LANGUAGE_ID
                         );
 
         call.enqueue(new Callback<GetRatings>() {
@@ -1264,8 +1259,7 @@ public class Product_Description extends Fragment {
         map.put("reviews_text", reviews_text);
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map,request_id);
+        Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map);
 
         call.enqueue(new Callback<GiveRating>() {
             @Override
@@ -1333,9 +1327,8 @@ public class Product_Description extends Fragment {
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
-        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams,request_id);
+        Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
         try {
             Response<ProductStock> response = call.execute();
             if (response.isSuccessful()) {

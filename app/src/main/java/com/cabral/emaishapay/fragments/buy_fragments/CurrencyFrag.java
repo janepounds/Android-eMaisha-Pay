@@ -204,10 +204,9 @@ public class CurrencyFrag extends Fragment {
     public void RequestCurrency() {
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
         Call<CurrencyModel> call = BuyInputsAPIClient.getInstance()
-                .getCurrency(access_token,request_id);
+                .getCurrency(access_token);
         
         call.enqueue(new Callback<CurrencyModel>() {
             @Override

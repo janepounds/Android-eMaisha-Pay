@@ -86,13 +86,11 @@ public class TopDealsFragment extends Fragment {
         getAllProducts.setType("special");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,
-                                request_id
+                                getAllProducts
                         );
 
         networkCall.enqueue(new Callback<ProductData>() {
