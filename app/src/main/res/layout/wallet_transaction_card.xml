@@ -45,9 +45,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toEndOf="@+id/layout_amount"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/user_name"
@@ -55,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                tools:text="Jovan Mutesasira"
                 android:textColor="#101436"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -64,7 +65,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.9" />
+                app:layout_constraintVertical_bias="0.9"
+                tools:text="Jovan Mutesasira" />
 
             <TextView
                 android:id="@+id/date"
@@ -72,31 +74,49 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                tools:text="25 December 2020, 12:14"
                 android:textColor="@color/hintColor"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@id/beneficiary_number"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline5"
-                app:layout_constraintVertical_bias="0.2" />
+                app:layout_constraintVertical_bias="0.2"
+                tools:text="25 December 2020, 12:14" />
+
+            <TextView
+                android:id="@+id/beneficiary_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/hintColor"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline5"
+                app:layout_constraintVertical_bias="0.2"
+                tools:text="Mobile Money" />
+
             <TextView
                 android:id="@+id/beneficiary_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                tools:text="12345678912345"
                 android:textColor="@color/hintColor"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintStart_toEndOf="@id/beneficiary_type"
+                app:layout_constraintTop_toTopOf="@+id/guideline5"
                 app:layout_constraintVertical_bias="0.2"
-                android:visibility="gone"/>
+                tools:text="12345678912345"
+                android:layout_marginStart="15dp"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline5"

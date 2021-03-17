@@ -56,7 +56,8 @@
             android:textSize="@dimen/button_text_size"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/button_margin"
-            android:background="@drawable/rectangular_green_solid" />
+            android:background="@drawable/rectangular_green_solid"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <FrameLayout
