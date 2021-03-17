@@ -429,8 +429,7 @@ public class Category_Products extends Fragment {
         productsCall = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,
-                                request_id
+                                getAllProducts
                         );
 
         productsCall.enqueue(new Callback<ProductData>() {
@@ -501,7 +500,7 @@ public class Category_Products extends Fragment {
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,
-                                getAllProducts,request_id
+                                getAllProducts
                         );
 
         call.enqueue(new Callback<ProductData>() {
@@ -553,8 +552,7 @@ public class Category_Products extends Fragment {
                 .getFilters
                         (access_token,
                                 categories_id,
-                                ConstantValues.LANGUAGE_ID,
-                                request_id
+                                ConstantValues.LANGUAGE_ID
                         );
 
         filterCAll.enqueue(new Callback<FilterData>() {

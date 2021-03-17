@@ -128,12 +128,9 @@ public interface APIRequestsForBuyInputs {
     @POST("getzones")
     Call<Zones> getZones(@Field("zone_country_id") String zone_country_id);
 
-    @FormUrlEncoded
     @POST("getalladdress")
     Call<AddressData> getAllAddress(
-            @Header("Authorization") String token,
-            @Field("customers_id") String customers_id,
-            @Field("request_id") String request_id);
+            @Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("getregions")
@@ -153,8 +150,7 @@ public interface APIRequestsForBuyInputs {
                                      @Field("entry_latitude") String latitude,
                                      @Field("entry_longitude") String longitude,
                                      @Field("entry_contact") String contact,
-                                     @Field("is_default") String customers_default_address_id,
-                                     @Field("request_id") String request_id);
+                                     @Field("is_default") String customers_default_address_id);
 
     @FormUrlEncoded
     @POST("updateshippingaddress")
@@ -171,24 +167,22 @@ public interface APIRequestsForBuyInputs {
                                         @Field("entry_latitude") String latitude,
                                         @Field("entry_longitude") String longitude,
                                         @Field("entry_contact") String contact,
-                                        @Field("is_default") String customers_default_address_id,
-                                        @Field("request_id") String request_id);
+                                        @Field("is_default") String customers_default_address_id);
 
     @FormUrlEncoded
     @POST("updatedefaultaddress")
     Call<AddressData> updateDefaultAddress(
                                          @Header("Authorization") String token,
                                          @Field("customers_id") String customers_id,
-                                         @Field("address_book_id") String address_book_id,
-                                         @Field("request_id") String request_id);
+                                         @Field("address_book_id") String address_book_id);
 
     @FormUrlEncoded
     @POST("deleteshippingaddress")
     Call<AddressData> deleteUserAddress(
                                         @Header("Authorization") String token,
                                         @Field("customers_id") String customers_id,
-                                        @Field("address_book_id") String address_book_id,
-                                        @Field("request_id") String request_id);
+                                        @Field("address_book_id") String address_book_id
+    );
 //Merchant shop methods from
 
     @FormUrlEncoded
@@ -259,8 +253,7 @@ public interface APIRequestsForBuyInputs {
             @Field("product_stock") int product_stock,
             @Field("new_manufacturer_name") String new_manufacturer_name,
             @Field("new_category_name") String new_category_name,
-            @Field("new_product_name") String new_product_name,
-            @Field("request_id") String request_id
+            @Field("new_product_name") String new_product_name
 
     );
 
@@ -271,8 +264,7 @@ public interface APIRequestsForBuyInputs {
     Call<ProductResponse> getProducts(
             @Header("Authorization") String token,
             @Path("category_id") int category_id,
-            @Path("manufacturer_id") int manufacturer_id,
-            @Field("request_id") String request_id
+            @Path("manufacturer_id") int manufacturer_id
     );
 
 
@@ -303,46 +295,40 @@ public interface APIRequestsForBuyInputs {
     @POST("allcategories")
     Call<CategoryData> getAllCategories(
             @Header("Authorization") String token,
-            @Field("language_id") int language_id,
-            @Field("request_id") String request_id);
+            @Field("language_id") int language_id);
 
     //******************** Product Data ********************//
 
     @POST("getallproducts")
     Call<ProductData> getAllProducts(
             @Header("Authorization") String token,
-            @Body GetAllProducts getAllProducts,
-            @Field("request_id") String request_id);
+            @Body GetAllProducts getAllProducts);
 
     @POST("getquantity")
     Call<ProductStock> getProductStock(
             @Header("Authorization") String token,
-            @Body GetStock getStock,
-            @Field("request_id") String request_id);
+            @Body GetStock getStock);
 
     @FormUrlEncoded
     @POST("likeproduct")
     Call<ProductData> likeProduct(
                                 @Header("Authorization") String token,
                                 @Field("liked_products_id") int liked_products_id,
-                                @Field("liked_customers_id") String liked_customers_id,
-                                @Field("request_id") String request_id);
+                                @Field("liked_customers_id") String liked_customers_id);
 
     @FormUrlEncoded
     @POST("unlikeproduct")
     Call<ProductData> unlikeProduct(
                                     @Header("Authorization") String token,
                                     @Field("liked_products_id") int liked_products_id,
-                                    @Field("liked_customers_id") String liked_customers_id,
-                                    @Field("request_id") String request_id);
+                                    @Field("liked_customers_id") String liked_customers_id);
 
     @FormUrlEncoded
     @POST("getfilters")
     Call<FilterData> getFilters(
                                 @Header("Authorization") String token,
                                 @Field("categories_id") int categories_id,
-                                @Field("language_id") int language_id,
-                                @Field("request_id") String request_id);
+                                @Field("language_id") int language_id);
 
     @FormUrlEncoded
     @POST("getsearchdata")
@@ -350,16 +336,14 @@ public interface APIRequestsForBuyInputs {
                                     @Header("Authorization") String token,
                                     @Field("searchValue") String searchValue,
                                    @Field("language_id") int language_id,
-                                   @Field("currency_code") String currency_code,
-                                    @Field("request_id") String request_id);
+                                   @Field("currency_code") String currency_code);
 
     //******************** Order Data ********************//
 
     @POST("addtoorder")
     Call<OrderData> addToOrder(
             @Header("Authorization") String token,
-            @Body PostOrder postOrder,
-            @Field("request_id") String request_id);
+            @Body PostOrder postOrder);
 
     @FormUrlEncoded
     @POST("getorders")
@@ -367,23 +351,20 @@ public interface APIRequestsForBuyInputs {
                             @Header("Authorization") String token,
                             @Field("customers_id") String customers_id,
                             @Field("language_id") int language_id,
-                            @Field("currency_code") String currency_code,
-                            @Field("request_id") String request_id);
+                            @Field("currency_code") String currency_code);
 
     @FormUrlEncoded
     @POST("updatestatus")
     Call<OrderData> updatestatus(
                                 @Header("Authorization") String token,
                                 @Field("customers_id") String customers_id,
-                                @Field("orders_id") int orders_id,
-                                @Field("request_id") String request_id);
+                                @Field("orders_id") int orders_id);
 
     @FormUrlEncoded
     @POST("getcoupon")
     Call<CouponsData> getCouponInfo(
             @Header("Authorization") String token,
-            @Field("code") String code,
-            @Field("request_id") String request_id
+            @Field("code") String code
     );
 
     @FormUrlEncoded
@@ -409,7 +390,7 @@ public interface APIRequestsForBuyInputs {
     //******************** Languages Data ********************//
 
     @GET("getlanguages")
-    Call<LanguageData> getLanguages(  @Header("Authorization") String token,@Field("request_id") String request_id);
+    Call<LanguageData> getLanguages(  @Header("Authorization") String token);
 
     //******************** App Settings Data ********************//
 
@@ -442,32 +423,32 @@ public interface APIRequestsForBuyInputs {
     Call<ContactUsData> notify_me(
                                 @Header("Authorization") String token,
                                 @Field("is_notify") String is_notify,
-                                @Field("device_id") String device_id,
-                                @Field("request_id") String request_id);
+                                @Field("device_id") String device_id
+    );
 
     @GET("generatebraintreetoken")
-    Call<GetBrainTreeToken> generateBraintreeToken(  @Header("Authorization") String token,@Field("request_id") String request_id);
+    Call<GetBrainTreeToken> generateBraintreeToken(  @Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("givereview")
     Call<GiveRating> giveRating(
             @Header("Authorization") String token,
-            @FieldMap Map<String, String> stringMap,
-            @Field("request_id") String request_id);
+            @FieldMap Map<String, String> stringMap
+    );
 
     @GET("getreviews")
     Call<GetRatings> getProductReviews(
                                     @Header("Authorization") String token,
                                     @Query("products_id") String product_id,
-                                    @Query("languages_id") String languages_id,
-                                    @Field("request_id") String request_id);
+                                    @Query("languages_id") String languages_id
+    );
 
     // This Api will give us City bounds
     @GET("getlocation")
     Call<GoogleAPIResponse> getCityBounds(
             @Header("Authorization") String token,
-            @Query(value = "address", encoded = true) String address,
-            @Field("request_id") String request_id);
+            @Query(value = "address", encoded = true) String address
+    );
 
     // Upload Image
     @Multipart
@@ -480,17 +461,16 @@ public interface APIRequestsForBuyInputs {
                                 @Header("Authorization") String token,
                                 @Query("oldpassword") String oldPassword,
                                 @Query("newpassword") String newPassword,
-                                @Query("customers_id") String customers_id,
-                                @Field("request_id") String request_id);
+                                @Query("customers_id") String customers_id);
 
     //Change Currency
     @GET("getcurrencies")
-    Call<CurrencyModel> getCurrency(@Header("Authorization") String token,@Field("request_id") String request_id);
+    Call<CurrencyModel> getCurrency(@Header("Authorization") String token);
 
     @GET("get_feasible_selling_shops")
     Call<MerchantData> getNearbyMerchants(
             @Header("Authorization") String token,
-            @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("productlist") String productlist,@Field("request_id") String request_id);
+            @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("productlist") String productlist);
 
     @GET("get_sellPrices_by_shopId")
     Call<MerchantData> getMerchantsProductData(@Query("shopID") String shopID, @Query("productlist") String productlist);

@@ -253,7 +253,7 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
-        Call<GoogleAPIResponse> call = BuyInputsAPIClient.getInstance().getCityBounds(access_token,city,request_id);
+        Call<GoogleAPIResponse> call = BuyInputsAPIClient.getInstance().getCityBounds(access_token,city);
         call.enqueue(new Callback<GoogleAPIResponse>() {
             @Override
             public void onResponse(Call<GoogleAPIResponse> call, Response<GoogleAPIResponse> response) {

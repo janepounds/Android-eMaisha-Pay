@@ -489,14 +489,12 @@ public class AddProductFragment extends DialogFragment {
 
                             dialogLoader.showProgressDialog();
                             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-                            String request_id = WalletHomeActivity.generateRequestId();
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
                                             access_token,
                                             category_id,
-                                            selectedManufacturersID,
-                                            request_id
+                                            selectedManufacturersID
                                     );
                             call.enqueue(new Callback<ProductResponse>() {
                                 @Override
