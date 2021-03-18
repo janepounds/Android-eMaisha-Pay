@@ -111,6 +111,9 @@ public class SignUp extends AppCompatActivity {
     private ArrayList<String> villageList = new ArrayList<>();
     private List<SecurityQnsResponse.SecurityQns> securityQnsList = new ArrayList();
     ArrayList<String> securityQns = new ArrayList<>();
+    ArrayList<String> securityQnsSubList1 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList2 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList3 = new ArrayList<>();
 
     public SignUp(Context context) {
         this.context = context;
@@ -866,12 +869,30 @@ public class SignUp extends AppCompatActivity {
 
 
                         }
+                        for(int i=0;i<securityQns.size();i++){
+                            securityQnsSubList1.add(securityQns.get(0));
+                            securityQnsSubList1.add(securityQns.get(1));
+                            securityQnsSubList1.add(securityQns.get(2));
+
+                            securityQnsSubList2.add(securityQns.get(3));
+                            securityQnsSubList2.add(securityQns.get(4));
+                            securityQnsSubList2.add(securityQns.get(5));
+
+                            securityQnsSubList3.add(securityQns.get(6));
+                            securityQnsSubList3.add(securityQns.get(7));
+                            securityQnsSubList3.add(securityQns.get(8));
+
+
+
+                        }
 
                         //set list in beneficiary spinner
-                        ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQns);
-                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter);
-                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter);
-                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter);
+                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
+                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList2);
+                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList3);
+                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
+                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
+                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
 
                     }
 
