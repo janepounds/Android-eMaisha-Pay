@@ -898,13 +898,13 @@ public class SignUp extends AppCompatActivity {
 
                 }else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(, true);
-                    finishAffinity();
-                    if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
+//                    TokenAuthActivity.startAuth(, true);
+//                    finishAffinity();
+//                    if (response.errorBody() != null) {
+//                        Log.e("info", new String(String.valueOf(response.errorBody())));
+//                    } else {
+//                        Log.e("info", "Something got very very wrong");
+//                    }
                 }
 
             }
