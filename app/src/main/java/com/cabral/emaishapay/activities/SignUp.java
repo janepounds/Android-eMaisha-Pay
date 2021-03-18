@@ -846,7 +846,7 @@ public class SignUp extends AppCompatActivity {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,category,"");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,"");
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {

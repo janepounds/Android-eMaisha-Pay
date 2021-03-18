@@ -840,7 +840,7 @@ public interface APIRequests {
 
     //get beneficiaries info
     @GET("user/qns/get")
-    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
+    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id,
                                             @Query("action_id")String action_id);
 
 }
