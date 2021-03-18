@@ -57,10 +57,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
-    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name;
+    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name,layoutBeneficiary;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
-    Spinner spTransferTo, spSelectBank,spSelectBankBranch;
+    Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
     FragmentManager fm;
@@ -130,6 +130,8 @@ public class TransferMoney extends Fragment {
         layoutEmaishaCard=view.findViewById(R.id.layout_emaisha_card);
         layoutBank=view.findViewById(R.id.layout_bank);
         layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
+        layoutBeneficiary=view.findViewById(R.id.layout_beneficiary);
+        layoutBeneficiary=view.findViewById(R.id.sp_beneficiary);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -172,29 +174,34 @@ public class TransferMoney extends Fragment {
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
                 }
                 else if(position==1){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
                 }
                 else if(position==2){
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.VISIBLE);
                     layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
                 }
                 else if(position==3){
-                    layoutMobileNumber.setVisibility(View.VISIBLE);
-                    layout_beneficiary_name.setVisibility(View.VISIBLE);
+                    layoutMobileNumber.setVisibility(View.GONE);
+                    layout_beneficiary_name.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.VISIBLE);
                 }
                 else if(position==4){
-                    loadTransferBanks();
+                   // loadTransferBanks();
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
-                    layoutBank.setVisibility(View.VISIBLE);
+                    layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.VISIBLE);
                 }
 
             }
