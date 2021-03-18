@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -616,5 +617,25 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         return request_id;
     }
+
+    //select spinner by value
+    public static void selectSpinnerItemByValue(Spinner spnr, String value) {
+
+        if (value == null) {
+            return;
+        }
+
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spnr.getAdapter();
+        for (int position = 1; position < adapter.getCount(); position++) {
+
+            String item = spnr.getAdapter().getItem(position) + "";
+            if (item.toLowerCase().equals(value.toLowerCase())) {
+                spnr.setSelection(position);
+                return;
+            }
+
+        }
+    }
+
 
 }

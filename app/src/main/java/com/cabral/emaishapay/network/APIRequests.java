@@ -6,6 +6,7 @@ import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
+import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
@@ -310,6 +311,14 @@ public interface APIRequests {
             @Field("addressStreet") String addressStreet,
             @Field("addressCityOrTown") String addressCityOrTown,
             @Field("address_district") String addressDistrict,
+            @Field("idType") String idType,
+            @Field("idNo") String idNo,
+            @Field("first_security_qn") String first_security_qn,
+            @Field("second_security_qn") String second_security_qn,
+            @Field("third_security_qn") String third_security_qn,
+            @Field("first_qn_answer") String first_qn_answer,
+            @Field("second_qn_answer") String second_qn_answer,
+            @Field("third_qn_answer") String third_qn_answer,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id);
@@ -527,10 +536,7 @@ public interface APIRequests {
                                @Query("action_id")String action_id);
 
 
-    //get beneficiaries info
-    @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
-                                              @Query("action_id")String action_id);
+
 
 
     /***********************SHOP REQUESTS**********************************/
@@ -776,5 +782,65 @@ public interface APIRequests {
 
 
     );
+
+    // //delete card
+    @FormUrlEncoded
+    @POST("wallet_delete_card")
+    Call<CardResponse>deleteBeneficiary(
+            @Field("id") String id,
+            @Header("Authorization") String token,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/update_beneficiary")
+    Call<CardResponse>updateBeneficiary(
+            @Header("Authorization")String token,
+            @Field("beneficary_type") String beneficary_type,
+            @Field("beneficiary_name") String beneficiary_name,
+            @Field("beneficiary_number") String beneficiary_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
+
+
+
+
+    );
+
+    //get beneficiaries info
+    @GET("wallet/beneficiaries/list")
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
+                                              @Query("action_id")String action_id);
+
+
+    //get beneficiaries info
+    @GET("wallet/beneficiaries/list")
+    Call<BeneficiaryResponse>getFilteredBeneficiaries(@Header("Authorization") String token,@Query("user_id")String user_id,@Query("filter") String filter, @Query("request_id") String request_id, @Query("category") String category,
+                                              @Query("action_id")String action_id);
+
+
+    @FormUrlEncoded
+    @POST("wallet/save_security_qns")
+    Call<CardResponse>saveSecurityQns(
+            @Header("Authorization")String token,
+            @Field("beneficary_type") String beneficary_type,
+            @Field("beneficiary_name") String beneficiary_name,
+            @Field("beneficiary_number") String beneficiary_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
+
+
+
+
+    );
+
+    //get beneficiaries info
+    @GET("user/qns/get")
+    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id,
+                                            @Query("action_id")String action_id);
 
 }

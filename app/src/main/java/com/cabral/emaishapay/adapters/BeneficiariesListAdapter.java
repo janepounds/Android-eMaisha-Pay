@@ -1,25 +1,44 @@
 package com.cabral.emaishapay.adapters;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.TokenAuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.BeneficiariesListFragment;
+import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
+import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.network.APIClient;
 
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BeneficiariesListAdapter extends RecyclerView.Adapter<BeneficiariesListAdapter.MyViewHolder> {
     private List<BeneficiaryResponse.Beneficiaries> dataList;
@@ -32,7 +51,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
         TextView initials,benefaciary_name,date,beneficiary_type,beneficiary_number;
         ImageView close;
-        ConstraintLayout constraintLayoutAmount;
+        ConstraintLayout constraintLayoutAmount,card;
 
         public MyViewHolder(View v, FragmentManager fm) {
             super(v);
@@ -43,6 +62,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
             date = v.findViewById(R.id.date);
             close = v.findViewById(R.id.img_beneficiary_close);
             constraintLayoutAmount = v.findViewById(R.id.layout_amount);
+            card = v.findViewById(R.id.layout_transaction_list_card);
 
         }
 
@@ -82,6 +102,43 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         holder.benefaciary_name.setText(data.getBeneficiary_name());
         holder.beneficiary_number.setText(data.getBeneficiary_number());
 
+        holder.close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Beneficiary?")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.dismiss();
+
+                            }})
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteBeneficiary(data.getBeneficiary_id());
+                                // notifyItemChanged(fragment);
+                                dialogInterface.dismiss();
+                            }
+
+
+                        })
+                        .show();
+
+
+            }
+        });
+
+        holder.card.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateBeneficiary(data.getBeneficiary_type(),data.getBeneficiary_name(),data.getInitials(),data.getBeneficiary_number());
+                    }
+                }
+        );
+
     }
 
 
@@ -92,4 +149,85 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
 
 
+    public void deleteBeneficiary(String id){
+
+
+        //call endpoint for deleting beneficiary
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("Please Wait..");
+        dialog.setCancelable(false);
+        dialog.show();
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        /*************RETROFIT IMPLEMENTATION**************/
+        Call<CardResponse> call = APIClient.getWalletInstance().deleteBeneficiary(id,access_token,request_id,category,"");
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus() == 0) {
+                        dialog.dismiss();
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    } else {
+                        String message = response.body().getMessage();
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                        fm.popBackStack();
+
+                        Fragment fragment = new CardListFragment();
+                        fm.beginTransaction()
+//                                .hide(((WalletHomeActivity) fm.g).currentFragment)
+                                .replace(R.id.wallet_home_container, fragment)
+                                .addToBackStack(null).commit();
+
+                        dialog.dismiss();
+                    }
+
+                }else if(response.code()==401){
+                    dialog.dismiss();
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+
+                    //redirect to auth
+//                    TokenAuthActivity.startAuth(, true);
+//                    fm..finishAffinity();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialog.dismiss();
+
+            }
+        });
+        
+
+
+
+    }
+
+    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String initials,String beneficiary_no){
+        //call add beneficiary fragment
+        //nvigate to add beneficiaries fragment
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev =fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        // Create and show the dialog.
+        DialogFragment addCardDialog =new AddBeneficiaryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("beneficiary_type",beneficiary_type);
+        bundle.putString("beneficiary_name",beneficary_name);
+        bundle.putString("initials",initials);
+        bundle.putString("beneficiary_no",beneficiary_no);
+        addCardDialog.setArguments(bundle);
+        addCardDialog.show( ft, "dialog");
+
+    }
 }

@@ -57,6 +57,14 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
     private static String village;
     private static String subCounty;
     private static String district;
+    private static String idType;
+    private static String idNo;
+    private static String firstSecurityQn;
+    private static String secondSecurityQn;
+    private static String thirdSecurityQn;
+    private static String firstQnAnswer;
+    private static String secondQnAnswer;
+    private static String thirdQnAnswer;
     private Context context;
     private static String phonenumber;
     public  static int ACTION_CODE = 1;
@@ -122,7 +130,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                             //submit registration details to server
 
                             String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                            processRegistration( WalletPass,phonenumber, userFirstname, userLastname, village, subCounty, district,dialogLoader);
+                            processRegistration( WalletPass,phonenumber, userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer,dialogLoader);
 
                         }
                     });
@@ -430,7 +438,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
     }
 
 
-    private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district, DialogLoader dialogLoader) {
+    private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district,String idType,String idNo,String firstSecurityQn,String secondSecurityQn,String thirdSecurityQn,String firstQnAnswer,String secondQnAnswer,String thirdQnAnswer, DialogLoader dialogLoader) {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         String action_id = "storeUser";
@@ -438,7 +446,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
         String countryCode = getResources().getString(R.string.ugandan_code);
         Call<UserData> call = APIClient.getWalletInstance()
-                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,request_id,category,action_id);
+                .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer,request_id,category,action_id);
 
         call.enqueue(new Callback<UserData>() {
             @Override
@@ -489,13 +497,21 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         context.startActivity(authenticate);
     }
 
-    public static void processFurtherRegistration(Context context,String phonenumber, String userFirstname, String userLastname, String village, String subCounty, String district,int ACTION_CODE) {
+    public static void processFurtherRegistration(Context context,String phonenumber, String userFirstname, String userLastname, String village, String subCounty, String district,String idType,String idNo,String firstSecurityQn,String secondSecurityQn,String thirdSecurityQn,String firstQnAnswer,String secondQnAnswer,String thirdQnAnswer,int ACTION_CODE) {
         ConfirmActivity.phonenumber=phonenumber;
         ConfirmActivity.userFirstname=userFirstname;
         ConfirmActivity.userLastname=userLastname;
         ConfirmActivity.village=village;
         ConfirmActivity.subCounty=subCounty;
         ConfirmActivity.district=district;
+        ConfirmActivity.idType=idType;
+        ConfirmActivity.idNo=idNo;
+        ConfirmActivity.firstSecurityQn=firstSecurityQn;
+        ConfirmActivity.secondSecurityQn=secondSecurityQn;
+        ConfirmActivity.thirdSecurityQn=thirdSecurityQn;
+        ConfirmActivity.firstQnAnswer=firstQnAnswer;
+        ConfirmActivity.secondQnAnswer=secondQnAnswer;
+        ConfirmActivity.thirdQnAnswer=thirdQnAnswer;
         ConfirmActivity.ACTION_CODE=ACTION_CODE;
         Intent authenticate = new Intent(context, ConfirmActivity.class);
         context.startActivity(authenticate);

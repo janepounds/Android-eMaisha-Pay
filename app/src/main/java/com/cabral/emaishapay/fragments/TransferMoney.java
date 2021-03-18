@@ -26,12 +26,16 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.models.BeneficiaryResponse;
+import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
@@ -46,6 +50,7 @@ import com.cabral.emaishapay.network.FlutterwaveV3APIClient;
 import com.cabral.emaishapay.network.RaveV2APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.internal.bind.ArrayTypeAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,10 +62,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
-    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name;
+    private static final String TAG = "TransferMoney";
+    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name,layoutBeneficiary;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
-    Spinner spTransferTo, spSelectBank,spSelectBankBranch;
+    Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
     private double balance;
     FragmentManager fm;
@@ -72,6 +78,8 @@ public class TransferMoney extends Fragment {
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
     String action;
+    private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
+    ArrayList<String> beneficiaries = new ArrayList<>();
 
     public TransferMoney(double balance, String action) {
         this.balance=balance;
@@ -130,6 +138,9 @@ public class TransferMoney extends Fragment {
         layoutEmaishaCard=view.findViewById(R.id.layout_emaisha_card);
         layoutBank=view.findViewById(R.id.layout_bank);
         layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
+        layoutBeneficiary=view.findViewById(R.id.layout_beneficiary);
+        layoutBeneficiary=view.findViewById(R.id.sp_beneficiary);
+        spBeneficiary = view.findViewById(R.id.sp_beneficiary);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -172,29 +183,37 @@ public class TransferMoney extends Fragment {
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
                 }
                 else if(position==1){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
+
                 }
                 else if(position==2){
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.VISIBLE);
                     layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.GONE);
                 }
                 else if(position==3){
-                    layoutMobileNumber.setVisibility(View.VISIBLE);
-                    layout_beneficiary_name.setVisibility(View.VISIBLE);
+                    layoutMobileNumber.setVisibility(View.GONE);
+                    layout_beneficiary_name.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.VISIBLE);
+                    requestFilteredBeneficiaries();
                 }
                 else if(position==4){
-                    loadTransferBanks();
+                   // loadTransferBanks();
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
-                    layoutBank.setVisibility(View.VISIBLE);
+                    layoutBank.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.VISIBLE);
+                    requestFilteredBeneficiaries();
                 }
 
             }
@@ -204,6 +223,8 @@ public class TransferMoney extends Fragment {
 
             }
         });
+
+
 
         if(this.action.equalsIgnoreCase(getString(R.string.settlements))){
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.settle_to));
@@ -407,6 +428,64 @@ public class TransferMoney extends Fragment {
                 dialogLoader.hideProgressDialog();
             }
         });
+
+    }
+
+    public void requestFilteredBeneficiaries(){
+        String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance().getFilteredBeneficiaries(access_token,user_id,spTransferTo.getSelectedItem().toString(),request_id,category,"getCards");
+        call.enqueue(new Callback<BeneficiaryResponse>() {
+            @Override
+            public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        beneficiariesList = response.body().getBeneficiariesList();
+
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        Log.d(TAG,beneficiariesList.size()+"**********");
+                        for(int i=0;i<beneficiariesList.size();i++){
+                            String beneficiary_name = beneficiariesList.get(i).getBeneficiary_name();
+                            beneficiaries.add(beneficiary_name);
+
+                        }
+
+                        //set list in beneficiary spinner
+                        ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, beneficiaries);
+                        spBeneficiary.setAdapter(beneficiariesAdapter);
+
+
+
+                    }
+                  
+                }else if (response.code() == 401) {
+
+                    TokenAuthActivity.startAuth(getActivity(), true);
+                    getActivity().finishAffinity();
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BeneficiaryResponse> call, Throwable t){
+            }
+        });
+
+
 
     }
 

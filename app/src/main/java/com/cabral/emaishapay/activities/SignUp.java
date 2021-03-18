@@ -3,6 +3,7 @@ package com.cabral.emaishapay.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,9 +38,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
 import com.cabral.emaishapay.databinding.SignupBinding;
+import com.cabral.emaishapay.models.BeneficiaryResponse;
+import com.cabral.emaishapay.models.SecurityQnsResponse;
+import com.cabral.emaishapay.network.APIClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,9 +73,13 @@ import org.json.JSONException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import am.appwise.components.ni.NoInternetDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * SignUp activity handles User's Registration
@@ -99,6 +109,11 @@ public class SignUp extends AppCompatActivity {
     private int pickedSubCountyId;
     private ArrayList<CropSpinnerItem> subCountyList = new ArrayList<>();
     private ArrayList<String> villageList = new ArrayList<>();
+    private List<SecurityQnsResponse.SecurityQns> securityQnsList = new ArrayList();
+    ArrayList<String> securityQns = new ArrayList<>();
+    ArrayList<String> securityQnsSubList1 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList2 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList3 = new ArrayList<>();
 
     public SignUp(Context context) {
         this.context = context;
@@ -351,7 +366,7 @@ public class SignUp extends AppCompatActivity {
         // Handle Click event of signUpBtn Button
         binding.signUpBtn.setOnClickListener(v -> {
             // Validate Login Form Inputs
-//            boolean isValidData = validateForm();
+            boolean isValidData = validateForm();
 //
 //            if (isValidData) {
 //                // Proceed User Registration
@@ -359,11 +374,36 @@ public class SignUp extends AppCompatActivity {
 //                sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
 //            }
 
-            binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
-            binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
-            binding.layoutSignUp.setVisibility(View.GONE);
-            binding.layoutSecurityQns.setVisibility(View.VISIBLE);
+                    if (isValidData) {
+                // Proceed User Registration
+                        binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
+                        binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
+                        binding.layoutSignUp.setVisibility(View.GONE);
+                        binding.layoutSecurityQns.setVisibility(View.VISIBLE);
+                        //get security qns
+                        RequestSecurityQns();
+
+            }
+
         });
+
+        binding.btnSubmitSecurityQn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+                boolean isValidData = validateSecurityQns();
+                if (isValidData) {
+//                // Proceed User Registration
+//
+                sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
+            }
+
+            }
+        });
+
+
+
+
 
         binding.btnBack.setOnClickListener(v -> {
 
@@ -642,7 +682,17 @@ public class SignUp extends AppCompatActivity {
                                     binding.userFirstname.getText().toString(),
                                     binding.userLastname.getText().toString(),
                                     binding.villageSpinner.getText().toString(),
-                                    binding.subCountySpinner.getText().toString(), binding.districtSpinner.getText().toString(),2);
+                                    binding.subCountySpinner.getText().toString(),
+                                    binding.districtSpinner.getText().toString(),
+                                    binding.idType.getSelectedItem().toString(),
+                                    binding.idNumber.getText().toString(),
+                                    binding.spFirstSecurityQn.getSelectedItem().toString(),
+                                    binding.spSecondSecurityQn.getSelectedItem().toString(),
+                                    binding.spThirdSecurityQn.getSelectedItem().toString(),
+                                    binding.etxtFirstSecurityQn.getText().toString(),
+                                    binding.etxtSecondSecurityQn.getText().toString(),
+                                    binding.etxtThirdSecurityQn.getText().toString(),
+                                    2);
 
                         } else {
                             //verification unsuccessful.. display an error message
@@ -722,10 +772,42 @@ public class SignUp extends AppCompatActivity {
         } else if (binding.villageSpinner.getText().toString().equals("Village")) {
             Toast.makeText(this, "Please select Village", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        } else if (binding.idType.getSelectedItem().toString().equalsIgnoreCase("select")) {
+            Toast.makeText(this, "Please select IdType", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (binding.idNumber.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter Id no", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (binding.idType.getSelectedItem().toString().equalsIgnoreCase("national id") && binding.idNumber.getText().toString().length()<15) {
+            Toast.makeText(this, "Please enter valid id", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
             return true;
         }
     }
+
+    //*********** Validate Security Qns Form Inputs ********//
+    private boolean validateSecurityQns() {
+      if (binding.spFirstSecurityQn.getSelectedItem().toString().equals("select")) {
+        Toast.makeText(this, "Please select first security question", Toast.LENGTH_SHORT).show();
+        return false;
+    } else if (binding.spSecondSecurityQn.getSelectedItem().toString().equalsIgnoreCase("select")) {
+          Toast.makeText(this, "Please select second security question", Toast.LENGTH_SHORT).show();
+          return false;
+      }
+      else if (binding.etxtFirstSecurityQn.getText().toString().isEmpty()) {
+          Toast.makeText(this, "Please enter 1st security question", Toast.LENGTH_SHORT).show();
+          return false;
+      }else if (binding.etxtSecondSecurityQn.getText().toString().isEmpty()) {
+          Toast.makeText(this, "Please enter 2nd security question", Toast.LENGTH_SHORT).show();
+          return false;
+      }else{
+          return  true;
+
+      }
+    }
+
 
     //*********** Set the Base Context for the ContextWrapper ********//
 
@@ -756,6 +838,86 @@ public class SignUp extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void RequestSecurityQns(){
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,"");
+        call.enqueue(new Callback<SecurityQnsResponse>() {
+            @Override
+            public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        securityQnsList = response.body().getSecurity_qnsList();
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        Log.d(TAG,securityQnsList.size()+"**********");
+
+                        //set security qns adapter
+                        for(int i=0;i<securityQnsList.size();i++){
+                            String security_Qn_name = securityQnsList.get(i).getSecurity_qn_name();
+                            securityQns.add(security_Qn_name);
+
+
+                        }
+                        for(int i=0;i<securityQns.size();i++){
+                            securityQnsSubList1.add(securityQns.get(0));
+                            securityQnsSubList1.add(securityQns.get(1));
+                            securityQnsSubList1.add(securityQns.get(2));
+
+                            securityQnsSubList2.add(securityQns.get(3));
+                            securityQnsSubList2.add(securityQns.get(4));
+                            securityQnsSubList2.add(securityQns.get(5));
+
+                            securityQnsSubList3.add(securityQns.get(6));
+                            securityQnsSubList3.add(securityQns.get(7));
+                            securityQnsSubList3.add(securityQns.get(8));
+
+
+
+                        }
+
+                        //set list in beneficiary spinner
+                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
+                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList2);
+                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList3);
+                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
+                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
+                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
+
+                    }
+
+                }else if (response.code() == 401) {
+
+//                    TokenAuthActivity.startAuth(, true);
+//                    finishAffinity();
+//                    if (response.errorBody() != null) {
+//                        Log.e("info", new String(String.valueOf(response.errorBody())));
+//                    } else {
+//                        Log.e("info", "Something got very very wrong");
+//                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+            }
+        });
+
+
+
+
+
     }
 }
 
