@@ -64,7 +64,6 @@ public class ShopProductsFragment extends Fragment {
     FragmentManager fm;
     Activity shop; String wallet_id;
     private Context context;
-    private DbHandlerSingleton dbHandler;
     private List<Manufacturer> manufacturers;
     ArrayList<HashMap<String, String>> products;
 
@@ -92,7 +91,6 @@ public class ShopProductsFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Products");
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
         fabAdd = view.findViewById(R.id.fab_add);
         etxtSearch = view.findViewById(R.id.etxt_search);
         recyclerView = view.findViewById(R.id.product_recyclerview);
@@ -149,7 +147,7 @@ public class ShopProductsFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 List<HashMap<String, String>> searchProductList;
-                searchProductList = dbHandler.getSearchProducts(s.toString(),wallet_id);
+                searchProductList = databaseAccess.getSearchProducts(s.toString());
 
 
                 if (searchProductList.size() <= 0) {
@@ -263,10 +261,9 @@ public class ShopProductsFragment extends Fragment {
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }finally {
-                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-                        databaseAccess.open();
-                        products = databaseAccess.getProducts();
-
+//                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
+//                        databaseAccess.open();
+//                        products = databaseAccess.getProducts();
                     }
 
                 } else {

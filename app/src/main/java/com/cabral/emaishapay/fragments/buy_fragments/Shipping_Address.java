@@ -154,13 +154,11 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             }
         }
 
+
         /*Edited  05/02/2021*/
         if (!Places.isInitialized()) {
             Places.initialize(getContext(), getString(R.string.place_picker_id));
         }
-
-        /*Edited 28-Dec-18*/
-
 
         // Set the Title of Toolbar
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(getString(R.string.shipping_address));
@@ -207,10 +205,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
             mCenterLatLong= new LatLng(shippingAddress.getLatitude(),shippingAddress.getLongitude());
 
-        } else {
+        }
+        else {
             // Request All Addresses of the User
             input_phone.setText(customerPhone);
-            //input_phone.setEnabled(false);
         }
 
         // [START_EXCLUDE silent]
@@ -221,7 +219,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
-        // Build the map.
         // [START maps_current_place_map_fragment]
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -297,6 +294,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
 
         if (isValidData && addresses!=null ) {
+            dialogLoader.showProgressDialog();
 
             final String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             final String city = addresses.get(0).getLocality();
@@ -560,7 +558,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
     public void addUserAddress(AddressDetails addressDetails, View v) {
 
-        dialogLoader.showProgressDialog();
+
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 
@@ -631,7 +629,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     //*********** Proceed the Request of Update Address ********//
 
     public void updateUserAddress(String addressID, AddressDetails addressDetails) {
-        dialogLoader.showProgressDialog();
+
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
 

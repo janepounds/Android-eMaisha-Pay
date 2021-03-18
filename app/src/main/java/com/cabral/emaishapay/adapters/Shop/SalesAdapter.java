@@ -46,19 +46,22 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        String customer_name = orderData.get(position).get("customer_name");
-        String invoice_id = orderData.get(position).get("invoice_id");
-        String order_date = orderData.get(position).get("order_date");
-        String order_time = orderData.get(position).get("order_time");
+        int invoice_id = Integer.parseInt(orderData.get(position).get("invoice_id"));
+        String order_date = orderData.get(position).get("product_order_date");
+        String product_qty = orderData.get(position).get("product_qty");
         String payment_method = orderData.get(position).get("order_payment_method");
-        String order_type = orderData.get(position).get("order_type");
+        String product_price = orderData.get(position).get("product_price");
+        double total=Double.parseDouble(product_price)*Double.parseDouble(product_qty);
+        String customer_name = orderData.get(position).get("customer_name");
+        String currency=context.getString(R.string.currency);
 
 
         holder.txt_customer_name.setText(customer_name);
-        holder.txt_order_id.setText(invoice_id);
-        holder.txt_order_staus.setText(payment_method);
-        holder.txt_order_type.setText(order_type);
-        holder.txt_date.setText(order_time + " " + order_date);
+        holder.txt_order_id.setText( String.format("%08d", invoice_id) );
+        holder.txt_payment_method.setText(payment_method);
+
+        holder.txt_product_price.setText(currency+" "+total);
+        holder.txt_date.setText(order_date);
 
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,19 +75,19 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
 
 
-                                boolean delete_order = dbHandler.deleteOrder(invoice_id);
+                               // boolean delete_order = dbHandler.deleteOrder(invoice_id);
 
-                                if (delete_order) {
-                                    Toasty.error(context, "Order Deleted", Toast.LENGTH_SHORT).show();
-
-                                    orderData.remove(holder.getAdapterPosition());
-
-                                    // Notify that item at position has been removed
-                                    notifyItemRemoved(holder.getAdapterPosition());
-
-                                } else {
-                                    Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
-                                }
+//                                if (delete_order) {
+//                                    Toasty.error(context, "Order Deleted", Toast.LENGTH_SHORT).show();
+//
+//                                    orderData.remove(holder.getAdapterPosition());
+//
+//                                    // Notify that item at position has been removed
+//                                    notifyItemRemoved(holder.getAdapterPosition());
+//
+//                                } else {
+//                                    Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
+//                                }
                                 dialog.cancel();
 
                             }
@@ -109,18 +112,19 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView txt_customer_name, txt_order_id, txt_order_type, txt_order_staus, txt_date;
-        ImageView imgDelete;
+        TextView txt_customer_name, txt_order_id, txt_product_price, txt_payment_method, txt_date;
+        ImageView imgDelete, imgProduct;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
+            //cart_product_image
             txt_customer_name = itemView.findViewById(R.id.txt_customer_name);
             txt_order_id = itemView.findViewById(R.id.txt_order_id_value);
-            txt_order_type = itemView.findViewById(R.id.txt_order_type_value);
-            txt_order_staus = itemView.findViewById(R.id.txt_order_payment_method);
+            txt_product_price = itemView.findViewById(R.id.product_price);
+            txt_payment_method = itemView.findViewById(R.id.txt_order_payment_method);
             txt_date = itemView.findViewById(R.id.txt_date);
             imgDelete = itemView.findViewById(R.id.img_delete);
+            imgProduct = itemView.findViewById(R.id.cart_product_image);
 
             itemView.setOnClickListener(this);
 
