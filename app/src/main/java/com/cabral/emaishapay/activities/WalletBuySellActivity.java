@@ -92,14 +92,16 @@ public class WalletBuySellActivity extends AppCompatActivity {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
                         Log.d("SHOP ACTIVITY","onVisibilityChanged: Keyboard visibility changed");
-                        if(isOpen){
-                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
-                            bottomNavigationView.setVisibility(View.INVISIBLE);
-                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
-                        }else{
-                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
-                            bottomNavigationView.setVisibility(View.VISIBLE);
-                            Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
+                        if(bottomNavigationView.getVisibility()==View.VISIBLE){
+                            if(isOpen){
+                                Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
+                                bottomNavigationView.setVisibility(View.INVISIBLE);
+                                Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
+                            }else{
+                                Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
+                                bottomNavigationView.setVisibility(View.VISIBLE);
+                                Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
+                            }
                         }
                     }
                 });
