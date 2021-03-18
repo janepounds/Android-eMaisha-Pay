@@ -445,6 +445,7 @@ public class ConfirmTransfer extends DialogFragment {
                         errorTextView.setText("Check your input details");
                         Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
                     } else if (response.code() == 406) {
+                        errorTextView.setText(response.body().getMessage());
 
                         Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
                     } else {
