@@ -19,6 +19,9 @@ public class BeneficiaryResponse {
     }
 
     public class Beneficiaries {
+        @SerializedName("beneficiary_id")
+        @Expose
+        private String beneficiary_id;
         @SerializedName("beneficiary_name")
         @Expose
         private String beneficiary_name;
@@ -31,6 +34,14 @@ public class BeneficiaryResponse {
         @SerializedName("beneficiary_number")
         @Expose
         private String beneficiary_number;
+
+        public String getBeneficiary_id() {
+            return beneficiary_id;
+        }
+
+        public void setBeneficiary_id(String beneficiary_id) {
+            this.beneficiary_id = beneficiary_id;
+        }
 
         public String getBeneficiary_name() {
             return beneficiary_name;

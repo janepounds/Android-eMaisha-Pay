@@ -88,6 +88,93 @@ public class AddBeneficiaryFragment extends DialogFragment {
         mobileMoneyLayout = view.findViewById(R.id.layout_mobile_money);
         transactionTypeSp = view.findViewById(R.id.sp_transaction_type);
 
+        if(getArguments()!=null){
+            //fill views and call update beneficiary
+            String beneficiary_type = getArguments().getString("beneficiary_type");
+            String beneficiary_name = getArguments().getString("beneficiary_name");
+            String initials = getArguments().getString("initials");
+            String beneficiary_number = getArguments().getString("beneficiary_no");
+            if(beneficiary_type.equalsIgnoreCase("bank")){
+
+                mobileMoneyLayout.setVisibility(View.GONE);
+                bankLayout.setVisibility(View.VISIBLE);
+                account_name.setText(beneficiary_name);
+                account_number.setText(beneficiary_number);
+
+
+            }else{
+                mobileMoneyLayout.setVisibility(View.VISIBLE);
+                bankLayout.setVisibility(View.GONE);
+                beneficiary_name_mm.setText(beneficiary_name);
+                beneficiary_no.setText(beneficiary_number);
+
+
+            }
+            WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,beneficiary_type);
+
+
+            submit.setText("UPDATE");
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProgressDialog dialog;
+                    dialog = new ProgressDialog(context);
+                    dialog.setIndeterminate(true);
+                    dialog.setMessage("Please Wait..");
+                    dialog.setCancelable(false);
+                    dialog.show();
+
+                    //call retrofit method for deleting card
+                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String request_id = WalletHomeActivity.generateRequestId();
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                    /*************RETROFIT IMPLEMENTATION**************/
+                    Call<CardResponse> call = APIClient.getWalletInstance().updateBeneficiary(access_token,transactionTypeSp.getSelectedItem().toString(),beneficiary_name,beneficiary_number,request_id,category,"");
+                    call.enqueue(new Callback<CardResponse>() {
+                        @Override
+                        public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                            if (response.isSuccessful()) {
+                                if (response.body().getStatus() == 0) {
+                                    dialog.dismiss();
+                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                } else {
+                                    String message = response.body().getMessage();
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                                    getActivity().getSupportFragmentManager().popBackStack();
+
+                                    Fragment fragment = new CardListFragment();
+                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                            .replace(R.id.wallet_home_container, fragment)
+                                            .addToBackStack(null).commit();
+
+                                    dialog.dismiss();
+                                }
+
+                            }else if(response.code()==401){
+                                dialog.dismiss();
+                                Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+
+                                //redirect to auth
+                                TokenAuthActivity.startAuth(getActivity(), true);
+                                getActivity().finishAffinity();
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<CardResponse> call, Throwable t) {
+                            dialog.dismiss();
+
+                        }
+                    });
+                }
+            });
+
+        }
 
         transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
