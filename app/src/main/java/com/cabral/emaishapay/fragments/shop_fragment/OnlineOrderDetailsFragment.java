@@ -269,8 +269,8 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
                             DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
                             databaseAccess.open();
-                            boolean check = databaseAccess.updateOrder(order_id, "Completed");
-                            txtOrderStatus.setText("Completed");
+                            boolean check = databaseAccess.updateOrder(order_id, "Approved");
+                            txtOrderStatus.setText("Approved");
                             reject_approve_layout.setVisibility(View.GONE);
                             if (check) {
                                 progressDialog.dismiss();

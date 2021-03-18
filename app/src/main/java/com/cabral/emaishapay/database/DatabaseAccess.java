@@ -901,7 +901,7 @@ public class DatabaseAccess {
     //get order history data
     public ArrayList<HashMap<String, String>> getAllSalesItems() {
         ArrayList<HashMap<String, String>> orderDetailsList = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT order_details.*,order_list.order_payment_method FROM order_details INNER JOIN order_list ON order_details.invoice_id=order_list.invoice_id WHERE order_list.order_status='Completed' ORDER BY order_details_id DESC", null);
+        Cursor cursor = database.rawQuery("SELECT order_details.*,order_list.order_payment_method FROM order_details INNER JOIN order_list ON order_details.invoice_id=order_list.invoice_id WHERE order_list.order_status='Approved' ORDER BY order_details_id DESC", null);
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
