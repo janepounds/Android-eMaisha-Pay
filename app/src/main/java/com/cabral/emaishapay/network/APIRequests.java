@@ -78,6 +78,16 @@ public interface APIRequests {
 
     );
 
+    ////wallet authentication
+    @FormUrlEncoded
+    @POST("user/resend/otp")
+    Call<WalletAuthenticationResponse>resendOtp(@Field("phoneNumber")String phoneNumber,
+                                                   @Field("password")String password,
+                                                   @Field("request_id") String request_id,
+                                                   @Field("action_id") String action_id
+
+    );
+
     @FormUrlEncoded
     @POST("authenticate/verify/code")
     Call<WalletAuthentication>confirmLogin(@Field("phoneNumber")String phoneNumber,

@@ -257,7 +257,10 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processLogin(password,ConfirmActivity.phonenumber);
+                //call resend otp
+                resendOtp(password,ConfirmActivity.phonenumber);
+
+//                processLogin(password,ConfirmActivity.phonenumber);
             }
         });
         otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
@@ -308,7 +311,37 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
     }
 
+    public void resendOtp(String password, String phonenumber) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        Log.d(TAG, "processLogin: request_id"+request_id);
 
+        //call the otp end point
+        dialogLoader.showProgressDialog();
+        Call<WalletAuthenticationResponse>call = apiRequests.resendOtp(phonenumber,password,request_id,"ResendOTP");
+        call.enqueue(new Callback<WalletAuthenticationResponse>() {
+            @Override
+            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
+                if(response.isSuccessful() && response.body().getStatus()==1 ) {
+                    smsResults = response.body().getData().getSms_results();
+
+                    //Call the OTP Dialog
+                    getOTPFromUser(password);
+                }
+                else{
+                    Snackbar.make(errorTextView,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+                Snackbar.make(errorTextView,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
