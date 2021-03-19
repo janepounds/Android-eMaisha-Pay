@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.fragments.buy_fragments.CheckoutFinal;
@@ -22,6 +23,7 @@ import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.merchants_model.MerchantDetails;
+import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.shipping_model.ShippingService;
 
@@ -160,6 +162,7 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingService(shippingService);
 
                 // Navigate to CheckoutFinal Fragment
+              WalletBuySellActivity.postOrder.setPaymentMethod("Payment Method");//Reset Payment
                 Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "",merchantsDetails.getMerchant_wallet_id());
                 fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment, context.getString(R.string.checkout))
                         .addToBackStack(null).commit();

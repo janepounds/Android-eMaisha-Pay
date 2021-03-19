@@ -31,10 +31,11 @@ public class Thank_You extends Fragment {
     private TextView order_number;
     private Button order_status_btn, continue_shopping_btn;
 
-    My_Cart my_cart;
+    My_Cart my_cart;String orderNumber;
 
-    public Thank_You(My_Cart my_cart) {
+    public Thank_You(My_Cart my_cart, String orderNumber) {
         this.my_cart = my_cart;
+        this.orderNumber=orderNumber;
     }
 
     @Nullable
@@ -54,6 +55,7 @@ public class Thank_You extends Fragment {
         order_status_btn = rootView.findViewById(R.id.order_status_btn);
         continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
 
+        order_number.setText("Order number: #"+this.orderNumber);
         // Binding Layout Views
         order_status_btn.setOnClickListener(view -> {
             // Navigate to My_Orders Fragment
@@ -82,8 +84,16 @@ public class Thank_You extends Fragment {
     }
 
     public void refreshActivity() {
-        Intent goToShop = new Intent(getActivity(), WalletBuySellActivity.class);
-        startActivity(goToShop);
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+
+        while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
+            fragmentManager.popBackStackImmediate();
+
+        Fragment fragment =new WalletBuyFragment(getContext(),fragmentManager);
+        fragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment2, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null).commit();
     }
     @Override
     public void onPrepareOptionsMenu(@NotNull Menu menu) {

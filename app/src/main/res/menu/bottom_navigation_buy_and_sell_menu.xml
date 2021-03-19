@@ -13,6 +13,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_sell"
         android:title="SELL"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletOrdersFragment"

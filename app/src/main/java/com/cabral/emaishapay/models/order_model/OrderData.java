@@ -11,6 +11,9 @@ public class OrderData {
     @SerializedName("success")
     @Expose
     private String success;
+    @SerializedName("order_id")
+    @Expose
+    private String order_id;
     @SerializedName("data")
     @Expose
     private List<OrderDetails> data = new ArrayList<OrderDetails>();
@@ -72,4 +75,11 @@ public class OrderData {
         this.message = message;
     }
 
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
 }

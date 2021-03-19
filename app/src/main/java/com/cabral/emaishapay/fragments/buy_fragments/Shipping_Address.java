@@ -659,7 +659,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Address has been Edited
                         // Navigate to Addresses fragment
-                        ((WalletHomeActivity) getContext()).getSupportFragmentManager().popBackStack();
+                        ((WalletBuySellActivity) getContext()).getSupportFragmentManager().popBackStack();
                         parentFrag.RequestAllAddresses(rootView);
 
                     }

@@ -64,6 +64,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -293,78 +294,6 @@ public class CheckoutFinal extends Fragment {
         });
 
 
-        // Integrate SupportedCardTypes with TextChangedListener of checkout_card_number
-//        checkout_card_number.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (!TextUtils.isEmpty(checkout_card_number.getText().toString().trim())) {
-//                    CardType type = CardType.forCardNumber(checkout_card_number.getText().toString());
-//                    if (cardType != type) {
-//                        cardType = type;
-//
-//                        InputFilter[] filters = {new InputFilter.LengthFilter(cardType.getMaxCardLength())};
-//                        checkout_card_number.setFilters(filters);
-//                        checkout_card_number.invalidate();
-//
-////                        braintreeSupportedCards.setSelected(cardType);
-//                    }
-//                } else {
-////                    braintreeSupportedCards.setSupportedCardTypes(SUPPORTED_CARD_TYPES);
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
-
-        // Handle Touch event of input_dob EditText
-//        checkout_card_expiry.setOnTouchListener((v, event) -> {
-//
-//            if (event.getAction() == MotionEvent.ACTION_UP) {
-//                // Get Calendar instance
-//                final Calendar calendar = Calendar.getInstance();
-//
-//                // Initialize DateSetListener of DatePickerDialog
-//                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//
-//                        // Set the selected Date Info to Calendar instance
-//                        calendar.set(Calendar.YEAR, year);
-//                        calendar.set(Calendar.MONTH, monthOfYear);
-//
-//                        // Set Date Format
-//                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy", Locale.US);
-//
-//                        // Set Date in input_dob EditText
-//                        checkout_card_expiry.setText(dateFormat.format(calendar.getTime()));
-//                    }
-//                };
-//
-//
-//                // Initialize DatePickerDialog
-//                DatePickerDialog datePicker = new DatePickerDialog
-//                        (
-//                                getContext(),
-//                                date,
-//                                calendar.get(Calendar.YEAR),
-//                                calendar.get(Calendar.MONTH),
-//                                calendar.get(Calendar.DAY_OF_MONTH)
-//                        );
-//
-//                // Show datePicker Dialog
-//                datePicker.show();
-//            }
-//
-//            return false;
-//        });
-
-        // Handle the Click event of edit_shipping_Btn Button
         edit_shipping_Btn.setOnClickListener(view -> {
 
             // Navigate to Shipping_Address Fragment to Edit ShippingAddress
@@ -393,7 +322,21 @@ public class CheckoutFinal extends Fragment {
         });
 
         // Handle the Click event of checkout_cancel_btn Button
-        checkout_cancel_btn.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
+        checkout_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+
+                while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
+                    fragmentManager.popBackStackImmediate();
+
+                Fragment fragment =new WalletBuyFragment(getContext(),fragmentManager);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment2, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null).commit();
+            }
+        });
 
         // Handle the Click event of checkout_order_btn Button
         checkout_order_btn.setOnClickListener(view -> {
@@ -415,111 +358,6 @@ public class CheckoutFinal extends Fragment {
 
             }
 
-//            if (selectedPaymentMethod.equalsIgnoreCase("cod")) {
-//                // Proceed Order
-//                proceedOrder();
-//                progressDialog.show();
-//
-//            } else if (selectedPaymentMethod.equalsIgnoreCase("braintree_paypal") || selectedPaymentMethod.equalsIgnoreCase("paypal")) {
-//                // Setup Payment Method
-//                validateSelectedPaymentMethod();
-//                progressDialog.show();
-//
-//                // Delay of 2 seconds
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (!"".equalsIgnoreCase(paymentNonceToken)) {
-//                            // Proceed Order
-//                            proceedOrder();
-//                        } else {
-//                            progressDialog.dismiss();
-//                            Snackbar.make(view, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }, 2000);
-//
-//            } else if (selectedPaymentMethod.equalsIgnoreCase("stripe") || selectedPaymentMethod.equalsIgnoreCase("braintree_card")) {
-//                if (validatePaymentCard()) {
-//                    // Setup Payment Method
-//                    validateSelectedPaymentMethod();
-//                    progressDialog.show();
-//
-//                    // Delay of 2 seconds
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (!"".equalsIgnoreCase(paymentNonceToken)) {
-//                                // Proceed Order
-//                                proceedOrder();
-//                            } else {
-//                                progressDialog.dismiss();
-//                                Snackbar.make(view, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }, 2000);
-//                }
-//
-//            } else if (selectedPaymentMethod.equalsIgnoreCase("instamojo")) {
-//
-//                // Setup Payment Method
-//                validateSelectedPaymentMethod();
-//                progressDialog.show();
-//
-//                // Delay of 2 seconds
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (!"".equalsIgnoreCase(paymentNonceToken)) {
-//                            // Proceed Order
-//                            proceedOrder();
-//                        } else {
-//                            progressDialog.dismiss();
-//                            Snackbar.make(view, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }, 2000);
-//
-//            } else if (selectedPaymentMethod.equalsIgnoreCase("razorpay")) {
-//
-//                // Setup Payment Method
-//                validateSelectedPaymentMethod();
-//                progressDialog.show();
-//
-//                // Delay of 2 seconds
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (!"".equalsIgnoreCase(DashboardActivity.paymentNonceToken)) {
-//                            paymentNonceToken = DashboardActivity.paymentNonceToken;
-//                            // Proceed Order
-//                            proceedOrder();
-//
-//                        } else {
-//                            progressDialog.dismiss();
-//                            Snackbar.make(view, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }, 2000);
-//
-//            } else if (selectedPaymentMethod.equalsIgnoreCase("payumoney")) {
-//
-//                // Setup Payment Method
-//                validateSelectedPaymentMethod();
-//                progressDialog.show();
-//
-//                // Delay of 2 seconds
-//                new Handler().postDelayed(() -> {
-//                    if (!"".equalsIgnoreCase(paymentNonceToken)) {
-//                        // Proceed Order
-//                        proceedOrder();
-//                    } else {
-//                        progressDialog.dismiss();
-//                        Snackbar.make(view, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//                    }
-//                }, 2000);
-//
-//            }
 
         });
 
@@ -568,9 +406,9 @@ public class CheckoutFinal extends Fragment {
     public void onResume() {
         super.onResume();
         PaymentOrderDetails = WalletBuySellActivity.postOrder;
-        Log.d(TAG, "onResume: Method = " + PaymentOrderDetails.getPaymentMethod());
-        Log.d(TAG, "onResume: Resume Called");
-
+        selectedPaymentMethod=PaymentOrderDetails.getPaymentMethod();
+        Log.d(TAG, "onResume: Method = " + selectedPaymentMethod);
+        Log.d(TAG, "onResume: Is Payment made "+PaymentOrderDetails.getPaymentMade());
         if (PaymentOrderDetails.getPaymentMethod() != null) {
 
             payment_method.setText(PaymentOrderDetails.getPaymentMethod());
@@ -854,7 +692,7 @@ public class CheckoutFinal extends Fragment {
 
         // Set PaymentNonceToken and PaymentMethod
         orderDetails.setNonce(paymentNonceToken);
-        orderDetails.setPaymentMethod(payment_method.getText().toString());
+        orderDetails.setPaymentMethod(selectedPaymentMethod);
 
         // Set CheckoutFinal Price and Products
         orderDetails.setProductsTotal(checkoutSubtotal);
@@ -867,90 +705,6 @@ public class CheckoutFinal extends Fragment {
         PlaceOrderNow(orderDetails);
     }
 
-    //*********** Request the Server to Generate BrainTreeToken ********//
-
-//    private void RequestPaymentMethods() {
-//
-//        dialogLoader.showProgressDialog();
-//
-//        Call<PaymentMethodsData> call = BuyInputsAPIClient.getInstance()
-//                .getPaymentMethods
-//                        (
-//                                ConstantValues.LANGUAGE_ID
-//                        );
-//
-//
-//        call.enqueue(new Callback<PaymentMethodsData>() {
-//            @Override
-//            public void onResponse(Call<PaymentMethodsData> call, retrofit2.Response<PaymentMethodsData> response) {
-//
-//                if (response.isSuccessful()) {
-//                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
-//
-//                        String strGson = new Gson().toJson(response.body());
-//                        for (int i = 0; i < response.body().getData().size(); i++) {
-//
-//                            PaymentMethodsInfo paymentMethodsInfo = response.body().getData().get(i);
-//
-//                            if (paymentMethodsInfo.getMethod().equalsIgnoreCase("cod")
-//                                    && paymentMethodsInfo.getActive().equalsIgnoreCase("1")) {
-//                                paymentMethodsList.add(paymentMethodsInfo);
-//                            }
-//
-////                            if (paymentMethodsInfo.getMethod().equalsIgnoreCase("paypal")   && paymentMethodsInfo.getActive().equalsIgnoreCase("1")) {
-////                                paymentMethodsList.add(paymentMethodsInfo);
-////
-////                                PAYMENT_ENVIRONMENT = paymentMethodsInfo.getEnvironment();
-//////                                PAYMENT_CURRENCY = paymentMethodsInfo.getPaymentCurrency();
-////                                PAYPAL_PUBLISHABLE_KEY = paymentMethodsInfo.getPublicKey();
-////
-////                                payPalConfiguration = new PayPalConfiguration()
-////                                        // sandbox (ENVIRONMENT_SANDBOX)
-////                                        // or live (ENVIRONMENT_PRODUCTION)
-////                                        .environment((PAYMENT_ENVIRONMENT.equalsIgnoreCase("Test") ? ENVIRONMENT_SANDBOX : ENVIRONMENT_PRODUCTION))
-////                                        .clientId(PAYPAL_PUBLISHABLE_KEY);
-////
-////                                Intent intent = new Intent(getContext(), PayPalService.class);
-////                                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, payPalConfiguration);
-////
-////                                getContext().startService(intent);
-////                            }
-//
-//
-//
-//                            if ((paymentMethodsInfo.getMethod().equalsIgnoreCase("emaisha_wallet") && paymentMethodsInfo.getActive().equalsIgnoreCase("1")) ) {
-//                                paymentMethodsList.add(paymentMethodsInfo);
-//                                GenerateBrainTreeToken();
-//                            } else {
-//                                dialogLoader.hideProgressDialog();
-//                            }
-//
-//                            PAYMENT_CURRENCY = getString(R.string.defaultcurrency);
-//                        }
-//
-//
-//
-//                    } else {
-//                        // Unexpected Response from Server
-//                        dialogLoader.hideProgressDialog();
-//                        Snackbar.make(rootView, getString(R.string.cannot_get_payment_methods), Snackbar.LENGTH_LONG).show();
-//                        Toast.makeText(getContext(), getString(R.string.cannot_get_payment_methods), Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    dialogLoader.hideProgressDialog();
-//                    Toast.makeText(getContext(), getString(R.string.cannot_get_payment_methods), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<PaymentMethodsData> call, Throwable t) {
-//                dialogLoader.hideProgressDialog();
-//                Toast.makeText(getContext(), "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-
-    //*********** Request the Server to Generate BrainTreeToken ********//
 
     private void GenerateBrainTreeToken() {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
@@ -1085,7 +839,6 @@ public class CheckoutFinal extends Fragment {
 
     private void PlaceOrderNow(PostOrder postOrder) {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
 
         String str = new Gson().toJson(postOrder);
 
@@ -1120,8 +873,8 @@ public class CheckoutFinal extends Fragment {
                         ((EmaishaPayApp) requireContext().getApplicationContext()).setBillingAddress(new AddressDetails());
 
                         // Navigate to Thank_You Fragment
-//                        String orderNumber = response.body().getData().get(0).getOrdersId() + "";
-                        Fragment fragment = new Thank_You(my_cart);
+                        String orderNumber = response.body().getOrder_id();
+                        Fragment fragment = new Thank_You(my_cart,orderNumber);
                         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                         fragmentManager.popBackStack(getString(R.string.actionHome), FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         fragmentManager.beginTransaction()

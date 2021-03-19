@@ -78,6 +78,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -383,10 +384,13 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
-                //
-                selectedPaymentMethod = "eMaisha Wallet";
-                recordEmaishaPayPurchase(txRef,this.chargeAmount);
-//                GenerateBrainTreeToken();
+                double balance= Double.parseDouble( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_BALANCE, context) );
+                if(balance>=this.total){
+                    selectedPaymentMethod = "eMaisha Wallet";
+                    recordEmaishaPayPurchase(txRef,this.chargeAmount);
+                }else {
+                    Toasty.error(context, "Insufficient Balance", Toast.LENGTH_LONG).show();
+                }
             }else if (COD.isChecked()) {
                 //
                 selectedPaymentMethod = "cod";
@@ -462,7 +466,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                     makeCardPaymentWithExistingCard();
                 }
 
-            } else if (MobileMoney.isChecked()) {
+            }
+            else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
 
                 String mobileNumber="0"+mobilePhonenumber.getText().toString();
@@ -1098,10 +1103,12 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+                        if(getContext()!=null){
+                            ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
-                        spinner_select_card.setAdapter(cardListAdapter);
-                        dialogLoader.hideProgressDialog();
+                            spinner_select_card.setAdapter(cardListAdapter);
+                            dialogLoader.hideProgressDialog();
+                        }
 
                     }
 

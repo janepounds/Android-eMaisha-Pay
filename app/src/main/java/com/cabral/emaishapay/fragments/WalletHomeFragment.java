@@ -3,6 +3,7 @@ package com.cabral.emaishapay.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +48,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private EmaishaPayHomeBinding binding;
@@ -56,6 +59,7 @@ public class WalletHomeFragment extends Fragment {
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
+    private static SharedPreferences sharedPreferences;
     public WalletHomeFragment(){}
 
     @Override
@@ -66,6 +70,7 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
+        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
 
         getTransactionsData();
         getBalanceAndCommission();
@@ -464,6 +469,10 @@ public class WalletHomeFragment extends Fragment {
                   balance =  response.body().getData().getBalance();
                   commisionbalance = response.body().getData().getCommission();
                   totalBalance = response.body().getData().getTotalBalance();
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, balance+"");
+                    editor.apply();
 
                   //set balance and commision
                     binding.totalBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(totalBalance));
