@@ -128,9 +128,12 @@ public interface APIRequestsForBuyInputs {
     @POST("getzones")
     Call<Zones> getZones(@Field("zone_country_id") String zone_country_id);
 
+    @FormUrlEncoded
     @POST("getalladdress")
     Call<AddressData> getAllAddress(
-            @Header("Authorization") String token);
+            @Header("Authorization") String token,
+            @Field("customers_id") String customers_id);
+
 
     @FormUrlEncoded
     @POST("getregions")

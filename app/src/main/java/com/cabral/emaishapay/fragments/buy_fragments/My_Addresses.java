@@ -186,8 +186,8 @@ public class My_Addresses extends Fragment {
 
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .getAllAddress
-                        (       access_token
-
+                        (       access_token,
+                                customerID
                         );
 
         call.enqueue(new Callback<AddressData>() {
