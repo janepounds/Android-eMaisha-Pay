@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.http.Field;
+import retrofit2.http.Header;
+
 
 /**
  * User_Cart_DB creates the table User_Cart and handles all CRUD operations relevant to User_Cart
@@ -76,6 +79,23 @@ public class User_Cart_BuyInputsDB {
     public static final String ATTRIBUTE_VALUE_PRICE_PREFIX = "attribute_value_prefix";
     public static final String ATTRIBUTE_PRODUCTS_ID        = "attribute_products_id";
     public static final String CART_TABLE_ID                = "cart_table_id";
+
+
+    public static  final String TABLE_DEFAULT_ADDRESS ="default_address";
+    //Table columns
+    public static  final String DEFAULT_ID ="default_id";
+    public static  final String CUSTOMER_ID ="customers_id";
+    public static  final String ENTRY_FIRST_NAME ="entry_firstname";
+    public static  final String ENTRY_LAST_NAME ="entry_lastname";
+    public static  final String ENTRY_STREET_ADDRESS ="entry_street_address";
+    public static  final String ENTRY_POSTAL_CODE ="entry_postcode";
+    public static  final String ENTRY_CITY ="entry_city";
+    public static  final String ENTRY_COUNTRY_ID ="entry_country_id";
+    public static  final String LATITUDE ="entry_latitude";
+    public static  final String LONGITUDE ="entry_longitude";
+    public static  final String ENTRY_CONTACT ="entry_contact";
+    public static  final String IS_DEFAULT ="is_default";
+
     
     
     
@@ -135,8 +155,104 @@ public class User_Cart_BuyInputsDB {
                 ")";
     }
     
-    
-    
+
+
+    //**************************Returns the Query to Create TABLE_DEFAULT_ADDRESS****//
+    public static String createTableDefaultAddress() {
+
+        return "CREATE TABLE "+ TABLE_DEFAULT_ADDRESS +
+                "(" +
+                DEFAULT_ID                  + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                CUSTOMER_ID                 + " TEXT," +
+                ENTRY_FIRST_NAME            + " TEXT," +
+                ENTRY_LAST_NAME             + " TEXT," +
+                ENTRY_STREET_ADDRESS        + " TEXT," +
+                ENTRY_POSTAL_CODE           + " TEXT," +
+                ENTRY_CITY                  + " TEXT," +
+                ENTRY_COUNTRY_ID            + " TEXT," +
+                LATITUDE                    + " TEXT," +
+                LONGITUDE                   + " TEXT," +
+                ENTRY_CONTACT               + " TEXT," +
+                IS_DEFAULT                  + " TEXT," +
+                ")";
+    }
+
+    //*********** Insert New Recent Item ********//
+
+    public void insertDefaultAddress(String customer_id,String entry_first_name,String entry_last_name,String entry_street_address,String entry_postal_code,String entry_city,String entry_country_id,String entry_contact,String latitude,String longitude,String is_default) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(CUSTOMER_ID,      customer_id);
+        values.put(ENTRY_FIRST_NAME,      entry_first_name);
+        values.put(ENTRY_LAST_NAME,      entry_last_name);
+        values.put(ENTRY_STREET_ADDRESS,      entry_street_address);
+        values.put(ENTRY_POSTAL_CODE,      entry_postal_code);
+        values.put(ENTRY_CITY,      entry_city);
+        values.put(ENTRY_COUNTRY_ID,      entry_country_id);
+        values.put(LATITUDE,      latitude);
+        values.put(LONGITUDE,      longitude);
+        values.put(ENTRY_CONTACT,      entry_contact);
+        values.put(IS_DEFAULT,      is_default);
+
+        db.insert(TABLE_DEFAULT_ADDRESS, null, values);
+
+        // close the Database
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+    }
+
+
+
+    //*********** Fetch All Default Address ********//
+
+    public ArrayList<String> getDefaultAddress(String customer_id,String is_default){
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        ArrayList<String> recents = new ArrayList<String>();
+
+//        Cursor cursor =  db.rawQuery( "SELECT * FROM "+ TABLE_DEFAULT_ADDRESS +" WHERE "+ CUSTOMER_ID +" =?", new String[] {customer_id});
+         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_DEFAULT_ADDRESS + " WHERE " + CUSTOMER_ID + " = '" + customer_id + "'" + " AND " + IS_DEFAULT + " = '" + is_default + "'", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                recents.add(cursor.getString(4));
+                recents.add(cursor.getString(6));
+                recents.add(cursor.getString(7));
+
+            } while (cursor.moveToNext());
+        }
+
+
+        // close the Database
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+
+        return recents;
+    }
+
+
+
+//    //*********** Update existing Recent Item ********//
+//
+//    public void updateDefaultAddress(int products_id) {
+//        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+//        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+//
+//        ContentValues values = new ContentValues();
+//
+//        values.put(PRODUCT_ID,       products_id);
+//
+//        db.update(TABLE_RECENTS, values, PRODUCT_ID +" = ?", new String[]{String.valueOf(products_id)});
+//
+//        // close the Database
+//        BuyInputsDB_Manager.getInstance().closeDatabase();
+//    }
+
+
+
+
     //*********** Fetch Last Inserted Cart_ID ********//
     
     public int getLastCartID() {

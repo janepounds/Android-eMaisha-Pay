@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -42,6 +44,7 @@ import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class My_Cart extends Fragment {
@@ -57,6 +61,7 @@ public class My_Cart extends Fragment {
     RecyclerView cart_items_recycler;
     LinearLayout cart_view, cart_view_empty;
     Button cart_checkout_btn, continue_shopping_btn, clear_cart;
+    TextView default_address_;
     NestedScrollView mainRvLayout;
     public TextView cart_item_subtotal_price, cart_item_discount_price, cart_item_total_price;
 
@@ -112,6 +117,7 @@ public class My_Cart extends Fragment {
 //        cart_item_subtotal_price = rootView.findViewById(R.id.cart_item_subtotal_price);
         cart_item_total_price = rootView.findViewById(R.id.cart_item_total_price);
         clear_cart = rootView.findViewById(R.id.btn_clear_cart);
+        default_address_ = rootView.findViewById(R.id.default_delivery_location2_tv);
 //        cart_item_discount_price = rootView.findViewById(R.id.cart_item_discount_price);
 
         // Change the Visibility of cart_view and cart_view_empty LinearLayout based on CartItemsList's Size
@@ -137,6 +143,7 @@ public class My_Cart extends Fragment {
         cartItemsAdapter.notifyDataSetChanged();
 
         Log.d(TAG, "onCreateView: "+finalCartItemsList);
+        getDefaultAddress();
 
         clear_cart.setOnClickListener(view -> {
             // Delete CartItem from Local Database using static method of My_Cart
@@ -234,6 +241,28 @@ public class My_Cart extends Fragment {
 //        });
 
         return rootView;
+    }
+
+    public void getDefaultAddress(){
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+
+        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        //get from the database
+        ArrayList<String> default_address = new ArrayList<>();
+        default_address= user_cart_BuyInputs_db.getDefaultAddress(customerID,"");
+        for(int i=0;i<default_address.size();i++){
+            String street = default_address.get(0);
+            String city = default_address.get(1);
+            String country = default_address.get(2);
+
+            default_address_.setText(street+" "+city+" " +country);
+        }
+
+
+
+
     }
 
     //*********** Change the Layout View of My_Cart Fragment based on Cart Items ********//
