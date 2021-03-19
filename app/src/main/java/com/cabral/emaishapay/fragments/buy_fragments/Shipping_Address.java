@@ -33,6 +33,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -593,6 +594,22 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                         // Navigate to Addresses fragment
                         ((WalletBuySellActivity) getContext()).getSupportFragmentManager().popBackStack();
                         if( my_cart!=null){
+                            //save a copy in the local database
+                            User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+                            user_cart_BuyInputs_db.insertDefaultAddress( customerID,
+                                    names[0],
+                                    JoinStrings(Arrays.copyOfRange(names, 1, names.length)),
+                                    //input_contact.getText().toString().trim(),
+                                    addressDetails.getStreet(),
+                                    addressDetails.getPostcode(),
+                                    addressDetails.getCity(),
+                                    "219",
+                                    addressDetails.getLatitude()+"",
+                                    addressDetails.getLongitude()+"",
+                                    addressDetails.getPhone()+"",
+                                    customers_default_address_id);
+
+
                             // Navigate to Shipping_Methods Fragment
                             Fragment fragment = new Nearby_Merchants(my_cart);
                             FragmentManager fragmentManager = getFragmentManager();
