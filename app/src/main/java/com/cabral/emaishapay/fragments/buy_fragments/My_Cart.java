@@ -60,7 +60,7 @@ public class My_Cart extends Fragment {
     private static final String TAG = "My_Cart";
     String customerID;
     RecyclerView cart_items_recycler;
-    LinearLayout cart_view, cart_view_empty;
+    LinearLayout cart_view, cart_view_empty,locationLayout;
     Button cart_checkout_btn, continue_shopping_btn, clear_cart;
     TextView default_address_;
     NestedScrollView mainRvLayout;
@@ -120,6 +120,9 @@ public class My_Cart extends Fragment {
         cart_item_total_price = rootView.findViewById(R.id.cart_item_total_price);
         clear_cart = rootView.findViewById(R.id.btn_clear_cart);
         default_address_ = rootView.findViewById(R.id.default_delivery_location2_tv);
+        locationLayout = rootView.findViewById(R.id.location_layout);
+
+
 //        cart_item_discount_price = rootView.findViewById(R.id.cart_item_discount_price);
 
         // Change the Visibility of cart_view and cart_view_empty LinearLayout based on CartItemsList's Size
@@ -262,6 +265,9 @@ public class My_Cart extends Fragment {
 
                 default_address_.setText(street + " " + city + " " + country);
             }
+        }else{
+
+        locationLayout.setVisibility(View.GONE);
         }
 
 
