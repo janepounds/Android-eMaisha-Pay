@@ -254,12 +254,14 @@ public class My_Cart extends Fragment {
         //get from the database
         ArrayList<String> default_address = new ArrayList<>();
         default_address= dbHandler.getDefaultAddress(customerID);
-        for(int i=0;i<default_address.size();i++){
-            String street = default_address.get(0);
-            String city = default_address.get(1);
-            String country = default_address.get(2);
+        if(default_address!=null) {
+            for (int i = 0; i < default_address.size(); i++) {
+                String street = default_address.get(0);
+                String city = default_address.get(1);
+                String country = default_address.get(2);
 
-            default_address_.setText(street+" "+city+" " +country);
+                default_address_.setText(street + " " + city + " " + country);
+            }
         }
 
 
