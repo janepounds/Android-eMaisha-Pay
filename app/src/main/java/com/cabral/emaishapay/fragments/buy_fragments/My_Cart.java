@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -75,7 +76,8 @@ public class My_Cart extends Fragment {
     List<String> stocks = new ArrayList<>();
     DialogLoader dialogLoader;
     Toolbar toolbar;
-    DbHandlerSingleton dbHandler;
+    private Context context;
+    private DbHandlerSingleton dbHandler;
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -84,6 +86,13 @@ public class My_Cart extends Fragment {
         if (!hidden) {
             ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("My Cart");
         }
+    }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Nullable
@@ -122,7 +131,7 @@ public class My_Cart extends Fragment {
         default_address_ = rootView.findViewById(R.id.default_delivery_location2_tv);
         locationLayout = rootView.findViewById(R.id.location_layout);
 
-
+        dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
 //        cart_item_discount_price = rootView.findViewById(R.id.cart_item_discount_price);
 
         // Change the Visibility of cart_view and cart_view_empty LinearLayout based on CartItemsList's Size
@@ -253,11 +262,11 @@ public class My_Cart extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
-        dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
+
         //get from the database
         ArrayList<String> default_address = new ArrayList<>();
         default_address= dbHandler.getDefaultAddress(customerID);
-        if(default_address!=null) {
+        if(default_address.size()>0) {
             for (int i = 0; i < default_address.size(); i++) {
                 String street = default_address.get(0);
                 String city = default_address.get(1);
