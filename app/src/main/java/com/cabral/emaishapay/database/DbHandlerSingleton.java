@@ -170,6 +170,22 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     public static final String PRODUCT_NAME_ID = "product_id";
     public static final String PRODUCT_NAME_NAME = "product_name";
 
+
+    public static  final String TABLE_DEFAULT_ADDRESS ="default_address";
+    //Table columns
+    public static  final String DEFAULT_ID ="default_id";
+    public static  final String ENTRY_CUSTOMER_ID ="customers_id";
+    public static  final String ENTRY_FIRST_NAME ="entry_firstname";
+    public static  final String ENTRY_LAST_NAME ="entry_lastname";
+    public static  final String ENTRY_STREET_ADDRESS ="entry_street_address";
+    public static  final String ENTRY_POSTAL_CODE ="entry_postcode";
+    public static  final String ENTRY_CITY ="entry_city";
+    public static  final String ENTRY_COUNTRY_ID ="entry_country_id";
+    public static  final String ENTRY_LATITUDE ="entry_latitude";
+    public static  final String ENTRY_LONGITUDE ="entry_longitude";
+    public static  final String ENTRY_CONTACT ="entry_contact";
+    public static  final String IS_DEFAULT ="is_default";
+
     private static com.cabral.emaishapay.database.DbHandlerSingleton DbHandlerSingleton;
     SQLiteDatabase database;
     Context context;
@@ -258,6 +274,22 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         String product_names_table_insert_query = "CREATE TABLE IF NOT EXISTS " + PRODUCT_NAME_TABLE_NAME + "( " + PRODUCT_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 PRODUCT_NAME_NAME + " TEXT " + " ) ";
 
+        String default_address_table_insert_query = "CREATE TABLE IF NOT EXISTS "+ TABLE_DEFAULT_ADDRESS +
+        "(" +
+                DEFAULT_ID                  + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ENTRY_CUSTOMER_ID           + " TEXT," +
+                ENTRY_FIRST_NAME            + " TEXT," +
+                ENTRY_LAST_NAME             + " TEXT," +
+                ENTRY_STREET_ADDRESS        + " TEXT," +
+                ENTRY_POSTAL_CODE           + " TEXT," +
+                ENTRY_CITY                  + " TEXT," +
+                ENTRY_COUNTRY_ID            + " TEXT," +
+                ENTRY_LATITUDE              + " TEXT," +
+                ENTRY_LONGITUDE             + " TEXT," +
+                ENTRY_CONTACT               + " TEXT," +
+                IS_DEFAULT                  + " TEXT" +
+                ")";
+
 
 
         database.execSQL(regions_details_insert_query);
@@ -276,6 +308,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         database.execSQL(payment_method_table_insert_query);
         database.execSQL(product_manufacturer_table_insert_query);
         database.execSQL(product_names_table_insert_query);
+        database.execSQL(default_address_table_insert_query);
     }
 
     @Override
@@ -1496,6 +1529,59 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
             return false;
         }
 
+    }
+
+    //*********** Insert default address Item ********//
+
+    public void insertDefaultAddress(String customer_id,String entry_first_name,String entry_last_name,String entry_street_address,String entry_postal_code,String entry_city,String entry_country_id,String entry_contact,String latitude,String longitude,String is_default) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(CUSTOMER_ID,      customer_id);
+        values.put(ENTRY_FIRST_NAME,      entry_first_name);
+        values.put(ENTRY_LAST_NAME,      entry_last_name);
+        values.put(ENTRY_STREET_ADDRESS,      entry_street_address);
+        values.put(ENTRY_POSTAL_CODE,      entry_postal_code);
+        values.put(ENTRY_CITY,      entry_city);
+        values.put(ENTRY_COUNTRY_ID,      entry_country_id);
+        values.put(ENTRY_LATITUDE,      latitude);
+        values.put(ENTRY_LONGITUDE,      longitude);
+        values.put(ENTRY_CONTACT,      entry_contact);
+        values.put(IS_DEFAULT,      is_default);
+
+        db.insert(TABLE_DEFAULT_ADDRESS, null, values);
+
+        // close the Database
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+    }
+
+
+
+    //*********** Fetch All Default Address ********//
+
+    public ArrayList<String> getDefaultAddress(String customer_id){
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+
+        ArrayList<String> address = new ArrayList<String>();
+        Cursor cursor = db.rawQuery( "SELECT * FROM "+ TABLE_DEFAULT_ADDRESS +" WHERE "+ ENTRY_CUSTOMER_ID +" =?", new String[] {customer_id});
+
+        if (cursor.moveToFirst()) {
+            do {
+                address.add(cursor.getString(4));
+                address.add(cursor.getString(6));
+                address.add(cursor.getString(7));
+
+            } while (cursor.moveToNext());
+        }
+
+
+        // close the Database
+        BuyInputsDB_Manager.getInstance().closeDatabase();
+
+        return address;
     }
 }
 

@@ -34,6 +34,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
@@ -74,6 +75,7 @@ public class My_Cart extends Fragment {
     List<String> stocks = new ArrayList<>();
     DialogLoader dialogLoader;
     Toolbar toolbar;
+    DbHandlerSingleton dbHandler;
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -248,10 +250,10 @@ public class My_Cart extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
-        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
+        dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
         //get from the database
         ArrayList<String> default_address = new ArrayList<>();
-        default_address= user_cart_BuyInputs_db.getDefaultAddress(customerID,"");
+        default_address= dbHandler.getDefaultAddress(customerID);
         for(int i=0;i<default_address.size();i++){
             String street = default_address.get(0);
             String city = default_address.get(1);
