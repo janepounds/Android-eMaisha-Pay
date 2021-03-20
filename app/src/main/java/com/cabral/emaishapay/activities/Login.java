@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.LoginBinding;
+import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -35,6 +38,9 @@ import com.cabral.emaishapay.utils.ValidateInputs;
 import com.venmo.android.pin.PinFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
@@ -52,6 +58,11 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     DialogLoader dialogLoader;
     APIRequests apiRequests;
     private Context context;
+    private List<SecurityQnsResponse.SecurityQns> securityQnsList = new ArrayList();
+    ArrayList<String> securityQns = new ArrayList<>();
+    ArrayList<String> securityQnsSubList1 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList2 = new ArrayList<>();
+    ArrayList<String> securityQnsSubList3 = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +83,39 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
+            RequestSecurityQns();
+//            RequestUserQns(user_id);
+            //display security qns and
+            Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean validSecurityQns = validateSecurityQns();
+                    if(validSecurityQns){
+                        //enter new pin
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
+                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
+                        dialog.setView(dialogView);
+                        dialog.setCancelable(true);
+
+
+                        final Button dialog_button = dialogView.findViewById(R.id.dialog_button);
+                        final TextView dialog_forgotText = dialogView.findViewById(R.id.forgot_password_text);
+                        final EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
+                        final Button dismiss_button = dialogView.findViewById(R.id.btn_cancel_security_qn);
+                        final TextView dialog_title = dialogView.findViewById(R.id.title_text);
+//            dialog_title.setText("Forgot Password");
+//            dialog_forgotText.setVisibility(View.VISIBLE);
+                        dialog_button.setText(getString(R.string.sendemail));
+
+
+                        final AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
+                    }
+
+                }
+            });
+
 
             final Button dialog_button = dialogView.findViewById(R.id.dialog_button);
             final TextView dialog_forgotText = dialogView.findViewById(R.id.forgot_password_text);
@@ -87,15 +131,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
             dismiss_button.setOnClickListener(v -> alertDialog.dismiss());
 
-            dialog_button.setOnClickListener(v -> {
-                if (ValidateInputs.isValidEmail(dialog_input.getText().toString().trim())) {
-                    // Request for Password Reset
-                    processForgotPassword(dialog_input.getText().toString());
-                } else {
-                    Snackbar.make(findViewById(android.R.id.content), getString(R.string.invalid_email), Snackbar.LENGTH_LONG).show();
-                }
-                alertDialog.dismiss();
-            });
+
         });
 
         binding.loginSignupText.setOnClickListener(v -> {
@@ -165,8 +201,96 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             return true;
         }
 
+
+
     }
 
+    private boolean validateSecurityQns() {
+        return true;
+
+    }
+
+    public void RequestSecurityQns(){
+
+        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,"");
+        call.enqueue(new Callback<SecurityQnsResponse>() {
+            @Override
+            public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        securityQnsList = response.body().getSecurity_qnsList();
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        Log.d(TAG,securityQnsList.size()+"**********");
+
+                        //set security qns adapter
+                        for(int i=0;i<securityQnsList.size();i++){
+                            String security_Qn_name = securityQnsList.get(i).getSecurity_qn_name();
+                            securityQns.add(security_Qn_name);
+
+
+                        }
+                        for(int i=0;i<securityQns.size();i++){
+                            securityQnsSubList1.add(securityQns.get(0));
+                            securityQnsSubList1.add(securityQns.get(1));
+                            securityQnsSubList1.add(securityQns.get(2));
+
+                            securityQnsSubList2.add(securityQns.get(3));
+                            securityQnsSubList2.add(securityQns.get(4));
+                            securityQnsSubList2.add(securityQns.get(5));
+
+                            securityQnsSubList3.add(securityQns.get(6));
+                            securityQnsSubList3.add(securityQns.get(7));
+                            securityQnsSubList3.add(securityQns.get(8));
+
+
+
+                        }
+
+                        //set list in beneficiary spinner
+                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
+                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList2);
+                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList3);
+//                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
+//                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
+//                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
+
+                        //set in the specific spinners
+
+                    }
+
+                }else if (response.code() == 401) {
+
+//                    TokenAuthActivity.startAuth(, true);
+//                    finishAffinity();
+//                    if (response.errorBody() != null) {
+//                        Log.e("info", new String(String.valueOf(response.errorBody())));
+//                    } else {
+//                        Log.e("info", "Something got very very wrong");
+//                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+            }
+        });
+
+
+
+
+
+    }
     //*********** Set the Base Context for the ContextWrapper ********//
     @Override
     protected void attachBaseContext(Context newBase) {
