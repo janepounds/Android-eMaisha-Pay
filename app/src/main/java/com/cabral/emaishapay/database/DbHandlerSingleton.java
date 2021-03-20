@@ -26,7 +26,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     private static final String TAG = "emaishapayHandler";
 
     public static final String DATABASE_NAME = "emaishapay.db";
-    private static int database_version = 1;
+    private static int database_version = 2;
 
     public static final String REGIONS_DETAILS_TABLE_NAME = "regionDetails";
     public static final String REGIONS_DETAILS_TABLE_ID = "tableId";
@@ -314,14 +314,37 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        onCreate(db);
+
+        String default_address_table_insert_query = "CREATE TABLE IF NOT EXISTS "+ TABLE_DEFAULT_ADDRESS +
+                "(" +
+                DEFAULT_ID                  + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ENTRY_CUSTOMER_ID           + " TEXT," +
+                ENTRY_FIRST_NAME            + " TEXT," +
+                ENTRY_LAST_NAME             + " TEXT," +
+                ENTRY_STREET_ADDRESS        + " TEXT," +
+                ENTRY_POSTAL_CODE           + " TEXT," +
+                ENTRY_CITY                  + " TEXT," +
+                ENTRY_COUNTRY_ID            + " TEXT," +
+                ENTRY_LATITUDE              + " TEXT," +
+                ENTRY_LONGITUDE             + " TEXT," +
+                ENTRY_CONTACT               + " TEXT," +
+                IS_DEFAULT                  + " TEXT" +
+                ")";
+
+        switch(oldVersion) {
+            case 1:
+                onCreate(db);
+                // we want both updates, so no break statement here...
+            case 2:
+                database.execSQL(default_address_table_insert_query);
+        }
 
     }
 
     public com.cabral.emaishapay.database.DbHandlerSingleton openDB() throws SQLException {
 
         database = this.getWritableDatabase();
-//        onCreate(database);
+        //onUpgrade(database,1,2);
 
         return this;
     }
@@ -1563,7 +1586,9 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     public ArrayList<String> getDefaultAddress(String customer_id){
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
-        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+        openDB();
+
+        SQLiteDatabase db = this.getReadableDatabase();
 
         ArrayList<String> address = new ArrayList<String>();
         Cursor cursor = db.rawQuery( "SELECT * FROM "+ TABLE_DEFAULT_ADDRESS +" WHERE "+ ENTRY_CUSTOMER_ID +" =?", new String[] {customer_id});
@@ -1579,7 +1604,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
 
         // close the Database
-        BuyInputsDB_Manager.getInstance().closeDatabase();
+       closeDB();
 
         return address;
     }
