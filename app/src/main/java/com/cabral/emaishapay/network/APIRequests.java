@@ -277,6 +277,20 @@ public interface APIRequests {
                                        @Field("category") String category,
                                        @Field("action_id")String action_id
     );
+    //wallet/thirdy-part-payment/credituser
+    @FormUrlEncoded
+    @POST("wallet/third-party-payment/credituser")
+    Call<WalletTransaction> thirdpartyCreditUser(@Header("Authorization") String token,
+                                                 @Field("merchant_id") String receiver_id,
+                                                 @Field("amount") Double amount,
+                                                 @Field("referenceNumber") String referenceNumber,
+                                                 @Field("thirdParty") String thirdParty,
+                                                 @Field("thirdParty_id") String thirdParty_id,
+                                                 @Field("isPending") Boolean isPending,
+                                                 @Field("request_id") String request_id,
+                                                 @Field("category") String category,
+                                                 @Field("action_id")String action_id
+    );
     // //create user credit
     @FormUrlEncoded
     @POST("wallet/payment/eMaishaPayPayment")
