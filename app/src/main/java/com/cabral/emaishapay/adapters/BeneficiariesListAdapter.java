@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.R;
 
@@ -32,6 +33,7 @@ import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.utils.CryptoUtil;
 
 
 import java.util.List;
@@ -44,6 +46,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     private List<BeneficiaryResponse.Beneficiaries> dataList;
     private FragmentManager fm;
     Context context;
+    String decripted_name,decripted_number;
     private String beneficary_name, initials,cvv,expiry_date,id;
 
 
@@ -97,10 +100,23 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         holder.close.setVisibility(View.VISIBLE);
         holder.beneficiary_type.setVisibility(View.VISIBLE);
 
-        holder.beneficiary_type.setText(data.getBeneficiary_type());
-        holder.initials.setText(data.getInitials());
-        holder.benefaciary_name.setText(data.getBeneficiary_name());
-        holder.beneficiary_number.setText(data.getBeneficiary_number());
+        holder.beneficiary_type.setText(data.getTransaction_type());
+
+
+        if (data.getTransaction_type().equalsIgnoreCase("bank")) {
+            //decript name and account no
+            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+            decripted_name = encrypter.decrypt(data.getAccount_name());
+            decripted_number = encrypter.decrypt(data.getAccount_number());
+            holder.initials.setText(getNameInitials(decripted_name));
+            holder.benefaciary_name.setText(decripted_name);
+            holder.beneficiary_number.setText(decripted_number);
+        } else {
+            holder.initials.setText(getNameInitials(data.getAccount_name()));
+            holder.benefaciary_name.setText(data.getAccount_name());
+            holder.beneficiary_number.setText(data.getAccount_number());
+
+        }
 
         holder.close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,11 +129,12 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
                                 dialogInterface.dismiss();
 
-                            }})
+                            }
+                        })
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                deleteBeneficiary(data.getBeneficiary_id());
+                                deleteBeneficiary(data.getId());
                                 // notifyItemChanged(fragment);
                                 dialogInterface.dismiss();
                             }
@@ -134,12 +151,23 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateBeneficiary(data.getBeneficiary_type(),data.getBeneficiary_name(),data.getInitials(),data.getBeneficiary_number());
-                    }
-                }
-        );
+                        if (data.getTransaction_type().equalsIgnoreCase("bank")) {
+                            //decript name and account no
+                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                            decripted_name = encrypter.decrypt(data.getAccount_name());
+                            decripted_number = encrypter.decrypt(data.getAccount_number());
+                            updateBeneficiary(data.getTransaction_type(), decripted_name, getNameInitials(decripted_name), decripted_number);
+                        } else {
+                            //
+                            updateBeneficiary(data.getTransaction_type(), data.getAccount_name(), getNameInitials(data.getAccount_name()), data.getAccount_number());
 
+                        }
+
+
+                    }
+                });
     }
+
 
 
     @Override
@@ -229,5 +257,22 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         addCardDialog.setArguments(bundle);
         addCardDialog.show( ft, "dialog");
 
+    }
+
+
+    private String getNameInitials(String name){
+        if(name==null || name.isEmpty())
+            return "";
+        String ini = ""+name.charAt(0);
+        // we use ini to return the output
+        for (int i=0; i<name.length(); i++){
+            if ( name.charAt(i)==' ' && i+1 < name.length() && name.charAt(i+1)!=' ' && ini.length()!=2 ){
+                //if i+1==name.length() you will have an indexboundofexception
+                //add the initials
+                ini+=name.charAt(i+1);
+            }
+        }
+        //after getting "ync" => return "YNC"
+        return ini.toUpperCase();
     }
 }

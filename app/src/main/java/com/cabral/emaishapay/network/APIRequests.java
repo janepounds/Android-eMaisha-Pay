@@ -4,6 +4,7 @@ import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.ChangePinResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -778,15 +779,18 @@ public interface APIRequests {
 
     // //update card info
     @FormUrlEncoded
-    @POST("wallet/save_beneficiary")
+    @POST("wallet/add_beneficiary")
     Call<CardResponse>saveBeneficiary(
             @Header("Authorization")String token,
-            @Field("beneficary_type") String beneficary_type,
-            @Field("beneficiary_name") String beneficiary_name,
-            @Field("beneficiary_number") String beneficiary_number,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("identifier") String user_id,
+            @Field("transaction_type") String beneficary_type,
+            @Field("bank") String bank,
+            @Field("bank_branch") String bank_branch,
+            @Field("account_name") String account_name,
+            @Field("account_number") String account_number
+//            @Field("request_id") String request_id,
+//            @Field("category") String category,
+//            @Field("action_id")String action_id
 
 
 
@@ -822,14 +826,8 @@ public interface APIRequests {
 
     //get beneficiaries info
     @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("request_id") String request_id, @Query("category") String category,
-                                              @Query("action_id")String action_id);
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type, @Query("request_id") String request_id);
 
-
-    //get beneficiaries info
-    @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getFilteredBeneficiaries(@Header("Authorization") String token,@Query("user_id")String user_id,@Query("filter") String filter, @Query("request_id") String request_id, @Query("category") String category,
-                                              @Query("action_id")String action_id);
 
 
     @FormUrlEncoded
@@ -852,5 +850,15 @@ public interface APIRequests {
     @GET("user/qns/get")
     Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id,
                                             @Query("action_id")String action_id);
+
+
+    //change passowrd
+    @FormUrlEncoded
+    @POST("wallet/change-pin")
+    Call<ChangePinResponse>changePassword(@Header("Authorization") String token,
+                                          @Field("phoneNumber") String phoneNumber,
+                                          @Field("currentPin") String currentPin,
+                                          @Field("newPin") String newPin,
+                                          @Field("comfirmNewPin") String comfirmNewPin);
 
 }

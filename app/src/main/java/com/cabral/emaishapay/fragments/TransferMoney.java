@@ -48,6 +48,7 @@ import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.ExternalAPIRequests;
 import com.cabral.emaishapay.network.FlutterwaveV3APIClient;
 import com.cabral.emaishapay.network.RaveV2APIClient;
+import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.internal.bind.ArrayTypeAdapter;
@@ -77,7 +78,7 @@ public class TransferMoney extends Fragment {
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
-    String action;
+    String action, beneficiary_name;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
     ArrayList<String> beneficiaries = new ArrayList<>();
 
@@ -437,7 +438,7 @@ public class TransferMoney extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<BeneficiaryResponse> call = APIClient.getWalletInstance().getFilteredBeneficiaries(access_token,user_id,spTransferTo.getSelectedItem().toString(),request_id,category,"getCards");
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance().getBeneficiaries(access_token,spTransferTo.getSelectedItem().toString(),request_id);
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
@@ -454,7 +455,17 @@ public class TransferMoney extends Fragment {
                     }finally {
                         Log.d(TAG,beneficiariesList.size()+"**********");
                         for(int i=0;i<beneficiariesList.size();i++){
-                            String beneficiary_name = beneficiariesList.get(i).getBeneficiary_name();
+
+                            if(beneficiariesList.get(i).getTransaction_type().equalsIgnoreCase("bank")){
+                                //decript
+                                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                                beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
+
+
+                            }else{
+                                beneficiary_name = beneficiariesList.get(i).getAccount_name();
+
+                            }
                             beneficiaries.add(beneficiary_name);
 
                         }
