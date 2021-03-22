@@ -454,18 +454,11 @@ public class TransferMoney extends Fragment {
                         e.printStackTrace();
                     }finally {
                         Log.d(TAG,beneficiariesList.size()+"**********");
-                        for(int i=0;i<beneficiariesList.size();i++){
+                        for(int i=0;i<beneficiariesList.size();i++) {
 
-                            if(beneficiariesList.get(i).getTransaction_type().equalsIgnoreCase("bank")){
-                                //decript
-                                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                                beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
-
-
-                            }else{
-                                beneficiary_name = beneficiariesList.get(i).getAccount_name();
-
-                            }
+                            //decript
+                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                            beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
                             beneficiaries.add(beneficiary_name);
 
                         }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BeneficiariesListAdapter extends RecyclerView.Adapter<BeneficiariesListAdapter.MyViewHolder> {
+    private static final String TAG = "BeneficiariesListAdapte";
     private List<BeneficiaryResponse.Beneficiaries> dataList;
     private FragmentManager fm;
     Context context;
@@ -99,11 +101,9 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         holder.date.setVisibility(View.GONE);
         holder.close.setVisibility(View.VISIBLE);
         holder.beneficiary_type.setVisibility(View.VISIBLE);
+        holder.beneficiary_number.setVisibility(View.VISIBLE);
 
         holder.beneficiary_type.setText(data.getTransaction_type());
-
-
-        if (data.getTransaction_type().equalsIgnoreCase("bank")) {
             //decript name and account no
             CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
             decripted_name = encrypter.decrypt(data.getAccount_name());
@@ -111,12 +111,9 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
             holder.initials.setText(getNameInitials(decripted_name));
             holder.benefaciary_name.setText(decripted_name);
             holder.beneficiary_number.setText(decripted_number);
-        } else {
             holder.initials.setText(getNameInitials(data.getAccount_name()));
-            holder.benefaciary_name.setText(data.getAccount_name());
-            holder.beneficiary_number.setText(data.getAccount_number());
 
-        }
+
 
         holder.close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,16 +148,10 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                            //decript name and account no
-                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                            decripted_name = encrypter.decrypt(data.getAccount_name());
-                            decripted_number = encrypter.decrypt(data.getAccount_number());
-                            updateBeneficiary(data.getTransaction_type(), decripted_name, getNameInitials(decripted_name), decripted_number);
-
-
-
-
+                            String  bank = data.getBank();
+                            String bank_branch  = data.getBank_branch();
+                            String id = data.getId();
+                            updateBeneficiary(data.getTransaction_type(), decripted_name, decripted_number,bank,bank_branch,id);
 
 
                     }
@@ -171,7 +162,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 
 
@@ -190,7 +181,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance().deleteBeneficiary(id,access_token,request_id,category,"");
+        Call<CardResponse> call = APIClient.getWalletInstance().deleteBeneficiary(access_token,id,request_id);
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -205,7 +196,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
                         fm.popBackStack();
 
-                        Fragment fragment = new CardListFragment();
+                        Fragment fragment = new BeneficiariesListFragment();
                         fm.beginTransaction()
 //                                .hide(((WalletHomeActivity) fm.g).currentFragment)
                                 .replace(R.id.wallet_home_container, fragment)
@@ -237,7 +228,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     }
 
-    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String initials,String beneficiary_no){
+    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String beneficiary_no,String bank,String branch,String id){
         //call add beneficiary fragment
         //nvigate to add beneficiaries fragment
         FragmentTransaction ft = fm.beginTransaction();
@@ -246,13 +237,16 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
             ft.remove(prev);
         }
         ft.addToBackStack(null);
+        Log.d(TAG, "updateBeneficiary: no"+beneficiary_no);
         // Create and show the dialog.
         DialogFragment addCardDialog =new AddBeneficiaryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("beneficiary_type",beneficiary_type);
         bundle.putString("beneficiary_name",beneficary_name);
-        bundle.putString("initials",initials);
         bundle.putString("beneficiary_no",beneficiary_no);
+        bundle.putString("bank",bank);
+        bundle.putString("branch",branch);
+        bundle.putString("id",id);
         addCardDialog.setArguments(bundle);
         addCardDialog.show( ft, "dialog");
 
