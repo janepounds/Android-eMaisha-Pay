@@ -829,11 +829,6 @@ public interface APIRequests {
     Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type, @Query("request_id") String request_id);
 
 
-    //get beneficiaries info
-    @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getFilteredBeneficiaries(@Header("Authorization") String token,@Query("user_id")String user_id,@Query("filter") String filter, @Query("request_id") String request_id, @Query("category") String category,
-                                              @Query("action_id")String action_id);
-
 
     @FormUrlEncoded
     @POST("wallet/save_security_qns")
