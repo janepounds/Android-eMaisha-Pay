@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,8 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     ArrayList<String> securityQnsSubList1 = new ArrayList<>();
     ArrayList<String> securityQnsSubList2 = new ArrayList<>();
     ArrayList<String> securityQnsSubList3 = new ArrayList<>();
+    private Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
+    private EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +86,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
             View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
-            RequestSecurityQns();
+
 //            RequestUserQns(user_id);
             //display security qns and
             Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
@@ -93,43 +96,44 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                     boolean validSecurityQns = validateSecurityQns();
                     if(validSecurityQns){
                         //enter new pin
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                         View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
                         dialog.setView(dialogView);
                         dialog.setCancelable(true);
-
-
-                        final Button dialog_button = dialogView.findViewById(R.id.dialog_button);
-                        final TextView dialog_forgotText = dialogView.findViewById(R.id.forgot_password_text);
-                        final EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
-                        final Button dismiss_button = dialogView.findViewById(R.id.btn_cancel_security_qn);
-                        final TextView dialog_title = dialogView.findViewById(R.id.title_text);
-//            dialog_title.setText("Forgot Password");
-//            dialog_forgotText.setVisibility(View.VISIBLE);
-                        dialog_button.setText(getString(R.string.sendemail));
+                        final EditText current_pin = dialogView.findViewById(R.id.current_pin);
+                        current_pin.setVisibility(View.GONE);
+                        final EditText new_pin = dialogView.findViewById(R.id.new_pin);
+                        final EditText confirm_new_pin = dialogView.findViewById(R.id.confirm_new_pin);
+                        final TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
+                        final Button submit = dialogView.findViewById(R.id.update);
+                        final Button cancel = dialogView.findViewById(R.id.cancel);
+                        dialog_title.setText("Create New Pin");
 
 
                         final AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                alertDialog.dismiss();
+                            }
+                        });
                     }
 
                 }
             });
 
-
-            final Button dialog_button = dialogView.findViewById(R.id.dialog_button);
-            final TextView dialog_forgotText = dialogView.findViewById(R.id.forgot_password_text);
-            final EditText dialog_input = dialogView.findViewById(R.id.dialog_input);
-            final Button dismiss_button = dialogView.findViewById(R.id.btn_cancel_security_qn);
-            final TextView dialog_title = dialogView.findViewById(R.id.title_text);
-//            dialog_title.setText("Forgot Password");
-//            dialog_forgotText.setVisibility(View.VISIBLE);
-            dialog_button.setText(getString(R.string.sendemail));
+            //calling security qns form
+            firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
+            secondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
+            thirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
+            firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
+            secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
+            thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+            RequestSecurityQns();
 
             final AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-
-            dismiss_button.setOnClickListener(v -> alertDialog.dismiss());
 
 
         });
@@ -206,6 +210,8 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     }
 
     private boolean validateSecurityQns() {
+        //load answered security Qns(locally or from an endpoint)
+
         return true;
 
     }
@@ -260,9 +266,9 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
                         ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
                         ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList2);
                         ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList3);
-//                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
-//                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
-//                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
+                        firstSecurityQn.setAdapter(beneficiariesAdapter1);
+                        secondSecurityQn.setAdapter(beneficiariesAdapter2);
+                        thirdSecurityQn.setAdapter(beneficiariesAdapter3);
 
                         //set in the specific spinners
 
