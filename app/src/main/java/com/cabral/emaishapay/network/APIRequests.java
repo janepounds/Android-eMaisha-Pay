@@ -4,6 +4,7 @@ import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.ChangePinResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -852,5 +853,15 @@ public interface APIRequests {
     @GET("user/qns/get")
     Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id,
                                             @Query("action_id")String action_id);
+
+
+    //change passowrd
+    @FormUrlEncoded
+    @POST("wallet/change-pin")
+    Call<ChangePinResponse>changePassword(@Header("Authorization") String token,
+                                          @Field("phoneNumber") String phoneNumber,
+                                          @Field("currentPin") String currentPin,
+                                          @Field("newPin") String newPin,
+                                          @Field("comfirmNewPin") String comfirmNewPin);
 
 }
