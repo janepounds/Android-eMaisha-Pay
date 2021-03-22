@@ -114,7 +114,6 @@ public class BeneficiariesListFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        Log.d(TAG,beneficiariesList.size()+"**********");
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         beneficiariesListAdapter = new BeneficiariesListAdapter(beneficiariesList,requireActivity().getSupportFragmentManager());

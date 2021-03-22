@@ -274,9 +274,9 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
-
-                        beneficiary_name = beneficiary_name_mm.getText().toString();
-                        beneficiary_number ="0"+beneficiary_no.getText().toString();
+                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                        beneficiary_name = encrypter.encrypt(beneficiary_name_mm.getText().toString());
+                        beneficiary_number = encrypter.encrypt("0"+beneficiary_no.getText().toString());
                         bankk = "Mobile Money Bank";
                         branch = "";
 

@@ -151,17 +151,16 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (data.getTransaction_type().equalsIgnoreCase("bank")) {
+
                             //decript name and account no
                             CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                             decripted_name = encrypter.decrypt(data.getAccount_name());
                             decripted_number = encrypter.decrypt(data.getAccount_number());
                             updateBeneficiary(data.getTransaction_type(), decripted_name, getNameInitials(decripted_name), decripted_number);
-                        } else {
-                            //
-                            updateBeneficiary(data.getTransaction_type(), data.getAccount_name(), getNameInitials(data.getAccount_name()), data.getAccount_number());
 
-                        }
+
+
+
 
 
                     }
@@ -172,7 +171,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return 0;
     }
 
 
