@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -43,6 +44,7 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
     ImageView logo;
     TextView appName;
     Animation animFade;
+    ConstraintLayout logoWordsLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,11 +61,12 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         rootView = findViewById(R.id.mainView);
         logo =findViewById(R.id.logo);
         appName =findViewById(R.id.logo_title);
+        logoWordsLayout =findViewById(R.id.layout_app_emaisha_pay);
         animFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
         animFade.setAnimationListener(this);
 
         logo.startAnimation(animFade);
-        appName.startAnimation(animFade);
+        logoWordsLayout.startAnimation(animFade);
 
         // Initializing StartAppRequests and PreferencesManager
         startAppRequests = new StartAppRequests(this);

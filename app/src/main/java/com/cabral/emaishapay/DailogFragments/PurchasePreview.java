@@ -162,7 +162,8 @@ public class PurchasePreview extends DialogFragment implements
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
+        Call<ConfirmationDataResponse> call = apiRequests.
+                getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
