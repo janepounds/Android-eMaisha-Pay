@@ -140,7 +140,6 @@ public class TransferMoney extends Fragment {
         layoutBank=view.findViewById(R.id.layout_bank);
         layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
         layoutBeneficiary=view.findViewById(R.id.layout_beneficiary);
-        layoutBeneficiary=view.findViewById(R.id.sp_beneficiary);
         spBeneficiary = view.findViewById(R.id.sp_beneficiary);
 
         this.fm=getActivity().getSupportFragmentManager();
