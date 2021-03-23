@@ -13,7 +13,7 @@ public class BeneficiaryResponse {
     @Expose
     private String message;
 
-    @SerializedName("beneficiaries")
+    @SerializedName("data")
     @Expose
     private List<Beneficiaries> beneficiariesList;
 
@@ -40,6 +40,8 @@ public class BeneficiaryResponse {
     public void setBeneficiariesList(List<Beneficiaries> beneficiariesList) {
         this.beneficiariesList = beneficiariesList;
     }
+
+
 
     public class Beneficiaries {
         @SerializedName("id")

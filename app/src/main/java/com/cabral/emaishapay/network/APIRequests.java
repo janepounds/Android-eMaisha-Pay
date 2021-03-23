@@ -277,6 +277,20 @@ public interface APIRequests {
                                        @Field("category") String category,
                                        @Field("action_id")String action_id
     );
+    //wallet/thirdy-part-payment/credituser
+    @FormUrlEncoded
+    @POST("wallet/third-party-payment/credituser")
+    Call<WalletTransaction> thirdpartyCreditUser(@Header("Authorization") String token,
+                                                 @Field("merchant_id") String receiver_id,
+                                                 @Field("amount") Double amount,
+                                                 @Field("referenceNumber") String referenceNumber,
+                                                 @Field("thirdParty") String thirdParty,
+                                                 @Field("thirdParty_id") String thirdParty_id,
+                                                 @Field("isPending") Boolean isPending,
+                                                 @Field("request_id") String request_id,
+                                                 @Field("category") String category,
+                                                 @Field("action_id")String action_id
+    );
     // //create user credit
     @FormUrlEncoded
     @POST("wallet/payment/eMaishaPayPayment")
@@ -799,27 +813,24 @@ public interface APIRequests {
 
     // //delete card
     @FormUrlEncoded
-    @POST("wallet_delete_card")
+    @POST("wallet/delete_beneficiary")
     Call<CardResponse>deleteBeneficiary(
-            @Field("id") String id,
             @Header("Authorization") String token,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("id") String id,
+            @Field("request_id") String request_id
     );
 
     @FormUrlEncoded
     @POST("wallet/update_beneficiary")
     Call<CardResponse>updateBeneficiary(
             @Header("Authorization")String token,
-            @Field("beneficary_type") String beneficary_type,
-            @Field("beneficiary_name") String beneficiary_name,
-            @Field("beneficiary_number") String beneficiary_number,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id
-
-
+            @Field("id") String beneficiary_id,
+            @Field("transaction_type") String transaction_type,
+            @Field("bank") String bank,
+            @Field("bank_branch") String bank_branch,
+            @Field("account_name") String account_name,
+            @Field("account_number") String account_number,
+            @Field("request_id")String request_id
 
 
     );

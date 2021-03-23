@@ -765,7 +765,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                 dialogLoader.hideProgressDialog();
                 Log.e("Success code :", "Mobile Money Payment "+flwRef);
                 Toast.makeText(context, "Transaction Successful", Toast.LENGTH_LONG).show();
-                proceedOrder(true);
+
+                recordPurchase(flwRef,chargeAmount,cardNumber.getText().toString());
+
             }
 
             @Override
@@ -789,7 +791,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<WalletTransaction> call = apiRequests.creditUser(access_token,merchantWalletId,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,true,request_id,category,"creditUserAfterTransaction");
+        Call<WalletTransaction> call = apiRequests.thirdpartyCreditUser(access_token,merchantWalletId,amount,referenceNumber,"flutterwave",thirdParty_id,true,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -798,7 +800,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                     dialogLoader.hideProgressDialog();
 
                     proceedOrder(true);
-                }else if(response.code() == 401){
+                } else if(response.code() == 401){
 
                     TokenAuthActivity.startAuth(getActivity(), true);
                     getActivity().finishAffinity();

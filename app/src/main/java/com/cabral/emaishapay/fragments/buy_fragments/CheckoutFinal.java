@@ -184,7 +184,7 @@ public class CheckoutFinal extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_checkout, container, false);
 
-        // Set the Title of Toolbar
+        // Set the Title of Toolbarshipping_address
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.checkout));
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
@@ -270,9 +270,20 @@ public class CheckoutFinal extends Fragment {
         else
             packingCharges=0;
 
-        // Set Billing Details
-        shipping_name.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
-        shipping_address.setText(shippingAddress.getZoneName() + ", " + shippingAddress.getCountryName());
+        if( (shippingAddress.getLastname()==null || shippingAddress.getLastname().isEmpty() )  ){
+            shipping_name.setText( shippingAddress.getFirstname());
+        }else if( (shippingAddress.getFirstname()==null || shippingAddress.getFirstname().equalsIgnoreCase("null") )  ){
+            shipping_name.setText( shippingAddress.getLastname());
+        }else {
+            shipping_name.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
+        }
+
+        if( (shippingAddress.getCity()==null || shippingAddress.getCity().equalsIgnoreCase("null") )  ){
+            shipping_address.setText( shippingAddress.getCountryName());
+        }else{
+            shipping_address.setText( shippingAddress.getCity()+", "+shippingAddress.getCountryName());
+        }
+
         shipping_street.setText(shippingAddress.getStreet());
 
         // Set CheckoutFinal Total

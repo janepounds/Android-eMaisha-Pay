@@ -435,7 +435,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
 
                     TokenAuthActivity.startAuth(getActivity(), false);
-                    getActivity().finish();
+                    //getActivity().finish();
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -482,7 +482,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     TokenAuthActivity.startAuth(getActivity(), false);
-                    getActivity().finish();
+                    //getActivity().finish();
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
@@ -494,7 +494,7 @@ public class WalletHomeFragment extends Fragment {
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
                 TokenAuthActivity.startAuth(getActivity(), false);
-                getActivity().finish();
+                //getActivity().finish();
             }
         });
     }

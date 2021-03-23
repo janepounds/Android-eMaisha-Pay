@@ -145,9 +145,9 @@ public class WalletHomeActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
+
         // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 

@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.BuildConfig;
@@ -53,6 +54,7 @@ import retrofit2.http.Field;
 import retrofit2.http.Header;
 
 public class AddBeneficiaryFragment extends DialogFragment {
+    private static final String TAG = "AddBeneficiaryFragment";
     LinearLayout bankLayout, mobileMoneyLayout;
     Spinner transactionTypeSp;
     Button submit;
@@ -61,7 +63,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Spinner bank,bank_branch;
     String beneficiary_name,beneficiary_number;
     Bank[] BankList; BankBranch[] bankBranches;
-    String selected_bank_code,selected_branch_code,bankk,branch;
+    String selected_bank_code,selected_branch_code,bankk,branch,id;
+    TextView title;
     public AddBeneficiaryFragment() {
         // Required empty public constructor
     }
@@ -96,90 +99,76 @@ public class AddBeneficiaryFragment extends DialogFragment {
         transactionTypeSp = view.findViewById(R.id.sp_transaction_type);
         bank = view.findViewById(R.id.sp_bank);
         bank_branch = view.findViewById(R.id.sp_bank_branch);
+        title = view.findViewById(R.id.agent_bal_inquiry_title_label);
 
         if(getArguments()!=null){
             //fill views and call update beneficiary
             String beneficiary_type = getArguments().getString("beneficiary_type");
-            String beneficiary_name = getArguments().getString("beneficiary_name");
-            String initials = getArguments().getString("initials");
-            String beneficiary_number = getArguments().getString("beneficiary_no");
+            String beneficiary_name_ = getArguments().getString("beneficiary_name");
+            String beneficiary_number_ = getArguments().getString("beneficiary_no");
+             bankk = getArguments().getString("bank");
+             branch = getArguments().getString("branch");
+             id = getArguments().getString("id");
+            Log.d(TAG, "onCreateDialog: number"+beneficiary_number_+"name"+beneficiary_name_+"id"+id);
             if(beneficiary_type.equalsIgnoreCase("bank")){
 
                 mobileMoneyLayout.setVisibility(View.GONE);
                 bankLayout.setVisibility(View.VISIBLE);
-                account_name.setText(beneficiary_name);
-                account_number.setText(beneficiary_number);
+                account_name.setText(beneficiary_name_);
+                account_number.setText(beneficiary_number_);
+                WalletHomeActivity.selectSpinnerItemByValue(bank,bankk);
+                WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
 
 
             }else{
                 mobileMoneyLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.GONE);
-                beneficiary_name_mm.setText(beneficiary_name);
-                beneficiary_no.setText(beneficiary_number);
+                beneficiary_name_mm.setText(beneficiary_name_);
+                beneficiary_no.setText(beneficiary_number_.substring(1));
+
 
 
             }
             WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,beneficiary_type);
 
-
+            title.setText("EDIT BENEFICIARY");
             submit.setText("UPDATE");
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProgressDialog dialog;
-                    dialog = new ProgressDialog(context);
-                    dialog.setIndeterminate(true);
-                    dialog.setMessage("Please Wait..");
-                    dialog.setCancelable(false);
-                    dialog.show();
+                    if(validateEntries()) {
+                        ProgressDialog dialog;
+                        dialog = new ProgressDialog(context);
+                        dialog.setIndeterminate(true);
+                        dialog.setMessage("Please Wait..");
+                        dialog.setCancelable(false);
+                        dialog.show();
 
-                    //call retrofit method for deleting card
-                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-                    String request_id = WalletHomeActivity.generateRequestId();
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-                    /*************RETROFIT IMPLEMENTATION**************/
-                    Call<CardResponse> call = APIClient.getWalletInstance().updateBeneficiary(access_token,transactionTypeSp.getSelectedItem().toString(),beneficiary_name,beneficiary_number,request_id,category,"");
-                    call.enqueue(new Callback<CardResponse>() {
-                        @Override
-                        public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                            if (response.isSuccessful()) {
-                                if (response.body().getStatus() == 0) {
-                                    dialog.dismiss();
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        //call retrofit method for deleting card
+                        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                        String request_id = WalletHomeActivity.generateRequestId();
+                        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
+                        String beneficary_type = transactionTypeSp.getSelectedItem().toString();
 
-                                } else {
-                                    String message = response.body().getMessage();
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        if (beneficary_type.equalsIgnoreCase("mobile money")) {
+                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                            beneficiary_name = encrypter.encrypt(beneficiary_name_mm.getText().toString());
+                            beneficiary_number = encrypter.encrypt("0" + beneficiary_no.getText().toString());
+                            bankk = "Mobile Money Bank";
+                            branch = "";
 
-                                    getActivity().getSupportFragmentManager().popBackStack();
+                        } else {
+                            //encript account_name and number
+                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                            beneficiary_name = encrypter.encrypt(account_name.getText().toString());
+                            beneficiary_number = encrypter.encrypt(account_number.getText().toString());
+                            bankk = bank.getSelectedItem().toString();
+                            branch = bank_branch.getSelectedItem().toString();
 
-                                    Fragment fragment = new CardListFragment();
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                            .replace(R.id.wallet_home_container, fragment)
-                                            .addToBackStack(null).commit();
 
-                                    dialog.dismiss();
-                                }
-
-                            }else if(response.code()==401){
-                                dialog.dismiss();
-                                Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
-
-                                //redirect to auth
-                                TokenAuthActivity.startAuth(getActivity(), true);
-                                getActivity().finishAffinity();
-                            }
                         }
 
-
-                        @Override
-                        public void onFailure(Call<CardResponse> call, Throwable t) {
-                            dialog.dismiss();
-
-                        }
-                    });
+                    }
                 }
             });
 
@@ -292,9 +281,56 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                     }
 
+                    if(submit.getText().toString().equalsIgnoreCase("update")){
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveBeneficiary(access_token,user_id,transactionTypeSp.getSelectedItem().toString(),bankk,branch,beneficiary_name,beneficiary_number);
+                        Call<CardResponse> call = APIClient.getWalletInstance().updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id);
+                        call.enqueue(new Callback<CardResponse>() {
+                            @Override
+                            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                                if (response.isSuccessful()) {
+                                    if (response.body().getStatus() == 0) {
+                                        dialog.dismiss();
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        String message = response.body().getMessage();
+                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                                        getActivity().getSupportFragmentManager().popBackStack();
+
+                                        Fragment fragment = new BeneficiariesListFragment();
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        fragmentManager.beginTransaction()
+                                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                                .replace(R.id.wallet_home_container, fragment)
+                                                .addToBackStack(null).commit();
+
+                                        dialog.dismiss();
+                                    }
+
+                                } else if (response.code() == 401) {
+                                    dialog.dismiss();
+                                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+
+                                    //redirect to auth
+                                    TokenAuthActivity.startAuth(getActivity(), true);
+                                    getActivity().finishAffinity();
+                                }
+                            }
+
+
+                            @Override
+                            public void onFailure(Call<CardResponse> call, Throwable t) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                    }else {
+
+
+                        /*************RETROFIT IMPLEMENTATION**************/
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -331,7 +367,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                             }
                         });
-
+                    }
 
 
                 }
