@@ -109,6 +109,7 @@ public class BeneficiariesListFragment extends Fragment {
                     try {
 
                         beneficiariesList = response.body().getBeneficiariesList();
+                        Log.d(TAG, "onResponse: beneficiaries"+beneficiariesList.size());
 
 
                     } catch (Exception e) {
