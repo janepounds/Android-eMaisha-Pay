@@ -55,7 +55,7 @@ public class NotificationHelper {
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setTicker(context.getString(R.string.app_name))
-                .setSmallIcon(R.drawable.emaishapay_logo_icon)
+                .setSmallIcon(R.drawable.logo_vector)
                 .setSound(notificationSound)
                 .setLights(Color.RED, 3000, 3000)
                 .setVibrate(new long[] { 1000, 1000 })
