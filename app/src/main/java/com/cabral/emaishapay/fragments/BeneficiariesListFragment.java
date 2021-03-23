@@ -100,7 +100,7 @@ public class BeneficiariesListFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<BeneficiaryResponse> call = APIClient.getWalletInstance().getBeneficiaries(access_token,request_id,category,"getCards");
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance().getBeneficiaries(access_token,"",request_id);
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
@@ -114,7 +114,6 @@ public class BeneficiariesListFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        Log.d(TAG,beneficiariesList.size()+"**********");
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         beneficiariesListAdapter = new BeneficiariesListAdapter(beneficiariesList,requireActivity().getSupportFragmentManager());

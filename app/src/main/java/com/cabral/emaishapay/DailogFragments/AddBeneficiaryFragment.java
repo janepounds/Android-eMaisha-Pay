@@ -36,6 +36,8 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.BeneficiariesListFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.external_transfer_model.Bank;
+import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
@@ -47,6 +49,8 @@ import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.Header;
 
 public class AddBeneficiaryFragment extends DialogFragment {
     LinearLayout bankLayout, mobileMoneyLayout;
@@ -54,7 +58,10 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Button submit;
     Context context;
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number;
+    Spinner bank,bank_branch;
     String beneficiary_name,beneficiary_number;
+    Bank[] BankList; BankBranch[] bankBranches;
+    String selected_bank_code,selected_branch_code,bankk,branch;
     public AddBeneficiaryFragment() {
         // Required empty public constructor
     }
@@ -87,6 +94,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
         bankLayout = view.findViewById(R.id.layout_bank);
         mobileMoneyLayout = view.findViewById(R.id.layout_mobile_money);
         transactionTypeSp = view.findViewById(R.id.sp_transaction_type);
+        bank = view.findViewById(R.id.sp_bank);
+        bank_branch = view.findViewById(R.id.sp_bank_branch);
 
         if(getArguments()!=null){
             //fill views and call update beneficiary
@@ -176,6 +185,42 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
         }
 
+        bank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(BankList!=null)
+                    for (Bank bank_: BankList) {
+                        if(bank_.getName().equalsIgnoreCase(bank.getSelectedItem().toString())){
+                            selected_bank_code=bank_.getCode();
+
+                        }
+                    }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+            });
+
+              bank_branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(BankList!=null)
+                        for (BankBranch branch: bankBranches) {
+                            if(branch.getBranchName().equalsIgnoreCase(bank_branch.getSelectedItem().toString())){
+                                selected_branch_code=branch.getBranchCode();
+                            }
+                        }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
         transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -224,21 +269,32 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     dialog.show();
 
                     String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
-                        beneficiary_name = beneficiary_name_mm.getText().toString();
-                        beneficiary_number ="0"+beneficiary_no.getText().toString();
+                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                        beneficiary_name = encrypter.encrypt(beneficiary_name_mm.getText().toString());
+                        beneficiary_number = encrypter.encrypt("0"+beneficiary_no.getText().toString());
+                        bankk = "Mobile Money Bank";
+                        branch = "";
 
                     }else{
-                        beneficiary_name = account_name.getText().toString();
-                        beneficiary_number = account_number.getText().toString();
+                        //encript account_name and number
+                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                         beneficiary_name = encrypter.encrypt(account_name.getText().toString());
+                        beneficiary_number = encrypter.encrypt(account_number.getText().toString());
+                        bankk = bank.getSelectedItem().toString();
+                        branch = bank_branch.getSelectedItem().toString();
+
+
 
                     }
 
+
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveBeneficiary(access_token,beneficary_type,beneficiary_name,beneficiary_number,request_id,category,"");
+                        Call<CardResponse> call = APIClient.getWalletInstance().saveBeneficiary(access_token,user_id,transactionTypeSp.getSelectedItem().toString(),bankk,branch,beneficiary_name,beneficiary_number);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
