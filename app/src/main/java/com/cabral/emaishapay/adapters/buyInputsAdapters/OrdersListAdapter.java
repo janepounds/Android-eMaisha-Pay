@@ -76,7 +76,7 @@ public class OrdersListAdapter extends RecyclerView.Adapter<OrdersListAdapter.My
             noOfProducts += orderDetails.getProducts().get(i).getProductsQuantity();
         }
 
-        switch (orderDetails.getOrdersStatus()) {
+        switch ((String) orderDetails.getOrdersStatus()) {
             case "Cancel":
                 holder.orderStatusBackground.setBackgroundResource(R.drawable.order_status_cancelled_background);
                 break;

@@ -12,7 +12,7 @@ public class OrderProducts {
     private Integer ordersProductsId;
     @SerializedName("orders_id")
     @Expose
-    private Integer ordersId;
+    private String ordersId;
     @SerializedName("products_id")
     @Expose
     private Integer productsId;
@@ -52,11 +52,11 @@ public class OrderProducts {
         this.ordersProductsId = ordersProductsId;
     }
 
-    public Integer getOrdersId() {
+    public String getOrdersId() {
         return ordersId;
     }
 
-    public void setOrdersId(Integer ordersId) {
+    public void setOrdersId(String ordersId) {
         this.ordersId = ordersId;
     }
 
