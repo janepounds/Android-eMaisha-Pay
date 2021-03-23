@@ -480,7 +480,6 @@
                                         android:layout_centerVertical="true"
                                         android:layout_gravity="center"
                                         android:background="@android:color/transparent"
-                                        android:entries="@array/spinner_first_security_questions"
                                         android:gravity="center"
                                         android:spinnerMode="dropdown" />
 
@@ -536,7 +535,6 @@
                                         android:layout_centerVertical="true"
                                         android:layout_gravity="center"
                                         android:background="@android:color/transparent"
-                                        android:entries="@array/spinner_second_security_questions"
                                         android:gravity="center"
                                         android:spinnerMode="dropdown" />
 
@@ -592,7 +590,6 @@
                                         android:layout_centerVertical="true"
                                         android:layout_gravity="center"
                                         android:background="@android:color/transparent"
-                                        android:entries="@array/spinner_third_security_questions"
                                         android:gravity="center"
                                         android:spinnerMode="dropdown" />
 

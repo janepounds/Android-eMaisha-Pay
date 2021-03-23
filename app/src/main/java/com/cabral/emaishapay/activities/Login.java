@@ -222,7 +222,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,"");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id);
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
@@ -245,22 +245,24 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
 
                         }
-                        for(int i=0;i<securityQns.size();i++){
-                            securityQnsSubList1.add(securityQns.get(0));
-                            securityQnsSubList1.add(securityQns.get(1));
-                            securityQnsSubList1.add(securityQns.get(2));
+                        for(int i=0;i<3;i++) {
+                            securityQnsSubList1.add(securityQns.get(i));
 
-                            securityQnsSubList2.add(securityQns.get(3));
-                            securityQnsSubList2.add(securityQns.get(4));
-                            securityQnsSubList2.add(securityQns.get(5));
+                        }for(int i=3;i<6;i++){
+                            securityQnsSubList2.add(securityQns.get(i));
 
-                            securityQnsSubList3.add(securityQns.get(6));
-                            securityQnsSubList3.add(securityQns.get(7));
-                            securityQnsSubList3.add(securityQns.get(8));
+
+                        }for(int i=6;i<9;i++){
+
+                            securityQnsSubList3.add(securityQns.get(i));
 
 
 
                         }
+
+
+
+
 
                         //set list in beneficiary spinner
                         ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);

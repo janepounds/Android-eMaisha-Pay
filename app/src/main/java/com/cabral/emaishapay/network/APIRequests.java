@@ -841,26 +841,12 @@ public interface APIRequests {
 
 
 
-    @FormUrlEncoded
-    @POST("wallet/save_security_qns")
-    Call<CardResponse>saveSecurityQns(
-            @Header("Authorization")String token,
-            @Field("beneficary_type") String beneficary_type,
-            @Field("beneficiary_name") String beneficiary_name,
-            @Field("beneficiary_number") String beneficiary_number,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id
 
-
-
-
-    );
 
     //get beneficiaries info
-    @GET("user/qns/get")
-    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id,
-                                            @Query("action_id")String action_id);
+    @GET("wallet/security-qns")
+    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id
+                                           );
 
 
     //change passowrd

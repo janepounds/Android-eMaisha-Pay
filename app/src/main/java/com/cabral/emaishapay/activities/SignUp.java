@@ -789,14 +789,8 @@ public class SignUp extends AppCompatActivity {
 
     //*********** Validate Security Qns Form Inputs ********//
     private boolean validateSecurityQns() {
-      if (binding.spFirstSecurityQn.getSelectedItem().toString().equals("select")) {
-        Toast.makeText(this, "Please select first security question", Toast.LENGTH_SHORT).show();
-        return false;
-    } else if (binding.spSecondSecurityQn.getSelectedItem().toString().equalsIgnoreCase("select")) {
-          Toast.makeText(this, "Please select second security question", Toast.LENGTH_SHORT).show();
-          return false;
-      }
-      else if (binding.etxtFirstSecurityQn.getText().toString().isEmpty()) {
+
+       if (binding.etxtFirstSecurityQn.getText().toString().isEmpty()) {
           Toast.makeText(this, "Please enter 1st security question", Toast.LENGTH_SHORT).show();
           return false;
       }else if (binding.etxtSecondSecurityQn.getText().toString().isEmpty()) {
@@ -844,9 +838,8 @@ public class SignUp extends AppCompatActivity {
 
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id,"");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id);
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
@@ -869,27 +862,28 @@ public class SignUp extends AppCompatActivity {
 
 
                         }
-                        for(int i=0;i<securityQns.size();i++){
-                            securityQnsSubList1.add(securityQns.get(0));
-                            securityQnsSubList1.add(securityQns.get(1));
-                            securityQnsSubList1.add(securityQns.get(2));
+                        for(int i=0;i<3;i++) {
+                            securityQnsSubList1.add(securityQns.get(i));
 
-                            securityQnsSubList2.add(securityQns.get(3));
-                            securityQnsSubList2.add(securityQns.get(4));
-                            securityQnsSubList2.add(securityQns.get(5));
+                        }for(int i=3;i<6;i++){
+                            securityQnsSubList2.add(securityQns.get(i));
 
-                            securityQnsSubList3.add(securityQns.get(6));
-                            securityQnsSubList3.add(securityQns.get(7));
-                            securityQnsSubList3.add(securityQns.get(8));
+
+                        }for(int i=6;i<9;i++){
+
+                            securityQnsSubList3.add(securityQns.get(i));
 
 
 
                         }
 
+
+
+
                         //set list in beneficiary spinner
-                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
-                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList2);
-                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList3);
+                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, securityQnsSubList1);
+                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, securityQnsSubList2);
+                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, securityQnsSubList3);
                         binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
                         binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
                         binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
