@@ -361,7 +361,7 @@ public interface APIRequestsForBuyInputs {
     Call<OrderData> updatestatus(
                                 @Header("Authorization") String token,
                                 @Field("customers_id") String customers_id,
-                                @Field("orders_id") int orders_id);
+                                @Field("orders_id") String orders_id);
 
     @FormUrlEncoded
     @POST("getcoupon")

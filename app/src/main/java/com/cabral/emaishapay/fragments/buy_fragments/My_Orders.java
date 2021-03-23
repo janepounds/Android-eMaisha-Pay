@@ -168,7 +168,7 @@ public class My_Orders extends Fragment {
 
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
+
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .getOrders
                         (access_token,
@@ -227,7 +227,7 @@ public class My_Orders extends Fragment {
                 .updatestatus
                         (access_token,
                                 customerID,
-                                orderID
+                                orderID+""
                         );
         
         call.enqueue(new Callback<OrderData>() {

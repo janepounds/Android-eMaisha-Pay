@@ -14,7 +14,7 @@ public class OrderDetails implements Parcelable
 
     @SerializedName("orders_id")
     @Expose
-    private long ordersId;
+    private String ordersId;
     @SerializedName("total_tax")
     @Expose
     private String totalTax;
@@ -238,7 +238,7 @@ public class OrderDetails implements Parcelable
     };
 
     protected OrderDetails(Parcel in) {
-        this.ordersId = ((long) in.readValue((long.class.getClassLoader())));
+        this.ordersId = ((String) in.readValue((String.class.getClassLoader())));
         this.totalTax = ((String) in.readValue((String.class.getClassLoader())));
         this.customersId = ((long) in.readValue((long.class.getClassLoader())));
         this.customersName = ((String) in.readValue((String.class.getClassLoader())));
@@ -313,18 +313,14 @@ public class OrderDetails implements Parcelable
     public OrderDetails() {
     }
 
-    public long getOrdersId() {
+    public String getOrdersId() {
         return ordersId;
     }
 
-    public void setOrdersId(long ordersId) {
+    public void setOrdersId(String ordersId) {
         this.ordersId = ordersId;
     }
 
-    public OrderDetails withOrdersId(long ordersId) {
-        this.ordersId = ordersId;
-        return this;
-    }
 
     public String getTotalTax() {
         return totalTax;
