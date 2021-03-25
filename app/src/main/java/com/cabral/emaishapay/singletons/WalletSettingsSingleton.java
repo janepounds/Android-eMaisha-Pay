@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class WalletSettingsSingleton {
-    private static final com.cabral.emaishapay.singletons.WalletSettingsSingleton ourInstance = new com.cabral.emaishapay.singletons.WalletSettingsSingleton();
+    private static final WalletSettingsSingleton ourInstance = new WalletSettingsSingleton();
 
     private String dateFormat ="dd/LL/yyyy";
     private String currency ="UGX";
@@ -16,7 +16,7 @@ public class WalletSettingsSingleton {
     private String id;
     private String userId;
 
-    public static com.cabral.emaishapay.singletons.WalletSettingsSingleton getInstance() {
+    public static WalletSettingsSingleton getInstance() {
         return ourInstance;
     }
 
