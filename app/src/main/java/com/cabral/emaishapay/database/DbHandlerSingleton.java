@@ -1558,11 +1558,11 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     public void insertDefaultAddress(String customer_id,String entry_first_name,String entry_last_name,String entry_street_address,String entry_postal_code,String entry_city,String entry_country_id,String entry_contact,String latitude,String longitude,String is_default) {
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
-        SQLiteDatabase db = BuyInputsDB_Manager.getInstance().openDatabase();
+        this.database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(CUSTOMER_ID,      customer_id);
+        values.put(ENTRY_CUSTOMER_ID,      customer_id);
         values.put(ENTRY_FIRST_NAME,      entry_first_name);
         values.put(ENTRY_LAST_NAME,      entry_last_name);
         values.put(ENTRY_STREET_ADDRESS,      entry_street_address);
@@ -1574,10 +1574,10 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
         values.put(ENTRY_CONTACT,      entry_contact);
         values.put(IS_DEFAULT,      is_default);
 
-        db.insert(TABLE_DEFAULT_ADDRESS, null, values);
+        database.insert(TABLE_DEFAULT_ADDRESS, null, values);
 
         // close the Database
-        BuyInputsDB_Manager.getInstance().closeDatabase();
+        database.close();
     }
 
 
