@@ -51,6 +51,13 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash);
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+
         overridePendingTransition(R.anim.slide_down, R.anim.bt_slide_in_up);
         MyAppPrefsManager prefsManager = new MyAppPrefsManager(this);
         Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
@@ -211,7 +218,8 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
             Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
             if (!prefsManager.isUserLoggedIn()) {
-                startActivity(new Intent(getBaseContext(), com.cabral.emaishapay.activities.Login.class));
+                startActivity(new Intent(getBaseContext(), com.cabral.emaishapay.activities.OnBoardingActivity.class));
+                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
             } else {
                 startActivity(new Intent(getBaseContext(), WalletHomeActivity.class));
             }
