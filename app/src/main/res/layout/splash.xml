@@ -15,7 +15,7 @@
         android:alpha=".05"/>
     <ImageView
         android:id="@+id/logo"
-        android:src="@drawable/new_logo"
+        android:src="@drawable/logo_vector"
         android:layout_width="138.88pt"
         android:paddingBottom="@dimen/dimen_20dp"
         android:layout_height="140dp"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="W E L C O M E   T O"
-            android:textColor="#110D47"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/logo_title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="eMaisha Pay"
-            android:textColor="#110D47"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,33 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp">
 
+        <TextView
+            android:id="@+id/signin1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="We are busy changing the world, "
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signin2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signin1"
+            android:layout_centerHorizontal="true"
+            android:text=" will you join us? "
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
         <LinearLayout
             android:layout_alignParentBottom="true"
