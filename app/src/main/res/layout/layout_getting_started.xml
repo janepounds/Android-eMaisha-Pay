@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/ic_new_bg_gradient">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@drawable/ic_new_bg_pattern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:alpha=".05"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/new_logo"
+            android:layout_width="138.88pt"
+            android:paddingBottom="@dimen/dimen_20dp"
+            android:layout_height="140dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="70dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_app_emaisha_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo">
+
+            <TextView
+                android:id="@+id/logo_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="W E L C O M E   T O"
+                android:textColor="#110D47"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/logo_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/logo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="eMaisha Pay"
+                android:textColor="#110D47"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pay \nManage \nGrow..."
+            android:textColor="#fff"
+            android:textSize="56sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_below="@id/layout_app_emaisha_pay"/>
+
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="An Easy app to manage all your payment, Shopping and finance related needs"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:layout_below="@id/title2"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/get_started_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:background="@drawable/round_button_dark_green"
+            android:text="Get Started"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/title3"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/get_started_btn">
+            <TextView
+                android:id="@+id/signin1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have account? "
+                android:textColor="#110D48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/signin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Sign in "
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/signin1"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -21,11 +21,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic,android:theme">
+        <activity android:name=".activities.OnBoardingActivity"></activity>
         <activity
             android:name=".activities.WalletBuySellActivity"
             android:label="@string/title_activity_wallet_buy_sell"
-            android:windowSoftInputMode="adjustPan"/>
-
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.ConfirmActivity" />
 
         <meta-data
@@ -68,12 +68,10 @@
         <activity
             android:name=".activities.SignUp"
             android:label="Sign UP" />
-
-        <activity android:name=".activities.ShopActivity"
+        <activity
+            android:name=".activities.ShopActivity"
             android:label="Shop"
-            android:windowSoftInputMode="adjustPan"/>
-
-
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.Login"
             android:label="Sign In" /> <!-- Firebase Notifications -->
@@ -84,14 +82,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-
-        <!--Google MAP API key-->
-
+        </service> <!-- Google MAP API key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
-
     </application>
 
 </manifest>
