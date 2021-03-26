@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient_splash">
+    android:background="@drawable/ic_new_bg_gradient">
 
-
+    <ImageView
+        android:src="@drawable/ic_new_bg_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:alpha=".05"/>
     <ImageView
         android:id="@+id/logo"
         android:src="@drawable/new_logo"
-        android:layout_width="match_parent"
+        android:layout_width="138.88pt"
         android:paddingBottom="@dimen/dimen_20dp"
         android:layout_height="140dp"
         android:layout_centerInParent="true"/>
@@ -22,29 +27,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logo">
 
-        <ImageView
-            android:id="@+id/smaller_logo"
-            android:layout_width="23dp"
-            android:layout_height="20dp"
-            android:src="@drawable/logo_vector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/logo_title"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"/>
-
+        <TextView
+            android:id="@+id/logo_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W E L C O M E   T O"
+            android:textColor="#110D47"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/logo_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
         <TextView
             android:id="@+id/logo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Maisha Pay"
+            android:text="eMaisha Pay"
             android:textColor="#110D47"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:alpha=".95"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
