@@ -47,6 +47,7 @@ import com.flutterwave.raveutils.verification.AVSVBVFragment;
 import com.flutterwave.raveutils.verification.OTPFragment;
 import com.flutterwave.raveutils.verification.PinFragment;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -133,11 +134,26 @@ public class PurchasePreview extends DialogFragment implements
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),getContext()));
-                Float PurchaseCharges=0F;
-                if(balance >= Double.parseDouble( ""+(WalletTransactionInitiation.getInstance().getAmount())+PurchaseCharges) ){
-                    processPayment();
+                if(mechantNameTextView.getText().toString().equalsIgnoreCase("unknown merchant")){
+
+                    Snackbar.make(errorTextView,"Unknown Merchant",Snackbar.LENGTH_SHORT).show();
+                    errorTextView.setVisibility(View.VISIBLE);
+
+                }else {
+
+                    double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
+                    Float PurchaseCharges = 0F;
+                    double amount = WalletTransactionInitiation.getInstance().getAmount() + PurchaseCharges;
+                    if (balance >= amount) {
+                        processPayment();
+
+                    } else {
+
+                        Snackbar.make(errorTextView,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
+                        errorTextView.setVisibility(View.VISIBLE);
+                    }
                 }
+
             }
         });
 
@@ -174,11 +190,11 @@ public class PurchasePreview extends DialogFragment implements
 
                     dialog.dismiss();
                 }else if(response.code()==412) {
-                    String businessName = null;
-                    businessName = response.body().getMessage();
-                    mechantNameTextView.setText(businessName);
-                    errorTextView.setText(businessName);
+//                    businessName = response.body().getMessage();
+                    mechantNameTextView.setText("Unknown Merchant");
+                    errorTextView.setText("Unknown Merchant");
                     errorTextView.setVisibility(View.VISIBLE);
+                    return;
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
@@ -208,7 +224,6 @@ public class PurchasePreview extends DialogFragment implements
     }
 
     public void processPayment(){
-
         String methodOfPayment= WalletTransactionInitiation.getInstance().getMethodOfPayment();
         if(methodOfPayment.equalsIgnoreCase("wallet")){
           processWalletPayment();

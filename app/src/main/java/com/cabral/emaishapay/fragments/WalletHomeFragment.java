@@ -470,10 +470,13 @@ public class WalletHomeFragment extends Fragment {
                   commisionbalance = response.body().getData().getCommission();
                   totalBalance = response.body().getData().getTotalBalance();
 
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, balance+"");
-                    editor.apply();
 
+
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, balance+"");
+//                    editor.apply();
+                    //update wallet balance
+                    WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), balance+"", context);
                   //set balance and commision
                     binding.totalBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(totalBalance));
                     binding.walletBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(balance));

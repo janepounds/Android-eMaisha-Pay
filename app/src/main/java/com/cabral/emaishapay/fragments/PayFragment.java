@@ -102,13 +102,13 @@ public class PayFragment extends Fragment {
             couponAmout= view.findViewById(R.id.txt_wallet_bill_coupon);
             layout_coupon= view.findViewById(R.id.layout_coupon);
             mechantIdEdt = view.findViewById(R.id.edt_purchase_mechant_id);
-            saveBtn = view.findViewById(R.id.btn_save);
+            saveBtn = view.findViewById(R.id.btn_save_pay_merchant);
             text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
             layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
 
-        spinner_select_card = view.findViewById(R.id.spinner_select_card);
+        spinner_select_card = view.findViewById(R.id.spinner_select_card_wallet_pay);
         card_details_layout = view.findViewById(R.id.card_details_layout);
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
 
@@ -226,17 +226,17 @@ public class PayFragment extends Fragment {
 
     public void processPayment(){
         float amount = Float.parseFloat(totalAmountEdt.getText().toString());
-        if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+        methodOfPayment= spPaymentMethod.getSelectedItem().toString();
+        if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
             Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-            return;
-        }else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+            return ;
+        }else if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
 
             cardNo = cardNumberEdt.getText().toString();
             cvv = cvvEdt.getText().toString();
             expiry = expiryEdt.getText().toString();
             mobileNo = mobileNumberEdt.getText().toString();
         }
-        methodOfPayment= spPaymentMethod.getSelectedItem().toString();
 
         if(methodOfPayment.equals("Wallet"))
             validateWalletPurchase();
@@ -294,8 +294,8 @@ public class PayFragment extends Fragment {
     }
 
     private boolean validateWalletPurchase() {
-        if (Integer.parseInt(mechantIdEdt.getText().toString().trim())<0) {
-            totalAmountEdt.setError(getString(R.string.invalid_number));
+        if (mechantIdEdt.getText().toString().trim().isEmpty()) {
+            mechantIdEdt.setError("Enter merchant id");
             return false;
         }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
             totalAmountEdt.setError(getString(R.string.invalid_number));

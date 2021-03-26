@@ -66,6 +66,9 @@ public class ShopProductsFragment extends Fragment {
     private Context context;
     private List<Manufacturer> manufacturers;
     ArrayList<HashMap<String, String>> products;
+    public ShopProductsFragment() {
+
+    }
 
     public ShopProductsFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
         this.fm = supportFragmentManager;
