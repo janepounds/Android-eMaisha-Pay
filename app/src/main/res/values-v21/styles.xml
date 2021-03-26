@@ -5,7 +5,7 @@
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -13,7 +13,7 @@
         <item name="colorPrimary">@color/colorAccentGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 </resources>
