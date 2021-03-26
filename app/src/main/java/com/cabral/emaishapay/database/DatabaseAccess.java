@@ -267,7 +267,8 @@ public class DatabaseAccess {
         values.put("product_weight_unit", weight_unit);
         values.put("product_weight", product_weight);
 
-        long check = database.insert("products", null, values);
+        //long check = database.insert("products", null, values);
+        long check = database.insertWithOnConflict("products", null, values,SQLiteDatabase.CONFLICT_IGNORE);
         database.close();
 
         //if data insert success, its return 1, if failed return -1
