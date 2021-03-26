@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,11 +21,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.models.shop_model.ProductResponse;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +42,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import es.dmoral.toasty.Toasty;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductPreviewDialog extends DialogFragment {
 
@@ -101,28 +110,51 @@ public class ProductPreviewDialog extends DialogFragment {
                         .setCancelable(false)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                //delete from online
+                                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                                String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,productData.get("unique_id"), userId);
+                                call.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful()) {
+
+                                            //delete locally
 
 
-                                boolean deleteProduct = dbHandler.deleteProduct(productData.get("unique_id"));
+                                            boolean deleteProduct = dbHandler.deleteProduct(productData.get("unique_id"));
 
-                                if (deleteProduct) {
-                                    Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
+                                            if (deleteProduct) {
+                                                Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
 
-                                   //redirect to product List
-                                    getActivity().getSupportFragmentManager().popBackStack();
+                                                //redirect to product List
+                                                getActivity().getSupportFragmentManager().popBackStack();
 
-                                    Fragment fragment = new ShopProductsFragment();
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                            .replace(R.id.wallet_home_container, fragment)
-                                            .addToBackStack(null).commit();
+                                                Fragment fragment = new ShopProductsFragment();
+                                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                                fragmentManager.beginTransaction()
+                                                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
+                                                        .replace(R.id.wallet_home_container, fragment)
+                                                        .addToBackStack(null).commit();
 
 
-                                } else {
-                                    Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
-                                }
-                                dialog.cancel();
+                                            } else {
+                                                Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
+                                            }
+                                            dialog.cancel();
+
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                    }
+                                });
+
+
 
                             }
                         })
