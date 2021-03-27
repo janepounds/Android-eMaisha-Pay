@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +22,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.fragments.CardListFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
@@ -48,7 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductPreviewDialog extends DialogFragment {
-
+    private static final String TAG = "ProductPreviewDialog";
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     private Context context;
     private HashMap<String, String>  productData;
@@ -113,29 +116,25 @@ public class ProductPreviewDialog extends DialogFragment {
                                 //delete from online
                                 String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
                                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,productData.get("unique_id"), userId);
+                                String product_id = productData.get("product_id");
+                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                         if (response.isSuccessful()) {
 
                                             //delete locally
+                                            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
+                                            databaseAccess.open();
 
-
-                                            boolean deleteProduct = dbHandler.deleteProduct(productData.get("unique_id"));
+                                            boolean deleteProduct = databaseAccess.deleteProduct(product_id);
 
                                             if (deleteProduct) {
                                                 Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
 
                                                 //redirect to product List
-                                                getActivity().getSupportFragmentManager().popBackStack();
-
-                                                Fragment fragment = new ShopProductsFragment();
-                                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                                fragmentManager.beginTransaction()
-                                                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                                        .replace(R.id.wallet_home_container, fragment)
-                                                        .addToBackStack(null).commit();
+                                                Intent intent = new Intent(getContext(), ShopActivity.class);
+                                                startActivity(intent);
 
 
                                             } else {

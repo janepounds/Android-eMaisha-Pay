@@ -45,6 +45,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -479,9 +480,8 @@ public interface APIRequestsForBuyInputs {
     Call<MerchantData> getMerchantsProductData(@Query("shopID") String shopID, @Query("productlist") String productlist);
 
 
-    @FormUrlEncoded
-    @POST("deleteMerchantProduct")
-    Call<ResponseBody>deleteMerchantProduct( @Header("Authorization") String token,@Field("product_id")String product_id,@Field("wallet_id")String user_id);
+    @DELETE("deleteMerchantProduct")
+    Call<ResponseBody>deleteMerchantProduct( @Header("Authorization") String token,@Query("product_id") String product_id,@Query("wallet_id") String user_id);
 
 
 }

@@ -50,6 +50,7 @@ import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
@@ -93,8 +94,9 @@ public class AddProductFragment extends DialogFragment {
     Integer selectedManufacturersID;
     Integer selectedCategoryID;
     String selectedSupplierID;
+    double selected_weight;
 
-    String selectectedCategoryName, selectedProductName, selectedManufacturerName;
+    String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units,product_description;
     private List<Category> categories;
     private List<Product> products;
     private List<String> catNames;
@@ -639,6 +641,9 @@ public class AddProductFragment extends DialogFragment {
                                     selectedProductID = products.get(i).getProducts_id();
                                     selected_measure_id= products.get(i).getMeasure_id();
                                     selectedProductName = products.get(i).getProducts_name()+ " "+ products.get(i).getProducts_weight()+ products.get(i).getProducts_weight_unit();
+                                    selected_weight = products.get(i).getProducts_weight();
+                                    selected_weight_units = products.get(i).getProducts_weight_unit();
+
                                     //measurement_layout.setVisibility(View.GONE);
                                     //spn_measurements_layout.setVisibility(View.VISIBLE);
                                     etxtproductMeasurement.setText(products.get(i).getProducts_weight()+"");
@@ -797,24 +802,29 @@ public class AddProductFragment extends DialogFragment {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
 
+                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
+                    databaseAccess.open();
+
                     //save product info in the database
-                    boolean check = dbHandler.addProduct(
+                    boolean check = databaseAccess.addProduct(
                             unique_id,
-                            selected_measure_id,
-                            userId,
-                            selectedProductID+"",
                             product_name,
                             product_code,
-                            product_category_id,
+                            product_category_name,
+                            "",
                             product_buy_price,
                             product_sell_price,
                             product_stock,
                             product_supplier,
                             encodedImage,
-                            units,
-                            manufacturer_name,
-                            product_category_name,sync_status
+                            selected_weight_units,
+                            selected_weight+""
+
+
                            );
+
+
+
 
 
                     if (check) {
