@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -268,45 +269,30 @@ public class TransferMoney extends Fragment {
             }
         });
         addMoneyImg.setOnClickListener(v -> {
-            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
+           // double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
 
             String phoneNumber = "0"+etMobileMoneyNumber.getText().toString();
             String amountEntered = etAmount.getText().toString();
             float amount = Float.parseFloat(amountEntered);
+            String beneficiary_name =etBeneficiaryName.getText().toString();//required for Mobile Money
+            String account_name = etAccountName.getText().toString();//required for Bank
+            String account_number = etAccountNumber.getText().toString();//required for Bank
 
             if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getSelectedItem().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
 
-                String account_name = etAccountName.getText().toString();
-                String account_number = etAccountNumber.getText().toString();
-
-                WalletTransactionInitiation.getInstance().setAmount(amount);
-                WalletTransactionInitiation.getInstance().setAccountNumber(account_number);
-                WalletTransactionInitiation.getInstance().setAccount_name(account_name);
-                WalletTransactionInitiation.getInstance().setMethodOfPayment("Bank");
-                WalletTransactionInitiation.getInstance().setBankCode(selected_bank_code);
-                WalletTransactionInitiation.getInstance().setBankBranch(selected_branch_code);
-
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account") &&  validateMobileMoneyTransFerForm()){
-                WalletTransactionInitiation.getInstance().setAmount(amount);
-                WalletTransactionInitiation.getInstance().setMobileNumber(phoneNumber);
-                WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Account");
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
                 WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") &&  validateMobileMoneyTransFerForm()){
 
-                String beneficiary_name =etBeneficiaryName.getText().toString();
-                WalletTransactionInitiation.getInstance().setAmount(amount);
-                WalletTransactionInitiation.getInstance().setMobileNumber(phoneNumber);
-                WalletTransactionInitiation.getInstance().setAccount_name(beneficiary_name);
-                WalletTransactionInitiation.getInstance().setMethodOfPayment("Mobile Money");
 
             }else{
                 Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
             }
 
-            if (balance >= amount ) {
+           // if (balance >= amount ) {
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev = fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -316,12 +302,26 @@ public class TransferMoney extends Fragment {
 
 
                 // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new com.cabral.emaishapay.DailogFragments.ConfirmTransfer(context,WalletTransactionInitiation.getInstance());
+                DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                Bundle args=new Bundle();
+                args.putString("methodOfPayment",spTransferTo.getSelectedItem().toString());
+                args.putString("phoneNumber",phoneNumber);
+                args.putDouble("amount",amount);
+
+                args.putString("beneficiary_name",beneficiary_name);
+                args.putString("account_name",account_name);
+                args.putString("account_number",account_number);
+
+                args.putString("bankCode",selected_bank_code);
+                args.putString("bankBranch",selected_branch_code);
+
+                transferPreviewDailog.setArguments(args);
                 transferPreviewDailog.show(ft, "dialog");
-            } else {
-                Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
-                Log.e("Error", "Insufficient Account balance!");
-            }
+//            } else {
+//                Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
+//                Log.e("Error", "Insufficient Account balance!");
+//            }
 
 
         });

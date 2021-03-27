@@ -63,9 +63,8 @@ public class ConfirmTransfer extends DialogFragment {
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
 
-    public ConfirmTransfer(Context context, WalletTransactionInitiation instance) {
+    public ConfirmTransfer(Context context) {
         this.activity = context;
-        WalletTransactionInitiation.setPurchase(instance);
     }
 
 
@@ -115,8 +114,14 @@ public class ConfirmTransfer extends DialogFragment {
 
         dialogLoader = new DialogLoader(activity);
 
-        double amount=WalletTransactionInitiation.getInstance().getAmount();
-        String phoneNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
+        String phoneNumber= getArguments().getString("phoneNumber");
+        String methodOfTransfer=getArguments().getString("methodOfPayment");
+        double amount=getArguments().getDouble("amount");
+        String beneficiary_name = getArguments().getString("beneficiary_name");
+        String account_name = getArguments().getString("account_name");
+        String account_number = getArguments().getString("account_number");
+        String branch=getArguments().getString("bankBranch");
+        String bankCode=getArguments().getString("bankCode");
 
         totalTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(amount));
 
@@ -130,7 +135,6 @@ public class ConfirmTransfer extends DialogFragment {
 
         datetimeTextView.setText(currentDateandTime);
         receiverPhoneNumber.setText(phoneNumber);
-        String methodOfTransfer=WalletTransactionInitiation.getInstance().getMethodOfPayment();
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +145,7 @@ public class ConfirmTransfer extends DialogFragment {
                     String beneficiary_name = WalletTransactionInitiation.getInstance().getAccount_name();
                     mobileMoneyTransfer(beneficiary_name, "" + amount, phoneNumber);
                 }else if(methodOfTransfer.equalsIgnoreCase("Bank")){
-                    String account_name=WalletTransactionInitiation.getInstance().getAccount_name();
-                    String account_number=WalletTransactionInitiation.getInstance().getAccountNumber();
-                    String branch=WalletTransactionInitiation.getInstance().getBankBranch();
-                    String bankCode=WalletTransactionInitiation.getInstance().getBankCode();
+
                     queueBankTransfer(account_name,""+amount,account_number,branch,bankCode);
                 }else if(methodOfTransfer.equalsIgnoreCase("eMaisha Card")){
 
@@ -160,13 +161,11 @@ public class ConfirmTransfer extends DialogFragment {
             discount_layount.setVisibility(View.GONE);
         }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")) {
             getFlutterwaveTransferFee(""+amount,"mobilemoney");
-            String beneficiary_name = WalletTransactionInitiation.getInstance().getAccount_name();
             receiverNameTextView.setText(beneficiary_name);
             charges_layount.setVisibility(View.VISIBLE);
             discount_layount.setVisibility(View.GONE);
         }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
             getFlutterwaveTransferFee(""+amount,"account");
-            String account_name = WalletTransactionInitiation.getInstance().getAccount_name();
             receiverNameTextView.setText(account_name);
             receiverPhoneNumber.setVisibility(View.GONE);
             charges_layount.setVisibility(View.VISIBLE);
@@ -399,7 +398,7 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         /*****RETROFIT IMPLEMENTATION*****/
-        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, requireContext());
+        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, requireContext());
         //encript service code
         CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, requireContext().getString(R.string.iv));
         String service_code_encripted = encrypter.encrypt(service_code);
