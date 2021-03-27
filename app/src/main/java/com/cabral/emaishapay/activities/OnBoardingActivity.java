@@ -55,6 +55,14 @@ public class OnBoardingActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.next_btn);
         gettingStartedLayout = findViewById(R.id.getting_started);
 
+        signInLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OnBoardingActivity.this, Login.class));
+                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+            }
+        });
+
         //Call adapter
         sliderAdapter = new com.cabral.emaishapay.adapters.SliderAdapter(this);
         viewPager.setAdapter(sliderAdapter);

@@ -185,7 +185,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:background="@drawable/edittext_corner"
-                            android:inputType="numberDecimal"
+                            android:inputType="text"
                             android:paddingStart="10dp"
                             android:textColor="@color/textColor"
                             android:layout_marginTop="5dp" />
@@ -282,7 +282,7 @@
                             android:orientation="horizontal">
 
                             <Spinner
-                                android:id="@+id/spinner_select_card"
+                                android:id="@+id/spinner_select_card_wallet_pay"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerVertical="true"
@@ -548,7 +548,7 @@
                     android:paddingRight="@dimen/dimen_10dp">
 
                     <Button
-                        android:id="@+id/btn_save"
+                        android:id="@+id/btn_save_pay_merchant"
                         style="@style/Button_DW"
                         android:layout_width="match_parent"
                         android:layout_height="40dip"

@@ -479,4 +479,9 @@ public interface APIRequestsForBuyInputs {
     Call<MerchantData> getMerchantsProductData(@Query("shopID") String shopID, @Query("productlist") String productlist);
 
 
+    @FormUrlEncoded
+    @POST("deleteMerchantProduct")
+    Call<ResponseBody>deleteMerchantProduct( @Header("Authorization") String token,@Field("product_id")String product_id,@Field("wallet_id")String user_id);
+
+
 }

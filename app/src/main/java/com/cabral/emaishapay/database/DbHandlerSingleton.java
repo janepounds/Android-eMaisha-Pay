@@ -906,9 +906,8 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
     //delete product
     public boolean deleteProduct(String product_id) {
-
-
-        long check = database.delete(PRODUCTS_TABLE_NAME, PRODUCT_ID + " =? ", new String[]{product_id});
+        this.database = this.getWritableDatabase();
+        long check = database.delete(PRODUCTS_TABLE_NAME, PRODUCT_UNIQUE_ID + " =? ", new String[]{product_id});
         long check2 = database.delete("product_cart", "product_id=?", new String[]{product_id});
 
         database.close();
@@ -925,7 +924,7 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
     //delete order
     public boolean deleteOrder(String invoice_id) {
 
-
+        this.database = this.getWritableDatabase();
         long check = database.delete(ORDER_LIST_TABLE_NAME, ORDER_ID + "=?", new String[]{invoice_id});
         long check2 = database.delete("order_details", "invoice_id=?", new String[]{invoice_id});
 
