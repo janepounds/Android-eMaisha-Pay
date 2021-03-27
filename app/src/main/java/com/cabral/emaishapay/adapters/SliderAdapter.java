@@ -29,15 +29,23 @@ public class SliderAdapter extends PagerAdapter {
     int images[] ={
 
 
-            R.drawable.ic_bag,
-            R.drawable.onboarding_2,
-            R.drawable.ic_truck,
+            R.drawable.ic_onboarding_pay_img,
+            R.drawable.ic_onboarding_credit_img,
+            R.drawable.ic_onboarding_shop_img,
             R.drawable.onboarding_2
     };
+    int titles[]={
+           R.string.pay,
+            R.string.get_credit,
+            R.string.shop,
+            R.string.actionAbout
+
+
+    };
     int descriptions[]={
-           R.string.add_category,
-            R.string.accept_payment,
-            R.string.actionRateApp,
+            R.string.pay_description,
+            R.string.get_credit_description,
+            R.string.shop_description,
             R.string.actionAbout
 
 
@@ -65,10 +73,12 @@ public class SliderAdapter extends PagerAdapter {
         //hooks
         ImageView imageView = view.findViewById(R.id.slider_image);
         TextView desc = view.findViewById(R.id.slider_desc);
+        TextView title = view.findViewById(R.id.slider_title);
         ImageView imageViewBg = view.findViewById(R.id.slider_image_bg);
 
         imageView.setImageResource(images[position]);
         desc.setText(descriptions[position]);
+        title.setText(titles[position]);
 
         container.addView(view);
 
