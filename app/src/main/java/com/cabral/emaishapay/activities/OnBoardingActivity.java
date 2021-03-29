@@ -55,6 +55,15 @@ public class OnBoardingActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.next_btn);
         gettingStartedLayout = findViewById(R.id.getting_started);
 
+        letsGetStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OnBoardingActivity.this, GetStartedSignUpActivity.class));
+                overridePendingTransition(R.anim.bt_slide_in_up, R.anim.bt_slide_out_down);
+            }
+        });
+
+
         signInLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

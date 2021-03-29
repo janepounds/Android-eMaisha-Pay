@@ -263,14 +263,14 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 //                processLogin(password,ConfirmActivity.phonenumber);
             }
         });
-        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
-            }
-        });
+//        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                otpDialog.dismiss();
+//                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
+//                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+//            }
+//        });
         otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
 

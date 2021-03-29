@@ -70,6 +70,12 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         context=com.cabral.emaishapay.activities.Login.this;
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(context).build();
         // noInternetDialog.show();

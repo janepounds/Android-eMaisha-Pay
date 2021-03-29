@@ -6,8 +6,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/ic_new_bg_gradient"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <ScrollView
@@ -19,8 +20,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -28,7 +28,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_new_bg_pattern"
-                    android:fitsSystemWindows="true"
                     android:alpha=".05">
 
                 </RelativeLayout>
@@ -54,7 +53,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/logo_bg"
-                    android:layout_margin="28dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="28dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
                     android:background="@drawable/background_custom_dialog"
@@ -73,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="20dp"
                         android:text="Please login to your account."
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
@@ -119,9 +120,9 @@
                                     android:gravity="center"
                                     android:text="+256"
                                     android:textColor="#303030"
-                                    android:textSize="14sp"
+                                    android:textSize="12sp"
                                     android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginEnd="6dp"
                                     app:drawableEndCompat="@drawable/ic_chevron_down"
                                     app:drawableStartCompat="@drawable/ic_ug_flag" />
 
@@ -139,8 +140,8 @@
                                     android:background="@android:color/transparent"
                                     android:inputType="phone"
                                     android:maxLength="9"
-                                    android:padding="12dp"
-                                    android:textSize="14sp"
+                                    android:padding="5dp"
+                                    android:textSize="12sp"
                                     android:hint="Enter your mobile number"/>
 
                             </LinearLayout>
@@ -180,8 +181,7 @@
                             android:layout_width="192dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dip"
-                            android:padding="2dp"
-                            android:background="@android:drawable/dialog_holo_light_frame">
+                            android:padding="2dp">
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/loginBtn"
@@ -287,7 +287,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/login_form_layout"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -313,8 +313,9 @@
 
             </RelativeLayout>
 
-        </ScrollView>
 
+
+        </ScrollView>
     </RelativeLayout>
 
 </layout>
