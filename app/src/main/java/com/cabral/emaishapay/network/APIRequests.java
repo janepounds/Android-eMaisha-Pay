@@ -152,6 +152,7 @@ public interface APIRequests {
                                                       );
 
     // //wallet transaction list
+    @FormUrlEncoded
     @POST("wallet/transactions/list")
     Call<WalletTransactionResponse> transactionList(@Header("Authorization") String token,
                                                     @Field("request_id") String request_id,
