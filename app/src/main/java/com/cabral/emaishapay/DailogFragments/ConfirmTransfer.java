@@ -420,7 +420,7 @@ public class ConfirmTransfer extends DialogFragment {
                     text.setText("You have transferred UGX " + NumberFormat.getInstance().format(amount) + " to " + businessName);
 
 
-                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
@@ -509,7 +509,7 @@ public class ConfirmTransfer extends DialogFragment {
                     text.setText("Transferred UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" to "+WalletTransactionInitiation.getInstance().getAccount_name());
 
 
-                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
