@@ -67,6 +67,11 @@ public class WalletTransactionsListFragment extends Fragment {
         walletCashOut = view.findViewById(R.id.wallet_cash_out);
 
         if(appTitle.equalsIgnoreCase("settlements")){
+            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+            toolbar.setTitle(this.appTitle);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+
             arrowCashIn.setImageResource(R.drawable.bank);
             arrowCashOut.setImageResource(R.drawable.ic_account_opening);
             cashInText.setText("Mobile Money");
@@ -75,6 +80,11 @@ public class WalletTransactionsListFragment extends Fragment {
             walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
             getSettlements();
         }else{
+            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+            toolbar.setTitle(this.appTitle);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
             arrowCashIn.setImageResource(R.drawable.ic_cashin);
             arrowCashOut.setImageResource(R.drawable.ic_diagonal_arrow);
             cashInText.setText("Cash In");
@@ -86,10 +96,6 @@ public class WalletTransactionsListFragment extends Fragment {
 
 
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle(this.appTitle);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
         return view;
     }
 

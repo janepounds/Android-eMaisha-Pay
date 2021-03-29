@@ -8,8 +8,11 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.utils.Utilities;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -47,7 +50,10 @@ public class APIClient {
             EmaishapayAPI_Interceptor apiInterceptor = new EmaishapayAPI_Interceptor.Builder()
                     .consumerKey(BuildConfig.EMAISHAPAY_API_KEY)
                     .build();
-                    
+
+
+
+
 
             OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                     .connectTimeout(120, TimeUnit.SECONDS)
@@ -67,9 +73,20 @@ public class APIClient {
                     .build();
 
 
+
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL_WALLET)
                     .client(okHttpClient)
+                    .callFactory(new Call.Factory() {
+                        @Override
+                        public Call newCall(Request request) {
+                            Set<String> paramList=request.url().queryParameterNames();
+                            //Log.w("RequestLogged", request.url().toString());
+                            //Request encryptRequest = EncryptCallHelper.encryptRequest(request);
+                            return okHttpClient.newCall(request);
+                        }
+                    })
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 

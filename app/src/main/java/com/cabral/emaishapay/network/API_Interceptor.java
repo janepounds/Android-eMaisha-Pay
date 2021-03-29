@@ -80,7 +80,6 @@ public class API_Interceptor implements Interceptor {
                 .addHeader(ECOMMERCE_COMSUMER_IP,consumerIP)
                 .addHeader(ECOMMERCE_CONSUMER_NONCE, consumerNonce)
                 .addHeader(ECOMMERCE_CONSUMER_DEVICE_ID, consumerDeviceID)
-
                 .url(url);
         
         
