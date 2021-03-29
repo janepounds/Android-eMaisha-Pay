@@ -70,7 +70,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     long end;
     long server;
     CountDownTimer mCountDownTimer;
-    GetAllProducts getAllProducts;
 
     public ProductAdapter(Activity context, FragmentManager fragmentManager, List<ProductDetails> productList, Boolean isHorizontal, Boolean isFlash) {
         this.context = context;

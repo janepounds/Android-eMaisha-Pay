@@ -688,6 +688,7 @@
     <string name="get_credit_description">You want to get a loan? We are quick and cheap.</string>
     <string name="shop">SHOP</string>
     <string name="shop_description">You want to buy quality Agro-inputs We are affordable, accessible and reliable</string>
+    <string name="Review">Review</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
