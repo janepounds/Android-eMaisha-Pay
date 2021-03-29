@@ -200,6 +200,7 @@ public class ShopActivity extends AppCompatActivity {
                             my_products = jsonObject.getJSONArray("products");
                             if (my_products.length() > 0) {
                                 Log.w("ProductSize", my_products.length() + "---------------------");
+                                Log.w("ProductArray", my_products + "---------------------");
                                 for (int i = 0; i < my_products.length(); i++) {
 
                                     boolean check = databaseAccess.addProduct(
@@ -214,7 +215,8 @@ public class ShopActivity extends AppCompatActivity {
                                             my_products.getJSONObject(i).getString("product_supplier"),
                                             my_products.getJSONObject(i).getString("product_image"),
                                             my_products.getJSONObject(i).getString("product_weight_unit"),
-                                            my_products.getJSONObject(i).getString("product_weight"));
+                                            my_products.getJSONObject(i).getString("product_weight"),
+                                            my_products.getJSONObject(i).getString("manufacturer"));
 
                                     if (check) {
                                         Log.w("Products Insert", "Product Inserted Successfully");

@@ -47,6 +47,7 @@ public class BuyInputsDB_Handler extends SQLiteOpenHelper {
         // Drop older tables if existed
         db.execSQL("DROP TABLE IF EXISTS " + User_Info_DB.TABLE_USER_INFO);
         db.execSQL("DROP TABLE IF EXISTS " + User_Recents_DB.TABLE_RECENTS);
+      
 //        db.execSQL("DROP TABLE IF EXISTS " + User_Cart_BuyInputsDB.TABLE_DEFAULT_ADDRESS);
 
         // Create tables again
