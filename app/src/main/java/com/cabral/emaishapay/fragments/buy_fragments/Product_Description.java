@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -95,6 +96,7 @@ import retrofit2.Response;
 
 public class Product_Description extends Fragment {
     private static final String TAG = "Product_Description";
+    public static int productMeasureAdapterCalls=0;
     View rootView;
     int productID;
     String customerID;
@@ -212,6 +214,7 @@ public class Product_Description extends Fragment {
 
         product_ratings_count = rootView.findViewById(R.id.product_ratings_count);
 
+        price_old.setVisibility(View.GONE);
         product_tag_new.setVisibility(View.GONE);
         product_tag_discount.setVisibility(View.GONE);
         product_attributes.setVisibility(View.VISIBLE);
@@ -310,32 +313,6 @@ public class Product_Description extends Fragment {
             }
         });
 
-//        continue_shopping_btn.setOnClickListener(view -> {
-//            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
-//
-//            if (ConstantValues.MAINTENANCE_MODE != null) {
-//                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
-//                    showDialog(ConstantValues.MAINTENANCE_TEXT);
-//                else {
-//                    // Check if cartItemsList isn't empty
-//                    if (cartItemsList.size() != 0) {
-//
-//                        // Check if User is Logged-In
-//                        if (ConstantValues.IS_USER_LOGGED_IN) {
-//                            Log.e("VC_Shop", "checkout executes  ");
-//                            new Product_Description.CheckStockTask().execute();
-//                        } else {
-//                            // Navigate to Login Activity
-//                            Intent i = new Intent(getContext(), Login.class);
-//                            getContext().startActivity(i);
-//                            ((WalletHomeActivity) getContext()).finish();
-//                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-//                        }
-//                    }
-//
-//                }
-//            }
-//        });
 
         buy_now.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -561,6 +538,8 @@ public class Product_Description extends Fragment {
 
         showMeasuresRecyclerView();
 
+
+
         // Set Product's OrderProductCategory Info
         String[] categoryIDs = new String[productDetails.getCategories().size()];
         String[] categoryNames = new String[productDetails.getCategories().size()];
@@ -733,9 +712,18 @@ public class Product_Description extends Fragment {
 
     public void showMeasuresRecyclerView() {
         if(productMeasures.size()>0){
-            productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, selected_measure, price_new, this,booleanArrayList);
+            productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, price_new, this,booleanArrayList);
             recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
             recyclerView.setAdapter(productMeasureAdapter);
+
+            if(productMeasures.size()==1 && productMeasureAdapterCalls==1){//listener to refresh Measures Adapter after setting a solo measure checked
+                recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        productMeasureAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
         }
 
     }
@@ -1088,121 +1076,7 @@ public class Product_Description extends Fragment {
 
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
-    public void showRatingsAndReviewsOfProduct() {
 
-        int rating_1_count = productDetails.getOne_ratio();
-        int rating_2_count = productDetails.getTwo_ratio();
-        int rating_3_count = productDetails.getThree_ratio();
-        int rating_4_count = productDetails.getFour_ratio();
-        int rating_5_count = productDetails.getFive_ratio();
-
-        final Dialog reviews_ratings_dialog = new Dialog(getContext(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-        reviews_ratings_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        reviews_ratings_dialog.setCancelable(true);
-        reviews_ratings_dialog.setContentView(R.layout.dialog_product_rating_reviews);
-        reviews_ratings_dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
-        // Bind Dialog Views
-        TextView average_rating = reviews_ratings_dialog.findViewById(R.id.average_rating);
-        TextView total_rating_count = reviews_ratings_dialog.findViewById(R.id.total_rating_count);
-        ProgressBar rating_progress_5 = reviews_ratings_dialog.findViewById(R.id.rating_progress_5);
-        ProgressBar rating_progress_4 = reviews_ratings_dialog.findViewById(R.id.rating_progress_4);
-        ProgressBar rating_progress_3 = reviews_ratings_dialog.findViewById(R.id.rating_progress_3);
-        ProgressBar rating_progress_2 = reviews_ratings_dialog.findViewById(R.id.rating_progress_2);
-        ProgressBar rating_progress_1 = reviews_ratings_dialog.findViewById(R.id.rating_progress_1);
-        Button rate_product_button = reviews_ratings_dialog.findViewById(R.id.rate_product);
-        ImageButton dialog_back_button = reviews_ratings_dialog.findViewById(R.id.dialog_button);
-        RecyclerView reviews_list_recycler = reviews_ratings_dialog.findViewById(R.id.reviews_list_recycler);
-
-        reviews_list_recycler.setNestedScrollingEnabled(false);
-        ViewCompat.setNestedScrollingEnabled(reviews_list_recycler, false);
-
-        average_rating.setText("" + productDetails.getRating());
-        total_rating_count.setText(String.valueOf(productDetails.getTotal_user_rated()));
-
-        rating_progress_1.setProgress(rating_1_count);
-        rating_progress_2.setProgress(rating_2_count);
-        rating_progress_3.setProgress(rating_3_count);
-        rating_progress_4.setProgress(rating_4_count);
-        rating_progress_5.setProgress(rating_5_count);
-
-        dialogLoader = new DialogLoader(getContext());
-        productReviews = new ArrayList<>();
-        // Initialize the ReviewsAdapter for RecyclerView
-        ProductReviewsAdapter reviewsAdapter = new ProductReviewsAdapter(getContext(), productReviews);
-
-        // Set the Adapter and LayoutManager to the RecyclerView
-        reviews_list_recycler.setAdapter(reviewsAdapter);
-        reviews_list_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        reviews_list_recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        getProductReviews("" + productDetails.getProductsId(), reviewsAdapter);
-
-        rate_product_button.setOnClickListener(v -> {
-            if (ConstantValues.IS_USER_LOGGED_IN) {
-                showRateProductDialog();
-            } else {
-                getContext().startActivity(new Intent(getContext(), Login.class));
-                ((WalletHomeActivity) getContext()).finish();
-                ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-            }
-        });
-
-        dialog_back_button.setOnClickListener(v -> reviews_ratings_dialog.dismiss());
-
-        reviews_ratings_dialog.show();
-    }
-
-    //*********** Setup the ImageSlider with the given List of Product Images ********//
-
-    public void showRateProductDialog() {
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_rate_product, null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
-
-        final ColorRatingBar dialog_rating_bar = dialogView.findViewById(R.id.dialog_rating_bar);
-        final EditText dialog_author_name = dialogView.findViewById(R.id.dialog_author_name);
-        final EditText dialog_author_message = dialogView.findViewById(R.id.dialog_author_message);
-        final Button dialog_button = dialogView.findViewById(R.id.dialog_button);
-
-        final AlertDialog rateProductDialog = dialog.create();
-
-        dialog_button.setOnClickListener(v -> {
-            if (ValidateInputs.isValidName(dialog_author_name.getText().toString())) {
-                if (!"".equalsIgnoreCase(dialog_author_message.getText().toString())) {
-
-                    rateProductDialog.dismiss();
-
-                    RequestGiveRating(
-                            String.valueOf(productDetails.getProductsId()),
-                            String.valueOf(customerID),
-                            dialog_author_name.getText().toString().trim(),
-                            String.valueOf((int) dialog_rating_bar.getRating()),
-                            String.valueOf(productDetails.getVendors_id()),
-                            String.valueOf(productDetails.getLanguageId()),
-                            dialog_author_message.getText().toString().trim()
-                    );
-                       /* getNonceForProductRating
-                                (
-                                        String.valueOf(productDetails.getId()),
-                                        String.valueOf(dialog_rating_bar.getRating()),
-                                        dialog_author_name.getText().toString().trim(),
-                                        dialog_author_email.getText().toString().trim(),
-                                        dialog_author_message.getText().toString().trim()
-                                );*/
-
-                } else {
-                    dialog_author_message.setError(getContext().getString(R.string.enter_message));
-                }
-
-            } else {
-                dialog_author_name.setError(getContext().getString(R.string.enter_name));
-            }
-        });
-
-        rateProductDialog.show();
-    }
 
     //*********** Proceed User Registration Request ********//
 
@@ -1242,41 +1116,6 @@ public class Product_Description extends Fragment {
             public void onFailure(Call<GetRatings> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
                 Toast.makeText(EmaishaPayApp.getContext(), "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void RequestGiveRating(String products_id, String customers_id, String customers_nam, String reviews_rating,
-                                   String vendors_id, String languages_id, String reviews_text) {
-
-        Map<String, String> map = new HashMap<>();
-        map.put("products_id", products_id);
-        map.put("customers_id", customers_id);
-        map.put("customers_name", customers_nam);
-        map.put("reviews_rating", reviews_rating);
-        //map.put("vendors_id",vendors_id);
-        map.put("languages_id", languages_id);
-        map.put("reviews_text", reviews_text);
-
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map);
-
-        call.enqueue(new Callback<GiveRating>() {
-            @Override
-            public void onResponse(Call<GiveRating> call, Response<GiveRating> response) {
-
-                if (response.isSuccessful()) {
-
-                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GiveRating> call, Throwable t) {
-                Toast.makeText(getContext(), "NetworkCallFailure: " + t, Toast.LENGTH_SHORT).show();
             }
         });
     }

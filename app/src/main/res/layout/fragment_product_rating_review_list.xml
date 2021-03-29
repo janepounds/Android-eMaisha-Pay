@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
-    android:layout_marginTop="?actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_review"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+    
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize"
         android:fillViewport="true">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout1"
@@ -160,7 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            app:srcCompat="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_star_rate"
                             app:layout_constraintStart_toEndOf="@id/star5_figure"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/rating_progress_5"
@@ -222,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            app:srcCompat="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_star_rate"
                             app:layout_constraintStart_toEndOf="@id/star4_figure"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/rating_progress_4"
@@ -284,7 +303,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            app:srcCompat="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_star_rate"
                             app:layout_constraintStart_toEndOf="@id/star3_figure"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/rating_progress_3"
@@ -346,7 +365,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            app:srcCompat="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_star_rate"
                             app:layout_constraintStart_toEndOf="@id/star2_figure"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/rating_progress_2"
@@ -408,7 +427,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            app:srcCompat="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_star_rate"
                             app:layout_constraintStart_toEndOf="@id/star1_figure"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/rating_progress_1"
@@ -551,7 +570,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:srcCompat="@drawable/ic_like"/>
+                    android:src="@drawable/ic_like"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <FrameLayout
@@ -590,4 +609,4 @@
             </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

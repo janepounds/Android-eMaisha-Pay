@@ -5,9 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,12 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
-import com.cabral.emaishapay.models.search_model.Product;
-import com.cabral.emaishapay.utils.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
     private static final String TAG = "ProductMeasureAdapter";
     private Context context;
     private List<ProductMeasure> productMeasures;
-    private String selected_measure;
+
     private String measure;
     private TextView new_price;
     private Product_Description productDescription;
@@ -39,14 +36,13 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
     ArrayList<Boolean> checkedmesure;
 
 
-    public ProductMeasureAdapter(Context context, List<ProductMeasure> productMeasureList, String product_measure, TextView new_price, Product_Description productDescription,ArrayList<Boolean>booleanArrayList) {
+    public ProductMeasureAdapter(Context context, List<ProductMeasure> productMeasureList, TextView new_price, Product_Description productDescription,ArrayList<Boolean>booleanArrayList) {
         this.context = context;
         this.productMeasures = productMeasureList;
-        this.selected_measure = product_measure;
         this.new_price = new_price;
         this.productDescription = productDescription;
         this.checkedmesure=booleanArrayList;
-
+        Product_Description.productMeasureAdapterCalls++;
     }
 
     @NonNull
@@ -84,21 +80,21 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
             //set the weights nd units
             String measure = holder.weight.getText().toString();
             String []weight = measure.split("\\s+");
-            selected_measure = holder.weight.getText().toString();
+            Product_Description.selected_measure = holder.weight.getText().toString();
             new_price.setText("UGX " + productMeasure.getProducts_price());
             Product_Description.selected_price=productMeasure.getProducts_price();
 
             String []products_price = new_price.getText().toString().split("\\s+");
 
             ProductDetails productDetails = new ProductDetails();
-            productDetails.setSelectedProductsWeight(selected_measure);
+            productDetails.setSelectedProductsWeight(Product_Description.selected_measure);
             productMeasure.setProducts_weight(weight[0]);
             productMeasure.setProducts_weight_unit(weight[1]);
             productMeasure.setProducts_price(products_price[1]);
 
 
             isChecked=true;
-            Log.d(TAG, "onBindViewHolder: prodctsprice"+products_price[1] + "measure"+selected_measure);
+            Log.d(TAG, "onBindViewHolder: prodctsprice"+products_price[1] + "measure"+Product_Description.selected_measure);
 
         } else {
             holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_mild_gray_background));
@@ -108,50 +104,33 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
         }
 
         holder.weight.setOnClickListener(v -> {
-            for (ProductMeasure productMeasure1 : productMeasures) {
-                productMeasure1.setChecked(false);
+            selectProductWeight(productMeasure,holder);
+            notifyDataSetChanged();
+        });
 
+        if(getItemCount()==1){
+            selectProductWeight(productMeasure,holder);
+        }
+    }
 
-                Log.d(TAG, "onBindViewHolder: ClickCheck = " + productMeasure1.isChecked());
-                Log.d(TAG, "onBindViewHolder: ClickCheckischecked= " + isChecked);
+    private void selectProductWeight(ProductMeasure productMeasure, ProductMeasureViewHolder holder){
+        for (ProductMeasure productMeasure1 : productMeasures) {
+            productMeasure1.setChecked(false);
+            Log.d(TAG, "onBindViewHolder: ClickCheck = " + productMeasure1.isChecked());
+            Log.d(TAG, "onBindViewHolder: ClickCheckischecked= " + isChecked);
 
-            }
+        }
 
 //            // Check Discount on Product with the help of static method of Helper class
-//            String discount = Utilities.checkDiscount(productMeasure.getProducts_price(), productDetails.getDiscountPrice());
-//
-//            if (discount != null) {
-//                productDetails.setIsSaleProduct("1");
-//
-//                // Set Discount Tag
-//                product_tag_discount.setVisibility(View.VISIBLE);
-//                product_tag_discount.setText(discount + " " + getString(R.string.OFF));
-//                // Set Price info based on Discount
-//                price_old.setVisibility(View.VISIBLE);
-//                price_old.setText(ConstantValues.CURRENCY_SYMBOL + productDetails.getProductsPrice());
-//                productBasePrice = Double.parseDouble(productDetails.getDiscountPrice().replace(",", ""));
-//
-//            } else {
-//                productDetails.setIsSaleProduct("0");
-//
-//                price_old.setVisibility(View.GONE);
-//                product_tag_discount.setVisibility(View.GONE);
-//                productBasePrice = Double.parseDouble(productDetails.getProductsPrice());
-//            }
 
-            productMeasure.setChecked(true);
-            holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_green_background));
-            holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
-//            String []products_price = new_price.getText().toString().split("\\s+");
-//            productMeasure.setProducts_price(products_price[1]);
-            Product_Description.selected_measure=holder.weight.getText().toString();
-            selected_measure = holder.weight.getText().toString();
-            new_price.setText("UGX " + productMeasure.getProducts_price());
-            isChecked = true;
+        productMeasure.setChecked(true);
+        holder.weight.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_rectangle_green_background));
+        holder.weight.setTextColor(ContextCompat.getColor(context, R.color.white));
 
-            productDescription.showMeasuresRecyclerView();
+        Product_Description.selected_measure=holder.weight.getText().toString();
+        new_price.setText("UGX " + productMeasure.getProducts_price());
+        isChecked = true;
 
-        });
     }
 
     @Override
@@ -166,11 +145,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
         public ProductMeasureViewHolder(View itemView) {
             super(itemView);
             weight = itemView.findViewById(R.id.weight1);
-
-
         }
-
-
 
     }
 

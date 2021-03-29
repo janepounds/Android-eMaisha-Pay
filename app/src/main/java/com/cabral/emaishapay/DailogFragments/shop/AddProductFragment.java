@@ -818,7 +818,9 @@ public class AddProductFragment extends DialogFragment {
                             product_supplier,
                             encodedImage,
                             selected_weight_units,
-                            selected_weight+""
+                            selected_weight+"",
+                            manufacturer_name
+
 
 
                            );

@@ -250,7 +250,7 @@ public class DatabaseAccess {
 
 
     //insert products
-    public boolean addProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_stock, String product_supplier, String product_image, String weight_unit, String product_weight) {
+    public boolean addProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_stock, String product_supplier, String product_image, String weight_unit, String product_weight,String manufacturer) {
 
         ContentValues values = new ContentValues();
         this.database = openHelper.getWritableDatabase();
@@ -266,6 +266,7 @@ public class DatabaseAccess {
         values.put("product_stock", product_stock);
         values.put("product_weight_unit", weight_unit);
         values.put("product_weight", product_weight);
+        values.put("manufacturer", manufacturer);
 
         //long check = database.insert("products", null, values);
         long check = database.insertWithOnConflict("products", null, values,SQLiteDatabase.CONFLICT_IGNORE);
@@ -1536,6 +1537,7 @@ public class DatabaseAccess {
                 map.put("product_stock", cursor.getString(9));
                 map.put("product_weight_unit", cursor.getString(10));
                 map.put("product_weight", cursor.getString(11));
+                map.put("manufacturer", cursor.getString(12));
 
 
                 product.add(map);
