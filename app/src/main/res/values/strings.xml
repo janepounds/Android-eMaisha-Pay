@@ -689,6 +689,7 @@
     <string name="shop">SHOP</string>
     <string name="shop_description">You want to buy quality Agro-inputs We are affordable, accessible and reliable</string>
     <string name="Review">Review</string>
+    <string name="AddReview">Add Review</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

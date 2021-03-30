@@ -74,10 +74,12 @@
                         android:numStars="5"
                         android:scaleY=".8"
                         android:scaleX=".8"
+                        android:isIndicator="true"
                         app:layout_constraintTop_toBottomOf="@id/review_list_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/average_rating_figure_layout"/>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/average_rating_figure_layout"
                         android:layout_width="match_parent"
@@ -127,6 +129,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <TextView
+                            android:id="@+id/total_rating_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
@@ -135,6 +138,7 @@
                             android:autoSizeTextType="uniform"
                             android:textColor="#C9C9C9"/>
                         <TextView
+                            android:id="@+id/total_review_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
