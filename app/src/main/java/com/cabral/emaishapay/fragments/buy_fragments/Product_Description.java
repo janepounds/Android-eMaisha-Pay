@@ -51,7 +51,6 @@ import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAttributesAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductMeasureAdapter;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductReviewsAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -68,9 +67,6 @@ import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
 import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.models.product_model.Value;
-import com.cabral.emaishapay.models.ratings.GetRatings;
-import com.cabral.emaishapay.models.ratings.GiveRating;
-import com.cabral.emaishapay.models.ratings.ProductReviews;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.Utilities;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -114,7 +110,7 @@ public class Product_Description extends Fragment {
     WebView product_description_webView;
     TextView title, category, price_new, price_old, product_stock, product_likes, product_tag_new, product_tag_discount, product_ratings_count;
     EditText pdtQty;
-    AppCompatButton addToCart, continue_shopping_btn,buy_now;
+    AppCompatButton addToCart,buy_now;
 
     DialogLoader dialogLoader;
     static ProductDetails productDetails;
@@ -124,7 +120,6 @@ public class Product_Description extends Fragment {
     List<Image> itemImages = new ArrayList<>();
     List<Attribute> attributesList = new ArrayList<>();
     List<CartProductAttributes> selectedAttributesList;
-    public List<ProductReviews> productReviews;
     private RelativeLayout product_rating_bar;
     private RecyclerView recyclerView;
     private ProductMeasureAdapter productMeasureAdapter;
@@ -188,7 +183,13 @@ public class Product_Description extends Fragment {
         product_rating_bar = rootView.findViewById(R.id.product_rating_bar);
 
         product_rating_bar.setOnClickListener((View.OnClickListener) v -> {
-            Fragment fragment = new ProductRatingReviewListFragment();
+            Fragment fragment;
+            if(productDetails.getRatingDataLists().size()>0){
+                fragment = new ProductRatingReviewListFragment();
+            }else {
+                fragment = new ProductRatingReviewFragment();
+            }
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.nav_host_fragment2, fragment)
@@ -1078,47 +1079,6 @@ public class Product_Description extends Fragment {
 
 
 
-    //*********** Proceed User Registration Request ********//
-
-    private void getProductReviews(final String productID, final ProductReviewsAdapter adapter) {
-
-        dialogLoader.showProgressDialog();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
-        Call<GetRatings> call = BuyInputsAPIClient.getInstance()
-                .getProductReviews
-                        (       access_token,
-                                productID,
-                                "" + ConstantValues.LANGUAGE_ID
-                        );
-
-        call.enqueue(new Callback<GetRatings>() {
-            @Override
-            public void onResponse(Call<GetRatings> call, Response<GetRatings> response) {
-
-                dialogLoader.hideProgressDialog();
-
-                String str = response.raw().request().url().toString();
-
-                // Check if the Response is successful
-                if (response.isSuccessful()) {
-                    String strGson = new Gson().toJson(response.body().getData());
-
-                    productReviews.addAll(response.body().getData());
-                    int size = productReviews.size();
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(EmaishaPayApp.getContext(), response.message(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetRatings> call, Throwable t) {
-                dialogLoader.hideProgressDialog();
-                Toast.makeText(EmaishaPayApp.getContext(), "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     public class CheckStockTask extends AsyncTask<Void, Void, Void> {
 
