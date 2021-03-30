@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic,android:theme">
-        <activity android:name=".activities.OnBoardingActivity"></activity>
+        <activity android:name=".activities.GetStartedSignUpActivity"></activity>
+        <activity android:name=".activities.OnBoardingActivity" />
         <activity
             android:name=".activities.WalletBuySellActivity"
             android:label="@string/title_activity_wallet_buy_sell"

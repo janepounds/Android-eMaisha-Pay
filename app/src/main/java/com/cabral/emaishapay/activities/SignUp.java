@@ -126,6 +126,11 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         binding = DataBindingUtil.setContentView(this, R.layout.signup);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(this).build();

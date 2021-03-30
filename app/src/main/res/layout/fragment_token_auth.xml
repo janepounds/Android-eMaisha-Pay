@@ -11,11 +11,11 @@
     <ImageView
         android:id="@+id/produce_close"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_weight=".9"
-        android:src="@drawable/close"
+        android:src="@drawable/ic_new_close_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/pin_title"/>
@@ -41,71 +41,70 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pin_title"
         app:layout_constraintBottom_toTopOf="@id/pin_view">
 
         <EditText
-            android:id="@+id/opt_code1_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/pin_code1_et"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_bottom_line"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_light_blue_bg"
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:cursorVisible="false"/>
 
         <EditText
-            android:id="@+id/otp_code2_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/pin_code2_et"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_bottom_line"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_light_blue_bg"
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:cursorVisible="false"/>
 
         <EditText
-            android:id="@+id/otp_code3_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/pin_code3_et"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_bottom_line"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_light_blue_bg"
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:cursorVisible="false"/>
 
         <EditText
-            android:id="@+id/otp_code4_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/pin_code4_et"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_bottom_line"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/round_light_blue_bg"
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:cursorVisible="false"/>
 
     </LinearLayout>
     <View
@@ -130,7 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pin_view"
-        tools:layout_editor_absoluteY="8dp"
+        app:layout_constraintBottom_toTopOf="@id/layout_signin"
         android:divider="@drawable/keyboard_divider">
 
         <TableRow style="@style/keyboard_row">
@@ -243,7 +242,6 @@
         app:layout_constraintTop_toBottomOf="@id/keyboard">
 
         <TextView
-            android:id="@+id/signin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -252,7 +250,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/signin2"
+            android:id="@+id/text_forgot_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/signin1"
