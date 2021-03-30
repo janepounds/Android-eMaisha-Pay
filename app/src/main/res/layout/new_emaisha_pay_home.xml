@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_new_bg_gradient">
+        android:background="#DDF1FD">
         <RelativeLayout
             android:id="@+id/layout_pattern"
             android:layout_width="match_parent"
