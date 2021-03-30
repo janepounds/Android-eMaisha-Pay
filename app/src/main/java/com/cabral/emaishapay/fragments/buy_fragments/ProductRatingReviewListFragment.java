@@ -6,15 +6,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -23,28 +24,22 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductReviewsAdapter;
+import com.cabral.emaishapay.adapters.buyInputsAdapters.UserProductReviewsAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ratings.GetRatings;
-import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.cabral.emaishapay.models.ratings.GetRatings;
-import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.models.ratings.ProductReviews;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductReviewsAdapter;
 
 import static com.cabral.emaishapay.fragments.buy_fragments.Product_Description.productDetails;
 
@@ -112,7 +107,7 @@ public class ProductRatingReviewListFragment extends Fragment {
         
     }
 
-    private void getProductReviews(final String productID, final ProductReviewsAdapter adapter) {
+    private void getProductReviews(final String productID, final UserProductReviewsAdapter adapter) {
 
         dialogLoader.showProgressDialog();
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
@@ -200,16 +195,17 @@ public class ProductRatingReviewListFragment extends Fragment {
         star4_total_number.setText( ((int) (rating_4_count*productDetails.getTotal_user_rated()/100) )+""  );
         star5_total_number.setText( ((int) (rating_5_count*productDetails.getTotal_user_rated()/100) )+""  );
 
-//        dialogLoader = new DialogLoader(getContext());
-//        productReviews = new ArrayList<>();
-        // Initialize the ReviewsAdapter for RecyclerView
-//        ProductReviewsAdapter reviewsAdapter = new ProductReviewsAdapter(getContext(), productReviews);
-//
-//        // Set the Adapter and LayoutManager to the RecyclerView
-//        reviews_list_recycler.setAdapter(reviewsAdapter);
-//        reviews_list_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-//        reviews_list_recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-//        getProductReviews("" + productDetails.getProductsId(), reviewsAdapter);
+        productReviews = new ArrayList<>();
+         //Initialize the ReviewsAdapter for RecyclerView
+        RecyclerView reviews_list_recycler=view.findViewById(R.id.ratings_review_recycler);
+        UserProductReviewsAdapter reviewsAdapter = new UserProductReviewsAdapter(getContext(), productReviews);
+
+        // Set the Adapter and LayoutManager to the RecyclerView
+        reviews_list_recycler.setAdapter(reviewsAdapter);
+        reviews_list_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviews_list_recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        getProductReviews("" + productDetails.getProductsId(), reviewsAdapter);
 
     }
 

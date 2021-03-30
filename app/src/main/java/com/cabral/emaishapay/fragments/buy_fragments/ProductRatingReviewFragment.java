@@ -1,52 +1,29 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Login;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductReviewsAdapter;
-import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
-import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import hyogeun.github.com.colorratingbarlib.ColorRatingBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

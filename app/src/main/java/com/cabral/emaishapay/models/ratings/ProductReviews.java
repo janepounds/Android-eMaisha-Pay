@@ -21,34 +21,22 @@ public class ProductReviews {
     @SerializedName("rating")
     @Expose
     private int rating;
-    @SerializedName("email")
+//    @SerializedName("email")
+//    @Expose
+//    private String email;
+//    @SerializedName("first_name")
+//    @Expose
+//    private String first_name;
+
+    @SerializedName("customers_name")
     @Expose
-    private String email;
-    @SerializedName("first_name")
-    @Expose
-    private String first_name;
-
-    @SerializedName("last_name")
-    @Expose
-    private String last_name;
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
+    private String customers_name;
     
-    
+    @SerializedName("reviews_read")
+    @Expose
+    private int reads;
+
+
     public int getId() {
         return id;
     }
@@ -82,16 +70,15 @@ public class ProductReviews {
         this.rating = rating;
     }
 
-    
-    public String getEmail() {
-        return email;
+    public String getCustomers_name() {
+        return customers_name;
     }
-    
-    public void setEmail(String email) {
-        this.email = email;
+
+    public void setCustomers_name(String customers_name) {
+        this.customers_name = customers_name;
     }
-    
 
-
-    
+    public int getReads() {
+        return  this.reads;
+    }
 }

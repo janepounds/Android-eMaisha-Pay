@@ -440,6 +440,15 @@ public interface APIRequestsForBuyInputs {
             @FieldMap Map<String, String> stringMap
     );
 
+    @FormUrlEncoded
+    @POST("product-review-read")
+    Call<GetRatings> likeReview(
+            @Header("Authorization") String token,
+            @Field("customers_id") String customers_id,
+            @Field("reviews_id") String reviews_id,
+            @Field("languages_id") String languages_id
+    );
+
     @GET("getreviews")
     Call<GetRatings> getProductReviews(
                                     @Header("Authorization") String token,
