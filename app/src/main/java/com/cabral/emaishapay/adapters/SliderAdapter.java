@@ -34,6 +34,14 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.ic_onboarding_shop_img,
             R.drawable.onboarding_2
     };
+    int imagesbg[] ={
+
+
+            R.drawable.city,
+            R.drawable.worlbgsmaller,
+            R.drawable.city,
+            R.drawable.city
+    };
     int titles[]={
            R.string.pay,
             R.string.get_credit,
@@ -77,6 +85,7 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageViewBg = view.findViewById(R.id.slider_image_bg);
 
         imageView.setImageResource(images[position]);
+        imageViewBg.setImageResource(imagesbg[position]);
         desc.setText(descriptions[position]);
         title.setText(titles[position]);
 

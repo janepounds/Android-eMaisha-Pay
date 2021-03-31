@@ -4,15 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/rounded_corners_edittext_white">
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:id="@+id/product_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,15 +20,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_10dp">
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/rounded_corners_edittext_white">
 
             <ImageView
                 android:id="@+id/product_cover"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:src="@drawable/placeholder" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
@@ -49,36 +50,29 @@
 
             <TextView
                 android:id="@+id/percentage_sale_off"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:background="@drawable/round_badge_drawable"
-                android:fontFamily="@font/josefin_sans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_solid_light_blue2"
                 android:gravity="center"
-                android:padding="6dp"
+                android:padding="4dp"
+                android:layout_marginEnd="3dp"
                 android:text="16% OFF"
-                android:textColor="@android:color/white"
-                app:autoSizeTextType="uniform"
+                android:textSize="8sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 android:layout_alignParentEnd="true"
-                android:visibility="gone"/>
+                android:layout_alignParentBottom="true"
+                android:visibility="visible"/>
 
         </RelativeLayout>
-        <TextView
-            android:id="@+id/product_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="@string/product_title"
-            android:textColor="#31244A"/>
+
 
         <RelativeLayout
             android:id="@+id/product_like_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp">
+            android:layout_marginEnd="13dp"
+            android:layout_marginTop="2dp">
 
         <ImageView
             android:id="@+id/first_star"
@@ -137,7 +131,8 @@
             android:maxLines="1"
             android:text="430 Ratings"
             android:textSize="12sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_sans"
                 android:text="UGX : 15,000"
-                android:gravity="center"
                 android:visibility="gone"/>
 
             <TextView
@@ -158,15 +152,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_5dp"
-                android:fontFamily="@font/josefin_sans"
-                android:text="UGX : 1,200"
+                android:text="UGX  1,200"
                 android:textSize="12sp"
-                android:textColor="#6D6D6D"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/product_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:text="@string/product_title"
+            android:textColor="@color/colorPrimary"/>
 
 
     </LinearLayout>
