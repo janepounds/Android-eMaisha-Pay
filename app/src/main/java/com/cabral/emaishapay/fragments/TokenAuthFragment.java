@@ -5,12 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +44,18 @@ import retrofit2.Response;
 
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
 
-public class TokenAuthFragment extends Fragment {
+public class TokenAuthFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "TokenAuthFragment";
     private Context context;
     private EditText code1,code2,code3,code4;
     private  String pin;
     static TextView errorTextView;
+    private TextView keyboard0,keyboard1,keyboard2,keyboard3,keyboard4,keyboard5,keyboard6,keyboard7,keyboard8,keyboard9,keybboardClear;
+    private ImageView backspace;
     public static String WALLET_ACCESS_TOKEN = null;
+    private SparseArray<String> keyValues = new SparseArray<>();
+    private InputConnection inputConnection;
+
 
 
     @Override
@@ -62,6 +74,32 @@ public class TokenAuthFragment extends Fragment {
         code3 = view.findViewById(R.id.pin_code3_et);
         code4 = view.findViewById(R.id.pin_code4_et);
         errorTextView = view.findViewById(R.id.text_view_crop_user_error);
+        keyboard0 = view.findViewById(R.id.t9_key_0);
+        keyboard1 = view.findViewById(R.id.t9_key_1);
+        keyboard2 = view.findViewById(R.id.t9_key_2);
+        keyboard3 = view.findViewById(R.id.t9_key_3);
+        keyboard4 = view.findViewById(R.id.t9_key_4);
+        keyboard5 = view.findViewById(R.id.t9_key_5);
+        keyboard6 = view.findViewById(R.id.t9_key_6);
+        keyboard7 = view.findViewById(R.id.t9_key_7);
+        keyboard8 = view.findViewById(R.id.t9_key_8);
+        keyboard9 = view.findViewById(R.id.t9_key_9);
+        keybboardClear = view.findViewById(R.id.t9_key_backspace);
+
+
+
+        keyValues.put(R.id.t9_key_1, "1");
+        keyValues.put(R.id.t9_key_2, "2");
+        keyValues.put(R.id.t9_key_3, "3");
+        keyValues.put(R.id.t9_key_4, "4");
+        keyValues.put(R.id.t9_key_5, "5");
+        keyValues.put(R.id.t9_key_6, "6");
+        keyValues.put(R.id.t9_key_7, "7");
+        keyValues.put(R.id.t9_key_8, "8");
+        keyValues.put(R.id.t9_key_9, "9");
+        keyValues.put(R.id.button_0, "0");
+
+
 
 
         return view;
@@ -71,6 +109,24 @@ public class TokenAuthFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        keyboard0.setOnClickListener(this);
+        keyboard1.setOnClickListener(this);
+        keyboard2.setOnClickListener(this);
+        keyboard3.setOnClickListener(this);
+        keyboard4.setOnClickListener(this);
+        keyboard5.setOnClickListener(this);
+        keyboard6.setOnClickListener(this);
+        keyboard7.setOnClickListener(this);
+        keyboard8.setOnClickListener(this);
+        keyboard9.setOnClickListener(this);
+
+        code1.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        code1.setTextIsSelectable(true);
+
+        InputConnection ic = code1.onCreateInputConnection(new EditorInfo());
+        setInputConnection(ic);
+
         code1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -85,6 +141,13 @@ public class TokenAuthFragment extends Fragment {
                 code2.requestFocus();
             }
         });
+
+
+        code2.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        code2.setTextIsSelectable(true);
+
+        InputConnection icc = code2.onCreateInputConnection(new EditorInfo());
+        setInputConnection(icc);
 
         code2.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,6 +164,11 @@ public class TokenAuthFragment extends Fragment {
             }
         });
 
+        code3.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        code3.setTextIsSelectable(true);
+
+        InputConnection iccc = code3.onCreateInputConnection(new EditorInfo());
+        setInputConnection(iccc);
         code3.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,6 +184,11 @@ public class TokenAuthFragment extends Fragment {
             }
         });
 
+        code4.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        code4.setTextIsSelectable(true);
+
+        InputConnection icccc = code4.onCreateInputConnection(new EditorInfo());
+        setInputConnection(icccc);
         code4.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -166,6 +239,14 @@ public class TokenAuthFragment extends Fragment {
         });
 
 
+    }
+
+
+
+
+
+    public void setInputConnection(InputConnection ic) {
+        inputConnection = ic;
     }
 
 
@@ -248,5 +329,24 @@ public class TokenAuthFragment extends Fragment {
         authenticate.putExtra("sessionExpired", sessionExpired);
         authenticate.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(authenticate);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (inputConnection == null)
+            return;
+
+        if (v.getId() == R.id.t9_key_backspace) {
+            CharSequence selectedText = inputConnection.getSelectedText(0);
+
+            if (TextUtils.isEmpty(selectedText)) {
+                inputConnection.deleteSurroundingText(1, 0);
+            } else {
+                inputConnection.commitText("", 1);
+            }
+        } else {
+            String value = keyValues.get(v.getId());
+            inputConnection.commitText(value, 1);
+        }
     }
 }
