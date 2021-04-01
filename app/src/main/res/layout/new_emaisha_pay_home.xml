@@ -9,13 +9,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DDF1FD">
+        android:background="#f4fafe">
         <RelativeLayout
             android:id="@+id/layout_pattern"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_new_bg_pattern"
-            android:alpha=".05">
+            android:alpha=".035">
 
         </RelativeLayout>
         <RelativeLayout
@@ -29,20 +29,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true">
 
-            <ImageView
-                android:id="@+id/img_arrow_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_chevron_left"
-                android:layout_centerVertical="true"
-                app:tint="@color/colorPrimary" />
+
             <com.cabral.emaishapay.customs.CircularImageView
                 android:id="@+id/img_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/user"
-                android:layout_toEndOf="@id/img_arrow_username"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"/>
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -385,7 +380,12 @@
                 android:text="UGX 0.0"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 

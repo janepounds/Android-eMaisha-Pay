@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#DDF1FD">
+    android:background="#f4fafe">
 
     <ImageView
         android:src="@drawable/ic_new_bg_pattern"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:alpha=".05"/>
+        android:alpha=".035"/>
     <ImageView
         android:id="@+id/hamburger_menu"
         android:src="@drawable/ic_hamburger_menu"
