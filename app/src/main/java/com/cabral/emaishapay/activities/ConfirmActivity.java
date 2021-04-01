@@ -145,7 +145,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
     }
 
     private void getOTPFromUser(String password) {
-        otpDialog  = new Dialog(context);
+        otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         otpDialog.setCancelable(false);

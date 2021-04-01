@@ -34,6 +34,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
@@ -302,11 +303,12 @@ public class AddCardFragment extends DialogFragment {
                                         dialog.dismiss();
                                     } else if (response.code() == 401) {
                                         dialog.dismiss();
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                                         //redirect to auth
-                                        TokenAuthActivity.startAuth(getActivity(), true);
-                                        getActivity().finishAffinity();
+
+                                        TokenAuthFragment.startAuth(getActivity(), true);
+//                                        getActivity().getSupportFragmentManager().popBackStack();
                                     }
                                 }
 
