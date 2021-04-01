@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,7 +98,6 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         keyValues.put(R.id.t9_key_7, "7");
         keyValues.put(R.id.t9_key_8, "8");
         keyValues.put(R.id.t9_key_9, "9");
-        keyValues.put(R.id.button_0, "0");
 
 
 
@@ -325,10 +325,17 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     }
     public static void startAuth(Activity context, boolean sessionExpired) {
         //call fragment
-        Intent authenticate = new Intent(context, TokenAuthActivity.class);
-        authenticate.putExtra("sessionExpired", sessionExpired);
-        authenticate.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(authenticate);
+        Fragment fragment = new TokenAuthFragment();
+        FragmentManager fragmentManager = context.getFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("sessionExpired", sessionExpired);
+        fragment.setArguments(bundle);
+        fragmentManager.beginTransaction().commit();
+
+//        Intent authenticate = new Intent(context, TokenAuthActivity.class);
+//        authenticate.putExtra("sessionExpired", sessionExpired);
+//        authenticate.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        context.startActivity(authenticate);
     }
 
     @Override
