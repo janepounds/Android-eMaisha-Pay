@@ -31,7 +31,7 @@ public class ProductReviews {
     @SerializedName("customers_name")
     @Expose
     private String customers_name;
-    
+
     @SerializedName("reviews_read")
     @Expose
     private int reads;

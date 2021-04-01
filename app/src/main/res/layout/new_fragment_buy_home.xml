@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#DDF1FD">
+
+    <ImageView
+        android:src="@drawable/ic_new_bg_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:alpha=".05"/>
+    <ImageView
+        android:id="@+id/hamburger_menu"
+        android:src="@drawable/ic_hamburger_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="10dp"/>
+    <ImageView
+        android:id="@+id/filter"
+        android:src="@drawable/ic_filter_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/etxt_search"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="5dp"
+        android:layout_below="@id/hamburger_menu"
+    android:background="@drawable/rounded_corners_edittext_white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:elevation="5dp">
+
+    <EditText
+        android:id="@+id/buy_inputs_search_view"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:hint="Search for Items"
+        android:textColorHint="@color/colorPrimary"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline42"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.18" />
+
+    <ImageView
+        android:id="@+id/buy_inputs_search_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline42"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_search_blue" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/layout_buy_sell_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/etxt_search">
+
+        <Button
+            android:id="@+id/buy_btn"
+            android:layout_weight="0.33"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Buy"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_corners_button_green"
+            android:gravity="center"
+            android:layout_marginEnd="6dp"/>
+
+
+        <Button
+            android:id="@+id/sell_btn"
+            android:layout_weight="0.33"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:text="Sell"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_corners_button_blue"
+            android:gravity="center"
+            android:layout_marginStart="6dp"/>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:layout_below="@id/layout_buy_sell_buttons">
+
+
+        <RelativeLayout
+            android:id="@+id/layout_maincontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+        android:id="@+id/layout_product_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:paddingBottom="10dp"
+        android:background="@drawable/background_round_white">
+
+        <LinearLayout
+            android:id="@+id/layout_product_categories_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="@drawable/rounded_rectangle_green_background">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shop by category"
+                android:textSize="14sp"
+                android:textColor="#F5F5F5"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/main_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_round_white"
+            android:layout_margin="8dp"
+            android:layout_below="@id/layout_product_categories_title">
+            <LinearLayout
+                android:id="@+id/layout_categories_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_categories_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_loop"
+                    android:layout_gravity="center"
+                    android:padding="20dp"/>
+                <TextView
+                    android:id="@+id/text_categories_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|bottom"
+                    android:text="Loading Product Categories . . ."
+                    android:padding="10dp" />
+            </LinearLayout>
+            <include layout="@layout/buy_inputs_homepage_9" />
+
+        </FrameLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/label_most_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_product_categories"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:text="Most Popular"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btn_view_all_most_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_below="@+id/layout_product_categories"
+        android:padding="10dp"
+        android:text="See All"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="9sp" />
+
+    <FrameLayout
+        android:id="@+id/layout_most_popular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_view_all_most_popular"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/label_deals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_most_popular"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:text="Deals"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btn_view_all_deals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_most_popular"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:padding="10dp"
+        android:text="See All"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="9sp" />
+
+    <FrameLayout
+        android:id="@+id/layout_deals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_view_all_deals"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

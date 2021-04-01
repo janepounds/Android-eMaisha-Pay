@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.OnBoardingActivity">
     <FrameLayout
         android:id="@+id/getting_started"
@@ -38,14 +39,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:drawableEnd="@drawable/ic_chevron_right"
-            android:drawableRight="@drawable/ic_chevron_right"
-            app:drawableTint="@color/white"
+            android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
+            android:drawableRight="@drawable/ic_right_chevron_arrow_white"
             android:onClick="skip"
             android:padding="15dp"
             android:layout_margin="10dp"
-            android:text="SKIP"
+            android:text="Skip"
             android:textColor="@color/white"
+            android:textAllCaps="false"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
@@ -91,7 +92,8 @@
             android:layout_centerInParent="true"
             android:orientation="horizontal"
             android:padding="20dp"
-            app:elevation="10dp" />
+            app:elevation="10dp"
+            android:layout_marginBottom="15dp"/>
 
 
         <Button
@@ -99,10 +101,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:padding="15dp"
             android:background="#00000000"
-            android:drawableTop="@drawable/ic_chevron_right"
+            android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
             android:onClick="next"
-            app:drawableTint="@color/white" />
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

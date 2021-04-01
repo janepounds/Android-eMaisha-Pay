@@ -24,20 +24,25 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true">
 
             <ImageView
                 android:id="@+id/img_arrow_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_chevron_left"
-                android:layout_centerVertical="true"/>
-            <ImageView
+                android:layout_centerVertical="true"
+                app:tint="@color/colorPrimary" />
+            <com.cabral.emaishapay.customs.CircularImageView
                 android:id="@+id/img_username"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/user"
-                android:layout_toEndOf="@id/img_arrow_username"/>
+                android:layout_toEndOf="@id/img_arrow_username"
+                android:layout_centerVertical="true"/>
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -50,7 +55,23 @@
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/img_username"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentTop="true"/>
+            <TextView
+                android:id="@+id/username_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="View Account details"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/img_username"
+                android:layout_below="@id/username"
+                android:drawableEnd="@drawable/drop_down"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:alpha="0.6"/>
         </RelativeLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_money_transfers"
@@ -238,7 +259,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:src="@drawable/ic_loan2"
+                    android:src="@drawable/ic_loan_1_"
                     app:layout_constraintBottom_toTopOf="@id/label_loan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -351,6 +372,9 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/total_balance"
                 android:layout_width="wrap_content"
@@ -362,6 +386,8 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -496,9 +522,11 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_down_chevron"
+                        android:src="@drawable/ic_credit_arrow_down"
                         app:tint="@color/white"
-                        android:layout_weight=".2"/>
+                        android:layout_weight=".2"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -506,11 +534,13 @@
                         />
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Credit"
                         android:textColor="@color/white"
                         android:layout_weight="1"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
 
                 </LinearLayout>
 
@@ -560,16 +590,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:orientation="horizontal"
                     android:padding="5dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/rectangular_solid_red_debit">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_up_chevron_1_"
+                        android:src="@drawable/ic_debit_arrow_up"
                         app:tint="@color/white"
-                        android:layout_weight=".2"/>
+                        android:layout_weight=".2"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -577,11 +609,13 @@
                         />
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Debit"
                         android:textColor="@color/white"
                         android:layout_weight="1"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
 
                 </LinearLayout>
 
