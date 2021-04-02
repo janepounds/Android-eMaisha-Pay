@@ -70,7 +70,7 @@ public class TransferMoney extends Fragment {
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
-    private double balance;
+
     FragmentManager fm;
     EditText etMobileMoneyNumber;
     AutoCompleteTextView etBeneficiaryName;
@@ -83,9 +83,7 @@ public class TransferMoney extends Fragment {
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
     ArrayList<String> beneficiaries = new ArrayList<>();
 
-    public TransferMoney(double balance, String action) {
-        this.balance=balance;
-        this.action=action;
+    public TransferMoney() {
     }
 
     @Override
@@ -100,6 +98,10 @@ public class TransferMoney extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transfer_money, container, false);
+
+        if(getArguments()!=null)
+            action=getArguments().getString("KEY_ACTION");
+
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         initializeForm(view);
 

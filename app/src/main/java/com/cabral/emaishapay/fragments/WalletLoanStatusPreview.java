@@ -142,32 +142,11 @@ public class WalletLoanStatusPreview extends Fragment {
 
         paymentHistory.setOnClickListener(v->{
 
-            Fragment fragment = new WalletLoanPaymentHistory();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentHistory);
 
         });
         paymentSchedule.setOnClickListener(v -> {
-
-            Fragment fragment = new WalletLoanPaymentSchedule();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoanStatusPreview_to_walletLoanPaymentSchedule);
         });
 
     }

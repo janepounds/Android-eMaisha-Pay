@@ -30,20 +30,19 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
-    LoanApplication loanApplication;
     ProgressDialog dialog;
-    private String title;
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     private TextView textViewLoanPreviewAmount, textViewLoanPreviewInterestRate, textViewLoanPreviewDuration, textViewLoanPreviewDueDate,
             textViewLoanPreviewDueAmount, loan_type_or_schedule_txt,textViewErrorMessage, loan_purpose_txt;
     private Button btnLoanNextStep, btnPrevious;
+    final String applicantType="Applicant_Type";
+    LoanApplication loanApplication;
+    private String title;
+    private float interest;
 
-    public WalletLoanPreviewRequestFragment(String title){
-        this.title = title;
-
-
+    public WalletLoanPreviewRequestFragment(){
     }
 
     @Override
@@ -51,6 +50,10 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wallet_loan_preview_request, container, false);
+        this.title=getArguments().getString(applicantType);
+        this.loanApplication= (LoanApplication) getArguments().getSerializable("loanApplication");
+        this.interest= getArguments().getFloat("interest");
+
 
         toolbar = view.findViewById(R.id.toolbar_wallet_loan_preview_request);
         loanProgressBarId = view.findViewById(R.id.loan_preview_request_progress_bar_id);
@@ -220,35 +223,15 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("loanApplication", loanApplication);
-       // navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanAppPhotosFragment,bundle);
 
         if(title.equalsIgnoreCase("Merchant Loan Details")){
-            Fragment fragment = new WalletLoanKycDetailsFragment(getString(R.string.merchant_loan_details));
-            fragment.setArguments(bundle);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            bundle.putString(applicantType, getString(R.string.merchant_loan_details));
+            //To WalletLoanKycDetailsFragment
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanKycDetailsFragment,bundle);
         }else {
-
-            Fragment fragment = new WalletLoanKycDetailsFragment(getString(R.string.default_loan_details));
-            fragment.setArguments(bundle);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            bundle.putString(applicantType, getString(R.string.default_loan_details));
+            //To WalletLoanKycDetailsFragment
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoanPreviewRequestFragment_to_walletLoanKycDetailsFragment,bundle);
         }
 
 

@@ -47,15 +47,19 @@ public class WalletTransactionsListFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView arrowCashIn,arrowCashOut;
     TextView cashInText,cashOutText,walletCashIn,walletCashOut;
+    String key_title="KEY_TITLE";
 
-    public WalletTransactionsListFragment(String appTitle){
-        this.appTitle=appTitle;
+    public WalletTransactionsListFragment(){
+
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.transaction_list, container, false);
+
+        if( getArguments()!=null)
+            appTitle=getArguments().getString(key_title);
 
         toolbar = view.findViewById(R.id.toolbar_wallet_transactions_list);
         recyclerView = view.findViewById(R.id.statement_recycler_view);

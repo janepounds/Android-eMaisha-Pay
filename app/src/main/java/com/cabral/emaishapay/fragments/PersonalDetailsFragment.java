@@ -125,7 +125,8 @@ public class PersonalDetailsFragment extends Fragment {
 
                 act_gender.setError(null);
                 date_of_birth.setError(null);
-                ContactDetailsFragment contactDetails = new ContactDetailsFragment();
+
+                //To ContactDetailsFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("firstname", firstname);
                 bundle.putString("lastname", lastname);
@@ -134,29 +135,15 @@ public class PersonalDetailsFragment extends Fragment {
                 }
                 bundle.putString("customer_gender", customer_gender);
                 bundle.putString("date_of_birth", date);
-                contactDetails.setArguments(bundle);
-                openFragment(contactDetails);
+
+                WalletHomeActivity.navController.navigate(R.id.action_personalDetailsFragment_to_contactDetailsFragment,bundle);
+
             }
         });
 
     }
 
-    public void openFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        transaction.replace(R.id.wallet_home_container, fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
 
-        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-            getFragmentManager().beginTransaction()
-                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-        else
-            getFragmentManager().beginTransaction()
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-    }
     public void addDatePicker2(final TextView ed_, final Context context) {
         ed_.setOnClickListener(view -> {
             Calendar mCurrentDate = Calendar.getInstance();

@@ -50,7 +50,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
     et_piggery_total_animals,et_piggery_females,et_poultry_no_of_birds_males,et_piggery_annual_revenue,et_piggery_experience;
     CheckBox equipments_cb, seeds_cb, Fertilizers_cb, crop_protection_cb,vaccination_cb,production_cb,mortality_records_cb,feed_consumption_cb,disease_incidences_cb,poultry_none_cb,poultry_feeds_cb,poultry_medication_cb,poultry_purchase_chicks_cb,poultry_shed_construction_cb,poultry_equipment_purchase_cb,
     selling_piglets_cb ,selling_breeding_cb,meat_production_cb ,feed_records_cb,incomes_expenses_cb ,medical_records_cb,breeding_records_cb, piggery_none_cb, piggery_feeds_cb, piggery_medication_cb,piggery_equipment_purchase_cb, breeding_stock_purchase_cb ;
-    Bundle localBundle;
+
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
@@ -65,10 +65,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             sp_piggery_source_of_seeds,sp_piggery_farm_vet_personnel,sp_poultry_qualifications,sp_piggery_qualifications;
 
     private String title;
+    final String applicantType="Applicant_Type";
 
-    public WalletLoanFarmingDetailsFragment(Bundle bundle,String title) {
-       this.localBundle=bundle;
-       this.title = title;
+    public WalletLoanFarmingDetailsFragment() {
     }
 
     @Override
@@ -82,6 +81,9 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wallet_loan_farming_details, container, false);
+        this.loanApplication= (LoanApplication) getArguments().getSerializable("loanApplication");
+        this.title=getArguments().getString(applicantType);
+        this.interest=getArguments().getFloat("interest");
 
         toolbar = view.findViewById(R.id.toolbar_wallet_loan_app_initiate);
         previousBtn = view.findViewById(R.id.btn_previous);
@@ -219,10 +221,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         if(localBundle != null){
-            loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
-            interest=localBundle.getFloat("interest");
-        }
+
            tv_poultry_date_of_hatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -569,38 +568,17 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putFloat("interest", interest);
                 bundle.putSerializable("loanApplication", loanApplication);
-//                navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
 
                 if(title.equalsIgnoreCase("Merchant Loan Details")){
-                    Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.merchant_loan_details));
-                    fragment.setArguments(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    //To WalletLoanPreviewRequestFragment
+                    bundle.putString(applicantType, getString(R.string.merchant_loan_details));
+                    WalletHomeActivity.navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
+
 
                 }else{
-
-                Fragment fragment = new WalletLoanPreviewRequestFragment(getString(R.string.default_loan_details));
-                fragment.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-
-            }
+                    bundle.putString(applicantType, getString(R.string.default_loan_details));
+                    WalletHomeActivity.navController.navigate(R.id.action_walletLoanFarmingDetailsFragment_to_walletLoanPreviewRequestFragment,bundle);
+                }
         }
         });
 

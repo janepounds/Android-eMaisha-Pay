@@ -318,7 +318,7 @@ public class ContactDetailsFragment extends Fragment {
                 Log.d("Kin Contact",next_of_kin_contact);
 
                 Log.d("First name", firstname);
-                IdentityProofFragment identityProof = new IdentityProofFragment();
+
                 Bundle bundle = new Bundle();
                 bundle.putString("firstname", firstname);
                 bundle.putString("lastname", lastname);
@@ -335,29 +335,13 @@ public class ContactDetailsFragment extends Fragment {
                 bundle.putString("next_of_kin_second_name", next_of_kin_second_name);
                 bundle.putString("next_of_kin_relationship", next_of_kin_relationship);
                 bundle.putString("next_of_kin_contact", next_of_kin_contact);
-                identityProof.setArguments(bundle);
 
-
-                openFragment(identityProof);
+                //To IdentityProofFragment
+                WalletHomeActivity.navController.navigate(R.id.action_personalDetailsFragment_to_contactDetailsFragment,bundle);
             }
         });
 
     }
 
-    public void openFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        transaction.replace(R.id.wallet_home_container, fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
 
-        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-            getFragmentManager().beginTransaction()
-                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-        else
-            getFragmentManager().beginTransaction()
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-    }
 }

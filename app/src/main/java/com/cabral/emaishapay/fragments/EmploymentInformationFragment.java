@@ -33,10 +33,8 @@ public class EmploymentInformationFragment extends Fragment {
     private static final String TAG = "EmploymentInformation";
     private FragmentEmploymentInformationBinding binding;
     private ProgressDialog progressDialog;
-    Bundle localBundle;
 
-    public EmploymentInformationFragment(Bundle bundle) {
-        this.localBundle=bundle;
+    public EmploymentInformationFragment() {
     }
 
     @Override
@@ -51,11 +49,11 @@ public class EmploymentInformationFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if(localBundle!=null){
-            String employer = localBundle.getString("employer");
-            String designation =localBundle.getString("designation");
-            String location =localBundle.getString("location");
-            String employee_id =localBundle.getString("employee_id");
+        if(getArguments()!=null){
+            String employer = getArguments().getString("employer");
+            String designation =getArguments().getString("designation");
+            String location =getArguments().getString("location");
+            String employee_id =getArguments().getString("employee_id");
 
             //set edit textviews
             binding.employer.setText(employer);
@@ -84,17 +82,8 @@ public class EmploymentInformationFragment extends Fragment {
                     if (response.isSuccessful()) {
                         Log.d(TAG, "onResponse: successful");
 
-                        Fragment fragment= new WalletAccountFragment();
-                        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                            fragmentManager.beginTransaction()
-                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                    .add(R.id.wallet_home_container, fragment)
-                                    .addToBackStack(null).commit();
-                        else
-                            fragmentManager.beginTransaction()
-                                    .add(R.id.wallet_home_container, fragment)
-                                    .addToBackStack(null).commit();
+                        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
                     } else {
                         Log.d(TAG, "onResponse: failed" + response.errorBody());
                         Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();

@@ -297,14 +297,10 @@ public class AddBeneficiaryFragment extends DialogFragment {
                                         String message = response.body().getMessage();
                                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
-                                        getActivity().getSupportFragmentManager().popBackStack();
 
-                                        Fragment fragment = new BeneficiariesListFragment();
-                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                        fragmentManager.beginTransaction()
-                                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                                .replace(R.id.wallet_home_container, fragment)
-                                                .addToBackStack(null).commit();
+                                        //To BeneficiariesListFragment();
+                                        WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
+                                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
 
                                         dialog.dismiss();
                                     }
@@ -337,20 +333,14 @@ public class AddBeneficiaryFragment extends DialogFragment {
                                 if (response.isSuccessful()) {
                                     String message = response.body().getMessage();
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-                                    //redirect to card list fragment
-                                    getActivity().getSupportFragmentManager().popBackStack();
-                                    Fragment fragment = new BeneficiariesListFragment();
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-                                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                                        fragmentManager.beginTransaction()
-                                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                                .replace(R.id.wallet_home_container, fragment)
-                                                .addToBackStack(null).commit();
-
-
                                     dialog.dismiss();
+                                    //To BeneficiariesListFragment();
+                                    WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
+                                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
+
+
+
+
                                 } else if (response.code() == 401) {
                                     dialog.dismiss();
                                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();

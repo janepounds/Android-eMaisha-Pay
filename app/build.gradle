@@ -60,7 +60,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    def nav_version = "2.3.1"
+    def nav_version = "2.3.4"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -109,7 +109,6 @@ dependencies {
     implementation 'com.braintreepayments.api:drop-in:3.+'
     implementation 'com.braintreepayments.api:braintree:2.+'
 
-    implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     //location and places
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'

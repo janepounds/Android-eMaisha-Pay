@@ -50,16 +50,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PersonalInformationFragment extends Fragment {
+public class AccountPersonalInformationFragment extends Fragment {
     private static final String TAG = "PersonalInformation";
     private FragmentPersonalInformationBinding binding;
     private ProgressDialog progressDialog;
     String encodedImageID = "N/A";
-    Bundle localBundle;
     private String selectedGender,displayGender;
 
-    public PersonalInformationFragment(Bundle bundle) {
-        this.localBundle=bundle;
+    public AccountPersonalInformationFragment() {
+
     }
 
 
@@ -81,12 +80,12 @@ public class PersonalInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(localBundle!=null) {
-            String dob = localBundle.getString("dob");
-            String gender = localBundle.getString("gender");
-            String nok = localBundle.getString("nok");
-            String nok_contact = localBundle.getString("nok_contact");
-            String pic = localBundle.getString("picture") ;
+        if(getArguments()!=null) {
+            String dob = getArguments().getString("dob");
+            String gender = getArguments().getString("gender");
+            String nok = getArguments().getString("nok");
+            String nok_contact = getArguments().getString("nok_contact");
+            String pic = getArguments().getString("picture") ;
             if(gender.equalsIgnoreCase("F")){
                 displayGender = "Female";
             }else{
@@ -176,17 +175,10 @@ public class PersonalInformationFragment extends Fragment {
             public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
-                    Fragment fragment= new WalletAccountFragment();
-                    FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+
+                    WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
+
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                     Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();

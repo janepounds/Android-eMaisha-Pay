@@ -351,9 +351,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                             button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
-                                    Intent intent = new Intent(context,WalletHomeActivity.class);
-                                    startActivity(intent);
+                                    WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
                                 }
                             });
                             dialog1.show();
@@ -364,22 +362,9 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                             String loan_no = response.body().getData().getLoan_no();
                             loanApplication.setLoan_no(loan_no);
 
-                            // navController.navigate(R.id.action_walletLoanAppPhotosFragment_to_walletLoansListFragment);
-                            Fragment fragment = new WalletLoansListFragment();
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                            while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
-                                fragmentManager.popBackStackImmediate();
-
-                            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                                fragmentManager.beginTransaction()
-                                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                        .add(R.id.wallet_home_container, fragment)
-                                        .addToBackStack(null).commit();
-                            else
-                                fragmentManager.beginTransaction()
-                                        .add(R.id.wallet_home_container, fragment)
-                                        .addToBackStack(null).commit();
+                            WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                            WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletLoansListFragment);
 
                     }
                 }

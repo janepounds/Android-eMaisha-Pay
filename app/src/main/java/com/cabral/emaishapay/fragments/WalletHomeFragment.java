@@ -243,17 +243,12 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new TransferMoney(balance,getString(R.string.transactions));
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                //To TransferMoney
+                Bundle args=new Bundle();
+                args.putString("KEY_ACTION", getString(R.string.transactions) );
+
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
+
 
             }
         });
@@ -261,17 +256,11 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new TransferMoney(balance,getString(R.string.settlements));
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                //To TransferMoney
+                Bundle args=new Bundle();
+                args.putString("KEY_ACTION", getString(R.string.settlements) );
+
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
 
             }
         });
@@ -295,18 +284,8 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutLoan.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-
-                  Fragment fragment = new WalletLoansListFragment();
-                  FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                  if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                      fragmentManager.beginTransaction()
-                              .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                              .add(R.id.wallet_home_container, fragment)
-                              .addToBackStack(null).commit();
-                  else
-                      fragmentManager.beginTransaction()
-                              .add(R.id.wallet_home_container, fragment)
-                              .addToBackStack(null).commit();
+                  //To WalletLoanListFragment
+                  WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletLoansListFragment);
 
               }
           }
@@ -314,35 +293,17 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Fragment fragment = new PayFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                //to PayFragment
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_payFragment);
             }
         });
         binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //To WalletTrasactionListFragment
-                Fragment fragment= new WalletTransactionsListFragment(getString(R.string.transactions));
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                Bundle args=new Bundle();
+                args.putString("KEY_TITLE", context.getString(R.string.transactions) );
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
         });
 
@@ -350,17 +311,7 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //To BeneficiariesListFragment
-                Fragment fragment= new BeneficiariesListFragment();
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
             }
         });
 
@@ -434,12 +385,12 @@ public class WalletHomeFragment extends Fragment {
                     dialog.hideProgressDialog();
                 } else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getActivity(), false);
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                     //getActivity().finish();
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
-                        Log.e("info", "Something got very very wrong");
+                        Log.e("info", "Something got very wrong");
                     }
                     dialog.hideProgressDialog();
                 }
@@ -447,6 +398,7 @@ public class WalletHomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
+                Log.e("info", "Something got very very wrong");
                 dialog.hideProgressDialog();
             }
         });
@@ -484,8 +436,8 @@ public class WalletHomeFragment extends Fragment {
 
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
-                    TokenAuthActivity.startAuth(getActivity(), false);
-                    //getActivity().finish();
+                    //Omitted to avoid current Destination conflicts
+                    //WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
@@ -496,8 +448,7 @@ public class WalletHomeFragment extends Fragment {
                 dialog.hideProgressDialog();
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
-                TokenAuthActivity.startAuth(getActivity(), false);
-                //getActivity().finish();
+
             }
         });
     }

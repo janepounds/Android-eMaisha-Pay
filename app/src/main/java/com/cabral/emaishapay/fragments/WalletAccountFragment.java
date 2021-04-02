@@ -147,17 +147,8 @@ public class WalletAccountFragment extends Fragment {
             bundle.putString("nok_contact",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
             bundle.putString("picture",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context));
 
-            Fragment fragment= new PersonalInformationFragment(bundle);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_personalInformationFragment,bundle);
+
 
         });
 
@@ -236,18 +227,8 @@ public class WalletAccountFragment extends Fragment {
                     bundle.putString("front", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context));
                     bundle.putString("back", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, context));
 
-                    Fragment fragment = new IdInformationFragment(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-
+                   ///To IdInformationFragment
+                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_idInformationFragment,bundle);
                 });
 
         binding.employmentInformationLayout.setOnClickListener(view12 -> {
@@ -315,24 +296,14 @@ public class WalletAccountFragment extends Fragment {
         binding.editEmploymentInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //To EmploymentInformationFragment
                 Bundle bundle = new Bundle();
                 bundle.putString("employer", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYER, context));
                 bundle.putString("designation", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_DESIGNATION, context));
                 bundle.putString("location", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LOCATION, context));
                 bundle.putString("employee_id", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, context));
 
-
-                Fragment fragment = new EmploymentInformationFragment(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_employmentInformationFragment,bundle);
             }
         });
 
@@ -398,6 +369,7 @@ public class WalletAccountFragment extends Fragment {
         binding.editBusinessInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //To BusinessInformationFragment
                 Bundle bundle = new Bundle();
                 bundle.putString("biz_name", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
                 bundle.putString("biz_location", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
@@ -405,17 +377,8 @@ public class WalletAccountFragment extends Fragment {
                 bundle.putString("license_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
                 bundle.putString("reg_cert", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
                 bundle.putString("trade_license", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
-                Fragment fragment = new BusinessInformationFragment(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+
+                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
             }
         });
 
@@ -559,18 +522,7 @@ public class WalletAccountFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     label_details = "Agent Details";
                     bundle.putString("Agent", label_details);
-
-                    Fragment fragment = new BusinessAccountFragment(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
 
 
                 }
@@ -582,18 +534,8 @@ public class WalletAccountFragment extends Fragment {
                     label_details = "Merchant Details";
                     bundle.putString("Merchant", label_details);
 
-                    Fragment fragment = new BusinessAccountFragment(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
                 }
             });
             binding.layoutAgentMerchant.setOnClickListener(new View.OnClickListener() {
@@ -603,18 +545,7 @@ public class WalletAccountFragment extends Fragment {
                     label_details = "Master Agent Details";
                     bundle.putString("AgentMerchant", label_details);
 
-                    Fragment fragment = new BusinessAccountFragment(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
                 }
             });
 

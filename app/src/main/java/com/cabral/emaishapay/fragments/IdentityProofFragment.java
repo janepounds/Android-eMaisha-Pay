@@ -168,7 +168,9 @@ public class IdentityProofFragment extends Fragment {
         finger_print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFragment(new FingerPrintAuthenticationFragment());
+
+                //openFragment(new FingerPrintAuthenticationFragment());
+
             }
         });
 
@@ -188,8 +190,7 @@ public class IdentityProofFragment extends Fragment {
                     Log.d("Kin Relationship", next_of_kin_relationship);
                     Log.d("Kin Contact", next_of_kin_contact);
 
-                    //call card details fragment
-                    CardDetail cardDetail = new CardDetail();
+                    //call card details fragment CardDetail
                     Bundle bundle = new Bundle();
                     bundle.putString("firstname", firstname);
                     bundle.putString("lastname", lastname);
@@ -211,8 +212,8 @@ public class IdentityProofFragment extends Fragment {
                     bundle.putString("national_id_photo", encodedImageID);
                     bundle.putString("customer_photo", encodedImageCustomerPhoto);
                     bundle.putString("customer_photo_with_id", encodedImagePhotoWithID);
-                    cardDetail.setArguments(bundle);
-                    openFragment(cardDetail);
+
+                    WalletHomeActivity.navController.navigate(R.id.action_identityProofFragment_to_cardDetail,bundle);
                 }
             }
         });
@@ -277,21 +278,6 @@ public class IdentityProofFragment extends Fragment {
     }
 
 
-    public void openFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        transaction.replace(R.id.wallet_home_container, fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-            getFragmentManager().beginTransaction()
-                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-        else
-            getFragmentManager().beginTransaction()
-                    .add(R.id.wallet_home_container, fragment)
-                    .addToBackStack(null).commit();
-    }
 
     public static void addDatePicker(final TextView ed_, final Context context) {
         ed_.setOnClickListener(new View.OnClickListener() {

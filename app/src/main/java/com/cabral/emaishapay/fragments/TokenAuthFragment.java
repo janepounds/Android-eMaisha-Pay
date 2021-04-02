@@ -1,15 +1,11 @@
 package com.cabral.emaishapay.fragments;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -18,17 +14,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ConfirmActivity;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.TokenResponse;
@@ -36,7 +27,6 @@ import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
-
 import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
@@ -51,8 +41,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     private EditText code1,code2,code3,code4;
     private  String pin;
     static TextView errorTextView;
-    private TextView keyboard0,keyboard1,keyboard2,keyboard3,keyboard4,keyboard5,keyboard6,keyboard7,keyboard8,keyboard9,keybboardClear;
-    private ImageView backspace;
+    private TextView keyboard0,keyboard1,keyboard2,keyboard3,keyboard4,keyboard5,keyboard6,keyboard7,keyboard8,keyboard9;
+
     public static String WALLET_ACCESS_TOKEN = null;
     private SparseArray<String> keyValues = new SparseArray<>();
     private InputConnection inputConnection;
@@ -85,9 +75,6 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         keyboard7 = view.findViewById(R.id.t9_key_7);
         keyboard8 = view.findViewById(R.id.t9_key_8);
         keyboard9 = view.findViewById(R.id.t9_key_9);
-        keybboardClear = view.findViewById(R.id.t9_key_backspace);
-
-
 
         keyValues.put(R.id.t9_key_1, "1");
         keyValues.put(R.id.t9_key_2, "2");
@@ -109,7 +96,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        WalletHomeActivity.disableNavigation();
         keyboard0.setOnClickListener(this);
         keyboard1.setOnClickListener(this);
         keyboard2.setOnClickListener(this);
@@ -230,8 +217,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
                 }else{
 
-                    WalletHomeActivity.startHome(context);
-                    getActivity().finish();
+                    WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);
 
                 }
             }
@@ -323,19 +309,12 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             }
         });
     }
-    public static void startAuth(Activity context, boolean sessionExpired) {
-        //call fragment
-        Fragment fragment = new TokenAuthFragment();
-        FragmentManager fragmentManager = context.getFragmentManager();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("sessionExpired", sessionExpired);
-        fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().commit();
 
-//        Intent authenticate = new Intent(context, TokenAuthActivity.class);
-//        authenticate.putExtra("sessionExpired", sessionExpired);
-//        authenticate.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        context.startActivity(authenticate);
+    public static void startAuth( boolean sessionExpired) {
+        //call fragment
+        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+
     }
 
     @Override

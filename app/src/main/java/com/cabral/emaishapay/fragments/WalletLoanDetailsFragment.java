@@ -34,7 +34,6 @@ import com.cabral.emaishapay.models.LoanApplication;
 public class WalletLoanDetailsFragment extends Fragment {
     private static final String TAG = "WalletLoanAppInitiateFr";
     private Context context;
-    Bundle localBundle;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     private Toolbar toolbar;
@@ -43,22 +42,23 @@ public class WalletLoanDetailsFragment extends Fragment {
     private EditText txtLoanApplicationAmount,loanpayments_edtxt;
     TextView loanpaymentfrequency,amount_due_txtview,txt_loan_application_duration,loanpayment_duration_units,txtv_maximum;
     private Spinner spLoanApplicationType;
-    Float interest=0F;
-    private String title;
-    LoanApplication loanApplication;
     FrameLayout layoutPreviousBtn;
     Button previous_btn;
 
-    public WalletLoanDetailsFragment(Bundle bundle,String title) {
-        this.title = title;
-        this.localBundle = bundle;
+    Float interest=0F;
+    final String applicantType="Applicant_Type";
+    private String title;
+    LoanApplication loanApplication;
+
+    public WalletLoanDetailsFragment() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(localBundle!=null){
-            interest=localBundle.getFloat("interest");
+        if(getArguments()!=null){
+            interest=getArguments().getFloat("interest");
+            title=  getArguments().getString(applicantType);
         }
     }
 
@@ -100,7 +100,7 @@ public class WalletLoanDetailsFragment extends Fragment {
            layoutPreviousBtn.setVisibility(View.VISIBLE);
            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
-           loanApplication= (LoanApplication) localBundle.getSerializable("loanApplication");
+           loanApplication= (LoanApplication) getArguments().getSerializable("loanApplication");
 
         }else {
             loanProgressBarId.setStateDescriptionData(descriptionData);
@@ -245,18 +245,10 @@ public class WalletLoanDetailsFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putFloat("interest", interest);
                     bundle.putSerializable("loanApplication", loanApplication);
+                    bundle.putString("Applicant_Type", getString(R.string.merchant_loan_details));
 
-                    Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle,getString(R.string.merchant_loan_details));
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    //To WalletLoanFarmingDetailsFragment
+                    WalletHomeActivity.navController.navigate(R.id.action_walletLoanDetailsFragment_to_walletLoanFarmingDetailsFragment,bundle);
 
                 }else{
                     LoanApplication loanApplication = new LoanApplication();
@@ -268,18 +260,10 @@ public class WalletLoanDetailsFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putFloat("interest", interest);
                     bundle.putSerializable("loanApplication", loanApplication);
+                    bundle.putString("Applicant_Type", getString(R.string.default_loan_details));
 
-                    Fragment fragment = new WalletLoanFarmingDetailsFragment(bundle,getString(R.string.default_loan_details));
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    //To WalletLoanFarmingDetailsFragment
+                    WalletHomeActivity.navController.navigate(R.id.action_walletLoanDetailsFragment_to_walletLoanFarmingDetailsFragment,bundle);
 
                 }
 

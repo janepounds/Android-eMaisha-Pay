@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -22,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -49,20 +46,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.cabral.emaishapay.fragments.PersonalInformationFragment.selectSpinnerItemByValue;
+import static com.cabral.emaishapay.fragments.AccountPersonalInformationFragment.selectSpinnerItemByValue;
 
 public class IdInformationFragment extends Fragment {
     private static final String TAG = "IdInformationFragment";
     private FragmentIdInformationBinding binding;
-    Bundle localBundle;
 
     private String encodedIdFront;
     private String encodedIdBack;
     private ImageView imageView;
     private ProgressDialog progressDialog;
 
-    public IdInformationFragment(Bundle bundle) {
-        this.localBundle=bundle;
+    public IdInformationFragment() {
     }
 
 
@@ -77,12 +72,13 @@ public class IdInformationFragment extends Fragment {
         binding.toolbar.setTitle("ID Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        if(localBundle!=null){
-            String idtype = localBundle.getString("idtype");
-            String idNumber =localBundle.getString("idNumber");
-            String expiryDate =localBundle.getString("expiryDate");
-            String front =localBundle.getString("front");
-            String back =localBundle.getString("back");
+        if(getArguments()!=null){
+            String idtype = getArguments().getString("idtype");
+            String idNumber =getArguments().getString("idNumber");
+            String expiryDate =getArguments().getString("expiryDate");
+            String front =getArguments().getString("front");
+            String back =getArguments().getString("back");
+
             Log.d(TAG, "onViewCreated: "+ ConstantValues.WALLET_DOMAIN+front);
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -159,17 +155,8 @@ public class IdInformationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: successful");
 
-                    Fragment fragment= new WalletAccountFragment();
-                    FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                    if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                        fragmentManager.beginTransaction()
-                                .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
-                    else
-                        fragmentManager.beginTransaction()
-                                .add(R.id.wallet_home_container, fragment)
-                                .addToBackStack(null).commit();
+                    WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
 
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());

@@ -37,9 +37,10 @@ import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-public class UserDetailsFragment extends Fragment {
+public class LoanUserDetailsFragment extends Fragment {
     private Context context;
-    Bundle localBundle;
+
+    final String applicantType="Applicant_Type";
     String[] descriptionData = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
 
     private Toolbar toolbar;
@@ -55,7 +56,7 @@ public class UserDetailsFragment extends Fragment {
 
     private float interest;
 
-    public UserDetailsFragment() {
+    public LoanUserDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -342,11 +343,15 @@ public class UserDetailsFragment extends Fragment {
             //navigate to next fragment
             LoanApplication loanApplication = new LoanApplication();
             loanApplication.setPhone(phone);
+
             Bundle bundle = new Bundle();
             bundle.putSerializable("loanApplication", loanApplication);
             bundle.putFloat("interest", interest);
-            WalletLoanDetailsFragment loanDetailsFragment = new WalletLoanDetailsFragment(bundle,getString(R.string.merchant_loan_details));
-            openFragment(loanDetailsFragment);
+            bundle.putString(applicantType, getString(R.string.merchant_loan_details));
+
+            //To  WalletLoanDetailsFragment
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanDetailsFragment,bundle);
+
         } else {
             Toast.makeText(context, "Enter valid code", Toast.LENGTH_LONG).show();
         }

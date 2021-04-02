@@ -144,21 +144,11 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
           //  NavController navController = Navigation.findNavController(v);
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("loanApplication", transaction);
+            Bundle args = new Bundle();
+            args.putSerializable("loanApplication", transaction);
 
-            Fragment fragment= new WalletLoanStatusPreview();
-            FragmentManager fragmentManager=((WalletHomeActivity) context).getSupportFragmentManager();
-            fragment.setArguments(bundle);
-            if (((WalletHomeActivity) context).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletHomeActivity) context).currentFragment)
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.wallet_home_container, fragment)
-                        .addToBackStack(null).commit();
+            //To WalletLoanStatusPreview();
+            WalletHomeActivity.navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanStatusPreview,args);
         }
     }
 }

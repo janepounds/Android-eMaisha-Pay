@@ -49,8 +49,7 @@ public class WalletLoansListFragment extends Fragment {
     private static final String TAG = "WalletLoansList";
     private Context context;
 
-    AppBarConfiguration appBarConfiguration;
-
+    final String applicantType="Applicant_Type";
     LoansListAdapter statementAdapter;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
@@ -87,21 +86,13 @@ public class WalletLoansListFragment extends Fragment {
         walletApplyLoanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Bundle bundle = new Bundle();
                 bundle.putFloat("interest", interest);
-                bundle.putString("possible_action", possible_action);
+                bundle.putString(applicantType, getString(R.string.default_loan_details));
 
-                Fragment fragment = new WalletLoanDetailsFragment(bundle,getString(R.string.default_loan_details));
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                    fragmentManager.beginTransaction()
-                            .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
-                else
-                    fragmentManager.beginTransaction()
-                            .add(R.id.wallet_home_container, fragment)
-                            .addToBackStack(null).commit();
+                //To  WalletLoanDetailsFragment
+                WalletHomeActivity.navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanDetailsFragment,bundle);
             }
         });
 
@@ -172,19 +163,10 @@ public class WalletLoansListFragment extends Fragment {
                                     public void onClick(View v) {
                                         Bundle bundle = new Bundle();
                                         bundle.putFloat("interest", interest);
+                                        bundle.putString(applicantType, getString(R.string.default_loan_details));
 
-                                        Log.d(TAG, "onClick: interest"+interest);
-                                        Fragment fragment = new WalletLoanDetailsFragment(bundle,getString(R.string.default_loan_details));
-                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                        if (((WalletHomeActivity) getActivity()).currentFragment != null)
-                                            fragmentManager.beginTransaction()
-                                                    .hide(((WalletHomeActivity) getActivity()).currentFragment)
-                                                    .add(R.id.wallet_home_container, fragment)
-                                                    .addToBackStack(null).commit();
-                                        else
-                                            fragmentManager.beginTransaction()
-                                                    .add(R.id.wallet_home_container, fragment)
-                                                    .addToBackStack(null).commit();
+                                        //To WalletLoanDetailsFragment
+                                        WalletHomeActivity.navController.navigate(R.id.action_walletLoansListFragment_to_walletLoanDetailsFragment,bundle);
 
                                 }
                                 });
