@@ -12,6 +12,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.http.Query;
 
 /**
  * Created by muneeb.vectorcoder@gmail.com on 30-Jan-18.
@@ -20,13 +21,19 @@ import okhttp3.Response;
 public class EmaishapayAPI_Interceptor implements Interceptor {
 
     private static final String EMAISHAPAY_CONSUMER_KEY = "authorizationKey";
+    private static final String EMAISHAPAY_REQUEST_ID = "request_id";
+    private static final String EMAISHAPAY_CATEGORY = "category";
 
     private String consumerKey;
+    private String requestId;
+    private String category;
 
 
 
-    private EmaishapayAPI_Interceptor(String consumerKey) {
+    private EmaishapayAPI_Interceptor(String consumerKey, String requestId, String category) {
         this.consumerKey = consumerKey;
+        this.requestId = requestId;
+        this.category = category;
     }
 
 
@@ -42,6 +49,8 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .addHeader("Content-Type", "application/json")
                 .addHeader(EMAISHAPAY_CONSUMER_KEY, consumerKey)
+                .addHeader(EMAISHAPAY_REQUEST_ID, requestId)
+                .addHeader(EMAISHAPAY_CATEGORY, category)
                 .url(url);
 
 
@@ -70,10 +79,22 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
     public static final class Builder {
 
         private String consumerKey;
+        private String requestId;
+        private String category;
 
         public Builder consumerKey(String consumerKey) {
             if (consumerKey == null) throw new NullPointerException("consumerKey = null");
             this.consumerKey = consumerKey;
+            return this;
+        }
+        public Builder requestId(String requestId) {
+            if (requestId == null) throw new NullPointerException("requestId = null");
+            this.requestId = requestId;
+            return this;
+        }
+        public Builder category(String category) {
+            if (category == null) throw new NullPointerException("category = null");
+            this.category = category;
             return this;
         }
 
@@ -81,8 +102,10 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
         public EmaishapayAPI_Interceptor build() {
 
             if (consumerKey == null) throw new IllegalStateException("consumerKey not set");
+            if (requestId == null) throw new IllegalStateException("requestId not set");
+            if (category == null) throw new IllegalStateException("category not set");
 
-            return new EmaishapayAPI_Interceptor(consumerKey);
+            return new EmaishapayAPI_Interceptor(consumerKey,requestId,category);
         }
     }
 

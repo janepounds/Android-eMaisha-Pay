@@ -110,7 +110,7 @@ public class PayLoan extends DialogFragment {
             
 
             /*********RETROFIT IMPLEMENTATION*************/
-            APIRequests apiRequests = APIClient.getWalletInstance();
+            APIRequests apiRequests = APIClient.getWalletInstance(getContext());
             Call<LoanPayResponse> call = apiRequests.loanPay(access_token,amount,userId,request_id,category,"payLoan");
             call.enqueue(new Callback<LoanPayResponse>() {
                 @Override

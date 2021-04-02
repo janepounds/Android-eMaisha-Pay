@@ -177,7 +177,7 @@ public class PurchasePreview extends DialogFragment implements
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<ConfirmationDataResponse> call = apiRequests.
                 getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
@@ -362,7 +362,7 @@ public class PurchasePreview extends DialogFragment implements
         int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -575,7 +575,7 @@ public class PurchasePreview extends DialogFragment implements
         int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());

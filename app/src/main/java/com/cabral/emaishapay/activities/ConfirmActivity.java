@@ -48,6 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
+import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
 
 public class ConfirmActivity extends AppCompatActivity implements PinFragment.Listener {
     private static final String TAG = "TokenAuthActivity";
@@ -90,7 +91,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         errorTextView = findViewById(R.id.text_view_crop_user_error);
         context = ConfirmActivity.this;
         dialogLoader = new DialogLoader(this);
-        apiRequests = APIClient.getWalletInstance();
+        apiRequests = APIClient.getWalletInstance(getContext());
 
         if ( ConfirmActivity.ACTION_CODE == 1) {
 
@@ -346,7 +347,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Log.d(TAG, "processLogin: request_id"+request_id);
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword,request_id,category,"comfirmUserLogin");
 
         dialogLoader.showProgressDialog();
@@ -478,7 +479,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         dialogLoader.showProgressDialog();
 
         String countryCode = getResources().getString(R.string.ugandan_code);
-        Call<UserData> call = APIClient.getWalletInstance()
+        Call<UserData> call = APIClient.getWalletInstance(getContext())
                 .processRegistration(userFirstname, userLastname, userPassword, countryCode, phoneNumber, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer,request_id,category,action_id);
 
         call.enqueue(new Callback<UserData>() {

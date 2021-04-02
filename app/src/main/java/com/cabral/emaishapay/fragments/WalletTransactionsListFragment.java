@@ -120,7 +120,7 @@ public class WalletTransactionsListFragment extends Fragment {
 
 
         /**********RETROFIT IMPLEMENTATION************/
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransactionResponse> call = apiRequests.transactionList(access_token,request_id,category,"getTransactionLogs");
 
         call.enqueue(new Callback<WalletTransactionResponse>() {
@@ -181,7 +181,7 @@ public class WalletTransactionsListFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /**********RETROFIT IMPLEMENTATION************/
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransactionResponse> call = apiRequests.getSettlements(access_token,request_id,category,"getSettlements");
 
         call.enqueue(new Callback<WalletTransactionResponse>() {

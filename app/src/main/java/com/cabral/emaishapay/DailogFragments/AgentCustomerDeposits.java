@@ -148,8 +148,8 @@ public class AgentCustomerDeposits extends DialogFragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantDeposit",request_id,category,"getReceiverForUser");
+        APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantDeposit","getReceiverForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {

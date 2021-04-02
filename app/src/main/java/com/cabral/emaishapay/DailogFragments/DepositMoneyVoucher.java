@@ -104,7 +104,7 @@ public class DepositMoneyVoucher extends DialogFragment {
         String codeEntered = voucherTxt.getText().toString();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<CouponsData> call = apiRequests.voucherDeposit(access_token,codeEntered,request_id,category,"initiateVoucherPay");
         call.enqueue(new Callback<CouponsData>() {
             @Override

@@ -185,8 +185,8 @@ public class ConfirmTransfer extends DialogFragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id,category,"getReceiverForUser");
+        APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer","getReceiverForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -405,7 +405,7 @@ public class ConfirmTransfer extends DialogFragment {
         Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code_encripted);
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,category,service_code_encripted,"customerInitiateFundsTransfer");
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
@@ -481,7 +481,7 @@ public class ConfirmTransfer extends DialogFragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
                 access_token,
                 amount,

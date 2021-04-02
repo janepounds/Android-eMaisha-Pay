@@ -304,7 +304,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         //**************RETROFIT IMPLEMENTATION******************//
-        Call<AccountResponse> call = APIClient.getWalletInstance()
+        Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,user_Id,business_name,registration_no,
                         encodedIdreg_cert,encodedIdtradelicense,proprietor_name,
                         proprietor_nin,encodedIdFront,encodedIdBack,role,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id,category,"applyForBusinessAccount");

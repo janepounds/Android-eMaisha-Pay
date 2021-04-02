@@ -104,7 +104,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
         /****RETROFIT IMPLEMENTATION*******/
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(context);
         Call<TokenResponse> call = apiRequests.getToken(phonenumber, password,request_id,category,"getAuthToken");
         call.enqueue(new Callback<TokenResponse>() {
             @Override

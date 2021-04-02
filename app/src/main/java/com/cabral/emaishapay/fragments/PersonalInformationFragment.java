@@ -168,7 +168,7 @@ public class PersonalInformationFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        Call<AccountResponse> call = APIClient.getWalletInstance()
+        Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .storePersonalInfo(access_token,userId, binding.dob.getText().toString(), selectedGender,
                         binding.nextOfKinFirst.getText().toString() + " " + binding.nextOfKinLast.getText().toString(), "+256" + binding.nextOfKinContact.getText().toString(), encodedImageID,request_id,category,"storeUserPersonalInfo");
         call.enqueue(new Callback<AccountResponse>() {

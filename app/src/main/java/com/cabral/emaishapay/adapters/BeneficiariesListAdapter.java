@@ -181,7 +181,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance().deleteBeneficiary(access_token,id,request_id);
+        Call<CardResponse> call = APIClient.getWalletInstance(context).deleteBeneficiary(access_token,id,request_id);
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

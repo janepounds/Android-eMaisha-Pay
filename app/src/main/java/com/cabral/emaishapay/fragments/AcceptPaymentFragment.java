@@ -220,7 +220,7 @@ public class AcceptPaymentFragment extends Fragment {
         dialogLoader.showProgressDialog();
 
         /*****RETROFIT IMPLEMENTATION*****/
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,"Agent Payment",request_id,category,"initiateAgentTransaction");
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
@@ -270,7 +270,7 @@ public class AcceptPaymentFragment extends Fragment {
         dialogLoader.showProgressDialog();
 
         /*****RETROFIT IMPLEMENTATION*****/
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateWithdrawResponse> call = apiRequests.confirmAcceptPayment(access_token, amount,customerNumber,OTPCode,request_id,category,"confirmAgentPayment");
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
@@ -448,7 +448,7 @@ public class AcceptPaymentFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,referenceNumber,"External Purchase","flutterwave",thirdParty_id,false,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override

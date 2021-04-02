@@ -202,8 +202,6 @@ public interface APIRequests {
   Call<ConfirmationDataResponse> getUserBusinessName(@Header("Authorization") String token,
                                                      @Path("phonenumber") String phonenumber,
                                                      @Path("purpose") String purpose,
-                                                     @Query("request_id") String request_id,
-                                                     @Query("category") String category,
                                                      @Query("action_id")String action_id
   );
 

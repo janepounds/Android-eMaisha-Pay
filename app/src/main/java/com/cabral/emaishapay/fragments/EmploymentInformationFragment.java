@@ -75,7 +75,7 @@ public class EmploymentInformationFragment extends Fragment {
             String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
             String request_id = WalletHomeActivity.generateRequestId();
             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-            Call<AccountResponse> call = APIClient.getWalletInstance()
+            Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                     .storeEmploymentInfo(access_token,userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
                             "+256 " + binding.contact.getText().toString(), binding.employerId.getText().toString(),request_id,category,"storeUserEmployementInfo");
             call.enqueue(new Callback<AccountResponse>() {

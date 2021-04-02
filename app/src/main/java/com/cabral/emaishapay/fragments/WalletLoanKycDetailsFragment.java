@@ -328,7 +328,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         }
 
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<RequestLoanresponse> call = apiRequests.requestLoans(access_token, requestObject,request_id,category,"requestLoan");
         call.enqueue(new Callback<RequestLoanresponse>() {
             @Override

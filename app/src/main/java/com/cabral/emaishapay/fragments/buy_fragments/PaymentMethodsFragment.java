@@ -438,7 +438,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -790,7 +790,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransaction> call = apiRequests.thirdpartyCreditUser(access_token,merchantWalletId,amount,referenceNumber,"flutterwave",thirdParty_id,true,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
@@ -862,7 +862,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id,category,"userEmaishaPayPaymentment");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override
@@ -1011,7 +1011,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id,category,"getCards");
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).getCards(access_token,request_id,category,"getCards");
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

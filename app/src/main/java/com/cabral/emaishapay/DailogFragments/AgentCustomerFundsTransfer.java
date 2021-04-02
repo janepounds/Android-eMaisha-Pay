@@ -209,7 +209,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         double amount = Double.parseDouble(amountEdt.getText().toString());
 
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<ConfirmationDataResponse> call = apiRequests.validateAgentFundsTransfer(access_token, customerPhoneNumber, receiverPhoneNumber,amount,request_id,category,"fundsTransferMetadata");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override

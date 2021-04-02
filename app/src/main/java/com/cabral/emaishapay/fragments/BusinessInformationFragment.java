@@ -163,7 +163,7 @@ public class BusinessInformationFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        Call<AccountResponse> call = APIClient.getWalletInstance()
+        Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .storeBusinessInfo(access_token,userId, binding.businessName.getText().toString(), binding.businessLocation.getText().toString(), binding.registrationNumber.getText().toString(),
                         encodedTradeLicence, binding.licenceNumber.getText().toString(), encodedRegistrationCertificate,request_id,category,"storeUserBusinessInfo");
         call.enqueue(new Callback<AccountResponse>() {

@@ -284,7 +284,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     if(submit.getText().toString().equalsIgnoreCase("update")){
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id);
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -330,7 +330,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance().saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number);
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

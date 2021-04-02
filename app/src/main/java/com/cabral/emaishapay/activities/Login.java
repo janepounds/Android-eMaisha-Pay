@@ -48,6 +48,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
+
 /**
  * Login activity handles User's Email, Facebook and Google Login
  **/
@@ -80,7 +82,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(context).build();
         // noInternetDialog.show();
         binding = DataBindingUtil.setContentView(this, R.layout.login);
-        apiRequests = APIClient.getWalletInstance();
+        apiRequests = APIClient.getWalletInstance(getContext());
 
         // Binding Layout Views
         dialogLoader = new DialogLoader(com.cabral.emaishapay.activities.Login.this);
@@ -228,7 +230,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance().getSecurityQns(access_token,request_id);
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(access_token,request_id);
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {

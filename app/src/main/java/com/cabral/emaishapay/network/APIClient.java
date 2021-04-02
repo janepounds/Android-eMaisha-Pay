@@ -1,9 +1,11 @@
 package com.cabral.emaishapay.network;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.utils.Utilities;
 
@@ -33,9 +35,10 @@ public class APIClient {
 
     private static APIRequests apiRequests;
     private  final String TAG="Retrofit2 Errors";
+    private Context context;
 
     // Singleton Instance of APIRequests
-    public static APIRequests getWalletInstance() {
+    public static APIRequests getWalletInstance(Context context) {
         if (apiRequests == null) {
 
             HttpLoggingInterceptor httpLoggingInterceptor =
@@ -47,8 +50,13 @@ public class APIClient {
                    });
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            String request_id = WalletHomeActivity.generateRequestId();
+            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
             EmaishapayAPI_Interceptor apiInterceptor = new EmaishapayAPI_Interceptor.Builder()
                     .consumerKey(BuildConfig.EMAISHAPAY_API_KEY)
+                    .requestId(request_id)
+                    .category(category)
                     .build();
 
 

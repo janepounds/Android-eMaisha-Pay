@@ -192,7 +192,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance().saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
+                            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
                             call.enqueue(new Callback<CardResponse>() {
                                 @Override
                                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -265,7 +265,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance().getCards(access_token,request_id,category,"getCards");
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).getCards(access_token,request_id,category,"getCards");
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -487,7 +487,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        APIRequests apiRequests = APIClient.getWalletInstance();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransaction> call = apiRequests.creditUser(access_token,null,amount,txRef,"Deposit","flutterwave",thirdparty_id, false,request_id,category,"creditUserAfterTransaction");
         call.enqueue(new Callback<WalletTransaction>() {
             @Override

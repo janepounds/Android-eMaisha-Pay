@@ -666,7 +666,7 @@ public class WalletAccountFragment extends Fragment {
         String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        Call<AccountResponse> call = APIClient.getWalletInstance()
+        Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .getAccountInfo(access_token,userId,request_id,category,"getAllUserData");
         call.enqueue(new Callback<AccountResponse>() {
             @Override
