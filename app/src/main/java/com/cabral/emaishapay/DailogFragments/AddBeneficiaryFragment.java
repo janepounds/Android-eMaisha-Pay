@@ -36,6 +36,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.BeneficiariesListFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
@@ -145,7 +146,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         dialog.show();
 
                         //call retrofit method for deleting card
-                        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
                         String beneficary_type = transactionTypeSp.getSelectedItem().toString();
@@ -257,7 +258,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     dialog.setCancelable(false);
                     dialog.show();
 
-                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                     String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -310,8 +311,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
                                     Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
 
                                     //redirect to auth
-                                    TokenAuthActivity.startAuth(getActivity(), true);
-                                    getActivity().finishAffinity();
+                                    TokenAuthFragment.startAuth( true);
+
                                 }
                             }
 
@@ -346,8 +347,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
                                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                                     //redirect to auth
-                                    TokenAuthActivity.startAuth(getActivity(), true);
-                                    getActivity().finishAffinity();
+                                    TokenAuthFragment.startAuth( true);
+
                                 }
                             }
 

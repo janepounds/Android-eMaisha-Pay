@@ -32,6 +32,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.order_model.OrderData;
 import com.cabral.emaishapay.models.order_model.OrderDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -167,7 +168,7 @@ public class My_Orders extends Fragment {
     public void RequestMyOrders() {
 
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .getOrders
@@ -219,7 +220,7 @@ public class My_Orders extends Fragment {
     //*********** Request User's cancel order ********//
     
     public void RequestMyOrdersCancel(int orderID) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         dialogLoader.showProgressDialog();
         

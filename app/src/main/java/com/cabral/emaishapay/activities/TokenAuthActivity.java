@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -50,7 +51,7 @@ public class TokenAuthActivity extends AppCompatActivity implements PinFragment.
         errorTextView = findViewById(R.id.text_view_crop_user_error);
         context = TokenAuthActivity.this;
 
-        if ( TokenAuthActivity.WALLET_ACCESS_TOKEN == null) {
+        if ( TokenAuthFragment.WALLET_ACCESS_TOKEN == null) {
 
             PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(TokenAuthActivity.this)
                     .validator(submission -> {

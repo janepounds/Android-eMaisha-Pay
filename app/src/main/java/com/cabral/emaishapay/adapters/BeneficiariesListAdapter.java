@@ -31,6 +31,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.BeneficiariesListFragment;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -177,7 +178,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /*************RETROFIT IMPLEMENTATION**************/

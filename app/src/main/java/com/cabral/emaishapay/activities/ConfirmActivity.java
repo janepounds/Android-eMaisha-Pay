@@ -22,6 +22,7 @@ import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_DB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
@@ -388,7 +389,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                             String accessToken = response.body().getAccess_token();
                             String accountRole = userDetails.getAccountRole();
                             Log.d(TAG, accessToken);
-                            TokenAuthActivity.WALLET_ACCESS_TOKEN = accessToken;
+                            TokenAuthFragment.WALLET_ACCESS_TOKEN = accessToken;
                             WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
                             if (dialogLoader != null)
                                 dialogLoader.hideProgressDialog();
@@ -454,7 +455,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
         editor.putBoolean("isLogged_in", true);
         editor.apply();
-        TokenAuthActivity.WALLET_ACCESS_TOKEN = null;
+        TokenAuthFragment.WALLET_ACCESS_TOKEN = null;
 
         // Set UserLoggedIn in MyAppPrefsManager
         MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(this);

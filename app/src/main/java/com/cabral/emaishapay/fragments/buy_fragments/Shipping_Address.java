@@ -35,6 +35,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -563,7 +564,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
 
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         String[] names = input_name.getText().toString().trim().split(" ");
 
@@ -635,7 +636,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public void updateUserAddress(String addressID, AddressDetails addressDetails) {
 
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         String[] names = input_name.getText().toString().trim().split(" ");
         Call<AddressData> call = BuyInputsAPIClient.getInstance()

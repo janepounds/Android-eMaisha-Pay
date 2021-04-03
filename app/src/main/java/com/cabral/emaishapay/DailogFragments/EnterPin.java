@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.APIClient;
 
@@ -82,7 +83,7 @@ public class EnterPin extends DialogFragment {
                 dialog.setMessage("Please Wait..");
                 dialog.setCancelable(false);
                 dialog.show();
-                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
                 String[] amount = totalAmount.split("\\s+");
                 String amount_only = amount[1];

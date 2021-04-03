@@ -43,6 +43,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -403,7 +404,7 @@ public class ShopPayments extends Fragment implements
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -419,8 +420,8 @@ public class ShopPayments extends Fragment implements
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
@@ -631,7 +632,7 @@ public class ShopPayments extends Fragment implements
 
     public void initiateAcceptPayment(final String phoneNumber, final double amount) {
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -648,12 +649,12 @@ public class ShopPayments extends Fragment implements
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                     getActivity().finish();
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 else if (response.code() == 500) {
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
@@ -681,7 +682,7 @@ public class ShopPayments extends Fragment implements
 
     public void comfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
         ProgressDialog dialog;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -697,8 +698,8 @@ public class ShopPayments extends Fragment implements
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 else if (response.code() == 500) {
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());

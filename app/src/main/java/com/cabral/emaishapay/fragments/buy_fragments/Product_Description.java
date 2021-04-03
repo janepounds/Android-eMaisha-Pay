@@ -55,6 +55,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Attribute;
@@ -900,7 +901,7 @@ public class Product_Description extends Fragment {
         getAllProducts.setCustomersId(customerID);
         getAllProducts.setProductsId(String.valueOf(productID));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -950,7 +951,7 @@ public class Product_Description extends Fragment {
         getStock.setProductsId(String.valueOf(productID));
         getStock.setAttributes(attributes);
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ProductStock> call = BuyInputsAPIClient.getInstance()
@@ -993,7 +994,7 @@ public class Product_Description extends Fragment {
     //*********** Request the Server to Like the Product based on productID and customerID ********//
 
     public static void LikeProduct(int productID, String customerID, final Context context, final View view) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .likeProduct
@@ -1036,7 +1037,7 @@ public class Product_Description extends Fragment {
     //*********** Request the Server to Unlike the Product based on productID and customerID ********//
 
     public static void UnlikeProduct(int productID, String customerID, final Context context, final View view) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .unlikeProduct
                         (access_token,
@@ -1125,7 +1126,7 @@ public class Product_Description extends Fragment {
         GetStock getStockParams = new GetStock();
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);
         try {

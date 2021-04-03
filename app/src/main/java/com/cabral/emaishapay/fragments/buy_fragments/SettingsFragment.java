@@ -44,6 +44,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.contact_model.ContactUsData;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.user_model.UserDetails;
@@ -168,7 +169,7 @@ public class SettingsFragment extends Fragment {
                 oldPassword = fullscreenDialog.findViewById(R.id.current_pin);
                 newPassword = fullscreenDialog.findViewById(R.id.new_pin);
                 Button saveButton = fullscreenDialog.findViewById(R.id.dialog_button);
-                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -577,7 +578,7 @@ public class SettingsFragment extends Fragment {
 
         deviceID = FirebaseInstanceId.getInstance().getToken();
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<ContactUsData> call = BuyInputsAPIClient.getInstance()
                 .notify_me

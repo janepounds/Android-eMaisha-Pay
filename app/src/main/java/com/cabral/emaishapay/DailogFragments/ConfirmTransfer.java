@@ -26,6 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -181,7 +182,7 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -205,8 +206,8 @@ public class ConfirmTransfer extends DialogFragment {
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));
@@ -389,7 +390,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     public void initiateWalletTransfer(final String phoneNumber, final double amount) {
         ProgressDialog dialog;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
         dialog = new ProgressDialog(activity);
@@ -434,8 +435,8 @@ public class ConfirmTransfer extends DialogFragment {
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                     else if (response.code() == 500) {
                         errorTextView.setText("Error Occurred Try again later");
@@ -469,7 +470,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     private void recordTransferSettlement(String third_party_status,String destination_type, BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader)
     {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Double amount =Double.parseDouble(transferResponse.getAmount());
         String thirdparty="flutterwave";
         Double third_party_fee =Double.parseDouble(transferResponse.getFee());

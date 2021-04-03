@@ -224,7 +224,7 @@ public class CardDetail extends Fragment {
                         e.printStackTrace();
                     }
 
-                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext())

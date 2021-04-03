@@ -287,7 +287,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         JSONObject requestObject = new JSONObject();
@@ -370,8 +370,8 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 }
 
                 } else if (response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 } else if (response.code() == 500) {
                     textViewErrorMessage.setText("Error Occurred Try again later");
                     Log.e("info 500", new String(String.valueOf(response.message())) + ", code: " + response.code());

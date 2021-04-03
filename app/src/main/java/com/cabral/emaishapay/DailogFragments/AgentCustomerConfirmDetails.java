@@ -36,6 +36,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
@@ -214,7 +215,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
     public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type) {
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -234,7 +235,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                     getActivity().finish();
                 }
                 else if (response.code() == 500) {
@@ -393,7 +394,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
     private  void comfirmAgentFundsTransfer(String otp_code, String customerNumber, double amount){
         String receiverPhoneNumber=textPhoneNumber.getText().toString();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -436,7 +437,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     }
 
     private  void comfirmAgentWithdraw(String otp_code, String customerNumber, double amount){
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();

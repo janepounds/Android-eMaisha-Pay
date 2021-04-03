@@ -25,6 +25,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.LoginBinding;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -170,7 +171,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     private void processForgotPassword(String email) {
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Call<UserData> call = apiRequests
@@ -226,7 +227,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     public void RequestSecurityQns(){
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/

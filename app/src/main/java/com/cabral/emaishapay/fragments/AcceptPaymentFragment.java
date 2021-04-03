@@ -214,7 +214,7 @@ public class AcceptPaymentFragment extends Fragment {
 
     public void initiateAcceptPayment(final String phoneNumber, final double amount) {
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -231,12 +231,12 @@ public class AcceptPaymentFragment extends Fragment {
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                     getActivity().finish();
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 else if (response.code() == 500) {
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
@@ -264,7 +264,7 @@ public class AcceptPaymentFragment extends Fragment {
 
     public void comfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
         ProgressDialog dialog;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -281,8 +281,8 @@ public class AcceptPaymentFragment extends Fragment {
 
                 }
                 else if(response.code() == 401) {
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 else if (response.code() == 500) {
                     Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
@@ -444,7 +444,7 @@ public class AcceptPaymentFragment extends Fragment {
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -460,8 +460,8 @@ public class AcceptPaymentFragment extends Fragment {
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();

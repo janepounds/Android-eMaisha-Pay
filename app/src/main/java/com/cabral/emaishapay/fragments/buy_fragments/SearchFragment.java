@@ -27,6 +27,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.search_model.SearchData;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.snackbar.Snackbar;
@@ -77,7 +78,7 @@ public class SearchFragment extends Fragment {
 
     public void requestSearchData(String searchValue) {
         progressBar.setVisibility(View.VISIBLE);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<SearchData> call = BuyInputsAPIClient.getInstance()
                 .getSearchData

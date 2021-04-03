@@ -20,6 +20,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
@@ -85,7 +86,7 @@ public class TopDealsFragment extends Fragment {
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("special");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts

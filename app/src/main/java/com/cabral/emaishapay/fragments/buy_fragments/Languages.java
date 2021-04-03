@@ -26,6 +26,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.language_model.LanguageData;
@@ -206,7 +207,7 @@ public class Languages extends Fragment {
     //*********** Request App Languages from the Server ********//
     
     public void RequestLanguages() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<LanguageData> call = BuyInputsAPIClient.getInstance()
                 .getLanguages(access_token);
         dialogLoader.showProgressDialog();

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/walletAccountFragment2"
         android:name="com.cabral.emaishapay.fragments.WalletAccountFragment"
-        android:label="WalletAccountFragment" >
+        android:label="WalletAccountFragment">
         <action
             android:id="@+id/action_walletAccountFragment2_to_businessInformationFragment"
             app:destination="@id/businessInformationFragment" />

@@ -29,6 +29,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
@@ -183,7 +184,7 @@ public class WishList extends Fragment {
         getAllProducts.setType("wishlist");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts

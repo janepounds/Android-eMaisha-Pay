@@ -435,7 +435,7 @@ public class TransferMoney extends Fragment {
 
     public void requestFilteredBeneficiaries(){
         String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
@@ -474,8 +474,8 @@ public class TransferMoney extends Fragment {
                   
                 }else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {

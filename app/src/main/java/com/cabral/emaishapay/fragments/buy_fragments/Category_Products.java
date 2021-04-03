@@ -36,6 +36,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.customs.FilterDialog;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.get_filters.FilterData;
 import com.cabral.emaishapay.models.filter_model.get_filters.FilterDetails;
@@ -424,7 +425,7 @@ public class Category_Products extends Fragment {
         getAllProducts.setCategoriesId(String.valueOf(categoryID));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
         getAllProducts.setType(sortBy);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         productsCall = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -495,7 +496,7 @@ public class Category_Products extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String data = new Gson().toJson(getAllProducts);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -545,7 +546,7 @@ public class Category_Products extends Fragment {
     //*********** Request Filters of the given OrderProductCategory ********//
 
     private void RequestFilters(int categories_id) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         filterCAll = BuyInputsAPIClient.getInstance()

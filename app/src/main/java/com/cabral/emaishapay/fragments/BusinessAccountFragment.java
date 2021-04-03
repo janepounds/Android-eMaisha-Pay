@@ -299,7 +299,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String registration_no = binding.registrationNumber.getText().toString();
         String proprietor_name = binding.proprietorName.getText().toString();
         String proprietor_nin = binding.proprietorNin.getText().toString();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

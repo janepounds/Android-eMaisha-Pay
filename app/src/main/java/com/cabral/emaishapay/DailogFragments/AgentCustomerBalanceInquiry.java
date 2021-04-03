@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -150,7 +151,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
 
         /***************RETROFIT IMPLEMENTATION***********************/
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantBalanceInquiry","getReceiverForUser");
@@ -185,8 +186,8 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
 
             }

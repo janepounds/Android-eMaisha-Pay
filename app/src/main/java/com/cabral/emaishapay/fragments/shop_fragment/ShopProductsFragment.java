@@ -39,6 +39,7 @@ import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -194,7 +195,7 @@ public class ShopProductsFragment extends Fragment {
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
                 .getManufacturers(access_token);

@@ -9,6 +9,7 @@ import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
@@ -149,7 +150,7 @@ public class StartAppRequests {
     public void saveProductList(String product_id,String unique_product_id,String measure_id,String user_id,String selected_product_id,String product_manufacturer,
                                 String product_name,String product_code,String selected_category_id,String  product_category,String product_buy_price, String product_sell_price,
                                 String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ResponseBody> call = BuyInputsAPIClient
@@ -188,7 +189,7 @@ public class StartAppRequests {
 
 
     public void RequestAllCategories() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         ConstantValues.LANGUAGE_ID=1;
         Call<CategoryData> call = BuyInputsAPIClient.getInstance()
@@ -295,7 +296,7 @@ public class StartAppRequests {
                 @Override
                 public void onSuccess(InstanceIdResult instanceIdResult) {
                     String deviceID =instanceIdResult.getToken();
-                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
                     Call<UserData> call = APIClient.getWalletInstance(context)

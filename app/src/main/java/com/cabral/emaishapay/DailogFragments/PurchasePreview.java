@@ -26,6 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -173,7 +174,7 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
@@ -198,8 +199,8 @@ public class PurchasePreview extends DialogFragment implements
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
 
 
@@ -363,7 +364,7 @@ public class PurchasePreview extends DialogFragment implements
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -576,7 +577,7 @@ public class PurchasePreview extends DialogFragment implements
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.fragments.WalletLoansListFragment;
 import com.cabral.emaishapay.models.LoanPayResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -102,7 +103,7 @@ public class PayLoan extends DialogFragment {
 
             float amount = Float.parseFloat(totalAmountTxt.getText().toString());
 
-            String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+            String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
             String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

@@ -21,6 +21,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ratings.GetRatings;
 import com.cabral.emaishapay.models.ratings.ProductReviews;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -145,7 +146,7 @@ public class UserProductReviewsAdapter extends RecyclerView.Adapter<UserProductR
         userLike.setImageResource(R.drawable.ic_like_blue);
 
         String customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .likeReview
                         (       access_token,

@@ -337,7 +337,7 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(context);
         dialog.showProgressDialog();
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -407,7 +407,7 @@ public class WalletHomeFragment extends Fragment {
     }
 
     public void getBalanceAndCommission() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

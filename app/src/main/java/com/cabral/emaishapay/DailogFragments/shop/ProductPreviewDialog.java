@@ -28,6 +28,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
@@ -114,7 +115,7 @@ public class ProductPreviewDialog extends DialogFragment {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //delete from online
-                                String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                                 String product_id = productData.get("product_id");
                                 Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);

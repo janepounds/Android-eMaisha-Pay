@@ -32,6 +32,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -128,7 +129,7 @@ public class ViewAllPopularProducts extends Fragment {
         getAllProducts.setType("top seller");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         productsCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,

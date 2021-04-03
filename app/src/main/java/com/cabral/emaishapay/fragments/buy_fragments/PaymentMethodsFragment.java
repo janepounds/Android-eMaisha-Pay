@@ -49,6 +49,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -434,7 +435,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         String hash_cvv = encrypter.encrypt(cvv_);
                         String hash_expiry = encrypter.encrypt(expiry);
                         String hash_account_name = encrypter.encrypt(account_name);
-                        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
@@ -618,7 +619,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     }
 
     private void GenerateBrainTreeToken() {
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
                 .generateBraintreeToken(access_token);
@@ -786,7 +787,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -802,8 +803,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                     proceedOrder(true);
                 } else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
@@ -858,7 +859,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -873,8 +874,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                     proceedOrder(true);
                 }else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
@@ -1007,7 +1008,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     }
 
     public void getCards(){
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
@@ -1116,7 +1117,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                 }else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {

@@ -35,6 +35,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.CropSpinnerItem;
@@ -188,7 +189,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         String hash_cvv = encrypter.encrypt(cvv);
                         String hash_expiry = encrypter.encrypt(expiry);
                         String hash_account_name = encrypter.encrypt(account_name);
-                        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
@@ -261,7 +262,7 @@ public class DepositMoneyVisa extends DialogFragment implements
     }
 
     public void getCards(){
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
@@ -370,7 +371,7 @@ public class DepositMoneyVisa extends DialogFragment implements
 
                 }else if (response.code() == 401) {
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
                     } else {
@@ -484,7 +485,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         double amount = Float.parseFloat(amountEntered);
 
         /************RETROFIT IMPLEMENTATION*******************/
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -498,7 +499,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                    TokenAuthActivity.startAuth(getActivity(), true);
+                    TokenAuthFragment.startAuth( true);
                 } else if (response.code() == 500) {
                     if (response.errorBody() != null) {
                         Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();

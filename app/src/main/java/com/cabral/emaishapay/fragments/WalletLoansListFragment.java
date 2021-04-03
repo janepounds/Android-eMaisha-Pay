@@ -124,7 +124,7 @@ public class WalletLoansListFragment extends Fragment {
 
         /*************RETROFIT IMPLEMENTATION********************/
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -212,8 +212,8 @@ public class WalletLoansListFragment extends Fragment {
                 Log.e("info : ", "Something got very wrong");
 
                 dialog.dismiss();
-                TokenAuthActivity.startAuth(getActivity(), true);
-                getActivity().finishAffinity();
+                TokenAuthFragment.startAuth( true);
+
             }
         });
     }
@@ -234,7 +234,7 @@ public class WalletLoansListFragment extends Fragment {
 
     public void cancelLoan(){
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

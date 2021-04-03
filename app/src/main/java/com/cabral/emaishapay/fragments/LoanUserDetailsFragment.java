@@ -134,7 +134,7 @@ public class LoanUserDetailsFragment extends Fragment {
         progressDialog.setMessage("Please Wait..");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -309,8 +309,8 @@ public class LoanUserDetailsFragment extends Fragment {
 
                 }
                 else if(response.code()==401){
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
                 if (response.errorBody() != null) {
                     Log.e("info", String.valueOf(response.errorBody()));

@@ -36,6 +36,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.CardListFragment;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -94,7 +95,7 @@ public class ChangePassword extends DialogFragment {
                     dialog.showProgressDialog();
                     //call endpoint for change password
                     String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
-                    String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+                    String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
                     /******************RETROFIT IMPLEMENTATION***********************/
                     Call<ChangePinResponse> call = APIClient.getWalletInstance(getContext()).changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString());
                     call.enqueue(new Callback<ChangePinResponse>() {

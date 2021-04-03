@@ -34,6 +34,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
@@ -204,7 +205,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
 
         /***************RETROFIT IMPLEMENTATION***********************/
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         double amount = Double.parseDouble(amountEdt.getText().toString());
@@ -252,8 +253,8 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                 }
                 else if(response.code()==401){
                     dialogLoader.hideProgressDialog();
-                    TokenAuthActivity.startAuth(getActivity(), true);
-                    getActivity().finishAffinity();
+                    TokenAuthFragment.startAuth( true);
+
                 }
 
             }

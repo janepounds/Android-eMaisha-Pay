@@ -28,6 +28,7 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.UserProductReviewsAdapte
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ratings.GetRatings;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.gson.Gson;
@@ -110,7 +111,7 @@ public class ProductRatingReviewListFragment extends Fragment {
     private void getProductReviews(final String productID, final UserProductReviewsAdapter adapter) {
 
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .getProductReviews
                         (       access_token,

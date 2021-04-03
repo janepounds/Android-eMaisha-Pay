@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.snackbar.Snackbar;
@@ -107,7 +108,7 @@ public class ProductRatingReviewFragment extends Fragment {
         map.put("languages_id", languages_id);
         map.put("reviews_text", reviews_text);
 
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map);
 
         call.enqueue(new Callback<GiveRating>() {

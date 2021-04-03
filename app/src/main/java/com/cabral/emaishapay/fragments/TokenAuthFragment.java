@@ -14,20 +14,22 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
 import org.jetbrains.annotations.NotNull;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +40,8 @@ import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WA
 public class TokenAuthFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "TokenAuthFragment";
     private Context context;
-    private EditText code1,code2,code3,code4;
     private  String pin;
-    static TextView errorTextView;
-    private TextView keyboard0,keyboard1,keyboard2,keyboard3,keyboard4,keyboard5,keyboard6,keyboard7,keyboard8,keyboard9;
+    FragmentTokenAuthBinding binding;
 
     public static String WALLET_ACCESS_TOKEN = null;
     private SparseArray<String> keyValues = new SparseArray<>();
@@ -59,37 +59,23 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view =   inflater.inflate(R.layout.fragment_token_auth, container, false);
-        code1 = view.findViewById(R.id.pin_code1_et);
-        code2 = view.findViewById(R.id.pin_code2_et);
-        code3 = view.findViewById(R.id.pin_code3_et);
-        code4 = view.findViewById(R.id.pin_code4_et);
-        errorTextView = view.findViewById(R.id.text_view_crop_user_error);
-        keyboard0 = view.findViewById(R.id.t9_key_0);
-        keyboard1 = view.findViewById(R.id.t9_key_1);
-        keyboard2 = view.findViewById(R.id.t9_key_2);
-        keyboard3 = view.findViewById(R.id.t9_key_3);
-        keyboard4 = view.findViewById(R.id.t9_key_4);
-        keyboard5 = view.findViewById(R.id.t9_key_5);
-        keyboard6 = view.findViewById(R.id.t9_key_6);
-        keyboard7 = view.findViewById(R.id.t9_key_7);
-        keyboard8 = view.findViewById(R.id.t9_key_8);
-        keyboard9 = view.findViewById(R.id.t9_key_9);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
 
-        keyValues.put(R.id.t9_key_1, "1");
-        keyValues.put(R.id.t9_key_2, "2");
-        keyValues.put(R.id.t9_key_3, "3");
-        keyValues.put(R.id.t9_key_4, "4");
-        keyValues.put(R.id.t9_key_5, "5");
-        keyValues.put(R.id.t9_key_6, "6");
-        keyValues.put(R.id.t9_key_7, "7");
-        keyValues.put(R.id.t9_key_8, "8");
-        keyValues.put(R.id.t9_key_9, "9");
+
+        keyValues.put(R.id.tv_key_1, "1");
+        keyValues.put(R.id.tv_key_2, "2");
+        keyValues.put(R.id.tv_key_3, "3");
+        keyValues.put(R.id.tv_key_4, "4");
+        keyValues.put(R.id.tv_key_5, "5");
+        keyValues.put(R.id.tv_key_6, "6");
+        keyValues.put(R.id.tv_key_7, "7");
+        keyValues.put(R.id.tv_key_8, "8");
+        keyValues.put(R.id.tv_key_9, "9");
 
 
 
 
-        return view;
+        return binding.getRoot();
 
     }
 
@@ -97,24 +83,22 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         WalletHomeActivity.disableNavigation();
-        keyboard0.setOnClickListener(this);
-        keyboard1.setOnClickListener(this);
-        keyboard2.setOnClickListener(this);
-        keyboard3.setOnClickListener(this);
-        keyboard4.setOnClickListener(this);
-        keyboard5.setOnClickListener(this);
-        keyboard6.setOnClickListener(this);
-        keyboard7.setOnClickListener(this);
-        keyboard8.setOnClickListener(this);
-        keyboard9.setOnClickListener(this);
+        binding.tvKey0.setOnClickListener(this);
+        binding.tvKey1.setOnClickListener(this);
+        binding.tvKey2.setOnClickListener(this);
+        binding.tvKey3.setOnClickListener(this);
+        binding.tvKey4.setOnClickListener(this);
+        binding.tvKey5.setOnClickListener(this);
+        binding.tvKey6.setOnClickListener(this);
+        binding.tvKey7.setOnClickListener(this);
+        binding.tvKey8.setOnClickListener(this);
+        binding.tvKey9.setOnClickListener(this);
+        binding.tvKeyBackspace.setOnClickListener(this);
 
-        code1.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        code1.setTextIsSelectable(true);
-
-        InputConnection ic = code1.onCreateInputConnection(new EditorInfo());
-        setInputConnection(ic);
-
-        code1.addTextChangedListener(new TextWatcher() {
+        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        binding.pinCode1Edt.setTextIsSelectable(true);
+        setInputConnection(binding.pinCode1Edt);
+        binding.pinCode1Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -125,18 +109,14 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
-                code2.requestFocus();
+                binding.pinCode2Edt.requestFocus();
             }
         });
 
 
-        code2.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        code2.setTextIsSelectable(true);
-
-        InputConnection icc = code2.onCreateInputConnection(new EditorInfo());
-        setInputConnection(icc);
-
-        code2.addTextChangedListener(new TextWatcher() {
+        binding.pinCode2Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        binding.pinCode2Edt.setTextIsSelectable(true);
+        binding.pinCode2Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -147,16 +127,13 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
-                code3.requestFocus();
+                binding.pinCode3Edt.requestFocus();
             }
         });
 
-        code3.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        code3.setTextIsSelectable(true);
-
-        InputConnection iccc = code3.onCreateInputConnection(new EditorInfo());
-        setInputConnection(iccc);
-        code3.addTextChangedListener(new TextWatcher() {
+        binding.pinCode3Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        binding.pinCode3Edt.setTextIsSelectable(true);
+        binding.pinCode3Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -167,16 +144,13 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
-                code4.requestFocus();
+                binding.pinCode4Edt.requestFocus();
             }
         });
 
-        code4.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        code4.setTextIsSelectable(true);
-
-        InputConnection icccc = code4.onCreateInputConnection(new EditorInfo());
-        setInputConnection(icccc);
-        code4.addTextChangedListener(new TextWatcher() {
+        binding.pinCode4Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        binding.pinCode4Edt.setTextIsSelectable(true);
+        binding.pinCode4Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -189,7 +163,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             public void afterTextChanged(Editable s) {
                 if (TokenAuthFragment.WALLET_ACCESS_TOKEN == null) {
 
-                    pin = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString();
+                    pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
                     pin = pin.replaceAll("\\s+", "");
                     if (pin.length() >= 4) {
                         DialogLoader dialogLoader = new DialogLoader(context);
@@ -206,7 +180,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
 
                         } else {
-                            Snackbar.make(errorTextView, getString(R.string.internet_connection_error), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(binding.textForgotPin, getString(R.string.internet_connection_error), Snackbar.LENGTH_LONG).show();
 
                         }
 
@@ -231,7 +205,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
 
 
-    public void setInputConnection(InputConnection ic) {
+    public void setInputConnection(EditText editText) {
+        InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
     }
 
@@ -273,12 +248,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                 } else {
 
                     if (response.code() == 403) {
-                        //Toast.makeText(context, errorResponse.getString("message"), Toast.LENGTH_LONG).show();
-                        if (errorTextView != null) {
-                            errorTextView.setText(response.body().getMessage());
-                            errorTextView.setVisibility(View.VISIBLE);
-                            errorTextView.requestFocus();
-                        }
+
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                     if (response.errorBody() != null) {
@@ -322,7 +293,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         if (inputConnection == null)
             return;
 
-        if (v.getId() == R.id.t9_key_backspace) {
+        if (v.getId() == R.id.tv_key_backspace) {
             CharSequence selectedText = inputConnection.getSelectedText(0);
 
             if (TextUtils.isEmpty(selectedText)) {
@@ -331,8 +302,27 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                 inputConnection.commitText("", 1);
             }
         } else {
-            String value = keyValues.get(v.getId());
+            String value = keyValues.get(v.getId()).toString();
             inputConnection.commitText(value, 1);
         }
+
+        pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+        pin = pin.replaceAll("\\s+", "");
+
+        switch (pin.length()){
+            case 0:
+                setInputConnection( binding.pinCode1Edt);
+                break;
+            case 1:
+                setInputConnection( binding.pinCode2Edt);
+                break;
+            case 2:
+                setInputConnection( binding.pinCode3Edt);
+                break;
+            case 3:
+                setInputConnection( binding.pinCode4Edt);
+                break;
+        }
+
     }
 }

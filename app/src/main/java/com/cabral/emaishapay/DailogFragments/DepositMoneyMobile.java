@@ -24,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.activities.TokenAuthActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
@@ -186,7 +187,7 @@ public class DepositMoneyMobile extends DialogFragment {
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
         String referenceNumber = txRef;
-        String access_token = TokenAuthActivity.WALLET_ACCESS_TOKEN;
+        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -202,8 +203,8 @@ public class DepositMoneyMobile extends DialogFragment {
                     refreshActivity();
                 }else if(response.code() == 401){
 
-                        TokenAuthActivity.startAuth(getActivity(), true);
-                        getActivity().finishAffinity();
+                        TokenAuthFragment.startAuth( true);
+
                     } else if (response.code() == 500) {
                         if (response.errorBody() != null) {
                             Toast.makeText(activity,response.body().getRecepient(), Toast.LENGTH_LONG).show();
