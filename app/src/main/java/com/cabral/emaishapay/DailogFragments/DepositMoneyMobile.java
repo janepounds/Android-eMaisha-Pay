@@ -187,7 +187,7 @@ public class DepositMoneyMobile extends DialogFragment {
         String amountEntered = addMoneyTxt.getText().toString();
         double amount = Float.parseFloat(amountEntered);
         String referenceNumber = txRef;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

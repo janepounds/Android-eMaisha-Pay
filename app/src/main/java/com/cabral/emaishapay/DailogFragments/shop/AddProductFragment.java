@@ -178,7 +178,7 @@ public class AddProductFragment extends DialogFragment {
         //get offline product names
         offlineProductNames = new ArrayList<>();
         offlineProductNames = dbHandler.getOfflineProductNames();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
 
@@ -491,7 +491,7 @@ public class AddProductFragment extends DialogFragment {
                             }
 
                             dialogLoader.showProgressDialog();
-                            String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                             Call<ProductResponse> call = BuyInputsAPIClient
                                     .getInstance()
                                     .getProducts(
@@ -769,7 +769,7 @@ public class AddProductFragment extends DialogFragment {
                 Log.d(TAG, "onClick: timestamp"+timestamp);
 
 
-                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                 if (product_name == null || product_name.isEmpty()) {
                     etxtProductName.setError(getString(R.string.product_name_cannot_be_empty));
                     etxtProductName.requestFocus();

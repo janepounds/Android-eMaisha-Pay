@@ -111,10 +111,9 @@ public class ProductRatingReviewListFragment extends Fragment {
     private void getProductReviews(final String productID, final UserProductReviewsAdapter adapter) {
 
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .getProductReviews
-                        (       access_token,
+                        (
                                 productID,
                                 "" + ConstantValues.LANGUAGE_ID
                         );

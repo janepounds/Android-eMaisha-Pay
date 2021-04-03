@@ -146,7 +146,7 @@ public class UserProductReviewsAdapter extends RecyclerView.Adapter<UserProductR
         userLike.setImageResource(R.drawable.ic_like_blue);
 
         String customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         Call<GetRatings> call = BuyInputsAPIClient.getInstance()
                 .likeReview
                         (       access_token,

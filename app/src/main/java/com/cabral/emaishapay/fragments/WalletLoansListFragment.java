@@ -124,7 +124,7 @@ public class WalletLoansListFragment extends Fragment {
 
         /*************RETROFIT IMPLEMENTATION********************/
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -234,7 +234,7 @@ public class WalletLoansListFragment extends Fragment {
 
     public void cancelLoan(){
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

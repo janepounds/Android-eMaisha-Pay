@@ -844,7 +844,7 @@ public class SignUp extends AppCompatActivity {
 
     public void RequestSecurityQns(){
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         /******************RETROFIT IMPLEMENTATION***********************/
         Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(access_token,request_id);

@@ -129,7 +129,7 @@ public class ViewAllPopularProducts extends Fragment {
         getAllProducts.setType("top seller");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         productsCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,

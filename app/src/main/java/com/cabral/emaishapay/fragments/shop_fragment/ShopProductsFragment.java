@@ -195,7 +195,7 @@ public class ShopProductsFragment extends Fragment {
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         Call<ManufacturersResponse> call1 = BuyInputsAPIClient
                 .getInstance()
                 .getManufacturers(access_token);

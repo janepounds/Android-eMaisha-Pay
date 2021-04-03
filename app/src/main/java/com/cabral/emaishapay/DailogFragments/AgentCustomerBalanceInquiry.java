@@ -151,7 +151,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
 
         /***************RETROFIT IMPLEMENTATION***********************/
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantBalanceInquiry","getReceiverForUser");

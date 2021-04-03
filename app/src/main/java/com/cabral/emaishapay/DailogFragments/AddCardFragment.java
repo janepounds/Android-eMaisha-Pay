@@ -130,7 +130,7 @@ public class AddCardFragment extends DialogFragment {
                 dialog.show();
 
                 //call retrofit method for deleting card
-                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                 String request_id = WalletHomeActivity.generateRequestId();
                 String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                 /*************RETROFIT IMPLEMENTATION**************/
@@ -236,7 +236,7 @@ public class AddCardFragment extends DialogFragment {
 
                         //check if the button text is save card
                         if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
-                            String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                             String request_id = WalletHomeActivity.generateRequestId();
                             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
@@ -264,7 +264,7 @@ public class AddCardFragment extends DialogFragment {
 
                     }else{
                             //call update card endpoint
-                            String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                             String request_id = WalletHomeActivity.generateRequestId();
                             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/

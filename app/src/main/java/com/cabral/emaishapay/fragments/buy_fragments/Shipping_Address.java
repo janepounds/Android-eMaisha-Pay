@@ -564,7 +564,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
 
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         String[] names = input_name.getText().toString().trim().split(" ");
 
@@ -636,7 +636,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public void updateUserAddress(String addressID, AddressDetails addressDetails) {
 
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         String[] names = input_name.getText().toString().trim().split(" ");
         Call<AddressData> call = BuyInputsAPIClient.getInstance()

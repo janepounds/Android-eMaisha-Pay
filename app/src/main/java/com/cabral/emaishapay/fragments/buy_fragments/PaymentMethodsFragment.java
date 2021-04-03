@@ -435,7 +435,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         String hash_cvv = encrypter.encrypt(cvv_);
                         String hash_expiry = encrypter.encrypt(expiry);
                         String hash_account_name = encrypter.encrypt(account_name);
-                        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
@@ -619,7 +619,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     }
 
     private void GenerateBrainTreeToken() {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
                 .generateBraintreeToken(access_token);
@@ -787,7 +787,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -859,7 +859,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -1008,7 +1008,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     }
 
     public void getCards(){
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/

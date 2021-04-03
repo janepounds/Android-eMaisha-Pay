@@ -145,7 +145,7 @@ public class AgentCustomerDeposits extends DialogFragment {
 
         /***************RETROFIT IMPLEMENTATION***********************/
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

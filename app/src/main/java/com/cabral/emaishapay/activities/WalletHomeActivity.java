@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
@@ -52,6 +54,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 
 public class WalletHomeActivity extends AppCompatActivity{
+    public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
     private static Context context;
     public static FragmentManager fm;
@@ -130,30 +133,31 @@ public class WalletHomeActivity extends AppCompatActivity{
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 
-            // Check BackStackEntryCount of FragmentManager
-            if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
-                // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
-                actionBar.setDisplayShowTitleEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-                actionBar.setDisplayHomeAsUpEnabled(false);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(WalletHomeActivity.bottomNavigationView!=null && WalletHomeActivity.bottom_navigation_shop!=null){
 
-                String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-                if(role.equalsIgnoreCase("Default")) {
-                    WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
-                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
-                }else{
-                    WalletHomeActivity.bottom_navigation_shop.setVisibility(View.VISIBLE);
-                    WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+                    if(destination.getId()==R.id.walletHomeFragment2 ||  destination.getId()==R.id.walletAccountFragment2
+                            ||  destination.getId()==R.id.cardListFragment ||  destination.getId()==R.id.acceptPaymentFragment ){
+
+                        String role = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+                        if( role.equalsIgnoreCase("DEFAULT")){
+                            WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                            WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+                        }
+                        else {
+                            WalletHomeActivity.setUpMasterAgentNav();
+                        }
+
+                    }
+
                 }
-            }
 
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-           // setupTitle();
+        }
         });
+
         if (!getPreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, WalletHomeActivity.this).equals("yes")) {
             getAppToken();
         }
@@ -451,15 +455,8 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-
-        currentFragment= navController.getCurrentDestination().getId();
-
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-           // backToast.cancel();
-            finishAffinity();
-        }
-        else {
+        if(navController.getCurrentDestination()!=null){
+            currentFragment= navController.getCurrentDestination().getId();
             if (currentFragment == R.id.walletHomeFragment2)
                 new AlertDialog.Builder(this)
                         .setMessage("Are you sure you want to exit?")
@@ -474,6 +471,11 @@ public class WalletHomeActivity extends AppCompatActivity{
             else
                 navController.popBackStack();
         }
+        else /*if (doubleBackToExitPressedOnce)*/ {
+            super.onBackPressed();
+            finish();
+        }
+
     }
 
 

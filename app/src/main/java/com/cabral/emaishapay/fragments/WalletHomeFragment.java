@@ -83,7 +83,6 @@ public class WalletHomeFragment extends Fragment {
 
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase("agent")){
-            WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
@@ -120,7 +119,6 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else if(role.equalsIgnoreCase("merchant")){
-            WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
@@ -157,8 +155,8 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
-            WalletHomeActivity.disableNavigation();
             WalletHomeActivity.setUpMasterAgentNav();
+
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
@@ -194,6 +192,8 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else{
+            WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+            WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
@@ -337,7 +337,7 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(context);
         dialog.showProgressDialog();
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -407,7 +407,7 @@ public class WalletHomeFragment extends Fragment {
     }
 
     public void getBalanceAndCommission() {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

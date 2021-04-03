@@ -182,7 +182,7 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
@@ -390,7 +390,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     public void initiateWalletTransfer(final String phoneNumber, final double amount) {
         ProgressDialog dialog;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
         dialog = new ProgressDialog(activity);
@@ -470,7 +470,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     private void recordTransferSettlement(String third_party_status,String destination_type, BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader)
     {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         Double amount =Double.parseDouble(transferResponse.getAmount());
         String thirdparty="flutterwave";
         Double third_party_fee =Double.parseDouble(transferResponse.getFee());

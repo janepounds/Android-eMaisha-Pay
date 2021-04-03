@@ -100,7 +100,7 @@ public class DepositMoneyVoucher extends DialogFragment {
     public void initiateDeposit(){
         dialog.show();
         /************RETROFIT IMPLEMENTATION*************/
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String codeEntered = voucherTxt.getText().toString();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());

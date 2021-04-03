@@ -171,7 +171,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     private void processForgotPassword(String email) {
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         Call<UserData> call = apiRequests
@@ -227,7 +227,7 @@ public class Login extends AppCompatActivity implements PinFragment.Listener{
 
     public void RequestSecurityQns(){
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/

@@ -207,7 +207,7 @@ public class Languages extends Fragment {
     //*********** Request App Languages from the Server ********//
     
     public void RequestLanguages() {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         Call<LanguageData> call = BuyInputsAPIClient.getInstance()
                 .getLanguages(access_token);
         dialogLoader.showProgressDialog();

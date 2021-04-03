@@ -83,7 +83,7 @@ public class EnterPin extends DialogFragment {
                 dialog.setMessage("Please Wait..");
                 dialog.setCancelable(false);
                 dialog.show();
-                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
                 String[] amount = totalAmount.split("\\s+");
                 String amount_only = amount[1];

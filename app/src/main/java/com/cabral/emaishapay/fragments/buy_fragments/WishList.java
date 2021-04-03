@@ -184,7 +184,7 @@ public class WishList extends Fragment {
         getAllProducts.setType("wishlist");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts

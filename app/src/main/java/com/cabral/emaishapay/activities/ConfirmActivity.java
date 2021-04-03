@@ -389,7 +389,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                             String accessToken = response.body().getAccess_token();
                             String accountRole = userDetails.getAccountRole();
                             Log.d(TAG, accessToken);
-                            TokenAuthFragment.WALLET_ACCESS_TOKEN = accessToken;
+                            WalletHomeActivity.WALLET_ACCESS_TOKEN = accessToken;
                             WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
                             if (dialogLoader != null)
                                 dialogLoader.hideProgressDialog();
@@ -455,7 +455,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
         editor.putBoolean("isLogged_in", true);
         editor.apply();
-        TokenAuthFragment.WALLET_ACCESS_TOKEN = null;
+        WalletHomeActivity.WALLET_ACCESS_TOKEN = null;
 
         // Set UserLoggedIn in MyAppPrefsManager
         MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(this);

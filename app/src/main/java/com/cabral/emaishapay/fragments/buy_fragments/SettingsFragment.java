@@ -169,7 +169,7 @@ public class SettingsFragment extends Fragment {
                 oldPassword = fullscreenDialog.findViewById(R.id.current_pin);
                 newPassword = fullscreenDialog.findViewById(R.id.new_pin);
                 Button saveButton = fullscreenDialog.findViewById(R.id.dialog_button);
-                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -578,7 +578,7 @@ public class SettingsFragment extends Fragment {
 
         deviceID = FirebaseInstanceId.getInstance().getToken();
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         Call<ContactUsData> call = BuyInputsAPIClient.getInstance()
                 .notify_me

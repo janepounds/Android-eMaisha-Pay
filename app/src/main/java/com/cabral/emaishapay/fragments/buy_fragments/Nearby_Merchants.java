@@ -143,7 +143,7 @@ public class Nearby_Merchants extends Fragment {
         }
         dialogLoader.showProgressDialog();
         Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String product_names_str = new Gson().toJson(product_names);
         Log.w( "CartData",product_names_str);
         Call<MerchantData> call = BuyInputsAPIClient.getInstance()

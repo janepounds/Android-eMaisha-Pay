@@ -251,7 +251,7 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
 
     private void RequestAutoCompleteBounds(String city){
      //  String _city = city.replaceAll(" ","%20");
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<GoogleAPIResponse> call = BuyInputsAPIClient.getInstance().getCityBounds(access_token,city);

@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment {
 
     public void requestSearchData(String searchValue) {
         progressBar.setVisibility(View.VISIBLE);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<SearchData> call = BuyInputsAPIClient.getInstance()
                 .getSearchData

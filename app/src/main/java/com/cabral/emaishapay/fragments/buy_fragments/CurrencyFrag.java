@@ -204,7 +204,7 @@ public class CurrencyFrag extends Fragment {
     
     public void RequestCurrency() {
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         Call<CurrencyModel> call = BuyInputsAPIClient.getInstance()
                 .getCurrency(access_token);

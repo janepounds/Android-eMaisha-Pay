@@ -168,7 +168,7 @@ public class My_Orders extends Fragment {
     public void RequestMyOrders() {
 
         dialogLoader.showProgressDialog();
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .getOrders
@@ -220,7 +220,7 @@ public class My_Orders extends Fragment {
     //*********** Request User's cancel order ********//
     
     public void RequestMyOrdersCancel(int orderID) {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         dialogLoader.showProgressDialog();
         

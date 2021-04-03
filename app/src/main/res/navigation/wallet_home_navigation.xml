@@ -58,8 +58,9 @@
         <action
             android:id="@+id/action_walletHomeFragment2_to_tokenAuthFragment"
             app:destination="@id/tokenAuthFragment"
-            app:popUpTo="@id/wallet_home_navigation"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/walletHomeFragment2"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
         <action
             android:id="@+id/action_walletHomeFragment2_to_walletTransactionsListFragment2"
             app:destination="@id/walletTransactionsListFragment" />
@@ -202,7 +203,8 @@
         android:label="TokenAuthFragment" >
         <action
             android:id="@+id/action_tokenAuthFragment_to_walletHomeFragment2"
-            app:destination="@id/walletHomeFragment2" />
+            app:destination="@id/walletHomeFragment2"
+            app:popUpTo="@id/tokenAuthFragment" />
     </fragment>
     <fragment
         android:id="@+id/walletTransactionsListFragment"

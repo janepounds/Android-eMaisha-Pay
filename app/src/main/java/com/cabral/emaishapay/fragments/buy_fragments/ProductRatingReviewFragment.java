@@ -108,7 +108,7 @@ public class ProductRatingReviewFragment extends Fragment {
         map.put("languages_id", languages_id);
         map.put("reviews_text", reviews_text);
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         Call<GiveRating> call = BuyInputsAPIClient.getInstance().giveRating(access_token,map);
 
         call.enqueue(new Callback<GiveRating>() {

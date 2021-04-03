@@ -425,7 +425,7 @@ public class Category_Products extends Fragment {
         getAllProducts.setCategoriesId(String.valueOf(categoryID));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
         getAllProducts.setType(sortBy);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         productsCall = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -496,7 +496,7 @@ public class Category_Products extends Fragment {
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
         String data = new Gson().toJson(getAllProducts);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -546,7 +546,7 @@ public class Category_Products extends Fragment {
     //*********** Request Filters of the given OrderProductCategory ********//
 
     private void RequestFilters(int categories_id) {
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         filterCAll = BuyInputsAPIClient.getInstance()

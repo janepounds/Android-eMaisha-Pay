@@ -184,7 +184,7 @@ public class My_Cart extends Fragment {
             // Go back to previous fragment(wallet home)
             requireActivity().onBackPressed();
         });
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         // Handle Click event of cart_checkout_btn Button
         cart_checkout_btn.setOnClickListener(view -> {
 //            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
@@ -260,7 +260,7 @@ public class My_Cart extends Fragment {
 
     public void getDefaultAddress(){
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
 
@@ -467,7 +467,7 @@ public class My_Cart extends Fragment {
         getAllProducts.setProductsId(String.valueOf(products_id));
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
@@ -496,7 +496,7 @@ public class My_Cart extends Fragment {
         GetStock getStockParams = new GetStock();
         getStockParams.setProductsId(productID + "");
         getStockParams.setAttributes(attributes);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ProductStock> call = BuyInputsAPIClient.getInstance().getProductStock(access_token,getStockParams);

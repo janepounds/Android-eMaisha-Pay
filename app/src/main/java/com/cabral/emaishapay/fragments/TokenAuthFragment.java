@@ -41,11 +41,11 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     private static final String TAG = "TokenAuthFragment";
     private Context context;
     private  String pin;
-    FragmentTokenAuthBinding binding;
+    static FragmentTokenAuthBinding binding;
 
     public static String WALLET_ACCESS_TOKEN = null;
     private SparseArray<String> keyValues = new SparseArray<>();
-    private InputConnection inputConnection;
+    private static InputConnection inputConnection;
 
 
 
@@ -62,6 +62,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
 
 
+        keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
         keyValues.put(R.id.tv_key_2, "2");
         keyValues.put(R.id.tv_key_3, "3");
@@ -94,6 +95,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         binding.tvKey8.setOnClickListener(this);
         binding.tvKey9.setOnClickListener(this);
         binding.tvKeyBackspace.setOnClickListener(this);
+        binding.tvKeyClear.setOnClickListener(this);
 
         binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         binding.pinCode1Edt.setTextIsSelectable(true);
@@ -161,7 +163,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TokenAuthFragment.WALLET_ACCESS_TOKEN == null) {
+                if (WalletHomeActivity.WALLET_ACCESS_TOKEN == null) {
 
                     pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
                     pin = pin.replaceAll("\\s+", "");
@@ -226,6 +228,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 0) {
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        clearPin(binding);
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
 
@@ -236,11 +239,11 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                         String accessToken = tokenResponse.getData().getAccess_token();
                         String accountRole = tokenResponse.getData().getAccountRole();
                         Log.d(TAG, accessToken);
-                        WALLET_ACCESS_TOKEN = accessToken;
+                        WalletHomeActivity.WALLET_ACCESS_TOKEN = accessToken;
                         WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
-                        WalletHomeActivity.startHome(context);
+                        WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);
 
                         //now you can go to next wallet page
                     }
@@ -283,7 +286,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
     public static void startAuth( boolean sessionExpired) {
         //call fragment
-        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+       // WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
         WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
 
     }
@@ -294,35 +297,62 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             return;
 
         if (v.getId() == R.id.tv_key_backspace) {
-            CharSequence selectedText = inputConnection.getSelectedText(0);
+            pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+            pin = pin.replaceAll("\\s+", "");
 
-            if (TextUtils.isEmpty(selectedText)) {
-                inputConnection.deleteSurroundingText(1, 0);
-            } else {
-                inputConnection.commitText("", 1);
+            switch (pin.length()){
+                case 1:
+                    binding.pinCode1Edt.setText("");
+                    setInputConnection( binding.pinCode1Edt);
+                    break;
+                case 2:
+                    binding.pinCode2Edt.setText("");
+                    setInputConnection( binding.pinCode2Edt);
+                    break;
+                case 3:
+                    binding.pinCode3Edt.setText("");
+                    setInputConnection( binding.pinCode3Edt);
+                    break;
             }
-        } else {
+        }
+        else if(v.getId() == R.id.tv_key_clear){
+            clearPin(binding);
+        }
+       else {
             String value = keyValues.get(v.getId()).toString();
             inputConnection.commitText(value, 1);
+
+            pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+            pin = pin.replaceAll("\\s+", "");
+
+            switch (pin.length()){
+                case 0:
+                    setInputConnection( binding.pinCode1Edt);
+                    break;
+                case 1:
+                    setInputConnection( binding.pinCode2Edt);
+                    break;
+                case 2:
+                    setInputConnection( binding.pinCode3Edt);
+                    break;
+                case 3:
+                    setInputConnection( binding.pinCode4Edt);
+                    break;
+            }
         }
 
-        pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
-        pin = pin.replaceAll("\\s+", "");
 
-        switch (pin.length()){
-            case 0:
-                setInputConnection( binding.pinCode1Edt);
-                break;
-            case 1:
-                setInputConnection( binding.pinCode2Edt);
-                break;
-            case 2:
-                setInputConnection( binding.pinCode3Edt);
-                break;
-            case 3:
-                setInputConnection( binding.pinCode4Edt);
-                break;
-        }
 
     }
+
+    private static void  clearPin(FragmentTokenAuthBinding binding){
+        binding.pinCode1Edt.setText("");
+        binding.pinCode2Edt.setText("");
+        binding.pinCode3Edt.setText("");
+        binding.pinCode4Edt.setText("");
+
+        InputConnection ic = binding.pinCode1Edt.onCreateInputConnection(new EditorInfo());
+        inputConnection = ic;
+    }
+
 }

@@ -189,7 +189,7 @@ public class DepositMoneyVisa extends DialogFragment implements
                         String hash_cvv = encrypter.encrypt(cvv);
                         String hash_expiry = encrypter.encrypt(expiry);
                         String hash_account_name = encrypter.encrypt(account_name);
-                        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
@@ -262,7 +262,7 @@ public class DepositMoneyVisa extends DialogFragment implements
     }
 
     public void getCards(){
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
@@ -485,7 +485,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         double amount = Float.parseFloat(amountEntered);
 
         /************RETROFIT IMPLEMENTATION*******************/
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

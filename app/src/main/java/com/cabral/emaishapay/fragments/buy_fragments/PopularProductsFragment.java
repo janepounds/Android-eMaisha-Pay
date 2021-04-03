@@ -95,7 +95,7 @@ public class PopularProductsFragment extends Fragment {
         getAllProducts.setCustomersId(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
         getAllProducts.setType("top seller");
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         Call<ProductData> networkCall= BuyInputsAPIClient.getInstance()
                 .getAllProducts

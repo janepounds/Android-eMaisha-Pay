@@ -214,7 +214,7 @@ public class AcceptPaymentFragment extends Fragment {
 
     public void initiateAcceptPayment(final String phoneNumber, final double amount) {
 
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -264,7 +264,7 @@ public class AcceptPaymentFragment extends Fragment {
 
     public void comfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
         ProgressDialog dialog;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
@@ -444,7 +444,7 @@ public class AcceptPaymentFragment extends Fragment {
         dialogLoader.showProgressDialog();
 
         String referenceNumber = txRef;
-        String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 

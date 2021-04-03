@@ -451,7 +451,6 @@ public interface APIRequestsForBuyInputs {
 
     @GET("getreviews")
     Call<GetRatings> getProductReviews(
-                                    @Header("Authorization") String token,
                                     @Query("products_id") String product_id,
                                     @Query("languages_id") String languages_id
     );

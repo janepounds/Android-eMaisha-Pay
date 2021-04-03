@@ -115,7 +115,7 @@ public class ProductPreviewDialog extends DialogFragment {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //delete from online
-                                String access_token = TokenAuthFragment.WALLET_ACCESS_TOKEN;
+                                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                                 String product_id = productData.get("product_id");
                                 Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);
