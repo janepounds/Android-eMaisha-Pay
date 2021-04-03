@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.googleMap.GoogleAPIResponse;

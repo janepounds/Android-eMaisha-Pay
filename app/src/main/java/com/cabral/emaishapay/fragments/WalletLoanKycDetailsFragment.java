@@ -34,7 +34,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.Referee;

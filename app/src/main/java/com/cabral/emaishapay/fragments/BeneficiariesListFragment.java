@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
 import com.cabral.emaishapay.adapters.CardsListAdapter;

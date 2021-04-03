@@ -23,7 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.TokenAuthFragment;

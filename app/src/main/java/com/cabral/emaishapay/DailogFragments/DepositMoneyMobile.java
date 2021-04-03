@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;

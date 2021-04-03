@@ -64,9 +64,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TokenAuthActivity"
-            android:label="Authentication" />
-        <activity
             android:name=".activities.SignUp"
             android:label="Sign UP" />
         <activity

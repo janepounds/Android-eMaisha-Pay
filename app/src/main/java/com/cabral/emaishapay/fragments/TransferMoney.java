@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.TokenAuthActivity;
+
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
