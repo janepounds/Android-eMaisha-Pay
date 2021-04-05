@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog_background"
     android:orientation="vertical"
+    tools:context=".DailogFragments.DepositMoneyVisa"
     android:theme="@style/AppTheme">
 
     <LinearLayout

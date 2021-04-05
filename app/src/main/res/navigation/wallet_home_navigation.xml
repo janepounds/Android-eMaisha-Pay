@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/walletAccountFragment2"
         android:name="com.cabral.emaishapay.fragments.WalletAccountFragment"
+        tools:layout="@layout/fragment_wallet_account"
         android:label="WalletAccountFragment">
         <action
             android:id="@+id/action_walletAccountFragment2_to_businessInformationFragment"
@@ -39,7 +40,8 @@
     <fragment
         android:id="@+id/walletHomeFragment2"
         android:name="com.cabral.emaishapay.fragments.WalletHomeFragment"
-        android:label="WalletHomeFragment" >
+        android:label="WalletHomeFragment"
+        tools:layout="@layout/emaisha_pay_home" >
         <action
             android:id="@+id/action_walletHomeFragment2_to_depositPayments"
             app:destination="@id/depositPayments" />
@@ -59,8 +61,7 @@
             android:id="@+id/action_walletHomeFragment2_to_tokenAuthFragment"
             app:destination="@id/tokenAuthFragment"
             app:popUpTo="@id/walletHomeFragment2"
-            app:popUpToInclusive="true"
-            app:launchSingleTop="true" />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_walletHomeFragment2_to_walletTransactionsListFragment2"
             app:destination="@id/walletTransactionsListFragment" />
@@ -84,7 +85,8 @@
     <fragment
         android:id="@+id/cardListFragment"
         android:name="com.cabral.emaishapay.fragments.CardListFragment"
-        android:label="CardListFragment" >
+        android:label="CardListFragment"
+        tools:layout="@layout/fragment_card_list">
         <action
             android:id="@+id/action_cardListFragment_to_addCardFragment"
             app:destination="@id/addCardFragment" />
@@ -104,7 +106,8 @@
     <fragment
         android:id="@+id/acceptPaymentFragment"
         android:name="com.cabral.emaishapay.fragments.AcceptPaymentFragment"
-        android:label="AcceptPaymentFragment" >
+        android:label="AcceptPaymentFragment"
+        tools:layout="@layout/fragment_accept_payment">
         <action
             android:id="@+id/action_acceptPaymentFragment_to_walletHomeFragment2"
             app:destination="@id/walletHomeFragment2" />
@@ -134,10 +137,12 @@
     <fragment
         android:id="@+id/beneficiariesListFragment"
         android:name="com.cabral.emaishapay.fragments.BeneficiariesListFragment"
+        tools:layout="@layout/fragment_beneficiaries_list"
         android:label="BeneficiariesListFragment" />
     <fragment
         android:id="@+id/businessAccountFragment"
         android:name="com.cabral.emaishapay.fragments.BusinessAccountFragment"
+        tools:layout="@layout/fragment_business_account"
         android:label="BusinessAccountFragment" >
         <action
             android:id="@+id/action_businessAccountFragment_to_walletAccountFragment2"
@@ -162,6 +167,7 @@
     <fragment
         android:id="@+id/depositPayments"
         android:name="com.cabral.emaishapay.DailogFragments.DepositPayments"
+        tools:layout="@layout/wallet_payment_methods"
         android:label="DepositPayments" >
         <action
             android:id="@+id/action_depositPayments_to_depositMoneyVisa"
@@ -176,6 +182,7 @@
     <fragment
         android:id="@+id/idInformationFragment"
         android:name="com.cabral.emaishapay.fragments.IdInformationFragment"
+        tools:layout="@layout/fragment_id_information"
         android:label="IdInformationFragment" >
         <action
             android:id="@+id/action_idInformationFragment_to_walletAccountFragment2"
@@ -184,6 +191,7 @@
     <fragment
         android:id="@+id/employmentInformationFragment"
         android:name="com.cabral.emaishapay.fragments.EmploymentInformationFragment"
+        tools:layout="@layout/fragment_employment_information"
         android:label="EmploymentInformationFragment" >
         <action
             android:id="@+id/action_employmentInformationFragment_to_walletAccountFragment2"
@@ -192,6 +200,7 @@
     <fragment
         android:id="@+id/personalInformationFragment"
         android:name="com.cabral.emaishapay.fragments.AccountPersonalInformationFragment"
+        tools:layout="@layout/fragment_personal_information"
         android:label="PersonalInformationFragment" >
         <action
             android:id="@+id/action_personalInformationFragment_to_walletAccountFragment2"
@@ -200,6 +209,7 @@
     <fragment
         android:id="@+id/tokenAuthFragment"
         android:name="com.cabral.emaishapay.fragments.TokenAuthFragment"
+        tools:layout="@layout/fragment_token_auth"
         android:label="TokenAuthFragment" >
         <action
             android:id="@+id/action_tokenAuthFragment_to_walletHomeFragment2"
@@ -209,6 +219,7 @@
     <fragment
         android:id="@+id/walletTransactionsListFragment"
         android:name="com.cabral.emaishapay.fragments.WalletTransactionsListFragment"
+        tools:layout="@layout/transaction_list"
         android:label="WalletTransactionsListFragment" >
         <action
             android:id="@+id/action_walletTransactionsListFragment_to_walletHomeFragment2"
@@ -224,6 +235,7 @@
     <fragment
         android:id="@+id/payFragment"
         android:name="com.cabral.emaishapay.fragments.PayFragment"
+        tools:layout="@layout/fragment_wallet_pay"
         android:label="PayFragment" >
         <action
             android:id="@+id/action_payFragment_to_walletHomeFragment2"
@@ -247,6 +259,7 @@
     <fragment
         android:id="@+id/transferMoney"
         android:name="com.cabral.emaishapay.fragments.TransferMoney"
+        tools:layout="@layout/fragment_transfer_money"
         android:label="TransferMoney" >
         <action
             android:id="@+id/action_transferMoney_to_walletHomeFragment2"
@@ -255,6 +268,7 @@
     <fragment
         android:id="@+id/walletLoanStatusPreview"
         android:name="com.cabral.emaishapay.fragments.WalletLoanStatusPreview"
+        tools:layout="@layout/loan_preview"
         android:label="WalletLoanStatusPreview" >
         <action
             android:id="@+id/action_walletLoanStatusPreview_to_walletLoanPaymentSchedule"
@@ -269,6 +283,7 @@
     <fragment
         android:id="@+id/walletLoanPaymentHistory"
         android:name="com.cabral.emaishapay.fragments.WalletLoanPaymentHistory"
+        tools:layout="@layout/payment_history"
         android:label="WalletLoanPaymentHistory" >
         <action
             android:id="@+id/action_walletLoanPaymentHistory_to_walletLoanStatusPreview"
@@ -277,6 +292,7 @@
     <fragment
         android:id="@+id/walletLoanPaymentSchedule"
         android:name="com.cabral.emaishapay.fragments.WalletLoanPaymentSchedule"
+        tools:layout="@layout/payment_schedule"
         android:label="WalletLoanPaymentSchedule" >
         <action
             android:id="@+id/action_walletLoanPaymentSchedule_to_walletLoanStatusPreview"

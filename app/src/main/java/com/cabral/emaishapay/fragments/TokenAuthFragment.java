@@ -286,7 +286,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
     public static void startAuth( boolean sessionExpired) {
         //call fragment
-       // WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
         WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
 
     }
