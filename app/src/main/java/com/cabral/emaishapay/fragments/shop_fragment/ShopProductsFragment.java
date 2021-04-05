@@ -38,8 +38,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;

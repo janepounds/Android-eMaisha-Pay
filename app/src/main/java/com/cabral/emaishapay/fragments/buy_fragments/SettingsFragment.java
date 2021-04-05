@@ -35,7 +35,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Login;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -44,7 +43,6 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.contact_model.ContactUsData;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.user_model.UserDetails;

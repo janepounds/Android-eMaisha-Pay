@@ -11,14 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.WalletAccountFragment;
-import com.cabral.emaishapay.fragments.WalletLoanStatusPreview;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 

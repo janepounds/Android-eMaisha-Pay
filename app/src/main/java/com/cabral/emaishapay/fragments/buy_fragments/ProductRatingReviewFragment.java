@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.snackbar.Snackbar;

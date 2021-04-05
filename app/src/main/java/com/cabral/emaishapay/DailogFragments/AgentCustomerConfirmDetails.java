@@ -1,9 +1,7 @@
 package com.cabral.emaishapay.DailogFragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -36,10 +34,9 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 

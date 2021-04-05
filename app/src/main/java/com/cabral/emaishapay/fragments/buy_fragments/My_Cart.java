@@ -1,8 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Login;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
@@ -37,8 +34,6 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
-import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -47,7 +42,6 @@ import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +49,6 @@ import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class My_Cart extends Fragment {

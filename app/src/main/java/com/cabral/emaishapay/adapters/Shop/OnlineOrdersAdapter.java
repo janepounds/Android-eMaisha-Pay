@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.adapters.Shop;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.fragments.BusinessInformationFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.OnlineOrderDetailsFragment;
 
 import java.util.HashMap;

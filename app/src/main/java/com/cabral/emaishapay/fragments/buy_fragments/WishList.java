@@ -29,7 +29,6 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;

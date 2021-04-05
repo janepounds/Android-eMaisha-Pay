@@ -11,12 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,25 +29,16 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.BeneficiariesListFragment;
-import com.cabral.emaishapay.fragments.CardListFragment;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.Header;
 
 public class AddBeneficiaryFragment extends DialogFragment {
     private static final String TAG = "AddBeneficiaryFragment";

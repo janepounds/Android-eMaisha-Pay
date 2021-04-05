@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -43,7 +42,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransaction;

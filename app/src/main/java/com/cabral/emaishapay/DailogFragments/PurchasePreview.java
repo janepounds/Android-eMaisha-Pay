@@ -26,7 +26,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransaction;

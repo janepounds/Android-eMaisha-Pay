@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:background="#DDF1FD"
-    tools:context=".fragments.TokenAuthFragment">
+    tools:context=".fragments.wallet_fragments.TokenAuthFragment">
 
     <ImageView
         android:id="@+id/produce_close"

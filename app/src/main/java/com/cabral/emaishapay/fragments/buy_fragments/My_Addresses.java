@@ -29,7 +29,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
@@ -38,7 +37,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;

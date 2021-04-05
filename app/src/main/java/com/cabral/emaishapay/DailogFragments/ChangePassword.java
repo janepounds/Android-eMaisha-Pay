@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,36 +11,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Login;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.CardListFragment;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
-import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
-import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;

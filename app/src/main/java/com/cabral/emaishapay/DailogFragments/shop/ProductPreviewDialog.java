@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.lang.UScript;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
@@ -27,23 +23,11 @@ import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.fragments.CardListFragment;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
-import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.shop_model.ProductResponse;
-import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;

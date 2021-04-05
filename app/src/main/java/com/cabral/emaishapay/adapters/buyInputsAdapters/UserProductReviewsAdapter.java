@@ -2,7 +2,6 @@ package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -20,8 +18,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.customs.CircularImageView;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ratings.GetRatings;
 import com.cabral.emaishapay.models.ratings.ProductReviews;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;

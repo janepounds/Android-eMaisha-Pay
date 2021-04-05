@@ -22,13 +22,11 @@ import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_DB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
-import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.venmo.android.pin.PinFragment;
@@ -38,12 +36,6 @@ import com.venmo.android.pin.PinSaver;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,7 +109,8 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                     .replace(R.id.container, toShow )
                     .commit();
 
-        }else if ( ConfirmActivity.ACTION_CODE == 2){
+        }
+        else if ( ConfirmActivity.ACTION_CODE == 2){
 
             PinFragmentConfiguration pinConfig = new PinFragmentConfiguration(context)
                     .validator(submission -> {
@@ -344,6 +337,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
         });
 
     }
+
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
@@ -494,9 +488,9 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                     if (response.body().getStatus().equalsIgnoreCase("1")) {
 
                         // Finish SignUpActivity to goto the LoginActivity
-                        Intent authenticate = new Intent(context, Login.class);
-                        context.startActivity(authenticate);
-                        finish();
+                       // Intent authenticate = new Intent(context, Login.class);
+                        //context.startActivity(authenticate);
+                        //finish();
 
                     } else if (response.body().getStatus().equalsIgnoreCase("0")) {
                         // Get the Error Message from Response

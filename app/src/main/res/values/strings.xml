@@ -690,6 +690,9 @@
     <string name="shop_description">You want to buy quality Agro-inputs We are affordable, accessible and reliable</string>
     <string name="Review">Review</string>
     <string name="AddReview">Add Review</string>
+    <string name="create_pin">Create PIN</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="comfirm_pin">Comfirm PIN</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

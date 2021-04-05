@@ -21,13 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic,android:theme">
-        <activity android:name=".activities.GetStartedSignUpActivity"></activity>
-        <activity android:name=".activities.OnBoardingActivity" />
-        <activity
-            android:name=".activities.WalletBuySellActivity"
-            android:label="@string/title_activity_wallet_buy_sell"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ConfirmActivity" />
+
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -38,6 +32,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <!-- Google MAP API key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+
+
+        <activity
+            android:name=".activities.WalletBuySellActivity"
+            android:label="@string/title_activity_wallet_buy_sell"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".activities.SplashScreen"
@@ -52,6 +56,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.WalletHomeActivity"
             android:label="@string/app_name"
@@ -63,16 +68,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.SignUp"
-            android:label="Sign UP" />
+
         <activity
             android:name=".activities.ShopActivity"
             android:label="Shop"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activities.Login"
-            android:label="Sign In" /> <!-- Firebase Notifications -->
+
+        <!-- Firebase Notifications -->
         <service
             android:name=".messaging.FirebaseMessageReceiver"
             android:permission="false">
@@ -80,10 +82,8 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service> <!-- Google MAP API key -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
+        </service>
+
     </application>
 
 </manifest>

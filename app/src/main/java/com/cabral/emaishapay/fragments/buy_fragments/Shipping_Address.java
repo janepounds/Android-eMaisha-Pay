@@ -34,8 +34,6 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;

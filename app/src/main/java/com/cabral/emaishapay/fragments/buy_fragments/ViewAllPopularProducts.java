@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +27,9 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
-import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -40,7 +37,6 @@ import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.Connectivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;

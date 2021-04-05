@@ -1,22 +1,12 @@
 package com.cabral.emaishapay.messaging;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Log;
-import android.widget.RemoteViews;
 
-import androidx.core.app.NotificationCompat;
-
-import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.NotificationHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;

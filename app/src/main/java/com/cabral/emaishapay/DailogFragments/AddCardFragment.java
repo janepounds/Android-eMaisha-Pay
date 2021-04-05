@@ -11,9 +11,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,8 +30,7 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.CardListFragment;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;

@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.customs.NotificationBadger;
-import com.cabral.emaishapay.fragments.WalletHomeFragment;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;

@@ -32,7 +32,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.order_model.OrderData;
 import com.cabral.emaishapay.models.order_model.OrderDetails;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;

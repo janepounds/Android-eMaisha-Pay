@@ -39,7 +39,6 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;

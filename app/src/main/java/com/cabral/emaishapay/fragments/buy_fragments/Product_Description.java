@@ -1,7 +1,5 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -16,15 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,17 +30,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.Login;
 
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -55,7 +47,6 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Attribute;
@@ -70,23 +61,19 @@ import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.Utilities;
-import com.cabral.emaishapay.utils.ValidateInputs;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import am.appwise.components.ni.NoInternetDialog;
-import hyogeun.github.com.colorratingbarlib.ColorRatingBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

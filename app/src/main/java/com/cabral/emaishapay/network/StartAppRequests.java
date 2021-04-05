@@ -8,7 +8,6 @@ import android.util.Log;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;

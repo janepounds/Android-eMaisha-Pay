@@ -26,8 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
-import com.cabral.emaishapay.fragments.WalletLoansListFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletLoansListFragment;
 import com.cabral.emaishapay.models.LoanPayResponse;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;

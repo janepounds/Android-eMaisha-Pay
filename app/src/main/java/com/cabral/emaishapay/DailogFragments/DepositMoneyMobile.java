@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;

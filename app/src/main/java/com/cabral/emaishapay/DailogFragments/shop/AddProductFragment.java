@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,15 +15,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+
 import es.dmoral.toasty.Toasty;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -34,7 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,28 +48,18 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
-import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
-import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class AddProductFragment extends DialogFragment {

@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -27,7 +25,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.search_model.SearchData;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.material.snackbar.Snackbar;

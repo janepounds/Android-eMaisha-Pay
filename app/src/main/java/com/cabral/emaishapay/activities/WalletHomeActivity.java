@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.activities;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,12 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +17,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,8 +30,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.fragments.LoanUserDetailsFragment;
-import com.cabral.emaishapay.fragments.WalletHomeFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;

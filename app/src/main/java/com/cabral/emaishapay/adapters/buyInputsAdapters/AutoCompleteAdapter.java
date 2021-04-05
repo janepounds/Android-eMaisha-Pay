@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.googleMap.GoogleAPIResponse;
 import com.cabral.emaishapay.network.BuyInputsAPIClient;
 import com.google.android.gms.common.api.ApiException;

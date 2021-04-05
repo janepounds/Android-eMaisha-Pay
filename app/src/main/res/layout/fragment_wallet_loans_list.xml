@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1F5F8"
-    tools:context="com.cabral.emaishapay.fragments.WalletLoansListFragment">
+    tools:context="com.cabral.emaishapay.fragments.wallet_fragments.WalletLoansListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_constraintLayout"
