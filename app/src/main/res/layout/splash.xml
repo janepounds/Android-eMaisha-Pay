@@ -1,86 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mainView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/ic_new_bg_gradient">
-
-    <ImageView
-        android:src="@drawable/ic_new_bg_pattern"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:id="@+id/mainView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:alpha=".05"/>
-    <ImageView
-        android:id="@+id/logo"
-        android:src="@drawable/logo_vector"
-        android:layout_width="138.88pt"
-        android:paddingBottom="@dimen/dimen_20dp"
-        android:layout_height="140dp"
-        android:layout_centerInParent="true"/>
+        android:background="@drawable/ic_new_bg_gradient"
+        tools:context=".fragments.auth_fragments.SplashScreenFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_app_emaisha_pay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo">
+        <ImageView
+            android:src="@drawable/ic_new_bg_pattern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:alpha=".05"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/logo_vector"
+            android:layout_width="138.88pt"
+            android:paddingBottom="@dimen/dimen_20dp"
+            android:layout_height="140dp"
+            android:layout_centerInParent="true"/>
 
-        <TextView
-            android:id="@+id/logo_title1"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_app_emaisha_pay"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="W E L C O M E   T O"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/logo_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
-            android:id="@+id/logo_title"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/logo">
+
+            <TextView
+                android:id="@+id/logo_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="W E L C O M E   T O"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/logo_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/logo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="eMaisha Pay"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="eMaisha Pay"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp">
 
+            <TextView
+                android:id="@+id/signin1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="We are busy changing the world, "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp">
-
-        <TextView
-            android:id="@+id/signin1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="We are busy changing the world, "
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/signin2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/signin1"
-            android:layout_centerHorizontal="true"
-            android:text=" will you join us? "
-            android:textColor="#fff"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/signin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signin1"
+                android:layout_centerHorizontal="true"
+                android:text=" will you join us? "
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_alignParentBottom="true"
@@ -116,4 +118,5 @@
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

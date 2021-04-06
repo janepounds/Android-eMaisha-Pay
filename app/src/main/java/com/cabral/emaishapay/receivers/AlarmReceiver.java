@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.cabral.emaishapay.activities.SplashScreen;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.utils.NotificationHelper;
 import com.cabral.emaishapay.utils.NotificationScheduler;
@@ -22,7 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
 
-        Intent notificationIntent = new Intent(context, SplashScreen.class);
+        Intent notificationIntent = new Intent(context, AuthActivity.class);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(context);

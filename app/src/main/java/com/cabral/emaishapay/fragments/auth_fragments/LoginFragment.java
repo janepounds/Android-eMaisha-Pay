@@ -75,7 +75,14 @@ public class LoginFragment  extends Fragment {
         // Binding Layout Views
         dialogLoader = new DialogLoader(context);
 
-        binding.forgotPasswordText.setOnClickListener(view -> {
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        binding.forgotPasswordText.setOnClickListener(view0 -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
             View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
             dialog.setView(dialogView);
@@ -152,15 +159,6 @@ public class LoginFragment  extends Fragment {
 
         });
 
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        if(AuthActivity.is_firstTimeLoggin){
-            AuthActivity.navController.navigate(R.id.action_loginFragment_to_onBoardingFragment2);
-        }
     }
 
 

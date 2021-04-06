@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.cabral.emaishapay.activities.SplashScreen;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 
 import java.util.Calendar;
@@ -80,7 +80,7 @@ public class NotificationScheduler {
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
 
-        Intent notificationIntent = new Intent(context, SplashScreen.class);
+        Intent notificationIntent = new Intent(context, AuthActivity.class);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_REQUEST_CODE, notificationIntent, 0);

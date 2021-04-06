@@ -1,83 +1,79 @@
-package com.cabral.emaishapay.activities;
+package com.cabral.emaishapay.fragments.auth_fragments;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.AuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.databinding.SplashBinding;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.Utilities;
 
-/**
- * SplashScreen activity, appears on App Startup
- **/
+public class SplashScreenFragment extends Fragment implements Animation.AnimationListener{
 
-public class SplashScreen extends AppCompatActivity implements Animation.AnimationListener {
     private static final String TAG = "SplashScreen";
 
-    View rootView;
     ProgressBar progressBar;
-
-    MyTask myTask;
+    SplashScreenFragment.MyTask myTask;
     StartAppRequests startAppRequests;
     MyAppPrefsManager myAppPrefsManager;
-
-    ImageView logo;
-    TextView appName;
     Animation animFade;
-    ConstraintLayout logoWordsLayout;
+    Context context;
+    SplashBinding binding;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.splash);
+    public void onAttach(@NonNull Context context) {
+        this.context=context;
+        super.onAttach(context);
+    }
 
-        View decorView = getWindow().getDecorView();
-        // Hide the status bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.splash,container,false);
 
-
-        overridePendingTransition(R.anim.slide_down, R.anim.bt_slide_in_up);
-        MyAppPrefsManager prefsManager = new MyAppPrefsManager(this);
+        getActivity().overridePendingTransition(R.anim.slide_down, R.anim.bt_slide_in_up);
+        MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
         Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
         Log.i("VC_Shop", "emaisha_Version = " + ConstantValues.CODE_VERSION);
 
-        progressBar = findViewById(R.id.progressBar);
-        rootView = findViewById(R.id.mainView);
-        logo =findViewById(R.id.logo);
-        appName =findViewById(R.id.logo_title);
-        logoWordsLayout =findViewById(R.id.layout_app_emaisha_pay);
-        animFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+        animFade = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fadein);
         animFade.setAnimationListener(this);
 
-        logo.startAnimation(animFade);
-        logoWordsLayout.startAnimation(animFade);
+        binding.logo.startAnimation(animFade);
+        binding.layoutAppEmaishaPay.startAnimation(animFade);
 
-        // Initializing StartAppRequests and PreferencesManager
-        startAppRequests = new StartAppRequests(this);
-        myAppPrefsManager = new MyAppPrefsManager(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+              // Initializing StartAppRequests and PreferencesManager
+        startAppRequests = new StartAppRequests(context);
+        myAppPrefsManager = new MyAppPrefsManager(context);
 
         ConstantValues.LANGUAGE_ID = myAppPrefsManager.getUserLanguageId();
         ConstantValues.LANGUAGE_CODE = myAppPrefsManager.getUserLanguageCode();
@@ -92,10 +88,27 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         }, 3000);
     }
 
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
+
+
     //*********** Sets App configuration ********//
 
     private void setAppConfig() {
-        AppSettingsDetails appSettingsDetails = ((EmaishaPayApp) getApplicationContext()).getAppSettingsDetails();
+        AppSettingsDetails appSettingsDetails = ((EmaishaPayApp) getActivity().getApplicationContext()).getAppSettingsDetails();
 
         if (appSettingsDetails != null) {
 
@@ -116,7 +129,7 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
 
                 ConstantValues.MAINTENANCE_TEXT = appSettingsDetails.getMaintenance_text();
             }
-            
+
             /*
             if (appSettingsDetails.getCurrencySymbol() != null  &&  !TextUtils.isEmpty(appSettingsDetails.getCurrencySymbol())) {
                 ConstantValues.CURRENCY_SYMBOL = Utilities.getCurrencySymbol(appSettingsDetails.getCurrencySymbol());
@@ -171,24 +184,9 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         }
     }
 
-    @Override
-    public void onAnimationStart(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
-    }
-
     /************* MyTask is Inner Class, that handles StartAppRequests on Background Thread *************/
 
-    private class MyTask extends AsyncTask<String, Void, String> {
+    public class MyTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -199,7 +197,7 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
         protected String doInBackground(String... params) {
 
             // Check for Internet Connection from the static method of Helper class
-            if (Utilities.hasActiveInternetConnection(com.cabral.emaishapay.activities.SplashScreen.this)) {
+            if (Utilities.hasActiveInternetConnection(context)) {
                 // Call the method of StartAppRequests class to process App Startup Requests
                 startAppRequests.StartRequests();
                 return "1";
@@ -214,22 +212,31 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
 
             setAppConfig();
 
-            MyAppPrefsManager prefsManager = new MyAppPrefsManager(getApplicationContext());
-            Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
+            MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
+            Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
             if (!prefsManager.isUserLoggedIn()) {
+                if(prefsManager.isFirstTimeLaunch()){
+                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
+                }else{
 
-                Intent authIntent=new Intent(getBaseContext(), com.cabral.emaishapay.activities.AuthActivity.class);
-                authIntent.putExtra("isFirstTimeLaunch",prefsManager.isFirstTimeLaunch());
-                startActivity(authIntent);
-                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
+                }
+
+
+//                Intent authIntent=new Intent(getBaseContext(), com.cabral.emaishapay.activities.AuthActivity.class);
+//                authIntent.putExtra("isFirstTimeLaunch",prefsManager.isFirstTimeLaunch());
+//                startActivity(authIntent);
+//                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
             } else {
-                startActivity(new Intent(getBaseContext(), WalletHomeActivity.class));
+                //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
+                startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));
+                getActivity().finish();
             }
 
-            finish();
+
         }
     }
+
+
 }
-
-

@@ -108,11 +108,13 @@ public class WalletHomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_home);
-        //setupDefaultHomePage();
+        bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         context = getApplicationContext();
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_home_container);
+
         navController = navHostFragment.getNavController();
 
 
@@ -154,11 +156,9 @@ public class WalletHomeActivity extends AppCompatActivity{
             getAppToken();
         }
 
-        bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
     }
 
     public void setUpNavigation() {
-         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setItemIconTintList(null);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

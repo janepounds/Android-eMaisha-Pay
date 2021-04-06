@@ -134,15 +134,6 @@ public class ShopActivity extends AppCompatActivity {
         currentFragment = defaultHomeFragment;
     }
 
-//    public static void setUpTitle(){
-//        if(currentFragment instanceof ShopProductsFragment){
-//            actionBar.setDisplayShowTitleEnabled(true);
-//
-//            actionBar.setHomeButtonEnabled(true);
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setTitle("Products");
-//        }
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {

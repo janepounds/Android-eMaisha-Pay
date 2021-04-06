@@ -24,10 +24,8 @@ import com.cabral.emaishapay.adapters.SliderAdapter;
 import com.cabral.emaishapay.databinding.FragmentOnBoardingBinding;
 
 public class OnBoardingFragment  extends Fragment {
-    ViewPager viewPager;
     SliderAdapter sliderAdapter;
     TextView[] dots;
-    Button letsGetStarted,nextBtn;
     Animation animation;
     int currentPos;
     FragmentOnBoardingBinding binding;
