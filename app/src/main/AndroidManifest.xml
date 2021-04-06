@@ -21,7 +21,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:usesCleartextTraffic,android:theme">
-        <activity android:name=".activities.AuthActivity"></activity>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -36,6 +35,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
 
+        <activity android:name=".activities.AuthActivity"></activity>
         <activity
             android:name=".activities.WalletBuySellActivity"
             android:label="@string/title_activity_wallet_buy_sell"
