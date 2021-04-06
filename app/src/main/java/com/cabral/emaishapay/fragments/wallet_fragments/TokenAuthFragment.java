@@ -158,37 +158,29 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (WalletHomeActivity.WALLET_ACCESS_TOKEN == null) {
+                pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+                pin = pin.replaceAll("\\s+", "");
+                if (pin.length() >= 4) {
+                    DialogLoader dialogLoader = new DialogLoader(context);
 
-                    pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
-                    pin = pin.replaceAll("\\s+", "");
-                    if (pin.length() >= 4) {
-                        DialogLoader dialogLoader = new DialogLoader(context);
+                    String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
 
-                        String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                    //login and get token
+                    Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, context));
 
-                        //login and get token
-                        Log.d(TAG, "attempting user login " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_EMAIL, context));
+                    if (Connectivity.isConnected(context)) {
+                        getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, context), context, dialogLoader);
 
-                        if (Connectivity.isConnected(context)) {
-                            getLoginToken(WalletPass, WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, context), context, dialogLoader);
+                        //getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
 
-                            getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-
-
-                        } else {
-                            Snackbar.make(binding.textForgotPin, getString(R.string.internet_connection_error), Snackbar.LENGTH_LONG).show();
-
-                        }
 
                     } else {
-                        Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(binding.textForgotPin, getString(R.string.internet_connection_error), Snackbar.LENGTH_LONG).show();
 
                     }
 
-                }else{
-
-                    WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);
+                } else {
+                    Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -227,7 +219,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
 
-                    } else {
+                    }
+                    else {
                         Log.d(TAG, "OnSuccess running");
                         TokenResponse tokenResponse = response.body();
 

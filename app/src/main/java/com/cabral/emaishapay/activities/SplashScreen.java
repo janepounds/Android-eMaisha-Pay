@@ -218,7 +218,10 @@ public class SplashScreen extends AppCompatActivity implements Animation.Animati
             Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
             if (!prefsManager.isUserLoggedIn()) {
-                startActivity(new Intent(getBaseContext(), com.cabral.emaishapay.activities.OnBoardingActivity.class));
+
+                Intent authIntent=new Intent(getBaseContext(), com.cabral.emaishapay.activities.AuthActivity.class);
+                authIntent.putExtra("isFirstTimeLaunch",prefsManager.isFirstTimeLaunch());
+                startActivity(authIntent);
                 overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
             } else {
                 startActivity(new Intent(getBaseContext(), WalletHomeActivity.class));

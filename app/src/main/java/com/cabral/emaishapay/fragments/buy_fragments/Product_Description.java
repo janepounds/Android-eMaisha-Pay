@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAttributesAdapter;
@@ -690,7 +691,7 @@ public class Product_Description extends Fragment {
                 product_like_btn.setChecked(false);
 
                 // Navigate to Login Activity
-                Intent i = new Intent(getContext(), Login.class);
+                Intent i = new Intent(getContext(), AuthActivity.class);
                 getContext().startActivity(i);
                 ((WalletHomeActivity) getContext()).finish();
                 ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);

@@ -3,14 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".fragments.auth_fragments.GetStartedSignUpFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/ic_new_bg_gradient"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
             android:src="@drawable/ic_new_bg_pattern"
             android:layout_width="match_parent"

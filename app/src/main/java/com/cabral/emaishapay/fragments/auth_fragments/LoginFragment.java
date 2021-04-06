@@ -21,6 +21,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.ConfirmActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -64,6 +65,7 @@ public class LoginFragment  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
 
         View decorView = getActivity().getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -132,7 +134,7 @@ public class LoginFragment  extends Fragment {
 
         binding.loginSignupText.setOnClickListener(v -> {
             // Navigate to SignUp Activity
-            startActivity(new Intent(getActivity(), com.cabral.emaishapay.activities.SignUp.class));
+            startActivity(new Intent(getActivity(), com.cabral.emaishapay.activities.AuthActivity.class));
             getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
         });
 
@@ -156,7 +158,9 @@ public class LoginFragment  extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        if(AuthActivity.is_firstTimeLoggin){
+            AuthActivity.navController.navigate(R.id.action_loginFragment_to_onBoardingFragment2);
+        }
     }
 
 
