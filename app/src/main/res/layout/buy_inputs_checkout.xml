@@ -375,7 +375,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/rectangular_green_solid"
+                        android:background="@drawable/rectangular_blue_solid"
                         android:padding="10dp"
                         android:text="@string/apply"
                         android:textColor="@color/white"

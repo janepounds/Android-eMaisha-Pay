@@ -743,7 +743,7 @@
             android:layout_weight="1"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:background="@drawable/rectangular_green_solid"
+            android:background="@drawable/rectangular_blue_solid"
             android:text="Payment Schedule"
             android:textColor="@color/white"
             android:textStyle="bold"

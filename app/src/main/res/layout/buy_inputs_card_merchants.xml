@@ -153,7 +153,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                android:background="@drawable/rectangular_green_solid"
+                android:background="@drawable/rectangular_blue_solid"
                 android:text="Select"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"

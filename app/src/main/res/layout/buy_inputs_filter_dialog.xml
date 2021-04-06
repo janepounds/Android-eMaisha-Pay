@@ -162,7 +162,7 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:background="@drawable/rectangular_green_solid"
+            android:background="@drawable/rectangular_blue_solid"
             android:gravity="center" />
 
     </LinearLayout>

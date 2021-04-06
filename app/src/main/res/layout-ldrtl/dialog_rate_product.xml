@@ -117,7 +117,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_gravity="end"
-            android:background="@drawable/rectangular_green_solid"
+            android:background="@drawable/rectangular_blue_solid"
             android:layout_marginRight="10dp" />
 
     </LinearLayout>

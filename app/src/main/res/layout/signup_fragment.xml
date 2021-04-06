@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f4fafe"
+        android:background="@drawable/ic_new_bg_gradient"
         android:orientation="vertical"
         tools:context="com.cabral.emaishapay.activities.SignUp">
 
@@ -14,7 +14,8 @@
             android:id="@+id/myToolbar"
             layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:visibility="gone"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -56,63 +57,136 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
-                    android:background="@drawable/background_custom_dialog"
-                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="@string/sign_up"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:drawableStart="@drawable/ic_chevron_left"
+                        android:drawableTint="@color/colorPrimary"/>
 
-                    <LinearLayout
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center">
-                        <View
-                            android:id="@+id/selected_sign_up"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="12dp"
-                            android:background="@drawable/rounded_corners_button" />
-                        <View
-                            android:id="@+id/selected_security_qns"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="12dp"
-                            android:background="@drawable/rounded_cornor_bg" />
+                        android:layout_marginTop="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_user_info"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/layout_security_qns_label"
+                            android:paddingBottom="10dp">
+                              <TextView
+                                android:id="@+id/text_user_info"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="User Info"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorPrimary"
+                                android:gravity="start"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </LinearLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_security_qns_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toEndOf="@id/layout_user_info"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:paddingBottom="10dp">
+                               <TextView
+                                android:id="@+id/text_security_qns_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                   android:text="Security Questions"
+                                   android:textSize="16sp"
+                                   android:textColor="@color/colorPrimary"
+                                   android:alpha="0.6"
+                                   android:gravity="start"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/layout_security_qns_label"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@color/colorPrimary"
+                                android:alpha="0.6"
+                                android:visibility="visible"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:id="@+id/selected_sign_up"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="3dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@color/colorPrimary"
+                                    android:visibility="visible"/>
+                                <View
+                                    android:id="@+id/selected_security_qns"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="3dp"
+                                    android:layout_weight="1"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@color/colorPrimary"
+                                    android:visibility="invisible"/>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="6dp"
-                        android:background="@color/light_gray" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
                     <LinearLayout
                         android:id="@+id/layout_sign_up"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/rounded_corners_edittext_white"
-                        android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:visibility="visible">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp"
+                            android:padding="10dp"
+                            android:background="@drawable/rounded_signup_form_bg_light">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -130,15 +204,14 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:fontFamily="@font/josefin_sans"
-                                    android:text="@string/first_name" />
+                                    android:text="@string/first_name"
+                                    android:textColor="#8C98A9"/>
 
                                 <EditText
                                     android:id="@+id/user_firstname"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
-                                    android:fontFamily="@font/josefin_sans"
+                                    android:background="@drawable/outline_primary"
                                     android:gravity="start|center_vertical"
                                     android:inputType="text"
                                     android:padding="10dp"
@@ -159,15 +232,14 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:fontFamily="@font/josefin_sans"
-                                    android:text="@string/last_name" />
+                                    android:text="@string/last_name"
+                                    android:textColor="#8C98A9"/>
 
                                 <EditText
                                     android:id="@+id/user_lastname"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
-                                    android:fontFamily="@font/josefin_sans"
+                                    android:background="@drawable/outline_primary"
                                     android:gravity="start|center_vertical"
                                     android:inputType="text"
                                     android:paddingStart="10dp"
@@ -197,12 +269,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:text="@string/district" />
+                                    android:text="@string/district"
+                                    android:textColor="#8C98A9"/>
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:padding="6dp">
 
                                     <AutoCompleteTextView
@@ -236,12 +309,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:text="@string/sub_county" />
+                                    android:text="@string/sub_county"
+                                    android:textColor="#8C98A9"/>
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:padding="6dp">
 
                                     <AutoCompleteTextView
@@ -267,12 +341,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:text="@string/village" />
+                                    android:text="@string/village"
+                                    android:textColor="#8C98A9"/>
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:padding="6dp">
 
                                     <AutoCompleteTextView
@@ -292,7 +367,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_15"
-                            android:orientation="vertical" >
+                            android:orientation="vertical"
+                            android:visibility="gone">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -303,8 +379,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:fontFamily="@font/josefin_sans"
-                                    android:text="@string/phone_number" />
+                                    android:text="@string/phone_number"
+                                    android:textColor="#8C98A9"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -353,14 +429,15 @@
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:text="ID Type"
-                            android:layout_marginBottom="4dp"/>
+                            android:layout_marginBottom="4dp"
+                            android:textColor="#8C98A9"/>
 
                         <RelativeLayout
                             android:id="@+id/id_type_layout"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginBottom="15dp"
-                            android:background="@drawable/edittext_corner">
+                            android:background="@drawable/outline_primary">
 
                             <Spinner
                                 android:id="@+id/id_type"
@@ -382,13 +459,14 @@
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:text="ID Number"
-                            android:layout_marginBottom="4dp"/>
+                            android:layout_marginBottom="4dp"
+                            android:textColor="#8C98A9"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginBottom="15dp"
-                            android:background="@drawable/edittext_corner">
+                            android:background="@drawable/outline_primary">
 
                             <EditText
                                 android:id="@+id/id_number"
@@ -403,25 +481,27 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </RelativeLayout>
+
+                        </LinearLayout>
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dip"
-                            android:background="@drawable/rounded_corners_button">
+                            android:layout_marginTop="10dip"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@drawable/rectangular_blue_solid">
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/signUpBtn"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dip"
+                                android:layout_height="45dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:background="@color/transparent"
-                                android:fontFamily="@font/josefin_sans"
-                                android:text="@string/next"
+                                android:text="@string/btn_continue"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/button_text_size"
-                                android:textStyle="bold" />
+                                android:textSize="12sp"/>
 
                             <ImageView
                                 android:layout_width="30dip"
@@ -430,12 +510,14 @@
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="right|center_vertical"
                                 android:layout_margin="10dip"
-                                android:src="@drawable/ic_right_arrow">
+                                android:src="@drawable/ic_right_arrow"
+                                android:visibility="gone">
 
                             </ImageView>
 
                         </FrameLayout>
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/layout_security_qns"
                         android:layout_width="match_parent"
@@ -447,28 +529,30 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_20dp"
-                            android:layout_marginTop="@dimen/margin_15"
-                            android:layout_marginEnd="@dimen/dimen_20dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:padding="12dp"
+                                android:background="@drawable/background_round_white">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
                                     android:text="First Security Question"
-                                    android:textSize="@dimen/dimen_16sp" />
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
 
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:gravity="center"
                                     android:orientation="horizontal"
                                     android:padding="3.4dp">
@@ -495,35 +579,46 @@
                                         app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
                                         tools:ignore="VectorDrawableCompat" />
                                 </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Your Answer"
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
+
                                 <EditText
                                     android:id="@+id/etxt_first_security_qn"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
-                                    android:fontFamily="@font/josefin_sans"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="text"
                                     android:padding="10dp"
                                     android:textColor="#000"
-                                    android:layout_marginTop="10dp"/>
+                                    android:layout_marginTop="4dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:layout_marginTop="15dp">
+                                android:layout_marginTop="15dp"
+                                android:padding="12dp"
+                                android:background="@drawable/background_round_white">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
                                     android:text="Second Security Question"
-                                    android:textSize="@dimen/dimen_16sp" />
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
 
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:gravity="center"
                                     android:orientation="horizontal"
                                     android:padding="3.4dp">
@@ -550,35 +645,45 @@
                                         app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
                                         tools:ignore="VectorDrawableCompat" />
                                 </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Your Answer"
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
                                 <EditText
                                     android:id="@+id/etxt_second_security_qn"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
-                                    android:fontFamily="@font/josefin_sans"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="text"
                                     android:padding="10dp"
                                     android:textColor="#000"
-                                    android:layout_marginTop="10dp"/>
+                                    android:layout_marginTop="4dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:layout_marginTop="15dp">
+                                android:layout_marginTop="15dp"
+                                android:padding="12dp"
+                                android:background="@drawable/background_round_white">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
                                     android:text="Third Security Question"
-                                    android:textSize="@dimen/dimen_16sp" />
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
 
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:gravity="center"
                                     android:orientation="horizontal"
                                     android:padding="3.4dp">
@@ -605,16 +710,23 @@
                                         app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
                                         tools:ignore="VectorDrawableCompat" />
                                 </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Your Answer"
+                                    android:textSize="@dimen/dimen_16sp"
+                                    android:textColor="@color/textColorPrimaryDark"/>
                                 <EditText
                                     android:id="@+id/etxt_third_security_qn"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
-                                    android:background="@drawable/edittext_corner"
-                                    android:fontFamily="@font/josefin_sans"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="text"
                                     android:padding="10dp"
                                     android:textColor="#000"
-                                    android:layout_marginTop="10dp"/>
+                                    android:layout_marginTop="4dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -636,12 +748,13 @@
                                 android:layout_margin="15dp"
                                 android:layout_weight="1"
                                 android:paddingStart="10dp"
-                                android:background="@drawable/round_button_red"
-                                android:text="@string/previous"
+                                android:background="@drawable/rectangular_blue_solid"
+                                android:text="Back"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
-                                android:drawableStart="@drawable/ic_left_chevron" />
+                                android:drawableStart="@drawable/ic_chevron_left"
+                                android:drawableTint="@color/white"/>
                             <Button
                                 android:id="@+id/btn_submit_security_qn"
                                 android:layout_width="match_parent"
@@ -649,38 +762,55 @@
                                 android:layout_weight="1"
                                 android:layout_margin="15dp"
                                 android:paddingEnd="10dp"
-                                android:background="@drawable/round_button_dark_green"
+                                android:background="@drawable/rectangular_blue_solid"
                                 android:text="@string/submit"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
-                                android:drawableEnd="@drawable/ic_right_chevron"/>
+                                android:drawableEnd="@drawable/ic_right_chevron_arrow_white"/>
                         </LinearLayout>
                     </LinearLayout>
 
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/app_terms_services"
+
+                <RelativeLayout
+                    android:id="@+id/layout_signin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_form"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="@font/josefin_sans"
+                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/app_terms_services"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_below="@id/layout_form">
+
+                    <TextView
+                        android:id="@+id/signin1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Already have account? "
+                        android:textColor="#F5F5F5"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/signin2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/signin1"
+                        android:text=" Sign in "
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/app_terms_services"
+                    android:layout_below="@id/layout_signin"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_15"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/text_terms_of_service"

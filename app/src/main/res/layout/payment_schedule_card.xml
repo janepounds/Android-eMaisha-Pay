@@ -181,7 +181,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_weight=".8"
-                android:background="@drawable/rectangular_green_solid"
+                android:background="@drawable/rectangular_blue_solid"
                 android:text="Paid"
                 android:textColor="@color/white"
                 android:textStyle="bold"
