@@ -378,8 +378,10 @@ public class SignUpFragment  extends Fragment {
 
             if (isValidData) {
                 // Proceed User Registration
-                binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
-                binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
+                binding.selectedSignUp.setVisibility(View.INVISIBLE);
+                binding.selectedSecurityQns.setVisibility(View.VISIBLE);
+                binding.textUserInfo.setAlpha((float) 0.6);
+                binding.textSecurityQnsLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
                 binding.layoutSignUp.setVisibility(View.GONE);
                 binding.layoutSecurityQns.setVisibility(View.VISIBLE);
                 //get security qns
@@ -405,10 +407,12 @@ public class SignUpFragment  extends Fragment {
 
 
         binding.btnBack.setOnClickListener(v -> {
-            binding.selectedSecurityQns.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_cornor_bg, null));
-            binding.selectedSignUp.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners_button, null));
-            binding.layoutSecurityQns.setVisibility(View.GONE);
+            binding.selectedSignUp.setVisibility(View.VISIBLE);
+            binding.selectedSecurityQns.setVisibility(View.INVISIBLE);
+            binding.textSecurityQnsLabel.setAlpha((float) 0.6);
+            binding.textUserInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
             binding.layoutSignUp.setVisibility(View.VISIBLE);
+            binding.layoutSecurityQns.setVisibility(View.GONE);
         });
     }
     

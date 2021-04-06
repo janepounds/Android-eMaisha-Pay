@@ -106,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rectangular_green_solid"
+        android:background="@drawable/rectangular_blue_solid"
         android:text="ok"
         android:textColor="@color/white"
         android:textStyle="bold"

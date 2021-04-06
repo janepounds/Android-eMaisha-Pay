@@ -355,7 +355,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/rectangular_green_solid"
+            android:background="@drawable/rectangular_blue_solid"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -669,7 +669,7 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             android:layout_below="@id/layout_last_transactions"
-            android:background="@drawable/rectangular_green_solid"/>
+            android:background="@drawable/rectangular_blue_solid"/>
 
 
         <LinearLayout

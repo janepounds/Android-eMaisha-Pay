@@ -87,7 +87,7 @@
             android:textAlignment="center"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:background="@drawable/rectangular_green_solid" />
+            android:background="@drawable/rectangular_blue_solid" />
 
     </LinearLayout>
 

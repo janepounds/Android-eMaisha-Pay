@@ -56,7 +56,6 @@
                 android:id="@+id/total_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:background="@drawable/outline_primary"
                 android:backgroundTint="#fff"
                 android:paddingTop="4dp"

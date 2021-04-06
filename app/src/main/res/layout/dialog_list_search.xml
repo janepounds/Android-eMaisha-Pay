@@ -50,7 +50,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:gravity="center"
-            android:background="@drawable/rectangular_green_solid"/>
+            android:background="@drawable/rectangular_blue_solid"/>
 
         <EditText
             android:id="@+id/dialog_input"

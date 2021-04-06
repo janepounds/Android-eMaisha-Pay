@@ -157,7 +157,7 @@
             android:layout_marginLeft="@dimen/dimen_10dp"
             android:layout_marginRight="@dimen/dimen_10dp"
             android:layout_marginBottom="@dimen/dimen_10dp"
-            android:background="@drawable/rectangular_green_solid">
+            android:background="@drawable/rectangular_blue_solid">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/autocomplete_fragment"
