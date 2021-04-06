@@ -25,6 +25,7 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -690,7 +691,7 @@ public class WalletAccountFragment extends Fragment {
 
                 requireActivity().finish();
                 // Open login
-                startActivity(new Intent(requireActivity(), Login.class));
+                startActivity(new Intent(requireActivity(), AuthActivity.class));
             }
         }).setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.LoginFragment"
+        tools:layout="@layout/login_fragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_PINManagerFragment"
+            app:destination="@id/PINManagerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_onBoardingFragment2"
+            app:destination="@id/onBoardingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/getStartedSignUpFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.GetStartedSignUpFragment"
+        android:label="fragment_get_started_sign_up"
+        tools:layout="@layout/fragment_get_started_sign_up" >
+        <action
+            android:id="@+id/action_getStartedSignUpFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.OnBoardingFragment"
+        tools:layout="@layout/fragment_on_boarding"
+        android:label="OnBoardingFragment" >
+        <action
+            android:id="@+id/action_onBoardingFragment_to_getStartedSignUpFragment"
+            app:destination="@id/getStartedSignUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.SignUpFragment"
+        tools:layout="@layout/signup_fragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_PINManagerFragment"
+            app:destination="@id/PINManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PINManagerFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.PINManagerFragment"
+        tools:layout="@layout/fragment_token_auth"
+        android:label="PINManagerFragment" >
+        <action
+            android:id="@+id/action_PINManagerFragment_to_wallet_home_navigation"
+            app:destination="@id/wallet_home_navigation" />
+    </fragment>
+
+    <include app:graph="@navigation/wallet_home_navigation" />
+</navigation>

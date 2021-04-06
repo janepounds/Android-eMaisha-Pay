@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -102,7 +103,7 @@ public class ChangePassword extends DialogFragment {
 
                                     requireActivity().finish();
                                     // Open login
-                                    startActivity(new Intent(requireActivity(), Login.class));
+                                    startActivity(new Intent(requireActivity(), AuthActivity.class));
                                 }
 
 

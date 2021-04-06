@@ -34,6 +34,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
@@ -224,7 +225,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //                        holder.product_like_layout.setChecked(false);
 
                     // Navigate to Login Activity
-                    Intent i = new Intent(context, Login.class);
+                    Intent i = new Intent(context, AuthActivity.class);
                     context.startActivity(i);
                     ((WalletBuySellActivity) context).finish();
                     ((WalletBuySellActivity) context).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);

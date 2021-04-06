@@ -36,6 +36,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
@@ -468,7 +469,7 @@ public class SettingsFragment extends Fragment {
 
                 } else {
                     // Navigate to Login Activity
-                    startActivity(new Intent(getContext(), Login.class));
+                    startActivity(new Intent(getContext(), AuthActivity.class));
                     ((WalletHomeActivity) getContext()).finish();
                     ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
                 }

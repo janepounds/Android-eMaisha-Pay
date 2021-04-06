@@ -132,7 +132,7 @@ public class LoginFragment  extends Fragment {
 
         binding.loginSignupText.setOnClickListener(v -> {
             // Navigate to SignUp Activity
-            startActivity(new Intent(getActivity(), com.cabral.emaishapay.activities.SignUp.class));
+            startActivity(new Intent(getActivity(), com.cabral.emaishapay.activities.AuthActivity.class));
             getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
         });
 
