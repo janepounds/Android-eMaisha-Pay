@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashScreenFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.cabral.emaishapay.fragments.auth_fragments.LoginFragment"
@@ -12,9 +12,6 @@
         <action
             android:id="@+id/action_loginFragment_to_PINManagerFragment"
             app:destination="@id/PINManagerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_onBoardingFragment2"
-            app:destination="@id/onBoardingFragment" />
     </fragment>
 
     <fragment
@@ -34,6 +31,9 @@
         <action
             android:id="@+id/action_onBoardingFragment_to_getStartedSignUpFragment"
             app:destination="@id/getStartedSignUpFragment" />
+        <action
+            android:id="@+id/action_onBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -56,4 +56,19 @@
     </fragment>
 
     <include app:graph="@navigation/wallet_home_navigation" />
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.cabral.emaishapay.fragments.auth_fragments.SplashScreenFragment"
+        android:label="SplashScreenFragment"
+        tools:layout="@layout/splash">
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_wallet_home_navigation"
+            app:destination="@id/wallet_home_navigation" />
+    </fragment>
 </navigation>

@@ -16,6 +16,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
@@ -52,7 +54,8 @@ public class WalletHomeFragment extends Fragment {
     public static FragmentManager fm;
     DialogLoader dialog;
     private static SharedPreferences sharedPreferences;
-    public WalletHomeFragment(){}
+    NavController navController;
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +66,11 @@ public class WalletHomeFragment extends Fragment {
 
         fm = requireActivity().getSupportFragmentManager();
         sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) fm.findFragmentById(R.id.wallet_home_container);
 
+        navController = navHostFragment.getNavController();
+        
         getTransactionsData();
         getBalanceAndCommission();
 
@@ -73,9 +80,18 @@ public class WalletHomeFragment extends Fragment {
 
 
 
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //super.onViewCreated(view, savedInstanceState);
+
+
+
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
         if(role.equalsIgnoreCase("agent")){
-            WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
@@ -111,7 +127,6 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else if(role.equalsIgnoreCase("merchant")){
-            WalletHomeActivity.setUpMasterAgentNav();
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
@@ -147,7 +162,6 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
-            WalletHomeActivity.setUpMasterAgentNav();
 
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
@@ -184,8 +198,7 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else{
-            WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
-            WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
@@ -220,17 +233,8 @@ public class WalletHomeFragment extends Fragment {
                 }
             });
         }
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
 
-//        btnWalletDeposit.setOnClickListener(view19 -> navController.navigate(R.id.action_walletHomeFragment_to_depositPayments, bundle));
-//        layoutWalletTransactions.setOnClickListener(view111 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
-//        btnWalletTransactions.setOnClickListener(view14 -> navController.navigate(R.id.action_walletHomeFragment_to_walletTransactionsListFragment));
         binding.layoutTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,7 +243,7 @@ public class WalletHomeFragment extends Fragment {
                 Bundle args=new Bundle();
                 args.putString("KEY_ACTION", getString(R.string.transactions) );
 
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
+                navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
 
 
             }
@@ -252,7 +256,7 @@ public class WalletHomeFragment extends Fragment {
                 Bundle args=new Bundle();
                 args.putString("KEY_ACTION", getString(R.string.settlements) );
 
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
+                navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
 
             }
         });
@@ -277,7 +281,7 @@ public class WalletHomeFragment extends Fragment {
               @Override
               public void onClick(View v) {
                   //To WalletLoanListFragment
-                  WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletLoansListFragment);
+                  navController.navigate(R.id.action_walletHomeFragment2_to_walletLoansListFragment);
 
               }
           }
@@ -286,7 +290,7 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //to PayFragment
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_payFragment);
+                navController.navigate(R.id.action_walletHomeFragment2_to_payFragment);
             }
         });
         binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
@@ -295,7 +299,7 @@ public class WalletHomeFragment extends Fragment {
                 //To WalletTrasactionListFragment
                 Bundle args=new Bundle();
                 args.putString("KEY_TITLE", context.getString(R.string.transactions) );
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
         });
 
@@ -303,7 +307,7 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //To BeneficiariesListFragment
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
+                navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
             }
         });
 
@@ -325,8 +329,6 @@ public class WalletHomeFragment extends Fragment {
     }
 
     private void getTransactionsData() {
-        DialogLoader dialog;
-        dialog = new DialogLoader(context);
         dialog.showProgressDialog();
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -377,7 +379,7 @@ public class WalletHomeFragment extends Fragment {
                     dialog.hideProgressDialog();
                 } else if (response.code() == 401) {
 
-                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                     //getActivity().finish();
                     if (response.errorBody() != null) {
                         Log.e("info", new String(String.valueOf(response.errorBody())));
@@ -429,7 +431,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
-                    //WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+                    //navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
