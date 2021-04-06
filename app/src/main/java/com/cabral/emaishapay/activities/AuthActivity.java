@@ -8,7 +8,8 @@ import android.os.Bundle;
 import com.cabral.emaishapay.R;
 
 public class AuthActivity extends AppCompatActivity {
-    NavController navController;
+    public static NavController navController;
+    public static  Boolean is_firstTimeLoggin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +20,9 @@ public class AuthActivity extends AppCompatActivity {
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_auth_container);
         navController = navHostFragment.getNavController();
 
-        Boolean is_firstTimeLoggin=getIntent().getBooleanExtra("isFirstTimeLaunch",false);
+        is_firstTimeLoggin=getIntent().getBooleanExtra("isFirstTimeLaunch",false);
 
-        if(is_firstTimeLoggin){
-            navController.navigate(R.id.action_loginFragment_to_onBoardingFragment2);
-        }
+
 
     }
 

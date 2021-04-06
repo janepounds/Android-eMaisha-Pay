@@ -67,7 +67,12 @@
         <activity
             android:name=".activities.ShopActivity"
             android:label="Shop"
-            android:windowSoftInputMode="adjustPan" /> <!-- Firebase Notifications -->
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.ConfirmActivity"
+            android:label="ConfirmActivity" />
+
+        <!-- Firebase Notifications -->
         <service
             android:name=".messaging.FirebaseMessageReceiver"
             android:permission="false">
