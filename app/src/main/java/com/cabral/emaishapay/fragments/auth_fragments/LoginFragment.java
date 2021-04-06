@@ -152,7 +152,10 @@ public class LoginFragment  extends Fragment {
             if (isValidData) {
                 // Proceed User Login
                 String phone ="0"+binding.userPhone.getText().toString();
-                ConfirmActivity.startAuth(context,phone,1);
+                Bundle args= new Bundle();
+                args.putInt("action",1);
+                args.putString("phone",phone);
+                AuthActivity.navController.navigate(R.id.action_loginFragment_to_PINManagerFragment,args);
             }
 
 

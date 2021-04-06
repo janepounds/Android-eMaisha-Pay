@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.adapters.SliderAdapter;
 import com.cabral.emaishapay.databinding.FragmentOnBoardingBinding;
 
@@ -55,14 +56,7 @@ public class OnBoardingFragment  extends Fragment {
         binding.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment frag = new GetStartedSignUpFragment();
-
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.onboarding_fragment_main_layout, frag);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
-                ft.commit();
+                AuthActivity.navController.navigate(R.id.action_onBoardingFragment_to_getStartedSignUpFragment);
             }
         });
 
@@ -159,28 +153,15 @@ public class OnBoardingFragment  extends Fragment {
                 binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Fragment frag = new GetStartedSignUpFragment();
-
-
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.onboarding_fragment_main_layout, frag);
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        AuthActivity.navController.navigate(R.id.action_onBoardingFragment_to_getStartedSignUpFragment);
                     }
                 });
 
                 binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Fragment frag = new LoginFragment();
 
-
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.onboarding_fragment_main_layout, frag);
-                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        AuthActivity.navController.navigate(R.id.action_onBoardingFragment_to_loginFragment);
                     }
                 });
 

@@ -80,11 +80,11 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
         sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         userInfoDB = new User_Info_DB();
-
-        errorTextView = findViewById(R.id.text_view_crop_user_error);
-        context = ConfirmActivity.this;
         dialogLoader = new DialogLoader(this);
         apiRequests = APIClient.getWalletInstance(getContext());
+
+        errorTextView = findViewById(R.id.text_view_crop_user_error);
+        context = ConfirmActivity.this;;
 
         if ( ConfirmActivity.ACTION_CODE == 1) {
 
@@ -139,7 +139,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
 
     }
 
-    private void getOTPFromUser(String password) {
+    private void getLogInOTPFromUser(String password) {
         otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -289,7 +289,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                     smsResults =response.body().getData().getSms_results();
 
                     //Call the OTP Dialog
-                    getOTPFromUser(password);
+                    getLogInOTPFromUser(password);
                 }else{
                     Snackbar.make(errorTextView,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
                 }
@@ -320,7 +320,7 @@ public class ConfirmActivity extends AppCompatActivity implements PinFragment.Li
                     smsResults = response.body().getData().getSms_results();
 
                     //Call the OTP Dialog
-                    getOTPFromUser(password);
+                    getLogInOTPFromUser(password);
                 }
                 else{
                     Snackbar.make(errorTextView,response.body().getMessage(),Snackbar.LENGTH_LONG).show();

@@ -215,19 +215,10 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
             MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
             Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
-            if (!prefsManager.isUserLoggedIn()) {
-                if(prefsManager.isFirstTimeLaunch()){
-                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
-                }else{
-
-                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
-                }
-
-
-//                Intent authIntent=new Intent(getBaseContext(), com.cabral.emaishapay.activities.AuthActivity.class);
-//                authIntent.putExtra("isFirstTimeLaunch",prefsManager.isFirstTimeLaunch());
-//                startActivity(authIntent);
-//                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+            if(prefsManager.isFirstTimeLaunch()){
+                AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
+            }else if (!prefsManager.isUserLoggedIn()) {
+                AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
             } else {
                 //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
                 startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));

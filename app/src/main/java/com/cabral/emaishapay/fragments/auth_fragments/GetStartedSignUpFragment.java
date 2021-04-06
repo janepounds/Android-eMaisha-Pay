@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.databinding.FragmentGetStartedSignUpBinding;
 
 public class GetStartedSignUpFragment extends Fragment {
@@ -43,6 +44,7 @@ public class GetStartedSignUpFragment extends Fragment {
             public void onClick(View v) {
                 //navigate to Sign Up Fragment
 
+                AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_signUpFragment);
             }
         });
 
@@ -51,14 +53,7 @@ public class GetStartedSignUpFragment extends Fragment {
             public void onClick(View v) {
                 //navigate to Sign Up Fragment
 
-                Fragment frag = new LoginFragment();
-
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.onboarding_fragment_main_layout, frag);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
-                ft.commit();
+                AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_loginFragment);
 
             }
         });

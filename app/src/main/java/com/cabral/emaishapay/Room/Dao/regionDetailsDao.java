@@ -22,16 +22,16 @@ public interface regionDetailsDao {
 
     //get all region details
     @Query("SELECT * FROM regionDetails WHERE regionDetails.regionType=:district")
-    ArrayList<regionDetails> getRegionDetails(String  district);
+    List<regionDetails> getRegionDetails(String  district);
 
 
     //get subcountry details
     @Query("SELECT * FROM regionDetails WHERE regionDetails.belongs_to=:belongs_to AND regionType=:subcounty")
-    ArrayList<regionDetails> getSubcountyDetails(String belongs_to, String subcounty);
+    List<regionDetails> getSubcountyDetails(String belongs_to, String subcounty);
 
     //get village details
     @Query("SELECT * FROM regionDetails WHERE regionDetails.belongs_to=:belongs_to AND regionType=:subcounty")
-    ArrayList<regionDetails> getVillageDetails(String belongs_to, String subcounty);
+    List<regionDetails> getVillageDetails(String belongs_to, String subcounty);
 
 
 

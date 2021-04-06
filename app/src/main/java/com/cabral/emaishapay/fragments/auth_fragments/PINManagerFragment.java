@@ -1,18 +1,24 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,16 +27,45 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.ConfirmActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
+import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
+import com.cabral.emaishapay.models.WalletAuthentication;
+import com.cabral.emaishapay.models.WalletAuthenticationResponse;
+import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.APIRequests;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
-//This fragment is used for creating or picking a user's PIN.
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
+import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
+
+//This fragment is used for creating or picking a user's PIN and Continue with Login or SignUp processes.
 public class PINManagerFragment  extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "TokenAuthFragment";
     private Context context;
-    private  String pin, pin1;
+    private  String pin, pin1,phonenumber,otp_code,smsResults;
     static FragmentTokenAuthBinding binding;
+
+    private static SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    User_Info_DB userInfoDB;
+    DialogLoader dialogLoader;
+    APIRequests apiRequests;
+    private Dialog otpDialog;
 
     public static int ACTION;
     private SparseArray<String> keyValues = new SparseArray<>();
@@ -38,6 +73,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
 
     @Override
     public void onAttach(@NonNull Context context) {
+        this.context=context;
         super.onAttach(context);
     }
 
@@ -57,6 +93,11 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         keyValues.put(R.id.tv_key_8, "8");
         keyValues.put(R.id.tv_key_9, "9");
 
+        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        userInfoDB = new User_Info_DB();
+        dialogLoader = new DialogLoader(context);
+        apiRequests = APIClient.getWalletInstance(getContext());
+
         return binding.getRoot();
     }
 
@@ -64,6 +105,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if(getArguments()!=null){
             ACTION=getArguments().getInt("action");
+            phonenumber=getArguments().getString("phone");
             if(ACTION==2)
                 binding.pinTitle.setText(getString(R.string.create_pin));
             else
@@ -160,6 +202,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
                         //if Action 1 login , if 2 proceed with registration
                         if(ACTION==1){
                             String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                            initiateLoginProcess(WalletPass,phonenumber);
                         }else if(ACTION==2){
                             if(pin1.length()==0){
                                 pin1=pin;
@@ -255,4 +298,330 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         inputConnection = ic;
     }
 
+    private void getLogInOTPFromUser(String password) {
+        otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
+        otpDialog.setContentView(R.layout.login_dialog_otp);
+        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        otpDialog.setCancelable(false);
+
+        EditText code1= otpDialog.findViewById(R.id.otp_code1_et);
+        EditText code2= otpDialog.findViewById(R.id.otp_code2_et);
+        EditText code3= otpDialog.findViewById(R.id.otp_code3_et);
+        EditText code4= otpDialog.findViewById(R.id.otp_code4_et);
+        EditText code5=otpDialog.findViewById(R.id.otp_code5_et);
+        EditText code6= otpDialog.findViewById(R.id.otp_code6_et);
+        TextView resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
+
+
+        code1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code2.requestFocus();
+            }
+        });
+
+        code2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code3.requestFocus();
+            }
+        });
+
+        code3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code4.requestFocus();
+            }
+        });
+
+        code4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code5.requestFocus();
+            }
+        });
+
+        code5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                code6.requestFocus();
+            }
+        });
+
+        code6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
+                otp_code = otp_code.replaceAll("\\s+", "");
+                if(otp_code.length()>=6){
+                    confirmLogin(password, phonenumber,otp_code,otpDialog);
+                }
+
+            }
+        });
+
+        otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //call resend otp
+                resendOtp(password,phonenumber);
+
+//                processLogin(password,ConfirmActivity.phonenumber);
+            }
+        });
+//        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                otpDialog.dismiss();
+//                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
+//                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
+//            }
+//        });
+        otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
+
+        params.x = 100; // Here is the param to set your dialog position. Same with params.x
+        otpDialog.getWindow().setAttributes(params);
+        otpDialog.show();
+    }
+
+    public void initiateLoginProcess(String password, String phonenumber) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        Log.d(TAG, "processLogin: request_id"+request_id);
+
+        //call the otp end point
+        dialogLoader.showProgressDialog();
+        Call<WalletAuthenticationResponse> call = apiRequests.authenticate(phonenumber,password,request_id,category,"initiateUserLogin");
+        call.enqueue(new Callback<WalletAuthenticationResponse>() {
+            @Override
+            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
+                if(response.isSuccessful() && response.body().getStatus()==1 ){
+                    smsResults =response.body().getData().getSms_results();
+
+                    //Call the OTP Dialog
+                    getLogInOTPFromUser(password);
+                }else{
+                    Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+                Snackbar.make(binding.textForgotPin,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    public void resendOtp(String password, String phonenumber) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        Log.d(TAG, "processLogin: request_id"+request_id);
+
+        //call the otp end point
+        dialogLoader.showProgressDialog();
+        Call<WalletAuthenticationResponse>call = apiRequests.resendOtp(phonenumber,password,request_id,"ResendOTP");
+        call.enqueue(new Callback<WalletAuthenticationResponse>() {
+            @Override
+            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
+                if(response.isSuccessful() && response.body().getStatus()==1 ) {
+                    smsResults = response.body().getData().getSms_results();
+
+                    //Call the OTP Dialog
+                    getLogInOTPFromUser(password);
+                }
+                else{
+                    Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+                Snackbar.make(binding.textForgotPin,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        Log.d(TAG, "processLogin: request_id"+request_id);
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        Call<WalletAuthentication> call = apiRequests.confirmLogin(phoneNumber,otp, rawpassword,request_id,category,"comfirmUserLogin");
+
+        dialogLoader.showProgressDialog();
+        call.enqueue(new Callback<WalletAuthentication>() {
+            @Override
+            public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull Response<WalletAuthentication> response) {
+                if (response.code() == 200) {
+
+                    if (response.body().getStatus() == 0) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (dialogLoader != null)
+                            dialogLoader.hideProgressDialog();
+
+                    }
+                    else if(response.body().getStatus() == 1){
+                        try {
+                            Gson gson = new Gson();
+                            String user = gson.toJson(response.body().getData());
+                            JSONObject userobject = new JSONObject(user);
+                            //userobject.getInt("id")
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userobject.getString("id"));
+                            editor.apply();
+
+                            WalletAuthentication.UserData userDetails = response.body().getData();
+                            Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+                            Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+                            Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+                            Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+                            Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+                            Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+                            Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+                            otpDialog.dismiss();
+                            loginUser(userDetails, rawpassword);
+
+                            Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+
+                            String accessToken = response.body().getAccess_token();
+                            String accountRole = userDetails.getAccountRole();
+                            Log.d(TAG, accessToken);
+                            WalletHomeActivity.WALLET_ACCESS_TOKEN = accessToken;
+                            WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
+                            if (dialogLoader != null)
+                                dialogLoader.hideProgressDialog();
+                            WalletHomeActivity.startHome(context);
+
+
+                        } catch (Exception e) {
+                            Log.e("response", response.toString());
+                            e.printStackTrace();
+                        } finally {
+                            dialogLoader.hideProgressDialog();
+                        }
+                    }
+
+
+
+                }
+                else {
+                    dialogLoader.hideProgressDialog();
+
+                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    String message = response.body().getMessage();
+                    Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthentication> call, Throwable t) {
+                Log.e("info2 : ", t.getMessage());
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    private void loginUser(WalletAuthentication.UserData userDetails, String password) {
+        // Save User Data to Local Databases
+        if (userInfoDB.getUserData(userDetails.getId() + "") != null) {
+            // User already exists
+            userInfoDB.updateUserData(userDetails, password);
+        } else {
+            // Insert Details of New User
+            userInfoDB.insertUserData(userDetails, password);
+        }
+        Log.e(TAG, userDetails.getId() + "");
+        // Save necessary details in SharedPrefs
+        editor = sharedPreferences.edit();
+        editor.putString(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, userDetails.getId() + "");
+        editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, userDetails.getBalance());
+        editor.putString(WalletHomeActivity.PREFERENCES_USER_EMAIL, userDetails.getEmail());
+        editor.putString(WalletHomeActivity.PREFERENCES_FIRST_NAME, userDetails.getFirstname());
+        editor.putString(WalletHomeActivity.PREFERENCES_LAST_NAME, userDetails.getLastname());
+        editor.putString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, userDetails.getPhoneNumber());
+        editor.putString(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, userDetails.getPictrure());
+        editor.putString(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, userDetails.getPictrure());
+
+        editor.putString("addressStreet", userDetails.getAddressStreet());
+        editor.putString("addressCityOrTown", userDetails.getAddressCityOrTown());
+        editor.putString("address_district", userDetails.getAddressCityOrTown());
+        editor.putString("addressCountry", userDetails.getAddressCityOrTown());
+
+        editor.putBoolean("isLogged_in", true);
+        editor.apply();
+        WalletHomeActivity.WALLET_ACCESS_TOKEN = null;
+
+        // Set UserLoggedIn in MyAppPrefsManager
+        MyAppPrefsManager myAppPrefsManager = new MyAppPrefsManager(context);
+        myAppPrefsManager.logInUser();
+
+        // Set isLogged_in of ConstantValues
+        ConstantValues.IS_USER_LOGGED_IN = myAppPrefsManager.isUserLoggedIn();
+
+
+        // Navigate back to MainActivity
+        Intent i = new Intent(context, WalletHomeActivity.class);
+        startActivity(i);
+        getActivity().finish();
+        getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_out_right);
+    }
 }
