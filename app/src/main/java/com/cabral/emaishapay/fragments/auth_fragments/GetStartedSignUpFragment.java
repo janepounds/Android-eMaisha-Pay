@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.FragmentGetStartedSignUpBinding;
@@ -41,6 +42,24 @@ public class GetStartedSignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //navigate to Sign Up Fragment
+
+            }
+        });
+
+        binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //navigate to Sign Up Fragment
+
+                Fragment frag = new LoginFragment();
+
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.onboarding_fragment_main_layout, frag);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
+                ft.commit();
+
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -15,14 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.adapters.SliderAdapter;
 import com.cabral.emaishapay.databinding.FragmentOnBoardingBinding;
 
 public class OnBoardingFragment  extends Fragment {
     ViewPager viewPager;
-    com.cabral.emaishapay.adapters.SliderAdapter sliderAdapter;
+    SliderAdapter sliderAdapter;
     TextView[] dots;
     Button letsGetStarted,nextBtn;
     Animation animation;
@@ -41,22 +44,52 @@ public class OnBoardingFragment  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_on_boarding,container,false);
 
+        //Call adapter
+        sliderAdapter = new SliderAdapter(context);
+        binding.slider.setAdapter(sliderAdapter);
+
+        //Dots
+        addDots(0);
+        binding.slider.addOnPageChangeListener(changeListener);
+
+
+
+        binding.skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment frag = new GetStartedSignUpFragment();
+
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.onboarding_fragment_main_layout, frag);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+
+        binding.nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.slider.setCurrentItem(currentPos + 1);
+            }
+        });
+
+
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
     }
 
-    public void skip(View view) {
-        //startActivity(new Intent(this, Login.class));
-       // finish();
-    }
 
-    public void next(View view) {
-        viewPager.setCurrentItem(currentPos + 1);
-    }
+
 
     private void addDots(int position) {
 
@@ -96,34 +129,62 @@ public class OnBoardingFragment  extends Fragment {
 
                 binding.topItemsLayout.setVisibility(View.VISIBLE);
                 binding.blueGradientLayout.setVisibility(View.VISIBLE);
-                nextBtn.setVisibility(View.VISIBLE);
-                viewPager.setVisibility(View.VISIBLE);
+                binding.nextBtn.setVisibility(View.VISIBLE);
+                binding.slider.setVisibility(View.VISIBLE);
                 binding.gettingStarted.setVisibility(View.GONE);
 
             } else if (position == 1) {
 
                 binding.topItemsLayout.setVisibility(View.VISIBLE);
                 binding.blueGradientLayout.setVisibility(View.VISIBLE);
-                nextBtn.setVisibility(View.VISIBLE);
-                viewPager.setVisibility(View.VISIBLE);
+                binding.nextBtn.setVisibility(View.VISIBLE);
+                binding.slider.setVisibility(View.VISIBLE);
                 binding.gettingStarted.setVisibility(View.GONE);
             } else if (position == 2) {
 
                 binding.topItemsLayout.setVisibility(View.VISIBLE);
                 binding.blueGradientLayout.setVisibility(View.VISIBLE);
-                nextBtn.setVisibility(View.VISIBLE);
-                viewPager.setVisibility(View.VISIBLE);
+                binding.nextBtn.setVisibility(View.VISIBLE);
+                binding.slider.setVisibility(View.VISIBLE);
                 binding.gettingStarted.setVisibility(View.GONE);
             } else {
                 animation = AnimationUtils.loadAnimation(context, R.anim.enter_from_left);
-                letsGetStarted.setAnimation(animation);
+                binding.getStartedBtn.setAnimation(animation);
                 binding.gettingStarted.setAnimation(animation);
                 binding.topItemsLayout.setVisibility(View.INVISIBLE);
                 binding.blueGradientLayout.setVisibility(View.INVISIBLE);
-                nextBtn.setVisibility(View.INVISIBLE);
-                viewPager.setVisibility(View.INVISIBLE);
+                binding.nextBtn.setVisibility(View.INVISIBLE);
+                binding.slider.setVisibility(View.INVISIBLE);
                 binding.gettingStarted.setVisibility(View.VISIBLE);
                 binding.dotsLayout.setVisibility(View.GONE);
+
+                binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment frag = new GetStartedSignUpFragment();
+
+
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.onboarding_fragment_main_layout, frag);
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                });
+
+                binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment frag = new LoginFragment();
+
+
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.onboarding_fragment_main_layout, frag);
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                });
 
             }
 
