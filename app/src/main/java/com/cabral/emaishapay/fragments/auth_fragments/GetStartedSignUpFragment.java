@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.databinding.FragmentGetStartedSignUpBinding;
+import com.cabral.emaishapay.utils.ValidateInputs;
 
 public class GetStartedSignUpFragment extends Fragment {
     FragmentGetStartedSignUpBinding binding;
@@ -42,6 +44,18 @@ public class GetStartedSignUpFragment extends Fragment {
         binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Validate Login Form Inputs
+                boolean isValidData = validateForm();
+//
+            if (isValidData) {
+                // Proceed User Registration
+
+ //               sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
+            }
+
+
+
                 //navigate to Sign Up Fragment
 
                 AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_signUpFragment);
@@ -57,6 +71,19 @@ public class GetStartedSignUpFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private boolean validateForm() {
+
+        if (!ValidateInputs.isValidNumber(binding.userMobile.getText().toString().trim())) {
+            binding.userMobile.setError(getString(R.string.invalid_contact));
+            return false;
+
+        }
+        else {
+            return true;
+        }
     }
 
 }
