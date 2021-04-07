@@ -335,14 +335,14 @@ public interface APIRequests {
             @Field("addressStreet") String addressStreet,
             @Field("addressCityOrTown") String addressCityOrTown,
             @Field("address_district") String addressDistrict,
-            @Field("idType") String idType,
-            @Field("idNo") String idNo,
-            @Field("first_security_qn") String first_security_qn,
-            @Field("second_security_qn") String second_security_qn,
-            @Field("third_security_qn") String third_security_qn,
-            @Field("first_qn_answer") String first_qn_answer,
-            @Field("second_qn_answer") String second_qn_answer,
-            @Field("third_qn_answer") String third_qn_answer,
+            @Field("id_type") String idType,
+            @Field("id_number") String idNo,
+            @Field("sec_qn_one") String first_security_qn,
+            @Field("sec_qn_two") String second_security_qn,
+            @Field("sec_qn_three") String third_security_qn,
+            @Field("sec_ans_one") String first_qn_answer,
+            @Field("sec_ans_two") String second_qn_answer,
+            @Field("sec_ans_three") String third_qn_answer,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id);
@@ -845,7 +845,7 @@ public interface APIRequests {
 
     //get beneficiaries info
     @GET("wallet/security-qns")
-    Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id
+    Call<SecurityQnsResponse>getSecurityQns( @Query("request_id") String request_id
             ,  @Query("category") String category,@Query("action_id") String action_id
                                            );
 
