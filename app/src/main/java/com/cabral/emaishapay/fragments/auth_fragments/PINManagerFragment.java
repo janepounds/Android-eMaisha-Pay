@@ -192,37 +192,30 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (WalletHomeActivity.WALLET_ACCESS_TOKEN == null) {
 
-                    pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
-                    pin = pin.replaceAll("\\s+", "");
-                    if (pin.length() >= 4) {
-
-
-                        //if Action 1 login , if 2 proceed with registration
-                        if(ACTION==1){
-                            String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                            initiateLoginProcess(WalletPass,phonenumber);
-                        }else if(ACTION==2){
-                            if(pin1.length()==0){
-                                pin1=pin;
-                                binding.pinTitle.setText(getString(R.string.comfirm_pin));
-                            }else if(pin1.length()==4 && pin.equals(pin1)){
-
-                            }
+                pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+                pin = pin.replaceAll("\\s+", "");
+                if (pin.length() >= 4) {
+                    //if Action 1 login , if 2 proceed with registration
+                    if(ACTION==1){
+                        String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                        initiateLoginProcess(WalletPass,phonenumber);
+                    }else if(ACTION==2){
+                        if(pin1.length()==0){
+                            pin1=pin;
+                            binding.pinTitle.setText(getString(R.string.comfirm_pin));
+                        }else if(pin1.length()==4 && pin.equals(pin1)){
 
                         }
 
-                    } else {
-                        Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
-
                     }
 
-                }else{
-
-                    WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);
+                }
+                else {
+                    Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
 
         });
