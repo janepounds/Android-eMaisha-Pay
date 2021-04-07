@@ -16,7 +16,6 @@ import com.cabral.emaishapay.R;
 
 public class AuthActivity extends AppCompatActivity {
     public static NavController navController;
-    public static  Boolean is_firstTimeLoggin;
 
 
     @Override
@@ -34,7 +33,6 @@ public class AuthActivity extends AppCompatActivity {
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_auth_container);
         navController = navHostFragment.getNavController();
 
-        is_firstTimeLoggin=getIntent().getBooleanExtra("isFirstTimeLaunch",false);
 
 
     }

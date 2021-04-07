@@ -31,7 +31,7 @@ import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.merchants_model.MerchantData;
 import com.cabral.emaishapay.models.merchants_model.MerchantDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 

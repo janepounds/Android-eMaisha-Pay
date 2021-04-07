@@ -3,12 +3,9 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +18,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentEmploymentInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
-import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 
 import org.jetbrains.annotations.NotNull;
 

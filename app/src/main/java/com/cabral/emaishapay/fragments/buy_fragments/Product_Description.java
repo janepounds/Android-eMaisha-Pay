@@ -60,7 +60,7 @@ import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductMeasure;
 import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.models.product_model.Value;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.Utilities;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;

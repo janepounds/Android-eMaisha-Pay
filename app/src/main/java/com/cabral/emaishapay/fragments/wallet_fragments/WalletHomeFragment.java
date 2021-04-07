@@ -19,20 +19,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -392,7 +389,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
-                    //navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }

@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Base64;
 import android.util.Log;
@@ -32,7 +31,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
-import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;

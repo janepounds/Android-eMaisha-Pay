@@ -32,7 +32,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
-import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 
 import org.jetbrains.annotations.NotNull;
 

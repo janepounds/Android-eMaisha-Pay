@@ -41,7 +41,7 @@ import com.cabral.emaishapay.models.product_model.GetStock;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductStock;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 
 import java.io.IOException;
 import java.util.ArrayList;

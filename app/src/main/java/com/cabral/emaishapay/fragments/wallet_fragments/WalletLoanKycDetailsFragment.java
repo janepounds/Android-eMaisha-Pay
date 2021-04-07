@@ -35,8 +35,8 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.Referee;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 import org.json.JSONObject;
 

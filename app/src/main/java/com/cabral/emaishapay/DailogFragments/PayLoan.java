@@ -28,8 +28,8 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletLoansListFragment;
 import com.cabral.emaishapay.models.LoanPayResponse;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 import retrofit2.Call;
 import retrofit2.Callback;

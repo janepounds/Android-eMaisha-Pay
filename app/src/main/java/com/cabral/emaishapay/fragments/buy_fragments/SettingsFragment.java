@@ -47,7 +47,7 @@ import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
 import com.cabral.emaishapay.models.contact_model.ContactUsData;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.user_model.UserDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.receivers.AlarmReceiver;
 import com.cabral.emaishapay.utils.NotificationScheduler;
 import com.cabral.emaishapay.utils.Utilities;

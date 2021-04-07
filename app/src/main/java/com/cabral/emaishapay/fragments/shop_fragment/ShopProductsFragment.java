@@ -40,7 +40,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;

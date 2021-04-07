@@ -23,7 +23,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrderDetailsAdapter;
 import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.

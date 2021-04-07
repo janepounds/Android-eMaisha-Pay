@@ -35,7 +35,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
-import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;

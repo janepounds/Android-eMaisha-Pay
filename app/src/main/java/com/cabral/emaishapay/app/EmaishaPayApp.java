@@ -3,11 +3,7 @@ package com.cabral.emaishapay.app;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 
@@ -15,25 +11,14 @@ import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
-import com.cabral.emaishapay.models.product_model.GetAllProducts;
-import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.shipping_model.ShippingService;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
-import com.google.gson.Gson;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
-import com.cabral.emaishapay.models.TokenResponse;
-import com.cabral.emaishapay.network.APIClient;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 //import com.google.common.io.BaseEncoding;
 

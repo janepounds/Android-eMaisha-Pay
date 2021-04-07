@@ -39,8 +39,8 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 
 public class AgentCustomerConfirmDetails extends DialogFragment {

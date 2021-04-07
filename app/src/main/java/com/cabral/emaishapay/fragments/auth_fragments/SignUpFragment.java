@@ -1,19 +1,9 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,7 +14,6 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -48,38 +35,17 @@ import com.cabral.emaishapay.databinding.SignupFragmentBinding;
 import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.address_model.RegionDetails;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.utils.CheckPermissions;
-import com.cabral.emaishapay.utils.ImagePicker;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
-import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
 
 public class SignUpFragment  extends Fragment {
     private static final String TAG = "SignUp";

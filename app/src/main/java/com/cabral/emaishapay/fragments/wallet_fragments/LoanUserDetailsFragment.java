@@ -33,8 +33,8 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 

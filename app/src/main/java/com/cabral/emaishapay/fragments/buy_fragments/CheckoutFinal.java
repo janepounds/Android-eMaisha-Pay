@@ -53,7 +53,7 @@ import com.cabral.emaishapay.models.payment_model.PaymentMethodsInfo;
 import com.cabral.emaishapay.models.product_model.Option;
 import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.models.user_model.UserDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.NotificationHelper;
 import com.cabral.emaishapay.utils.Utilities;
 import com.cabral.emaishapay.utils.ValidateInputs;

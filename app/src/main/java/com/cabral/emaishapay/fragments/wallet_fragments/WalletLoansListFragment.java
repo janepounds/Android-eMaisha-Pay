@@ -31,8 +31,8 @@ import com.cabral.emaishapay.adapters.LoansListAdapter;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
 import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 import org.jetbrains.annotations.NotNull;
 

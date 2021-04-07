@@ -53,7 +53,7 @@ import com.cabral.emaishapay.models.shop_model.Category;
 import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;

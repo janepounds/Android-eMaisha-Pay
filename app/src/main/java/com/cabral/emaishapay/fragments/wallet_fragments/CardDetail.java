@@ -11,7 +11,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
-import com.cabral.emaishapay.network.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 
 import androidx.annotation.NonNull;

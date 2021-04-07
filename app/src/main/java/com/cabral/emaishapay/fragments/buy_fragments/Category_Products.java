@@ -43,7 +43,7 @@ import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;

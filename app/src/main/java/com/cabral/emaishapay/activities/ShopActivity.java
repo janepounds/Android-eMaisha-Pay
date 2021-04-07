@@ -12,7 +12,7 @@ import com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopSalesFragment;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
@@ -29,8 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

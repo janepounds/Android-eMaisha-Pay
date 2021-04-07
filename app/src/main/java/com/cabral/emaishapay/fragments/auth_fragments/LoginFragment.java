@@ -26,8 +26,8 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LoginFragmentBinding;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;

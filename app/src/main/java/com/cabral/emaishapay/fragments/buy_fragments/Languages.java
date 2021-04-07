@@ -30,7 +30,7 @@ import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.language_model.LanguageData;
 import com.cabral.emaishapay.models.language_model.LanguageDetails;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.material.snackbar.Snackbar;
 

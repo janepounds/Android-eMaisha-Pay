@@ -38,8 +38,8 @@ import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
-import com.cabral.emaishapay.network.APIClient;
-import com.cabral.emaishapay.network.APIRequests;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 

@@ -20,7 +20,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.ratings.GetRatings;
 import com.cabral.emaishapay.models.ratings.ProductReviews;
-import com.cabral.emaishapay.network.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 
 import java.text.DateFormat;
 import java.text.ParseException;
