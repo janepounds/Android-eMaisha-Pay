@@ -159,7 +159,7 @@ public class LoanUserDetailsFragment extends Fragment {
                         //call otp dialog
                         dialog  = new Dialog(context);
                         dialog.setContentView(R.layout.login_dialog_otp);
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                         dialog.setCancelable(false);
 
 

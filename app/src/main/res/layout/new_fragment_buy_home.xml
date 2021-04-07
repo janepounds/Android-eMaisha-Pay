@@ -5,6 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f4fafe">
 
+    <FrameLayout
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_marginBottom="?actionBarSize">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <ImageView
         android:src="@drawable/ic_new_bg_pattern"
         android:layout_width="match_parent"
@@ -19,16 +30,18 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="?actionBarSize"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
     <ImageView
-        android:id="@+id/filter"
+        android:id="@+id/cart"
         android:src="@drawable/ic_filter_blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="?actionBarSize"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/etxt_search"
@@ -37,7 +50,7 @@
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
     android:layout_marginBottom="5dp"
-        android:layout_below="@id/hamburger_menu"
+        android:layout_marginTop="65dp"
     android:background="@drawable/rounded_corners_edittext_white"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +101,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_below="@id/etxt_search">
+        android:layout_below="@id/etxt_search"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/buy_btn"
@@ -264,5 +278,32 @@
         android:layout_marginEnd="10dp"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+    </FrameLayout>
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_orders_home"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="10dp"/>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bttm_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#f4fafe"
+        app:labelVisibilityMode="labeled"
+        app:itemRippleColor="#2D84B72B"
+        app:itemIconTint="@android:color/transparent"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_buy_and_sell_menu" />
 </RelativeLayout>

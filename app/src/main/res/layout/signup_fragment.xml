@@ -363,67 +363,6 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_15"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="4dp"
-                                    android:text="@string/phone_number"
-                                    android:textColor="#8C98A9"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:layout_alignParentTop="true"
-                                    android:background="@drawable/edittext_corner"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/txt_crops_estimated_revenue_units"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.3"
-                                        android:background="@drawable/edittext_left_corners_green"
-                                        android:gravity="center"
-                                        android:text="+256"
-                                        android:textColor="@color/white"
-                                        android:textSize="14sp"
-                                        android:textStyle="bold" />
-
-                                    <EditText
-                                        android:id="@+id/user_mobile"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.7"
-                                        android:background="@android:color/transparent"
-                                        android:fontFamily="@font/josefin_sans"
-                                        android:gravity="start|center_vertical"
-                                        android:inputType="phone"
-                                        android:maxLength="9"
-                                        android:paddingStart="@dimen/dimen_10dp"
-                                        android:paddingEnd="@dimen/dimen_10dp"
-                                        android:tag="+256 "
-                                        android:textAlignment="viewStart"
-                                        android:textColor="@android:color/black"
-                                        android:textColorHint="@android:color/black" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-
-                        </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -263,7 +263,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     private void getOTPFromUser(final String customerNumber, final double amount) {
         otpDialog  = new Dialog(getContext());
         otpDialog.setContentView(R.layout.login_dialog_otp);
-        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         otpDialog.setCancelable(false);
 
         code1= otpDialog.findViewById(R.id.otp_code1_et);

@@ -455,7 +455,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                WalletHomeActivity.super.onBackPressed();
+                                finishAffinity();
                             }
                         })
                         .setNegativeButton("No", null)

@@ -27,7 +27,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ConfirmActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -36,6 +35,7 @@ import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
+import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.APIClient;
 import com.cabral.emaishapay.network.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
@@ -50,14 +50,13 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
-import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
 
 //This fragment is used for creating or picking a user's PIN and Continue with Login or SignUp processes.
 public class PINManagerFragment  extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "TokenAuthFragment";
     private Context context;
-    private  String pin, pin1,phonenumber,otp_code,smsResults;
+    private  String pin="", pin1="",phonenumber,otp_code,smsResults;
     static FragmentTokenAuthBinding binding;
 
     private static SharedPreferences sharedPreferences;
@@ -70,6 +69,8 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
     public static int ACTION;
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
+
+    private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -106,10 +107,26 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         if(getArguments()!=null){
             ACTION=getArguments().getInt("action");
             phonenumber=getArguments().getString("phone");
-            if(ACTION==2)
+            if(ACTION==2){
                 binding.pinTitle.setText(getString(R.string.create_pin));
-            else
+                userFirstname=getArguments().getString("userFirstname");
+                userLastname=getArguments().getString("userLastname");
+                village=getArguments().getString("village");
+                subCounty=getArguments().getString("subCounty");
+                district=getArguments().getString("district");
+                idType=getArguments().getString("idType");
+                idNo=getArguments().getString("idNo");
+                firstSecurityQn=getArguments().getString("firstSecurityQn");
+                secondSecurityQn=getArguments().getString("secondSecurityQn");
+                thirdSecurityQn=getArguments().getString("thirdSecurityQn");
+                firstQnAnswer=getArguments().getString("firstQnAnswer");
+                secondQnAnswer=getArguments().getString("secondQnAnswer");
+                thirdQnAnswer=getArguments().getString("thirdQnAnswer");
+
+            }
+            else{
                 binding.pinTitle.setText(getString(R.string.enter_pin));
+            }
         }
 
 
@@ -192,37 +209,34 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (WalletHomeActivity.WALLET_ACCESS_TOKEN == null) {
 
-                    pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
-                    pin = pin.replaceAll("\\s+", "");
-                    if (pin.length() >= 4) {
+                pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+                pin = pin.replaceAll("\\s+", "");
+                if (pin.length() >= 4) {
+                    //if Action 1 login , if 2 proceed with registration
+                    if(ACTION==1){
+                        String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                        initiateLoginProcess(WalletPass,phonenumber);
+                    }else if(ACTION==2){
+                        if(pin1.length()==0){
+                            pin1=pin;
+                            binding.pinTitle.setText(getString(R.string.comfirm_pin));
+                            clearPin(binding);
+                        }else if(pin1.length()==4 && pin.equals(pin1)){
 
-
-                        //if Action 1 login , if 2 proceed with registration
-                        if(ACTION==1){
                             String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                            initiateLoginProcess(WalletPass,phonenumber);
-                        }else if(ACTION==2){
-                            if(pin1.length()==0){
-                                pin1=pin;
-                                binding.pinTitle.setText(getString(R.string.comfirm_pin));
-                            }else if(pin1.length()==4 && pin.equals(pin1)){
-
-                            }
+                            processRegistration( WalletPass,phonenumber, userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer);
 
                         }
 
-                    } else {
-                        Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
-
                     }
 
-                }else{
-
-                    WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);
+                }
+                else {
+                    Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
 
         });
@@ -301,7 +315,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
     private void getLogInOTPFromUser(String password) {
         otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
-        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         otpDialog.setCancelable(false);
 
         EditText code1= otpDialog.findViewById(R.id.otp_code1_et);
@@ -624,4 +638,62 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         getActivity().finish();
         getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_out_right);
     }
+
+    private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district,String idType,String idNo,String firstSecurityQn,String secondSecurityQn,String thirdSecurityQn,String firstQnAnswer,String secondQnAnswer,String thirdQnAnswer) {
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        String action_id = "storeUser";
+        dialogLoader.showProgressDialog();
+
+        String countryCode = getResources().getString(R.string.ugandan_code);
+        Call<UserData> call = APIClient.getWalletInstance(getContext())
+                .processRegistration(
+                        userFirstname,userLastname, userPassword,
+                        countryCode, phoneNumber, village, subCounty,
+                        district,idType,idNo,
+                        firstSecurityQn,secondSecurityQn,thirdSecurityQn,
+                        firstQnAnswer,secondQnAnswer,thirdQnAnswer,
+                        request_id,category,action_id);
+
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(@NotNull Call<UserData> call, @NotNull retrofit2.Response<UserData> response) {
+
+                dialogLoader.hideProgressDialog();
+
+                // Check if the Response is successful
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().equalsIgnoreCase("1")) {
+
+                        Intent authenticate = new Intent(context, WalletHomeActivity.class);
+                        context.startActivity(authenticate);
+                        getActivity().finish();
+
+                    } else if (response.body().getStatus().equalsIgnoreCase("0")) {
+                        // Get the Error Message from Response
+                        String message = response.body().getMessage();
+                        Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
+
+                    } else {
+                        // Unable to get Success status
+                        Toast.makeText(context, getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    // Show the Error Message
+                    String Str = response.message();
+                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<UserData> call, @NotNull Throwable t) {
+                dialogLoader.hideProgressDialog();
+                String Str = "" + t;
+                Toast.makeText(context, "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

@@ -76,7 +76,7 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buy_home, container, false);
+        View view = inflater.inflate(R.layout.new_fragment_buy_home, container, false);
         setHasOptionsMenu(true);
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);

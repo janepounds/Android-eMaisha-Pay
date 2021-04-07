@@ -109,7 +109,7 @@
                         android:alpha=".7"/>
 
                     <EditText
-                        android:id="@+id/user_phone"
+                        android:id="@+id/user_mobile"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_weight="0.7"

@@ -43,7 +43,6 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     private  String pin;
     static FragmentTokenAuthBinding binding;
 
-    public static String WALLET_ACCESS_TOKEN = null;
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
 
