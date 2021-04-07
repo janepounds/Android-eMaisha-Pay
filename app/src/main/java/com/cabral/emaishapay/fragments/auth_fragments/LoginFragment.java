@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.auth_fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
-import com.cabral.emaishapay.activities.ConfirmActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LoginFragmentBinding;
@@ -141,8 +139,7 @@ public class LoginFragment  extends Fragment {
 
         binding.loginSignupText.setOnClickListener(v -> {
             // Navigate to SignUp Activity
-            startActivity(new Intent(getActivity(), com.cabral.emaishapay.activities.AuthActivity.class));
-            getActivity().overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
+            AuthActivity.navController.navigate(R.id.action_loginFragment_to_getStartedSignUpFragment);
         });
 
         binding.loginBtn.setOnClickListener(v -> {
@@ -221,12 +218,10 @@ public class LoginFragment  extends Fragment {
     }
 
     public void RequestSecurityQns(){
-
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(access_token,request_id,category,"getSecurityQns");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(request_id,category,"getSecurityQns");
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
