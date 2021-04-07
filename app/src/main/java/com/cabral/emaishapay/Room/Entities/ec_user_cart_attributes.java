@@ -8,10 +8,10 @@ import androidx.room.Index;
 
 @Entity(tableName = "user_cart_attributes",foreignKeys = {
         @ForeignKey(entity = ec_user_cart.class,
-                parentColumns = "cart_table_id",
-                childColumns = "cart_id",
+                parentColumns = "cart_id",
+                childColumns = "cart_table_id",
                 onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = "cart_id")
+        indices = {@Index(value = "cart_table_id")
         })
 public class ec_user_cart_attributes {
 
