@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +53,8 @@ import retrofit2.Response;
 
 public class AcceptPaymentFragment extends Fragment {
 
-    TextView  txtPaymentMethod;
+    TextView  txtPaymentMethod,tvTimer;
+    RelativeLayout layoutResendCode;
 
     private DialogLoader dialogLoader;
     LinearLayout layoutMobileMoney;
@@ -318,7 +321,20 @@ public class AcceptPaymentFragment extends Fragment {
         code5=otpDialog.findViewById(R.id.otp_code5_et);
         code6= otpDialog.findViewById(R.id.otp_code6_et);
         resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
+        tvTimer= otpDialog.findViewById(R.id.tv_timer);
+        layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
 
+        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+            }
+
+            public void onFinish() {
+                layoutResendCode.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
 
         code1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -419,6 +435,7 @@ public class AcceptPaymentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                // processLogin(password,ConfirmActivity.phonenumber);
+                layoutResendCode.setVisibility(View.GONE);
             }
         });
         otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {

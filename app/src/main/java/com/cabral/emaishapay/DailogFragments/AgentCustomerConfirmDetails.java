@@ -18,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +45,12 @@ import com.cabral.emaishapay.network.APIRequests;
 
 public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleLabel,textTitleName,textName,textReceiverAccount,textTitlePhoneNumber,textPhoneNumber,textTitleAmount,textAmount;
-    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount,textSenderName,textSenderMobile;
+    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount,textSenderName,textSenderMobile,tvTimer;
     CardView layoutReceiverAccount,totalAmount,charge,depositAmount,layoutSenderName,layoutSenderMobile;
     Button txtSubmit,btnCancel;
     String key = "",customerNo;
     DialogLoader dialogLoader;
+    RelativeLayout layoutResendCode;
 
     private Dialog otpDialog;
     private EditText code1,code2,code3,code4,code5,code6;
@@ -273,6 +276,24 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         code5=otpDialog.findViewById(R.id.otp_code5_et);
         code6= otpDialog.findViewById(R.id.otp_code6_et);
         resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
+        tvTimer= otpDialog.findViewById(R.id.tv_timer);
+        layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
+
+
+        CountDownTimer timer = new  CountDownTimer(90000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+            }
+
+            public void onFinish() {
+                layoutResendCode.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
+
+
+
 
 
         code1.addTextChangedListener(new TextWatcher() {
@@ -378,6 +399,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // processLogin(password,ConfirmActivity.phonenumber);
+                layoutResendCode.setVisibility(View.GONE);
             }
         });
 

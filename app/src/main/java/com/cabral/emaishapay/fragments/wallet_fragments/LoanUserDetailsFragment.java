@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -50,9 +51,9 @@ public class LoanUserDetailsFragment extends Fragment {
     private String businessName,account_name,phone;
     private Dialog dialog;
     private EditText code1,code2,code3,code4,code5,code6;
-    TextView resendtxtview;
+    TextView resendtxtview,tvTimer;
     private  String code, sms_code;
-    RelativeLayout parentLayout;
+    RelativeLayout parentLayout,layoutResendCode;
 
     private float interest;
 
@@ -172,6 +173,24 @@ public class LoanUserDetailsFragment extends Fragment {
                         code6= dialog.findViewById(R.id.otp_code6_et);
                         resendtxtview= dialog.findViewById(R.id.login_otp_resend_code);
 
+                        tvTimer= dialog.findViewById(R.id.tv_timer);
+                        layoutResendCode= dialog.findViewById(R.id.layout_resend_code);
+
+                        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+                            }
+
+                            public void onFinish() {
+                                layoutResendCode.setVisibility(View.VISIBLE);
+                            }
+                        };
+                        timer.start();
+
+
+
+
 
                         code1.addTextChangedListener(new TextWatcher() {
                             @Override
@@ -269,6 +288,7 @@ public class LoanUserDetailsFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 getReceiverName("0"+etxteMaishaAcc.getText().toString());
+                                layoutResendCode.setVisibility(View.GONE);
                             }
                         });
                         dialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {

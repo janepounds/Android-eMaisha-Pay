@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +89,7 @@ public class ShopPayments extends Fragment implements
     private LinearLayout merchantCard, VisaCard, MobileM,eMaishaPayLayout;
     private EditText cardNumber, cardExpiry, cvv, monileMoneyPhoneEdtx,emaishapay_phone_number;
     Button continuePayment;
-    TextView  resendtxtview;
+    TextView  resendtxtview, tvTimer;
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
@@ -101,6 +103,7 @@ public class ShopPayments extends Fragment implements
     String txRef,otp_code;
     double chargeAmount;
     private CardPaymentManager cardPayManager;
+    private RelativeLayout layoutResendCode;
 
 
     private RaveVerificationUtils verificationUtils;
@@ -736,7 +739,20 @@ public class ShopPayments extends Fragment implements
         code5=otpDialog.findViewById(R.id.otp_code5_et);
         code6= otpDialog.findViewById(R.id.otp_code6_et);
         resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
+        tvTimer= otpDialog.findViewById(R.id.tv_timer);
+        layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
 
+        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+            }
+
+            public void onFinish() {
+                layoutResendCode.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
 
         code1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -837,6 +853,7 @@ public class ShopPayments extends Fragment implements
             @Override
             public void onClick(View v) {
                 // processLogin(password,ConfirmActivity.phonenumber);
+                layoutResendCode.setVisibility(View.GONE);
             }
         });
         otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {

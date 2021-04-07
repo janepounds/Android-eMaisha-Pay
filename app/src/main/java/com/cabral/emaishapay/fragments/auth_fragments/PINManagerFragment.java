@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
     DialogLoader dialogLoader;
     APIRequests apiRequests;
     private Dialog otpDialog;
+
 
     public static int ACTION;
     private SparseArray<String> keyValues = new SparseArray<>();
@@ -325,7 +328,20 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         EditText code5=otpDialog.findViewById(R.id.otp_code5_et);
         EditText code6= otpDialog.findViewById(R.id.otp_code6_et);
         TextView resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
+        TextView tvTimer= otpDialog.findViewById(R.id.tv_timer);
+        RelativeLayout layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
 
+        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+            }
+
+            public void onFinish() {
+                layoutResendCode.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
 
         code1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -428,6 +444,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
                 //call resend otp
                 resendOtp(password,phonenumber);
 
+                layoutResendCode.setVisibility(View.GONE);
 //                processLogin(password,ConfirmActivity.phonenumber);
             }
         });

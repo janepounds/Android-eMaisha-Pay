@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,8 @@ public class GetStartedSignUpFragment extends Fragment {
     Context context;
 
     private EditText code1,code2,code3,code4,code5,code6;
+    private TextView tvTimer;
+    private RelativeLayout layoutResendCode;
     private Dialog dialog;
     private DialogLoader dialogLoader;
     private FirebaseAuth mAuth;
@@ -131,6 +136,20 @@ public class GetStartedSignUpFragment extends Fragment {
         code4= dialog.findViewById(R.id.otp_code4_et);
         code5=dialog.findViewById(R.id.otp_code5_et);
         code6= dialog.findViewById(R.id.otp_code6_et);
+        tvTimer= dialog.findViewById(R.id.tv_timer);
+        layoutResendCode= dialog.findViewById(R.id.layout_resend_code);
+
+        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
+            }
+
+            public void onFinish() {
+                layoutResendCode.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
         code1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -228,6 +247,7 @@ public class GetStartedSignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sendVerificationCode(getResources().getString(R.string.ugandan_code)+binding.userMobile.getText().toString().trim());
+                layoutResendCode.setVisibility(View.VISIBLE);
             }
         });
 
