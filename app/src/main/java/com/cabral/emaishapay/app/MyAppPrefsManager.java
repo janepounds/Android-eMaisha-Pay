@@ -88,6 +88,7 @@ public class MyAppPrefsManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_USER_LOGGED_IN, false);
         editor.apply();
+        setFirstTimeLaunch(false);
     }
 
     public boolean isUserLoggedIn() {
