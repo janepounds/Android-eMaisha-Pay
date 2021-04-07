@@ -800,10 +800,10 @@ public interface APIRequests {
             @Field("bank") String bank,
             @Field("bank_branch") String bank_branch,
             @Field("account_name") String account_name,
-            @Field("account_number") String account_number
-//            @Field("request_id") String request_id,
-//            @Field("category") String category,
-//            @Field("action_id")String action_id
+            @Field("account_number") String account_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
 
 
 
@@ -836,7 +836,8 @@ public interface APIRequests {
 
     //get beneficiaries info
     @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type, @Query("request_id") String request_id);
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type,
+                                              @Query("request_id") String request_id);
 
 
 
@@ -845,6 +846,7 @@ public interface APIRequests {
     //get beneficiaries info
     @GET("wallet/security-qns")
     Call<SecurityQnsResponse>getSecurityQns(@Header("Authorization") String token, @Query("request_id") String request_id
+            ,  @Query("category") String category,@Query("action_id") String action_id
                                            );
 
 

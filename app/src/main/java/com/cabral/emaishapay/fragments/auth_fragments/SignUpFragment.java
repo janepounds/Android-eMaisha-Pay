@@ -774,8 +774,10 @@ public class SignUpFragment  extends Fragment {
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(access_token,request_id);
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(access_token,request_id,category,"getSecurityQns");
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {

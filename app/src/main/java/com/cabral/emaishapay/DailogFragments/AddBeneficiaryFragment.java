@@ -313,7 +313,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number);
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number,
+                                request_id,category,"saveBeneficiary");
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
