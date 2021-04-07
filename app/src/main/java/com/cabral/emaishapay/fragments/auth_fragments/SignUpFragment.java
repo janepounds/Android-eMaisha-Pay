@@ -421,60 +421,6 @@ public class SignUpFragment  extends Fragment {
     }
 
 
-        // Getting image URI
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    // Get absolute image path
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
-
-    /// Custom dialog for OTP
-    public void showOTPDialog(Activity activity, String msg) {
-        //call success dialog
-        dialog  = new Dialog(activity);
-        dialog.setContentView(R.layout.login_dialog_otp);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        dialog.setCancelable(false);
-        code1= dialog.findViewById(R.id.otp_code1_et);
-        code2= dialog.findViewById(R.id.otp_code2_et);
-        code3= dialog.findViewById(R.id.otp_code3_et);
-        code4= dialog.findViewById(R.id.otp_code4_et);
-        code5=dialog.findViewById(R.id.otp_code5_et);
-        code6= dialog.findViewById(R.id.otp_code6_et);
-              code1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code2.requestFocus();
-            }
-        });
-
-
-        code2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
 
     //*********** Validate SignUp Form Inputs ********//
 
@@ -589,4 +535,3 @@ public class SignUpFragment  extends Fragment {
 
 
 }
-
