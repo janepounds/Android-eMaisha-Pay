@@ -437,7 +437,7 @@ public class SignUpFragment  extends Fragment {
         //call success dialog
         dialog  = new Dialog(activity);
         dialog.setContentView(R.layout.login_dialog_otp);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         dialog.setCancelable(false);
         code1= dialog.findViewById(R.id.otp_code1_et);
         code2= dialog.findViewById(R.id.otp_code2_et);

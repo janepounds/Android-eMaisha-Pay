@@ -194,7 +194,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
         // Tint Menu Icons with the help of static method of Utilities class
 //        Utilities.tintMenuIcon(DashboardActivity.this, languageItem, R.color.white);
-        Utilities.tintMenuIcon(WalletBuySellActivity.this, cartItem, R.color.white);
+        //Utilities.tintMenuIcon(WalletBuySellActivity.this, cartItem, R.color.white);
 
         return true;
     }

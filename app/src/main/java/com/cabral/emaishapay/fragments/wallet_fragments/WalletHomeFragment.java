@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.EmaishaPayHomeBinding;
+import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.APIClient;
@@ -46,7 +48,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
-    private EmaishaPayHomeBinding binding;
+    private NewEmaishaPayHomeBinding binding;
     private Context context;
     private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
@@ -61,7 +63,7 @@ public class WalletHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.emaisha_pay_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.new_emaisha_pay_home, container, false);
         dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
@@ -71,12 +73,14 @@ public class WalletHomeFragment extends Fragment {
 
         navController = navHostFragment.getNavController();
         
-        getTransactionsData();
+//        getTransactionsData();
         getBalanceAndCommission();
 
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
 
-        binding.username.setText("Hi, "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+" "+ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context)));
+        binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
+
+
 
 
 
@@ -98,32 +102,6 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
-            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.GONE);
-                    binding.layoutTransfer.setVisibility(View.GONE);
-                    binding.layoutSettle.setVisibility(View.GONE);
-                    binding.layoutLoan.setVisibility(View.GONE);
-                    binding.layoutPay.setVisibility(View.GONE);
-                    binding.layoutMoreItems.setVisibility(View.GONE);
-                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
-                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
-                }
-            });
-            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.VISIBLE);
-                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
-                    binding.layoutSettle.setVisibility(View.VISIBLE);
-                    binding.layoutLoan.setVisibility(View.VISIBLE);
-                    binding.layoutPay.setVisibility(View.VISIBLE);
-                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
-                    binding.layoutPreviousItems.setVisibility(View.GONE);
-                    binding.layoutBeneficiaries.setVisibility(View.GONE);
-                }
-            });
 
         }
         else if(role.equalsIgnoreCase("merchant")){
@@ -133,32 +111,8 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
-            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.GONE);
-                    binding.layoutTransfer.setVisibility(View.GONE);
-                    binding.layoutSettle.setVisibility(View.GONE);
-                    binding.layoutLoan.setVisibility(View.GONE);
-                    binding.layoutPay.setVisibility(View.GONE);
-                    binding.layoutMoreItems.setVisibility(View.GONE);
-                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
-                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
-                }
-            });
-            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.VISIBLE);
-                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
-                    binding.layoutSettle.setVisibility(View.VISIBLE);
-                    binding.layoutLoan.setVisibility(View.VISIBLE);
-                    binding.layoutPay.setVisibility(View.VISIBLE);
-                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
-                    binding.layoutPreviousItems.setVisibility(View.GONE);
-                    binding.layoutBeneficiaries.setVisibility(View.GONE);
-                }
-            });
+
+
 
         }
         else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
@@ -169,32 +123,6 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
 
-            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.GONE);
-                    binding.layoutTransfer.setVisibility(View.GONE);
-                    binding.layoutSettle.setVisibility(View.GONE);
-                    binding.layoutLoan.setVisibility(View.GONE);
-                    binding.layoutPay.setVisibility(View.GONE);
-                    binding.layoutMoreItems.setVisibility(View.GONE);
-                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
-                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
-                }
-            });
-            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.VISIBLE);
-                    binding.layoutTransfer.setVisibility(View.INVISIBLE);
-                    binding.layoutSettle.setVisibility(View.VISIBLE);
-                    binding.layoutLoan.setVisibility(View.VISIBLE);
-                    binding.layoutPay.setVisibility(View.VISIBLE);
-                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
-                    binding.layoutPreviousItems.setVisibility(View.GONE);
-                    binding.layoutBeneficiaries.setVisibility(View.GONE);
-                }
-            });
 
         }
         else{
@@ -206,32 +134,7 @@ public class WalletHomeFragment extends Fragment {
             binding.cardBalanceLabel.setText("Card");
             Log.d(TAG, "onCreateView: *"+role+"*");
 
-            binding.layoutMoreItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.GONE);
-                    binding.layoutTransfer.setVisibility(View.GONE);
-                    binding.layoutSettle.setVisibility(View.GONE);
-                    binding.layoutLoan.setVisibility(View.GONE);
-                    binding.layoutPay.setVisibility(View.GONE);
-                    binding.layoutMoreItems.setVisibility(View.GONE);
-                    binding.layoutPreviousItems.setVisibility(View.VISIBLE);
-                    binding.layoutBeneficiaries.setVisibility(View.VISIBLE);
-                }
-            });
-            binding.layoutPreviousItems.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    binding.layoutTopUp.setVisibility(View.VISIBLE);
-                    binding.layoutTransfer.setVisibility(View.VISIBLE);
-                    binding.layoutSettle.setVisibility(View.INVISIBLE);
-                    binding.layoutLoan.setVisibility(View.VISIBLE);
-                    binding.layoutPay.setVisibility(View.VISIBLE);
-                    binding.layoutMoreItems.setVisibility(View.VISIBLE);
-                    binding.layoutPreviousItems.setVisibility(View.GONE);
-                    binding.layoutBeneficiaries.setVisibility(View.GONE);
-                }
-            });
+
         }
 
 
@@ -293,15 +196,15 @@ public class WalletHomeFragment extends Fragment {
                 navController.navigate(R.id.action_walletHomeFragment2_to_payFragment);
             }
         });
-        binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //To WalletTrasactionListFragment
-                Bundle args=new Bundle();
-                args.putString("KEY_TITLE", context.getString(R.string.transactions) );
-                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
-            }
-        });
+//        binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //To WalletTrasactionListFragment
+//                Bundle args=new Bundle();
+//                args.putString("KEY_TITLE", context.getString(R.string.transactions) );
+//                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+//            }
+//        });
 
         binding.layoutBeneficiaries.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +213,64 @@ public class WalletHomeFragment extends Fragment {
                 navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
             }
         });
+
+        binding.imgAmountVisibile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.imgAmountVisibile.setVisibility(View.GONE);
+                binding.imgAmountBlur.setVisibility(View.VISIBLE);
+
+                //hiding the amounts
+                binding.totalBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                float radius = binding.totalBalance.getTextSize() / 3;
+                BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
+                binding.totalBalance.getPaint().setMaskFilter(filter);
+
+                binding.walletBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                float radius1 = binding.walletBalance.getTextSize() / 3;
+                BlurMaskFilter filter1 = new BlurMaskFilter(radius1, BlurMaskFilter.Blur.NORMAL);
+                binding.walletBalance.getPaint().setMaskFilter(filter1);
+
+                binding.cardBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                float radius2 = binding.cardBalance.getTextSize() / 3;
+                BlurMaskFilter filter2 = new BlurMaskFilter(radius2, BlurMaskFilter.Blur.NORMAL);
+                binding.cardBalance.getPaint().setMaskFilter(filter2);
+
+
+            }
+        });
+
+
+        binding.imgAmountBlur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.imgAmountVisibile.setVisibility(View.VISIBLE);
+                binding.imgAmountBlur.setVisibility(View.GONE);
+
+                binding.totalBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                binding.totalBalance.getPaint().setMaskFilter(null);
+
+
+                binding.walletBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                binding.walletBalance.getPaint().setMaskFilter(null);
+
+
+                binding.cardBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                binding.cardBalance.getPaint().setMaskFilter(null);
+            }
+        });
+
+
+        binding.layoutUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
+            }
+        });
+
+
 
 
 
@@ -328,77 +289,77 @@ public class WalletHomeFragment extends Fragment {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    private void getTransactionsData() {
-        dialog.showProgressDialog();
-
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-
-        /**********RETROFIT IMPLEMENTATION************/
-        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit,request_id,category,"getTransactionLogs");
-
-        call.enqueue(new Callback<WalletTransactionResponse>() {
-            @Override
-            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
-                if (response.code() == 200) {
-                    try {
-                        WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
-                        List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
-                        models.clear();
-                        if(transactions.size()!=0){
-                            int loop_limit=transactions_limit;
-                            if(transactions.size()<transactions_limit)
-                                loop_limit=transactions.size();
-
-                            for (int i = 0; i < loop_limit; i++) {
-                                WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
-                                models.add( res );
-                            }
-                        }
-
-
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    finally {
-                        if(models.size()>0){
-                            WalletTransactionsListAdapter adapter = new WalletTransactionsListAdapter( models, getActivity().getSupportFragmentManager());
-                            binding.recyclerView.setAdapter(adapter);
-                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                            binding.recyclerView.setHasFixedSize(true);
-                        } else{
-                            binding.moreTransactionCards.setVisibility(View.GONE);
-                            binding.noTransactionCards.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-
-                    dialog.hideProgressDialog();
-                } else if (response.code() == 401) {
-
-                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
-                    //getActivity().finish();
-                    if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
-                    } else {
-                        Log.e("info", "Something got very wrong");
-                    }
-                    dialog.hideProgressDialog();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
-                Log.e("info", "Something got very very wrong");
-                dialog.hideProgressDialog();
-            }
-        });
-
-
-    }
+//    private void getTransactionsData() {
+//        dialog.showProgressDialog();
+//
+//        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+//        String request_id = WalletHomeActivity.generateRequestId();
+//        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+//
+//        /**********RETROFIT IMPLEMENTATION************/
+//        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+//        Call<WalletTransactionResponse> call = apiRequests.transactionList2(access_token,transactions_limit,request_id,category,"getTransactionLogs");
+//
+//        call.enqueue(new Callback<WalletTransactionResponse>() {
+//            @Override
+//            public void onResponse(Call<WalletTransactionResponse> call, Response<WalletTransactionResponse> response) {
+//                if (response.code() == 200) {
+//                    try {
+//                        WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
+//                        List<WalletTransactionResponse.TransactionData.Transactions> transactions = walletTransactionResponseData.getTransactions();
+//                        models.clear();
+//                        if(transactions.size()!=0){
+//                            int loop_limit=transactions_limit;
+//                            if(transactions.size()<transactions_limit)
+//                                loop_limit=transactions.size();
+//
+//                            for (int i = 0; i < loop_limit; i++) {
+//                                WalletTransactionResponse.TransactionData.Transactions res = transactions.get(i);
+//                                models.add( res );
+//                            }
+//                        }
+//
+//
+//                    }
+//                    catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    finally {
+//                        if(models.size()>0){
+//                            WalletTransactionsListAdapter adapter = new WalletTransactionsListAdapter( models, getActivity().getSupportFragmentManager());
+//                            binding.recyclerView.setAdapter(adapter);
+//                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+//                            binding.recyclerView.setHasFixedSize(true);
+//                        } else{
+//                            binding.moreTransactionCards.setVisibility(View.GONE);
+//                            binding.noTransactionCards.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//
+//
+//                    dialog.hideProgressDialog();
+//                } else if (response.code() == 401) {
+//
+//                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+//                    //getActivity().finish();
+//                    if (response.errorBody() != null) {
+//                        Log.e("info", new String(String.valueOf(response.errorBody())));
+//                    } else {
+//                        Log.e("info", "Something got very wrong");
+//                    }
+//                    dialog.hideProgressDialog();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
+//                Log.e("info", "Something got very very wrong");
+//                dialog.hideProgressDialog();
+//            }
+//        });
+//
+//
+//    }
 
     public void getBalanceAndCommission() {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/walletHomeFragment"
         android:enabled="true"
-        android:icon="@drawable/home"
+        android:icon="@drawable/ic_bn_home"
         android:title="HOME"
         android:titleCondensed="Home"
         app:showAsAction="ifRoom" />
@@ -14,27 +14,27 @@
     <item
         android:id="@+id/walletCouponsFragment"
         android:enabled="true"
-        android:icon="@drawable/coupon"
+        android:icon="@drawable/ic_bn_gift"
         android:title="COUPONS"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/WalletBuyFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_buy_sell"
+        android:icon="@drawable/ic_bn_store"
         android:title="BUY &amp; SELL"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/walletCardsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_card_btm_nav"
+        android:icon="@drawable/ic_bn_cards"
         android:title="CARDS"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/walletAccountFragment"
         android:enabled="true"
-        android:icon="@drawable/user"
+        android:icon="@drawable/ic_bn_account_circle"
         android:title="ACCOUNT"
         app:showAsAction="ifRoom" />
 
