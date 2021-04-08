@@ -8,7 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcOrderDetails implements Parcelable {
+public class ShopOrderDetails implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int order_details_id;
     @ColumnInfo(name = "invoice_id")
@@ -26,14 +26,14 @@ public class EcOrderDetails implements Parcelable {
     @ColumnInfo(name = "product_order_date")
     private String product_order_date;
 
-    public EcOrderDetails(int order_details_id, String product_name, String product_image, String product_order_date) {
+    public ShopOrderDetails(int order_details_id, String product_name, String product_image, String product_order_date) {
         this.order_details_id = order_details_id;
         this.product_name = product_name;
         this.product_image = product_image;
         this.product_order_date = product_order_date;
     }
 
-    protected EcOrderDetails(Parcel in) {
+    protected ShopOrderDetails(Parcel in) {
         order_details_id = in.readInt();
         invoice_id = in.readString();
         product_name = in.readString();
@@ -61,15 +61,15 @@ public class EcOrderDetails implements Parcelable {
         return 0;
     }
 
-    public static final Creator<EcOrderDetails> CREATOR = new Creator<EcOrderDetails>() {
+    public static final Creator<ShopOrderDetails> CREATOR = new Creator<ShopOrderDetails>() {
         @Override
-        public EcOrderDetails createFromParcel(Parcel in) {
-            return new EcOrderDetails(in);
+        public ShopOrderDetails createFromParcel(Parcel in) {
+            return new ShopOrderDetails(in);
         }
 
         @Override
-        public EcOrderDetails[] newArray(int size) {
-            return new EcOrderDetails[size];
+        public ShopOrderDetails[] newArray(int size) {
+            return new ShopOrderDetails[size];
         }
     };
 

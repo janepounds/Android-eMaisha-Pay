@@ -16,43 +16,43 @@ public interface EcProductsDao {
 
     //insert product
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    boolean addProduct(EcProduct products);
+    void addProduct(EcProduct products);
 
 
     //get products
     @Query("SELECT * FROM  EcProduct ORDER BY product_id DESC")
-    List<HashMap<String, String>> getProducts();
+    List<EcProduct> getProducts();
 
 
     //delete product
     @Delete
-    boolean deleteProduct(String product_id);
+    void deleteProduct(EcProduct product);
 
     //get product data
     @Query("SELECT * FROM EcProduct WHERE product_name LIKE :s OR product_code LIKE :s ORDER BY product_id DESC")
-    List<HashMap<String, String>> getSearchProducts(String s);
+    List<EcProduct> getSearchProducts(String s);
 
     //get product name
     @Query("SELECT * FROM EcProduct WHERE product_id=:product_id")
-    String getProductName(String product_id);
+    List<EcProduct> getProductName(String product_id);
 
     //get product image
     @Query("SELECT * FROM EcProduct WHERE product_id=:product_id")
-    String getProductImage(String product_id);
+    List<EcProduct> getProductImage(String product_id);
 
     //add product name
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    boolean addProductName(EcProduct products);
+    void addProductName(EcProduct products);
 
     //get offline product names
     @Query("SELECT * FROM EcProduct ORDER BY product_name DESC ")
-    List<HashMap<String, String>> getOfflineProductNames();
+    List<EcProduct> getOfflineProductNames();
 
     //get unsynced products
     @Query("SELECT * FROM EcProduct WHERE sync_status=:sync_status")
-    List<HashMap<String, String>> getUnsyncedProducts(String sync_status);
+    List<EcProduct> getUnsyncedProducts(String sync_status);
 
     //update sync status
     @Query("UPDATE EcProduct SET sync_status=:sync_status WHERE product_id=:product_id")
-    boolean updateProductSyncStatus(String product_id,String sync_status);
+    void updateProductSyncStatus(String product_id,String sync_status);
 }

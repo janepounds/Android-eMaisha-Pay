@@ -3,6 +3,7 @@ package com.cabral.emaishapay.network.db.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,6 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class EcProduct implements Parcelable {
     @PrimaryKey(autoGenerate = false)
+    @NonNull
      private String product_id;
      @ColumnInfo(name = "product_name")
      private String product_name;

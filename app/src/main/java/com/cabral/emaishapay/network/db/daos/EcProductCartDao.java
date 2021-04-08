@@ -12,11 +12,11 @@ public interface EcProductCartDao {
 
     //add to  cart
     @Query("SELECT * FROM EcProductCart WHERE product_id=:product_id")
-    int addToCart(String product_id, String weight, String weight_unit, String price, int qty);
+    int addToCart(String product_id);
 
     //delete product from cart
     @Query("DELETE FROM EcProductCart WHERE cart_id = :id")
-    boolean deleteProductFromCart(String id);
+    void deleteProductFromCart(String id);
 
     //get cart item count
     @Query("SELECT * FROM EcProductCart")

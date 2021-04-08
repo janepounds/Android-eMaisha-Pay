@@ -22,16 +22,16 @@ public interface EcUserCartAttributesDao {
 
     //fetch cart attributes
     @Query("SELECT * FROM EcUserCartAttributes WHERE  cart_table_id =:cart_id")
-    List<CartProductAttributes> getCartAttributes(int cart_id);
+    List<EcUserCartAttributes> getCartAttributes(int cart_id);
 
 
     //get cart attributes product
     @Query("SELECT * FROM EcUserCartAttributes  WHERE cart_table_id =:cart_id")
-    List<CartProductAttributes>getCartAttributesProduct(int cart_id);
+    List<EcUserCartAttributes>getCartAttributesProduct(int cart_id);
 
 
     //get cart attributes product 2
     @Query("SELECT * FROM EcUserCartAttributes  WHERE cart_table_id =:cart_id")
-    List<CartProductAttributes>getCartAattributesProduct2(int cart_id);
+    List<EcUserCartAttributes>getCartAattributesProduct2(int cart_id);
 
 }

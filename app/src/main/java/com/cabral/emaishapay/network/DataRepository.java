@@ -21,7 +21,6 @@ public class DataRepository {
     private static DataRepository ourInstance;
     private EmaishapayDb dbInstance;
     private  final DefaultAddressDao mDefaultAddressDao;
-    private  final EcCategoryDao mEcCategoryDao;
     private  final EcManufacturerDao mEcManufacturerDao;
     private  final EcOrderDetailsDao mEcOrderDetailsDao;
     private  final EcOrderListDao mEcOrderListDao;
@@ -36,7 +35,6 @@ public class DataRepository {
     private DataRepository(Context context) {
         this.dbInstance=EmaishapayDb.getDatabase(context);
         mDefaultAddressDao=dbInstance.defaultAddressDao();
-        mEcCategoryDao=dbInstance.ecCategoryDao();
         mEcManufacturerDao=dbInstance.ecManufacturerDao();
         mEcOrderDetailsDao=dbInstance.ecOrderDetailsDao();
         mEcOrderListDao=dbInstance.ecOrderListDao();

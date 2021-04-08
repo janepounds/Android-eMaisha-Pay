@@ -8,7 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcOrderList implements Parcelable {
+public class ShopOrderList implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int order_id;
     @ColumnInfo(name = "invoice_id")
@@ -38,7 +38,7 @@ public class EcOrderList implements Parcelable {
     @ColumnInfo(name = "customer_email")
     private String customer_email;
 
-    public EcOrderList(int order_id, String invoice_id, String order_date, String order_time, String order_type, String order_payment_method, String customer_name, String storage_status, int discount, String order_status, String customer_address, String customer_cell, String delivery_fee, String customer_email) {
+    public ShopOrderList(int order_id, String invoice_id, String order_date, String order_time, String order_type, String order_payment_method, String customer_name, String storage_status, int discount, String order_status, String customer_address, String customer_cell, String delivery_fee, String customer_email) {
         this.order_id = order_id;
         this.invoice_id = invoice_id;
         this.order_date = order_date;
@@ -55,7 +55,7 @@ public class EcOrderList implements Parcelable {
         this.customer_email = customer_email;
     }
 
-    protected EcOrderList(Parcel in) {
+    protected ShopOrderList(Parcel in) {
         order_id = in.readInt();
         invoice_id = in.readString();
         order_date = in.readString();
@@ -95,15 +95,15 @@ public class EcOrderList implements Parcelable {
         return 0;
     }
 
-    public static final Creator<EcOrderList> CREATOR = new Creator<EcOrderList>() {
+    public static final Creator<ShopOrderList> CREATOR = new Creator<ShopOrderList>() {
         @Override
-        public EcOrderList createFromParcel(Parcel in) {
-            return new EcOrderList(in);
+        public ShopOrderList createFromParcel(Parcel in) {
+            return new ShopOrderList(in);
         }
 
         @Override
-        public EcOrderList[] newArray(int size) {
-            return new EcOrderList[size];
+        public ShopOrderList[] newArray(int size) {
+            return new ShopOrderList[size];
         }
     };
 

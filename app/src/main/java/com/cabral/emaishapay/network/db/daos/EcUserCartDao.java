@@ -26,17 +26,17 @@ public interface EcUserCartDao {
 
     //fetch cart items
     @Query("SELECT * FROM EcUserCart")
-    List<CartProduct>getCartItems();
+    List<EcUserCart>getCartItems();
 
 
     //get cart product
     @Query("SELECT * FROM EcUserCart WHERE  products_id=:product_id")
-    CartProduct getCartProduct(int product_id);
+    EcUserCart getCartProduct(int product_id);
 
 
     //get cart product 2
     @Query("SELECT * FROM EcUserCart WHERE products_id =:product_id OR products_name =:product_name")
-    CartProduct getCartProduct2(String product_id, String product_name);
+    EcUserCart getCartProduct2(String product_id, String product_name);
 
 
     //get cart items id
@@ -45,16 +45,16 @@ public interface EcUserCartDao {
 
     //check cart
     @Query("SELECT * FROM EcUserCart WHERE products_id=:product_id")
-    List<CartProduct>checkCartHasProductAndMeasure(int product_id);
+    List<EcUserCart>checkCartHasProductAndMeasure(int product_id);
 
 
     //update cart
     @Update
-    void updateCart(CartProduct cart);
+    void updateCart(EcUserCart cart);
 
     //update cart item
     @Update
-    void updateCartItem(CartProduct cart);
+    void updateCartItem(EcUserCart cart);
 
     //delete cart item
     @Delete
@@ -67,11 +67,11 @@ public interface EcUserCartDao {
 
     //check cart product
     @Query("SELECT * FROM EcUserCart WHERE products_id=:product_id OR products_name =:product_name")
-    Boolean checkCartProduct(int product_id, String product_name);
+    List<EcUserCart> checkCartProduct(int product_id, String product_name);
 
     //update cart items2
     @Update
-    void updateCartItem2(CartProduct cart);
+    void updateCartItem2(EcUserCart cart);
 
 
 

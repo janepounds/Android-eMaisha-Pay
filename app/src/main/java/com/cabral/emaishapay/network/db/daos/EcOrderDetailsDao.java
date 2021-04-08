@@ -4,6 +4,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Query;
 
+import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
+import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,23 +14,21 @@ import java.util.List;
 public interface EcOrderDetailsDao {
 
     //get order details list
-    @Query("SELECT * FROM EcOrderDetails WHERE invoice_id=:order_id ORDER BY order_details_id DESC")
-    List<HashMap<String, String>> getOrderDetailsList(String order_id);
+    @Query("SELECT * FROM ShopOrderDetails WHERE invoice_id=:order_id ORDER BY order_details_id DESC")
+    List<ShopOrderDetails> getOrderDetailsList(String order_id);
 
     //get all sales item
-    @Query("SELECT EcOrderDetails.*,EcOrderList.order_payment_method FROM EcOrderDetails INNER JOIN EcOrderList ON EcOrderDetails.invoice_id=EcOrderList.invoice_id WHERE EcOrderList.order_status='Approved' ORDER BY order_details_id DESC")
-    List<HashMap<String, String>> getAllSalesItems();
+//    @Query("SELECT ShopOrderDetails.*,ShopOrderList.order_payment_method FROM ShopOrderDetails INNER JOIN ShopOrderList ON ShopOrderDetails.invoice_id=ShopOrderList.invoice_id WHERE ShopOrderList.order_status='Approved' ORDER BY order_details_id DESC")
+//    List<ShopOrderDetails> getAllSalesItems();
 
 
     //total order price
-    @Query("SELECT * FROM EcOrderDetails WHERE invoice_id=:invoice_id")
+    @Query("SELECT * FROM ShopOrderDetails WHERE invoice_id=:invoice_id")
     double totalOrderPrice(String invoice_id);
 
     //delete order
     @Delete
-    boolean deleteOrder(String invoice_id);
+    void deleteOrder(ShopOrderDetails orderDetails);
 
-    //search order
-    @Query("SELECT * FROM EcOrderList WHERE customer_name LIKE :s OR invoice_id LIKE :s ORDER BY order_id DESC")
-    List<HashMap<String, String>> searchOrderList(String s);
+
 }
