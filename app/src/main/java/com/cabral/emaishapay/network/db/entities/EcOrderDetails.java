@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcOrderDetails {
+public class EcOrderDetails implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int order_details_id;
     @ColumnInfo(name = "invoice_id")
@@ -29,6 +32,46 @@ public class EcOrderDetails {
         this.product_image = product_image;
         this.product_order_date = product_order_date;
     }
+
+    protected EcOrderDetails(Parcel in) {
+        order_details_id = in.readInt();
+        invoice_id = in.readString();
+        product_name = in.readString();
+        product_weight = in.readString();
+        product_qty = in.readString();
+        product_price = in.readString();
+        product_image = in.readString();
+        product_order_date = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(order_details_id);
+        dest.writeString(invoice_id);
+        dest.writeString(product_name);
+        dest.writeString(product_weight);
+        dest.writeString(product_qty);
+        dest.writeString(product_price);
+        dest.writeString(product_image);
+        dest.writeString(product_order_date);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<EcOrderDetails> CREATOR = new Creator<EcOrderDetails>() {
+        @Override
+        public EcOrderDetails createFromParcel(Parcel in) {
+            return new EcOrderDetails(in);
+        }
+
+        @Override
+        public EcOrderDetails[] newArray(int size) {
+            return new EcOrderDetails[size];
+        }
+    };
 
     public int getOrder_details_id() {
         return order_details_id;

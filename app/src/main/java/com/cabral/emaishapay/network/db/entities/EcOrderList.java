@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcOrderList {
+public class EcOrderList implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int order_id;
     @ColumnInfo(name = "invoice_id")
@@ -51,6 +54,58 @@ public class EcOrderList {
         this.delivery_fee = delivery_fee;
         this.customer_email = customer_email;
     }
+
+    protected EcOrderList(Parcel in) {
+        order_id = in.readInt();
+        invoice_id = in.readString();
+        order_date = in.readString();
+        order_time = in.readString();
+        order_type = in.readString();
+        order_payment_method = in.readString();
+        customer_name = in.readString();
+        storage_status = in.readString();
+        discount = in.readInt();
+        order_status = in.readString();
+        customer_address = in.readString();
+        customer_cell = in.readString();
+        delivery_fee = in.readString();
+        customer_email = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(order_id);
+        dest.writeString(invoice_id);
+        dest.writeString(order_date);
+        dest.writeString(order_time);
+        dest.writeString(order_type);
+        dest.writeString(order_payment_method);
+        dest.writeString(customer_name);
+        dest.writeString(storage_status);
+        dest.writeInt(discount);
+        dest.writeString(order_status);
+        dest.writeString(customer_address);
+        dest.writeString(customer_cell);
+        dest.writeString(delivery_fee);
+        dest.writeString(customer_email);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<EcOrderList> CREATOR = new Creator<EcOrderList>() {
+        @Override
+        public EcOrderList createFromParcel(Parcel in) {
+            return new EcOrderList(in);
+        }
+
+        @Override
+        public EcOrderList[] newArray(int size) {
+            return new EcOrderList[size];
+        }
+    };
 
     public int getOrder_id() {
         return order_id;

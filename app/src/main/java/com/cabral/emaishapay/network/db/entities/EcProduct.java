@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcProduct {
+public class EcProduct implements Parcelable {
     @PrimaryKey(autoGenerate = false)
      private String product_id;
      @ColumnInfo(name = "product_name")
@@ -51,6 +54,58 @@ public class EcProduct {
         this.manufacturer = manufacturer;
         this.sync_status = sync_status;
     }
+
+    protected EcProduct(Parcel in) {
+        product_id = in.readString();
+        product_name = in.readString();
+        product_code = in.readString();
+        product_category = in.readString();
+        product_description = in.readString();
+        product_buy_price = in.readString();
+        product_sell_price = in.readString();
+        product_supplier = in.readString();
+        product_image = in.readString();
+        product_stock = in.readString();
+        product_weight_unit = in.readString();
+        product_weight = in.readString();
+        manufacturer = in.readString();
+        sync_status = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(product_id);
+        dest.writeString(product_name);
+        dest.writeString(product_code);
+        dest.writeString(product_category);
+        dest.writeString(product_description);
+        dest.writeString(product_buy_price);
+        dest.writeString(product_sell_price);
+        dest.writeString(product_supplier);
+        dest.writeString(product_image);
+        dest.writeString(product_stock);
+        dest.writeString(product_weight_unit);
+        dest.writeString(product_weight);
+        dest.writeString(manufacturer);
+        dest.writeString(sync_status);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<EcProduct> CREATOR = new Creator<EcProduct>() {
+        @Override
+        public EcProduct createFromParcel(Parcel in) {
+            return new EcProduct(in);
+        }
+
+        @Override
+        public EcProduct[] newArray(int size) {
+            return new EcProduct[size];
+        }
+    };
 
     public String getProduct_id() {
         return product_id;

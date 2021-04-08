@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcUserCart {
+public class EcUserCart implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int cart_id;
     @ColumnInfo(name = "products_id")
@@ -84,6 +87,46 @@ public class EcUserCart {
         this.is_sale_product = is_sale_product;
         this.cart_date_added = cart_date_added;
     }
+
+    protected EcUserCart(Parcel in) {
+        cart_id = in.readInt();
+        products_id = in.readInt();
+        products_name = in.readString();
+        products_image = in.readString();
+        products_url = in.readString();
+        product_model = in.readString();
+        products_weight = in.readString();
+        products_weight_unit = in.readString();
+        product_stock = in.readInt();
+        product_quantity = in.readInt();
+        product_price = in.readString();
+        product_attr_price = in.readString();
+        product_total_price = in.readString();
+        product_final_price = in.readString();
+        products_description = in.readString();
+        categories_id = in.readString();
+        categories_name = in.readString();
+        manufacturers_id = in.readInt();
+        manufacturer_name = in.readString();
+        product_taxClassID = in.readInt();
+        tax_description = in.readString();
+        tax_class_title = in.readString();
+        tax_class_description = in.readString();
+        is_sale_product = in.readString();
+        cart_date_added = in.readString();
+    }
+
+    public static final Creator<EcUserCart> CREATOR = new Creator<EcUserCart>() {
+        @Override
+        public EcUserCart createFromParcel(Parcel in) {
+            return new EcUserCart(in);
+        }
+
+        @Override
+        public EcUserCart[] newArray(int size) {
+            return new EcUserCart[size];
+        }
+    };
 
     public int getCart_id() {
         return cart_id;
@@ -283,5 +326,39 @@ public class EcUserCart {
 
     public void setCart_date_added(String cart_date_added) {
         this.cart_date_added = cart_date_added;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(cart_id);
+        dest.writeInt(products_id);
+        dest.writeString(products_name);
+        dest.writeString(products_image);
+        dest.writeString(products_url);
+        dest.writeString(product_model);
+        dest.writeString(products_weight);
+        dest.writeString(products_weight_unit);
+        dest.writeInt(product_stock);
+        dest.writeInt(product_quantity);
+        dest.writeString(product_price);
+        dest.writeString(product_attr_price);
+        dest.writeString(product_total_price);
+        dest.writeString(product_final_price);
+        dest.writeString(products_description);
+        dest.writeString(categories_id);
+        dest.writeString(categories_name);
+        dest.writeInt(manufacturers_id);
+        dest.writeString(manufacturer_name);
+        dest.writeInt(product_taxClassID);
+        dest.writeString(tax_description);
+        dest.writeString(tax_class_title);
+        dest.writeString(tax_class_description);
+        dest.writeString(is_sale_product);
+        dest.writeString(cart_date_added);
     }
 }
