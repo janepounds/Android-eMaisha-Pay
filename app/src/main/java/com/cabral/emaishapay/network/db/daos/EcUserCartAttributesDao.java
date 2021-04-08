@@ -8,6 +8,8 @@ import androidx.room.Query;
 
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
+import com.cabral.emaishapay.network.db.entities.EcUserCart;
+import com.cabral.emaishapay.network.db.entities.EcUserCartAttributes;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface EcUserCartAttributesDao {
 
     //insert cart attributes
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addCartAttributes(CartProduct cartProduct);
+    void addCartAttributes(EcUserCartAttributes userCartAttributes);
 
     //fetch cart attributes
     @Query("SELECT * FROM EcUserCartAttributes WHERE  cart_table_id =:cart_id")

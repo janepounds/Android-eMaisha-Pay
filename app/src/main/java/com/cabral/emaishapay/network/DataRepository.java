@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
-import com.cabral.emaishapay.network.db.daos.EcCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
 import com.cabral.emaishapay.network.db.daos.EcOrderDetailsDao;
 import com.cabral.emaishapay.network.db.daos.EcOrderListDao;

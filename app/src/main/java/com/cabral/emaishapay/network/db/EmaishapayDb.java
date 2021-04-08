@@ -7,7 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
-import com.cabral.emaishapay.network.db.daos.EcCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
 import com.cabral.emaishapay.network.db.daos.EcOrderDetailsDao;
 import com.cabral.emaishapay.network.db.daos.EcOrderListDao;
@@ -31,8 +30,6 @@ import com.cabral.emaishapay.network.db.entities.EcUserCart;
 import com.cabral.emaishapay.network.db.entities.EcUserCartAttributes;
 import com.cabral.emaishapay.network.db.entities.regionDetails;
 
-import java.util.List;
-
 @Database(entities = {DefaultAddress.class, EcManufacturer.class, EcOrderDetails.class, EcOrderList.class,
         EcProductCart.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcSupplier.class,
         EcUserCart.class, EcUserCartAttributes.class,regionDetails.class},
@@ -42,7 +39,6 @@ import java.util.List;
 public abstract class EmaishapayDb extends RoomDatabase {
 
     public abstract DefaultAddressDao defaultAddressDao();
-    public abstract EcCategoryDao ecCategoryDao();
     public abstract EcManufacturerDao ecManufacturerDao();
     public abstract EcOrderDetailsDao ecOrderDetailsDao();
     public abstract EcOrderListDao ecOrderListDao();
@@ -70,11 +66,12 @@ public abstract class EmaishapayDb extends RoomDatabase {
     }
 
     public static void insertData(final EmaishapayDb database,
-                                      final DefaultAddress default_address,
-                                      final List<regionDetails> regionDetails) {
+                                      final EcUserCart userCart,
+                                      final EcUserCartAttributes userCartAttributes) {
         database.runInTransaction(() -> {
-            database.regionDetailsDao().insertRegionDetails(regionDetails);
-            database.defaultAddressDao().insertDefaultAddress(default_address);
+            database.ecUserCartDao().addCartItem(userCart);
+            database.ecUserCartAttributesDao().addCartAttributes(userCartAttributes);
+
         });
 
     }

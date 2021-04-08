@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.cabral.emaishapay.models.cart_model.CartProduct;
+import com.cabral.emaishapay.network.db.entities.EcUserCart;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface EcUserCartDao {
 
     //insert cart items
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addCartItem(CartProduct cartProduct);
+    void addCartItem(EcUserCart userCart);
 
 
     //fetch cart items
