@@ -58,11 +58,11 @@ public interface EcUserCartDao {
 
     //delete cart item
     @Delete
-    void deleteCartItem(int cart_id);
+    void deleteCartItem(EcUserCart cart);
 
     //clear cart
     @Delete
-    void clearCart();
+    void clearCart(EcUserCart... cart);
 
 
     //check cart product

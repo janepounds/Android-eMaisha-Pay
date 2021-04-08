@@ -34,8 +34,7 @@ public class DefaultAddress implements Parcelable {
     @ColumnInfo(name = "is_default")
     private String is_default;
 
-    public DefaultAddress(int default_id, String customers_id, String entry_firstname, String entry_lastname, String entry_street_address, String entry_postcode, String entry_city, String entry_country_id, String entry_latitude, String entry_longitude, String entry_contact, String is_default) {
-        this.default_id = default_id;
+    public DefaultAddress( String customers_id, String entry_firstname, String entry_lastname, String entry_street_address, String entry_postcode, String entry_city, String entry_country_id, String entry_latitude, String entry_longitude, String entry_contact, String is_default) {
         this.customers_id = customers_id;
         this.entry_firstname = entry_firstname;
         this.entry_lastname = entry_lastname;
