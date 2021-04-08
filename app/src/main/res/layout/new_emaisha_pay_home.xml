@@ -171,7 +171,7 @@
                     android:id="@+id/image_settle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/round_white_badge"
+                    android:background="@drawable/round_button_dark_green"
                     android:padding="10dp"
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_settle"
