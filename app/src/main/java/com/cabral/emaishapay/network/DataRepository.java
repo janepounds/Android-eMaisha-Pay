@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.network;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
@@ -14,6 +15,9 @@ import com.cabral.emaishapay.network.db.daos.EcProductsDao;
 import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
 import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
+import com.cabral.emaishapay.network.db.entities.DefaultAddress;
+
+import java.util.List;
 
 public class DataRepository {
     private static final String TAG = "DataRepository";
@@ -52,6 +56,30 @@ public class DataRepository {
             ourInstance=new DataRepository(context);
         }
         return  ourInstance;
+    }
+
+    //*********** Insert default address Item ********//
+    public void insertDefaultAddress(String customer_id,String entry_first_name,String entry_last_name,String entry_street_address,String entry_postal_code,String entry_city,String entry_country_id,String entry_contact,String latitude,String longitude,String is_default) {
+        // get and open SQLiteDatabase Instance from static method of DB_Manager class
+
+        mDefaultAddressDao.insertDefaultAddress(new DefaultAddress(
+                customer_id, entry_first_name,
+                entry_last_name,entry_street_address,
+                entry_postal_code, entry_city,
+                entry_country_id,entry_contact,
+                latitude, longitude,is_default
+        ));
+    }
+
+
+    //***********Default Address ********//
+    public DefaultAddress getDefaultAddress(String customer_id){
+
+        List<DefaultAddress> addressList=mDefaultAddressDao.getDefaultAddress(customer_id);
+        if(addressList.size()>0)
+        return addressList.get(0);
+
+        return null;
     }
 
 
