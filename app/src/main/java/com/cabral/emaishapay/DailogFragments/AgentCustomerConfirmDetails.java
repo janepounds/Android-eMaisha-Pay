@@ -45,7 +45,7 @@ import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleLabel,textTitleName,textName,textReceiverAccount,textTitlePhoneNumber,textPhoneNumber,textTitleAmount,textAmount;
-    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount,textSenderName,textSenderMobile,tvTimer;
+    TextView textTitleCharge,textCharge,textTitleTotalAmount,textTotalAmount,textSenderName,textSenderMobile,tvTimer,tvChangeNumber;
     CardView layoutReceiverAccount,totalAmount,charge,depositAmount,layoutSenderName,layoutSenderMobile;
     Button txtSubmit,btnCancel;
     String key = "",customerNo;
@@ -278,7 +278,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
         tvTimer= otpDialog.findViewById(R.id.tv_timer);
         layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
-
+        tvChangeNumber = otpDialog.findViewById(R.id.text_view_change_number);
 
         CountDownTimer timer = new  CountDownTimer(90000, 1000) {
 
@@ -400,6 +400,13 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             public void onClick(View v) {
                 // processLogin(password,ConfirmActivity.phonenumber);
                 layoutResendCode.setVisibility(View.GONE);
+            }
+        });
+
+        otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpDialog.dismiss();
             }
         });
 

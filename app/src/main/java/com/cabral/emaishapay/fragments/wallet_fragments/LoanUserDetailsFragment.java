@@ -300,6 +300,16 @@ public class LoanUserDetailsFragment extends Fragment {
                                 validateEnteredCode(code,sms_code);
                             }
                         });
+
+
+                         dialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            }
+                        });
+
+
                         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                         WindowManager.LayoutParams params = dialog.getWindow().getAttributes(); // change this to your dialog.
 

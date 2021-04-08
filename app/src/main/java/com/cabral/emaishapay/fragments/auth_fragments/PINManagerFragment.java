@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -54,7 +56,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
 
 //This fragment is used for creating or picking a user's PIN and Continue with Login or SignUp processes.
-public class PINManagerFragment  extends Fragment implements View.OnClickListener{
+public class PINManagerFragment  extends  Fragment  implements View.OnClickListener  {
 
     private static final String TAG = "TokenAuthFragment";
     private Context context;
@@ -146,6 +148,9 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         binding.tvKeyBackspace.setOnClickListener(this);
         binding.tvKeyClear.setOnClickListener(this);
 
+
+
+
         binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         binding.pinCode1Edt.setTextIsSelectable(true);
         setInputConnection(binding.pinCode1Edt);
@@ -161,6 +166,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable s) {
                 binding.pinCode2Edt.requestFocus();
+                binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -179,6 +185,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable s) {
                 binding.pinCode3Edt.requestFocus();
+                binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -196,6 +203,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable s) {
                 binding.pinCode4Edt.requestFocus();
+                binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -212,6 +220,8 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
 
                 pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
                 pin = pin.replaceAll("\\s+", "");
@@ -245,6 +255,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         });
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -297,8 +308,9 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         }
 
 
-
     }
+
+
 
     private static void  clearPin(FragmentTokenAuthBinding binding){
         binding.pinCode1Edt.setText("");
@@ -330,6 +342,7 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
         TextView resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
         TextView tvTimer= otpDialog.findViewById(R.id.tv_timer);
         RelativeLayout layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
+        TextView tvChangeNumber = otpDialog.findViewById(R.id.text_view_change_number);
 
         CountDownTimer timer = new CountDownTimer(90000, 1000) {
 
@@ -446,6 +459,13 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
 
                 layoutResendCode.setVisibility(View.GONE);
 //                processLogin(password,ConfirmActivity.phonenumber);
+            }
+        });
+
+        otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpDialog.dismiss();
             }
         });
 //        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
@@ -712,5 +732,6 @@ public class PINManagerFragment  extends Fragment implements View.OnClickListene
             }
         });
     }
+
 
 }

@@ -199,7 +199,7 @@
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -222,14 +222,17 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_below="@id/cart_items_recycler"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_promo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_10dp"
                     android:background="#222222"
-                    android:padding="@dimen/dimen_5dp">
+                    android:padding="@dimen/dimen_5dp"
+                    android:layout_below="@id/btn_clear_cart">
 
                     <TextView
                         android:id="@+id/promo_text"
@@ -259,59 +262,66 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/topcornerscurved"
-                    android:elevation="@dimen/dimen_10dp"
-                    android:padding="10dp"
-                    android:layout_gravity="center"
-                    android:gravity="center">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp">
+
 
                     <LinearLayout
-                        android:id="@+id/layout_total_payment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dimen_5dp"
-                            android:text="Total Payment"
-                            android:textColor="#515C6F"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/cart_item_total_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="UGX 00.0"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/cart_checkout_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_corners_button"
-                        android:drawableEnd="@drawable/ic_right_chevron"
-                        android:padding="8dp"
-                        android:text="Checkout"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"
-                        android:textStyle="bold" />
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/topcornerscurved"
+                        android:elevation="@dimen/dimen_10dp"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/layout_total_payment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dimen_5dp"
+                                android:text="Total Payment"
+                                android:textColor="#515C6F"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/cart_item_total_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="UGX 00.0"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/cart_checkout_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_corners_button"
+                            android:drawableEnd="@drawable/ic_right_chevron"
+                            android:padding="8dp"
+                            android:text="Checkout"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/button_text_size"
+                            android:textStyle="bold" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </androidx.core.widget.NestedScrollView>

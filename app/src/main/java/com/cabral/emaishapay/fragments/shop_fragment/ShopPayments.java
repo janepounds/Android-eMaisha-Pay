@@ -864,6 +864,14 @@ public class ShopPayments extends Fragment implements
                 comfirmAcceptPayment(otp_code,customerNumber,amount);
             }
         });
+
+         otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpDialog.dismiss();
+            }
+        });
+
         otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
 

@@ -162,6 +162,7 @@
                 android:drawableStart="@drawable/ic_send_again"
                 android:drawablePadding="5dp"/>
             <TextView
+                android:id="@+id/text_view_change_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Change Number"
