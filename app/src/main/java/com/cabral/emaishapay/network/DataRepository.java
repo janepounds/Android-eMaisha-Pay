@@ -2,6 +2,7 @@ package com.cabral.emaishapay.network;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
@@ -16,7 +17,11 @@ import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
 import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataRepository {
@@ -51,7 +56,7 @@ public class DataRepository {
         mRegionDetailsDao = dbInstance.regionDetailsDao();
     }
 
-    public DataRepository getOurInstance(Context context){
+    public static  DataRepository getOurInstance(Context context){
         if(ourInstance==null){
             ourInstance=new DataRepository(context);
         }
@@ -82,5 +87,41 @@ public class DataRepository {
         return null;
     }
 
+
+    //get unsynced products
+    public List<EcProduct> getUnsyncedProducts(String sync_status) {
+
+        return mEcProductsDao.getUnsyncedProducts(sync_status);
+    }
+
+    public void updateProductSyncStatus(String product_id,String sync_status) {
+        mEcProductsDao.updateProductSyncStatus(product_id,sync_status);
+
+    }
+
+    //get offline product names
+    public ArrayList<HashMap<String, String>> getOfflineProductNames() {
+        ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
+
+        for (EcProduct product:mEcProductsDao.getOfflineProductNames()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("product_name", product.getProduct_name());
+            productnames.add(map);
+        }
+        return productnames;
+    }
+
+    //get offline product categories
+    public ArrayList<HashMap<String, String>> getOfflineProductCategories() {
+        ArrayList<HashMap<String, String>> categories = new ArrayList<>();
+
+        for (EcProductCategory category : mEcProductCategoryDao.getOfflineProductCategories()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("category_name", category.getCategory_name());
+            categories.add(map);
+        }
+
+        return categories;
+    }
 
 }

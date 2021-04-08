@@ -14,6 +14,7 @@ import com.cabral.emaishapay.models.pages_model.PagesDetails;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIClient;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -113,6 +114,8 @@ public class StartAppRequests {
     public void SyncProductData() {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
+            List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
+
             productList = dbHandler.getUnsyncedProducts(sync_status);
             for (int i = 0; i < productList.size(); i++) {
                 Log.e("WAlletIDError",productList.get(i).get("user_id")+"");

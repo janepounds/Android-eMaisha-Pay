@@ -124,7 +124,7 @@ public class GetStartedSignUpFragment extends Fragment {
 
 
     /// Custom dialog for OTP
-    public void showOTPDialog(Activity activity, String msg) {
+    public void showOTPDialog(Activity activity) {
         //call success dialog
         dialog  = new Dialog(activity);
         dialog.setContentView(R.layout.login_dialog_otp);
@@ -261,16 +261,17 @@ public class GetStartedSignUpFragment extends Fragment {
     //the country id is concatenated
     //you can take the country id as user input as well
     private void sendVerificationCode(String mobile) {
-        showOTPDialog(getActivity(), "");
-
+        showOTPDialog(getActivity());
+        Toast.makeText(context,mobile,Toast.LENGTH_LONG).show();
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(mobile)                        // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS)      // Timeout and unit
-                        .setActivity(getActivity())                             // Activity (for callback binding)
+                        .setActivity(requireActivity())                             // Activity (for callback binding)
                         .setCallbacks(mCallbacks)                      // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+
     }
 
 
@@ -332,7 +333,7 @@ public class GetStartedSignUpFragment extends Fragment {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "Invalid code entered...";
                             }
-                            Snackbar snackbar = Snackbar.make(binding.layoutEnterPhoneNumber, message, Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(dialog.findViewById(R.id.otp_code6_et), message, Snackbar.LENGTH_LONG);
                             snackbar.setAction("Dismiss", v -> snackbar.dismiss());
                             snackbar.show();
                         }
