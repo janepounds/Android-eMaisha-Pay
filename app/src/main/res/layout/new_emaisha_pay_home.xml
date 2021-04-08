@@ -11,7 +11,7 @@
         tools:context="com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f4fafe">
+        android:background="#F4FAFE">
         <RelativeLayout
             android:id="@+id/layout_pattern"
             android:layout_width="match_parent"
@@ -64,10 +64,20 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/img_username"
                 android:layout_below="@id/username"
-                android:drawableEnd="@drawable/drop_down"
-                android:drawablePadding="4dp"
-                android:drawableTint="@color/colorPrimary"
                 android:alpha="0.6"/>
+            <ImageView
+                android:id="@+id/down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/username_details"
+                android:layout_below="@id/username"
+                android:src="@drawable/drop_down"
+                android:drawablePadding="4dp"
+                android:alpha="0.6"
+                app:tint="@color/colorPrimary"/>
+
         </RelativeLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_money_transfers"
@@ -342,9 +352,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/rectangular_blue_solid"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:background="@drawable/background_round_white"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -366,8 +376,7 @@
                     app:layout_constraintBottom_toTopOf="@id/label_account_opening"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/label_account_opening"
@@ -375,7 +384,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Account \n Opening"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
@@ -406,8 +415,7 @@
                     app:layout_constraintBottom_toTopOf="@id/label_deposits"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/label_deposits"
@@ -417,7 +425,7 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Deposit"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -446,8 +454,7 @@
                     app:layout_constraintBottom_toTopOf="@id/label_funds_transfers"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/label_funds_transfers"
@@ -456,7 +463,7 @@
                     android:layout_margin="5dp"
                     android:fontFamily="@font/josefin_sans"
                     android:text="Send"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
@@ -487,7 +494,8 @@
                     app:layout_constraintBottom_toTopOf="@id/label_loan_app"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/label_loan_app"
@@ -498,7 +506,7 @@
                     android:gravity="center_horizontal"
                     android:text="Loan \n Application"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -526,8 +534,7 @@
                     app:layout_constraintBottom_toTopOf="@id/label_withdraw"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/label_withdraw"
@@ -537,7 +544,7 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Withdraw"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -566,8 +573,7 @@
                     app:layout_constraintBottom_toTopOf="@id/label_balance_inquiry"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/label_balance_inquiry"
@@ -577,7 +583,7 @@
                     android:fontFamily="@font/josefin_sans"
                     android:text="Balance \n Inquiry"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -608,14 +614,14 @@
             <ImageView
                 android:id="@+id/img_amount_visibile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_eye"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"/>
             <ImageView
                 android:id="@+id/img_amount_blur"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_invisible_eye"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
@@ -628,7 +634,7 @@
             android:layout_below="@id/layout_balance_label_visibility"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rectangular_blue_solid"
             android:gravity="center"
             android:orientation="vertical">
@@ -636,7 +642,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:text="Available Balance"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
@@ -663,7 +669,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -677,7 +683,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Wallet"
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:autoSizeTextType="uniform" />
@@ -720,7 +726,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Card"
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:autoSizeTextType="uniform" />
@@ -778,7 +784,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="18dp">
 
             <RelativeLayout
@@ -960,12 +966,13 @@
             android:orientation="vertical"
             android:background="@color/white"
             android:layout_marginTop="15dp"
-            android:layout_below="@id/text_popular_products">
+            android:layout_below="@id/text_popular_products"
+            android:layout_alignParentBottom="true">
 
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/product_cover_slider"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="10dp"
@@ -975,6 +982,16 @@
                 custom:indicator_visibility="visible" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dots_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal= "true"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            app:elevation="10dp"
+            android:layout_marginBottom="15dp"/>
 
 
     </RelativeLayout>

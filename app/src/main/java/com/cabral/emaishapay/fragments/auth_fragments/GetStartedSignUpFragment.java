@@ -49,7 +49,7 @@ public class GetStartedSignUpFragment extends Fragment {
     Context context;
 
     private EditText code1,code2,code3,code4,code5,code6;
-    private TextView tvTimer;
+    private TextView tvTimer, tvChangeNumber;
     private RelativeLayout layoutResendCode;
     private Dialog dialog;
     private DialogLoader dialogLoader;
@@ -128,7 +128,7 @@ public class GetStartedSignUpFragment extends Fragment {
         //call success dialog
         dialog  = new Dialog(activity);
         dialog.setContentView(R.layout.login_dialog_otp);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         dialog.setCancelable(false);
         code1= dialog.findViewById(R.id.otp_code1_et);
         code2= dialog.findViewById(R.id.otp_code2_et);
@@ -138,6 +138,7 @@ public class GetStartedSignUpFragment extends Fragment {
         code6= dialog.findViewById(R.id.otp_code6_et);
         tvTimer= dialog.findViewById(R.id.tv_timer);
         layoutResendCode= dialog.findViewById(R.id.layout_resend_code);
+        tvChangeNumber = dialog.findViewById(R.id.text_view_change_number);
 
         CountDownTimer timer = new CountDownTimer(90000, 1000) {
 
@@ -250,6 +251,14 @@ public class GetStartedSignUpFragment extends Fragment {
                 layoutResendCode.setVisibility(View.VISIBLE);
             }
         });
+
+        dialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
 
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
