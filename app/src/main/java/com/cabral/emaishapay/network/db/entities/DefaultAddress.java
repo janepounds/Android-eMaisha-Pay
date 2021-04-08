@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class DefaultAddress {
+public class DefaultAddress implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int default_id;
     @ColumnInfo(name = "customers_id")
@@ -45,6 +48,54 @@ public class DefaultAddress {
         this.entry_contact = entry_contact;
         this.is_default = is_default;
     }
+
+    protected DefaultAddress(Parcel in) {
+        default_id = in.readInt();
+        customers_id = in.readString();
+        entry_firstname = in.readString();
+        entry_lastname = in.readString();
+        entry_street_address = in.readString();
+        entry_postcode = in.readString();
+        entry_city = in.readString();
+        entry_country_id = in.readString();
+        entry_latitude = in.readString();
+        entry_longitude = in.readString();
+        entry_contact = in.readString();
+        is_default = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(default_id);
+        dest.writeString(customers_id);
+        dest.writeString(entry_firstname);
+        dest.writeString(entry_lastname);
+        dest.writeString(entry_street_address);
+        dest.writeString(entry_postcode);
+        dest.writeString(entry_city);
+        dest.writeString(entry_country_id);
+        dest.writeString(entry_latitude);
+        dest.writeString(entry_longitude);
+        dest.writeString(entry_contact);
+        dest.writeString(is_default);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DefaultAddress> CREATOR = new Creator<DefaultAddress>() {
+        @Override
+        public DefaultAddress createFromParcel(Parcel in) {
+            return new DefaultAddress(in);
+        }
+
+        @Override
+        public DefaultAddress[] newArray(int size) {
+            return new DefaultAddress[size];
+        }
+    };
 
     public int getDefault_id() {
         return default_id;

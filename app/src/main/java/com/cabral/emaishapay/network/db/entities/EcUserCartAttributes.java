@@ -1,5 +1,8 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -11,7 +14,7 @@ import androidx.room.Index;
                 onDelete = ForeignKey.CASCADE)},
         indices = {@Index(value = "cart_table_id")
         })
-public class EcUserCartAttributes {
+public class EcUserCartAttributes implements Parcelable {
 
     private String attribute_option_id;
     private String attribute_option_name;
@@ -32,6 +35,29 @@ public class EcUserCartAttributes {
         this.attribute_products_id = attribute_products_id;
         this.cart_table_id = cart_table_id;
     }
+
+    protected EcUserCartAttributes(Parcel in) {
+        attribute_option_id = in.readString();
+        attribute_option_name = in.readString();
+        attribute_value_id = in.readString();
+        attribute_value_name = in.readString();
+        attribute_value_price = in.readString();
+        attribute_value_prefix = in.readString();
+        attribute_products_id = in.readString();
+        cart_table_id = in.readInt();
+    }
+
+    public static final Creator<EcUserCartAttributes> CREATOR = new Creator<EcUserCartAttributes>() {
+        @Override
+        public EcUserCartAttributes createFromParcel(Parcel in) {
+            return new EcUserCartAttributes(in);
+        }
+
+        @Override
+        public EcUserCartAttributes[] newArray(int size) {
+            return new EcUserCartAttributes[size];
+        }
+    };
 
     public String getAttribute_option_id() {
         return attribute_option_id;
@@ -95,5 +121,22 @@ public class EcUserCartAttributes {
 
     public void setCart_table_id(int cart_table_id) {
         this.cart_table_id = cart_table_id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(attribute_option_id);
+        dest.writeString(attribute_option_name);
+        dest.writeString(attribute_value_id);
+        dest.writeString(attribute_value_name);
+        dest.writeString(attribute_value_price);
+        dest.writeString(attribute_value_prefix);
+        dest.writeString(attribute_products_id);
+        dest.writeInt(cart_table_id);
     }
 }

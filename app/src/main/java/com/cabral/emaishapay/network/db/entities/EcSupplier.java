@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcSupplier {
+public class EcSupplier  implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int suppliers_id;
     @ColumnInfo(name = "suppliers_name")
@@ -33,6 +36,46 @@ public class EcSupplier {
         this.suppliers_address_two = suppliers_address_two;
         this.suppliers_image = suppliers_image;
     }
+
+    protected EcSupplier(Parcel in) {
+        suppliers_id = in.readInt();
+        suppliers_name = in.readString();
+        suppliers_contact_person = in.readString();
+        suppliers_cell = in.readString();
+        suppliers_email = in.readString();
+        suppliers_address = in.readString();
+        suppliers_address_two = in.readString();
+        suppliers_image = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(suppliers_id);
+        dest.writeString(suppliers_name);
+        dest.writeString(suppliers_contact_person);
+        dest.writeString(suppliers_cell);
+        dest.writeString(suppliers_email);
+        dest.writeString(suppliers_address);
+        dest.writeString(suppliers_address_two);
+        dest.writeString(suppliers_image);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<EcSupplier> CREATOR = new Creator<EcSupplier>() {
+        @Override
+        public EcSupplier createFromParcel(Parcel in) {
+            return new EcSupplier(in);
+        }
+
+        @Override
+        public EcSupplier[] newArray(int size) {
+            return new EcSupplier[size];
+        }
+    };
 
     public int getSuppliers_id() {
         return suppliers_id;

@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcProductCart {
+public class EcProductCart implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int cart_id;
     @ColumnInfo(name = "product_id")
@@ -27,6 +30,42 @@ public class EcProductCart {
         this.product_price = product_price;
         this.product_qty = product_qty;
     }
+
+    protected EcProductCart(Parcel in) {
+        cart_id = in.readInt();
+        product_id = in.readString();
+        product_weight = in.readString();
+        product_weight_unit = in.readString();
+        product_price = in.readString();
+        product_qty = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(cart_id);
+        dest.writeString(product_id);
+        dest.writeString(product_weight);
+        dest.writeString(product_weight_unit);
+        dest.writeString(product_price);
+        dest.writeInt(product_qty);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<EcProductCart> CREATOR = new Creator<EcProductCart>() {
+        @Override
+        public EcProductCart createFromParcel(Parcel in) {
+            return new EcProductCart(in);
+        }
+
+        @Override
+        public EcProductCart[] newArray(int size) {
+            return new EcProductCart[size];
+        }
+    };
 
     public int getCart_id() {
         return cart_id;

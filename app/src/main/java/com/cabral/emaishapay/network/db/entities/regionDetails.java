@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "regionDetails")
-public class regionDetails {
+public class regionDetails implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int tableId;
     @ColumnInfo(name = "id")
@@ -24,6 +27,26 @@ public class regionDetails {
         this.region = region;
         this.belongs_to = belongs_to;
     }
+
+    protected regionDetails(Parcel in) {
+        tableId = in.readInt();
+        id = in.readInt();
+        regionType = in.readString();
+        region = in.readString();
+        belongs_to = in.readString();
+    }
+
+    public static final Creator<regionDetails> CREATOR = new Creator<regionDetails>() {
+        @Override
+        public regionDetails createFromParcel(Parcel in) {
+            return new regionDetails(in);
+        }
+
+        @Override
+        public regionDetails[] newArray(int size) {
+            return new regionDetails[size];
+        }
+    };
 
     public int getTableId() {
         return tableId;
@@ -63,5 +86,19 @@ public class regionDetails {
 
     public void setBelongs_to(String belongs_to) {
         this.belongs_to = belongs_to;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(tableId);
+        dest.writeInt(id);
+        dest.writeString(regionType);
+        dest.writeString(region);
+        dest.writeString(belongs_to);
     }
 }
