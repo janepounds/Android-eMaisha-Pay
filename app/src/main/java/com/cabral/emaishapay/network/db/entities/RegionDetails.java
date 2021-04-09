@@ -3,57 +3,51 @@ package com.cabral.emaishapay.network.db.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "regionDetails")
-public class regionDetails implements Parcelable {
-    @PrimaryKey(autoGenerate = true)
-    private int tableId;
-    @ColumnInfo(name = "id")
+public class RegionDetails implements Parcelable {
+    @PrimaryKey
+    @NonNull
     private int id;
-    @ColumnInfo(name = "regionType")
+
     private String regionType;
-    @ColumnInfo(name = "region")
+
     private String region;
-    @ColumnInfo(name = "belongs_to")
+
     private String belongs_to;
 
-    public regionDetails(int tableId, int id, String regionType, String region, String belongs_to) {
-        this.tableId = tableId;
+    public RegionDetails(int id, String regionType, String region, String belongs_to) {
         this.id = id;
         this.regionType = regionType;
         this.region = region;
         this.belongs_to = belongs_to;
     }
 
-    protected regionDetails(Parcel in) {
-        tableId = in.readInt();
+    protected RegionDetails(Parcel in) {
         id = in.readInt();
         regionType = in.readString();
         region = in.readString();
         belongs_to = in.readString();
     }
 
-    public static final Creator<regionDetails> CREATOR = new Creator<regionDetails>() {
+    public static final Creator<RegionDetails> CREATOR = new Creator<RegionDetails>() {
         @Override
-        public regionDetails createFromParcel(Parcel in) {
-            return new regionDetails(in);
+        public RegionDetails createFromParcel(Parcel in) {
+            return new RegionDetails(in);
         }
 
         @Override
-        public regionDetails[] newArray(int size) {
-            return new regionDetails[size];
+        public RegionDetails[] newArray(int size) {
+            return new RegionDetails[size];
         }
     };
 
-    public int getTableId() {
-        return tableId;
-    }
+    public RegionDetails() {
 
-    public void setTableId(int tableId) {
-        this.tableId = tableId;
     }
 
     public int getId() {
@@ -95,7 +89,6 @@ public class regionDetails implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(tableId);
         dest.writeInt(id);
         dest.writeString(regionType);
         dest.writeString(region);

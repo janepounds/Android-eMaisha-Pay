@@ -34,8 +34,8 @@ import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.databinding.SignupFragmentBinding;
 import com.cabral.emaishapay.models.CropSpinnerItem;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
-import com.cabral.emaishapay.models.address_model.RegionDetails;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.utils.ValidateInputs;
 
 import org.json.JSONException;

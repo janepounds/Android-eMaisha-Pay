@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.models.address_model;
 
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

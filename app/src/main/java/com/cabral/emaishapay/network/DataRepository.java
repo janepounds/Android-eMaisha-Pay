@@ -3,6 +3,10 @@ package com.cabral.emaishapay.network;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import androidx.lifecycle.MediatorLiveData;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
@@ -19,6 +23,9 @@ import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,6 +129,31 @@ public class DataRepository {
         }
 
         return categories;
+    }
+
+    public void insertRegionDetails(List<RegionDetails> regionDetails) {
+        mRegionDetailsDao.insertRegionDetails( regionDetails);
+    }
+
+    //*********GET LATEST ID FROM REGIONS DETAILS*************//
+    public int getMaxRegionId() {
+        return mRegionDetailsDao.getMaxRegionId();
+    }
+
+    //******GET DISTRICTS*****//
+
+    public MediatorLiveData<List<RegionDetails>> getRegionDetails(String type) {
+        return mRegionDetailsDao.getRegionDetails(type);
+    }
+
+    //******GET SUB COUNTIES**********//
+    public MediatorLiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty){
+        return mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty);
+    }
+
+    //*********GET VILLAGES*************//
+    public MediatorLiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty) {
+        return mRegionDetailsDao.getVillageDetails(belongs_to,subcounty);
     }
 
 }

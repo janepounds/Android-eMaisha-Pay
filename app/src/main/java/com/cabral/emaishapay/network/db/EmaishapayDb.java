@@ -19,6 +19,7 @@ import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderList;
 import com.cabral.emaishapay.network.db.entities.EcProductCart;
@@ -28,11 +29,10 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcSupplier;
 import com.cabral.emaishapay.network.db.entities.EcUserCart;
 import com.cabral.emaishapay.network.db.entities.EcUserCartAttributes;
-import com.cabral.emaishapay.network.db.entities.regionDetails;
 
 @Database(entities = {DefaultAddress.class, EcManufacturer.class, ShopOrderDetails.class, ShopOrderList.class,
         EcProductCart.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcSupplier.class,
-        EcUserCart.class, EcUserCartAttributes.class,regionDetails.class},
+        EcUserCart.class, EcUserCartAttributes.class, RegionDetails.class},
         version = 1,
         exportSchema = false
         )

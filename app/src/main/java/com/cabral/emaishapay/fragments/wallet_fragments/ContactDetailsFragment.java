@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,7 +25,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.CropSpinnerItem;
-import com.cabral.emaishapay.models.address_model.RegionDetails;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 

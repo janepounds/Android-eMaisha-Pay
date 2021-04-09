@@ -23,7 +23,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.models.address_model.RegionDetails;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 import com.cabral.emaishapay.models.user_model.UserData;

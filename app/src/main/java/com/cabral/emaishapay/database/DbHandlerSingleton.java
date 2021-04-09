@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.cabral.emaishapay.models.address_model.RegionDetails;
 import com.cabral.emaishapay.models.marketplace.MarketPrice;
 import com.cabral.emaishapay.models.marketplace.MarketPriceSubItem;
 import com.cabral.emaishapay.models.marketplace.MyProduce;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 
 import org.json.JSONException;
 
@@ -400,7 +400,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         while (!res.isAfterLast()) {
             RegionDetails regionDetails = new RegionDetails();
-            regionDetails.setTableId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_TABLE_ID))));
             regionDetails.setId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_ID))));
             regionDetails.setRegionType(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION_TYPE)));
             regionDetails.setRegion(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION)));
@@ -452,7 +451,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         while (!res.isAfterLast()) {
             RegionDetails regionDetails = new RegionDetails();
-            regionDetails.setTableId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_TABLE_ID))));
             regionDetails.setId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_ID))));
             regionDetails.setRegionType(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION_TYPE)));
             regionDetails.setRegion(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION)));
@@ -479,7 +477,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         while (!res.isAfterLast()) {
             RegionDetails regionDetails = new RegionDetails();
-            regionDetails.setTableId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_TABLE_ID))));
             regionDetails.setId(Integer.parseInt(res.getString(res.getColumnIndex(REGIONS_DETAILS_ID))));
             regionDetails.setRegionType(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION_TYPE)));
             regionDetails.setRegion(res.getString(res.getColumnIndex(REGIONS_DETAILS_REGION)));
@@ -651,7 +648,6 @@ public class DbHandlerSingleton extends SQLiteOpenHelper {
 
         return marketPriceArrayList;
     }
-
 
     //get product data
     public ArrayList<HashMap<String, String>> getProducts(String userId) {
