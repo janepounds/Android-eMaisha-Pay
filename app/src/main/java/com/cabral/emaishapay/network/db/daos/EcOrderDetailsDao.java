@@ -31,4 +31,21 @@ public interface EcOrderDetailsDao {
     void deleteOrder(ShopOrderDetails orderDetails);
 
 
+    //get monthly total price
+    @Query("SELECT * FROM ShopOrderDetails WHERE strftime('%m', product_order_date) =:current_month ")
+    List<ShopOrderDetails> getMonthlyTotalPrice(String current_month);
+
+
+    //get yearly total price
+    @Query("SELECT * FROM ShopOrderDetails WHERE strftime('%Y', product_order_date) =:currentYear")
+    List<ShopOrderDetails> getYearlyTotalPrice(String currentYear);
+
+    //get yearly total price
+    @Query("SELECT * FROM ShopOrderDetails WHERE strftime('%Y', product_order_date) =:currentDate ORDER BY order_Details_id DESC")
+    List<ShopOrderDetails> getDailyTotalPrice(String currentDate);
+
+    //get total price
+    @Query("SELECT * FROM ShopOrderDetails")
+    List<ShopOrderDetails> getTotalPrice();
+
 }
