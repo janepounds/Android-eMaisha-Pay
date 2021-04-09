@@ -143,17 +143,24 @@ public class DataRepository {
     //******GET DISTRICTS*****//
 
     public MediatorLiveData<List<RegionDetails>> getRegionDetails(String type) {
-        return mRegionDetailsDao.getRegionDetails(type);
+        MediatorLiveData<List<RegionDetails>> regions=new MediatorLiveData<>();
+        regions.setValue(mRegionDetailsDao.getRegionDetails(type));
+        return  regions;
     }
 
     //******GET SUB COUNTIES**********//
     public MediatorLiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty){
-        return mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty);
+        MediatorLiveData<List<RegionDetails>> subcounties=new MediatorLiveData<>();
+        subcounties.setValue(mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty));
+        return  subcounties;
     }
 
     //*********GET VILLAGES*************//
     public MediatorLiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty) {
-        return mRegionDetailsDao.getVillageDetails(belongs_to,subcounty);
+        MediatorLiveData<List<RegionDetails>> villages=new MediatorLiveData<>();
+        villages.setValue(mRegionDetailsDao.getVillageDetails(belongs_to,subcounty));
+
+        return villages;
     }
 
 }

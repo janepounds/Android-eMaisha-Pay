@@ -15,6 +15,7 @@ import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
