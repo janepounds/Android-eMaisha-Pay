@@ -23,18 +23,18 @@ public interface RegionDetailsDao {
 
     //get all region details
     @Query("SELECT * FROM RegionDetails WHERE RegionDetails.regionType=:district")
-    List<RegionDetails> getRegionDetails(String  district);
+    LiveData<List<RegionDetails>> getRegionDetails(String  district);
 
 
     //get subcountry details
     @Query("SELECT * FROM RegionDetails WHERE RegionDetails.belongs_to=:belongs_to AND regionType=:subcounty")
-    List<RegionDetails> getSubcountyDetails(String belongs_to, String subcounty);
+    LiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty);
 
     //get village details
     @Query("SELECT * FROM RegionDetails WHERE RegionDetails.belongs_to=:belongs_to AND regionType=:subcounty")
-    List<RegionDetails> getVillageDetails(String belongs_to, String subcounty);
+    LiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty);
 
-
-
-
+    //get region details
+    @Query("SELECT * FROM RegionDetails WHERE RegionDetails.region=:name")
+    LiveData<RegionDetails> getRegionDetail(String name);
 }

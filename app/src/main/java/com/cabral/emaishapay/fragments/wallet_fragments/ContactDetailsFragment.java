@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.models.CropSpinnerItem;
+import com.cabral.emaishapay.models.SpinnerItem;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.kofigyan.stateprogressbar.StateProgressBar;
@@ -44,7 +44,7 @@ public class ContactDetailsFragment extends Fragment {
     private FirebaseAuth mAuth;
     private int pickedDistrictId;
     private int pickedSubCountyId;
-    private ArrayList<CropSpinnerItem> subCountyList = new ArrayList<>();
+    private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
     private ArrayList<String> villageList = new ArrayList<>();
     private DbHandlerSingleton dbHandler;
 
@@ -92,20 +92,16 @@ public class ContactDetailsFragment extends Fragment {
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
 
-        ArrayList<CropSpinnerItem> districtList = new ArrayList<>();
+        ArrayList<SpinnerItem> districtList = new ArrayList<>();
         dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
         try {
             for (RegionDetails x : dbHandler.getRegionDetails("district")) {
-                districtList.add(new CropSpinnerItem() {
+                districtList.add(new SpinnerItem() {
                     @Override
                     public String getId() {
                         return String.valueOf(x.getId());
                     }
 
-                    @Override
-                    public String getUnits() {
-                        return null;
-                    }
 
                     @NonNull
                     @Override
@@ -119,7 +115,7 @@ public class ContactDetailsFragment extends Fragment {
             e.printStackTrace();
         }
         //Log.d(TAG, "onCreate: " + districtList + districtList.size());
-        ArrayAdapter<CropSpinnerItem> districtListAdapter = new ArrayAdapter<CropSpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, districtList);
+        ArrayAdapter<SpinnerItem> districtListAdapter = new ArrayAdapter<SpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, districtList);
         act_districts.setThreshold(1);
         act_districts.setAdapter(districtListAdapter);
         act_districts.addTextChangedListener(new TextWatcher() {
@@ -146,17 +142,11 @@ public class ContactDetailsFragment extends Fragment {
                         subCountyList.clear();
                         try {
                             for (RegionDetails x : dbHandler.getSubcountyDetails(String.valueOf(pickedDistrictId), "subcounty")) {
-                                subCountyList.add(new CropSpinnerItem() {
+                                subCountyList.add(new SpinnerItem() {
                                     @Override
                                     public String getId() {
                                         return String.valueOf(x.getId());
                                     }
-
-                                    @Override
-                                    public String getUnits() {
-                                        return null;
-                                    }
-
                                     @NonNull
                                     @Override
                                     public String toString() {
@@ -168,7 +158,7 @@ public class ContactDetailsFragment extends Fragment {
                             e.printStackTrace();
                         }
                         Log.d(TAG, "onCreate: " + subCountyList);
-                        ArrayAdapter<CropSpinnerItem> subCountyListAdapter = new ArrayAdapter<CropSpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, subCountyList);
+                        ArrayAdapter<SpinnerItem> subCountyListAdapter = new ArrayAdapter<SpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, subCountyList);
                         act_sub_counties.setThreshold(1);
                         act_sub_counties.setAdapter(subCountyListAdapter);
                     }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
@@ -21,15 +22,20 @@ import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
 import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
+import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
+import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DataRepository {
     private static final String TAG = "DataRepository";
@@ -64,8 +70,12 @@ public class DataRepository {
     }
 
     public static  DataRepository getOurInstance(Context context){
-        if(ourInstance==null){
-            ourInstance=new DataRepository(context);
+        if (ourInstance == null) {
+            synchronized (DataRepository.class) {
+                if (ourInstance == null) {
+                    ourInstance = new DataRepository(context);
+                }
+            }
         }
         return  ourInstance;
     }
@@ -142,25 +152,103 @@ public class DataRepository {
 
     //******GET DISTRICTS*****//
 
-    public MediatorLiveData<List<RegionDetails>> getRegionDetails(String type) {
-        MediatorLiveData<List<RegionDetails>> regions=new MediatorLiveData<>();
-        regions.setValue(mRegionDetailsDao.getRegionDetails(type));
-        return  regions;
+    public LiveData<List<RegionDetails>> getRegionDetails(String type) {
+        return  mRegionDetailsDao.getRegionDetails(type);
     }
 
     //******GET SUB COUNTIES**********//
-    public MediatorLiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty){
-        MediatorLiveData<List<RegionDetails>> subcounties=new MediatorLiveData<>();
-        subcounties.setValue(mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty));
-        return  subcounties;
+    public LiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty){
+        return  mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty);
     }
 
     //*********GET VILLAGES*************//
-    public MediatorLiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty) {
-        MediatorLiveData<List<RegionDetails>> villages=new MediatorLiveData<>();
-        villages.setValue(mRegionDetailsDao.getVillageDetails(belongs_to,subcounty));
-
-        return villages;
+    public LiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty) {
+        return mRegionDetailsDao.getVillageDetails(belongs_to,subcounty);
     }
 
+    public LiveData<RegionDetails> getRegionDetail( String name) {
+        return mRegionDetailsDao.getRegionDetail(name);
+    }
+    //**********GET OFFLINE MANUFACTURERS************//
+    public  ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+        ArrayList<HashMap<String, String>> manufacturers = new ArrayList<>();
+        for (EcManufacturer manufacturer : mEcManufacturerDao.getOfflineManufacturers()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("manufacturer", manufacturer.getManufacturer_name());
+            manufacturers.add(map);
+        }
+
+        return manufacturers;
+    }
+
+    //**********ADD PRODUCT NAME *******************//
+    public void addProductName(EcProduct product) {
+      mEcProductsDao.addProductName(product);
+    }
+
+    //**********ADD PRODUCT CATEGORY *******************//
+    public void addProductCategory(EcProductCategory productCategory) {
+        mEcProductCategoryDao.addProductCategory(productCategory);
+    }
+
+    //**********ADD MANUFACTURERS *******************//
+    public void addManufacturers(EcManufacturer manufacturer) {
+        mEcManufacturerDao.addManufacturers(manufacturer);
+    }
+
+
+    //*********UPDATE PRODUCT QTY*****************//
+    public void updateProductQty(String id, String qty) {
+
+      mEcProductCartDao.updateProductQty(id,qty);
+
+    }
+
+    //******GET TOTAL PRODUCT PRICE ********//
+    public double getTotalOrderPrice(String type) {
+
+       List<ShopOrderDetails> order_details = new ArrayList<>();
+        double total_price = 0;
+
+
+        if (type.equals("monthly")) {
+
+            String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
+
+            order_details =    mEcOrderDetailsDao.getMonthlyTotalPrice(currentMonth);
+
+        } else if (type.equals("yearly")) {
+
+            String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
+            order_details= mEcOrderDetailsDao.getYearlyTotalPrice(currentYear);
+
+        } else if (type.equals("daily")) {
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+            order_details=  mEcOrderDetailsDao.getDailyTotalPrice(currentDate);
+
+        } else {
+            order_details=  mEcOrderDetailsDao.getTotalPrice();
+
+        }
+
+
+        if (order_details.size()>0) {
+            for(int i=0;i<order_details.size();i++){
+                double price = Double.parseDouble(order_details.get(i).getProduct_price());
+                int qty = Integer.parseInt(order_details.get(i).getProduct_qty());
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+            }
+
+
+        } else {
+            total_price = 0;
+        }
+
+        return total_price;
+    }
+
+
+    //************8
 }

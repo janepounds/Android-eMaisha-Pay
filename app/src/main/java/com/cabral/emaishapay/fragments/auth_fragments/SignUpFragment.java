@@ -24,6 +24,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
@@ -32,8 +34,9 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.databinding.SignupFragmentBinding;
-import com.cabral.emaishapay.models.CropSpinnerItem;
+import com.cabral.emaishapay.models.SpinnerItem;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
+import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -60,13 +63,8 @@ public class SignUpFragment  extends Fragment {
     // Firebase auth object
     private int pickedDistrictId;
     private int pickedSubCountyId;
-    private ArrayList<CropSpinnerItem> subCountyList = new ArrayList<>();
-    private ArrayList<String> villageList = new ArrayList<>();
-    private List<SecurityQnsResponse.SecurityQns> securityQnsList = new ArrayList();
-    ArrayList<String> securityQns = new ArrayList<>();
-    ArrayList<String> securityQnsSubList1 = new ArrayList<>();
-    ArrayList<String> securityQnsSubList2 = new ArrayList<>();
-    ArrayList<String> securityQnsSubList3 = new ArrayList<>();
+    private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
+    private ArrayList<SpinnerItem> villageList = new ArrayList<>();
     
     @Override
     public void onAttach(@NonNull Context context) {
@@ -91,39 +89,14 @@ public class SignUpFragment  extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final SignUpModelView viewModel = new ViewModelProvider(this).get(SignUpModelView.class);
         //get security qns
-        RequestSecurityQns();
+        subscribeToSecurityQns(viewModel.getSecurityQuestions());
 
-        ArrayList<CropSpinnerItem> districtList = new ArrayList<>();
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        try {
-            for (RegionDetails x : dbHandler.getRegionDetails("district")) {
-                districtList.add(new CropSpinnerItem() {
-                    @Override
-                    public String getId() {
-                        return String.valueOf(x.getId());
-                    }
+        ArrayList<SpinnerItem> districtList = new ArrayList<>();
 
-                    @Override
-                    public String getUnits() {
-                        return null;
-                    }
+        subscribeDistrictList(viewModel.getDistricts(),districtList);
 
-                    @NonNull
-                    @Override
-                    public String toString() {
-                        return x.getRegion();
-                    }
-                });
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "onCreate: " + districtList + districtList.size());
-        ArrayAdapter<CropSpinnerItem> districtListAdapter = new ArrayAdapter<CropSpinnerItem>(context, android.R.layout.simple_dropdown_item_1line, districtList);
-        binding.districtSpinner.setThreshold(1);
-        binding.districtSpinner.setAdapter(districtListAdapter);
         binding.districtSpinner.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -138,44 +111,19 @@ public class SignUpFragment  extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.districtSpinner.showDropDown();
-                for (int i = 0; i < districtList.size(); i++) {
+                String districtInput =binding.districtSpinner.getText().toString();
 
-                    if (districtList.get(i).toString().equals(binding.districtSpinner.getText().toString())) {
-                        pickedDistrictId = Integer.parseInt(districtList.get(i).getId());
+                if(districtInput.length()<4)
+                    return;
 
-                        Log.d(TAG, "onCreate: " + pickedDistrictId);
+                viewModel.getRegionDetail(districtInput).observe(getViewLifecycleOwner(),myRegion->{
+                    pickedDistrictId=myRegion.getId();
 
-                        subCountyList.clear();
-                        try {
-                            for (RegionDetails x : dbHandler.getSubcountyDetails(String.valueOf(pickedDistrictId), "subcounty")) {
-                                subCountyList.add(new CropSpinnerItem() {
-                                    @Override
-                                    public String getId() {
-                                        return String.valueOf(x.getId());
-                                    }
+                    subCountyList.clear();
+                    subscribeSubcountyList(viewModel.getSubcountyDetails(String.valueOf(pickedDistrictId)));
+                });
 
-                                    @Override
-                                    public String getUnits() {
-                                        return null;
-                                    }
 
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return x.getRegion();
-                                    }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d(TAG, "onCreate: " + subCountyList);
-                        ArrayAdapter<CropSpinnerItem> subCountyListAdapter = new ArrayAdapter<CropSpinnerItem>(context, android.R.layout.simple_dropdown_item_1line, subCountyList);
-                        binding.subCountySpinner.setThreshold(1);
-                        binding.subCountySpinner.setAdapter(subCountyListAdapter);
-                    }
-
-                }
             }
         });
 
@@ -193,49 +141,22 @@ public class SignUpFragment  extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.subCountySpinner.showDropDown();
+                String subCountyInput =binding.subCountySpinner.getText().toString();
 
-                for (int i = 0; i < subCountyList.size(); i++) {
+                if(subCountyInput.length()<4)
+                    return;
 
-                    if (subCountyList.get(i).toString().equals(binding.subCountySpinner.getText().toString())) {
-                        pickedSubCountyId = Integer.parseInt(subCountyList.get(i).getId());
+                viewModel.getRegionDetail(subCountyInput).observe(getViewLifecycleOwner(),myRegion->{
+                    pickedSubCountyId=myRegion.getId();
 
-                        Log.d(TAG, "onCreate: " + pickedSubCountyId);
-
-                        villageList.clear();
-                        try {
-                            for (RegionDetails x : dbHandler.getVillageDetails(String.valueOf(pickedSubCountyId), "village")) {
-                                villageList.add(x.getRegion());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d(TAG, "onCreate: " + villageList);
-                        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, villageList);
-                        binding.villageSpinner.setThreshold(1);
-                        binding.villageSpinner.setAdapter(villageListAdapter);
-                    }
+                    villageList.clear();
+                    subscribeVillageList(viewModel.getVillageDetails(String.valueOf(pickedSubCountyId)));
+                });
 
 
-                }
             }
         });
 
-        binding.villageSpinner.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         dialogLoader = new DialogLoader(context);
 
@@ -438,65 +359,97 @@ public class SignUpFragment  extends Fragment {
 
       }
     }
+     private void subscribeDistrictList(LiveData<List<RegionDetails>> districts, ArrayList<SpinnerItem> districtList){
+         districts.observe(getViewLifecycleOwner(),myDistricts->{
+             if(myDistricts!=null && myDistricts.size()!=0){
+                 for (RegionDetails x : myDistricts) {
+                     districtList.add(new SpinnerItem() {
+                         @Override
+                         public String getId() {
+                             return ""+x.getId();
+                         }
 
+                         @Override
+                         public String toString() {
+                             return x.getRegion();
+                         }
+                     });
 
-    public void RequestSecurityQns(){
+                 }
 
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+                 //Log.d(TAG, "onCreate: " + districtList + districtList.size());
+                 ArrayAdapter<SpinnerItem> districtListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, districtList);
+                 binding.districtSpinner.setThreshold(1);
+                 binding.districtSpinner.setAdapter(districtListAdapter);
+             }
+         });
+     }
 
-        dialogLoader.showProgressDialog();
-        /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).getSecurityQns(request_id,category,"getSecurityQns");
-        call.enqueue(new Callback<SecurityQnsResponse>() {
-            @Override
-            public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
-                if(response.isSuccessful()){
-                    dialogLoader.hideProgressDialog();
-                    try {
-                        securityQnsList = response.body().getSecurity_qnsList();
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }finally {
-                        Log.d(TAG,securityQnsList.size()+"**********");
-
-                        //set security qns adapter
-                        for(int i=0;i<securityQnsList.size();i++){
-                            String security_Qn_name = securityQnsList.get(i).getSecurity_qn_name();
-                            securityQns.add(security_Qn_name);
+    private void subscribeSubcountyList(LiveData<List<RegionDetails>> subcounties){
+        subcounties.observe(getViewLifecycleOwner(),mySubcounties->{
+            if(mySubcounties!=null && mySubcounties.size()!=0){
+                for (RegionDetails x : mySubcounties) {
+                    subCountyList.add(new SpinnerItem() {
+                        @Override
+                        public String getId() {
+                            return ""+x.getId();
                         }
-                        for(int i=0;i<3;i++) {
-                            securityQnsSubList1.add(securityQns.get(i));
-                        }for(int i=3;i<6;i++){
-                            securityQnsSubList2.add(securityQns.get(i));
 
-                        }for(int i=6;i<9;i++){
-                            securityQnsSubList3.add(securityQns.get(i));
-
+                        @Override
+                        public String toString() {
+                            return x.getRegion();
                         }
-                        //set list in beneficiary spinner
-                        ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, securityQnsSubList1);
-                        ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, securityQnsSubList2);
-                        ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, securityQnsSubList3);
-                        binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
-                        binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
-                        binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
+                    } );
 
-                    }
-
-                }else if (response.code() == 401) {
-                    Log.e("info", "Something got very wrong");
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
-                Log.e("info", "Something got very very wrong");
+                //Log.d(TAG, "onCreate: " + subCountyList);
+                ArrayAdapter<SpinnerItem> subCountyListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, subCountyList);
+                binding.subCountySpinner.setThreshold(1);
+                binding.subCountySpinner.setAdapter(subCountyListAdapter);
             }
         });
+    }
 
+    private void subscribeVillageList(LiveData<List<RegionDetails>> villageDetailsList) {
+        villageDetailsList.observe(getViewLifecycleOwner(),myVillages->{
+            if(myVillages!=null && myVillages.size()!=0){
+                for (RegionDetails x : myVillages) {
+                    villageList.add(new SpinnerItem() {
+                        @Override
+                        public String getId() {
+                            return ""+x.getId();
+                        }
+
+                        @Override
+                        public String toString() {
+                            return x.getRegion();
+                        }
+                    });
+
+                }
+
+                //Log.d(TAG, "onCreate: " + villageList);
+                ArrayAdapter<SpinnerItem> villageListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, villageList);
+                binding.villageSpinner.setThreshold(1);
+                binding.villageSpinner.setAdapter(villageListAdapter);
+            }
+        });
+    }
+
+    private void subscribeToSecurityQns(LiveData<List<ArrayList<String>>> securityQuestions) {
+        securityQuestions.observe(getViewLifecycleOwner(), myQns->{
+            //set list in beneficiary spinner
+            if(myQns!=null){
+                ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(0));
+                ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(1));
+                ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(2));
+                binding.spFirstSecurityQn.setAdapter(beneficiariesAdapter1);
+                binding.spSecondSecurityQn.setAdapter(beneficiariesAdapter2);
+                binding.spThirdSecurityQn.setAdapter(beneficiariesAdapter3);
+            }
+
+        });
     }
 
 

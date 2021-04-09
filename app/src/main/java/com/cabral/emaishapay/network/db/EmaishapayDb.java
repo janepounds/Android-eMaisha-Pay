@@ -56,7 +56,7 @@ public abstract class EmaishapayDb extends RoomDatabase {
         if(INSTANCE==null){
             synchronized (RoomDatabase.class){
                 if(INSTANCE==null){
-                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb10")
+                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb11")
                             //.addMigrations(MIGRATION_3_4)
                             .build();
                 }

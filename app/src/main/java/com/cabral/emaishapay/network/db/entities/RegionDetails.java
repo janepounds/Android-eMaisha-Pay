@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "regionDetails")
@@ -46,8 +47,8 @@ public class RegionDetails implements Parcelable {
         }
     };
 
+    @Ignore
     public RegionDetails() {
-
     }
 
     public int getId() {
