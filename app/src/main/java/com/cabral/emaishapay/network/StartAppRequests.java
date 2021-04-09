@@ -79,7 +79,7 @@ public class StartAppRequests {
 
     public void RequestAllRegions() {
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        int regionId =dbHandler.getMaxRegionId();
+        int regionId = DataRepository.getOurInstance(context).getMaxRegionId();
         Log.d(TAG, "RequestAllRegions: "+ regionId);
         Call<Regions> call = ExternalAPIClient.getInstance()
                 .getAllRegions(regionId);
@@ -94,10 +94,8 @@ public class StartAppRequests {
                 //Log.e("DataCheck0: ",appSettingsData.getAppDetails().getMaintenance_text());
                 String strJson = new Gson().toJson(regionsData);
                 List<RegionDetails> regionDetails = regionsData.getData();
+                 DataRepository.getOurInstance(context).insertRegionDetails(regionDetails);
 
-                 dbHandler.insertRegionDetails(regionDetails);
-//                if (!TextUtils.isEmpty(regionsData.getSuccess()))
-//                    emaishaPayApp.setAppSettingsDetails(regionsData.getData());
                 Log.d(TAG, "RequestAllRegions: " + regionDetails);
             }
             else {

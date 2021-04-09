@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.models;
 
-public interface CropSpinnerItem {
+public interface SpinnerItem {
     String getId();
     String toString();
-    String getUnits();
 }

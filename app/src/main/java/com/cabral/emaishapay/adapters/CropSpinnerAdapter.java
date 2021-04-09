@@ -13,19 +13,19 @@ import android.widget.TextView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.models.CropSpinnerItem;
+import com.cabral.emaishapay.models.SpinnerItem;
 
 import java.util.ArrayList;
 
-public class CropSpinnerAdapter extends ArrayAdapter<CropSpinnerItem> {
-    ArrayList<CropSpinnerItem> values=new ArrayList<>();
+public class CropSpinnerAdapter extends ArrayAdapter<SpinnerItem> {
+    ArrayList<SpinnerItem> values=new ArrayList<>();
     String fieldLabel;
     Context context;
-    public CropSpinnerAdapter(ArrayList<CropSpinnerItem> items,final String fieldLabel, Context context) {
+    public CropSpinnerAdapter(ArrayList<SpinnerItem> items, final String fieldLabel, Context context) {
         super(context,  android.R.layout.simple_spinner_item);
         this.fieldLabel =fieldLabel;
         if(fieldLabel!=null)
-            values.add(new CropSpinnerItem() {
+            values.add(new SpinnerItem() {
                 @Override
                 public String getId() {
                     return null;
@@ -33,18 +33,15 @@ public class CropSpinnerAdapter extends ArrayAdapter<CropSpinnerItem> {
                 public String toString(){
                     return "Select "+fieldLabel;
                 }
-                public String getUnits(){
-                    return null;
-                }
             });
         values.addAll(items);
         this.context =context;
     }
-    public void add(CropSpinnerItem item){
+    public void add(SpinnerItem item){
         values.add(item);
         notifyDataSetChanged();
     }
-    public void changeDefaultItem(CropSpinnerItem defaultItem){
+    public void changeDefaultItem(SpinnerItem defaultItem){
         values.remove(0);
         values.add(0,defaultItem);
         notifyDataSetChanged();
@@ -55,7 +52,7 @@ public class CropSpinnerAdapter extends ArrayAdapter<CropSpinnerItem> {
     }
 
     @Override
-    public CropSpinnerItem getItem(int position){
+    public SpinnerItem getItem(int position){
         return values.get(position);
     }
 
@@ -65,9 +62,9 @@ public class CropSpinnerAdapter extends ArrayAdapter<CropSpinnerItem> {
     }
 
 
-    public void changeItems(ArrayList<CropSpinnerItem> items){
+    public void changeItems(ArrayList<SpinnerItem> items){
         values.clear();
-        values.add(new CropSpinnerItem() {
+        values.add(new SpinnerItem() {
             @Override
             public String getId() {
                 return null;

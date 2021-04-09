@@ -92,9 +92,6 @@ public class GetStartedSignUpFragment extends Fragment {
                     sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
 
                 }
-
-
-
                 //navigate to Sign Up Fragment
 
 
@@ -271,7 +268,7 @@ public class GetStartedSignUpFragment extends Fragment {
     //you can take the country id as user input as well
     private void sendVerificationCode(String mobile) {
         showOTPDialog(getActivity());
-        Toast.makeText(context,mobile,Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,mobile,Toast.LENGTH_LONG).show();
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(mobile)                        // Phone number to verify
