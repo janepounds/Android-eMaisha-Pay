@@ -22,15 +22,20 @@ import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
 import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
+import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
+import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DataRepository {
     private static final String TAG = "DataRepository";
@@ -164,4 +169,86 @@ public class DataRepository {
     public LiveData<RegionDetails> getRegionDetail( String name) {
         return mRegionDetailsDao.getRegionDetail(name);
     }
+    //**********GET OFFLINE MANUFACTURERS************//
+    public  ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+        ArrayList<HashMap<String, String>> manufacturers = new ArrayList<>();
+        for (EcManufacturer manufacturer : mEcManufacturerDao.getOfflineManufacturers()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("manufacturer", manufacturer.getManufacturer_name());
+            manufacturers.add(map);
+        }
+
+        return manufacturers;
+    }
+
+    //**********ADD PRODUCT NAME *******************//
+    public void addProductName(EcProduct product) {
+      mEcProductsDao.addProductName(product);
+    }
+
+    //**********ADD PRODUCT CATEGORY *******************//
+    public void addProductCategory(EcProductCategory productCategory) {
+        mEcProductCategoryDao.addProductCategory(productCategory);
+    }
+
+    //**********ADD MANUFACTURERS *******************//
+    public void addManufacturers(EcManufacturer manufacturer) {
+        mEcManufacturerDao.addManufacturers(manufacturer);
+    }
+
+
+    //*********UPDATE PRODUCT QTY*****************//
+    public void updateProductQty(String id, String qty) {
+
+      mEcProductCartDao.updateProductQty(id,qty);
+
+    }
+
+    //******GET TOTAL PRODUCT PRICE ********//
+    public double getTotalOrderPrice(String type) {
+
+       List<ShopOrderDetails> order_details = new ArrayList<>();
+        double total_price = 0;
+
+
+        if (type.equals("monthly")) {
+
+            String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
+
+            order_details =    mEcOrderDetailsDao.getMonthlyTotalPrice(currentMonth);
+
+        } else if (type.equals("yearly")) {
+
+            String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
+            order_details= mEcOrderDetailsDao.getYearlyTotalPrice(currentYear);
+
+        } else if (type.equals("daily")) {
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+            order_details=  mEcOrderDetailsDao.getDailyTotalPrice(currentDate);
+
+        } else {
+            order_details=  mEcOrderDetailsDao.getTotalPrice();
+
+        }
+
+
+        if (order_details.size()>0) {
+            for(int i=0;i<order_details.size();i++){
+                double price = Double.parseDouble(order_details.get(i).getProduct_price());
+                int qty = Integer.parseInt(order_details.get(i).getProduct_qty());
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+            }
+
+
+        } else {
+            total_price = 0;
+        }
+
+        return total_price;
+    }
+
+
+    //************8
 }
