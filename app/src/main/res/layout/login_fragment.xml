@@ -222,7 +222,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:clickable="true"
                                 android:focusable="true"
-                                android:text="@string/forgot_pass"
+                                android:text="Forgot PIN"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="16sp" />
 

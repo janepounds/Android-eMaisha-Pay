@@ -82,7 +82,7 @@ public class LoginFragment  extends Fragment {
 
         binding.forgotPasswordText.setOnClickListener(view0 -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
-            View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
+            View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
 
