@@ -31,6 +31,7 @@ import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
+import com.cabral.emaishapay.databinding.NewFragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 
@@ -42,7 +43,7 @@ import retrofit2.Response;
 
 public class WalletAccountFragment extends Fragment {
     private static final String TAG = "WalletAccountFragment";
-    private FragmentWalletAccountBinding binding;
+    private NewFragmentWalletAccountBinding binding;
     private Context context;
     private String label_details;
     FragmentManager fm;
@@ -54,7 +55,7 @@ public class WalletAccountFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_wallet_account, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.new_fragment_wallet_account, container, false);
 
         retrieveAccountInfo();
         binding.userName.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, requireContext())) + " " + ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, requireContext())));
@@ -71,212 +72,226 @@ public class WalletAccountFragment extends Fragment {
         //get account info
 
 
-        binding.personalInformationLayout.setOnClickListener(view12 -> {
+//        binding.personalInformationLayout.setOnClickListener(view12 -> {
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                //check logged in role
+//
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            } else {
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+//                binding.layoutPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.genderDobStatus.setVisibility(View.GONE);
+//                binding.viewPersonalInfo.setVisibility(View.GONE);
+//
+//
+//                //set id info textviews
+//                binding.textViewDob.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
+//                binding.textViewGender.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
+//                binding.textViewNok.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, context));
+//                binding.textViewNokContact.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
+//
+//
+//
+//            }
+//
+//        });
+//
+//        binding.editPersonalInfo.setOnClickListener(view1 -> {
+//            Bundle bundle = new Bundle();
+//            bundle.putString("dob",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
+//            bundle.putString("gender",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
+//            bundle.putString("nok",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, context));
+//            bundle.putString("nok_contact",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
+//            bundle.putString("picture",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context));
+//
+//            WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_personalInformationFragment,bundle);
+//
+//
+//        });
+//
+//        binding.idInformationLayout.setOnClickListener(view12 -> {
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            } else {
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+//                binding.layoutIdInfo.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.GONE);
+//                binding.idTypeNumber.setVisibility(View.GONE);
+//
+//
+//                RequestOptions idoptions = new RequestOptions()
+//                        .centerCrop()
+//                        .placeholder(R.drawable.add_default_image)
+//                        .error(R.drawable.add_default_image)
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .priority(Priority.HIGH);
+//
+//                //set id info textviews
+//                binding.textViewIdType.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
+//                binding.textViewIdNumber.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
+//                binding.textViewExpiryDate.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
+//                Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
+//
+//            }
+//
+//        });
+//
+//        binding.editIdInfo.setOnClickListener(view1 -> {
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("idtype", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
+//                    bundle.putString("idNumber", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
+//                    bundle.putString("expiryDate", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
+//                    bundle.putString("front", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context));
+//                    bundle.putString("back", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, context));
+//
+//                   ///To IdInformationFragment
+//                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_idInformationFragment,bundle);
+//                });
 
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
+        binding.layoutEmploymentBusinessInfo.setOnClickListener(view12 -> {
 
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
-                binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
 
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                //check logged in role
-
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            } else {
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
-                binding.layoutPersonalInfo.setVisibility(View.VISIBLE);
-                binding.genderDobStatus.setVisibility(View.GONE);
-                binding.viewPersonalInfo.setVisibility(View.GONE);
-
-
-                //set id info textviews
-                binding.textViewDob.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
-                binding.textViewGender.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
-                binding.textViewNok.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, context));
-                binding.textViewNokContact.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//
+//            }
 
 
+                binding.chevronEmploymentBusinessInfo.setRotation(90);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.GONE);
+//                binding.employeeDesignation.setVisibility(View.GONE);
+//
 
-            }
+
 
         });
 
-        binding.editPersonalInfo.setOnClickListener(view1 -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("dob",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
-            bundle.putString("gender",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
-            bundle.putString("nok",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK, context));
-            bundle.putString("nok_contact",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
-            bundle.putString("picture",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context));
-
-            WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_personalInformationFragment,bundle);
-
-
-        });
-
-        binding.idInformationLayout.setOnClickListener(view12 -> {
-
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
-                binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            } else {
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
-                binding.layoutIdInfo.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.GONE);
-                binding.idTypeNumber.setVisibility(View.GONE);
-
-
-                RequestOptions idoptions = new RequestOptions()
-                        .centerCrop()
-                        .placeholder(R.drawable.add_default_image)
-                        .error(R.drawable.add_default_image)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH);
-
-                //set id info textviews
-                binding.textViewIdType.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
-                binding.textViewIdNumber.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
-                binding.textViewExpiryDate.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
-                Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context)).apply(idoptions).into(binding.imgDisplayIdFront);
-
-            }
-
-        });
-
-        binding.editIdInfo.setOnClickListener(view1 -> {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("idtype", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_TYPE, context));
-                    bundle.putString("idNumber", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_NUMBER, context));
-                    bundle.putString("expiryDate", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_EXPIRY_DATE, context));
-                    bundle.putString("front", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT, context));
-                    bundle.putString("back", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK, context));
-
-                   ///To IdInformationFragment
-                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_idInformationFragment,bundle);
-                });
-
-        binding.employmentInformationLayout.setOnClickListener(view12 -> {
-
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
-                binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-
-            } else {
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+        binding.layoutEmploymentInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.chevronEmploymentDetails.setRotation(90);
                 binding.layoutEmploymentInfo.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.GONE);
-                binding.employeeDesignation.setVisibility(View.GONE);
+
 
                 //set employment info textviews
                 binding.textViewEmployer.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYER, context));
@@ -285,7 +300,6 @@ public class WalletAccountFragment extends Fragment {
                 binding.textViewEmployeeId.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, context));
 
             }
-
         });
 
         binding.editEmploymentInfo.setOnClickListener(new View.OnClickListener() {
@@ -302,208 +316,224 @@ public class WalletAccountFragment extends Fragment {
             }
         });
 
-        binding.businessInformationLayout.setOnClickListener(view12 -> {
-
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
-                binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            }
-
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-
-            } else {
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
-                binding.layoutBusinessInfo.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.GONE);
-                binding.businessNameTinLicence.setVisibility(View.GONE);
-                //set business info textviews
-                binding.textViewBusinessName.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
-                binding.textViewBusinessLocation.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
-                binding.textViewRegNo.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, context));
-                binding.textViewLicenseNo.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
-
-            }
-
-        });
-
-        binding.editBusinessInfo.setOnClickListener(new View.OnClickListener() {
+        binding.layoutCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //To BusinessInformationFragment
-                Bundle bundle = new Bundle();
-                bundle.putString("biz_name", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
-                bundle.putString("biz_location", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
-                bundle.putString("reg_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, context));
-                bundle.putString("license_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
-                bundle.putString("reg_cert", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
-                bundle.putString("trade_license", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
-
-                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
-            }
-        });
-
-        binding.businessAccountLayout.setOnClickListener(view12 -> {
-
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+                binding.chevronEmploymentDetails.setRotation(0);
                 binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+
+
 
             }
-
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-
-            } else {
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
-                binding.layoutBusinessAccount.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.GONE);
-                binding.agentMerchant.setVisibility(View.GONE);
-
-            }
-
-
         });
 
+//        binding.businessInformationLayout.setOnClickListener(view12 -> {
+//
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//
+//            } else {
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+//                binding.layoutBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.GONE);
+//                binding.businessNameTinLicence.setVisibility(View.GONE);
+//                //set business info textviews
+//                binding.textViewBusinessName.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
+//                binding.textViewBusinessLocation.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
+//                binding.textViewRegNo.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, context));
+//                binding.textViewLicenseNo.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
+//
+//            }
+//
+//        });
+//
+//        binding.editBusinessInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //To BusinessInformationFragment
+//                Bundle bundle = new Bundle();
+//                bundle.putString("biz_name", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME, context));
+//                bundle.putString("biz_location", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION, context));
+//                bundle.putString("reg_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO, context));
+//                bundle.putString("license_no", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER, context));
+//                bundle.putString("reg_cert", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE, context));
+//                bundle.putString("trade_license", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE, context));
+//
+//                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
+//            }
+//        });
 
-        binding.layoutCustomerSupport.setOnClickListener(view12 -> {
+//        binding.businessAccountLayout.setOnClickListener(view12 -> {
+//
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            }
+//
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//
+//            } else {
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+//                binding.layoutBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.GONE);
+//                binding.agentMerchant.setVisibility(View.GONE);
+//
+//            }
+//
+//
+//        });
+//
+//
+//        binding.layoutCustomerSupport.setOnClickListener(view12 -> {
+//
+//            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
+//                binding.genderDobStatus.setVisibility(View.VISIBLE);
+//                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
+//                binding.layoutPersonalInfo.setVisibility(View.GONE);
+//                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
+//                binding.idTypeNumber.setVisibility(View.VISIBLE);
+//                binding.viewIdInfo.setVisibility(View.VISIBLE);
+//                binding.layoutIdInfo.setVisibility(View.GONE);
+//                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+//                binding.employeeDesignation.setVisibility(View.VISIBLE);
+//                binding.viewEmploymentId.setVisibility(View.VISIBLE);
+//                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+//                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//
+//
+//            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+//                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
+//                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessInfo.setVisibility(View.GONE);
+//                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//            }
+//            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
+//                binding.agentMerchant.setVisibility(View.VISIBLE);
+//                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
+//                binding.layoutBusinessAccount.setVisibility(View.GONE);
+//                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//
+//            }
+//            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
+//                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
+//                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
+//
+//            } else {
+//                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
+//                binding.layoutCustomerSupportMenu.setVisibility(View.VISIBLE);
+//                binding.viewCustomerSupport.setVisibility(View.GONE);
+//                binding.tollFreeEmailLiveChat.setVisibility(View.GONE);
+//
+//            }
+//
+//
+//        });
 
-            if (binding.layoutPersonalInfo.getVisibility() == View.VISIBLE) {
-                binding.genderDobStatus.setVisibility(View.VISIBLE);
-                binding.viewPersonalInfo.setVisibility(View.VISIBLE);
-                binding.layoutPersonalInfo.setVisibility(View.GONE);
-                binding.chevronPersonalInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutIdInfo.getVisibility() == View.VISIBLE) {
-                binding.idTypeNumber.setVisibility(View.VISIBLE);
-                binding.viewIdInfo.setVisibility(View.VISIBLE);
-                binding.layoutIdInfo.setVisibility(View.GONE);
-                binding.chevronIdInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
-                binding.employeeDesignation.setVisibility(View.VISIBLE);
-                binding.viewEmploymentId.setVisibility(View.VISIBLE);
-                binding.layoutEmploymentInfo.setVisibility(View.GONE);
-                binding.chevronEmploymentInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-
-
-            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
-                binding.businessNameTinLicence.setVisibility(View.VISIBLE);
-                binding.viewBusinessInfo.setVisibility(View.VISIBLE);
-                binding.layoutBusinessInfo.setVisibility(View.GONE);
-                binding.chevronBusinessInformation.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-            }
-            if (binding.layoutBusinessAccount.getVisibility() == View.VISIBLE) {
-                binding.agentMerchant.setVisibility(View.VISIBLE);
-                binding.viewBusinessAccount.setVisibility(View.VISIBLE);
-                binding.layoutBusinessAccount.setVisibility(View.GONE);
-                binding.chevronBusinessAccount.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-
-            }
-            if (binding.layoutCustomerSupportMenu.getVisibility() == View.VISIBLE) {
-                binding.tollFreeEmailLiveChat.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.VISIBLE);
-                binding.layoutCustomerSupportMenu.setVisibility(View.GONE);
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_right));
-
-            } else {
-                binding.chevronCustomerSupport.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_chevron_down));
-                binding.layoutCustomerSupportMenu.setVisibility(View.VISIBLE);
-                binding.viewCustomerSupport.setVisibility(View.GONE);
-                binding.tollFreeEmailLiveChat.setVisibility(View.GONE);
-
-            }
-
-
-        });
-
-        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-        if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
-            binding.agentMerchant.setText("Master Agent");
-            binding.layoutAgent.setVisibility(View.GONE);
-            binding.layoutMerchant.setVisibility(View.GONE);
-            binding.businessAccountLayout.setVisibility(View.VISIBLE);
-        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
-            binding.businessAccountLayout.setVisibility(View.GONE);
-
-        }
+//        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+//        if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
+//            binding.agentMerchant.setText("Master Agent");
+//            binding.layoutAgent.setVisibility(View.GONE);
+//            binding.layoutMerchant.setVisibility(View.GONE);
+//            binding.businessAccountLayout.setVisibility(View.VISIBLE);
+//        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+//            binding.businessAccountLayout.setVisibility(View.GONE);
+//
+//        }
 
 
 
             binding.layoutSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
                 // Create and show the dialog.
                 DialogFragment depositDialog = new ChangePassword();
                 depositDialog.show(getFragmentManager(), "dialog");
@@ -511,40 +541,45 @@ public class WalletAccountFragment extends Fragment {
             }
         });
 
-            binding.layoutAgent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    label_details = "Agent Details";
-                    bundle.putString("Agent", label_details);
-                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
+//            binding.layoutAgent.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle bundle = new Bundle();
+//                    label_details = "Agent Details";
+//                    bundle.putString("Agent", label_details);
+//                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
+//
+//
+//                }
+//            });
+//            binding.layoutMerchant.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle bundle = new Bundle();
+//                    label_details = "Merchant Details";
+//                    bundle.putString("Merchant", label_details);
+//
+//
+//                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
+//                }
+//            });
+//            binding.layoutAgentMerchant.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle bundle = new Bundle();
+//                    label_details = "Master Agent Details";
+//                    bundle.putString("AgentMerchant", label_details);
+//
+//                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
+//                }
+//            });
 
+            binding.textRateShareApp.setOnClickListener(view13 -> {
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
 
-                }
-            });
-            binding.layoutMerchant.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    label_details = "Merchant Details";
-                    bundle.putString("Merchant", label_details);
-
-
-                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
-                }
-            });
-            binding.layoutAgentMerchant.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    label_details = "Master Agent Details";
-                    bundle.putString("AgentMerchant", label_details);
-
-                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
-                }
-            });
-
-            binding.shareApp.setOnClickListener(view13 -> {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
@@ -552,18 +587,33 @@ public class WalletAccountFragment extends Fragment {
                 startActivity(sendIntent);
             });
 
-            binding.rateApp.setOnClickListener(view13 -> {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
-            });
+//            binding.rateApp.setOnClickListener(view13 -> {
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+//            });
 
             binding.logout.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
+
+                    binding.chevronEmploymentBusinessInfo.setRotation(0);
+                    binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+                    binding.chevronEmploymentDetails.setRotation(0);
+                    binding.layoutEmploymentInfo.setVisibility(View.GONE);
+
+
                     logoutUser();
                 }
             });
 
-            binding.layoutTollFree.setOnClickListener(v -> {
+            binding.layoutCustomerSupport.setOnClickListener(v -> {
+
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+
+
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:0800399399"));
                 startActivity(intent);

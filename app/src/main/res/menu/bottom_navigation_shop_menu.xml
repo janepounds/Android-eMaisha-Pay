@@ -6,25 +6,25 @@
     <item
         android:id="@+id/walletProductsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_product"
+        android:icon="@drawable/ic_sell_product"
         android:title="PRODUCTS"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/walletOrdersFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_orders"
+        android:icon="@drawable/ic_sent"
         android:title="ORDERS"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletPOSFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_pos"
+        android:icon="@drawable/ic_pos2"
         android:title="POS"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletSalesFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_sales"
+        android:icon="@drawable/ic_cash_on_delivery"
         android:title="SALES"
         app:showAsAction="ifRoom"/>
 </menu>

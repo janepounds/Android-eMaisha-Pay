@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +25,6 @@
                 android:id="@+id/account_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20dp"
                 android:maxLines="1"
                 android:text="My Account"
                 android:textColor="@color/colorPrimary"
@@ -170,9 +170,16 @@
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@id/personal_info_img"
                         android:layout_below="@id/user_location"
-                        android:drawableEnd="@drawable/drop_down"
-                        android:drawablePadding="4dp"
-                        android:drawableTint="@color/colorPrimary"
+                        android:alpha="0.6"/>
+                    <ImageView
+                        android:id="@+id/down_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_toEndOf="@id/view_more_details"
+                        android:layout_below="@id/user_location"
+                        android:src="@drawable/ic_right_arrow_green"
+                        android:rotation="90"
+                        android:layout_marginTop="-2dp"
                         android:alpha="0.6"/>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -228,7 +235,7 @@
                     android:paddingEnd="5dp"
                     android:paddingBottom="10dp"
                     android:background="#f8f8ff"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
 
 
@@ -256,12 +263,12 @@
                             android:textColor="@color/colorPrimaryDark" />
 
                         <ImageView
+                            android:id="@+id/chevron_employment_details"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:layout_alignParentEnd="true"
                             android:src="@drawable/ic_right_arrow_green"
-                            app:tint="@color/colorPrimaryDark"
-                            android:rotation="90"/>
+                            app:tint="@color/colorPrimaryDark"/>
 
 
 
@@ -270,12 +277,10 @@
                         android:id="@+id/layout_employment_info"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dimen_5dp"
-                        android:paddingStart="5dp"
                         android:paddingTop="5dp"
                         android:paddingEnd="5dp"
                         android:paddingBottom="10dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/layout_employment_information">
 
                         <FrameLayout
@@ -283,18 +288,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:text="Employment Information"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:visibility="gone" />
+
 
                             <ImageView
                                 android:id="@+id/edit_employment_info"
@@ -306,31 +302,20 @@
 
                         </FrameLayout>
 
-                        <View
-                            android:id="@+id/viewE"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="4dp"
-                            android:background="#F9F7FE"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/layout_employment_info_title" />
 
                         <LinearLayout
                             android:id="@+id/layout_employer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toSxtartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/viewE">
+                            app:layout_constraintEnd_toStartOf="@id/layout_employment_info_title"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:paddingLeft="@dimen/dimen_10dp"
                                 android:text="Employer :"
                                 android:textStyle="bold"
                                 android:textSize="11sp"
@@ -365,7 +350,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:paddingLeft="@dimen/dimen_10dp"
                                 android:text="Designation :"
                                 android:textStyle="bold"
                                 android:textSize="11sp"
@@ -399,7 +383,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:paddingLeft="@dimen/dimen_10dp"
                                 android:text="Location :"
                                 android:textStyle="bold"
                                 android:textSize="11sp"
@@ -434,7 +417,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:paddingLeft="@dimen/dimen_10dp"
                                 android:text="Employee ID :"
                                 android:textStyle="bold"
                                 android:textSize="11sp"
@@ -489,6 +471,13 @@
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimaryDark" />
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow_green"
+                            app:tint="@color/colorPrimaryDark"/>
+
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -510,7 +499,10 @@
                     android:id="@+id/layout_cards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="14dp">
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="10dp">
 
 
                     <TextView
@@ -557,7 +549,10 @@
                     android:id="@+id/layout_security"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="14dp">
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="10dp">
 
 
                     <TextView
@@ -701,7 +696,7 @@
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
+                android:layout_margin="35dp"
                 android:layout_below="@id/layout_app_info_share">
 
 
@@ -719,3 +714,4 @@
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
+</layout>

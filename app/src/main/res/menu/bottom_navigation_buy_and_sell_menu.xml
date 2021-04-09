@@ -4,27 +4,27 @@
     <item
         android:id="@+id/walletBuyFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_local_mall_black_24dp"
         android:title="BUY"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/walletSellFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_sell"
+        android:icon="@drawable/ic_bn_shopping_basket"
         android:title="SELL"
         android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletOrdersFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_orders"
+        android:icon="@drawable/ic_sent"
         android:title="ORDERS"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/walletAddressesFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_location_pin"
+        android:icon="@drawable/ic_pin_drop_black_24dp"
         android:title="ADDRESSES"
         app:showAsAction="ifRoom"/>
 
