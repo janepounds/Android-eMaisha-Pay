@@ -614,14 +614,14 @@
             <ImageView
                 android:id="@+id/img_amount_visibile"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_eye"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"/>
             <ImageView
                 android:id="@+id/img_amount_blur"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_invisible_eye"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"

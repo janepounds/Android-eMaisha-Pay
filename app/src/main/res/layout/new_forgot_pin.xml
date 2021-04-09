@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_new_bg_gradient"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ImageView
+            android:src="@drawable/ic_new_bg_pattern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:alpha=".05"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/logo_vector"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:paddingBottom="@dimen/dimen_20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
+
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Security Questions"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_below="@id/logo"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_below="@id/title2"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/top_curved_background_light_blue">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="First Security Question"
+                                android:textSize="@dimen/dimen_16sp"
+                                android:textColor="@color/colorPrimaryDark"/>
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="3.4dp">
+
+                                <Spinner
+                                    android:id="@+id/sp_first_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:entries="@array/spinner_first_security_questions"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                    tools:ignore="VectorDrawableCompat" />
+                            </RelativeLayout>
+
+                            <EditText
+                                android:id="@+id/etxt_first_security_qn"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:fontFamily="@font/josefin_sans"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textColor="#000" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Second Security Question"
+                                android:textSize="@dimen/dimen_16sp"
+                                android:textColor="@color/colorPrimaryDark"/>
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="3.4dp">
+
+                                <Spinner
+                                    android:id="@+id/sp_second_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:entries="@array/spinner_second_security_questions"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                    tools:ignore="VectorDrawableCompat" />
+                            </RelativeLayout>
+
+                            <EditText
+                                android:id="@+id/etxt_second_security_qn"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:fontFamily="@font/josefin_sans"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textColor="#000" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="Third Security Question"
+                                android:textSize="@dimen/dimen_16sp"
+                                android:textColor="@color/colorPrimaryDark"/>
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="3.4dp">
+
+                                <Spinner
+                                    android:id="@+id/sp_third_security_qn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:entries="@array/spinner_third_security_questions"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="10dp"
+                                    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                                    tools:ignore="VectorDrawableCompat" />
+                            </RelativeLayout>
+
+                            <EditText
+                                android:id="@+id/etxt_third_security_qn"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rounded_gray_background"
+                                android:fontFamily="@font/josefin_sans"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textColor="#000" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+
+
+                        <Button
+                            android:id="@+id/btn_cancel_security_qn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:layout_weight="1"
+                            android:paddingStart="20dp"
+                            android:background="@drawable/rectangular_red_solid"
+                            android:text="@string/cancel"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:drawableStart="@drawable/ic_chevron_left"
+                            android:drawableTint="@color/white"/>
+                        <Button
+                            android:id="@+id/btn_submit_security_qn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="15dp"
+                            android:paddingEnd="20dp"
+                            android:paddingStart="5dp"
+                            android:background="@drawable/rectangular_blue_solid"
+                            android:text="@string/submit"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:drawableEnd="@drawable/ic_right_chevron_arrow_white"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

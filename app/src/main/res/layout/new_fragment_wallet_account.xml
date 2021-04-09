@@ -178,7 +178,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_security_id_info"
+                android:id="@+id/card_view_employment_business_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -188,24 +188,354 @@
                 android:layout_below="@id/card_view_personal_info"
                 app:cardCornerRadius="5dp">
                 <RelativeLayout
-                    android:id="@+id/layout_security_id_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/layout_employment_business_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="14dp">
 
 
                     <TextView
-                        android:id="@+id/security_id_info_title"
+                        android:id="@+id/employment_business_info_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Security "
+                        android:text="Employment &amp; Business Info "
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:alpha="0.8"/>
                     <ImageView
-                        android:id="@+id/chevron_security_id_info"
+                        android:id="@+id/chevron_employment_business_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_right_arrow_green"/>
+
+                </RelativeLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_employment_business_info_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/layout_employment_business_info"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="10dp"
+                    android:background="#f8f8ff"
+                    android:visibility="visible">
+
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_employment_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Employment Info"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow_green"
+                            app:tint="@color/colorPrimaryDark"
+                            android:rotation="90"/>
+
+
+
+                    </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_employment_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dimen_5dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="10dp"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@id/layout_employment_information">
+
+                        <FrameLayout
+                            android:id="@+id/layout_employment_info_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:text="Employment Information"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/edit_employment_info"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="end"
+                                android:src="@android:drawable/ic_menu_edit" />
+
+
+                        </FrameLayout>
+
+                        <View
+                            android:id="@+id/viewE"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="4dp"
+                            android:background="#F9F7FE"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_employment_info_title" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_employer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toSxtartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/viewE">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="Employer :"
+                                android:textStyle="bold"
+                                android:textSize="11sp"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_employer"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_designation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_employer">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="Designation :"
+                                android:textStyle="bold"
+                                android:textSize="11sp"
+                                android:textColor="@color/textColor" />
+
+
+                            <TextView
+                                android:id="@+id/text_view_designation"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_designation">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="Location :"
+                                android:textStyle="bold"
+                                android:textSize="11sp"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_location"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_employee_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_location">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="Employee ID :"
+                                android:textStyle="bold"
+                                android:textSize="11sp"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_employee_id"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        app:layout_constraintTop_toBottomOf="@id/layout_employment_info"
+                        app:layout_constraintBottom_toTopOf="@id/layout_business_information"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@color/colorPrimary"
+                        android:alpha=".79" />
+                    <LinearLayout
+                        android:id="@+id/layout_business_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view4">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Business Info"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/card_view_employment_business_info"
+                app:cardCornerRadius="5dp">
+                <RelativeLayout
+                    android:id="@+id/layout_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp">
+
+
+                    <TextView
+                        android:id="@+id/cards_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="Cards"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:alpha="0.8"/>
+                    <TextView
+                        android:id="@+id/cards_sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/cards_title"
+                        android:text="View your cards"
+                        android:textSize="10sp"
+                        android:textColor="#8C98A9"
+                        android:textStyle="bold"
+                        android:alpha="0.81"/>
+                    <ImageView
+                        android:id="@+id/chevron_cards"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -214,70 +544,45 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_payment_methods"
+                android:id="@+id/card_view_security"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@color/white"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_security_id_info"
+                android:layout_below="@id/card_view_cards"
                 app:cardCornerRadius="5dp">
                 <RelativeLayout
-                    android:id="@+id/layout_payment_methods"
+                    android:id="@+id/layout_security"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="14dp">
 
 
                     <TextView
-                        android:id="@+id/payment_methods_title"
+                        android:id="@+id/security_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Payment Methods"
+                        android:text="Security"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:alpha="0.8"/>
-                    <ImageView
-                        android:id="@+id/chevron_payment_methods"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_right_arrow_green"/>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_faqs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@color/white"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_payment_methods"
-                app:cardCornerRadius="5dp">
-                <RelativeLayout
-                    android:id="@+id/layout_faqs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="14dp">
-
-
                     <TextView
-                        android:id="@+id/faqs_title"
+                        android:id="@+id/security_sub_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="FAQ\'s"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14sp"
+                        android:layout_below="@id/security_title"
+                        android:text="Change Pin"
+                        android:textSize="10sp"
+                        android:textColor="#8C98A9"
                         android:textStyle="bold"
-                        android:alpha="0.8"/>
+                        android:alpha="0.81"/>
                     <ImageView
-                        android:id="@+id/chevron_faqs"
+                        android:id="@+id/chevron_security"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -293,7 +598,7 @@
                 android:background="@color/white"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_faqs"
+                android:layout_below="@id/card_view_security"
                 app:cardCornerRadius="5dp">
                 <RelativeLayout
                     android:id="@+id/layout_help"
@@ -307,7 +612,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Help"
+                        android:text="FAQ\'s &amp; Help"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"
