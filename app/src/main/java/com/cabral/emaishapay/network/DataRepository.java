@@ -18,6 +18,7 @@ import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCart;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
@@ -242,5 +243,78 @@ public class DataRepository {
     }
 
 
-    //************8
+    //************GET CART ITEM COUNT ************//
+
+    public LiveData<Integer> getCartItemCount() {
+        return mEcProductCartDao.getCartItemCount();
+    }
+
+    //**************DELETE PRODUCT FROM CART********************************//
+    public LiveData<Void> deleteProductFromCart(String id) {
+
+      return   mEcProductCartDao.deleteProductFromCart(id);
+
+    }
+
+
+    //*****************GET TOTAL PRICE**************************************************//
+    public double getTotalPrice() {
+
+        List<EcProductCart> products;
+        products = mEcProductCartDao.getTotalPrice();
+        double total_price = 0;
+
+        if (products!=null) {
+            for(int i=0;i<products.size();i++){
+                double price = Double.parseDouble(products.get(i).getProduct_price());
+                int qty = Integer.parseInt(products.get(i).getProduct_qty());
+                double sub_total = price * qty;
+                total_price = total_price + sub_total;
+
+
+            }
+
+
+        } else {
+            total_price = 0;
+        }
+
+        return total_price;
+    }
+
+    //**************GET PRODUCT NAME****************************************//
+
+    public List<EcProduct> getProductName(String product_id) {
+
+        return mEcProductsDao.getProductName(product_id);
+    }
+
+    //***********GET PRODUCT IMAGE***************************************************//
+    public ArrayList<HashMap<String, String>> getProductImage(String product_id) {
+        ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
+
+        for (EcProduct product:mEcProductsDao.getProductImage(product_id)) {
+            HashMap<String, String> map = new HashMap();
+            map.put("product_image", product.getProduct_image());
+            productnames.add(map);
+        }
+
+       return productnames;
+
+    }
+
+    //******************GET ORDER HISTORY DATA****************************************************//
+
+    public void addToCart(String product_id) {
+
+
+        mEcProductCartDao.addToCart(product_id);
+
+    }
+
+
+
+
+
+
 }

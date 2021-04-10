@@ -1,14 +1,19 @@
 package com.cabral.emaishapay.network.db.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
+
+import com.cabral.emaishapay.network.db.entities.EcProductCart;
+
+import java.util.List;
 
 @Dao
 public interface EcProductCartDao {
 
     //get total price
     @Query("SELECT * FROM EcProductCart")
-    double getTotalPrice();
+    List<EcProductCart> getTotalPrice();
 
     //add to  cart
     @Query("SELECT * FROM EcProductCart WHERE product_id=:product_id")
@@ -16,11 +21,11 @@ public interface EcProductCartDao {
 
     //delete product from cart
     @Query("DELETE FROM EcProductCart WHERE cart_id = :id")
-    void deleteProductFromCart(String id);
+    LiveData<Void> deleteProductFromCart(String id);
 
     //get cart item count
     @Query("SELECT * FROM EcProductCart")
-     int getCartItemCount();
+    LiveData<Integer> getCartItemCount();
 
 
     //update product quantity

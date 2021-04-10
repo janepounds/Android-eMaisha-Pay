@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.cabral.emaishapay.R;
@@ -90,6 +91,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         binding.tvKeyBackspace.setOnClickListener(this);
         binding.tvKeyClear.setOnClickListener(this);
 
+
         binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         binding.pinCode1Edt.setTextIsSelectable(true);
         setInputConnection(binding.pinCode1Edt);
@@ -104,7 +106,9 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 binding.pinCode2Edt.requestFocus();
+                binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -122,7 +126,9 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 binding.pinCode3Edt.requestFocus();
+                binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -139,7 +145,9 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 binding.pinCode4Edt.requestFocus();
+                binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
             }
         });
 
@@ -156,6 +164,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
                 pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
                 pin = pin.replaceAll("\\s+", "");
                 if (pin.length() >= 4) {
@@ -290,19 +300,35 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                 case 1:
                     binding.pinCode1Edt.setText("");
                     setInputConnection( binding.pinCode1Edt);
+                    binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
                     break;
                 case 2:
                     binding.pinCode2Edt.setText("");
                     setInputConnection( binding.pinCode2Edt);
+                    binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
                     break;
                 case 3:
                     binding.pinCode3Edt.setText("");
                     setInputConnection( binding.pinCode3Edt);
+                    binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
+                    break;
+                case 4:
+                    binding.pinCode4Edt.setText("");
+                    setInputConnection( binding.pinCode4Edt);
+                    binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
                     break;
             }
         }
         else if(v.getId() == R.id.tv_key_clear){
             clearPin(binding);
+            binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+            binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+            binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+            binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
         }
        else {
             String value = keyValues.get(v.getId()).toString();
