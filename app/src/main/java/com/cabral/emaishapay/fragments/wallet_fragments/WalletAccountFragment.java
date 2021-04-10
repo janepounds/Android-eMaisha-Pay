@@ -691,7 +691,9 @@ public class WalletAccountFragment extends Fragment {
 
                 requireActivity().finish();
                 // Open login
-                startActivity(new Intent(requireActivity(), AuthActivity.class));
+                Intent authIntent=new Intent(requireActivity(), AuthActivity.class);
+                authIntent.putExtra("flash",false);
+                startActivity(authIntent);
             }
         }).setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
 

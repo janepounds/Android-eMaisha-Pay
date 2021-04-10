@@ -1,14 +1,8 @@
 package com.cabral.emaishapay.network;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
@@ -27,8 +21,6 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
-
-import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -2,6 +2,8 @@ package com.cabral.emaishapay.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavInflater;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Intent;
@@ -31,9 +33,18 @@ public class AuthActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_auth_container);
+
         navController = navHostFragment.getNavController();
 
+        Boolean goToFlash=getIntent().getBooleanExtra("flash",true);
+        if(!goToFlash){  // Hostfragment
+            NavInflater inflater = navController.getNavInflater();
+            NavGraph graph = inflater.inflate(R.navigation.auth_navigation);
+            graph.setStartDestination(R.id.loginFragment);
 
+            navHostFragment.getNavController().setGraph(graph);
+
+        }
 
     }
 

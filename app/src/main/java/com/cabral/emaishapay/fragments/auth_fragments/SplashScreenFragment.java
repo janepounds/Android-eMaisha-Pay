@@ -81,11 +81,17 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
         ConstantValues.IS_PUSH_NOTIFICATIONS_ENABLED = myAppPrefsManager.isPushNotificationsEnabled();
         ConstantValues.IS_LOCAL_NOTIFICATIONS_ENABLED = myAppPrefsManager.isLocalNotificationsEnabled();
 
-        // Start MyTask after 3 seconds
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            myTask = new MyTask();
-            myTask.execute();
-        }, 3000);
+        Boolean goToFlash=requireActivity().getIntent().getBooleanExtra("flash",true);
+        if(goToFlash){
+            // Start MyTask after 3 seconds
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                myTask = new MyTask();
+                myTask.execute();
+            }, 3000);
+        }else {
+            setAppConfig();
+        }
+
     }
 
 

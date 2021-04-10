@@ -69,10 +69,12 @@
         tools:layout="@layout/splash">
         <action
             android:id="@+id/action_splashScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/auth_navigation" />
         <action
             android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
-            app:destination="@id/onBoardingFragment" />
+            app:destination="@id/onBoardingFragment"
+            app:popUpTo="@id/auth_navigation" />
         <action
             android:id="@+id/action_splashScreenFragment_to_wallet_home_navigation"
             app:destination="@id/wallet_home_navigation" />
