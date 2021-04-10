@@ -21,11 +21,11 @@ public interface EcProductCartDao {
 
     //delete product from cart
     @Query("DELETE FROM EcProductCart WHERE cart_id = :id")
-    LiveData<Void> deleteProductFromCart(String id);
+    void deleteProductFromCart(String id);
 
     //get cart item count
     @Query("SELECT * FROM EcProductCart")
-    LiveData<Integer> getCartItemCount();
+    int getCartItemCount();
 
 
     //update product quantity

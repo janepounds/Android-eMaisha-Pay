@@ -107,7 +107,7 @@ public class EcProductCart implements Parcelable {
         this.product_price = product_price;
     }
 
-    public String getProduct_qty() {
+    public int getProduct_qty() {
         return product_qty;
     }
 

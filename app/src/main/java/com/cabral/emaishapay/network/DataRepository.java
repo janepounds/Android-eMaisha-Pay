@@ -245,14 +245,14 @@ public class DataRepository {
 
     //************GET CART ITEM COUNT ************//
 
-    public LiveData<Integer> getCartItemCount() {
+    public int getCartItemCount() {
         return mEcProductCartDao.getCartItemCount();
     }
 
     //**************DELETE PRODUCT FROM CART********************************//
-    public LiveData<Void> deleteProductFromCart(String id) {
+    public void deleteProductFromCart(String id) {
 
-      return   mEcProductCartDao.deleteProductFromCart(id);
+        mEcProductCartDao.deleteProductFromCart(id);
 
     }
 
@@ -267,7 +267,7 @@ public class DataRepository {
         if (products!=null) {
             for(int i=0;i<products.size();i++){
                 double price = Double.parseDouble(products.get(i).getProduct_price());
-                int qty = Integer.parseInt(products.get(i).getProduct_qty());
+                int qty = products.get(i).getProduct_qty();
                 double sub_total = price * qty;
                 total_price = total_price + sub_total;
 
