@@ -1,8 +1,16 @@
 package com.cabral.emaishapay.network;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
+
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
@@ -22,6 +30,8 @@ import com.cabral.emaishapay.network.db.entities.EcProductCart;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
+import com.cabral.emaishapay.utils.NetworkBoundResource;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +39,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 public class DataRepository {
     private static final String TAG = "DataRepository";
@@ -314,7 +327,63 @@ public class DataRepository {
 
 
 
+    public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id) {
 
 
+        return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
+            @Override
+            protected void saveCallResult(@NonNull List<EcProduct> productList) {
+                mEcProductsDao.addProduct( productList);
+            }
 
+            @NonNull
+            @Override
+            protected LiveData<List<EcProduct>> loadFromDb() {
+
+                return mEcProductsDao.getProducts();
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<EcProduct> data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected Call<List<EcProduct>> createCall() {
+
+                Call<List<EcProduct>> call = BuyInputsAPIClient.getInstance().getMerchantProducts(wallet_id);
+                return call;
+            }
+        }.getAsLiveData();
+
+    }
+
+    public LiveData<Resource<List<EcProduct>>> searchMerchantProduct(String key) {
+
+        return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
+            @Override
+            protected void saveCallResult(@NonNull List<EcProduct> productList) {
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<EcProduct>> loadFromDb() {
+
+                return  mEcProductsDao.getSearchProducts(key);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<EcProduct> data) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected Call<List<EcProduct>> createCall() {
+                return null;
+            }
+        }.getAsLiveData();
+
+    }
 }

@@ -24,6 +24,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,11 +40,11 @@ public class ProductPreviewDialog extends DialogFragment {
     private static final String TAG = "ProductPreviewDialog";
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     private Context context;
-    private HashMap<String, String>  productData;
+    private EcProduct  productData;
     Button delete_button;
     DbHandlerSingleton dbHandler;
 
-   public ProductPreviewDialog(HashMap<String, String> productData){
+   public ProductPreviewDialog(EcProduct productData){
        this.productData =productData;
    }
     @NotNull
@@ -101,7 +102,7 @@ public class ProductPreviewDialog extends DialogFragment {
                                 //delete from online
                                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                                String product_id = productData.get("product_id");
+                                String product_id = productData.getProduct_id();
                                 Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
@@ -153,13 +154,13 @@ public class ProductPreviewDialog extends DialogFragment {
             }
         });
 
-        produce_title_txt.setText(this.productData.get("product_name"));
-        product_manufacturer_txt.setText(this.productData.get("product_manufacturer"));
-        product_category_txt.setText(this.productData.get("product_category"));
-        product_code_txt.setText(this.productData.get("product_code"));
-        product_sell_price_txt.setText(this.productData.get("product_sell_price"));
-        product_purchase_price_txt.setText(  this.productData.get("product_buy_price"));//NumberFormat.getInstance().format()
-        product_stock_txt.setText(this.productData.get("product_stock"));
+        produce_title_txt.setText(this.productData.getProduct_name());
+        product_manufacturer_txt.setText(this.productData.getManufacturer());
+        product_category_txt.setText(this.productData.getProduct_category());
+        product_code_txt.setText(this.productData.getProduct_code());
+        product_sell_price_txt.setText(this.productData.getProduct_sell_price());
+        product_purchase_price_txt.setText(  this.productData.getProduct_buy_price());//NumberFormat.getInstance().format()
+        product_stock_txt.setText(this.productData.getProduct_stock());
 
     }
 

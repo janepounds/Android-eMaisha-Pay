@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.network.db.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,13 +16,13 @@ import java.util.List;
 public interface EcProductsDao {
 
     //insert product
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addProduct(EcProduct products);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void addProduct(List<EcProduct> products);
 
 
     //get products
     @Query("SELECT * FROM  EcProduct ORDER BY product_id DESC")
-    List<EcProduct> getProducts();
+    LiveData<List<EcProduct>> getProducts();
 
 
     //delete product
@@ -30,7 +31,7 @@ public interface EcProductsDao {
 
     //get product data
     @Query("SELECT * FROM EcProduct WHERE product_name LIKE :s OR product_code LIKE :s ORDER BY product_id DESC")
-    List<EcProduct> getSearchProducts(String s);
+    LiveData<List<EcProduct>> getSearchProducts(String s);
 
     //get product name
     @Query("SELECT * FROM EcProduct WHERE product_id=:product_id")

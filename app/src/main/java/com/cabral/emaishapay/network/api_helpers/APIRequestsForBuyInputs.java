@@ -36,8 +36,10 @@ import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.models.uploadimage.UploadImageModel;
 import com.cabral.emaishapay.models.user_model.UserData;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -275,8 +277,8 @@ public interface APIRequestsForBuyInputs {
     @GET("getManufacturers")
     Call<ManufacturersResponse> getManufacturers(@Header("Authorization")String token);
 
-    @GET("getBackup/{wallet_id}")
-    Call<ResponseBody> getBackup(
+    @GET("getMerchantProducts/{wallet_id}")
+    Call<List<EcProduct>> getMerchantProducts(
             @Path("wallet_id") String id
     );
 

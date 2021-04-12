@@ -1,10 +1,10 @@
 package com.cabral.emaishapay.adapters.Shop;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,40 +16,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cabral.emaishapay.DailogFragments.shop.AddProductFragment;
 import com.cabral.emaishapay.DailogFragments.shop.ProductPreviewDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.shop_model.Manufacturer;
+import com.cabral.emaishapay.network.db.entities.EcManufacturer;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-import static com.cabral.emaishapay.app.EmaishaPayApp.getContext;
-
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
 
-    private List<HashMap<String, String>> productData;
+    private List<? extends EcProduct> productData=new ArrayList<>();
     private Context context;
     private DbHandlerSingleton dbHandler;
-    private List<Manufacturer> manufacturers;
+    private List<EcManufacturer> manufacturers;
     FragmentManager fm;
 
 
-    public ProductAdapter(Context context, List<HashMap<String, String>> productData, FragmentManager supportFragmentManager, List<Manufacturer> manufacturers) {
+    public ProductAdapter(Context context, FragmentManager supportFragmentManager, List<EcManufacturer> manufacturers) {
         this.context = context;
-        this.productData = productData;
         this.fm=supportFragmentManager;
     }
 
@@ -61,20 +56,59 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return new MyViewHolder(view);
     }
 
+    public void setProductList(final List<? extends EcProduct> productList) {
+        if ( this.productData== null) {
+            this.productData =  productList;
+            notifyItemRangeInserted(0, productList.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return productData.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return productList.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return productData.get(oldItemPosition).getProduct_id() ==
+                            productList.get(newItemPosition).getProduct_id();
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    EcProduct newProduct = productList.get(newItemPosition);
+                    EcProduct oldProduct = productData.get(oldItemPosition);
+                    return newProduct.getProduct_weight() == oldProduct.getProduct_weight()
+                            && TextUtils.equals(newProduct.getProduct_name(), oldProduct.getProduct_name())
+                            && TextUtils.equals(newProduct.getProduct_weight_unit(), oldProduct.getProduct_weight_unit())
+                            && newProduct.getProduct_sell_price() == oldProduct.getProduct_sell_price();
+                }
+            });
+            productData = productList;
+            result.dispatchUpdatesTo(this);
+        }
+    }
+
+
+
 
     @Override
     public void onBindViewHolder(@NonNull final ProductAdapter.MyViewHolder holder, int position) {
 
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        final String product_id = productData.get(position).get("product_id");
-        String name = productData.get(position).get("product_name");
-        String category = productData.get(position).get("product_category");
-        String supplier_id = productData.get(position).get("product_supplier");
-        String buy_price = productData.get(position).get("product_buy_price");
-        String sell_price = productData.get(position).get("product_sell_price");
-        String base64Image = productData.get(position).get("product_image");
-        String productstock = productData.get(position).get("product_stock");
+        final String product_id = productData.get(position).getProduct_id();
+        String name = productData.get(position).getProduct_name();
+        String category = productData.get(position).getProduct_category();
+        String supplier_id = productData.get(position).getProduct_supplier();
+        String buy_price = productData.get(position).getProduct_buy_price();
+        String sell_price = productData.get(position).getProduct_sell_price();
+        String base64Image = productData.get(position).getProduct_image();
+        String productstock = productData.get(position).getProduct_stock();
         String currency =context.getString(R.string.currency);
 
         String supplier_name = dbHandler.getSupplierName(supplier_id);
@@ -85,9 +119,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.txtSupplierName.setText(supplier_name);
         holder.txtBuyPrice.setText(currency + " " + buy_price);
         holder.txtSellPrice.setText(currency + " " + sell_price);
-        if(productData.get(position).get("product_weight")!=null && !productData.get(position).get("product_weight").equalsIgnoreCase("null") ){
-            holder.txt_per_unit.setText("/"+productData.get(position).get("product_weight")+productData.get(position).get("product_weight_unit"));
-            holder.txtProductName.setText(holder.txtProductName.getText()+" "+productData.get(position).get("product_weight")+productData.get(position).get("product_weight_unit"));
+        
+        if(productData.get(position).getProduct_weight()!=null && !productData.get(position).getProduct_weight().equalsIgnoreCase("null") ){
+            holder.txt_per_unit.setText("/"+productData.get(position).getProduct_weight()+productData.get(position).getProduct_weight_unit());
+            holder.txtProductName.setText(holder.txtProductName.getText()+" "+productData.get(position).getProduct_weight()+productData.get(position).getProduct_weight_unit());
         }
 
 
@@ -154,7 +189,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return productData.size();
+        return this.productData.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -185,7 +220,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         @Override
         public void onClick(View view) {
 
-            HashMap<String, String> productDetails = productData.get(getAdapterPosition());
+            EcProduct productDetails = productData.get(getAdapterPosition());
             //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
             if (fm!=null ){
                 ProductPreviewDialog productPreviewDialog = new ProductPreviewDialog(productDetails);

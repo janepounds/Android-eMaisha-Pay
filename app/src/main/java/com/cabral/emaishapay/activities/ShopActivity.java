@@ -40,7 +40,6 @@ public class ShopActivity extends AppCompatActivity {
     public static ActionBar actionBar;
     public static BottomNavigationView bottomNavigationView;
     public Fragment currentFragment, defaultHomeFragment;
-    String wallet_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +71,8 @@ public class ShopActivity extends AppCompatActivity {
             // setupTitle();
         });
 
-        wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, ShopActivity.this);
-        getProductsBackUp();
-        defaultHomeFragment =new ShopProductsFragment(ShopActivity.this, getSupportFragmentManager());
+
+        defaultHomeFragment =new ShopProductsFragment(ShopActivity.this);
 
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setItemIconTintList(null);
@@ -165,83 +163,5 @@ public class ShopActivity extends AppCompatActivity {
         return true;
     }
 
-
-    private  void getProductsBackUp(){
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ShopActivity.this);
-        databaseAccess.open();
-
-        Call<ResponseBody> call = BuyInputsAPIClient
-                .getInstance()
-                .getBackup(
-                        wallet_id
-                );
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    String s = null;
-                    try {
-                        s = response.body().string();
-                        if (s != null) {
-                            JSONObject jsonObject = new JSONObject(s);
-                            JSONArray my_products = null;
-
-                            my_products = jsonObject.getJSONArray("products");
-                            if (my_products.length() > 0) {
-                                Log.w("ProductSize", my_products.length() + "---------------------");
-                                Log.w("ProductArray", my_products + "---------------------");
-                                for (int i = 0; i < my_products.length(); i++) {
-
-                                    boolean check = databaseAccess.addProduct(
-                                            my_products.getJSONObject(i).getString("product_id"),
-                                            my_products.getJSONObject(i).getString("product_name"),
-                                            my_products.getJSONObject(i).getString("product_code"),
-                                            my_products.getJSONObject(i).getString("product_category"),
-                                            my_products.getJSONObject(i).getString("product_description"),
-                                            my_products.getJSONObject(i).getString("product_buy_price"),
-                                            my_products.getJSONObject(i).getString("product_sell_price"),
-                                            my_products.getJSONObject(i).getString("product_stock"),
-                                            my_products.getJSONObject(i).getString("product_supplier"),
-                                            my_products.getJSONObject(i).getString("product_image"),
-                                            my_products.getJSONObject(i).getString("product_weight_unit"),
-                                            my_products.getJSONObject(i).getString("product_weight"),
-                                            my_products.getJSONObject(i).getString("manufacturer"));
-
-                                    if (check) {
-                                        Log.w("Products Insert", "Product Inserted Successfully");
-                                    } else {
-                                        Log.e("Product Insert", "product Insertion failed");
-
-                                    }
-
-                                }
-                            } else {
-                                Log.d("No Products", "Shop Has No Products Backed Up");
-
-                            }
-
-
-                        }
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    Log.d("Error Occurred", "Error Occurred");
-                    Log.d("Error response", String.valueOf(response));
-                    Log.d("Error Code", String.valueOf(response.code()));
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-                Log.d("Error Occurred", "Error Occurred");
-
-            }
-        });
-    }
 
 }

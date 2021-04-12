@@ -1,16 +1,23 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import es.dmoral.toasty.Toasty;
@@ -20,6 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,9 +46,14 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.models.shop_model.Manufacturer;
+import com.cabral.emaishapay.databinding.FragmentShopProductsBinding;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.EcManufacturer;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.utils.Resource;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -54,24 +67,20 @@ import java.util.List;
 
 public class ShopProductsFragment extends Fragment {
 
-    Toolbar toolbar;
     ProductAdapter productAdapter;
-    ImageView imgNoProduct;
-    EditText etxtSearch;
-    FloatingActionButton fabAdd;
-    private RecyclerView recyclerView;
     FragmentManager fm;
     Activity shop; String wallet_id;
     private Context context;
-    private List<Manufacturer> manufacturers;
-    ArrayList<HashMap<String, String>> products;
-    public ShopProductsFragment() {
+    private List<EcManufacturer> manufacturers=new ArrayList<>();
 
-    }
+    DialogLoader dialogLoader;
+    FragmentShopProductsBinding binding;
+    private ShopProductsModelView viewModel;
 
-    public ShopProductsFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
-        this.fm = supportFragmentManager;
+    public ShopProductsFragment(ShopActivity shopActivity) {
+
         this.shop = shopActivity;
+        this.fm = shopActivity.getSupportFragmentManager();
     }
 
     @Override
@@ -82,27 +91,30 @@ public class ShopProductsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
 
-        getOnlineManufacturers();
-        wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop_products, container, false);
-        toolbar = view.findViewById(R.id.toolbar_shop_products);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_shop_products,container,false);
+
+        dialogLoader = new DialogLoader(getContext());
+
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);
+        wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarShopProducts);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Products");
-        fabAdd = view.findViewById(R.id.fab_add);
-        etxtSearch = view.findViewById(R.id.etxt_search);
-        recyclerView = view.findViewById(R.id.product_recyclerview);
-        imgNoProduct = view.findViewById(R.id.image_no_product);
+
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        recyclerView.setHasFixedSize(true);
+        binding.productRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.productRecyclerview.setHasFixedSize(true);
 
-        fabAdd.setOnClickListener(new View.OnClickListener() {
+        binding.fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = fm.beginTransaction();
@@ -118,27 +130,27 @@ public class ShopProductsFragment extends Fragment {
             }
         });
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-        databaseAccess.open();
-        //get data from local database
-        List<HashMap<String, String>> productData= new ArrayList();
-        productData = databaseAccess.getProducts();
+//        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
+//        databaseAccess.open();
+//        getOnlineOrders();
+        productAdapter = new ProductAdapter(context, getActivity().getSupportFragmentManager(),manufacturers);
 
-        Log.d("data", "" + productData.size());
-
-        if (productData.size() <= 0) {
-            Toasty.info(context, R.string.no_product_found, Toast.LENGTH_SHORT).show();
-            imgNoProduct.setImageResource(R.drawable.no_product);
-        } else {
-            imgNoProduct.setVisibility(View.GONE);
-
-            productAdapter = new ProductAdapter(context, productData, getActivity().getSupportFragmentManager(),manufacturers);
-
-            recyclerView.setAdapter(productAdapter);
-        }
+        binding.productRecyclerview.setAdapter(productAdapter);
 
 
-        etxtSearch.addTextChangedListener(new TextWatcher() {
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
+        subscribeToMerchantProducts(viewModel.getMerchantProducts());
+
+        subscribeToManufacturer(viewModel.getOnlineManufacturers());
+
+        binding.etxtSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,32 +159,7 @@ public class ShopProductsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                List<HashMap<String, String>> searchProductList;
-                searchProductList = databaseAccess.getSearchProducts(s.toString());
-
-
-                if (searchProductList.size() <= 0) {
-                    //  Toasty.info(ProductActivity.this, "No Product Found!", Toast.LENGTH_SHORT).show();
-
-                    recyclerView.setVisibility(View.GONE);
-                    imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.no_product);
-                    //  txtNoProducts.setVisibility(View.VISIBLE);
-
-
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    imgNoProduct.setVisibility(View.GONE);
-
-
-                    productAdapter = new ProductAdapter(getContext(), searchProductList, getActivity().getSupportFragmentManager(), manufacturers);
-
-                    recyclerView.setAdapter(productAdapter);
-
-
-                }
-
+                viewModel.setQuery(s);
 
             }
 
@@ -183,44 +170,45 @@ public class ShopProductsFragment extends Fragment {
 
 
         });
-        getOnlineOrders();
-
-
-        return view;
     }
 
-    private  void getOnlineManufacturers(){
-        DialogLoader dialogLoader = new DialogLoader(getContext());
-        dialogLoader.showProgressDialog();
+    private void subscribeToMerchantProducts(LiveData<Resource<List<EcProduct>>> merchantProducts) {
 
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        Call<ManufacturersResponse> call1 = BuyInputsAPIClient
-                .getInstance()
-                .getManufacturers(access_token);
-        call1.enqueue(new Callback<ManufacturersResponse>() {
-            @Override
-            public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
-                if (response.isSuccessful()) {
+        merchantProducts.observe(getViewLifecycleOwner(), myProducts->{
+            //dialogLoader.showProgressDialog();
+            Log.d("debug","------->>>>");
+            if(myProducts.data!=null && myProducts.data.size()!=0){
 
-                    saveManufacturersList(response.body().getManufacturers());
-                    //Log.d("Categories", String.valueOf(categories));
+                binding.imageNoProduct.setVisibility(View.GONE);
+                productAdapter.setProductList( myProducts.data);
+              //  dialogLoader.hideProgressDialog();
 
-                } else {
-                    Log.d("Failed", "Manufacturers Fetch failed");
+            }else {
+                //Toasty.info(context, R.string.no_product_found, Toast.LENGTH_SHORT).show();
 
-                }
-                dialogLoader.hideProgressDialog();
-            }
-
-            @Override
-            public void onFailure(Call<ManufacturersResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.d("Failed", "Manufacturers Fetch failed");
-                dialogLoader.hideProgressDialog();
+                binding.productRecyclerview.setVisibility(View.GONE);
+                binding.imageNoProduct.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setImageResource(R.drawable.no_product);
             }
         });
-
     }
+
+    private void subscribeToManufacturer(LiveData<List<EcManufacturer>> onlineManufacturers) {
+        onlineManufacturers.observe(getViewLifecycleOwner(), myManfacturers->{
+            dialogLoader.showProgressDialog();
+            if(myManfacturers!=null && myManfacturers.size()!=0){
+
+                saveManufacturersList(myManfacturers);
+                if(productAdapter!=null){
+                    productAdapter.notifyDataSetChanged();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+    }
+
+
 
     private  void getOnlineOrders(){
         //NetworkStateChecker.RegisterDeviceForFCM(HomeActivity.this);
@@ -282,7 +270,8 @@ public class ShopProductsFragment extends Fragment {
         });
     }
 
-    public void saveManufacturersList(List<Manufacturer> manufacturers) {
+    public void saveManufacturersList(List<EcManufacturer> manufacturers) {
         this.manufacturers = manufacturers;
     }
+
 }

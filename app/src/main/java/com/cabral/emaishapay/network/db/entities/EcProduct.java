@@ -40,7 +40,7 @@ public class EcProduct implements Parcelable {
     @ColumnInfo(name = "sync_status",defaultValue = "0")
     private String sync_status;
 
-    public EcProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_supplier, String product_image, String product_stock, String product_weight_unit, String product_weight, String manufacturer, String sync_status) {
+    public EcProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_supplier, String product_image, String product_stock, String product_weight_unit, String product_weight, String manufacturer) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_code = product_code;
@@ -54,7 +54,6 @@ public class EcProduct implements Parcelable {
         this.product_weight_unit = product_weight_unit;
         this.product_weight = product_weight;
         this.manufacturer = manufacturer;
-        this.sync_status = sync_status;
     }
 
     protected EcProduct(Parcel in) {

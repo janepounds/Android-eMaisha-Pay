@@ -1748,36 +1748,6 @@ public class DatabaseAccess {
     }
 
 
-    //get product data
-    public ArrayList<HashMap<String, String>> getSearchProducts(String s) {
-        ArrayList<HashMap<String, String>> product = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM products WHERE product_name LIKE '%" + s + "%' OR product_code LIKE '%" + s + "%' ORDER BY product_id DESC", null);
-        if (cursor.moveToFirst()) {
-            do {
-                HashMap<String, String> map = new HashMap<String, String>();
-
-                map.put("product_id", cursor.getString(0));
-                map.put("product_name", cursor.getString(1));
-                map.put("product_code", cursor.getString(2));
-                map.put("product_category", cursor.getString(3));
-                map.put("product_description", cursor.getString(4));
-                map.put("product_buy_price", cursor.getString(5));
-                map.put("product_sell_price", cursor.getString(6));
-                map.put("product_supplier", cursor.getString(7));
-                map.put("product_image", cursor.getString(8));
-                map.put("product_stock", cursor.getString(9));
-                map.put("product_weight_unit_id", cursor.getString(10));
-                map.put("product_weight", cursor.getString(11));
-
-
-                product.add(map);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        database.close();
-        return product;
-    }
-
 
     //Add product into cart
     public int addToCart(String product_name, String price, String weight, int qty, String base64Image, String ref, String tva_tx, String product_id) {

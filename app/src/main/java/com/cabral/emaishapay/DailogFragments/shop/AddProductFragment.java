@@ -50,10 +50,10 @@ import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
-import com.cabral.emaishapay.models.shop_model.Manufacturer;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;
@@ -87,7 +87,7 @@ public class AddProductFragment extends DialogFragment {
     private List<Category> categories;
     private List<Product> products;
     private List<String> catNames;
-    private List<Manufacturer> manufacturers;
+    private List<EcManufacturer> manufacturers;
     private List<String> productNames;
     private List<String> manufacturersNames;
     private List<String> offlinemanufacturersNames;
@@ -103,12 +103,12 @@ public class AddProductFragment extends DialogFragment {
     List<HashMap<String, String>> productData;
 
 
-    public AddProductFragment(List<Manufacturer> manufacturers) {
+    public AddProductFragment(List<EcManufacturer> manufacturers) {
         this.manufacturers=manufacturers;
     }
 
 
-    public AddProductFragment(List<Manufacturer> manufacturers, List<HashMap<String, String>> productData) {
+    public AddProductFragment(List<EcManufacturer> manufacturers, List<HashMap<String, String>> productData) {
         this.manufacturers=manufacturers;
         this.productData=productData;
     }
@@ -346,7 +346,7 @@ public class AddProductFragment extends DialogFragment {
                         for (int i = 0; i < manufacturersNames.size(); i++) {
                             if (manufacturersNames.get(i).equalsIgnoreCase(selectedItem)) {
                                 // Get the ID of selected Country
-                                manufacturers_id = manufacturers.get(i).getManufacturers_id();
+                                manufacturers_id = manufacturers.get(i).getManufacturer_id();
                                 manufacturers_name = manufacturers.get(i).getManufacturer_name();
                             }
                         }
