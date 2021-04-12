@@ -40,13 +40,11 @@ public class ShopOrdersFragment extends Fragment {
     private OnlineOrdersAdapter orderAdapter;
     private DbHandlerSingleton dbHandler;
     private Context context;
-    Toolbar toolbar;String wallet_id;
-
-    public ShopOrdersFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
-    }
+    Toolbar toolbar;
 
     @Override
     public void onAttach(@NonNull Context context) {
+        this.context=context;
         super.onAttach(context);
     }
 
@@ -72,9 +70,6 @@ public class ShopOrdersFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
 
         recyclerView.setHasFixedSize(true);
-
-
-
 
         //get data from local database
         List<HashMap<String, String>> orderList;
@@ -106,15 +101,9 @@ public class ShopOrdersFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
-                //  searchData(s.toString());
-
-
-                //get data from local database
                 List<HashMap<String, String>> searchOrder;
 
                 searchOrder = dbHandler.searchOrderList(s.toString());
-
 
                 if (searchOrder.size() <= 0) {
                     recyclerView.setVisibility(View.GONE);

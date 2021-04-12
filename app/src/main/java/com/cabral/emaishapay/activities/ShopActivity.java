@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DatabaseAccess;
+import com.cabral.emaishapay.databinding.ActivityShopBinding;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
@@ -15,11 +17,17 @@ import com.cabral.emaishapay.fragments.shop_fragment.ShopSalesFragment;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
@@ -36,19 +44,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShopActivity extends AppCompatActivity {
-    Toolbar toolbar;
+
     public static ActionBar actionBar;
-    public static BottomNavigationView bottomNavigationView;
-    public Fragment currentFragment, defaultHomeFragment;
+    ActivityShopBinding binding;
+    public  static NavController navController;
+    public  static BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop);
+        binding= DataBindingUtil.setContentView(ShopActivity.this,R.layout.activity_shop);
+        //setContentView(R.layout.activity_shop);
+        bottomNavigationView=binding.navView;
 
 
-        toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbarMain);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -63,7 +73,7 @@ public class ShopActivity extends AppCompatActivity {
                 actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
                 actionBar.setDisplayHomeAsUpEnabled(false);
-                ShopActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                binding.navView.setVisibility(View.VISIBLE);
             }
 
             actionBar.setHomeButtonEnabled(true);
@@ -71,64 +81,57 @@ public class ShopActivity extends AppCompatActivity {
             // setupTitle();
         });
 
+        binding.navView.setItemIconTintList(null);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.shop_navigation_container);
 
-        defaultHomeFragment =new ShopProductsFragment(ShopActivity.this);
-
-        bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setItemIconTintList(null);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(binding.navView, navController);
 
         KeyboardVisibilityEvent.setEventListener(
                 this,
                 new KeyboardVisibilityEventListener() {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
-                        Log.d("SHOP ACTIVITY","onVisibilityChanged: Keyboard visibility changed");
-                        if(isOpen){
+                        Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard visibility changed");
+                        if (isOpen) {
                             Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
-                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            binding.navView.setVisibility(View.INVISIBLE);
                             Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
-                        }else{
+                        } else {
                             Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
-                            bottomNavigationView.setVisibility(View.VISIBLE);
+                            binding.navView.setVisibility(View.VISIBLE);
                             Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
                         }
                     }
                 });
-        setupDefaultHomePage();
+        //setupDefaultHomePage();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
-        Fragment selectedFragment = null;
-        switch (item.getItemId()) {
-            case R.id.walletProductsFragment:
-                selectedFragment =defaultHomeFragment;
-                break;
-            case R.id.walletOrdersFragment:
-                selectedFragment = new ShopOrdersFragment(ShopActivity.this, getSupportFragmentManager());
-                break;
-            case R.id.walletPOSFragment:
-                selectedFragment = new ShopPOSFragment(false);
-                break;
-            case R.id.walletSalesFragment:
-
-                selectedFragment = new ShopSalesFragment(false);
-                break;
-        }
-        ShopActivity.bottomNavigationView.setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment3, selectedFragment).commit();
-        currentFragment=selectedFragment;
-        return true;
-    };
-
-
+//    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
+//        Fragment selectedFragment = null;
+//        switch (item.getItemId()) {
+//            case R.id.walletProductsFragment:
+//                selectedFragment =defaultHomeFragment;
+//                break;
+//            case R.id.walletOrdersFragment:
+//                selectedFragment = new ShopOrdersFragment(ShopActivity.this, getSupportFragmentManager());
+//                break;
+//            case R.id.walletPOSFragment:
+//                selectedFragment = new ShopPOSFragment(false);
+//                break;
+//            case R.id.walletSalesFragment:
+//
+//                selectedFragment = new ShopSalesFragment(false);
+//                break;
+//        }
+//        ShopActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.shop_navigation_container, selectedFragment).commit();
+//        currentFragment=selectedFragment;
+//        return true;
+//    };
 
 
-
-    private void setupDefaultHomePage() {
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment3, defaultHomeFragment).commit();
-        currentFragment = defaultHomeFragment;
-    }
 
 
     @Override

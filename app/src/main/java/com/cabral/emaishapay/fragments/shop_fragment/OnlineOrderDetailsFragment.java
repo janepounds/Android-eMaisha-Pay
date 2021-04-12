@@ -34,11 +34,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OnlineOrderDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OnlineOrderDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -56,27 +51,6 @@ public class OnlineOrderDetailsFragment extends Fragment {
     private OnlineOrderDetailsAdapter onlineOrderDetailsAdapter;
 
 
-    public OnlineOrderDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OnlineOrderDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OnlineOrderDetailsFragment newInstance(String param1, String param2) {
-        OnlineOrderDetailsFragment fragment = new OnlineOrderDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
