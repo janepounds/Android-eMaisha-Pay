@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +29,11 @@ import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
 import com.cabral.emaishapay.adapters.Shop.OrderAdapter;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
+import com.cabral.emaishapay.modelviews.ShopPOSModelView;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,12 +49,14 @@ public class ShopOrdersFragment extends Fragment {
     private DbHandlerSingleton dbHandler;
     private Context context;
     Toolbar toolbar;String wallet_id;
+    private ShopOrdersModelView viewModel;
 
     public ShopOrdersFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
+        this.context=context;
         super.onAttach(context);
     }
 
@@ -66,7 +76,7 @@ public class ShopOrdersFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar_orders);
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
-
+        viewModel = new ViewModelProvider(requireActivity()).get(ShopOrdersModelView.class);
         // set a GridLayoutManager with default vertical orientation and 3 number of columns
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
@@ -74,26 +84,26 @@ public class ShopOrdersFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
 
+        subscribeToOrderList(viewModel.getOrderList());
 
-
-        //get data from local database
-        List<HashMap<String, String>> orderList;
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-        databaseAccess.open();
-        orderList = databaseAccess.getOrderList();
-
-        if (orderList.size() <= 0) {
-            //if no data in local db, then load data from server
-//            Toasty.info(context, R.string.no_order_found, Toast.LENGTH_SHORT).show();
-            recyclerView.setVisibility(View.GONE);
-            imgNoProduct.setVisibility(View.VISIBLE);
-            imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
-            txtNoProducts.setVisibility(View.VISIBLE);
-        } else {
-            orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
-
-            recyclerView.setAdapter(orderAdapter);
-        }
+//        //get data from local database
+//        List<HashMap<String, String>> orderList;
+//        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
+//        databaseAccess.open();
+//        orderList = databaseAccess.getOrderList();
+//
+//        if (orderList.size() <= 0) {
+//            //if no data in local db, then load data from server
+////            Toasty.info(context, R.string.no_order_found, Toast.LENGTH_SHORT).show();
+//            recyclerView.setVisibility(View.GONE);
+//            imgNoProduct.setVisibility(View.VISIBLE);
+//            imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+//            txtNoProducts.setVisibility(View.VISIBLE);
+//        } else {
+//            orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
+//
+//            recyclerView.setAdapter(orderAdapter);
+//        }
 
 
         etxtSearch.addTextChangedListener(new TextWatcher() {
@@ -108,33 +118,33 @@ public class ShopOrdersFragment extends Fragment {
 
 
                 //  searchData(s.toString());
-
+                subscribeToSearchedOrders(viewModel.searchOrderList());
 
                 //get data from local database
-                List<HashMap<String, String>> searchOrder;
-
-                searchOrder = dbHandler.searchOrderList(s.toString());
-
-
-                if (searchOrder.size() <= 0) {
-                    recyclerView.setVisibility(View.GONE);
-                    imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.no_data);
-
-
-                } else {
-
-
-                    recyclerView.setVisibility(View.VISIBLE);
-                    imgNoProduct.setVisibility(View.GONE);
-
-
-                    OrderAdapter supplierAdapter = new OrderAdapter(context, searchOrder);
-
-                    recyclerView.setAdapter(supplierAdapter);
-
-
-                }
+//                List<HashMap<String, String>> searchOrder;
+//
+//                searchOrder = dbHandler.searchOrderList(s.toString());
+//
+//
+//                if (searchOrder.size() <= 0) {
+//                    recyclerView.setVisibility(View.GONE);
+//                    imgNoProduct.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setImageResource(R.drawable.no_data);
+//
+//
+//                } else {
+//
+//
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setVisibility(View.GONE);
+//
+//
+//                    OrderAdapter supplierAdapter = new OrderAdapter(context, searchOrder);
+//
+//                    recyclerView.setAdapter(supplierAdapter);
+//
+//
+//                }
 
 
             }
@@ -165,6 +175,51 @@ public class ShopOrdersFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void subscribeToOrderList(LiveData<Resource<List<ShopOrderList>>> orders) {
+        orders.observe(getViewLifecycleOwner(), searchedOrders -> {
+            //dialogLoader.showProgressDialog();
+            Log.d("debug", "------->>>>");
+            if (searchedOrders.data != null && searchedOrders.data.size() <= 0) {
+                recyclerView.setVisibility(View.GONE);
+                imgNoProduct.setVisibility(View.VISIBLE);
+                imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+                txtNoProducts.setVisibility(View.VISIBLE);
+
+
+            } else {
+//                orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
+
+//                recyclerView.setAdapter(orderAdapter);
+
+
+            }
+        });
+    }
+
+    private void subscribeToSearchedOrders(LiveData<Resource<List<ShopOrderList>>> products) {
+        products.observe(getViewLifecycleOwner(), searchedProducts -> {
+            //dialogLoader.showProgressDialog();
+            Log.d("debug", "------->>>>");
+            if (searchedProducts.data != null && searchedProducts.data.size() <= 0) {
+                recyclerView.setVisibility(View.GONE);
+                imgNoProduct.setVisibility(View.VISIBLE);
+                imgNoProduct.setImageResource(R.drawable.no_data);
+
+
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                imgNoProduct.setVisibility(View.GONE);
+
+
+//                OrderAdapter supplierAdapter = new OrderAdapter(context, searchOrder);
+
+//                recyclerView.setAdapter(supplierAdapter);
+
+
+            }
+        });
     }
 
 

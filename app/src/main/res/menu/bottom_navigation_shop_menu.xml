@@ -4,25 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:keep="@menu/bottom_navigation_shop_menu">
     <item
-        android:id="@+id/walletProductsFragment"
+        android:id="@+id/shopProductsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_sell_product"
         android:title="PRODUCTS"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/walletOrdersFragment"
+        android:id="@+id/shopOrdersFragment"
         android:enabled="true"
         android:icon="@drawable/ic_sent"
         android:title="ORDERS"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/walletPOSFragment"
+        android:id="@+id/shopPOSFragment"
         android:enabled="true"
         android:icon="@drawable/ic_pos2"
         android:title="POS"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/walletSalesFragment"
+        android:id="@+id/shopSalesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_cash_on_delivery"
         android:title="SALES"

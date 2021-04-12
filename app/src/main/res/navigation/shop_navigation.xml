@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shop_navigation"
+    app:startDestination="@id/shopProductsFragment">
+
+    <fragment
+        android:id="@+id/shopOrdersFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment"
+        android:label="ShopOrdersFragment"
+        tools:layout="@layout/fragment_shop_orders" >
+        <action
+            android:id="@+id/action_shopOrdersFragment_to_onlineOrderDetailsFragment"
+            app:destination="@id/onlineOrderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopPOSFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment"
+        android:label="ShopPOSFragment"
+        tools:layout="@layout/fragment_shop_pos" />
+    <fragment
+        android:id="@+id/shopProductsFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment"
+        android:label="ShopProductsFragment"
+        tools:layout="@layout/fragment_shop_products"/>
+    <fragment
+        android:id="@+id/shopPayments"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopPayments"
+        android:label="ShopPayments"
+        tools:layout="@layout/fragment_payment_methods" />
+    <fragment
+        android:id="@+id/shopSalesFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopSalesFragment"
+        android:label="ShopSalesFragment"
+        tools:layout="@layout/fragment_shop_sales"
+        />
+    <fragment
+        android:id="@+id/onlineOrderDetailsFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.OnlineOrderDetailsFragment"
+        android:label="OnlineOrderDetailsFragment"
+        tools:layout="@layout/fragment_online_order_details"/>
+</navigation>

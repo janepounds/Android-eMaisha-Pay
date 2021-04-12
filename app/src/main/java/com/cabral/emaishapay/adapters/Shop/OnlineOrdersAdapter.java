@@ -87,19 +87,8 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaisha
             bundle.putString("delivery_fee", orderData.get(getAdapterPosition()).get("delivery_fee"));
 
 
-            Fragment fragment = new OnlineOrderDetailsFragment();
-            fragment.setArguments(bundle);
-            FragmentManager fragmentManager=((ShopActivity) context).getSupportFragmentManager();
+            ShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment,bundle);
 
-            if (((ShopActivity) context).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((ShopActivity) context).currentFragment)
-                        .add(R.id.nav_host_fragment3, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.nav_host_fragment3, fragment)
-                        .addToBackStack(null).commit();
         }
             
 

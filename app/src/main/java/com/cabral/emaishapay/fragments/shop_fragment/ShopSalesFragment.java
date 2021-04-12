@@ -47,14 +47,6 @@ public class ShopSalesFragment extends Fragment {
     private RecyclerView recyclerView;
 
 
-    public ShopSalesFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
-        this.fm = supportFragmentManager;
-        this.shop = shopActivity;
-    }
-
-    public ShopSalesFragment(boolean b) {
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

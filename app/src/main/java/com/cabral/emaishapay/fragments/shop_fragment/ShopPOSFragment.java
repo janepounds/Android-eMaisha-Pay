@@ -20,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +33,10 @@ import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
+import com.cabral.emaishapay.modelviews.ShopPOSModelView;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -56,6 +62,7 @@ public class ShopPOSFragment extends Fragment {
     private WeakReference<ShopPOSFragment> fragmentReference;
     FrameLayout posChargeLayout;
     ImageView imageTick;
+    private ShopPOSModelView viewModel;
 
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -91,11 +98,14 @@ public class ShopPOSFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.all_product);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ShopPOSModelView.class);
+
         etxtSearch = view.findViewById(R.id.etxt_search);
         recyclerView = view.findViewById(R.id.recycler);
         imgNoProduct = view.findViewById(R.id.image_no_product);
         txtNoProducts = view.findViewById(R.id.txt_no_products);
         //imgScanner = view.findViewById(R.id.img_scanner);
+
 
         posChargeLayout = view.findViewById(R.id.layout_pos_charge);
         etxtCharge = view.findViewById(R.id.pos_charge);
@@ -140,29 +150,32 @@ public class ShopPOSFragment extends Fragment {
 
 
                 //get data from local database
-                List<HashMap<String, String>> productList;
-                userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                productList = dbHandler.getProducts(userId);
-
-                if (productList.size() <= 0) {
-
-                    recyclerView.setVisibility(View.GONE);
-                    imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.not_found);
-                    txtNoProducts.setVisibility(View.VISIBLE);
+//                List<HashMap<String, String>> productList;
+//                userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+//                productList = dbHandler.getProducts(userId);
 
 
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    imgNoProduct.setVisibility(View.GONE);
-                    txtNoProducts.setVisibility(View.GONE);
-
-                    productAdapter = new PosProductAdapter(getContext(), productList,fragmentReference);
-
-                    recyclerView.setAdapter(productAdapter);
-
-
-                }
+                subscribeToProducts(viewModel.getProducts());
+//
+//                if (productList.size() <= 0) {
+//
+//                    recyclerView.setVisibility(View.GONE);
+//                    imgNoProduct.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setImageResource(R.drawable.not_found);
+//                    txtNoProducts.setVisibility(View.VISIBLE);
+//
+//
+//                } else {
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setVisibility(View.GONE);
+//                    txtNoProducts.setVisibility(View.GONE);
+//
+//                    productAdapter = new PosProductAdapter(getContext(), productList,fragmentReference);
+//
+//                    recyclerView.setAdapter(productAdapter);
+//
+//
+//                }
 
             }
         });
@@ -173,7 +186,7 @@ public class ShopPOSFragment extends Fragment {
 
                 ShopPayments nextFrag= new ShopPayments(chargeAmount);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
+                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
 
@@ -187,7 +200,7 @@ public class ShopPOSFragment extends Fragment {
 
                 ShopPayments nextFrag= new ShopPayments( Double.parseDouble(etxtCharge.getText().toString()) );
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
+                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
 
@@ -219,32 +232,33 @@ public class ShopPOSFragment extends Fragment {
 
                // databaseAccess.open();
                 //get data from local database
-                List<HashMap<String, String>> searchProductList;
-
-                searchProductList = dbHandler.getSearchProducts(s.toString(), userId);
-
-
-                if (searchProductList.size() <= 0) {
-
-                    recyclerView.setVisibility(View.GONE);
-                    imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.not_found);
-                    txtNoProducts.setVisibility(View.VISIBLE);
-
-
-                } else {
-
-
-                    recyclerView.setVisibility(View.VISIBLE);
-                    imgNoProduct.setVisibility(View.GONE);
-                    txtNoProducts.setVisibility(View.GONE);
-
-                    productAdapter = new PosProductAdapter(getContext(), searchProductList, fragmentReference);
-
-                    recyclerView.setAdapter(productAdapter);
-
-
-                }
+                subscribeToSearchedProducts(viewModel.getSearchedProducts());
+//                List<HashMap<String, String>> searchProductList;
+//
+//                searchProductList = dbHandler.getSearchProducts(s.toString(), userId);
+//
+//
+//                if (searchProductList.size() <= 0) {
+//
+//                    recyclerView.setVisibility(View.GONE);
+//                    imgNoProduct.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setImageResource(R.drawable.not_found);
+//                    txtNoProducts.setVisibility(View.VISIBLE);
+//
+//
+//                } else {
+//
+//
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                    imgNoProduct.setVisibility(View.GONE);
+//                    txtNoProducts.setVisibility(View.GONE);
+//
+//                    productAdapter = new PosProductAdapter(getContext(), searchProductList, fragmentReference);
+//
+//                    recyclerView.setAdapter(productAdapter);
+//
+//
+//                }
 
 
             }
@@ -287,5 +301,53 @@ public class ShopPOSFragment extends Fragment {
     public static void ClearCart() {
         User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
         user_cart_BuyInputs_db.clearCart();
+    }
+
+    private void subscribeToProducts(LiveData<Resource<List<EcProduct>>> products) {
+        products.observe(getViewLifecycleOwner(), myProducts->{
+            //dialogLoader.showProgressDialog();
+            Log.d("debug","------->>>>");
+            if(myProducts.data!=null && myProducts.data.size()<=0){
+                recyclerView.setVisibility(View.GONE);
+                imgNoProduct.setVisibility(View.VISIBLE);
+                imgNoProduct.setImageResource(R.drawable.not_found);
+                txtNoProducts.setVisibility(View.VISIBLE);
+
+
+            }else {
+                recyclerView.setVisibility(View.VISIBLE);
+                imgNoProduct.setVisibility(View.GONE);
+                txtNoProducts.setVisibility(View.GONE);
+                productAdapter.setProductList( myProducts.data);
+
+
+
+
+            }
+        });
+
+    }
+
+
+    private void subscribeToSearchedProducts(LiveData<Resource<List<EcProduct>>> products) {
+        products.observe(getViewLifecycleOwner(), searchedProducts -> {
+            //dialogLoader.showProgressDialog();
+            Log.d("debug", "------->>>>");
+            if (searchedProducts.data != null && searchedProducts.data.size() <= 0) {
+                recyclerView.setVisibility(View.GONE);
+                imgNoProduct.setVisibility(View.VISIBLE);
+                imgNoProduct.setImageResource(R.drawable.not_found);
+                txtNoProducts.setVisibility(View.VISIBLE);
+
+
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                imgNoProduct.setVisibility(View.GONE);
+                txtNoProducts.setVisibility(View.GONE);
+                productAdapter.setProductList( searchedProducts.data);
+
+
+            }
+        });
     }
 }
