@@ -186,7 +186,7 @@ public class ShopPOSFragment extends Fragment {
 
                 ShopPayments nextFrag= new ShopPayments(chargeAmount);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
+                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
 
@@ -200,7 +200,7 @@ public class ShopPOSFragment extends Fragment {
 
                 ShopPayments nextFrag= new ShopPayments( Double.parseDouble(etxtCharge.getText().toString()) );
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment3, nextFrag, "findThisFragment")
+                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
 

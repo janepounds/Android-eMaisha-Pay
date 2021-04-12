@@ -68,8 +68,7 @@ import java.util.List;
 public class ShopProductsFragment extends Fragment {
 
     ProductAdapter productAdapter;
-    FragmentManager fm;
-    Activity shop; String wallet_id;
+     String wallet_id;
     private Context context;
     private List<EcManufacturer> manufacturers=new ArrayList<>();
 
@@ -77,11 +76,6 @@ public class ShopProductsFragment extends Fragment {
     FragmentShopProductsBinding binding;
     private ShopProductsModelView viewModel;
 
-    public ShopProductsFragment(ShopActivity shopActivity) {
-
-        this.shop = shopActivity;
-        this.fm = shopActivity.getSupportFragmentManager();
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -100,7 +94,7 @@ public class ShopProductsFragment extends Fragment {
         dialogLoader = new DialogLoader(getContext());
 
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);
+        viewModel = new ViewModelProvider(this).get(ShopProductsModelView.class);
         wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarShopProducts);
@@ -117,8 +111,8 @@ public class ShopProductsFragment extends Fragment {
         binding.fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
                 if (prev != null) {
                     ft.remove(prev);
                 }

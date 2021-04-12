@@ -56,6 +56,7 @@ public class ShopOrdersFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
+        this.context=context;
         super.onAttach(context);
     }
 
