@@ -1,9 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Main button -->
-    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+    <item android:top="5dp" android:left="5dp" android:right="5dp" android:bottom="5dp">
         <shape android:shape="rectangle">
-            <corners android:radius="3dp" />
+            <corners android:radius="5dp" />
             <solid android:color="@color/colorPrimary" />
         </shape>
     </item>

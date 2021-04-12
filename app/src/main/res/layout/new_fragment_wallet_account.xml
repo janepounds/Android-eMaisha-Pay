@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f4fafe">
+    android:background="#f8f8ff">
 
-    <ImageView
-        android:src="@drawable/ic_new_bg_pattern"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:alpha="0.035"/>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -21,21 +15,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp">
 
-            <TextView
-                android:id="@+id/account_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="My Account"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+
             <RelativeLayout
                 android:id="@+id/layout_account_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:layout_below="@id/account_title">
+                android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/label_account_type"
                 android:layout_width="wrap_content"
@@ -52,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="Merchant"
+                    android:text="Type"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -225,7 +210,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_employment_business_info_details"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/layout_employment_business_info"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
@@ -472,6 +457,7 @@
                             android:textColor="@color/colorPrimaryDark" />
 
                         <ImageView
+                            android:id="@+id/chevron_business_information"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:layout_alignParentEnd="true"
@@ -480,60 +466,177 @@
 
                     </LinearLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_business_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="5dp"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/layout_business_information">
+
+                        <FrameLayout
+                            android:id="@+id/layout_business_info_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/edit_business_info"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="end"
+                                android:src="@android:drawable/ic_menu_edit" />
+
+                        </FrameLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/layout_business_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="Business Name :"
+                                android:textStyle="bold"
+                                android:textSize="11sp"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_business_name"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_business_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_business_name">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:text="Business Location :"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_business_location"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingStart="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_reg_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_business_location">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                               android:textSize="11sp"
+                                android:text="Registration No. :"
+                                android:textStyle="bold"
+                                android:textColor="@color/textColor" />
+
+
+                            <TextView
+                                android:id="@+id/text_view_reg_no"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_license_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/layout_reg_no">
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textSize="11sp"
+                                android:text="License No. :"
+                                android:textStyle="bold"
+                                android:textColor="@color/textColor" />
+
+
+
+                            <TextView
+                                android:id="@+id/text_view_license_no"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:alpha="1.0"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:text="None"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_cards"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@color/white"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_employment_business_info"
-                app:cardCornerRadius="5dp">
-                <RelativeLayout
-                    android:id="@+id/layout_cards"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="10dp">
 
-
-                    <TextView
-                        android:id="@+id/cards_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:text="Cards"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:alpha="0.8"/>
-                    <TextView
-                        android:id="@+id/cards_sub_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@id/cards_title"
-                        android:text="View your cards"
-                        android:textSize="10sp"
-                        android:textColor="#8C98A9"
-                        android:textStyle="bold"
-                        android:alpha="0.81"/>
-                    <ImageView
-                        android:id="@+id/chevron_cards"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_right_arrow_green"/>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_security"
@@ -543,7 +646,7 @@
                 android:background="@color/white"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_cards"
+                android:layout_below="@id/card_view_employment_business_info"
                 app:cardCornerRadius="5dp">
                 <RelativeLayout
                     android:id="@+id/layout_security"
@@ -678,16 +781,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="1.0"
+                    android:text="0"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     android:layout_toEndOf="@id/label_app_version"/>
                 <TextView
-                    android:id="@+id/text_rate_share_app"
+                    android:id="@+id/text_rate_app"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="Rate or Share App"
+                    android:text="Rate App"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_toStartOf="@id/rate_share_separator"/>
+
+                <TextView
+                    android:id="@+id/rate_share_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="  |  "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_toStartOf="@id/text_share_app"/>
+
+                <TextView
+                    android:id="@+id/text_share_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Share App"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     android:layout_alignParentEnd="true"/>
@@ -696,22 +819,25 @@
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="35dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="30dp"
                 android:layout_below="@id/layout_app_info_share">
 
 
-            <Button
-                android:id="@+id/btn_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_button_dark_green"
-                android:text="Logout"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button_dark_green"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </RelativeLayout>
 </layout>

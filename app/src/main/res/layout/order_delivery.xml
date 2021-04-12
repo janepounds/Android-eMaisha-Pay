@@ -8,8 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
-        android:layout_marginBottom="5dp"
+       android:layout_marginBottom="5dp"
         android:text="Delivery Time"
         android:textColor="@color/textColorSecondaryLight"
         android:textSize="16sp" />
@@ -20,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/edittext_corner"
-        android:fontFamily="@font/josefin_sans"
         android:inputType="number"
         android:padding="10dp"
         android:textColor="@color/creditCardBackground"

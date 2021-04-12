@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F4FAFE">
+    android:background="#f5fbff">
 
     <FrameLayout
         android:id="@+id/nav_host_fragment"
@@ -16,12 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <ImageView
-        android:src="@drawable/ic_new_bg_pattern"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:alpha=".035"/>
+
     <ImageView
         android:id="@+id/hamburger_menu"
         android:src="@drawable/ic_hamburger_menu"

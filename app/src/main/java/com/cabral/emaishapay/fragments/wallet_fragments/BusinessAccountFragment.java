@@ -98,9 +98,15 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private static final String KEY_LOCATION = "location";
     private LatLng mCenterLatLong;
 
+
+    public BusinessAccountFragment() {
+    }
+
     public BusinessAccountFragment(Bundle bundle) {
         this.localBundle=bundle;
     }
+
+
 
 
     @Override
