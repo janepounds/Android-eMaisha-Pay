@@ -104,9 +104,7 @@ public class ShopProductsFragment extends Fragment {
 
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        binding.productRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        binding.productRecyclerview.setHasFixedSize(true);
+
 
         binding.fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,9 +125,7 @@ public class ShopProductsFragment extends Fragment {
 //        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
 //        databaseAccess.open();
 //        getOnlineOrders();
-        productAdapter = new ProductAdapter(context, getActivity().getSupportFragmentManager(),manufacturers);
 
-        binding.productRecyclerview.setAdapter(productAdapter);
 
 
         return binding.getRoot();
@@ -139,6 +135,13 @@ public class ShopProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+
+
+        productAdapter = new ProductAdapter(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        binding.shopProductRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.shopProductRecyclerview.setHasFixedSize(true);
+        binding.shopProductRecyclerview.setAdapter(productAdapter);
 
         subscribeToMerchantProducts(viewModel.getMerchantProducts());
 
@@ -164,26 +167,33 @@ public class ShopProductsFragment extends Fragment {
 
 
         });
+
+
     }
 
     private void subscribeToMerchantProducts(LiveData<Resource<List<EcProduct>>> merchantProducts) {
+        binding.shopProductRecyclerview.setVisibility(View.GONE);
+        binding.imageNoProduct.setVisibility(View.VISIBLE);
+        binding.imageNoProduct.setImageResource(R.drawable.no_product);
 
-        merchantProducts.observe(getViewLifecycleOwner(), myProducts->{
+        merchantProducts.observe(this.getViewLifecycleOwner(), myProducts->{
             //dialogLoader.showProgressDialog();
-            Log.d("debug","------->>>>");
+
             if(myProducts.data!=null && myProducts.data.size()!=0){
-
                 binding.imageNoProduct.setVisibility(View.GONE);
+                binding.shopProductRecyclerview.setVisibility(View.VISIBLE);
+                Log.d("debug","------->>>>"+myProducts.data.size());
                 productAdapter.setProductList( myProducts.data);
-              //  dialogLoader.hideProgressDialog();
 
+
+                //dialogLoader.hideProgressDialog();
             }else {
                 //Toasty.info(context, R.string.no_product_found, Toast.LENGTH_SHORT).show();
-
-                binding.productRecyclerview.setVisibility(View.GONE);
+                binding.shopProductRecyclerview.setVisibility(View.GONE);
                 binding.imageNoProduct.setVisibility(View.VISIBLE);
                 binding.imageNoProduct.setImageResource(R.drawable.no_product);
             }
+            binding.executePendingBindings();
         });
     }
 

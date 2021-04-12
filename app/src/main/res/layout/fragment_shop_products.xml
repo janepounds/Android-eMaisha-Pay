@@ -47,7 +47,7 @@
                 android:padding="10dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/product_recyclerview"
+                android:id="@+id/shop_product_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground">

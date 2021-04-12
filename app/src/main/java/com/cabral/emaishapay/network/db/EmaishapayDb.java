@@ -19,6 +19,7 @@ import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
+import com.cabral.emaishapay.network.db.entities.EcProductFts;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrderList;
@@ -31,8 +32,8 @@ import com.cabral.emaishapay.network.db.entities.EcUserCart;
 import com.cabral.emaishapay.network.db.entities.EcUserCartAttributes;
 
 @Database(entities = {DefaultAddress.class, EcManufacturer.class, ShopOrderDetails.class, ShopOrderList.class,
-        EcProductCart.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcSupplier.class,
-        EcUserCart.class, EcUserCartAttributes.class, RegionDetails.class},
+        EcProductCart.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcProductFts.class,
+        EcSupplier.class, EcUserCart.class, EcUserCartAttributes.class, RegionDetails.class},
         version = 1,
         exportSchema = false
         )
@@ -56,7 +57,7 @@ public abstract class EmaishapayDb extends RoomDatabase {
         if(INSTANCE==null){
             synchronized (RoomDatabase.class){
                 if(INSTANCE==null){
-                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb11")
+                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb12")
                             //.addMigrations(MIGRATION_3_4)
                             .build();
                 }

@@ -47,6 +47,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     private final SavedStateHandle mSavedStateHandler;
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
+
     private String wallet_id;
     // query extras
     private boolean isQueryExhausted;
@@ -60,10 +61,22 @@ public class ShopProductsModelView extends AndroidViewModel {
         this.mSavedStateHandler=savedStateHandle;
         this.wallet_id= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, application.getApplicationContext());
         mRepository=DataRepository.getOurInstance(application.getApplicationContext());
-        executeFetchMerchantProducts();
+
+        LiveData<Resource<List<EcProduct>>> repositorySource=
+        Transformations.switchMap(
+                mSavedStateHandler.getLiveData(QUERY_KEY,null),
+                (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
+
+                    return mRepository.getProducts(wallet_id,"*"+query+"*");
+                });
+
+        executeFetchMerchantProducts( repositorySource );
+
         requestOnlineManufacturers();
 
     }
+
+
 
     private  void requestOnlineManufacturers(){
 
@@ -99,13 +112,12 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
 
-    private void executeFetchMerchantProducts(){
+    private void executeFetchMerchantProducts(LiveData<Resource<List<EcProduct>>> repositorySource){
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
 
 
-        final LiveData<Resource<List<EcProduct>>> repositorySource=mRepository.getProducts(wallet_id);
 
         merchantProducts.addSource(repositorySource, new Observer<Resource<List<EcProduct>>>() {
             @Override
@@ -151,15 +163,7 @@ public class ShopProductsModelView extends AndroidViewModel {
 
     public LiveData<Resource<List<EcProduct>>> getMerchantProducts() {
 
-
-        return Transformations.switchMap(
-                mSavedStateHandler.getLiveData(QUERY_KEY),
-                (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
-                    if (TextUtils.isEmpty(query)) {
-                        return merchantProducts;
-                    }
-                    return mRepository.searchMerchantProduct( query+"" );
-                });
+        return merchantProducts;
     }
 
 

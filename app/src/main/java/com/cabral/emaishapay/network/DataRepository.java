@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -327,7 +328,7 @@ public class DataRepository {
 
 
 
-    public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id) {
+    public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id, String key) {
 
 
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
@@ -339,13 +340,19 @@ public class DataRepository {
             @NonNull
             @Override
             protected LiveData<List<EcProduct>> loadFromDb() {
-
-                return mEcProductsDao.getProducts();
+                if (TextUtils.isEmpty(key)) {
+                    return mEcProductsDao.getProducts();
+                }
+                return mEcProductsDao.getSearchProducts( key );
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<EcProduct> data) {
-                return true;
+                if (TextUtils.isEmpty(key)) {
+                    return true;
+                }
+
+                return false;
             }
 
             @NonNull
@@ -359,31 +366,4 @@ public class DataRepository {
 
     }
 
-    public LiveData<Resource<List<EcProduct>>> searchMerchantProduct(String key) {
-
-        return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
-            @Override
-            protected void saveCallResult(@NonNull List<EcProduct> productList) {
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<EcProduct>> loadFromDb() {
-
-                return  mEcProductsDao.getSearchProducts(key);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<EcProduct> data) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected Call<List<EcProduct>> createCall() {
-                return null;
-            }
-        }.getAsLiveData();
-
-    }
 }

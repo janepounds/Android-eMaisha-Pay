@@ -64,22 +64,7 @@ public class ShopActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 
-            // Check BackStackEntryCount of FragmentManager
-            if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
-                // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
-                actionBar.setDisplayShowTitleEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-                actionBar.setDisplayHomeAsUpEnabled(false);
-                binding.navView.setVisibility(View.VISIBLE);
-            }
-
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            // setupTitle();
-        });
 
         binding.navView.setItemIconTintList(null);
         NavHostFragment navHostFragment =
@@ -107,30 +92,6 @@ public class ShopActivity extends AppCompatActivity {
                 });
         //setupDefaultHomePage();
     }
-
-//    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
-//        Fragment selectedFragment = null;
-//        switch (item.getItemId()) {
-//            case R.id.walletProductsFragment:
-//                selectedFragment =defaultHomeFragment;
-//                break;
-//            case R.id.walletOrdersFragment:
-//                selectedFragment = new ShopOrdersFragment(ShopActivity.this, getSupportFragmentManager());
-//                break;
-//            case R.id.walletPOSFragment:
-//                selectedFragment = new ShopPOSFragment(false);
-//                break;
-//            case R.id.walletSalesFragment:
-//
-//                selectedFragment = new ShopSalesFragment(false);
-//                break;
-//        }
-//        ShopActivity.bottomNavigationView.setVisibility(View.VISIBLE);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.shop_navigation_container, selectedFragment).commit();
-//        currentFragment=selectedFragment;
-//        return true;
-//    };
-
 
 
 
