@@ -11,15 +11,9 @@
         tools:context="com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F4FAFE">
-        <RelativeLayout
-            android:id="@+id/layout_pattern"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_new_bg_pattern"
-            android:alpha=".035">
+        android:background="#f5fbff">
 
-        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/layout_username"
             android:layout_width="wrap_content"
@@ -113,7 +107,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="TOPUP"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
@@ -153,7 +146,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="@string/transfer"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
@@ -193,8 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="@string/settle"
+                   android:text="@string/settle"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
@@ -233,8 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="@string/pay"
+                   android:text="@string/pay"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold"
@@ -274,8 +264,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="Loan"
+                   android:text="Loan"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
@@ -317,8 +306,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
-                    android:text="Beneficiaries"
+                   android:text="Beneficiaries"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
@@ -420,7 +408,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Deposit"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
@@ -459,7 +446,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Send"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
@@ -500,7 +486,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center_horizontal"
                     android:text="Loan \n Application"
                     android:textAllCaps="true"
@@ -539,7 +524,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Withdraw"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
@@ -578,7 +562,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Balance \n Inquiry"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
@@ -630,8 +613,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_balance_label_visibility"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/rectangular_blue_solid"
             android:gravity="center"
@@ -809,8 +792,7 @@
                         android:src="@drawable/ic_credit_arrow_down"
                         app:tint="@color/white"
                         android:layout_weight=".2"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_gravity="center"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -884,8 +866,7 @@
                         android:src="@drawable/ic_debit_arrow_up"
                         app:tint="@color/white"
                         android:layout_weight=".2"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_gravity="center"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
