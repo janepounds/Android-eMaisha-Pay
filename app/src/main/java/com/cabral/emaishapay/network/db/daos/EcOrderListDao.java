@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.network.db.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -7,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.utils.Resource;
 
 import org.json.JSONObject;
 
@@ -29,7 +31,7 @@ public interface EcOrderListDao {
 
     //get order list
     @Query("SELECT * FROM ShopOrderList ORDER BY order_id DESC")
-    List<ShopOrderList> getOrderList();
+    LiveData<Resource<List<ShopOrderList>>> getOrderList();
 
     //update order
     @Query("UPDATE ShopOrderList SET order_status=:status WHERE order_id=:id ")
@@ -37,6 +39,6 @@ public interface EcOrderListDao {
 
     //search order
     @Query("SELECT * FROM ShopOrderList WHERE customer_name LIKE :s OR invoice_id LIKE :s ORDER BY order_id DESC")
-    List<ShopOrderList> searchOrderList(String s);
+    LiveData<Resource<List<ShopOrderList>>> searchOrderList(String s);
 
 }
