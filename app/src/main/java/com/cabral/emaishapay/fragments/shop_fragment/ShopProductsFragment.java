@@ -177,7 +177,7 @@ public class ShopProductsFragment extends Fragment {
         binding.imageNoProduct.setImageResource(R.drawable.no_product);
 
         merchantProducts.observe(this.getViewLifecycleOwner(), myProducts->{
-            //dialogLoader.showProgressDialog();
+           // dialogLoader.showProgressDialog();
 
             if(myProducts.data!=null && myProducts.data.size()!=0){
                 binding.imageNoProduct.setVisibility(View.GONE);

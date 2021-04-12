@@ -328,7 +328,7 @@ public class DataRepository {
 
 
 
-    public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id, String key) {
+    public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id, CharSequence key) {
 
 
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
@@ -343,7 +343,9 @@ public class DataRepository {
                 if (TextUtils.isEmpty(key)) {
                     return mEcProductsDao.getProducts();
                 }
-                return mEcProductsDao.getSearchProducts( key );
+                LiveData<List<EcProduct>> results= mEcProductsDao.getSearchProducts( "*"+key+"*" );
+
+                return results;
             }
 
             @Override

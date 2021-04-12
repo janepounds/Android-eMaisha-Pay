@@ -6,12 +6,16 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = {"product_id"},
+        unique = true)})
 public class EcProduct implements Parcelable {
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    private int id;
+    @ColumnInfo(name = "product_id")
      private String product_id;
      @ColumnInfo(name = "product_name")
      private String product_name;
@@ -218,5 +222,13 @@ public class EcProduct implements Parcelable {
 
     public void setSync_status(String sync_status) {
         this.sync_status = sync_status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

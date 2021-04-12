@@ -1,20 +1,30 @@
 package com.cabral.emaishapay.network.db.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
+import androidx.room.PrimaryKey;
 
 
 @Entity(tableName = "EcProductFts")
 @Fts4(contentEntity = EcProduct.class)
 public class EcProductFts {
+    @PrimaryKey
+    @ColumnInfo(name = "rowid")
+    private final int rowId;
     private String product_name;
     private String product_category;
     private String product_description;
 
-    public EcProductFts(String product_name, String product_category, String product_description) {
+    public EcProductFts(int rowId, String product_name, String product_category, String product_description) {
+        this.rowId = rowId;
         this.product_name = product_name;
         this.product_category = product_category;
         this.product_description = product_description;
+    }
+
+    public int getRowId() {
+        return rowId;
     }
 
     public String getProduct_name() {

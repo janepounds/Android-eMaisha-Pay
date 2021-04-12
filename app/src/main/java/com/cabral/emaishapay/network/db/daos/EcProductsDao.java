@@ -30,7 +30,7 @@ public interface EcProductsDao {
     void deleteProduct(EcProduct product);
 
     //get product data
-    @Query("SELECT * FROM EcProduct JOIN EcProductFts ON (EcProduct.product_id = EcProductFts.rowid) WHERE EcProductFts MATCH :query ORDER BY product_id DESC")
+    @Query("SELECT EcProduct.* FROM EcProduct JOIN EcProductFts ON (EcProduct.id = EcProductFts.rowid) WHERE EcProductFts MATCH :query")
     LiveData<List<EcProduct>> getSearchProducts(String query);
 
     //get product name

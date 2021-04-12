@@ -46,6 +46,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
+    private LiveData<Resource<List<EcProduct>>> repositorySource;
     private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
 
     private String wallet_id;
@@ -62,15 +63,15 @@ public class ShopProductsModelView extends AndroidViewModel {
         this.wallet_id= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, application.getApplicationContext());
         mRepository=DataRepository.getOurInstance(application.getApplicationContext());
 
-        LiveData<Resource<List<EcProduct>>> repositorySource=
+         repositorySource=
         Transformations.switchMap(
                 mSavedStateHandler.getLiveData(QUERY_KEY,null),
                 (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
 
-                    return mRepository.getProducts(wallet_id,"*"+query+"*");
+                    return mRepository.getProducts(wallet_id,query);
                 });
 
-        executeFetchMerchantProducts( repositorySource );
+        //executeFetchMerchantProducts( repositorySource );
 
         requestOnlineManufacturers();
 
@@ -163,7 +164,7 @@ public class ShopProductsModelView extends AndroidViewModel {
 
     public LiveData<Resource<List<EcProduct>>> getMerchantProducts() {
 
-        return merchantProducts;
+        return repositorySource;
     }
 
 
