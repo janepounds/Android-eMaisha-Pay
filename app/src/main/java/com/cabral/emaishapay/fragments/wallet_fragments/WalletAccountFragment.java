@@ -569,8 +569,10 @@ public class WalletAccountFragment extends Fragment {
 
         else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
 
-
             binding.textAccountType.setText("Master Agent");
+            binding.textChangeAccountType.setOnClickListener(null);
+            binding.textChangeAccountType.setClickable(false);
+            binding.textChangeAccountType.setAlpha((float) 0.5);
         } else{
             binding.textAccountType.setText("Default User");
         }

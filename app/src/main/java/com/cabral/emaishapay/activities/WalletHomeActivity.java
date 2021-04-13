@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -98,6 +99,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static NavController navController;
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
+    public  static CoordinatorLayout scanCoordinatorLayout;
 
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -110,6 +112,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         setContentView(R.layout.wallet_home);
         bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
         context = getApplicationContext();
 
         NavHostFragment navHostFragment =
@@ -139,6 +142,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                         String role = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE,context);
                         if( role.equalsIgnoreCase("DEFAULT")){
                             WalletHomeActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+                            WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.VISIBLE);
                             WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
                         }
                         else {
@@ -168,18 +172,18 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 switch (item.getItemId()){
 
-                    case R.id.walletCardsFragment:
-                        currentDestination = navController.getCurrentDestination().getId();
-
-                        if (currentDestination  == R.id.walletHomeFragment2) {
-                            navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
-                             navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-                        } else if (currentDestination == R.id.cardListFragment )  {
-
-                        }
-
-                        return true;
+//                    case R.id.walletCardsFragment:
+//                        currentDestination = navController.getCurrentDestination().getId();
+//
+//                        if (currentDestination  == R.id.walletHomeFragment2) {
+//                            navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
+//                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
+//                             navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
+//                        } else if (currentDestination == R.id.cardListFragment )  {
+//
+//                        }
+//
+//                        return true;
 
                     case R.id.walletAccountFragment :
 
@@ -227,6 +231,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static void setUpMasterAgentNav() {
         bottomNavigationView.setVisibility(View.GONE);
+        scanCoordinatorLayout.setVisibility(View.GONE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
         bottom_navigation_shop.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -497,6 +502,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static void disableNavigation() {
       bottomNavigationView.setVisibility(View.GONE);
       bottom_navigation_shop.setVisibility(View.GONE);
+      scanCoordinatorLayout.setVisibility(View.GONE);
     }
 
 

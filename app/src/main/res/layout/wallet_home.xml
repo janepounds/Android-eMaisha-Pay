@@ -1,6 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
@@ -21,29 +22,63 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/wallet_home_navigation"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/coordinator_layout_for_scanner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_for_scanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#f4fafe"
-        app:labelVisibilityMode="labeled"
-        app:itemRippleColor="#2D84B72B"
-        app:itemIconTint="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_shop"
-       app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        android:visibility="visible"/>
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_shop">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_anchor="@+id/bottomAppBar"
+            app:layout_anchorGravity="center"
+            app:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp">
+
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#f4fafe"
+                android:visibility="visible"
+                app:itemIconTint="@android:color/transparent"
+                app:itemRippleColor="#2D84B72B"
+                app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+                app:itemTextAppearanceInactive="@style/BottomNavigationView"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_navigation_menu" />
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:fabCustomSize="80dp"
+            app:srcCompat="@drawable/ic_qr_code"
+            tools:ignore="VectorDrawableCompat"
+            app:layout_anchor="@id/bottomAppBar"
+            app:layout_anchorGravity="top|center"
+            app:backgroundTint="@color/white"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_shop"
