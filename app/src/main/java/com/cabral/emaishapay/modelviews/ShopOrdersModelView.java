@@ -1,20 +1,17 @@
 package com.cabral.emaishapay.modelviews;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.Transformations;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.network.DataRepository;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
@@ -23,7 +20,7 @@ public class ShopOrdersModelView extends AndroidViewModel {
     private static final String QUERY_KEY = "QUERY";
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
-    private final LiveData<Resource<List<ShopOrderList>>> orderList;
+    private final LiveData<Resource<List<ShopOrder>>> orderList;
     private String wallet_id;
 
     public ShopOrdersModelView(@NonNull Application application,@NonNull SavedStateHandle savedStateHandle) {
@@ -34,8 +31,8 @@ public class ShopOrdersModelView extends AndroidViewModel {
 
 
         orderList= Transformations.switchMap(
-                mSavedStateHandler.getLiveData(QUERY_KEY),
-                (Function<CharSequence, LiveData<Resource<List<ShopOrderList>>>>) query -> {
+                mSavedStateHandler.getLiveData(QUERY_KEY,null),
+                (Function<CharSequence, LiveData<Resource<List<ShopOrder>>>>) query -> {
 
                     return mRepository.getOrderList(wallet_id,query);
                 });
@@ -43,7 +40,7 @@ public class ShopOrdersModelView extends AndroidViewModel {
 
 
 
-    public LiveData<Resource<List<ShopOrderList>>> getOrderList() {
+    public LiveData<Resource<List<ShopOrder>>> getOrderList() {
         return orderList;
     }
 

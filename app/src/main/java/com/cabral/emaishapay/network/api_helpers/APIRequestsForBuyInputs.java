@@ -37,7 +37,7 @@ import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.models.uploadimage.UploadImageModel;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
 
 
 import java.util.List;
@@ -284,7 +284,7 @@ public interface APIRequestsForBuyInputs {
     );
 
     @GET("getEMaishaAppOrders/{wallet_id}")
-    Call<List<ShopOrderList>> getOrders(
+    Call<List<ShopOrder>> getOrders(
             @Path("wallet_id") String id
     );
 

@@ -1,23 +1,18 @@
 package com.cabral.emaishapay.network;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
-import androidx.room.Query;
 
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
-import com.cabral.emaishapay.network.db.daos.EcOrderDetailsDao;
-import com.cabral.emaishapay.network.db.daos.EcOrderListDao;
+import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
+import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCartDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcProductWeightDao;
@@ -31,8 +26,8 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCart;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
-import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
-import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.utils.NetworkBoundResource;
 import com.cabral.emaishapay.utils.Resource;
 
@@ -43,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class DataRepository {
@@ -53,8 +47,8 @@ public class DataRepository {
     private EmaishapayDb dbInstance;
     private  final DefaultAddressDao mDefaultAddressDao;
     private  final EcManufacturerDao mEcManufacturerDao;
-    private  final EcOrderDetailsDao mEcOrderDetailsDao;
-    private  final EcOrderListDao mEcOrderListDao;
+    private  final ShopOrderProductsDao mEcOrderDetailsDao;
+    private  final ShopOrderDao mEcOrderListDao;
     private  final EcProductCartDao mEcProductCartDao;
     private  final EcProductCategoryDao mEcProductCategoryDao;
     private  final EcProductsDao mEcProductsDao;
@@ -216,7 +210,7 @@ public class DataRepository {
     //******GET TOTAL PRODUCT PRICE ********//
     public double getTotalOrderPrice(String type) {
 
-       List<ShopOrderDetails> order_details = new ArrayList<>();
+       List<ShopOrderProducts> order_details = new ArrayList<>();
         double total_price = 0;
 
 
@@ -378,18 +372,17 @@ public class DataRepository {
 
 
     //********************GET ORDER LIST *************************//
-  public LiveData<Resource<List<ShopOrderList>>> getOrderList(String wallet_id, CharSequence key){
+  public LiveData<Resource<List<ShopOrder>>> getOrderList(String wallet_id, CharSequence key){
 
-
-      return new NetworkBoundResource<List<ShopOrderList>, List<ShopOrderList>>() {
+      return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
           @Override
-          protected void saveCallResult(@NonNull List<ShopOrderList> orderList) {
+          protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
               mEcOrderListDao.insertOrder(orderList);
           }
 
           @NonNull
           @Override
-          protected LiveData<List<ShopOrderList>> loadFromDb() {
+          protected LiveData<List<ShopOrder>> loadFromDb() {
               if (TextUtils.isEmpty(key)) {
                   return mEcOrderListDao.getOrderList();
               }
@@ -398,19 +391,18 @@ public class DataRepository {
           }
 
           @Override
-          protected boolean shouldFetch(@Nullable List<ShopOrderList> data) {
+          protected boolean shouldFetch(@Nullable List<ShopOrder> data) {
               if (TextUtils.isEmpty(key)) {
                   return true;
               }
-
               return false;
           }
 
           @NonNull
           @Override
-          protected Call<List<ShopOrderList>> createCall() {
+          protected Call<List<ShopOrder>> createCall() {
 
-              Call<List<ShopOrderList>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
+              Call<List<ShopOrder>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
               return call;
           }
       }.getAsLiveData();
