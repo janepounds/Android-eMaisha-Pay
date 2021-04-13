@@ -5,7 +5,10 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
@@ -28,6 +31,7 @@ import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
+import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 import com.cabral.emaishapay.utils.NetworkBoundResource;
 import com.cabral.emaishapay.utils.Resource;
 
@@ -322,13 +326,6 @@ public class DataRepository {
 
     }
 
-    //***************GET SEARCHED PRODUCT ******************************************//
-
-   public LiveData<List<EcProduct>> getSearchProducts(String s,String wallet_id){
-        return mEcProductsDao.getSearchProducts(s);
-
-    }
-
 
     public LiveData<Resource<List<EcProduct>>> getProducts(String wallet_id, CharSequence key) {
 
@@ -377,14 +374,29 @@ public class DataRepository {
       return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
           @Override
           protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
-              mShopOrderDao.insertOrder(orderList);
+              for (ShopOrder shopOrder:orderList) {
+
+                  ShopOrderWithProducts orderData=new ShopOrderWithProducts();
+                  orderData.setShopOrder(shopOrder);
+                  orderData.setOrderProducts(shopOrder.getProducts());
+
+                  EmaishapayDb.insertShopOrderWithProducts(dbInstance,orderData);
+              }
+
           }
 
           @NonNull
           @Override
           protected LiveData<List<ShopOrder>> loadFromDb() {
               if (TextUtils.isEmpty(key)) {
-                  return mShopOrderDao.getOrderList();
+                  LiveData<List<ShopOrderWithProducts>> load=mShopOrderDao.getOrderList();
+
+
+                  LiveData<List<ShopOrder>> resultantOrderData =
+                          Transformations.switchMap(load, myOrderData -> changeToShopOrderFormat(myOrderData) );
+
+
+              return resultantOrderData;
               }
 
               return mShopOrderDao.searchOrderList("*"+key+"*");
@@ -411,16 +423,22 @@ public class DataRepository {
 
 
   //*****************GET ORDER DETAILS LIST ***********************//
-
     public LiveData<List<ShopOrderProducts>> getOrderDetailsList(String order_id) {
      return mShopOrderProductDao.getOrderDetailsList(order_id);
-
-
-
     }
 
+    private LiveData<List<ShopOrder>> changeToShopOrderFormat(List<ShopOrderWithProducts> myOrderData) {
+        MutableLiveData<List<ShopOrder>> results= new MutableLiveData<>();
+        List<ShopOrder> oderList=new ArrayList<>();
 
+        for (ShopOrderWithProducts order:myOrderData ) {
 
-
+            ShopOrder mShopOrder=order.shopOrder;
+            mShopOrder.setProducts( order.getOrderProducts() );
+            oderList.add( mShopOrder );
+        }
+        results.setValue(oderList);
+        return results;
+    }
 
 }

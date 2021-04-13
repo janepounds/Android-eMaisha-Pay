@@ -20,9 +20,10 @@ import com.cabral.emaishapay.network.db.entities.ShopOrder;
 
 import java.util.List;
 
-public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter.MyViewHolder> {
+public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapter.MyViewHolder> {
     Context context;
     private List<ShopOrder> orderData;
+
     public OnlineOrdersAdapter(Context context) {
         this.context = context;
     }
@@ -31,7 +32,7 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaisha
     @Override
     public com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.online_order_item, parent, false);
-        return new com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter.MyViewHolder(view);
+        return new OnlineOrdersAdapter.MyViewHolder(view);
     }
 
     @Override

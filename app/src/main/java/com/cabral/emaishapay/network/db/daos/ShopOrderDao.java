@@ -5,9 +5,10 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
-import com.cabral.emaishapay.network.db.entities.ShopOrderFts;
+import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
 import java.util.List;
 
@@ -27,8 +28,9 @@ public interface ShopOrderDao {
     void insertOrder(List<ShopOrder> order_list);
 
     //get order list
-    @Query("SELECT * FROM ShopOrder ORDER BY order_id DESC")
-    LiveData<List<ShopOrder>> getOrderList();
+    @Transaction
+    @Query("SELECT ShopOrder.* FROM ShopOrder ORDER BY ShopOrder.order_id DESC")
+    LiveData<List<ShopOrderWithProducts>> getOrderList();
 
     //update order
     @Query("UPDATE ShopOrder SET order_status=:status WHERE order_id=:id ")

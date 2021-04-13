@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.FragmentShopOrdersBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.utils.Resource;
@@ -33,14 +37,11 @@ import java.util.List;
 
 public class ShopOrdersFragment extends Fragment {
 
-    ImageView imgNoProduct;
-    TextView txtNoProducts;
-    EditText etxtSearch;
-    private RecyclerView recyclerView;
     private OnlineOrdersAdapter orderAdapter;
     private Context context;
-    Toolbar toolbar;
+    FragmentShopOrdersBinding binding;
     private ShopOrdersModelView viewModel;
+    DialogLoader dialogLoader;
 
 
     @Override
@@ -53,30 +54,10 @@ public class ShopOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop_orders, container, false);
-        recyclerView = view.findViewById(R.id.recycler);
-        imgNoProduct = view.findViewById(R.id.image_no_product);
-
-        txtNoProducts = view.findViewById(R.id.txt_no_products);
-        etxtSearch = view.findViewById(R.id.etxt_search_order);
-
-        imgNoProduct.setVisibility(View.GONE);
-        txtNoProducts.setVisibility(View.GONE);
-        toolbar = view.findViewById(R.id.toolbar_orders);
-
-        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
-        // set a GridLayoutManager with default vertical orientation and 3 number of columns
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-
-        recyclerView.setHasFixedSize(true);
-        orderAdapter = new OnlineOrdersAdapter(context);
-        recyclerView.setAdapter(orderAdapter);
-
-        subscribeToOrderList(viewModel.getOrderList());
+        binding=DataBindingUtil.inflate(inflater,R.layout.fragment_shop_orders,container,false);
 
 
-        etxtSearch.addTextChangedListener(new TextWatcher() {
+        binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,38 +78,45 @@ public class ShopOrdersFragment extends Fragment {
 
         });
 
-
-
-        return  view;
+        dialogLoader = new DialogLoader(getContext());
+        return  binding.getRoot();
     }
 
-
-    //for back button
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-            case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                requireActivity().finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        binding.ordersRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.ordersRecycler.setHasFixedSize(true);
+        orderAdapter = new OnlineOrdersAdapter(context);
+        binding.ordersRecycler.setAdapter(orderAdapter);
+
+        dialogLoader.showProgressDialog();
+        subscribeToOrderList(viewModel.getOrderList());
+
     }
+
+
 
     private void subscribeToOrderList(LiveData<Resource<List<ShopOrder>>> orders) {
-        orders.observe(getViewLifecycleOwner(), searchedOrders -> {
-            //dialogLoader.showProgressDialog();
-            Log.d("debug", "Orders------->>>>");
-            if (searchedOrders.data != null && searchedOrders.data.size() <= 0) {
-                recyclerView.setVisibility(View.VISIBLE);
-                imgNoProduct.setVisibility(View.GONE);
-                orderAdapter.setOrderList(searchedOrders.data);
+        orders.observe(getViewLifecycleOwner(), myOrders -> {
+
+            if (myOrders.data != null && myOrders.data.size() > 0) {
+                binding.ordersRecycler.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setVisibility(View.GONE);
+                binding.txtNoProducts.setVisibility(View.GONE);
+                Log.d("debug", "Orders------->>>>"+myOrders.data.size());
+                orderAdapter.setOrderList(myOrders.data);
             } else {
-                imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
-                txtNoProducts.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+                binding.imageNoProduct.setVisibility(View.VISIBLE);
+                binding.txtNoProducts.setVisibility(View.VISIBLE);
+                binding.ordersRecycler.setVisibility(View.GONE);
+
             }
+            dialogLoader.hideProgressDialog();
         });
     }
 

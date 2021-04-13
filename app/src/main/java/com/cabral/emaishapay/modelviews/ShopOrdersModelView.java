@@ -41,7 +41,7 @@ public class ShopOrdersModelView extends AndroidViewModel {
 
 
     public LiveData<Resource<List<ShopOrder>>> getOrderList() {
-        return orderList;
+        return this.orderList;
     }
 
     public void setQuery(CharSequence query) {

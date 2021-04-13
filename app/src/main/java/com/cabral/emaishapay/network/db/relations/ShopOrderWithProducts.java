@@ -17,7 +17,7 @@ public class ShopOrderWithProducts {
             parentColumn = "order_id",
             entityColumn = "product_order_id"
     )
-    public List<ShopOrderProducts> orderProducts;
+    List<ShopOrderProducts> orderProducts;
 
     public ShopOrder getShopOrder() {
         return shopOrder;
@@ -28,7 +28,7 @@ public class ShopOrderWithProducts {
     }
 
     public List<ShopOrderProducts> getOrderProducts() {
-        return orderProducts;
+        return this.orderProducts;
     }
 
     public void setOrderProducts(List<ShopOrderProducts> orderProducts) {

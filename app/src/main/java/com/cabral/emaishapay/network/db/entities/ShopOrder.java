@@ -5,10 +5,13 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(indices = {@Index(value = {"order_id"},
         unique = true)})
@@ -42,6 +45,9 @@ public class ShopOrder implements Parcelable, Serializable {
     @ColumnInfo(name = "customer_email")
     private String customer_email;
 
+    @Ignore
+    private List<ShopOrderProducts> products=new ArrayList<>();
+
     public ShopOrder(String order_id, String order_date, String order_time, String order_type, String storage_status, String order_payment_method, String customer_name, double discount, String order_status, String customer_address, String customer_cell, String delivery_fee, String customer_email) {
         this.order_id = order_id;
         this.order_date = order_date;
@@ -58,6 +64,7 @@ public class ShopOrder implements Parcelable, Serializable {
         this.customer_email = customer_email;
     }
 
+
     protected ShopOrder(Parcel in) {
         order_id = in.readString();
         order_date = in.readString();
@@ -66,12 +73,13 @@ public class ShopOrder implements Parcelable, Serializable {
         order_payment_method = in.readString();
         customer_name = in.readString();
         storage_status = in.readString();
-        discount = in.readInt();
+        discount = in.readDouble();
         order_status = in.readString();
         customer_address = in.readString();
         customer_cell = in.readString();
         delivery_fee = in.readString();
         customer_email = in.readString();
+        products = in.createTypedArrayList(ShopOrderProducts.CREATOR);
     }
 
     @Override
@@ -89,6 +97,7 @@ public class ShopOrder implements Parcelable, Serializable {
         dest.writeString(customer_cell);
         dest.writeString(delivery_fee);
         dest.writeString(customer_email);
+        dest.writeTypedList(products);
     }
 
     @Override
@@ -219,5 +228,17 @@ public class ShopOrder implements Parcelable, Serializable {
 
     public void setCustomer_email(String customer_email) {
         this.customer_email = customer_email;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public List<ShopOrderProducts> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ShopOrderProducts> products) {
+        this.products = products;
     }
 }

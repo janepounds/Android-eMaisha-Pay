@@ -117,10 +117,13 @@ public class SignUpFragment  extends Fragment {
                     return;
 
                 viewModel.getRegionDetail(districtInput).observe(getViewLifecycleOwner(),myRegion->{
-                    pickedDistrictId=myRegion.getId();
+                    if(myRegion!=null){
+                        pickedDistrictId=myRegion.getId();
 
-                    subCountyList.clear();
-                    subscribeSubcountyList(viewModel.getSubcountyDetails(String.valueOf(pickedDistrictId)));
+                        subCountyList.clear();
+                        subscribeSubcountyList(viewModel.getSubcountyDetails(String.valueOf(pickedDistrictId)));
+                    }
+
                 });
 
 
@@ -147,10 +150,13 @@ public class SignUpFragment  extends Fragment {
                     return;
 
                 viewModel.getRegionDetail(subCountyInput).observe(getViewLifecycleOwner(),myRegion->{
-                    pickedSubCountyId=myRegion.getId();
+                    if(myRegion!=null){
+                        pickedSubCountyId=myRegion.getId();
 
-                    villageList.clear();
-                    subscribeVillageList(viewModel.getVillageDetails(String.valueOf(pickedSubCountyId)));
+                        villageList.clear();
+                        subscribeVillageList(viewModel.getVillageDetails(String.valueOf(pickedSubCountyId)));
+                    }
+
                 });
 
 

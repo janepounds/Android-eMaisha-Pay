@@ -313,7 +313,6 @@ public class GetStartedSignUpFragment extends Fragment {
         dialogLoader.showProgressDialog();
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-
         //signing the user
         signInWithPhoneAuthCredential(credential);
     }

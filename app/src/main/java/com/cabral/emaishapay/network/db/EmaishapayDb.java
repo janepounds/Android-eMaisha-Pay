@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.network.db;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -75,10 +76,15 @@ public abstract class EmaishapayDb extends RoomDatabase {
         database.runInTransaction(() -> {
             database.shopOrderDao().addOrder(orderWithProducts.shopOrder);
 
-            for (ShopOrderProducts orderProduct:orderWithProducts.orderProducts ) {
-                orderProduct.setOrder_id(orderWithProducts.shopOrder.getOrder_id());
-                database.shopOrderProductsDao().insertShopProduct(orderProduct);
+            //Log.d("OrderProducts","==="+orderWithProducts.getOrderProducts().size());
+
+            if(orderWithProducts.getOrderProducts()!=null){
+                for (ShopOrderProducts orderProduct:orderWithProducts.getOrderProducts() ) {
+                    orderProduct.setOrder_id(orderWithProducts.shopOrder.getOrder_id());
+                    database.shopOrderProductsDao().insertShopProduct(orderProduct);
+                }
             }
+
 
 
         });
