@@ -2,18 +2,23 @@ package com.cabral.emaishapay.adapters.Shop;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
 
 
 import java.util.HashMap;
@@ -23,12 +28,12 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
 
 
     Context context;
-    private List<HashMap<String, String>> orderData;
+    private List<? extends ShopOrderDetails> orderData;
     private DbHandlerSingleton dbHandler;
 
-    public SalesDetailsAdapter(Context context, List<HashMap<String, String>> orderData) {
+    public SalesDetailsAdapter(Context context) {
         this.context = context;
-        this.orderData = orderData;
+
     }
 
     @Override
@@ -37,20 +42,60 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
         return new MyViewHolder(view);
     }
 
+
+    public void setProductList(final List<? extends ShopOrderDetails> orderDetails) {
+        if ( this.orderData== null) {
+            this.orderData =  orderDetails;
+            notifyItemRangeInserted(0, orderData.size());
+        }
+        else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return orderData.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return orderData.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return orderData.get(oldItemPosition).getOrder_details_id() ==
+                            orderData.get(newItemPosition).getOrder_details_id();
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    ShopOrderDetails newProduct = orderDetails.get(newItemPosition);
+                    ShopOrderDetails oldProduct = orderData.get(oldItemPosition);
+                    return newProduct.getProduct_weight() == oldProduct.getProduct_weight()
+                            && TextUtils.equals(newProduct.getProduct_name(), oldProduct.getProduct_name())
+                            && TextUtils.equals(newProduct.getProduct_qty(), oldProduct.getProduct_qty());
+
+                }
+            });
+            orderData = orderDetails;
+            result.dispatchUpdatesTo(this);
+        }
+        Log.d("AdapterSize","########"+this.getItemCount());
+    }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
-        holder.txt_product_name.setText(orderData.get(position).get("product_name"));
+        holder.txt_product_name.setText(orderData.get(position).getProduct_name());
 
-        holder.txt_product_qty.setText(context.getString(R.string.quantity) + "  " + orderData.get(position).get("product_qty"));
-        holder.txt_product_Weight.setText(context.getString(R.string.weight) + "  " + orderData.get(position).get("product_weight"));
-        String base64Image = orderData.get(position).get("product_image");
+        holder.txt_product_qty.setText(context.getString(R.string.quantity) + "  " + orderData.get(position).getProduct_qty());
+        holder.txt_product_Weight.setText(context.getString(R.string.weight) + "  " + orderData.get(position).getProduct_weight());
+        String base64Image = orderData.get(position).getProduct_image();
 
 
-        String unit_price = orderData.get(position).get("product_price");
-        String qty = orderData.get(position).get("product_qty");
+        String unit_price = orderData.get(position).getProduct_price();
+        String qty = orderData.get(position).getProduct_qty();
         double price = Double.parseDouble(unit_price);
         int quantity = Integer.parseInt(qty);
         double cost = quantity * price;

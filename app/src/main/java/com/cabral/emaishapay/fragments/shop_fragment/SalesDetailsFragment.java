@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.adapters.Shop.SalesDetailsAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.modelviews.ShopSalesModelView;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +60,7 @@ public class SalesDetailsFragment extends Fragment {
     private Context context;
     Toolbar toolbar;
     private DbHandlerSingleton dbHandler;
+    private ShopSalesModelView viewModel;
 
     public SalesDetailsFragment() {
         // Required empty public constructor
@@ -71,41 +84,27 @@ public class SalesDetailsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler);
         imgNoProduct = view.findViewById(R.id.image_no_product);
         txtTotalPrice = view.findViewById(R.id.txt_total_price);
-
+        viewModel = new ViewModelProvider(this).get(ShopSalesModelView.class);
 
 
         txtNoProducts = view.findViewById(R.id.txt_no_products);
-//        order_id = getIntent().getExtras().getString("order_id");
-//        order_date = getIntent().getExtras().getString("order_date");
-//        order_time = getIntent().getExtras().getString("order_time");
-//        customer_name = getIntent().getExtras().getString("customer_name");
-//        order_status = getIntent().getExtras().getString("order_status");
-//        storage_status = getIntent().getExtras().getString("storage_status");
-
-        imgNoProduct.setVisibility(View.GONE);
-        txtNoProducts.setVisibility(View.GONE);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        recyclerView.setHasFixedSize(true);
 
 
 
+//        //get data from local database
+//        List<HashMap<String, String>> orderDetailsList;
+//        orderDetailsList = dbHandler.getOrderDetailsList(order_id);
+//
+//        if (orderDetailsList.size() <= 0) {
+//            //if no data in local db, then load data from server
+//            Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
+//        } else {
+//            salesDetailsAdapter = new SalesDetailsAdapter(context, orderDetailsList);
+//
+//            recyclerView.setAdapter(salesDetailsAdapter);
 
-        //get data from local database
-        List<HashMap<String, String>> orderDetailsList;
-        orderDetailsList = dbHandler.getOrderDetailsList(order_id);
 
-        if (orderDetailsList.size() <= 0) {
-            //if no data in local db, then load data from server
-            Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
-        } else {
-            salesDetailsAdapter = new SalesDetailsAdapter(context, orderDetailsList);
-
-            recyclerView.setAdapter(salesDetailsAdapter);
-
-
-        }
+//        }
 
 
 
@@ -137,5 +136,32 @@ public class SalesDetailsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        salesDetailsAdapter = new SalesDetailsAdapter(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        recyclerView.setHasFixedSize(true);
+        subscribeToOrderDetailsList(viewModel.getOrderDetailsList());
+    }
 
+    private void subscribeToOrderDetailsList(LiveData<Resource<List<ShopOrderDetails>>> orderDetails) {
+        imgNoProduct.setVisibility(View.GONE);
+        txtNoProducts.setVisibility(View.GONE);
+
+        orderDetails.observe(this.getViewLifecycleOwner(), orderdetails->{
+            // dialogLoader.showProgressDialog();
+
+            if(orderdetails.data!=null && orderdetails.data.size()<=0){
+                Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
+
+
+                //dialogLoader.hideProgressDialog();
+            }else {
+                salesDetailsAdapter.setProductList( orderdetails.data);
+
+            }
+        });
+    }
 }
