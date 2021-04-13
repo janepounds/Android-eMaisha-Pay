@@ -81,6 +81,14 @@ public class ShopOrderProducts implements Parcelable {
         }
     };
 
+    public String getProduct_order_id() {
+        return product_order_id;
+    }
+
+    public void setProduct_order_id(String product_order_id) {
+        this.product_order_id = product_order_id;
+    }
+
     public int getOrder_details_id() {
         return order_details_id;
     }

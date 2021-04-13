@@ -788,7 +788,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     private void processRegistration(String userPassword, String phoneNumber, String userFirstname, String userLastname, String village, String subCounty, String district,String idType,String idNo,String firstSecurityQn,String secondSecurityQn,String thirdSecurityQn,String firstQnAnswer,String secondQnAnswer,String thirdQnAnswer) {
         String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        String category = "Default";
         String action_id = "storeUser";
         dialogLoader.showProgressDialog();
 

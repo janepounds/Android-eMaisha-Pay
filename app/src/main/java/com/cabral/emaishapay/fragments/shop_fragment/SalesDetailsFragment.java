@@ -30,8 +30,7 @@ import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.modelviews.ShopSalesModelView;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.ArrayList;
@@ -146,21 +145,21 @@ public class SalesDetailsFragment extends Fragment {
         subscribeToOrderDetailsList(viewModel.getOrderDetailsList());
     }
 
-    private void subscribeToOrderDetailsList(LiveData<Resource<List<ShopOrderDetails>>> orderDetails) {
+    private void subscribeToOrderDetailsList(LiveData<List<ShopOrderProducts>> orderDetails) {
         imgNoProduct.setVisibility(View.GONE);
         txtNoProducts.setVisibility(View.GONE);
 
         orderDetails.observe(this.getViewLifecycleOwner(), orderdetails->{
             // dialogLoader.showProgressDialog();
 
-            if(orderdetails.data!=null && orderdetails.data.size()<=0){
-                Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
+            if(orderdetails!=null && orderdetails.size()>0){
 
+                salesDetailsAdapter.setProductList( orderdetails);
 
                 //dialogLoader.hideProgressDialog();
-            }else {
-                salesDetailsAdapter.setProductList( orderdetails.data);
+            }else {;
 
+                Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
             }
         });
     }

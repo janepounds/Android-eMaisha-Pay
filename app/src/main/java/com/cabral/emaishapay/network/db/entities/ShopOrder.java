@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(indices = {@Index(value = {"order_id"},
+        unique = true)})
 public class ShopOrder implements Parcelable, Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -105,6 +107,14 @@ public class ShopOrder implements Parcelable, Serializable {
             return new ShopOrder[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getOrder_id() {
         return order_id;

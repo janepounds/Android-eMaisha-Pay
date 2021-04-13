@@ -34,7 +34,7 @@ public interface ShopOrderDao {
     void updateOrder(String id, String status);
 
     //search order
-    @Query("SELECT * FROM ShopOrder WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
+    @Query("SELECT * FROM ShopOrder WHERE customer_name MATCH :s  ORDER BY order_id DESC")
     LiveData<List<ShopOrder>> searchOrderList(String s);
 
 }

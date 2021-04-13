@@ -6,7 +6,7 @@ import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 
 
-@Entity
+@Entity(tableName = "ShopOrderFts")
 @Fts4(contentEntity = ShopOrder.class)
 public class ShopOrderFts {
     @PrimaryKey

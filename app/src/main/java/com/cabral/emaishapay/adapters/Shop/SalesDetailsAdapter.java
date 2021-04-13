@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderDetails;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
 
 
     Context context;
-    private List<? extends ShopOrderDetails> orderData;
+    private List<? extends ShopOrderProducts> orderData;
     private DbHandlerSingleton dbHandler;
 
     public SalesDetailsAdapter(Context context) {
@@ -43,7 +42,7 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
     }
 
 
-    public void setProductList(final List<? extends ShopOrderDetails> orderDetails) {
+    public void setProductList(final List<? extends ShopOrderProducts> orderDetails) {
         if ( this.orderData== null) {
             this.orderData =  orderDetails;
             notifyItemRangeInserted(0, orderData.size());
@@ -68,8 +67,8 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ShopOrderDetails newProduct = orderDetails.get(newItemPosition);
-                    ShopOrderDetails oldProduct = orderData.get(oldItemPosition);
+                    ShopOrderProducts newProduct = orderDetails.get(newItemPosition);
+                    ShopOrderProducts oldProduct = orderData.get(oldItemPosition);
                     return newProduct.getProduct_weight() == oldProduct.getProduct_weight()
                             && TextUtils.equals(newProduct.getProduct_name(), oldProduct.getProduct_name())
                             && TextUtils.equals(newProduct.getProduct_qty(), oldProduct.getProduct_qty());

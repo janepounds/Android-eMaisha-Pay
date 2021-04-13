@@ -47,8 +47,8 @@ public class DataRepository {
     private EmaishapayDb dbInstance;
     private  final DefaultAddressDao mDefaultAddressDao;
     private  final EcManufacturerDao mEcManufacturerDao;
-    private  final ShopOrderProductsDao mEcOrderDetailsDao;
-    private  final ShopOrderDao mEcOrderListDao;
+    private  final ShopOrderProductsDao mShopOrderProductDao;
+    private  final ShopOrderDao mShopOrderDao;
     private  final EcProductCartDao mEcProductCartDao;
     private  final EcProductCategoryDao mEcProductCategoryDao;
     private  final EcProductsDao mEcProductsDao;
@@ -61,8 +61,8 @@ public class DataRepository {
         this.dbInstance=EmaishapayDb.getDatabase(context);
         mDefaultAddressDao=dbInstance.defaultAddressDao();
         mEcManufacturerDao=dbInstance.ecManufacturerDao();
-        mEcOrderDetailsDao=dbInstance.ecOrderDetailsDao();
-        mEcOrderListDao=dbInstance.ecOrderListDao();
+        mShopOrderProductDao=dbInstance.shopOrderProductsDao();
+        mShopOrderDao=dbInstance.shopOrderDao();
         mEcProductCartDao=dbInstance.ecProductCartDao();
         mEcProductCategoryDao=dbInstance.ecProductCategoryDao();
         mEcProductsDao=dbInstance.ecProductsDao();
@@ -218,20 +218,20 @@ public class DataRepository {
 
             String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
 
-            order_details =    mEcOrderDetailsDao.getMonthlyTotalPrice(currentMonth);
+            order_details =    mShopOrderProductDao.getMonthlyTotalPrice(currentMonth);
 
         } else if (type.equals("yearly")) {
 
             String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
-            order_details= mEcOrderDetailsDao.getYearlyTotalPrice(currentYear);
+            order_details= mShopOrderProductDao.getYearlyTotalPrice(currentYear);
 
         } else if (type.equals("daily")) {
             String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
 
-            order_details=  mEcOrderDetailsDao.getDailyTotalPrice(currentDate);
+            order_details=  mShopOrderProductDao.getDailyTotalPrice(currentDate);
 
         } else {
-            order_details=  mEcOrderDetailsDao.getTotalPrice();
+            order_details=  mShopOrderProductDao.getTotalPrice();
 
         }
 
@@ -377,17 +377,17 @@ public class DataRepository {
       return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
           @Override
           protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
-              mEcOrderListDao.insertOrder(orderList);
+              mShopOrderDao.insertOrder(orderList);
           }
 
           @NonNull
           @Override
           protected LiveData<List<ShopOrder>> loadFromDb() {
               if (TextUtils.isEmpty(key)) {
-                  return mEcOrderListDao.getOrderList();
+                  return mShopOrderDao.getOrderList();
               }
 
-              return mEcOrderListDao.searchOrderList("*"+key+"*");
+              return mShopOrderDao.searchOrderList("*"+key+"*");
           }
 
           @Override
@@ -412,8 +412,8 @@ public class DataRepository {
 
   //*****************GET ORDER DETAILS LIST ***********************//
 
-    public LiveData<List<ShopOrderDetails>> getOrderDetailsList(String order_id) {
-     return mEcOrderDetailsDao.getOrderDetailsList(order_id);
+    public LiveData<List<ShopOrderProducts>> getOrderDetailsList(String order_id) {
+     return mShopOrderProductDao.getOrderDetailsList(order_id);
 
 
 
