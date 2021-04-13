@@ -490,6 +490,9 @@ public class WalletAccountFragment extends Fragment {
             LinearLayout layout_agent = dialogView.findViewById(R.id.layout_agent);
             LinearLayout layout_merchant = dialogView.findViewById(R.id.layout_merchant);
             LinearLayout layout_agent_merchant = dialogView.findViewById(R.id.layout_agent_merchant);
+            TextView agent_merchant = dialogView.findViewById(R.id.agent_merchant);
+            View view4 = dialogView.findViewById(R.id.view4);
+            View view5 = dialogView.findViewById(R.id.view5);
 
 
             layout_agent.setOnClickListener(new View.OnClickListener() {
@@ -530,7 +533,18 @@ public class WalletAccountFragment extends Fragment {
                 }
             });
 
+            String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+            if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
+                agent_merchant.setText("Master Agent");
+                layout_agent.setVisibility(View.GONE);
+                layout_merchant.setVisibility(View.GONE);
+                view4.setVisibility(View.GONE);
+                view5.setVisibility(View.GONE);
 
+            }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+                //
+
+            }
 
 
 
@@ -540,6 +554,26 @@ public class WalletAccountFragment extends Fragment {
 
 
         });
+
+        //Setting the account type
+        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        if(role.equalsIgnoreCase("agent") ){
+
+            binding.textAccountType.setText("Agent");
+
+        }
+
+        else if(role.equalsIgnoreCase("merchant")){
+            binding.textAccountType.setText("Merchant");
+        }
+
+        else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+
+
+            binding.textAccountType.setText("Master Agent");
+        } else{
+            binding.textAccountType.setText("Default User");
+        }
 
 //
 //        binding.layoutCustomerSupport.setOnClickListener(view12 -> {
@@ -597,16 +631,7 @@ public class WalletAccountFragment extends Fragment {
 //
 //        });
 
-//        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-//        if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
-//            binding.agentMerchant.setText("Master Agent");
-//            binding.layoutAgent.setVisibility(View.GONE);
-//            binding.layoutMerchant.setVisibility(View.GONE);
-//            binding.businessAccountLayout.setVisibility(View.VISIBLE);
-//        }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
-//            binding.businessAccountLayout.setVisibility(View.GONE);
-//
-//        }
+
 
 
 
