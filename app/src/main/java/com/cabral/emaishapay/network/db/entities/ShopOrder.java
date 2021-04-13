@@ -5,16 +5,18 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity
-public class ShopOrderList implements Parcelable, Serializable {
+@Entity(indices = {@Index(value = {"order_id"},
+        unique = true)})
+public class ShopOrder implements Parcelable, Serializable {
     @PrimaryKey(autoGenerate = true)
-    private int order_id;
-    @ColumnInfo(name = "invoice_id")
-    private String invoice_id;
+    private int id;
+    @ColumnInfo(name = "order_id")
+    private String order_id;
     @ColumnInfo(name = "order_date")
     private String order_date;
     @ColumnInfo(name = "order_time")
@@ -28,7 +30,7 @@ public class ShopOrderList implements Parcelable, Serializable {
     @ColumnInfo(name = "storage_status",defaultValue = "local")
     private String storage_status;
     @ColumnInfo(name = "discount")
-    private int discount;
+    private double discount;
     @ColumnInfo(name = "order_status")
     private String order_status;
     @ColumnInfo(name = "customer_address")
@@ -40,15 +42,14 @@ public class ShopOrderList implements Parcelable, Serializable {
     @ColumnInfo(name = "customer_email")
     private String customer_email;
 
-    public ShopOrderList(int order_id, String invoice_id, String order_date, String order_time, String order_type, String order_payment_method, String customer_name, String storage_status, int discount, String order_status, String customer_address, String customer_cell, String delivery_fee, String customer_email) {
+    public ShopOrder(String order_id, String order_date, String order_time, String order_type, String storage_status, String order_payment_method, String customer_name, double discount, String order_status, String customer_address, String customer_cell, String delivery_fee, String customer_email) {
         this.order_id = order_id;
-        this.invoice_id = invoice_id;
         this.order_date = order_date;
         this.order_time = order_time;
         this.order_type = order_type;
+        this.storage_status=storage_status;
         this.order_payment_method = order_payment_method;
         this.customer_name = customer_name;
-        this.storage_status = storage_status;
         this.discount = discount;
         this.order_status = order_status;
         this.customer_address = customer_address;
@@ -57,9 +58,8 @@ public class ShopOrderList implements Parcelable, Serializable {
         this.customer_email = customer_email;
     }
 
-    protected ShopOrderList(Parcel in) {
-        order_id = in.readInt();
-        invoice_id = in.readString();
+    protected ShopOrder(Parcel in) {
+        order_id = in.readString();
         order_date = in.readString();
         order_time = in.readString();
         order_type = in.readString();
@@ -76,15 +76,14 @@ public class ShopOrderList implements Parcelable, Serializable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(order_id);
-        dest.writeString(invoice_id);
+        dest.writeString(order_id);
         dest.writeString(order_date);
         dest.writeString(order_time);
         dest.writeString(order_type);
         dest.writeString(order_payment_method);
         dest.writeString(customer_name);
         dest.writeString(storage_status);
-        dest.writeInt(discount);
+        dest.writeDouble(discount);
         dest.writeString(order_status);
         dest.writeString(customer_address);
         dest.writeString(customer_cell);
@@ -97,33 +96,34 @@ public class ShopOrderList implements Parcelable, Serializable {
         return 0;
     }
 
-    public static final Creator<ShopOrderList> CREATOR = new Creator<ShopOrderList>() {
+    public static final Creator<ShopOrder> CREATOR = new Creator<ShopOrder>() {
         @Override
-        public ShopOrderList createFromParcel(Parcel in) {
-            return new ShopOrderList(in);
+        public ShopOrder createFromParcel(Parcel in) {
+            return new ShopOrder(in);
         }
 
         @Override
-        public ShopOrderList[] newArray(int size) {
-            return new ShopOrderList[size];
+        public ShopOrder[] newArray(int size) {
+            return new ShopOrder[size];
         }
     };
 
-    public int getOrder_id() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(int order_id) {
+    public void setOrder_id(String order_id) {
         this.order_id = order_id;
     }
 
-    public String getInvoice_id() {
-        return invoice_id;
-    }
-
-    public void setInvoice_id(String invoice_id) {
-        this.invoice_id = invoice_id;
-    }
 
     public String getOrder_date() {
         return order_date;
@@ -173,7 +173,7 @@ public class ShopOrderList implements Parcelable, Serializable {
         this.storage_status = storage_status;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 

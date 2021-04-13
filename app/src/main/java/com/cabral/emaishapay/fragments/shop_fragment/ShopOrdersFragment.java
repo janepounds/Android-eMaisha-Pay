@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,18 +23,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
-import com.cabral.emaishapay.adapters.Shop.OrderAdapter;
-import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
-import com.cabral.emaishapay.modelviews.ShopPOSModelView;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.utils.Resource;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -78,8 +70,7 @@ public class ShopOrdersFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
 
         recyclerView.setHasFixedSize(true);
-        orderAdapter = new OnlineOrdersAdapter(getContext());
-
+        orderAdapter = new OnlineOrdersAdapter(context);
         recyclerView.setAdapter(orderAdapter);
 
         subscribeToOrderList(viewModel.getOrderList());
@@ -94,8 +85,7 @@ public class ShopOrdersFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
+                viewModel.setQuery(s);
 
             }
 
@@ -127,7 +117,7 @@ public class ShopOrdersFragment extends Fragment {
         }
     }
 
-    private void subscribeToOrderList(LiveData<Resource<List<ShopOrderList>>> orders) {
+    private void subscribeToOrderList(LiveData<Resource<List<ShopOrder>>> orders) {
         orders.observe(getViewLifecycleOwner(), searchedOrders -> {
             //dialogLoader.showProgressDialog();
             Log.d("debug", "Orders------->>>>");
@@ -141,31 +131,6 @@ public class ShopOrdersFragment extends Fragment {
             }
         });
     }
-
-    private void subscribeToSearchedOrders(LiveData<Resource<List<ShopOrderList>>> products) {
-        products.observe(getViewLifecycleOwner(), searchedProducts -> {
-            //dialogLoader.showProgressDialog();
-            Log.d("debug", "------->>>>");
-            if (searchedProducts.data != null && searchedProducts.data.size() <= 0) {
-                recyclerView.setVisibility(View.GONE);
-                imgNoProduct.setVisibility(View.VISIBLE);
-                imgNoProduct.setImageResource(R.drawable.no_data);
-
-
-            } else {
-                recyclerView.setVisibility(View.VISIBLE);
-                imgNoProduct.setVisibility(View.GONE);
-
-
-//                OrderAdapter supplierAdapter = new OrderAdapter(context, searchOrder);
-
-//                recyclerView.setAdapter(supplierAdapter);
-
-
-            }
-        });
-    }
-
 
 
     }

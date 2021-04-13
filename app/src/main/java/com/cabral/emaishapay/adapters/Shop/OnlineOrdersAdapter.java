@@ -11,23 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.fragments.shop_fragment.OnlineOrderDetailsFragment;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrderList;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter.MyViewHolder> {
     Context context;
-    private List<ShopOrderList> orderData;
+    private List<ShopOrder> orderData;
     public OnlineOrdersAdapter(Context context) {
         this.context = context;
     }
@@ -55,7 +50,7 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaisha
         return orderData==null? 0 : orderData.size();
     }
 
-    public void setOrderList(List<ShopOrderList> shopOrderLists) {
+    public void setOrderList(List<ShopOrder> shopOrderLists) {
         if ( this.orderData== null) {
             this.orderData =  shopOrderLists;
             notifyItemRangeInserted(0, shopOrderLists.size());
@@ -80,8 +75,8 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<com.cabral.emaisha
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ShopOrderList newProduct = shopOrderLists.get(newItemPosition);
-                    ShopOrderList oldProduct = orderData.get(oldItemPosition);
+                    ShopOrder newProduct = shopOrderLists.get(newItemPosition);
+                    ShopOrder oldProduct = orderData.get(oldItemPosition);
                     return newProduct.getOrder_id() == oldProduct.getOrder_id()
                             && TextUtils.equals(newProduct.getCustomer_address(), oldProduct.getCustomer_address())
                             && TextUtils.equals(newProduct.getCustomer_name(), oldProduct.getCustomer_name())

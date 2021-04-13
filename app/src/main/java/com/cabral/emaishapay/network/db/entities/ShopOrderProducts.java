@@ -5,14 +5,22 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
-public class ShopOrderDetails implements Parcelable {
+@Entity(foreignKeys = {
+        @ForeignKey(entity = ShopOrder.class,
+                parentColumns = "order_id",
+                childColumns = "product_order_id",
+                onDelete = ForeignKey.CASCADE)},
+        indices = {@Index(value = "product_order_id")
+        })
+public class ShopOrderProducts implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int order_details_id;
-    @ColumnInfo(name = "invoice_id")
-    private String invoice_id;
+    @ColumnInfo(name = "product_order_id")
+    private String product_order_id;
     @ColumnInfo(name = "product_name")
     private String product_name;
     @ColumnInfo(name = "product_weight")
@@ -26,16 +34,16 @@ public class ShopOrderDetails implements Parcelable {
     @ColumnInfo(name = "product_order_date")
     private String product_order_date;
 
-    public ShopOrderDetails(int order_details_id, String product_name, String product_image, String product_order_date) {
+    public ShopOrderProducts(int order_details_id, String product_name, String product_image, String product_order_date) {
         this.order_details_id = order_details_id;
         this.product_name = product_name;
         this.product_image = product_image;
         this.product_order_date = product_order_date;
     }
 
-    protected ShopOrderDetails(Parcel in) {
+    protected ShopOrderProducts(Parcel in) {
         order_details_id = in.readInt();
-        invoice_id = in.readString();
+        product_order_id = in.readString();
         product_name = in.readString();
         product_weight = in.readString();
         product_qty = in.readString();
@@ -47,7 +55,7 @@ public class ShopOrderDetails implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(order_details_id);
-        dest.writeString(invoice_id);
+        dest.writeString(product_order_id);
         dest.writeString(product_name);
         dest.writeString(product_weight);
         dest.writeString(product_qty);
@@ -61,17 +69,25 @@ public class ShopOrderDetails implements Parcelable {
         return 0;
     }
 
-    public static final Creator<ShopOrderDetails> CREATOR = new Creator<ShopOrderDetails>() {
+    public static final Creator<ShopOrderProducts> CREATOR = new Creator<ShopOrderProducts>() {
         @Override
-        public ShopOrderDetails createFromParcel(Parcel in) {
-            return new ShopOrderDetails(in);
+        public ShopOrderProducts createFromParcel(Parcel in) {
+            return new ShopOrderProducts(in);
         }
 
         @Override
-        public ShopOrderDetails[] newArray(int size) {
-            return new ShopOrderDetails[size];
+        public ShopOrderProducts[] newArray(int size) {
+            return new ShopOrderProducts[size];
         }
     };
+
+    public String getProduct_order_id() {
+        return product_order_id;
+    }
+
+    public void setProduct_order_id(String product_order_id) {
+        this.product_order_id = product_order_id;
+    }
 
     public int getOrder_details_id() {
         return order_details_id;
@@ -81,12 +97,12 @@ public class ShopOrderDetails implements Parcelable {
         this.order_details_id = order_details_id;
     }
 
-    public String getInvoice_id() {
-        return invoice_id;
+    public String getOrder_id() {
+        return product_order_id;
     }
 
-    public void setInvoice_id(String invoice_id) {
-        this.invoice_id = invoice_id;
+    public void setOrder_id(String order_id) {
+        this.product_order_id = order_id;
     }
 
     public String getProduct_name() {
