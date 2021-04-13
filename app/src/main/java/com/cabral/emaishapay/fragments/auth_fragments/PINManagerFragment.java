@@ -133,6 +133,10 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             phonenumber=getArguments().getString("phone");
             if(ACTION==2){
                 binding.pinTitle.setText(getString(R.string.create_pin));
+                binding.layoutSignin.setVisibility(View.GONE);
+                binding.tokenAuthClose.setVisibility(View.GONE);
+
+
                 userFirstname=getArguments().getString("userFirstname");
                 userLastname=getArguments().getString("userLastname");
                 village=getArguments().getString("village");
@@ -150,6 +154,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
             else{
                 binding.pinTitle.setText(getString(R.string.enter_pin));
+
             }
         }
 
@@ -256,6 +261,11 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             pin1=pin;
                             binding.pinTitle.setText(getString(R.string.comfirm_pin));
                             clearPin(binding);
+                            binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                            binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                            binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                            binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
                         }else if(pin1.length()==4 && pin.equals(pin1)){
 
                             String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;

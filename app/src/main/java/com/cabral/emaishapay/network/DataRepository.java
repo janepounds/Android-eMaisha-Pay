@@ -410,4 +410,17 @@ public class DataRepository {
   }
 
 
+  //*****************GET ORDER DETAILS LIST ***********************//
+
+    public LiveData<List<ShopOrderDetails>> getOrderDetailsList(String order_id) {
+     return mEcOrderDetailsDao.getOrderDetailsList(order_id);
+
+
+
+    }
+
+
+
+
+
 }
