@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.ShopOrderFts;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public interface ShopOrderDao {
     void updateOrder(String id, String status);
 
     //search order
-    @Query("SELECT * FROM ShopOrder WHERE customer_name MATCH :s  ORDER BY order_id DESC")
+    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.order_id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
     LiveData<List<ShopOrder>> searchOrderList(String s);
 
 }
