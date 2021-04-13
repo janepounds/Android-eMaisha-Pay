@@ -46,13 +46,10 @@ public class ShopOrdersFragment extends Fragment {
     EditText etxtSearch;
     private RecyclerView recyclerView;
     private OnlineOrdersAdapter orderAdapter;
-    private DbHandlerSingleton dbHandler;
     private Context context;
-    Toolbar toolbar;String wallet_id;
+    Toolbar toolbar;
     private ShopOrdersModelView viewModel;
 
-    public ShopOrdersFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,9 +71,8 @@ public class ShopOrdersFragment extends Fragment {
         imgNoProduct.setVisibility(View.GONE);
         txtNoProducts.setVisibility(View.GONE);
         toolbar = view.findViewById(R.id.toolbar_orders);
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ShopOrdersModelView.class);
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
         // set a GridLayoutManager with default vertical orientation and 3 number of columns
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
@@ -87,25 +83,6 @@ public class ShopOrdersFragment extends Fragment {
         recyclerView.setAdapter(orderAdapter);
 
         subscribeToOrderList(viewModel.getOrderList());
-
-//        //get data from local database
-//        List<HashMap<String, String>> orderList;
-//        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-//        databaseAccess.open();
-//        orderList = databaseAccess.getOrderList();
-//
-//        if (orderList.size() <= 0) {
-//            //if no data in local db, then load data from server
-////            Toasty.info(context, R.string.no_order_found, Toast.LENGTH_SHORT).show();
-//            recyclerView.setVisibility(View.GONE);
-//            imgNoProduct.setVisibility(View.VISIBLE);
-//            imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
-//            txtNoProducts.setVisibility(View.VISIBLE);
-//        } else {
-//            orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
-//
-//            recyclerView.setAdapter(orderAdapter);
-//        }
 
 
         etxtSearch.addTextChangedListener(new TextWatcher() {
