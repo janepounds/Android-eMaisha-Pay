@@ -376,45 +376,46 @@ public class DataRepository {
 
     }
 
-    public LiveData<Resource<List<EcProduct>>> searchMerchantProduct(String key) {
-
-        return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
-            @Override
-            protected void saveCallResult(@NonNull List<EcProduct> productList) {
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<EcProduct>> loadFromDb() {
-
-                return  mEcProductsDao.getSearchProducts(key);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<EcProduct> data) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected Call<List<EcProduct>> createCall() {
-                return null;
-            }
-        }.getAsLiveData();
-
-    }
-
-    //*******************SEARCH ORDER LIST************************//
-   public LiveData<Resource<List<ShopOrderList>>> searchOrderList(String s){
-    return    mEcOrderListDao.searchOrderList(s);
-
-
-   }
-
 
     //********************GET ORDER LIST *************************//
-  public LiveData<Resource<List<ShopOrderList>>> getOrderList(){
+  public LiveData<Resource<List<ShopOrderList>>> getOrderList(String wallet_id, CharSequence key){
 
-      return  mEcOrderListDao.getOrderList();
-    }
+
+      return new NetworkBoundResource<List<ShopOrderList>, List<ShopOrderList>>() {
+          @Override
+          protected void saveCallResult(@NonNull List<ShopOrderList> orderList) {
+              mEcOrderListDao.insertOrder(orderList);
+          }
+
+          @NonNull
+          @Override
+          protected LiveData<List<ShopOrderList>> loadFromDb() {
+              if (TextUtils.isEmpty(key)) {
+                  return mEcOrderListDao.getOrderList();
+              }
+
+              return mEcOrderListDao.searchOrderList("*"+key+"*");
+          }
+
+          @Override
+          protected boolean shouldFetch(@Nullable List<ShopOrderList> data) {
+              if (TextUtils.isEmpty(key)) {
+                  return true;
+              }
+
+              return false;
+          }
+
+          @NonNull
+          @Override
+          protected Call<List<ShopOrderList>> createCall() {
+
+              Call<List<ShopOrderList>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
+              return call;
+          }
+      }.getAsLiveData();
+
+  }
+
+
 }

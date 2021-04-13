@@ -82,7 +82,9 @@ public class ShopOrdersFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
 
         recyclerView.setHasFixedSize(true);
+        orderAdapter = new OnlineOrdersAdapter(getContext());
 
+        recyclerView.setAdapter(orderAdapter);
 
         subscribeToOrderList(viewModel.getOrderList());
 
@@ -116,35 +118,6 @@ public class ShopOrdersFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
-                //  searchData(s.toString());
-                subscribeToSearchedOrders(viewModel.searchOrderList());
-
-                //get data from local database
-//                List<HashMap<String, String>> searchOrder;
-//
-//                searchOrder = dbHandler.searchOrderList(s.toString());
-//
-//
-//                if (searchOrder.size() <= 0) {
-//                    recyclerView.setVisibility(View.GONE);
-//                    imgNoProduct.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setImageResource(R.drawable.no_data);
-//
-//
-//                } else {
-//
-//
-//                    recyclerView.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setVisibility(View.GONE);
-//
-//
-//                    OrderAdapter supplierAdapter = new OrderAdapter(context, searchOrder);
-//
-//                    recyclerView.setAdapter(supplierAdapter);
-//
-//
-//                }
 
 
             }
@@ -180,20 +153,14 @@ public class ShopOrdersFragment extends Fragment {
     private void subscribeToOrderList(LiveData<Resource<List<ShopOrderList>>> orders) {
         orders.observe(getViewLifecycleOwner(), searchedOrders -> {
             //dialogLoader.showProgressDialog();
-            Log.d("debug", "------->>>>");
+            Log.d("debug", "Orders------->>>>");
             if (searchedOrders.data != null && searchedOrders.data.size() <= 0) {
-                recyclerView.setVisibility(View.GONE);
-                imgNoProduct.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+                imgNoProduct.setVisibility(View.GONE);
+                orderAdapter.setOrderList(searchedOrders.data);
+            } else {
                 imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
                 txtNoProducts.setVisibility(View.VISIBLE);
-
-
-            } else {
-//                orderAdapter = new OnlineOrdersAdapter(getContext(), orderList);
-
-//                recyclerView.setAdapter(orderAdapter);
-
-
             }
         });
     }

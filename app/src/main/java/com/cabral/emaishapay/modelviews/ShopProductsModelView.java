@@ -50,9 +50,6 @@ public class ShopProductsModelView extends AndroidViewModel {
     private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
 
     private String wallet_id;
-    // query extras
-    private boolean isQueryExhausted;
-    private boolean isPerformingQuery;
     private boolean cancelRequest;
     private long requestStartTime;
 
@@ -112,55 +109,6 @@ public class ShopProductsModelView extends AndroidViewModel {
         return this.manufacturers;
     }
 
-
-    private void executeFetchMerchantProducts(LiveData<Resource<List<EcProduct>>> repositorySource){
-        requestStartTime = System.currentTimeMillis();
-        cancelRequest = false;
-        isPerformingQuery = true;
-
-
-
-        merchantProducts.addSource(repositorySource, new Observer<Resource<List<EcProduct>>>() {
-            @Override
-            public void onChanged(Resource<List<EcProduct>> listResource) {
-
-                if(!cancelRequest){
-                    if(listResource!=null){
-
-                        if(listResource.status == Resource.Status.SUCCESS){
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            //Log.d(TAG, "onChanged: page number: " + pageNumber);
-                            Log.d(TAG, "onChanged: " + listResource.data);
-                            isPerformingQuery=false;
-                            if(listResource.data!=null){
-                                merchantProducts.setValue( new Resource<>(
-                                        Resource.Status.SUCCESS,
-                                        listResource.data,
-                                        QUERY_EXHAUSTED
-                                ));
-                            }
-                            merchantProducts.removeSource(repositorySource);
-                        }
-                        else if(listResource.status== Resource.Status.ERROR) {
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            isPerformingQuery = false;
-                            if (listResource.message.equals(QUERY_EXHAUSTED)) {
-                                isQueryExhausted = true;
-                            }
-                            merchantProducts.removeSource(repositorySource);
-                        }
-                        merchantProducts.setValue(listResource);
-                    }
-                    else {
-                        merchantProducts.removeSource(repositorySource);
-                    }
-                }else{
-                    merchantProducts.removeSource(repositorySource);
-                }
-
-            }
-        });
-    }
 
     public LiveData<Resource<List<EcProduct>>> getMerchantProducts() {
 

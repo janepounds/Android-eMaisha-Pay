@@ -213,67 +213,6 @@ public class ShopProductsFragment extends Fragment {
     }
 
 
-
-    private  void getOnlineOrders(){
-        //NetworkStateChecker.RegisterDeviceForFCM(HomeActivity.this);
-
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-        databaseAccess.open();
-
-        Call<ResponseBody> call1 = BuyInputsAPIClient
-                .getInstance()
-                .getOrders(
-                        wallet_id
-                );
-
-        call1.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    String s = null;
-                    try {
-                        s = response.body().string();
-                        if (s != null) {
-                            JSONObject jsonObject = new JSONObject(s);
-                            Log.d("Order Fetch", String.valueOf(jsonObject.getJSONArray("orders")));
-                            JSONArray order_array = jsonObject.getJSONArray("orders");
-                            for (int i = 0; i < order_array.length(); i++) {
-                                Log.d("Order", String.valueOf(order_array.getJSONObject(i)));
-                                boolean check = databaseAccess.addOrder(order_array.getJSONObject(i));
-                                if (check) {
-                                    Log.d("Update Status", "New Order inserted or updated Successfully");
-                                } else {
-                                    Log.d("Update Failure", "New Order insertion failed");
-                                }
-
-                            }
-                        } else {
-
-                            Log.d("Order Fetch", "Response is Empty");
-                        }
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }finally {
-//                        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-//                        databaseAccess.open();
-//                        products = databaseAccess.getProducts();
-                    }
-
-                } else {
-                    Log.d("Order Fetch", "Response is an Error");
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-
-            }
-        });
-    }
-
     public void saveManufacturersList(List<EcManufacturer> manufacturers) {
         this.manufacturers = manufacturers;
     }

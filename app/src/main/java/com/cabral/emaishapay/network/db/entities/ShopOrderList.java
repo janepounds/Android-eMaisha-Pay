@@ -7,8 +7,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class ShopOrderList implements Parcelable {
+public class ShopOrderList implements Parcelable, Serializable {
     @PrimaryKey(autoGenerate = true)
     private int order_id;
     @ColumnInfo(name = "invoice_id")

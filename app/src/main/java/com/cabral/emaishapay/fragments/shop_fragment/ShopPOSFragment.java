@@ -229,36 +229,7 @@ public class ShopPOSFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-               // databaseAccess.open();
-                //get data from local database
-                subscribeToSearchedProducts(viewModel.getSearchedProducts());
-//                List<HashMap<String, String>> searchProductList;
-//
-//                searchProductList = dbHandler.getSearchProducts(s.toString(), userId);
-//
-//
-//                if (searchProductList.size() <= 0) {
-//
-//                    recyclerView.setVisibility(View.GONE);
-//                    imgNoProduct.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setImageResource(R.drawable.not_found);
-//                    txtNoProducts.setVisibility(View.VISIBLE);
-//
-//
-//                } else {
-//
-//
-//                    recyclerView.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setVisibility(View.GONE);
-//                    txtNoProducts.setVisibility(View.GONE);
-//
-//                    productAdapter = new PosProductAdapter(getContext(), searchProductList, fragmentReference);
-//
-//                    recyclerView.setAdapter(productAdapter);
-//
-//
-//                }
+                viewModel.setQuery(s);
 
 
             }

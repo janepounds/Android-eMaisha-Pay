@@ -22,104 +22,43 @@ import java.util.List;
 
 public class ShopPOSModelView extends AndroidViewModel {
     private static final String TAG = "ShopPOSModelView";
-    public static final String QUERY_EXHAUSTED = "No more results.";
     private static final String QUERY_KEY = "QUERY";
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
-    private final MediatorLiveData<Resource<List<EcProduct>>> products=new MediatorLiveData<>();
+    private final LiveData<Resource<List<EcProduct>>> products;
     private String wallet_id;
-    private boolean cancelRequest;
-    private long requestStartTime;
-    private boolean isQueryExhausted;
-    private boolean isPerformingQuery;
 
 
-    public ShopPOSModelView(@NonNull Application application, DataRepository mRepository, SavedStateHandle mSavedStateHandler) {
+    public ShopPOSModelView(@NonNull Application application,@NonNull SavedStateHandle savedStateHandle) {
         super(application);
-        this.mRepository = mRepository;
-        this.mSavedStateHandler = mSavedStateHandler;
+        this.mSavedStateHandler=savedStateHandle;
         this.wallet_id= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, application.getApplicationContext());
+        mRepository=DataRepository.getOurInstance(application.getApplicationContext());
 
-        getProductData();
+        products= Transformations.switchMap(
+                mSavedStateHandler.getLiveData(QUERY_KEY),
+                (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
+                    return mRepository.getProducts( wallet_id,query );
+
+                });
 
     }
 
-    private void getProductData(){
-        requestStartTime = System.currentTimeMillis();
-        cancelRequest = false;
-        isPerformingQuery = true;
-
-
-        final LiveData<Resource<List<EcProduct>>> repositorySource=mRepository.getProducts(wallet_id);
-
-        products.addSource(repositorySource, new Observer<Resource<List<EcProduct>>>() {
-            @Override
-            public void onChanged(Resource<List<EcProduct>> listResource) {
-
-                if(!cancelRequest){
-                    if(listResource!=null){
-
-                        if(listResource.status == Resource.Status.SUCCESS){
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            //Log.d(TAG, "onChanged: page number: " + pageNumber);
-                            Log.d(TAG, "onChanged: " + listResource.data);
-                            isPerformingQuery=false;
-                            if(listResource.data!=null){
-                                products.setValue( new Resource<>(
-                                        Resource.Status.SUCCESS,
-                                        listResource.data,
-                                        QUERY_EXHAUSTED
-                                ));
-                            }
-                            products.removeSource(repositorySource);
-                        }
-                        else if(listResource.status== Resource.Status.ERROR) {
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            isPerformingQuery = false;
-                            if (listResource.message.equals(QUERY_EXHAUSTED)) {
-                                isQueryExhausted = true;
-                            }
-                            products.removeSource(repositorySource);
-                        }
-                        products.setValue(listResource);
-                    }
-                    else {
-                        products.removeSource(repositorySource);
-                    }
-                }else{
-                    products.removeSource(repositorySource);
-                }
-
-            }
-        });
-    }
 
     public LiveData<Resource<List<EcProduct>>> getProducts() {
 
 
-        return Transformations.switchMap(
-                mSavedStateHandler.getLiveData(QUERY_KEY),
-                (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
-                    if (TextUtils.isEmpty(query)) {
-                        return products;
-                    }
-                    return mRepository.getProducts( query+"" );
-                });
+      return products;
     }
 
-    public LiveData<Resource<List<EcProduct>>> getSearchedProducts() {
 
-        return products;
-
-//                Transformations.switchMap(
-//                mSavedStateHandler.getLiveData(QUERY_KEY),
-//                (Function<CharSequence, LiveData<Resource<List<EcProduct>>>>) query -> {
-//                    if (TextUtils.isEmpty(query)) {
-//                        return products;
-//                    }
-////                    return mRepository.getSearchProducts( query+"" );
-//                });
+    public void setQuery(CharSequence query) {
+        // Save the user's query into the SavedStateHandle.
+        // This ensures that we retain the value across process death
+        // and is used as the input into the Transformations.switchMap above
+        mSavedStateHandler.set(QUERY_KEY, query);
     }
+
 
 
 }
