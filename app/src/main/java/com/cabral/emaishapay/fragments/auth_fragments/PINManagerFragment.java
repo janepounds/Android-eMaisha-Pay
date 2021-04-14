@@ -793,7 +793,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         dialogLoader.showProgressDialog();
 
         String countryCode = getResources().getString(R.string.ugandan_code);
-        Call<UserData> call = APIClient.getWalletInstance(getContext())
+        Call<WalletAuthentication> call = APIClient.getWalletInstance(getContext())
                 .processRegistration(
                         userFirstname,userLastname, userPassword,
                         countryCode, phoneNumber, village, subCounty,
@@ -802,21 +802,28 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                         firstQnAnswer,secondQnAnswer,thirdQnAnswer,
                         request_id,category,action_id);
 
-        call.enqueue(new Callback<UserData>() {
+        call.enqueue(new Callback<WalletAuthentication>() {
             @Override
-            public void onResponse(@NotNull Call<UserData> call, @NotNull retrofit2.Response<UserData> response) {
+            public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull retrofit2.Response<WalletAuthentication> response) {
 
                 dialogLoader.hideProgressDialog();
 
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
-                    if (response.body().getStatus().equalsIgnoreCase("1")) {
+                    if (response.body().getStatus()==1) {
 
-                        Intent authenticate = new Intent(context, WalletHomeActivity.class);
-                        context.startActivity(authenticate);
-                        getActivity().finish();
+                        WalletAuthentication.UserData userDetails = response.body().getData();
+                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+                        //otpDialog.dismiss();
+                        loginUser(userDetails, userPassword);
 
-                    } else if (response.body().getStatus().equalsIgnoreCase("0")) {
+                    } else if (response.body().getStatus()==0) {
                         // Get the Error Message from Response
                         String message = response.body().getMessage();
                         Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
@@ -835,7 +842,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
 
             @Override
-            public void onFailure(@NotNull Call<UserData> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<WalletAuthentication> call, @NotNull Throwable t) {
                 dialogLoader.hideProgressDialog();
                 String Str = "" + t;
                 Toast.makeText(context, "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();

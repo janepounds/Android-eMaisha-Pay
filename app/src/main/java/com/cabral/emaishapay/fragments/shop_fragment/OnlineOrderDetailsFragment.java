@@ -3,27 +3,30 @@ package com.cabral.emaishapay.fragments.shop_fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.adapters.Shop.OnlineOrderDetailsAdapter;
+import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
 import com.cabral.emaishapay.database.DatabaseAccess;
+import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,113 +39,85 @@ import retrofit2.Response;
 
 public class OnlineOrderDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee;
     double total_price;
-    Toolbar toolbar;
-    LinearLayout email_layout,reject_approve_layout;
-    TextView txtSubTotal, txtCustomerName, txtOrderStatus, txtApprove, txtReject, txtDelivery, txtCustomerPhone, txtCustomerEmail, txtOverallTotal;
-    private RecyclerView recyclerView;
-    private OnlineOrderDetailsAdapter onlineOrderDetailsAdapter;
+    FragmentOnlineOrderDetailsBinding binding;
+    private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
+    ShopOrder shopOrderDetails;
 
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            order_id = getArguments().getString("order_id");
-            customer_name = getArguments().getString("customer_name");
-            customer_email = getArguments().getString("customer_email");
-            customer_cell = getArguments().getString("customer_cell");
-            customer_address = getArguments().getString("customer_address");
-            delivery_fee = getArguments().getString("delivery_fee");
-            order_status = getArguments().getString("order_status");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_online_order_details,container,false);
 
-        View view = inflater.inflate(R.layout.fragment_online_order_details, container, false);
-        toolbar = view.findViewById(R.id.toolbar_orders);
 
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarOrders);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
         ((AppCompatActivity)requireActivity()). getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.order_details);
         ShopActivity.bottomNavigationView.setVisibility(View.GONE);
-        recyclerView = view.findViewById(R.id.recycler);
-        txtSubTotal = view.findViewById(R.id.txt_online_total_price);
-        txtOrderStatus = view.findViewById(R.id.txt_online_order_status);
-        txtCustomerName = view.findViewById(R.id.txt_online_order_customer_name);
-        txtApprove = view.findViewById(R.id.txt_approve_online);
-        txtDelivery = view.findViewById(R.id.txt_online_delivery_price);
-        txtCustomerPhone = view.findViewById(R.id.txt_online_order_customer_phone);
-        txtCustomerEmail = view.findViewById(R.id.txt_online_order_customer_email);
-        txtOverallTotal = view.findViewById(R.id.txt_online_overall_total_price);
-        txtReject = view.findViewById(R.id.txt_reject_online);
-        email_layout= view.findViewById(R.id.email_layout);
-        reject_approve_layout= view.findViewById(R.id.reject_approve_layout);
 
-
-        txtOrderStatus.setText(order_status);
-        if(!order_status.equalsIgnoreCase("Pending")){
-            reject_approve_layout.setVisibility(View.GONE);
-        }else if(order_status.equalsIgnoreCase("Cancel")){
-            txtOrderStatus.setText("Cancelled");
+        if (getArguments() != null) {
+            this.shopOrderDetails= (ShopOrder) getArguments().getSerializable("order_details");
+            order_id =shopOrderDetails.getOrder_id();
+            customer_name = shopOrderDetails.getCustomer_name();
+            customer_email = shopOrderDetails.getCustomer_email();
+            customer_cell = shopOrderDetails.getCustomer_cell();
+            customer_address = shopOrderDetails.getCustomer_address();
+            delivery_fee = shopOrderDetails.getDelivery_fee();
+            order_status = shopOrderDetails.getOrder_status();
         }
-        txtCustomerName.setText(customer_name);
+
+        // Inflate the layout for this fragment
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        binding.txtOnlineOrderStatus.setText(order_status);
+        if(order_status!=null){
+            if(  !order_status.equalsIgnoreCase("Pending")){
+                binding.rejectApproveLayout.setVisibility(View.GONE);
+            }else if( order_status.equalsIgnoreCase("Cancel")){
+                binding.txtOnlineOrderStatus.setText("Cancelled");
+            }
+        }
+
+
+        binding.txtOnlineOrderCustomerName.setText(customer_name);
         if(customer_email==null || customer_email.equalsIgnoreCase("null")){
-            email_layout.setVisibility(View.GONE);
+            binding.emailLayout.setVisibility(View.GONE);
         }
-        txtCustomerEmail.setText(customer_email);
-        txtCustomerPhone.setText(customer_cell);
-        txtDelivery.setText(delivery_fee);
+        binding.txtOnlineOrderCustomerEmail.setText(customer_email);
+        binding.txtOnlineOrderCustomerPhone.setText(customer_cell);
+        binding.txtOnlineDeliveryPrice.setText(delivery_fee);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.recycler.setLayoutManager(linearLayoutManager); // set LayoutManager to binding.recycler
 
 
-        recyclerView.setHasFixedSize(true);
+        binding.recycler.setHasFixedSize(true);
 
-        final DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
-        databaseAccess.open();
+        onlineOrderDetailsAdapter = new OnlineOrderProductsAdapter(getContext(), shopOrderDetails.getProducts());
+
+        binding.recycler.setAdapter(onlineOrderDetailsAdapter);
 
 
-        //get data from local database
-        List<HashMap<String, String>> orderDetailsList;
-        orderDetailsList = databaseAccess.getOrderDetailsList(order_id);
-        Log.d("Order List", String.valueOf(orderDetailsList));
-
-        onlineOrderDetailsAdapter = new OnlineOrderDetailsAdapter(getContext(), orderDetailsList);
-
-        recyclerView.setAdapter(onlineOrderDetailsAdapter);
-
-        databaseAccess.open();
-        //get data from local database
-        List<HashMap<String, String>> shopData;
-        shopData = databaseAccess.getShopInformation();
         currency=getString(R.string.currency);
-        if(shopData.size()>0)
-         currency = shopData.get(0).get("shop_currency");
 
 
-        databaseAccess.open();
-        total_price = databaseAccess.totalOrderPrice(order_id);
-        Double delivery_cost = Double.parseDouble(txtDelivery.getText().toString());
+        total_price = calculatTotalOrderPrice(shopOrderDetails.getProducts());
+
+        Double delivery_cost = Double.parseDouble(binding.txtOnlineDeliveryPrice.getText().toString());
         Log.d("Delivery Cost", String.valueOf(delivery_cost));
         Double total = total_price + delivery_cost;
-        txtSubTotal.setText(currency + " " + total_price);
-        txtOverallTotal.setText(currency + " " + total);
 
-        txtReject.setOnClickListener(new View.OnClickListener() {
+        binding.txtSubTotalPrice.setText(currency + " " + total_price);
+        binding.txtOnlineOverallTotalPrice.setText(currency + " " + total);
+
+        binding.txtRejectOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -187,8 +162,8 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                     DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
                                     databaseAccess.open();
                                     boolean check = databaseAccess.updateOrder(order_id, "Cancelled");
-                                    txtOrderStatus.setText("Cancelled");
-                                    reject_approve_layout.setVisibility(View.GONE);
+                                    binding.txtOnlineOrderStatus.setText("Cancelled");
+                                    binding.rejectApproveLayout.setVisibility(View.GONE);
                                     alertDialog.cancel();
                                     if (check) {
                                         progressDialog.dismiss();
@@ -219,7 +194,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
         });
 
 
-        txtApprove.setOnClickListener(new View.OnClickListener() {
+        binding.txtApproveOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Call<ResponseBody> call = BuyInputsAPIClient
@@ -243,12 +218,12 @@ public class OnlineOrderDetailsFragment extends Fragment {
                             DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
                             databaseAccess.open();
                             boolean check = databaseAccess.updateOrder(order_id, "Approved");
-                            txtOrderStatus.setText("Approved");
-                            reject_approve_layout.setVisibility(View.GONE);
+                            binding.txtOnlineOrderStatus.setText("Approved");
+                            binding.rejectApproveLayout.setVisibility(View.GONE);
                             if (check) {
                                 progressDialog.dismiss();
                                 ShopActivity.bottomNavigationView.setVisibility(View.GONE);
-                                txtApprove.setVisibility(View.GONE);
+                                binding.txtApproveOnline.setVisibility(View.GONE);
                                 Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
                             } else {
                                 progressDialog.dismiss();
@@ -272,9 +247,14 @@ public class OnlineOrderDetailsFragment extends Fragment {
             }
         });
 
+    }
 
-        // Inflate the layout for this fragment
-        return view;
+    private double calculatTotalOrderPrice(List<ShopOrderProducts> products) {
+        double total=0;
+        for (ShopOrderProducts product:products) {
+            total+=Double.parseDouble(product.getProduct_price());
+        }
+        return total;
     }
 
     @Override

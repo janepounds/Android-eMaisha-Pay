@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentGetStartedSignUpBinding;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -84,7 +86,6 @@ public class GetStartedSignUpFragment extends Fragment {
         binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // Validate Login Form Inputs
                 boolean isValidData = validateForm();
                 if (isValidData) {
@@ -311,10 +312,18 @@ public class GetStartedSignUpFragment extends Fragment {
 
     private void verifyVerificationCode(String code) {
         dialogLoader.showProgressDialog();
-        //creating the credential
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-        //signing the user
-        signInWithPhoneAuthCredential(credential);
+        try {
+            //creating the credential
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+            //signing the user
+            signInWithPhoneAuthCredential(credential);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("VerificationError",e.getMessage());
+            dialog.dismiss();
+            dialogLoader.hideProgressDialog();
+        }
+
     }
 
     //*********** This method is invoked for every call on requestPermissions(Activity, String[], int) ********//

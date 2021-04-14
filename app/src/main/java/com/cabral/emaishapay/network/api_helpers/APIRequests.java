@@ -326,7 +326,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("processregistration")
-    Call<UserData> processRegistration(
+    Call<WalletAuthentication> processRegistration(
             @Field("firstname") String firstName,
             @Field("lastname") String lastName,
             @Field("password") String password,
