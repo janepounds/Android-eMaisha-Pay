@@ -259,7 +259,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                     }else if(ACTION==2){
                         if(pin1.length()==0){
                             pin1=pin;
-                            binding.pinTitle.setText(getString(R.string.comfirm_pin));
+                            binding.pinTitle.setText(getString(R.string.confirm_pin));
                             clearPin(binding);
                             binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
                             binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
