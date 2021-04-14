@@ -16,6 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.DailogFragments.shop.ProductPreviewDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
@@ -36,7 +40,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
-
+    private static final String TAG = "ProductAdapter";
 
     private List<? extends EcProduct> productData;
     private Context context;ProductItemBinding binding;
@@ -100,6 +104,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.setProductData(productData.get(position));
         holder.binding.executePendingBindings();
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.new_product)
+                    .error(R.drawable.new_product)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+
+
+            Glide.with(context).load(Base64.decode(productData.get(position).getProduct_image(), Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
+
+
+        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
+
     }
 
     public void onBindViewHolder0000(@NonNull final MyViewHolder holder, int position) {
@@ -117,6 +134,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         String base64Image = productData.get(position).getProduct_image();
         String productstock = productData.get(position).getProduct_stock();
         String currency =context.getString(R.string.currency);
+
+
 
         //String supplier_name = dbHandler.getSupplierName(supplier_id);
 
