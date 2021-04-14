@@ -54,11 +54,8 @@ public class SalesDetailsFragment extends Fragment {
     //headers and get clients para meter must be equal
     private String[] header = {"Description", "Price"};
 
-    FragmentManager fm;
-    Activity shop;
     private Context context;
     Toolbar toolbar;
-    private DbHandlerSingleton dbHandler;
     private ShopSalesModelView viewModel;
 
     public SalesDetailsFragment() {
@@ -78,7 +75,6 @@ public class SalesDetailsFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Products");
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
 
         recyclerView = view.findViewById(R.id.recycler);
         imgNoProduct = view.findViewById(R.id.image_no_product);
@@ -90,36 +86,9 @@ public class SalesDetailsFragment extends Fragment {
 
 
 
-//        //get data from local database
-//        List<HashMap<String, String>> orderDetailsList;
-//        orderDetailsList = dbHandler.getOrderDetailsList(order_id);
-//
-//        if (orderDetailsList.size() <= 0) {
-//            //if no data in local db, then load data from server
-//            Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
-//        } else {
-//            salesDetailsAdapter = new SalesDetailsAdapter(context, orderDetailsList);
-//
-//            recyclerView.setAdapter(salesDetailsAdapter);
-
-
-//        }
-
-
-
-        //get data from local database
-        List<HashMap<String, String>> shopData;
-        shopData = dbHandler.getShopInformation();
-
-        String shop_name = shopData.get(0).get("shop_name");
-        String shop_contact = shopData.get(0).get("shop_contact");
-        String shop_email = shopData.get(0).get("shop_email");
-        String shop_address = shopData.get(0).get("shop_address");
-        currency = shopData.get(0).get("shop_currency");
-
-
-        total_price = dbHandler.getTotalOrderPrice(order_id);
-        txtTotalPrice.setText(currency + total_price);
+//        currency = shopData.get(0).get("shop_currency");
+//        total_price = dbHandler.getTotalOrderPrice(order_id);
+//        txtTotalPrice.setText(currency + total_price);
 
 
         //for pdf report

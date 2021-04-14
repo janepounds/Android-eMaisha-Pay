@@ -1283,36 +1283,6 @@ public class DatabaseAccess {
         return total_price;
     }
 
-
-    //calculate total price of product
-    public double totalOrderPrice(String invoice_id) {
-
-
-        double total_price = 0;
-
-
-        Cursor cursor = database.rawQuery("SELECT * FROM order_details WHERE invoice_id='" + invoice_id + "'", null);
-
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                double price = Double.parseDouble(cursor.getString(5));
-                int qty = Integer.parseInt(cursor.getString(4));
-                double sub_total = price * qty;
-                total_price = total_price + sub_total;
-
-
-            } while (cursor.moveToNext());
-        } else {
-            total_price = 0;
-        }
-        cursor.close();
-        database.close();
-        return total_price;
-    }
-
-
     //calculate total price of expense
     public double getTotalExpense(String type) {
 
