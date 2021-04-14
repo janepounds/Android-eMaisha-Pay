@@ -60,6 +60,10 @@ public class BeneficiariesListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =inflater.inflate(R.layout.fragment_beneficiaries_list, container, false);
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+
+
         btnAddBeneficiary = rootView.findViewById(R.id.btn_add_beneficiary);
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);
         toolbar = rootView.findViewById(R.id.toolbar_beneficiaries_list);

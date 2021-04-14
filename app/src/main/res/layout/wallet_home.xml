@@ -32,6 +32,7 @@
         android:id="@+id/coordinator_layout_for_scanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#f8f8ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,11 +72,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             app:fabCustomSize="80dp"
-            app:srcCompat="@drawable/ic_qr_code"
+            app:fabSize="auto"
+            android:src="@drawable/ic_qr_code"
             tools:ignore="VectorDrawableCompat"
             app:layout_anchor="@id/bottomAppBar"
             app:layout_anchorGravity="top|center"
-            app:backgroundTint="@color/white"/>
+            app:backgroundTint="@color/white"
+            app:tint="@color/colorPrimary"/>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

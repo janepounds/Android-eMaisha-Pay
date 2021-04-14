@@ -3,24 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F1F5F8"
+    android:background="#fff"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_20dp">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_wallet_pay_merchant"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="@color/white"
+            app:titleTextColor="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_chevron_left_blue" />
 
-    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -138,7 +134,7 @@
                             android:layout_height="45dp"
                             android:layout_weight="1"
                             android:layout_alignParentTop="true"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/rectangular_blue_solid"
                             android:orientation="horizontal">
 
                             <Spinner
@@ -150,18 +146,16 @@
                                 android:background="@android:color/transparent"
                                 android:gravity="center"
                                 android:entries="@array/payment_method"
-                                android:spinnerMode="dropdown"/>
+                                android:spinnerMode="dropdown"
+                                android:padding="5dp"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
                                 android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_chevron_down" />
+                                android:layout_marginBottom="10dp"
+                                android:src="@drawable/ic_right_chevron_arrow_white"
+                                android:rotation="90"/>
 
                         </RelativeLayout>
 
@@ -184,7 +178,7 @@
                             android:id="@+id/edt_purchase_mechant_id"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:inputType="text"
                             android:paddingStart="10dp"
                             android:textColor="@color/textColor"
@@ -220,7 +214,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_alignParentTop="true"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="0dp"
@@ -278,7 +272,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:orientation="horizontal">
 
                             <Spinner
@@ -330,7 +324,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:paddingStart="@dimen/dimen_10dp"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:textColor="@color/textColor"
                                 android:layout_marginTop="5dp"
                                 android:inputType="text"
@@ -355,7 +349,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:paddingStart="@dimen/dimen_10dp"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:inputType="number"
                                 android:textColor="@color/textColor"
                                 android:layout_marginTop="5dp"
@@ -390,7 +384,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:paddingStart="@dimen/dimen_10dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="date"
                                     android:maxLength="5"
                                     android:textColor="@color/textColor"
@@ -417,7 +411,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:paddingStart="@dimen/dimen_10dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="number"
                                     android:textColor="@color/textColor"
                                     android:layout_marginTop="5dp"
@@ -454,7 +448,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:orientation="horizontal">
                             <TextView
 
@@ -528,7 +522,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="@dimen/margin_10"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:hint="Enter.."
                             android:inputType="text"
                             android:paddingLeft="10dp"

@@ -35,7 +35,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@color/white"/>
     <LinearLayout
         android:id="@+id/beneficiaries_view_empty"
         android:layout_width="match_parent"

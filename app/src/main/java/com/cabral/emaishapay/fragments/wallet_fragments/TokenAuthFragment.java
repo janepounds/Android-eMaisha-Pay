@@ -312,7 +312,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                 case 3:
                     binding.pinCode3Edt.setText("");
                     setInputConnection( binding.pinCode3Edt);
-                    binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                    binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
 
                     break;
                 case 4:
