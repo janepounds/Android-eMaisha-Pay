@@ -9,17 +9,18 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class OnlineOrderDetailsAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.Shop.OnlineOrderDetailsAdapter.MyViewHolder> {
+public class OnlineOrderProductsAdapter extends RecyclerView.Adapter<OnlineOrderProductsAdapter.MyViewHolder> {
 
 
     Context context;
-    private List<HashMap<String, String>> orderData;
+    private List<ShopOrderProducts> orderData;
 
-    public OnlineOrderDetailsAdapter(Context context, List<HashMap<String, String>> orderData) {
+    public OnlineOrderProductsAdapter(Context context, List<ShopOrderProducts> orderData) {
 
         this.context = context;
         this.orderData = orderData;
@@ -34,7 +35,7 @@ public class OnlineOrderDetailsAdapter extends RecyclerView.Adapter<com.cabral.e
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.txt_product_name.setText(orderData.get(position).get("product_qty") + " x " + orderData.get(position).get("product_name"));
+        holder.txt_product_name.setText(orderData.get(position).getProduct_qty() + " x " + orderData.get(position).getProduct_name());
 
     }
 
