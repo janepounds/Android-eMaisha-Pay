@@ -53,7 +53,7 @@ public class ShopPOSFragment extends Fragment {
     Activity shop;
     private Context context;
     public static EditText etxtSearch, etxtCharge;
-    PosProductAdapter productAdapter;
+    ProductAdapter productAdapter;
     TextView txtNoProducts, txtEnter, txtItems;
     public  TextView totalItems,totalprice;
     View enterView, itemsView;
@@ -66,7 +66,7 @@ public class ShopPOSFragment extends Fragment {
     private WeakReference<ShopPOSFragment> fragmentReference;
     FrameLayout posChargeLayout;
     ImageView imageTick;
-    private ShopPOSModelView viewModel;
+    private ShopProductsModelView viewModel;
     FragmentShopPosBinding binding;
 
 
@@ -103,7 +103,7 @@ public class ShopPOSFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.all_product);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ShopPOSModelView.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);
         fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
@@ -114,51 +114,14 @@ public class ShopPOSFragment extends Fragment {
                 binding.enterSelected.setVisibility(View.VISIBLE);
                 binding.itemsSelected.setVisibility(View.INVISIBLE);
                 binding.etxtSearch.setVisibility(View.GONE);
-                binding.recycler.setVisibility(View.GONE);
+                binding.posRecycler.setVisibility(View.GONE);
                 binding.layoutCart.setVisibility(View.GONE);
                 binding.layoutPosCharge.setVisibility(View.VISIBLE);
                 binding.posCharge.requestFocus();
 
             }
         });
-        binding.txtItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.enterSelected.setVisibility(View.INVISIBLE);
-                binding.itemsSelected.setVisibility(View.VISIBLE);
-                binding.etxtSearch.setVisibility(View.VISIBLE);
-                binding.recycler.setVisibility(View.VISIBLE);
-                binding.layoutCart.setVisibility(View.VISIBLE);
-                binding.layoutPosCharge.setVisibility(View.GONE);
-                binding.posCharge.clearFocus();
 
-
-                subscribeToProducts(viewModel.getProducts());
-
-                binding.etxtSearch.addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        viewModel.setQuery(s);
-
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-
-
-                });
-
-            }
-        });
 
         binding.layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +163,52 @@ public class ShopPOSFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        productAdapter = new PosProductAdapter(context);
+        productAdapter = new ProductAdapter(context);
+        // set a LinearLayoutManager with default vertical orientation
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        binding.posRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+
+        binding.posRecycler.setHasFixedSize(true);
+        binding.posRecycler.setAdapter(productAdapter);
+        subscribeToProducts(viewModel.getMerchantProducts());
+        binding.txtItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.enterSelected.setVisibility(View.INVISIBLE);
+                binding.itemsSelected.setVisibility(View.VISIBLE);
+                binding.etxtSearch.setVisibility(View.VISIBLE);
+                binding.posRecycler.setVisibility(View.VISIBLE);
+                binding.layoutCart.setVisibility(View.VISIBLE);
+                binding.layoutPosCharge.setVisibility(View.GONE);
+                binding.posCharge.clearFocus();
+
+
+
+
+                binding.etxtSearch.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        viewModel.setQuery(s);
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+
+
+                });
+
+            }
+        });
     }
 
     @Override
@@ -238,21 +246,16 @@ public class ShopPOSFragment extends Fragment {
             Log.d("debug","------->>>>");
             if(myProducts.data!=null && myProducts.data.size()>0){
 
-                binding.recycler.setVisibility(View.VISIBLE);
+                binding.posRecycler.setVisibility(View.VISIBLE);
                 binding.imageNoProduct.setVisibility(View.GONE);
                 binding.txtNoProducts.setVisibility(View.GONE);
                 productAdapter.setProductList( myProducts.data);
-                // set a LinearLayoutManager with default vertical orientation
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                binding.recycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
 
-                binding.recycler.setHasFixedSize(true);
-                binding.recycler.setAdapter(productAdapter);
 
 
             }else {
 
-                binding.recycler.setVisibility(View.GONE);
+                binding.posRecycler.setVisibility(View.GONE);
                 binding.imageNoProduct.setVisibility(View.VISIBLE);
                 binding.imageNoProduct.setImageResource(R.drawable.not_found);
                 binding.txtNoProducts.setVisibility(View.VISIBLE);
