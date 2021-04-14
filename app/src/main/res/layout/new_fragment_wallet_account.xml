@@ -875,7 +875,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="30dp"
-                android:layout_below="@id/layout_app_info_share">
+                android:layout_below="@id/layout_app_info_share"
+                >
 
 
                 <Button

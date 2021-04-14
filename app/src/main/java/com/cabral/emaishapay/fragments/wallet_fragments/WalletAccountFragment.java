@@ -719,7 +719,7 @@ public class WalletAccountFragment extends Fragment {
                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
             });
 
-            binding.logout.setOnClickListener(new View.OnClickListener() {
+            binding.btnLogout.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -729,6 +729,7 @@ public class WalletAccountFragment extends Fragment {
                         binding.layoutEmploymentInfo.setVisibility(View.GONE);
 
                     }
+
                     if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                         binding.chevronBusinessInformation.setRotation(0);
                         binding.layoutBusinessInfo.setVisibility(View.GONE);
@@ -738,10 +739,7 @@ public class WalletAccountFragment extends Fragment {
                     if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
                         binding.chevronEmploymentBusinessInfo.setRotation(0);
                         binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
-
-
                     }
-
 
                     logoutUser();
                 }
