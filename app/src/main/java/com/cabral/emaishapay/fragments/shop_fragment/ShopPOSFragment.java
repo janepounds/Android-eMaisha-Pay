@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
@@ -29,8 +31,10 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
+import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.FragmentShopPosBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.modelviews.ShopPOSModelView;
@@ -63,6 +67,7 @@ public class ShopPOSFragment extends Fragment {
     FrameLayout posChargeLayout;
     ImageView imageTick;
     private ShopPOSModelView viewModel;
+    FragmentShopPosBinding binding;
 
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -91,96 +96,71 @@ public class ShopPOSFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop_pos, container, false);
-        toolbar = view.findViewById(R.id.toolbar_shop_pos);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        // Inflate the layout for this fragment
+        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_shop_pos,container,false);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarShopPos);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.all_product);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ShopPOSModelView.class);
-
-        etxtSearch = view.findViewById(R.id.etxt_search);
-        recyclerView = view.findViewById(R.id.recycler);
-        imgNoProduct = view.findViewById(R.id.image_no_product);
-        txtNoProducts = view.findViewById(R.id.txt_no_products);
-        //imgScanner = view.findViewById(R.id.img_scanner);
-
-
-        posChargeLayout = view.findViewById(R.id.layout_pos_charge);
-        etxtCharge = view.findViewById(R.id.pos_charge);
-        txtEnter = view.findViewById(R.id.txt_enter);
-        txtItems = view.findViewById(R.id.txt_items);
-        enterView = view.findViewById(R.id.enter_selected);
-        itemsView = view.findViewById(R.id.items_selected);
-        layoutCart = view.findViewById(R.id.layout_cart);
-        totalprice = view.findViewById(R.id.tv_total_price);
-        totalItems = view.findViewById(R.id.total_items);
-        imageTick = view.findViewById(R.id.img_check);
         fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
-        //for interstitial ads show
-//        Utils utils=new Utils();
-//        utils.interstitialAdsShow(PosActivity.this);
         dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
 
-        txtEnter.setOnClickListener(new View.OnClickListener() {
+       binding.txtEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enterView.setVisibility(View.VISIBLE);
-                itemsView.setVisibility(View.INVISIBLE);
-                etxtSearch.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.GONE);
-                layoutCart.setVisibility(View.GONE);
-                posChargeLayout.setVisibility(View.VISIBLE);
-                etxtCharge.requestFocus();
+                binding.enterSelected.setVisibility(View.VISIBLE);
+                binding.itemsSelected.setVisibility(View.INVISIBLE);
+                binding.etxtSearch.setVisibility(View.GONE);
+                binding.recycler.setVisibility(View.GONE);
+                binding.layoutCart.setVisibility(View.GONE);
+                binding.layoutPosCharge.setVisibility(View.VISIBLE);
+                binding.posCharge.requestFocus();
 
             }
         });
-        txtItems.setOnClickListener(new View.OnClickListener() {
+        binding.txtItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enterView.setVisibility(View.INVISIBLE);
-                itemsView.setVisibility(View.VISIBLE);
-                etxtSearch.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.VISIBLE);
-                layoutCart.setVisibility(View.VISIBLE);
-                posChargeLayout.setVisibility(View.GONE);
-                etxtCharge.clearFocus();
-
-
-                //get data from local database
-//                List<HashMap<String, String>> productList;
-//                userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-//                productList = dbHandler.getProducts(userId);
+                binding.enterSelected.setVisibility(View.INVISIBLE);
+                binding.itemsSelected.setVisibility(View.VISIBLE);
+                binding.etxtSearch.setVisibility(View.VISIBLE);
+                binding.recycler.setVisibility(View.VISIBLE);
+                binding.layoutCart.setVisibility(View.VISIBLE);
+                binding.layoutPosCharge.setVisibility(View.GONE);
+                binding.posCharge.clearFocus();
 
 
                 subscribeToProducts(viewModel.getProducts());
-//
-//                if (productList.size() <= 0) {
-//
-//                    recyclerView.setVisibility(View.GONE);
-//                    imgNoProduct.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setImageResource(R.drawable.not_found);
-//                    txtNoProducts.setVisibility(View.VISIBLE);
-//
-//
-//                } else {
-//                    recyclerView.setVisibility(View.VISIBLE);
-//                    imgNoProduct.setVisibility(View.GONE);
-//                    txtNoProducts.setVisibility(View.GONE);
-//
-//                    productAdapter = new PosProductAdapter(getContext(), productList,fragmentReference);
-//
-//                    recyclerView.setAdapter(productAdapter);
-//
-//
-//                }
+
+                binding.etxtSearch.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        viewModel.setQuery(s);
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+
+
+                });
 
             }
         });
 
-        layoutCart.setOnClickListener(new View.OnClickListener() {
+        binding.layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -194,11 +174,11 @@ public class ShopPOSFragment extends Fragment {
             }
         });
 
-        imageTick.setOnClickListener(new View.OnClickListener() {
+        binding.imgCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                ShopPayments nextFrag= new ShopPayments( Double.parseDouble(etxtCharge.getText().toString()) );
+                ShopPayments nextFrag= new ShopPayments( Double.parseDouble(binding.posCharge.getText().toString()) );
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -209,40 +189,18 @@ public class ShopPOSFragment extends Fragment {
         });
 
 
-        imgNoProduct.setVisibility(View.GONE);
-        txtNoProducts.setVisibility(View.GONE);
-
-        // set a LinearLayoutManager with default vertical orientation
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+//        binding.imageNoProduct.setVisibility(View.GONE);
+//        binding.txtNoProducts.setVisibility(View.GONE);
 
 
-        recyclerView.setHasFixedSize(true);
+//        refreshCartProducts();
+        return binding.getRoot();
+    }
 
-
-        etxtSearch.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.setQuery(s);
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-
-        });
-        refreshCartProducts();
-        return view;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        productAdapter = new PosProductAdapter(context);
     }
 
     @Override
@@ -264,8 +222,8 @@ public class ShopPOSFragment extends Fragment {
         }
         String currency =context.getString(R.string.currency);
 
-        totalItems.setText(itemsCounter+" Items");
-        totalprice.setText(currency+" "+priceCounter);
+        binding.totalItems.setText(itemsCounter+" Items");
+        binding.tvTotalPrice.setText(currency+" "+priceCounter);
 
 
     }
@@ -278,19 +236,26 @@ public class ShopPOSFragment extends Fragment {
         products.observe(getViewLifecycleOwner(), myProducts->{
             //dialogLoader.showProgressDialog();
             Log.d("debug","------->>>>");
-            if(myProducts.data!=null && myProducts.data.size()<=0){
-                recyclerView.setVisibility(View.GONE);
-                imgNoProduct.setVisibility(View.VISIBLE);
-                imgNoProduct.setImageResource(R.drawable.not_found);
-                txtNoProducts.setVisibility(View.VISIBLE);
+            if(myProducts.data!=null && myProducts.data.size()>0){
+
+                binding.recycler.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setVisibility(View.GONE);
+                binding.txtNoProducts.setVisibility(View.GONE);
+                productAdapter.setProductList( myProducts.data);
+                // set a LinearLayoutManager with default vertical orientation
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                binding.recycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+
+                binding.recycler.setHasFixedSize(true);
+                binding.recycler.setAdapter(productAdapter);
 
 
             }else {
-                recyclerView.setVisibility(View.VISIBLE);
-                imgNoProduct.setVisibility(View.GONE);
-                txtNoProducts.setVisibility(View.GONE);
-                productAdapter.setProductList( myProducts.data);
 
+                binding.recycler.setVisibility(View.GONE);
+                binding.imageNoProduct.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setImageResource(R.drawable.not_found);
+                binding.txtNoProducts.setVisibility(View.VISIBLE);
 
 
 
