@@ -43,6 +43,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Random;
 
@@ -515,10 +516,13 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         // Generate random integers in range 0 to 9999
         int rand_int = rand.nextInt(10000);
+
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestamp_ = timestamp.toString();
         String result = timestamp_.replaceAll("\\p{Punct}|\\s", "");
-        request_id ="E"+ result + rand_int ;
+
+        String formatted_rand_int = String.format("%021d", new BigInteger(result+rand_int) );
+        request_id ="E"+ formatted_rand_int ;
 
         return request_id;
     }
