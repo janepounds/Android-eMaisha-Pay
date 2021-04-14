@@ -126,7 +126,7 @@ public class SalesDetailsFragment extends Fragment {
                 salesDetailsAdapter.setProductList( orderdetails);
 
                 //dialogLoader.hideProgressDialog();
-            }else {;
+            }else {
 
                 Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
             }

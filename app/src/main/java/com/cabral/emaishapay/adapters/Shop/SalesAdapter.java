@@ -3,67 +3,73 @@ package com.cabral.emaishapay.adapters.Shop;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
+import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
 
-import java.util.HashMap;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder> {
 
 
     Context context;
-    private List<HashMap<String, String>> orderData;
-    private DbHandlerSingleton dbHandler;
+    private List<ShopOrderWithProducts> orderData;
+    OrderSalesItemBinding binding;
 
 
-    public SalesAdapter(Context context, List<HashMap<String, String>> orderData) {
+    public SalesAdapter(Context context) {
         this.context = context;
-        this.orderData = orderData;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_item, parent, false);
-        return new MyViewHolder(view);
+        binding= DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.order_sales_item,  parent, false);
+
+        return new MyViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        int invoice_id = Integer.parseInt(orderData.get(position).get("invoice_id"));
-        String order_date = orderData.get(position).get("product_order_date");
-        String product_qty = orderData.get(position).get("product_qty");
-        String payment_method = orderData.get(position).get("order_payment_method");
-        String product_price = orderData.get(position).get("product_price");
-        double total=Double.parseDouble(product_price)*Double.parseDouble(product_qty);
-        String customer_name = orderData.get(position).get("customer_name");
+        String invoice_id = orderData.get(position).shopOrder.getOrder_id();
+        String order_date = orderData.get(position).shopOrder.getOrder_date();
+        String payment_method = orderData.get(position).shopOrder.getOrder_payment_method();
+
+        int totalProductSize=0;
+        double totalProductPrice=0.0;
+        for (ShopOrderProducts product:orderData.get(position).shopOrder.getProducts()) {
+            totalProductSize+=Integer.parseInt(product.getProduct_qty());
+            double subTotalPrice=Double.parseDouble(product.getProduct_price())*Double.parseDouble(product.getProduct_qty());
+            totalProductPrice+=subTotalPrice;
+        }
+
+        String customer_name = orderData.get(position).shopOrder.getCustomer_name();
         String currency=context.getString(R.string.currency);
 
 
-        holder.txt_customer_name.setText(customer_name);
-        holder.txt_order_id.setText( String.format("%08d", invoice_id) );
-        holder.txt_payment_method.setText(payment_method);
+        holder.binding.txtCustomerName.setText(customer_name);
+        holder.binding.txtOrderIdValue.setText( invoice_id);
+        holder.binding.txtOrderPaymentMethod.setText(payment_method);
 
-        holder.txt_product_price.setText(currency+" "+total);
-        holder.txt_date.setText(order_date);
+        holder.binding.productPrice.setText(currency+" "+totalProductPrice);
+        holder.binding.txtDate.setText(order_date);
 
-        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+        holder.binding.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -102,32 +108,67 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             }
         });
 
-
+        holder.binding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return orderData.size();
+        return orderData==null? 0 : orderData.size();
+    }
+
+    public void setSalesList(List<ShopOrderWithProducts> orderSales) {
+        if ( this.orderData== null) {
+            this.orderData =  orderSales;
+            notifyItemRangeInserted(0, orderSales.size());
+        }
+        else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return orderData.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return orderSales.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return orderData.get(oldItemPosition).shopOrder.getOrder_id() ==
+                            orderSales.get(newItemPosition).shopOrder.getOrder_id();
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    ShopOrder newOrder = orderSales.get(newItemPosition).shopOrder;
+                    ShopOrder oldOrder = orderData.get(oldItemPosition).shopOrder;
+                    return newOrder.getOrder_id() == oldOrder.getOrder_id()
+                            && TextUtils.equals(newOrder.getCustomer_name(), oldOrder.getCustomer_name())
+                            && TextUtils.equals(newOrder.getOrder_type(), oldOrder.getOrder_type())
+                            && TextUtils.equals(newOrder.getOrder_payment_method(), oldOrder.getOrder_payment_method())
+                            && TextUtils.equals(newOrder.getOrder_time(), oldOrder.getOrder_time())
+                            && TextUtils.equals(newOrder.getOrder_status(), oldOrder.getOrder_status())
+                            && newOrder.getProducts().size()==oldOrder.getProducts().size();
+                }
+            });
+            orderData = orderSales;
+            result.dispatchUpdatesTo(this);
+        }
+        Log.d("SalesAdapterSize","########"+this.getItemCount());
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView txt_customer_name, txt_order_id, txt_product_price, txt_payment_method, txt_date;
-        ImageView imgDelete, imgProduct;
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            //cart_product_image
-            txt_customer_name = itemView.findViewById(R.id.txt_customer_name);
-            txt_order_id = itemView.findViewById(R.id.txt_order_id_value);
-            txt_product_price = itemView.findViewById(R.id.product_price);
-            txt_payment_method = itemView.findViewById(R.id.txt_order_payment_method);
-            txt_date = itemView.findViewById(R.id.txt_date);
-            imgDelete = itemView.findViewById(R.id.img_delete);
-            imgProduct = itemView.findViewById(R.id.cart_product_image);
+        final OrderSalesItemBinding binding;
 
-            itemView.setOnClickListener(this);
+        public MyViewHolder(OrderSalesItemBinding binding) {
+            super(binding.getRoot());
 
+
+            binding.getRoot().setOnClickListener(this);
+            this.binding = binding;
 
         }
 

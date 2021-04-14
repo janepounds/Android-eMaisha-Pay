@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +15,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.SalesAdapter;
-import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.databinding.FragmentShopSalesBinding;
+import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
+import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,19 +37,10 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class ShopSalesFragment extends Fragment {
-    FragmentManager fm;
-    Activity shop;
     private Context context;
-    private DbHandlerSingleton dbHandler;
-    Toolbar toolbar;
-    ImageView imgNoProduct;
-    EditText etxtSearch;
     private SalesAdapter salesAdapter;
-    TextView txtNoProducts, txtTotalPrice;
-    List<HashMap<String, String>> orderDetailsList;
-    double total_price;
-    private RecyclerView recyclerView;
-
+    ShopOrdersModelView viewModel;
+    FragmentShopSalesBinding binding;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -57,100 +52,77 @@ public class ShopSalesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop_sales, container, false);
-        toolbar = view.findViewById(R.id.toolbar_sales);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_shop_sales, container, false);
+        
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarSales);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Sales");
 
 
-        recyclerView = view.findViewById(R.id.recycler);
-        imgNoProduct = view.findViewById(R.id.image_no_product);
 
-        txtNoProducts = view.findViewById(R.id.txt_no_products);
-        etxtSearch = view.findViewById(R.id.etxt_search_order);
+        return binding.getRoot();
+    }
 
-        imgNoProduct.setVisibility(View.GONE);
-        txtNoProducts.setVisibility(View.GONE);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
 
+        salesAdapter = new SalesAdapter(context);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        recyclerView.setHasFixedSize(true);
-        final DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
-        databaseAccess.open();
-        List<HashMap<String, String>> orderDetailsList;
-        orderDetailsList = databaseAccess.getAllSalesItems();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        binding.recyclerSales.setLayoutManager(linearLayoutManager); // set LayoutManager to binding.recyclerSales
+        binding.recyclerSales.setHasFixedSize(true);
+        binding.recyclerSales.setAdapter(salesAdapter);
 
-        if (orderDetailsList.size() <= 0) {
-            //if no data in local db, then load data from server
-            Toasty.info(getContext(), "No Order Found", Toast.LENGTH_SHORT).show();
-            recyclerView.setVisibility(View.GONE);
-            imgNoProduct.setVisibility(View.VISIBLE);
-            imgNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
-            txtNoProducts.setVisibility(View.VISIBLE);
-        } else {
-            salesAdapter = new SalesAdapter(getContext(), orderDetailsList);
-
-            recyclerView.setAdapter(salesAdapter);
-        }
+       subscribeToOrderList(viewModel.getOrderSales());
 
 
-        etxtSearch.addTextChangedListener(new TextWatcher() {
+
+        binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-                //  searchData(s.toString());
-
-//                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(OrdersActivity.this);
-//                databaseAccess.open();
-                //get data from local database
-                List<HashMap<String, String>> searchOrder;
-
-                searchOrder = dbHandler.searchOrderList(s.toString());
-
-
-                if (searchOrder.size() <= 0) {
-                    recyclerView.setVisibility(View.GONE);
-                    imgNoProduct.setVisibility(View.VISIBLE);
-                    imgNoProduct.setImageResource(R.drawable.no_product);
-
-
-                } else {
-
-
-                    recyclerView.setVisibility(View.VISIBLE);
-                    imgNoProduct.setVisibility(View.GONE);
-
-
-                    SalesAdapter supplierAdapter = new SalesAdapter(getContext(), searchOrder);
-
-                    recyclerView.setAdapter(supplierAdapter);
-
-
-                }
-
-
+                viewModel.setSalesQuery(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
-
 
         });
 
+        viewModel.setSalesQuery(binding.etxtSearchOrder.getText());
+    }
 
 
-        return view;
+    private void subscribeToOrderList(LiveData<List<ShopOrderWithProducts>> sales) {
+        binding.recyclerSales.setVisibility(View.VISIBLE);
+        binding.imageNoProduct.setVisibility(View.GONE);
+        binding.txtNoProducts.setVisibility(View.GONE);
+
+        sales.observe(getViewLifecycleOwner(), myOrderSales -> {
+
+            if (myOrderSales != null && myOrderSales.size() > 0) {
+                binding.recyclerSales.setVisibility(View.VISIBLE);
+                binding.imageNoProduct.setVisibility(View.GONE);
+                binding.txtNoProducts.setVisibility(View.GONE);
+                Log.d("debug", "Sales------->>>>"+myOrderSales.size());
+                salesAdapter.setSalesList(myOrderSales);
+            } else {
+                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+                binding.imageNoProduct.setVisibility(View.VISIBLE);
+                binding.txtNoProducts.setVisibility(View.VISIBLE);
+                binding.recyclerSales.setVisibility(View.GONE);
+
+            }
+            binding.executePendingBindings();
+        });
+
+
     }
 }

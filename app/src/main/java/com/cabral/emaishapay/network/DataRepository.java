@@ -49,34 +49,34 @@ public class DataRepository {
 
     private static DataRepository ourInstance;
     private EmaishapayDb dbInstance;
-    private  final DefaultAddressDao mDefaultAddressDao;
-    private  final EcManufacturerDao mEcManufacturerDao;
-    private  final ShopOrderProductsDao mShopOrderProductDao;
-    private  final ShopOrderDao mShopOrderDao;
-    private  final EcProductCartDao mEcProductCartDao;
-    private  final EcProductCategoryDao mEcProductCategoryDao;
-    private  final EcProductsDao mEcProductsDao;
-    private  final EcProductWeightDao mEcProductWeightDao;
-    private  final EcUserCartAttributesDao mEcUserCartAttributesDao;
-    private  final EcUserCartDao mEcUserCartDao;
-    private  final RegionDetailsDao mRegionDetailsDao;
+    private final DefaultAddressDao mDefaultAddressDao;
+    private final EcManufacturerDao mEcManufacturerDao;
+    private final ShopOrderProductsDao mShopOrderProductDao;
+    private final ShopOrderDao mShopOrderDao;
+    private final EcProductCartDao mEcProductCartDao;
+    private final EcProductCategoryDao mEcProductCategoryDao;
+    private final EcProductsDao mEcProductsDao;
+    private final EcProductWeightDao mEcProductWeightDao;
+    private final EcUserCartAttributesDao mEcUserCartAttributesDao;
+    private final EcUserCartDao mEcUserCartDao;
+    private final RegionDetailsDao mRegionDetailsDao;
 
     private DataRepository(Context context) {
-        this.dbInstance=EmaishapayDb.getDatabase(context);
-        mDefaultAddressDao=dbInstance.defaultAddressDao();
-        mEcManufacturerDao=dbInstance.ecManufacturerDao();
-        mShopOrderProductDao=dbInstance.shopOrderProductsDao();
-        mShopOrderDao=dbInstance.shopOrderDao();
-        mEcProductCartDao=dbInstance.ecProductCartDao();
-        mEcProductCategoryDao=dbInstance.ecProductCategoryDao();
-        mEcProductsDao=dbInstance.ecProductsDao();
-        mEcProductWeightDao=dbInstance.ecProductWeightDao();
-        mEcUserCartAttributesDao=dbInstance.ecUserCartAttributesDao();
-        mEcUserCartDao=dbInstance.ecUserCartDao();
+        this.dbInstance = EmaishapayDb.getDatabase(context);
+        mDefaultAddressDao = dbInstance.defaultAddressDao();
+        mEcManufacturerDao = dbInstance.ecManufacturerDao();
+        mShopOrderProductDao = dbInstance.shopOrderProductsDao();
+        mShopOrderDao = dbInstance.shopOrderDao();
+        mEcProductCartDao = dbInstance.ecProductCartDao();
+        mEcProductCategoryDao = dbInstance.ecProductCategoryDao();
+        mEcProductsDao = dbInstance.ecProductsDao();
+        mEcProductWeightDao = dbInstance.ecProductWeightDao();
+        mEcUserCartAttributesDao = dbInstance.ecUserCartAttributesDao();
+        mEcUserCartDao = dbInstance.ecUserCartDao();
         mRegionDetailsDao = dbInstance.regionDetailsDao();
     }
 
-    public static  DataRepository getOurInstance(Context context){
+    public static DataRepository getOurInstance(Context context) {
         if (ourInstance == null) {
             synchronized (DataRepository.class) {
                 if (ourInstance == null) {
@@ -84,29 +84,29 @@ public class DataRepository {
                 }
             }
         }
-        return  ourInstance;
+        return ourInstance;
     }
 
     //*********** Insert default address Item ********//
-    public void insertDefaultAddress(String customer_id,String entry_first_name,String entry_last_name,String entry_street_address,String entry_postal_code,String entry_city,String entry_country_id,String entry_contact,String latitude,String longitude,String is_default) {
+    public void insertDefaultAddress(String customer_id, String entry_first_name, String entry_last_name, String entry_street_address, String entry_postal_code, String entry_city, String entry_country_id, String entry_contact, String latitude, String longitude, String is_default) {
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
 
         mDefaultAddressDao.insertDefaultAddress(new DefaultAddress(
                 customer_id, entry_first_name,
-                entry_last_name,entry_street_address,
+                entry_last_name, entry_street_address,
                 entry_postal_code, entry_city,
-                entry_country_id,entry_contact,
-                latitude, longitude,is_default
+                entry_country_id, entry_contact,
+                latitude, longitude, is_default
         ));
     }
 
 
     //***********Default Address ********//
-    public DefaultAddress getDefaultAddress(String customer_id){
+    public DefaultAddress getDefaultAddress(String customer_id) {
 
-        List<DefaultAddress> addressList=mDefaultAddressDao.getDefaultAddress(customer_id);
-        if(addressList.size()>0)
-        return addressList.get(0);
+        List<DefaultAddress> addressList = mDefaultAddressDao.getDefaultAddress(customer_id);
+        if (addressList.size() > 0)
+            return addressList.get(0);
 
         return null;
     }
@@ -118,8 +118,8 @@ public class DataRepository {
         return mEcProductsDao.getUnsyncedProducts(sync_status);
     }
 
-    public void updateProductSyncStatus(String product_id,String sync_status) {
-        mEcProductsDao.updateProductSyncStatus(product_id,sync_status);
+    public void updateProductSyncStatus(String product_id, String sync_status) {
+        mEcProductsDao.updateProductSyncStatus(product_id, sync_status);
 
     }
 
@@ -127,7 +127,7 @@ public class DataRepository {
     public ArrayList<HashMap<String, String>> getOfflineProductNames() {
         ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
 
-        for (EcProduct product:mEcProductsDao.getOfflineProductNames()) {
+        for (EcProduct product : mEcProductsDao.getOfflineProductNames()) {
             HashMap<String, String> map = new HashMap();
             map.put("product_name", product.getProduct_name());
             productnames.add(map);
@@ -149,7 +149,7 @@ public class DataRepository {
     }
 
     public void insertRegionDetails(List<RegionDetails> regionDetails) {
-        mRegionDetailsDao.insertRegionDetails( regionDetails);
+        mRegionDetailsDao.insertRegionDetails(regionDetails);
     }
 
     //*********GET LATEST ID FROM REGIONS DETAILS*************//
@@ -160,24 +160,25 @@ public class DataRepository {
     //******GET DISTRICTS*****//
 
     public LiveData<List<RegionDetails>> getRegionDetails(String type) {
-        return  mRegionDetailsDao.getRegionDetails(type);
+        return mRegionDetailsDao.getRegionDetails(type);
     }
 
     //******GET SUB COUNTIES**********//
-    public LiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty){
-        return  mRegionDetailsDao.getSubcountyDetails(belongs_to,subcounty);
+    public LiveData<List<RegionDetails>> getSubcountyDetails(String belongs_to, String subcounty) {
+        return mRegionDetailsDao.getSubcountyDetails(belongs_to, subcounty);
     }
 
     //*********GET VILLAGES*************//
     public LiveData<List<RegionDetails>> getVillageDetails(String belongs_to, String subcounty) {
-        return mRegionDetailsDao.getVillageDetails(belongs_to,subcounty);
+        return mRegionDetailsDao.getVillageDetails(belongs_to, subcounty);
     }
 
-    public LiveData<RegionDetails> getRegionDetail( String name) {
+    public LiveData<RegionDetails> getRegionDetail(String name) {
         return mRegionDetailsDao.getRegionDetail(name);
     }
+
     //**********GET OFFLINE MANUFACTURERS************//
-    public  ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+    public ArrayList<HashMap<String, String>> getOfflineManufacturers() {
         ArrayList<HashMap<String, String>> manufacturers = new ArrayList<>();
         for (EcManufacturer manufacturer : mEcManufacturerDao.getOfflineManufacturers()) {
             HashMap<String, String> map = new HashMap();
@@ -190,7 +191,7 @@ public class DataRepository {
 
     //**********ADD PRODUCT NAME *******************//
     public void addProductName(EcProduct product) {
-      mEcProductsDao.addProductName(product);
+        mEcProductsDao.addProductName(product);
     }
 
     //**********ADD PRODUCT CATEGORY *******************//
@@ -207,14 +208,14 @@ public class DataRepository {
     //*********UPDATE PRODUCT QTY*****************//
     public void updateProductQty(String id, String qty) {
 
-      mEcProductCartDao.updateProductQty(id,qty);
+        mEcProductCartDao.updateProductQty(id, qty);
 
     }
 
     //******GET TOTAL PRODUCT PRICE ********//
     public double getTotalOrderPrice(String type) {
 
-       List<ShopOrderProducts> order_details = new ArrayList<>();
+        List<ShopOrderProducts> order_details = new ArrayList<>();
         double total_price = 0;
 
 
@@ -222,26 +223,26 @@ public class DataRepository {
 
             String currentMonth = new SimpleDateFormat("MM", Locale.ENGLISH).format(new Date());
 
-            order_details =    mShopOrderProductDao.getMonthlyTotalPrice(currentMonth);
+            order_details = mShopOrderProductDao.getMonthlyTotalPrice(currentMonth);
 
         } else if (type.equals("yearly")) {
 
             String currentYear = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(new Date());
-            order_details= mShopOrderProductDao.getYearlyTotalPrice(currentYear);
+            order_details = mShopOrderProductDao.getYearlyTotalPrice(currentYear);
 
         } else if (type.equals("daily")) {
             String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
 
-            order_details=  mShopOrderProductDao.getDailyTotalPrice(currentDate);
+            order_details = mShopOrderProductDao.getDailyTotalPrice(currentDate);
 
         } else {
-            order_details=  mShopOrderProductDao.getTotalPrice();
+            order_details = mShopOrderProductDao.getTotalPrice();
 
         }
 
 
-        if (order_details.size()>0) {
-            for(int i=0;i<order_details.size();i++){
+        if (order_details.size() > 0) {
+            for (int i = 0; i < order_details.size(); i++) {
                 double price = Double.parseDouble(order_details.get(i).getProduct_price());
                 int qty = Integer.parseInt(order_details.get(i).getProduct_qty());
                 double sub_total = price * qty;
@@ -278,8 +279,8 @@ public class DataRepository {
         products = mEcProductCartDao.getTotalPrice();
         double total_price = 0;
 
-        if (products!=null) {
-            for(int i=0;i<products.size();i++){
+        if (products != null) {
+            for (int i = 0; i < products.size(); i++) {
                 double price = Double.parseDouble(products.get(i).getProduct_price());
                 int qty = products.get(i).getProduct_qty();
                 double sub_total = price * qty;
@@ -307,13 +308,13 @@ public class DataRepository {
     public ArrayList<HashMap<String, String>> getProductImage(String product_id) {
         ArrayList<HashMap<String, String>> productnames = new ArrayList<>();
 
-        for (EcProduct product:mEcProductsDao.getProductImage(product_id)) {
+        for (EcProduct product : mEcProductsDao.getProductImage(product_id)) {
             HashMap<String, String> map = new HashMap();
             map.put("product_image", product.getProduct_image());
             productnames.add(map);
         }
 
-       return productnames;
+        return productnames;
 
     }
 
@@ -333,7 +334,7 @@ public class DataRepository {
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
             @Override
             protected void saveCallResult(@NonNull List<EcProduct> productList) {
-                mEcProductsDao.addProduct( productList);
+                mEcProductsDao.addProduct(productList);
             }
 
             @NonNull
@@ -342,7 +343,7 @@ public class DataRepository {
                 if (TextUtils.isEmpty(key)) {
                     return mEcProductsDao.getProducts();
                 }
-                LiveData<List<EcProduct>> results= mEcProductsDao.getSearchProducts( "*"+key+"*" );
+                LiveData<List<EcProduct>> results = mEcProductsDao.getSearchProducts("*" + key + "*");
 
                 return results;
             }
@@ -369,76 +370,87 @@ public class DataRepository {
 
 
     //********************GET ORDER LIST *************************//
-  public LiveData<Resource<List<ShopOrder>>> getOrderList(String wallet_id, CharSequence key){
+    public LiveData<Resource<List<ShopOrder>>> getOrderList(String wallet_id, CharSequence key) {
 
-      return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
-          @Override
-          protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
-              for (ShopOrder shopOrder:orderList) {
+        return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
+            @Override
+            protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
+                for (ShopOrder shopOrder : orderList) {
 
-                  ShopOrderWithProducts orderData=new ShopOrderWithProducts();
-                  orderData.setShopOrder(shopOrder);
-                  orderData.setOrderProducts(shopOrder.getProducts());
+                    ShopOrderWithProducts orderData = new ShopOrderWithProducts();
+                    orderData.setShopOrder(shopOrder);
+                    orderData.setOrderProducts(shopOrder.getProducts());
 
-                  EmaishapayDb.insertShopOrderWithProducts(dbInstance,orderData);
-              }
+                    EmaishapayDb.insertShopOrderWithProducts(dbInstance, orderData);
+                }
 
-          }
+            }
 
-          @NonNull
-          @Override
-          protected LiveData<List<ShopOrder>> loadFromDb() {
-              if (TextUtils.isEmpty(key)) {
-                  LiveData<List<ShopOrderWithProducts>> load=mShopOrderDao.getOrderList();
-
-
-                  LiveData<List<ShopOrder>> resultantOrderData =
-                          Transformations.switchMap(load, myOrderData -> changeToShopOrderFormat(myOrderData) );
+            @NonNull
+            @Override
+            protected LiveData<List<ShopOrder>> loadFromDb() {
+                if (TextUtils.isEmpty(key)) {
+                    LiveData<List<ShopOrderWithProducts>> load = mShopOrderDao.getOrderList();
 
 
-              return resultantOrderData;
-              }
-
-              return mShopOrderDao.searchOrderList("*"+key+"*");
-          }
-
-          @Override
-          protected boolean shouldFetch(@Nullable List<ShopOrder> data) {
-              if (TextUtils.isEmpty(key)) {
-                  return true;
-              }
-              return false;
-          }
-
-          @NonNull
-          @Override
-          protected Call<List<ShopOrder>> createCall() {
-
-              Call<List<ShopOrder>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
-              return call;
-          }
-      }.getAsLiveData();
-
-  }
+                    LiveData<List<ShopOrder>> resultantOrderData =
+                            Transformations.switchMap(load, myOrderData -> changeToShopOrderFormat(myOrderData));
 
 
-  //*****************GET ORDER DETAILS LIST ***********************//
+                    return resultantOrderData;
+                }
+
+                return mShopOrderDao.searchOrderList("*" + key + "*");
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<ShopOrder> data) {
+                if (TextUtils.isEmpty(key)) {
+                    return true;
+                }
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected Call<List<ShopOrder>> createCall() {
+
+                Call<List<ShopOrder>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
+                return call;
+            }
+        }.getAsLiveData();
+
+    }
+
+
+    public LiveData<List<ShopOrderWithProducts>> getOrderSales() {
+
+        return  mShopOrderDao.getAllSalesItems();
+    }
+
+    public LiveData<List<ShopOrderWithProducts>> SearchOrderSales(CharSequence query) {
+        return mShopOrderDao.searchOrderSales("*"+query+"*");
+    }
+
+    //*****************GET ORDER DETAILS LIST ***********************//
     public LiveData<List<ShopOrderProducts>> getOrderDetailsList(String order_id) {
-     return mShopOrderProductDao.getOrderDetailsList(order_id);
+        return mShopOrderProductDao.getOrderDetailsList(order_id);
     }
 
     private LiveData<List<ShopOrder>> changeToShopOrderFormat(List<ShopOrderWithProducts> myOrderData) {
-        MutableLiveData<List<ShopOrder>> results= new MutableLiveData<>();
-        List<ShopOrder> oderList=new ArrayList<>();
+        MutableLiveData<List<ShopOrder>> results = new MutableLiveData<>();
+        List<ShopOrder> oderList = new ArrayList<>();
 
-        for (ShopOrderWithProducts order:myOrderData ) {
+        for (ShopOrderWithProducts order : myOrderData) {
 
-            ShopOrder mShopOrder=order.shopOrder;
-            mShopOrder.setProducts( order.getOrderProducts() );
-            oderList.add( mShopOrder );
+            ShopOrder mShopOrder = order.shopOrder;
+            mShopOrder.setProducts(order.getOrderProducts());
+            oderList.add(mShopOrder);
         }
         results.setValue(oderList);
         return results;
     }
 
 }
+
+

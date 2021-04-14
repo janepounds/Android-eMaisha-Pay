@@ -57,6 +57,25 @@ public class ShopOrdersFragment extends Fragment {
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_shop_orders,container,false);
 
 
+
+        dialogLoader = new DialogLoader(getContext());
+        return  binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        binding.ordersRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.ordersRecycler.setHasFixedSize(true);
+        orderAdapter = new OnlineOrdersAdapter(context);
+        binding.ordersRecycler.setAdapter(orderAdapter);
+
+        dialogLoader.showProgressDialog();
+        subscribeToOrderList(viewModel.getOrderList());
+
         binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -77,24 +96,6 @@ public class ShopOrdersFragment extends Fragment {
 
 
         });
-
-        dialogLoader = new DialogLoader(getContext());
-        return  binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        binding.ordersRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        binding.ordersRecycler.setHasFixedSize(true);
-        orderAdapter = new OnlineOrdersAdapter(context);
-        binding.ordersRecycler.setAdapter(orderAdapter);
-
-        dialogLoader.showProgressDialog();
-        subscribeToOrderList(viewModel.getOrderList());
 
     }
 
