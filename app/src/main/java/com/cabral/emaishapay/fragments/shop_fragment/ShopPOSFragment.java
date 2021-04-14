@@ -29,22 +29,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentShopPosBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
-import com.cabral.emaishapay.modelviews.ShopPOSModelView;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ShopPOSFragment extends Fragment {
