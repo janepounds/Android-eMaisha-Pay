@@ -24,7 +24,6 @@ public class ShopOrdersModelView extends AndroidViewModel {
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
     private final LiveData<Resource<List<ShopOrder>>> orderList;
-    private final LiveData<List<ShopOrderWithProducts>> sales;
     private String wallet_id;
 
     public ShopOrdersModelView(@NonNull Application application,@NonNull SavedStateHandle savedStateHandle) {
@@ -33,14 +32,6 @@ public class ShopOrdersModelView extends AndroidViewModel {
         this.wallet_id= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, application.getApplicationContext());
         mRepository=DataRepository.getOurInstance(application.getApplicationContext());
 
-        sales = Transformations.switchMap(
-                mSavedStateHandler.getLiveData(SALESQUERY_KEY,null),
-                (Function<CharSequence, LiveData<List<ShopOrderWithProducts>>>) query -> {
-                    if(TextUtils.isEmpty(query) ){
-                        return  mRepository.getOrderSales();
-                    }
-                    return mRepository.SearchOrderSales(query);
-                });
 
         orderList= Transformations.switchMap(
                 mSavedStateHandler.getLiveData(QUERY_KEY,null),
@@ -65,12 +56,4 @@ public class ShopOrdersModelView extends AndroidViewModel {
         mSavedStateHandler.set(QUERY_KEY, query);
     }
 
-    public void setSalesQuery(CharSequence query) {
-        mSavedStateHandler.set(SALESQUERY_KEY, query);
-    }
-
-    //Contructor initialises the API data request to save on local DB, no need for a Network Data bound Resource here
-    public LiveData<List<ShopOrderWithProducts>> getOrderSales() {
-        return sales;
-    }
 }

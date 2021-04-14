@@ -52,7 +52,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
         int totalProductSize=0;
         double totalProductPrice=0.0;
-        for (ShopOrderProducts product:orderData.get(position).shopOrder.getProducts()) {
+        for (ShopOrderProducts product:orderData.get(position).getOrderProducts()) {
             totalProductSize+=Integer.parseInt(product.getProduct_qty());
             double subTotalPrice=Double.parseDouble(product.getProduct_price())*Double.parseDouble(product.getProduct_qty());
             totalProductPrice+=subTotalPrice;
