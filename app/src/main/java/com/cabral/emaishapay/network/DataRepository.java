@@ -1,6 +1,8 @@
 package com.cabral.emaishapay.network;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -320,11 +322,37 @@ public class DataRepository {
 
     //******************GET ORDER HISTORY DATA****************************************************//
 
-    public void addToCart(String product_id) {
+    public LiveData<Integer> addToCart(String product_id,EcProductCart productCart) {
+        LiveData<List<EcProductCart>> cartProducts = mEcProductCartDao.selectCartProduct(product_id);
+
+        LiveData<Integer> result = Transformations.switchMap(
+                cartProducts, mycartProduct ->insertIfDoesnotexist(mycartProduct,productCart) );
 
 
-        mEcProductCartDao.addToCart(product_id);
 
+        return result;
+    }
+
+    private LiveData<Integer> insertIfDoesnotexist(List<EcProductCart> mycartProduct, EcProductCart productCart) {
+        MutableLiveData<Integer> results = new MutableLiveData<>();
+        if (mycartProduct.size() > 0) {
+            results.setValue(new Integer(2 + ""));
+
+
+        } else {
+
+            //if data insert success, its return 1, if failed return -1
+            if (mEcProductCartDao.insertCartProduct(productCart) == -1) {
+                results.setValue(new Integer(-1 + ""));
+
+
+            } else {
+                results.setValue(new Integer(1 + ""));
+            }
+
+
+        }
+        return results;
     }
 
 

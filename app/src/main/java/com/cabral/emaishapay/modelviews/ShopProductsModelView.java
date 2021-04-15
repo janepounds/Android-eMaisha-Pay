@@ -28,6 +28,7 @@ import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCart;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.ArrayList;
@@ -48,9 +49,11 @@ public class ShopProductsModelView extends AndroidViewModel {
     private final SavedStateHandle mSavedStateHandler;
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private LiveData<Resource<List<EcProduct>>> repositorySource;
+    private LiveData<Integer>cartReipositorySource;
     private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
+    private EcProductCart productCart;
 
-    private String wallet_id;
+    private String wallet_id,product_id;
     private boolean cancelRequest;
     private long requestStartTime;
 
@@ -70,6 +73,9 @@ public class ShopProductsModelView extends AndroidViewModel {
                 });
 
         //executeFetchMerchantProducts( repositorySource );
+
+        cartReipositorySource = mRepository.addToCart(product_id,productCart);
+
 
         requestOnlineManufacturers();
 
@@ -114,6 +120,12 @@ public class ShopProductsModelView extends AndroidViewModel {
     public LiveData<Resource<List<EcProduct>>> getMerchantProducts() {
 
         return repositorySource;
+    }
+
+    public LiveData<Integer> addToCart() {
+
+
+        return cartReipositorySource;
     }
 
 
