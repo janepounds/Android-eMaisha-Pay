@@ -159,7 +159,7 @@ public class ShopPOSFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        productAdapter = new ProductAdapter(context);
+        productAdapter = new ProductAdapter(context, viewModel);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.posRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView

@@ -103,7 +103,7 @@ public class ProductPreviewDialog extends DialogFragment {
                                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                                 String product_id = productData.getProduct_id();
-                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);
+                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(product_id, userId);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

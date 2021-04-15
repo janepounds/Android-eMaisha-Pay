@@ -492,7 +492,7 @@ public interface APIRequestsForBuyInputs {
 
 
     @DELETE("deleteMerchantProduct")
-    Call<ResponseBody>deleteMerchantProduct( @Header("Authorization") String token,@Query("product_id") String product_id,@Query("wallet_id") String user_id);
+    Call<ResponseBody>deleteMerchantProduct(@Query("product_id") String product_id,@Query("wallet_id") String user_id);
 
 
 }
