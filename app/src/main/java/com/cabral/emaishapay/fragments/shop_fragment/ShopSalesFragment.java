@@ -68,8 +68,6 @@ public class ShopSalesFragment extends Fragment {
 
        subscribeToOrderList(viewModel.getOrderSales());
 
-
-
         binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
 
             @Override

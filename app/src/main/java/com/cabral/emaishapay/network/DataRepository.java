@@ -479,6 +479,10 @@ public class DataRepository {
         return results;
     }
 
+    public void deleteProductStock(EcProduct product) {
+        //product_id
+        mEcProductsDao.deleteProduct(product);
+    }
 }
 
 

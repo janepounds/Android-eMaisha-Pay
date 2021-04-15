@@ -62,7 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class AddProductFragment extends DialogFragment {
+public class AddShopProductFragment extends DialogFragment {
     private static final String TAG = "AddProductFragment";
 
     Context context;
@@ -103,12 +103,12 @@ public class AddProductFragment extends DialogFragment {
     List<HashMap<String, String>> productData;
 
 
-    public AddProductFragment(List<EcManufacturer> manufacturers) {
+    public AddShopProductFragment(List<EcManufacturer> manufacturers) {
         this.manufacturers=manufacturers;
     }
 
 
-    public AddProductFragment(List<EcManufacturer> manufacturers, List<HashMap<String, String>> productData) {
+    public AddShopProductFragment(List<EcManufacturer> manufacturers, List<HashMap<String, String>> productData) {
         this.manufacturers=manufacturers;
         this.productData=productData;
     }

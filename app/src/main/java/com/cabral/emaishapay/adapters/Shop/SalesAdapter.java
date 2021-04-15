@@ -3,6 +3,7 @@ package com.cabral.emaishapay.adapters.Shop;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
@@ -174,15 +176,9 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
         @Override
         public void onClick(View view) {
-//            Intent i = new Intent(context, OrderDetailsActivity.class);
-//            Bundle bundle = new Bundle();
-//            i.putExtra("order_id", orderData.get(getAdapterPosition()).get("invoice_id"));
-//            i.putExtra("customer_name", orderData.get(getAdapterPosition()).get("customer_name"));
-//            i.putExtra("order_date", orderData.get(getAdapterPosition()).get("order_date"));
-//            i.putExtra("order_time", orderData.get(getAdapterPosition()).get("order_time"));
-//            i.putExtra("order_status", orderData.get(getAdapterPosition()).get("order_status"));
-//            i.putExtra("storage_status", orderData.get(getAdapterPosition()).get("storage_status"));
-//            context.startActivity(i);
+            Bundle args = new Bundle();
+            args.putSerializable("salesDetails",orderData.get(getAdapterPosition()));
+            ShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
         }
     }
 

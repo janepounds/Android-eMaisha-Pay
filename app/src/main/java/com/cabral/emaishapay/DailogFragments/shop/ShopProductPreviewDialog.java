@@ -23,6 +23,7 @@ import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 
@@ -36,17 +37,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductPreviewDialog extends DialogFragment {
+public class ShopProductPreviewDialog extends DialogFragment {
     private static final String TAG = "ProductPreviewDialog";
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     private Context context;
     private EcProduct  productData;
     Button delete_button;
-    DbHandlerSingleton dbHandler;
+    ShopProductsModelView viewModel;
 
-   public ProductPreviewDialog(EcProduct productData){
-       this.productData =productData;
-   }
+    public ShopProductPreviewDialog(EcProduct productData, ShopProductsModelView viewModel) {
+       this.viewModel=viewModel;
+        this.productData =productData;
+    }
+
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -92,55 +95,14 @@ public class ProductPreviewDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //call delete method
-                dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(R.string.want_to_delete_product)
                         .setCancelable(false)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //delete from online
-                                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                                String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                                String product_id = productData.getProduct_id();
-                                Call<ResponseBody> call = BuyInputsAPIClient.getInstance().deleteMerchantProduct(access_token,product_id, userId);
-                                call.enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                        if (response.isSuccessful()) {
 
-                                            //delete locally
-                                            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
-                                            databaseAccess.open();
-
-                                            boolean deleteProduct = databaseAccess.deleteProduct(product_id);
-
-                                            if (deleteProduct) {
-                                                Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
-
-                                                //redirect to product List
-                                                Intent intent = new Intent(getContext(), ShopActivity.class);
-                                                startActivity(intent);
-
-
-                                            } else {
-                                                Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
-                                            }
-                                            dialog.cancel();
-
-                                        }
-
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                                    }
-                                });
-
-
-
+                                viewModel.deleteProduct(productData);
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

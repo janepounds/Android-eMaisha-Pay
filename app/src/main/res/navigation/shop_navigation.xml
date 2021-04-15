@@ -18,7 +18,11 @@
         android:id="@+id/shopPOSFragment"
         android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment"
         android:label="ShopPOSFragment"
-        tools:layout="@layout/fragment_shop_pos" />
+        tools:layout="@layout/fragment_shop_pos" >
+        <action
+            android:id="@+id/action_shopPOSFragment_to_shopPayments"
+            app:destination="@id/shopPayments" />
+    </fragment>
     <fragment
         android:id="@+id/shopProductsFragment"
         android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment"
@@ -34,10 +38,19 @@
         android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopSalesFragment"
         android:label="ShopSalesFragment"
         tools:layout="@layout/fragment_shop_sales"
-        />
+        >
+        <action
+            android:id="@+id/action_shopSalesFragment_to_salesDetailsFragment"
+            app:destination="@id/salesDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onlineOrderDetailsFragment"
         android:name="com.cabral.emaishapay.fragments.shop_fragment.OnlineOrderDetailsFragment"
         android:label="OnlineOrderDetailsFragment"
         tools:layout="@layout/fragment_online_order_details"/>
+    <fragment
+        android:id="@+id/salesDetailsFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment"
+        android:label="SalesDetailsFragment"
+        tools:layout="@layout/fragment_sales_details"/>
 </navigation>

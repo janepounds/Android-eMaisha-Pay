@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -137,7 +138,31 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
 
+    public void deleteProduct(EcProduct product) {
+        Call<ResponseBody> call1 = BuyInputsAPIClient
+                .getInstance()
+                .deleteMerchantProduct(product.getProduct_id(),wallet_id);
+        call1.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                    mRepository.deleteProductStock(product);
+                    //Log.d("Categories", String.valueOf(categories));
+
+                } else {
+                    Log.d("Failed", "Manufacturers Fetch failed");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                Log.d("Failed", "Manufacturers Fetch failed");
+            }
+        });
 
 
-
+    }
 }
