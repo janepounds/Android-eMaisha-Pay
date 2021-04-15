@@ -1,68 +1,40 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import es.dmoral.toasty.Toasty;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 
-import com.cabral.emaishapay.DailogFragments.shop.AddProductFragment;
+import com.cabral.emaishapay.DailogFragments.shop.AddShopProductFragment;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.databinding.FragmentShopProductsBinding;
-import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
-import com.cabral.emaishapay.modelviews.SignUpModelView;
-import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.utils.Resource;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ShopProductsFragment extends Fragment {
@@ -117,14 +89,10 @@ public class ShopProductsFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment addProductDialog = new AddProductFragment(manufacturers);
+                DialogFragment addProductDialog = new AddShopProductFragment(manufacturers);
                 addProductDialog.show(ft, "dialog");
             }
         });
-
-//        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
-//        databaseAccess.open();
-//        getOnlineOrders();
 
 
 
@@ -137,7 +105,7 @@ public class ShopProductsFragment extends Fragment {
 
 
 
-        productAdapter = new ProductAdapter(context,viewModel);
+        productAdapter = new ProductAdapter(getActivity(),viewModel);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.shopProductRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
         binding.shopProductRecyclerview.setHasFixedSize(true);

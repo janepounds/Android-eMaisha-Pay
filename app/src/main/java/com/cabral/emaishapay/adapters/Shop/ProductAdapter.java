@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.cabral.emaishapay.DailogFragments.shop.ShopProductPreviewDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.ProductItemBinding;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
@@ -22,6 +23,10 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,14 +38,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private static final String TAG = "ProductAdapter";
 
     private List<? extends EcProduct> productData;
-    private Context context;ProductItemBinding binding;
+    private Context context;
+    private FragmentManager fm;
+    ProductItemBinding binding;
     ShopProductsModelView viewModel;
     //private List<EcManufacturer> manufacturers;
 
 
-    public ProductAdapter(Context context, ShopProductsModelView viewModel) {
+    public ProductAdapter(Context context, ShopProductsModelView viewModel,FragmentManager fm ) {
         this.context = context;
         this.viewModel=viewModel;
+        this.fm=fm;
         setHasStableIds(true);
     }
 
@@ -144,6 +152,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             }
         });
 
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment productPreviewDialog = new ShopProductPreviewDialog(productData.get(position),viewModel);
+                productPreviewDialog.show(ft, "dialog");
+            }
+        });
 
         holder.binding.executePendingBindings();
         Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
