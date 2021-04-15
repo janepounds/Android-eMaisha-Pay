@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +35,11 @@ import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCart;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -43,6 +49,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.MyViewHolder> {
+    private static final String TAG = "PosProductAdapter";
 
 
     MediaPlayer player;
@@ -52,28 +59,23 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
     ProductItemBinding binding;
     String currency;
     WeakReference<ShopPOSFragment> fragmentReference;
+    ShopProductsModelView viewModel;
+    LifecycleOwner viewLifecycleOwner;
 
-
-    public PosProductAdapter(Context context) {
+    public PosProductAdapter(Context context, ShopProductsModelView viewModel, LifecycleOwner viewLifecycleOwner) {
         this.context = context;
+        this.viewModel = viewModel;
+        this.viewLifecycleOwner = viewLifecycleOwner;
         setHasStableIds(true);
-        currency =context.getString(R.string.currency);
     }
 
-
-    @NonNull
-    @Override
-    public PosProductAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding= DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.product_item,  parent, false);
-
-        return new PosProductAdapter.MyViewHolder(binding);
-    }
 
     public void setProductList(final List<? extends EcProduct> productList) {
-        if (this.productData == null) {
-            this.productData = productList;
+        if ( this.productData== null) {
+            this.productData =  productList;
             notifyItemRangeInserted(0, productList.size());
-        } else {
+        }
+        else {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
@@ -104,14 +106,21 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
             productData = productList;
             result.dispatchUpdatesTo(this);
         }
+        Log.d("AdapterSize","########"+this.getItemCount());
     }
 
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        binding= DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.product_item,  parent, false);
+
+        return new PosProductAdapter.MyViewHolder(binding);
+    }
 
     @Override
-    public void onBindViewHolder(@NonNull final PosProductAdapter.MyViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.setProductData(productData.get(position));
-        holder.binding.executePendingBindings();
+
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.new_product)
@@ -122,83 +131,64 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
 
         Glide.with(context).load(Base64.decode(productData.get(position).getProduct_image(), Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
 
+        holder.binding.executePendingBindings();
+        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
+
+        binding.productImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                //set product cart items
+//                EcProductCart productCart = new EcProductCart();
+//                productCart.setProduct_id(productData.get(position).getProduct_id());
+//                productCart.setProduct_weight(productData.get(position).getProduct_weight());
+//                productCart.setProduct_weight_unit(productData.get(position).getProduct_weight_unit());
+//                productCart.setProduct_price(productData.get(position).getProduct_sell_price());
+//                productCart.setProduct_qty(1);
+
+                //insert item to cart
+                subscribeToCartProduct(viewModel.addToCart());
+
+
+            }
+        });
+
+       binding.cardProductItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                ViewGroup viewGroup = v.findViewById(android.R.id.content);
+                View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_pos_product_details, viewGroup, false);
+                builder.setView(dialogView);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                initialiseProductDialog(dialogView,alertDialog, productData.get(position));
+            }
+        });
+
     }
-//
-//        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-//        final String product_id = productData.get(position).getProduct_id();
-//        String name = productData.get(position).getProduct_name();
-//        String category = productData.get(position).getProduct_category();
-//        String supplier_id = productData.get(position).getProduct_supplier();
-//        String buy_price = productData.get(position).getProduct_buy_price();
-//        String sell_price = productData.get(position).getProduct_sell_price();
-//        String base64Image = productData.get(position).getProduct_image();
-//        String productstock = productData.get(position).getProduct_stock();
-//
-//        final String product_weight = productData.get(position).getProduct_weight();
-//        final String product_price = productData.get(position).getProduct_sell_price();
-//        final String weight_unit_name = productData.get(position).getProduct_weight_unit();
-//
-//        String supplier_name = dbHandler.getSupplierName(supplier_id);
-//        holder.txtProductName.setText(name);
-//        holder.categoryName.setText(category);
-//        holder.txt_product_stock.setText(productstock);
-//        holder.txtSupplierName.setText(supplier_name);
-//        holder.txtBuyPrice.setText(currency + " " + buy_price);
-//        holder.txtSellPrice.setText(currency + " " + sell_price);
-//        holder.txt_per_unit.setText(productData.get(position).getProduct_weight_unit());
-//
-//        if (base64Image != null) {
-//            if (base64Image.length() < 6) {
-//                Log.d("64base", base64Image);
-//                holder.product_image.setImageResource(R.drawable.image_placeholder);
-//            } else {
-//                byte[] bytes = Base64.decode(base64Image, Base64.DEFAULT);
-//                holder.product_image.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-//
-//            }
-//        }
-//
-//
-//
-//        holder.product_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int check = dbHandler.addToCart(product_id, product_weight, weight_unit_name, product_price, 1);
-//
-//                if (check == 1) {
-//                    Toasty.success(context, "Product Added to cart", Toast.LENGTH_SHORT).show();
-//                    player.start();
-//                } else if (check == 2) {
-//
-//                    Toasty.info(context, "Product already added to cart", Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//                    Toasty.error(context, "Product added to cart failed try again", Toast.LENGTH_SHORT).show();
-//
-//                }
-//
-//
-//            }
-//        });
-//
-//        holder.cardProductItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                ViewGroup viewGroup = v.findViewById(android.R.id.content);
-//                View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_pos_product_details, viewGroup, false);
-//                builder.setView(dialogView);
-//                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
-////                initialiseProductDialog(dialogView,alertDialog, productData.get(position));
-//            }
-//        });
-//    }
+
+    private void subscribeToCartProduct(LiveData<Integer> cartProduct) {
+
+        cartProduct.observe(viewLifecycleOwner, myCartProduct->{
+            // dialogLoader.showProgressDialog();
+
+            if(myCartProduct==1) {
+                Toasty.success(context, "Product Added to cart", Toast.LENGTH_SHORT).show();
+                player.start();
+            }else if(myCartProduct==2){
+                Toasty.info(context, "Product already added to cart", Toast.LENGTH_SHORT).show();
+            }else {
+                Toasty.error(context, "Product added to cart failed try again", Toast.LENGTH_SHORT).show();
+            }
+            binding.executePendingBindings();
+        });
+
+    }
+
 
     @Override
     public int getItemCount() {
-
         return productData == null ? 0 : productData.size();
     }
 
@@ -207,10 +197,14 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         return super.getItemId(position);
     }
 
+
     @Override
     public void onViewRecycled(@NonNull MyViewHolder holder) {
+        Log.e("ErrorMJ",holder.binding.txtProductName.getText().toString());
         super.onViewRecycled(holder);
     }
+
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -220,41 +214,13 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
             super(binding.getRoot());
             this.binding = binding;
         }
+
     }
 
 
-//        public class MyViewHolder extends RecyclerView.ViewHolder {
-//
-//        TextView txtProductName, txtSupplierName, txtBuyPrice, txtSellPrice, txt_product_stock, categoryName,txt_per_unit;
-//       // Button btnAddToCart;
-//        ImageView product_image, imgDelete;
-//        CardView cardProductItem;
-//        LinearLayout img_delete_shadow;
-//
-//        public MyViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            txtProductName = itemView.findViewById(R.id.txt_product_name);
-//            txtSupplierName = itemView.findViewById(R.id.txt_product_supplier_value);
-//            txtBuyPrice = itemView.findViewById(R.id.txt_product_buy_price_value);
-//            txtSellPrice = itemView.findViewById(R.id.txt_product_sell_price_value);
-//            txt_product_stock = itemView.findViewById(R.id.txt_product_stock_value);
-//            img_delete_shadow = itemView.findViewById(R.id.img_delete_shadow);
-//            imgDelete = itemView.findViewById(R.id.img_delete);
-//            product_image = itemView.findViewById(R.id.product_image);
-//            categoryName = itemView.findViewById(R.id.category_name);
-//            txt_per_unit= itemView.findViewById(R.id.txt_per_unit);
-//            imgDelete = itemView.findViewById(R.id.img_delete);
-//            imgDelete.setVisibility(View.GONE);
-//           // btnAddToCart = itemView.findViewById(R.id.btn_add_cart);
-//            cardProductItem = itemView.findViewById(R.id.card_product_item);
-//
-//
-//        }
-//    }
+    private void initialiseProductDialog(View dialogView, AlertDialog alertDialog, EcProduct productData){
 
-    private void initialiseProductDialog(View dialogView, AlertDialog alertDialog, HashMap<String, String> productData){
-
-        double sell_price =Double.parseDouble( productData.get("product_sell_price") );
+        double sell_price =Double.parseDouble( productData.getProduct_sell_price());
 
         TextView cancel = dialogView.findViewById(R.id.btn_cancel);
         TextView update = dialogView.findViewById(R.id.btn_update);
@@ -271,10 +237,14 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         TextView txtQty = (TextView) dialogView.findViewById(R.id.txt_product_qty);
         TextView ProductName = dialogView.findViewById(R.id.product_name);
         TextView ProductPrice = dialogView.findViewById(R.id.txt_product_price);
-        ProductName.setText( productData.get("product_name")  );
-        ProductPrice.setText( currency+" "+productData.get("product_sell_price")  );
+        ProductName.setText( productData.getProduct_name() );
+        ProductPrice.setText( currency+" "+productData.getProduct_sell_price() );
 
-        CartProduct cartProduct=GetCartProduct(productData.get("product_id"),productData.get("product_name"));
+        //get cart product
+
+
+
+        CartProduct cartProduct=GetCartProduct(productData.getProduct_id(),productData.getProduct_name());
         if(cartProduct!=null && cartProduct.getCustomersBasketProduct()!=null && cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()!=0){
             Log.e("error",cartProduct.getCustomersBasketProduct().getProductsName());
             txtQty.setText(cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()+"");
@@ -313,18 +283,18 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
                 int productQTY=Integer.parseInt(txtQty.getText().toString());
 
                 ProductDetails product=new ProductDetails();
-                product.setProductsName( productData.get("product_name") );
+                product.setProductsName( productData.getProduct_name() );
                 product.setCustomersBasketQuantity( productQTY );
                 try {
-                    product.setProductsId( Integer.parseInt(productData.get("product_id")) );
+                    product.setProductsId( Integer.parseInt(productData.getProduct_id()) );
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
-                product.setCategoryNames( productData.get("product_category") );
-                product.setProductsImage( productData.get("product_image") );
-                product.setProductsPrice( productData.get("product_sell_price") );
-                product.setSelectedProductsWeight( productData.get("product_weight") );
-                product.setSelectedProductsWeightUnit( productData.get("product_weight_unit") );
+                product.setCategoryNames( productData.getProduct_category() );
+                product.setProductsImage( productData.getProduct_image() );
+                product.setProductsPrice( productData.getProduct_sell_price());
+                product.setSelectedProductsWeight( productData.getProduct_weight() );
+                product.setSelectedProductsWeightUnit( productData.getProduct_weight_unit() );
 
 
                 CartProduct cartProduct = new CartProduct();

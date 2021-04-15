@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -38,6 +39,11 @@ public class EcProductCart implements Parcelable {
         product_weight_unit = in.readString();
         product_price = in.readString();
         product_qty = in.readInt();
+    }
+
+    @Ignore
+    public EcProductCart() {
+
     }
 
     @Override
