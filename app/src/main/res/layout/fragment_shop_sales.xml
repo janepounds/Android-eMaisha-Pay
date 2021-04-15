@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,7 +43,7 @@
             android:padding="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recycler_sales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -55,7 +58,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -66,9 +69,9 @@
 
                     <ImageView
                         android:id="@+id/image_no_product"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"/>
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="50dp" />
 
                     <TextView
                         android:id="@+id/txt_no_products"
@@ -76,6 +79,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
+                        android:text="Receive and track sales from here"
                         android:textColor="#31244A"
                         android:textSize="24sp"
                         android:textStyle="bold"/>
@@ -87,3 +91,5 @@
 
 
 </RelativeLayout>
+
+</layout>

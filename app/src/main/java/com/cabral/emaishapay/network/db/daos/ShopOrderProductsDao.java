@@ -19,10 +19,6 @@ public interface ShopOrderProductsDao {
     @Query("SELECT * FROM ShopOrderProducts WHERE product_order_id=:order_id ORDER BY order_details_id DESC")
     LiveData<List<ShopOrderProducts>> getOrderDetailsList(String order_id);
 
-    //get all sales item
-//    @Query("SELECT ShopOrderDetails.*,ShopOrderList.order_payment_method FROM ShopOrderDetails INNER JOIN ShopOrderList ON ShopOrderDetails.invoice_id=ShopOrderList.invoice_id WHERE ShopOrderList.order_status='Approved' ORDER BY order_details_id DESC")
-//    List<ShopOrderDetails> getAllSalesItems();
-
 
     //total order price
     @Query("SELECT * FROM ShopOrderProducts WHERE product_order_id=:invoice_id")

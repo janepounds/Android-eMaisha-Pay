@@ -103,7 +103,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.setProductData(productData.get(position));
-        holder.binding.executePendingBindings();
+
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.drawable.new_product)
@@ -114,102 +114,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             Glide.with(context).load(Base64.decode(productData.get(position).getProduct_image(), Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
 
-
-        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
-
-    }
-
-    public void onBindViewHolder0000(@NonNull final MyViewHolder holder, int position) {
-
-        holder.binding.setProductData(productData.get(position));
         holder.binding.executePendingBindings();
-
-        //dbHandler = DbHandlerSingleton.getHandlerInstance(context);
-        final String product_id = productData.get(position).getProduct_id();
-        String name = productData.get(position).getProduct_name();
-        String category = productData.get(position).getProduct_category();
-        String supplier_id = productData.get(position).getProduct_supplier();
-        String buy_price = productData.get(position).getProduct_buy_price();
-        String sell_price = productData.get(position).getProduct_sell_price();
-        String base64Image = productData.get(position).getProduct_image();
-        String productstock = productData.get(position).getProduct_stock();
-        String currency =context.getString(R.string.currency);
-
-
-
-        //String supplier_name = dbHandler.getSupplierName(supplier_id);
-
-//        holder.binding.txtProductName.setText(name);
-//        holder.binding.categoryName.setText(category);
-//        holder.binding.txtProductStock.setText(productstock);
-//       // holder.txtSupplierName.setText(supplier_name);
-//        holder.binding.txtProductBuyPriceValue.setText(currency + " " + buy_price);
-//        holder.binding.txtProductSellPriceValue.setText(currency + " " + sell_price);
-//
-//        if(productData.get(position).getProduct_weight()!=null && !productData.get(position).getProduct_weight().equalsIgnoreCase("null") ){
-//            holder.binding.txtPerUnit.setText("/"+productData.get(position).getProduct_weight()+productData.get(position).getProduct_weight_unit());
-//            holder.binding.txtProductName.setText(holder.binding.txtProductName.getText()+" "+productData.get(position).getProduct_weight()+productData.get(position).getProduct_weight_unit());
-//        }
-//
-//
-//        if (base64Image != null) {
-//            if (base64Image.length() < 6) {
-//                Log.d("64base", base64Image);
-//                holder.binding.productImage.setImageResource(R.drawable.image_placeholder);
-//            } else {
-//
-//
-//                byte[] bytes = Base64.decode(base64Image, Base64.DEFAULT);
-//                holder.binding.productImage.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-//
-//            }
-//        }
-//
-//        holder.binding.imgDelete.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                holder.binding.imgDeleteShadow.setVisibility(View.VISIBLE);
-//                return false;
-//            }
-//        });
-//
-//        holder.binding.imgDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage(R.string.want_to_delete_product)
-//                        .setCancelable(false)
-//                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//
-////                                boolean deleteProduct = dbHandler.deleteProduct(product_id);
-////
-////                                if (deleteProduct) {
-////                                    Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
-////
-////                                    productData.remove(holder.getAdapterPosition());
-////
-////                                    // Notify that item at position has been removed
-////                                    notifyItemRemoved(holder.getAdapterPosition());
-////
-////                                } else {
-////                                    Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
-////                                }
-////                                dialog.cancel();
-//
-//                            }
-//                        })
-//                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                // Perform Your Task Here--When No is pressed
-//                                dialog.cancel();
-//                            }
-//                        }).show();
-//
-//            }
-//        });
+        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
 
     }
 

@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.modelviews;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -12,12 +13,14 @@ import androidx.lifecycle.Transformations;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
 
 public class ShopOrdersModelView extends AndroidViewModel {
     private static final String QUERY_KEY = "QUERY";
+    private static final String SALESQUERY_KEY = "SALESQUERY";
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
     private final LiveData<Resource<List<ShopOrder>>> orderList;
@@ -36,6 +39,8 @@ public class ShopOrdersModelView extends AndroidViewModel {
 
                     return mRepository.getOrderList(wallet_id,query);
                 });
+
+
     }
 
 

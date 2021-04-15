@@ -8,7 +8,9 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
 
@@ -23,10 +25,6 @@ public interface ShopOrderDao {
     @Query("SELECT order_id FROM ShopOrder WHERE order_id=:id")
     int getID(String id);
 
-    //insert order
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertOrder(List<ShopOrder> order_list);
-
     //get order list
     @Transaction
     @Query("SELECT ShopOrder.* FROM ShopOrder ORDER BY ShopOrder.order_id DESC")
@@ -37,7 +35,16 @@ public interface ShopOrderDao {
     void updateOrder(String id, String status);
 
     //search order
-    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.order_id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
+    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
     LiveData<List<ShopOrder>> searchOrderList(String s);
 
+    //get all sales item
+    //get order list
+    @Transaction
+    @Query("SELECT ShopOrder.* FROM ShopOrder WHERE ShopOrder.order_status='Approved' ORDER BY ShopOrder.order_id DESC")
+    LiveData<List<ShopOrderWithProducts>> getAllSalesItems();
+
+    @Transaction
+    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrder.order_status='Approved' AND  ShopOrderFts MATCH :query ORDER BY ShopOrder.order_id DESC")
+    LiveData<List<ShopOrderWithProducts>> searchOrderSales(String query);
 }

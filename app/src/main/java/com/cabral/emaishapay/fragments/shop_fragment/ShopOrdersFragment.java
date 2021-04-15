@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,28 @@ public class ShopOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_shop_orders,container,false);
 
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarOrders);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.orders);
+
+        dialogLoader = new DialogLoader(getContext());
+        return  binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        binding.ordersRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
+        binding.ordersRecycler.setHasFixedSize(true);
+        orderAdapter = new OnlineOrdersAdapter(context);
+        binding.ordersRecycler.setAdapter(orderAdapter);
+
+        dialogLoader.showProgressDialog();
+        subscribeToOrderList(viewModel.getOrderList());
 
         binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
 
@@ -77,24 +100,6 @@ public class ShopOrdersFragment extends Fragment {
 
 
         });
-
-        dialogLoader = new DialogLoader(getContext());
-        return  binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        binding.ordersRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
-        binding.ordersRecycler.setHasFixedSize(true);
-        orderAdapter = new OnlineOrdersAdapter(context);
-        binding.ordersRecycler.setAdapter(orderAdapter);
-
-        dialogLoader.showProgressDialog();
-        subscribeToOrderList(viewModel.getOrderList());
 
     }
 

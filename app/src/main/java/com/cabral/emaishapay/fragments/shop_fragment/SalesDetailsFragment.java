@@ -111,7 +111,7 @@ public class SalesDetailsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
         recyclerView.setHasFixedSize(true);
-        subscribeToOrderDetailsList(viewModel.getOrderDetailsList());
+        //subscribeToOrderDetailsList(viewModel.getOrderDetailsList());
     }
 
     private void subscribeToOrderDetailsList(LiveData<List<ShopOrderProducts>> orderDetails) {
@@ -126,7 +126,7 @@ public class SalesDetailsFragment extends Fragment {
                 salesDetailsAdapter.setProductList( orderdetails);
 
                 //dialogLoader.hideProgressDialog();
-            }else {;
+            }else {
 
                 Toasty.info(context, "No Data Found", Toast.LENGTH_SHORT).show();
             }

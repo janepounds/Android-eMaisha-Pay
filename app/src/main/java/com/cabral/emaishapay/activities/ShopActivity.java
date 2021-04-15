@@ -18,6 +18,7 @@ import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +26,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -90,7 +92,27 @@ public class ShopActivity extends AppCompatActivity {
                         }
                     }
                 });
-        //setupDefaultHomePage();
+
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(ShopActivity.bottomNavigationView!=null ){
+
+                    if(destination.getId()==R.id.shopPOSFragment ||  destination.getId()==R.id.shopProductsFragment
+                            ||  destination.getId()==R.id.shopOrdersFragment ||  destination.getId()==R.id.shopSalesFragment ){
+
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    }else{
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+
+                }
+
+            }
+        });
+
+
     }
 
 
@@ -102,30 +124,17 @@ public class ShopActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        // Get FragmentManager
-        FragmentManager fm = getSupportFragmentManager();
 
         // Check if BackStack has some Fragments
-        if (fm.getBackStackEntryCount() > 0) {
+        if (navController.getCurrentDestination().getId()!=R.id.shopProductsFragment) {
             // Pop previous Fragment
-            fm.popBackStack();
+            navController.popBackStack();
 
-        } // Check if doubleBackToExitPressed is true
-//        else if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed();
-//            backToast.cancel();
-//            finishAffinity();
-//        }
+        }
         else {
             Intent intent = new Intent(this, WalletHomeActivity.class);
             startActivity(intent);
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
 
 }
