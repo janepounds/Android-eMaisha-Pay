@@ -44,8 +44,8 @@ public class ShopSalesFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_shop_sales, container, false);
         
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarSales);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Sales");
 
 

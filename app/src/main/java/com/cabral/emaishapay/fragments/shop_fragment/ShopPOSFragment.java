@@ -95,8 +95,8 @@ public class ShopPOSFragment extends Fragment {
         // Inflate the layout for this fragment
         binding= DataBindingUtil.inflate(inflater,R.layout.fragment_shop_pos,container,false);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarShopPos);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.all_product);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);

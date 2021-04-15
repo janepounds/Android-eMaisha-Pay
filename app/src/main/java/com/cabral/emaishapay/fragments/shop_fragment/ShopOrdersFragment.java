@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -56,7 +57,10 @@ public class ShopOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_shop_orders,container,false);
 
-
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarOrders);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.orders);
 
         dialogLoader = new DialogLoader(getContext());
         return  binding.getRoot();
