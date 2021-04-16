@@ -152,6 +152,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             }
         });
 
+
+
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
