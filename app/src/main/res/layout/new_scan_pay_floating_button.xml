@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:alpha="0.1"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/img_scan_cancel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_scan"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:fabCustomSize="80dp"
+    android:src="@drawable/ic_barcode_scanner"
+    android:layout_marginEnd="30dp"
+    app:backgroundTint="@color/white"
+    app:tint="@color/colorPrimary"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_emaisha_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabCustomSize="80dp"
+        android:src="@drawable/ic_emaisha_pay_scan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        app:backgroundTint="@color/white"
+        app:tint="@color/colorPrimary"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_scan_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel_blue"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

@@ -271,6 +271,8 @@ public class WalletHomeFragment extends Fragment {
 
 
 
+
+
     }
 
     @Override
@@ -389,7 +391,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
-                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+                     navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }

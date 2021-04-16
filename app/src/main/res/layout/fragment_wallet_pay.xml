@@ -534,19 +534,21 @@
                 </LinearLayout>
 
                 <FrameLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginRight="@dimen/margin_10"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/rounded_corners_button"
-                    android:gravity="right"
-                    android:paddingRight="@dimen/dimen_10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal">
 
                     <Button
                         android:id="@+id/btn_save_pay_merchant"
                         style="@style/Button_DW"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
@@ -558,16 +560,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/button_text_size" />
 
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_margin="10dip"
-                        android:src="@drawable/ic_right_chevron">
 
-                    </ImageView>
 
                 </FrameLayout>
             </LinearLayout>
