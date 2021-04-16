@@ -57,7 +57,7 @@ import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
     private static final String TAG = "TransferMoney";
-    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name,layoutBeneficiary;
+    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name,layoutBeneficiary,layoutAmount;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
@@ -95,6 +95,7 @@ public class TransferMoney extends Fragment {
             action=getArguments().getString("KEY_ACTION");
 
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -136,6 +137,7 @@ public class TransferMoney extends Fragment {
         layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
         layoutBeneficiary=view.findViewById(R.id.layout_beneficiary);
         spBeneficiary = view.findViewById(R.id.sp_beneficiary);
+        layoutAmount = view.findViewById(R.id.transfer_amount);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -169,7 +171,7 @@ public class TransferMoney extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                 } catch (Exception e) {
 
                 }
@@ -179,6 +181,7 @@ public class TransferMoney extends Fragment {
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.GONE);
                 }
                 else if(position==1){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
@@ -186,6 +189,7 @@ public class TransferMoney extends Fragment {
                     layoutBank.setVisibility(View.GONE);
                     layout_beneficiary_name.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
 
                 }
                 else if(position==2){
@@ -193,6 +197,7 @@ public class TransferMoney extends Fragment {
                     layoutEmaishaCard.setVisibility(View.VISIBLE);
                     layoutBank.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
                 }
                 else if(position==3){
                     layoutMobileNumber.setVisibility(View.GONE);
@@ -200,6 +205,7 @@ public class TransferMoney extends Fragment {
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.VISIBLE);
                     requestFilteredBeneficiaries();
                 }
                 else if(position==4){
@@ -208,6 +214,7 @@ public class TransferMoney extends Fragment {
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.VISIBLE);
                     requestFilteredBeneficiaries();
                 }
 
@@ -232,8 +239,17 @@ public class TransferMoney extends Fragment {
         spSelectBank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 if(BankList!=null)
                     for (Bank bank: BankList) {
+                        try {
+                            //Change selected text color
+                            ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                            //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                        } catch (Exception e) {
+                        }
+
+
                        if(bank.getName().equalsIgnoreCase(spSelectBank.getSelectedItem().toString())){
                            selected_bank_code=bank.getCode();
                            getTransferBankBranches(bank.getId());
@@ -251,6 +267,14 @@ public class TransferMoney extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(BankList!=null)
                     for (BankBranch branch: bankBranches) {
+
+                        try {
+                            //Change selected text color
+                            ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                            //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                        } catch (Exception e) {
+                        }
+
                         if(branch.getBranchName().equalsIgnoreCase(spSelectBankBranch.getSelectedItem().toString())){
                             selected_branch_code=branch.getBranchCode();
                         }
@@ -457,7 +481,9 @@ public class TransferMoney extends Fragment {
                         }
 
                         //set list in beneficiary spinner
+
                         ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, beneficiaries);
+
                         spBeneficiary.setAdapter(beneficiariesAdapter);
 
 

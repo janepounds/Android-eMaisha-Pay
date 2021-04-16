@@ -169,23 +169,22 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_qr_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:background="@color/white"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/card_view_personal_info"
-                app:cardCornerRadius="5dp">
+
                 <RelativeLayout
+                    android:id="@+id/card_view_qr_code"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/card_view_personal_info"
+                    android:padding="0dp"
+                    android:background="@drawable/background_round_white">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="14dp">
+                        android:layout_margin="14dp"
+                        android:layout_centerVertical="true">
 
 
                         <TextView
@@ -209,17 +208,26 @@
                             android:textColor="#8C98A9"
                             android:textStyle="bold"
                             android:alpha="0.81"/>
+
+
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="0dp"
+                        android:padding="0dp"
+                        android:background="@drawable/rectangular_blue_solid">
                         <ImageView
                             android:id="@+id/img_qr_code"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:src="@drawable/ic_right_arrow_green"/>
-
-                    </RelativeLayout>
-
+                            android:src="@drawable/ic_qr_code"
+                            android:padding="20dp"/>
+                    </LinearLayout>
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_employment_business_info"

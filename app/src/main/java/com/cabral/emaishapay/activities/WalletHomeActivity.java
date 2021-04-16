@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -101,6 +103,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static NavController navController;
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
     public  static CoordinatorLayout scanCoordinatorLayout;
+    public static FloatingActionButton scanFAB;
 
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -114,6 +117,9 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
+
+
+
         context = getApplicationContext();
 
         NavHostFragment navHostFragment =
@@ -443,6 +449,30 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void openAgentCustomerLoanApplication(View view) {
         navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
 
+    }
+
+    public void openScanAndPay(View view){
+
+        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context, R.style.DialogFullscreen);
+        View dialogView = getLayoutInflater().inflate(R.layout.new_scan_pay_floating_button, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+
+        ImageView cancel = dialogView.findViewById(R.id.img_scan_cancel);
+
+
+
+        final android.app.AlertDialog alertDialog = dialog.create();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
     }
 
     @Override

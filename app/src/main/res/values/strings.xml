@@ -775,6 +775,7 @@
         <item>Select</item>
     </string-array>
     <string-array name="payment_method">
+        <item>Select</item>
         <item>Wallet</item>
         <item>eMaisha Card</item>
         <item>Mobile Money</item>

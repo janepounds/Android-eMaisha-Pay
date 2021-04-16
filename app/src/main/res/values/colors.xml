@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#2D84B7</color>
     <color name="colorPrimaryLight">#000</color>
-    <color name="textColor">#515C6F</color>
+    <color name="textColor">#8C98A9</color>
     <color name="buttonColor">#2D84B7</color>
     <color name="colorPrimaryDark">#123365</color>
     <color name="colorAccent">#2D84B7</color>
@@ -63,7 +63,7 @@
     <color name="textColorSecondaryDark">#212121</color>
     <color name="textColorSecondaryLight">#666666</color>
 
-    <color name="windowBackground">#F1F5F8</color>
+    <color name="windowBackground">#f8f8ff</color>
     <color name="windowBackgroundDark">#F9F9F9</color>
     <color name="windowBackgroundLight">#d0e5f4</color>
 

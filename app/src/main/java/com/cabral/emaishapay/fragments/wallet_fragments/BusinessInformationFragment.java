@@ -60,6 +60,7 @@ public class BusinessInformationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_information, container, false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle("Business Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

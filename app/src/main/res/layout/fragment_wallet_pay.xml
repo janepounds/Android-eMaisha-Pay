@@ -3,24 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F1F5F8"
+    android:background="#fff"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_20dp">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_wallet_pay_merchant"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="@color/white"
+            app:titleTextColor="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_chevron_left_blue" />
 
-    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,14 +127,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:text="Payment Method"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textColor="@color/textColor"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_weight="1"
                             android:layout_alignParentTop="true"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/rectangular_blue_solid"
                             android:orientation="horizontal">
 
                             <Spinner
@@ -150,41 +147,41 @@
                                 android:background="@android:color/transparent"
                                 android:gravity="center"
                                 android:entries="@array/payment_method"
-                                android:spinnerMode="dropdown"/>
+                                android:spinnerMode="dropdown"
+                                android:padding="5dp"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
                                 android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_chevron_down" />
+                                android:layout_marginBottom="10dp"
+                                android:src="@drawable/ic_right_chevron_arrow_white"
+                                android:rotation="90"/>
 
                         </RelativeLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_pay_merchant_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="Merchant ID"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textColor="@color/textColor"/>
 
                         <EditText
                             android:id="@+id/edt_purchase_mechant_id"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:inputType="text"
                             android:paddingStart="10dp"
                             android:textColor="@color/textColor"
@@ -205,10 +202,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="Mobile Number"
                             android:textSize="16sp"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/textColor"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -220,7 +217,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_alignParentTop="true"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="0dp"
@@ -270,7 +267,8 @@
                             android:layout_height="wrap_content"
                             android:text="Select Card"
                             android:textSize="16sp"
-                            android:fontFamily="@font/josefin_sans" />
+                            android:fontFamily="@font/josefin_sans"
+                            android:textColor="@color/textColor"/>
 
 
 
@@ -278,7 +276,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/rectangular_blue_solid"
                             android:orientation="horizontal">
 
                             <Spinner
@@ -294,13 +292,10 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
                                 android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_chevron_down" />
+                                android:layout_marginBottom="10dp"
+                                android:src="@drawable/ic_right_chevron_arrow_white"
+                                android:rotation="90"/>
 
                         </RelativeLayout>
 
@@ -323,14 +318,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Holder Name"
                                 android:textSize="16sp"
-                                android:fontFamily="@font/josefin_sans" />
+                                android:textColor="@color/textColor"/>
 
                             <EditText
                                 android:id="@+id/add_money_holder_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:paddingStart="@dimen/dimen_10dp"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:textColor="@color/textColor"
                                 android:layout_marginTop="5dp"
                                 android:inputType="text"
@@ -348,14 +343,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Card Number"
                                 android:textSize="16sp"
-                                android:fontFamily="@font/josefin_sans" />
+                                android:textColor="@color/textColor"/>
 
                             <EditText
                                 android:id="@+id/pay_bank_CardNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:paddingStart="@dimen/dimen_10dp"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:inputType="number"
                                 android:textColor="@color/textColor"
                                 android:layout_marginTop="5dp"
@@ -383,14 +378,14 @@
                                     android:layout_height="wrap_content"
                                     android:text="Card Expiry"
                                     android:textSize="16sp"
-                                    android:fontFamily="@font/josefin_sans" />
+                                    android:textColor="@color/textColor" />
 
                                 <EditText
                                     android:id="@+id/pay_bank_card_expiry"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:paddingStart="@dimen/dimen_10dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="date"
                                     android:maxLength="5"
                                     android:textColor="@color/textColor"
@@ -410,14 +405,14 @@
                                     android:layout_height="wrap_content"
                                     android:text="Card CVV"
                                     android:textSize="16sp"
-                                    android:fontFamily="@font/josefin_sans" />
+                                    android:textColor="@color/textColor" />
 
                                 <EditText
                                     android:id="@+id/pay_bank_card_cvv"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
                                     android:paddingStart="@dimen/dimen_10dp"
-                                    android:background="@drawable/edittext_corner"
+                                    android:background="@drawable/outline_primary"
                                     android:inputType="number"
                                     android:textColor="@color/textColor"
                                     android:layout_marginTop="5dp"
@@ -439,22 +434,24 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_pay_merchant_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="0dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
+                            android:textColor="@color/textColor"
                             android:text="Amount"
                             android:textSize="16sp" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:orientation="horizontal">
                             <TextView
 
@@ -499,7 +496,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_10"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:text="Coupon ?"
                             android:textColor="@color/colorPrimary"
@@ -519,7 +515,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
+                            android:textColor="@color/textColor"
                             android:text="Discount Coupon"
                             android:textSize="15dp" />
 
@@ -528,7 +524,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="@dimen/margin_10"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:hint="Enter.."
                             android:inputType="text"
                             android:paddingLeft="10dp"
@@ -538,19 +534,21 @@
                 </LinearLayout>
 
                 <FrameLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginRight="@dimen/margin_10"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/rounded_corners_button"
-                    android:gravity="right"
-                    android:paddingRight="@dimen/dimen_10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal">
 
                     <Button
                         android:id="@+id/btn_save_pay_merchant"
                         style="@style/Button_DW"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="40dip"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
@@ -562,16 +560,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/button_text_size" />
 
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_margin="10dip"
-                        android:src="@drawable/ic_right_chevron">
 
-                    </ImageView>
 
                 </FrameLayout>
             </LinearLayout>

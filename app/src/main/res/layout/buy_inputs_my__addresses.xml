@@ -78,11 +78,12 @@
             android:layout_height="wrap_content"
             app:fabSize="normal"
             android:src="@drawable/ic_add_location_24"
-            android:tint="@color/white"
+            app:tint="@color/white"
+            app:backgroundTint="@color/colorPrimary"
             android:elevation="5dp"
             android:translationZ="3dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="50dp"/>
 
     </FrameLayout>

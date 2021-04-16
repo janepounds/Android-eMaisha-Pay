@@ -39,7 +39,6 @@ import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class PayFragment extends Fragment {
 
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
-    LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards;
+    LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID;
     Spinner spPaymentMethod;
     Button saveBtn;
     FragmentManager fm;
@@ -76,12 +75,14 @@ public class PayFragment extends Fragment {
        // getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View view = inflater.inflate(R.layout.fragment_wallet_pay, container, false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         this.context=getActivity();
         Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
         dialog = new DialogLoader(getContext());
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Pay Merchant");
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         this.fm=getParentFragmentManager();
@@ -111,6 +112,9 @@ public class PayFragment extends Fragment {
         spinner_select_card = view.findViewById(R.id.spinner_select_card_wallet_pay);
         card_details_layout = view.findViewById(R.id.card_details_layout);
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
+
+        layoutMerchantID = view.findViewById(R.id.layout_pay_merchant_id);
+        layoutAmount = view.findViewById(R.id.layout_pay_merchant_amount);
 
             
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
@@ -142,23 +146,37 @@ public class PayFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
                 }
                 String selectedItem=spPaymentMethod.getSelectedItem().toString();
-                if(selectedItem.equalsIgnoreCase("wallet")){
+
+                if(selectedItem.equalsIgnoreCase("select")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.GONE);
+                    layoutMerchantID.setVisibility(View.GONE);
+                }
+
+                else if(selectedItem.equalsIgnoreCase("wallet")){
+                    layoutMobileMoney.setVisibility(View.GONE);
+                    layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutMerchantID.setVisibility(View.VISIBLE);
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
                     layoutMobileMoney.setVisibility(View.VISIBLE);
                     layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutMerchantID.setVisibility(View.VISIBLE);
                 }
                 else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutMerchantID.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -172,6 +190,14 @@ public class PayFragment extends Fragment {
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
 
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     //call add card
