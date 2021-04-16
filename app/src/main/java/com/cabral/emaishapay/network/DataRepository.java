@@ -481,6 +481,12 @@ public class DataRepository {
 
         mEcProductsDao.deleteProduct(product);
     }
+
+    public void updateProductStock(String product_id,String product_name,String product_code, String product_category,String product_description,String product_buy_price,String product_sell_price,String product_supplier,String product_image, String product_stock,String product_weight_unit,String product_weight,String manufacturer){
+
+       mEcProductsDao.updateProductStock(product_id, product_name, product_code,  product_category, product_description, product_buy_price, product_sell_price, product_supplier, product_image,  product_stock, product_weight_unit, product_weight, manufacturer);
+
+    }
 }
 
 

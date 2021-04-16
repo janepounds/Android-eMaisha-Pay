@@ -495,4 +495,23 @@ public interface APIRequestsForBuyInputs {
     Call<ResponseBody>deleteMerchantProduct(@Query("product_id") String product_id,@Query("wallet_id") String user_id);
 
 
+    @FormUrlEncoded
+    @POST("updateMerchantProductStock")
+    Call<ResponseBody> updateProduct(
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("measure_id") String measure_id,
+            @Field("wallet_id") String wallet_id,
+            @Field("product_id") String product_id,
+            @Field("product_buy_price") String product_buy_price,
+            @Field("product_sell_price") String product_sell_price,
+            @Field("product_supplier") String product_supplier,
+            @Field("product_stock") int product_stock,
+            @Field("new_manufacturer_name") String new_manufacturer_name,
+            @Field("new_category_name") String new_category_name,
+            @Field("new_product_name") String new_product_name
+
+    );
+
+
 }
