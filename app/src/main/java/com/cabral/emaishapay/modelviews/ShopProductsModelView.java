@@ -50,13 +50,10 @@ public class ShopProductsModelView extends AndroidViewModel {
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private LiveData<Resource<List<EcProduct>>> repositorySource;
     private LiveData<Integer>cartReipositorySource;
-    private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
     private EcProductCart productCart;
+    private MutableLiveData<Long> is=new MutableLiveData<>();
 
     private String wallet_id,product_id;
-    private boolean cancelRequest;
-    private long requestStartTime;
-
     public ShopProductsModelView(@NonNull Application application,
                                  @NonNull SavedStateHandle savedStateHandle) {
         super(application);

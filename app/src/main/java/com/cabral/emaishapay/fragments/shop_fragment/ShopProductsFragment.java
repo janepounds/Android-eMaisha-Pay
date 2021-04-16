@@ -105,7 +105,7 @@ public class ShopProductsFragment extends Fragment {
 
 
 
-        productAdapter = new ProductAdapter(getActivity(),viewModel);
+        productAdapter = new ProductAdapter(getActivity(),viewModel,getActivity().getSupportFragmentManager());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.shopProductRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
         binding.shopProductRecyclerview.setHasFixedSize(true);

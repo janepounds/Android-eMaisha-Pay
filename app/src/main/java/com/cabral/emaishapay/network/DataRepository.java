@@ -1,13 +1,10 @@
 package com.cabral.emaishapay.network;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -479,9 +476,10 @@ public class DataRepository {
         return results;
     }
 
-    public void deleteProductStock(EcProduct product) {
+    public LiveData<Long> deleteProductStock(EcProduct product) {
         //product_id
-        mEcProductsDao.deleteProduct(product);
+
+        return mEcProductsDao.deleteProduct(product);
     }
 }
 

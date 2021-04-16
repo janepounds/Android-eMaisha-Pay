@@ -27,7 +27,7 @@ public interface EcProductsDao {
 
     //delete product
     @Delete
-    void deleteProduct(EcProduct product);
+    LiveData<Long> deleteProduct(EcProduct product);
 
     //get product data
     @Query("SELECT EcProduct.* FROM EcProduct JOIN EcProductFts ON (EcProduct.id = EcProductFts.rowid) WHERE EcProductFts MATCH :query")
