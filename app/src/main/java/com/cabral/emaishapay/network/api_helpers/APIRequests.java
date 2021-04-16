@@ -208,7 +208,7 @@ public interface APIRequests {
 
   //get receiver business name,sender business name and Transaction charge
   @FormUrlEncoded
-  @POST("agent/funds-transfer/metadata")
+  @POST("wallet/customer/metadata")
   Call<ConfirmationDataResponse> validateAgentFundsTransfer(@Header("Authorization") String token,
                                                             @Field("senderNumber") String senderNumber,
                                                             @Field("receiverNumber") String receiverNumber,
@@ -718,7 +718,7 @@ public interface APIRequests {
 
 
  @FormUrlEncoded
- @POST("wallet/agent/confirm-transfer")
+ @POST("wallet/agent/confirm-customer-transfer")
  Call<InitiateWithdrawResponse>confirmAgentTransfer(
          @Header("Authorization") String token,
          @Field("amount") double amount,
@@ -747,7 +747,7 @@ public interface APIRequests {
 
   //initiate agent transaction
   @FormUrlEncoded
-  @POST("wallet/agent/initiate-transcation")
+  @POST("wallet/agent/initiate-customer-transfers")
   Call<InitiateTransferResponse> initiateAgentTransaction(@Header("Authorization") String token,
                                                           @Field("amount") Double amount,
                                                           @Field("customerPhoneNumber") String customerPhoneNumber,

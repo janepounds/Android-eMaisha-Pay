@@ -121,7 +121,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         navController = navHostFragment.getNavController();
 
-
+        this.fm=getSupportFragmentManager();
         setUpNavigation();
 
         toolbar = findViewById(R.id.main_Toolbar);
@@ -370,7 +370,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance, getSupportFragmentManager());
+        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance, fm);
         depositDialog.show(ft, "dialog");
     }
 
