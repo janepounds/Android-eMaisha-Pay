@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.savedstate.SavedStateRegistryOwner;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
@@ -51,7 +52,6 @@ public class ShopProductsModelView extends AndroidViewModel {
     private LiveData<Resource<List<EcProduct>>> repositorySource;
     private LiveData<Integer>cartReipositorySource;
     private EcProductCart productCart;
-    private MutableLiveData<Long> is=new MutableLiveData<>();
 
     private String wallet_id,product_id;
     public ShopProductsModelView(@NonNull Application application,
@@ -143,8 +143,12 @@ public class ShopProductsModelView extends AndroidViewModel {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-
-                    mRepository.deleteProductStock(product);
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRepository.deleteProductStock(product);
+                        }
+                    });
                     //Log.d("Categories", String.valueOf(categories));
 
                 } else {

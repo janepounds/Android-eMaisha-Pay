@@ -103,6 +103,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 viewModel.deleteProduct(productData);
+                                ShopProductPreviewDialog.this.dismiss();
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

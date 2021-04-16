@@ -476,10 +476,10 @@ public class DataRepository {
         return results;
     }
 
-    public LiveData<Long> deleteProductStock(EcProduct product) {
+    public void deleteProductStock(EcProduct product) {
         //product_id
 
-        return mEcProductsDao.deleteProduct(product);
+        mEcProductsDao.deleteProduct(product);
     }
 }
 
