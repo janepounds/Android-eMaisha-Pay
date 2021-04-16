@@ -42,6 +42,7 @@ import com.braintreepayments.cardform.view.SupportedCardTypesView;
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
@@ -79,11 +80,8 @@ public class ShopPayments extends Fragment implements
 
         SavedCardsListener, CardPaymentCallback {
 
-    List<String> customerNames, orderTypeNames, paymentMethodNames;
-    ArrayAdapter<String> customerAdapter, orderTypeAdapter, paymentMethodAdapter;
     private Context context;
     ConstraintLayout layoutCod;
-    String order_type, order_payment_method, customer_name;
 
     private RadioButton eMaishaWallet, eMaishaCard, Visa, MobileMoney;
     private LinearLayout merchantCard, VisaCard, MobileM,eMaishaPayLayout;
@@ -93,12 +91,10 @@ public class ShopPayments extends Fragment implements
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
-    private BraintreeFragment braintreeFragment;
+   // private BraintreeFragment braintreeFragment;
     private String selectedPaymentMethod;
     SupportedCardTypesView brainTreeSupportedCards;
     private Toolbar toolbar;
-    private CardBuilder brainTreeCard;
-    private String brainTreeToken;
     private DialogLoader dialogLoader;
     String txRef,otp_code;
     double chargeAmount;
@@ -110,9 +106,6 @@ public class ShopPayments extends Fragment implements
     private Dialog otpDialog;
     private EditText code1,code2,code3,code4,code5,code6;
 
-    public ShopPayments(double chargeAmount) {
-        this.chargeAmount=chargeAmount;
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -125,8 +118,10 @@ public class ShopPayments extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View rootView = inflater.inflate(R.layout.fragment_payment_methods, container, false);
-
+        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        this.chargeAmount=getArguments().getDouble("Charge");
         toolbar = rootView.findViewById(R.id.toolbar_payment_methods);
+
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

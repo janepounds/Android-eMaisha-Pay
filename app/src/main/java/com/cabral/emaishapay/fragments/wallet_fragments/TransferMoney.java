@@ -431,7 +431,7 @@ public class TransferMoney extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(getContext()).getBeneficiaries(access_token,spTransferTo.getSelectedItem().toString(),request_id);
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(context).getBeneficiaries(access_token,spTransferTo.getSelectedItem().toString(),request_id);
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
@@ -457,7 +457,7 @@ public class TransferMoney extends Fragment {
                         }
 
                         //set list in beneficiary spinner
-                        ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, beneficiaries);
+                        ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, beneficiaries);
                         spBeneficiary.setAdapter(beneficiariesAdapter);
 
 

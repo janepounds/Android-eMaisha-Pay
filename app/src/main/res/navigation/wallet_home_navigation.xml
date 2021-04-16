@@ -222,6 +222,10 @@
             <action
                 android:id="@+id/action_walletAccountFragment2_to_walletHomeFragment2"
                 app:destination="@id/walletHomeFragment2" />
+
+            <action
+                android:id="@+id/action_walletAccountFragment2_to_acceptPaymentFragment"
+                app:destination="@id/acceptPaymentFragment" />
             <action
                 android:id="@+id/action_walletAccountFragment2_to_walletTransactionsListFragment2"
                 app:destination="@id/walletTransactionsListFragment" />

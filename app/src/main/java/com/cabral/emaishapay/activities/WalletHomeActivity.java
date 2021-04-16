@@ -302,7 +302,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                         if (currentDestination  == R.id.walletHomeFragment2) {
                             navController.navigate(R.id.action_walletHomeFragment2_to_acceptPaymentFragment);
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
-                            navController.navigate(R.id.action_walletHomeFragment2_to_acceptPaymentFragment);
+                            navController.navigate(R.id.action_walletAccountFragment2_to_acceptPaymentFragment);
                         } else if (currentDestination == R.id.acceptPaymentFragment )  {
 
                         }else if (currentDestination == R.id.walletTransactionsListFragment )  {
