@@ -8,7 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcUserCart implements Parcelable {
+public class UserCart implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int cart_id;
     @ColumnInfo(name = "products_id")
@@ -60,7 +60,7 @@ public class EcUserCart implements Parcelable {
     @ColumnInfo(name = "cart_date_added")
     private String cart_date_added;
 
-    public EcUserCart(int cart_id, int products_id, String products_name, String products_image, String products_url, String product_model, String products_weight, String products_weight_unit, int product_stock, int product_quantity, String product_price, String product_attr_price, String product_total_price, String product_final_price, String products_description, String categories_id, String categories_name, int manufacturers_id, String manufacturer_name, int product_taxClassID, String tax_description, String tax_class_title, String tax_class_description, String is_sale_product, String cart_date_added) {
+    public UserCart(int cart_id, int products_id, String products_name, String products_image, String products_url, String product_model, String products_weight, String products_weight_unit, int product_stock, int product_quantity, String product_price, String product_attr_price, String product_total_price, String product_final_price, String products_description, String categories_id, String categories_name, int manufacturers_id, String manufacturer_name, int product_taxClassID, String tax_description, String tax_class_title, String tax_class_description, String is_sale_product, String cart_date_added) {
         this.cart_id = cart_id;
         this.products_id = products_id;
         this.products_name = products_name;
@@ -88,7 +88,7 @@ public class EcUserCart implements Parcelable {
         this.cart_date_added = cart_date_added;
     }
 
-    protected EcUserCart(Parcel in) {
+    protected UserCart(Parcel in) {
         cart_id = in.readInt();
         products_id = in.readInt();
         products_name = in.readString();
@@ -116,15 +116,15 @@ public class EcUserCart implements Parcelable {
         cart_date_added = in.readString();
     }
 
-    public static final Creator<EcUserCart> CREATOR = new Creator<EcUserCart>() {
+    public static final Creator<UserCart> CREATOR = new Creator<UserCart>() {
         @Override
-        public EcUserCart createFromParcel(Parcel in) {
-            return new EcUserCart(in);
+        public UserCart createFromParcel(Parcel in) {
+            return new UserCart(in);
         }
 
         @Override
-        public EcUserCart[] newArray(int size) {
-            return new EcUserCart[size];
+        public UserCart[] newArray(int size) {
+            return new UserCart[size];
         }
     };
 

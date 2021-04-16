@@ -5,8 +5,6 @@ import androidx.room.Relation;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
-import com.cabral.emaishapay.network.db.entities.ShopUserCart;
-import com.cabral.emaishapay.network.db.entities.ShopUserCartAttributes;
 
 import java.io.Serializable;
 import java.util.List;

@@ -8,14 +8,14 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "EcUserCartAttributes",foreignKeys = {
-        @ForeignKey(entity = EcUserCart.class,
+@Entity(tableName = "UserCartAttributes",foreignKeys = {
+        @ForeignKey(entity = UserCart.class,
                 parentColumns = "cart_id",
                 childColumns = "cart_table_id",
                 onDelete = ForeignKey.CASCADE)},
         indices = {@Index(value = "cart_table_id")
         })
-public class EcUserCartAttributes implements Parcelable {
+public class UserCartAttributes implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String attribute_option_id;
@@ -27,7 +27,7 @@ public class EcUserCartAttributes implements Parcelable {
     private String attribute_products_id;
     private int cart_table_id;
 
-    public EcUserCartAttributes(String attribute_option_id, String attribute_option_name, String attribute_value_id, String attribute_value_name, String attribute_value_price, String attribute_value_prefix, String attribute_products_id, int cart_table_id) {
+    public UserCartAttributes(String attribute_option_id, String attribute_option_name, String attribute_value_id, String attribute_value_name, String attribute_value_price, String attribute_value_prefix, String attribute_products_id, int cart_table_id) {
         this.attribute_option_id = attribute_option_id;
         this.attribute_option_name = attribute_option_name;
         this.attribute_value_id = attribute_value_id;
@@ -38,7 +38,7 @@ public class EcUserCartAttributes implements Parcelable {
         this.cart_table_id = cart_table_id;
     }
 
-    protected EcUserCartAttributes(Parcel in) {
+    protected UserCartAttributes(Parcel in) {
         id = in.readInt();
         attribute_option_id = in.readString();
         attribute_option_name = in.readString();
@@ -50,15 +50,15 @@ public class EcUserCartAttributes implements Parcelable {
         cart_table_id = in.readInt();
     }
 
-    public static final Creator<EcUserCartAttributes> CREATOR = new Creator<EcUserCartAttributes>() {
+    public static final Creator<UserCartAttributes> CREATOR = new Creator<UserCartAttributes>() {
         @Override
-        public EcUserCartAttributes createFromParcel(Parcel in) {
-            return new EcUserCartAttributes(in);
+        public UserCartAttributes createFromParcel(Parcel in) {
+            return new UserCartAttributes(in);
         }
 
         @Override
-        public EcUserCartAttributes[] newArray(int size) {
-            return new EcUserCartAttributes[size];
+        public UserCartAttributes[] newArray(int size) {
+            return new UserCartAttributes[size];
         }
     };
 

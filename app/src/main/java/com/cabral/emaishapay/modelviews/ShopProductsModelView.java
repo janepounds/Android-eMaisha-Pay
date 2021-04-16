@@ -1,47 +1,32 @@
 package com.cabral.emaishapay.modelviews;
 
 import android.app.Application;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
-import androidx.lifecycle.AbstractSavedStateViewModelFactory;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.savedstate.SavedStateRegistryOwner;
 
 import com.cabral.emaishapay.AppExecutors;
-import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.EcProductCart;
+import com.cabral.emaishapay.network.db.entities.UserCartProduct;
 import com.cabral.emaishapay.utils.Resource;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.Header;
 
 public class ShopProductsModelView extends AndroidViewModel {
     private static final String TAG = "ShopProductsModelView";
@@ -53,7 +38,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private LiveData<Resource<List<EcProduct>>> repositorySource;
     private LiveData<Integer>cartReipositorySource;
-    private EcProductCart productCart;
+    private UserCartProduct userCartProduct;
 
     private String wallet_id,product_id;
     public ShopProductsModelView(@NonNull Application application,
@@ -73,7 +58,7 @@ public class ShopProductsModelView extends AndroidViewModel {
 
         //executeFetchMerchantProducts( repositorySource );
 
-        cartReipositorySource = mRepository.addToCart(product_id,productCart);
+        cartReipositorySource = mRepository.addToCart(product_id, userCartProduct);
 
 
         requestOnlineManufacturers();

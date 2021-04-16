@@ -9,7 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class EcProductCart implements Parcelable {
+public class UserCartProduct implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int cart_id;
     @ColumnInfo(name = "product_id")
@@ -23,7 +23,7 @@ public class EcProductCart implements Parcelable {
     @ColumnInfo(name = "product_qty")
     private int product_qty;
 
-    public EcProductCart(int cart_id, String product_id, String product_weight, String product_weight_unit, String product_price, int product_qty) {
+    public UserCartProduct(int cart_id, String product_id, String product_weight, String product_weight_unit, String product_price, int product_qty) {
         this.cart_id = cart_id;
         this.product_id = product_id;
         this.product_weight = product_weight;
@@ -32,7 +32,7 @@ public class EcProductCart implements Parcelable {
         this.product_qty = product_qty;
     }
 
-    protected EcProductCart(Parcel in) {
+    protected UserCartProduct(Parcel in) {
         cart_id = in.readInt();
         product_id = in.readString();
         product_weight = in.readString();
@@ -42,7 +42,7 @@ public class EcProductCart implements Parcelable {
     }
 
     @Ignore
-    public EcProductCart() {
+    public UserCartProduct() {
 
     }
 
@@ -61,15 +61,15 @@ public class EcProductCart implements Parcelable {
         return 0;
     }
 
-    public static final Creator<EcProductCart> CREATOR = new Creator<EcProductCart>() {
+    public static final Creator<UserCartProduct> CREATOR = new Creator<UserCartProduct>() {
         @Override
-        public EcProductCart createFromParcel(Parcel in) {
-            return new EcProductCart(in);
+        public UserCartProduct createFromParcel(Parcel in) {
+            return new UserCartProduct(in);
         }
 
         @Override
-        public EcProductCart[] newArray(int size) {
-            return new EcProductCart[size];
+        public UserCartProduct[] newArray(int size) {
+            return new UserCartProduct[size];
         }
     };
 

@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.network.db;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -11,12 +10,12 @@ import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
-import com.cabral.emaishapay.network.db.daos.EcProductCartDao;
+import com.cabral.emaishapay.network.db.daos.UserCartProductDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcProductWeightDao;
 import com.cabral.emaishapay.network.db.daos.EcProductsDao;
-import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
-import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
+import com.cabral.emaishapay.network.db.daos.UserCartAttributesDao;
+import com.cabral.emaishapay.network.db.daos.UserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
@@ -25,18 +24,18 @@ import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderFts;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
-import com.cabral.emaishapay.network.db.entities.EcProductCart;
+import com.cabral.emaishapay.network.db.entities.UserCartProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.EcProductWeight;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcSupplier;
-import com.cabral.emaishapay.network.db.entities.EcUserCart;
-import com.cabral.emaishapay.network.db.entities.EcUserCartAttributes;
+import com.cabral.emaishapay.network.db.entities.UserCart;
+import com.cabral.emaishapay.network.db.entities.UserCartAttributes;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
 @Database(entities = {DefaultAddress.class, EcManufacturer.class, ShopOrderProducts.class, ShopOrder.class, ShopOrderFts.class,
-        EcProductCart.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcProductFts.class,
-        EcSupplier.class, EcUserCart.class, EcUserCartAttributes.class, RegionDetails.class},
+        UserCartProduct.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcProductFts.class,
+        EcSupplier.class, UserCart.class, UserCartAttributes.class, RegionDetails.class},
         version = 1,
         exportSchema = false
         )
@@ -46,12 +45,12 @@ public abstract class EmaishapayDb extends RoomDatabase {
     public abstract EcManufacturerDao ecManufacturerDao();
     public abstract ShopOrderProductsDao shopOrderProductsDao();
     public abstract ShopOrderDao shopOrderDao();
-    public abstract EcProductCartDao ecProductCartDao();
+    public abstract UserCartProductDao ecProductCartDao();
     public abstract EcProductCategoryDao ecProductCategoryDao();
     public abstract EcProductsDao ecProductsDao();
     public abstract EcProductWeightDao ecProductWeightDao();
-    public abstract EcUserCartAttributesDao ecUserCartAttributesDao();
-    public abstract EcUserCartDao ecUserCartDao();
+    public abstract UserCartAttributesDao userCartAttributesDao();
+    public abstract UserCartDao userCartDao();
     public abstract RegionDetailsDao regionDetailsDao();
 
 
@@ -62,7 +61,7 @@ public abstract class EmaishapayDb extends RoomDatabase {
         if(INSTANCE==null){
             synchronized (RoomDatabase.class){
                 if(INSTANCE==null){
-                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb18")
+                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb19")
                             //.addMigrations(MIGRATION_3_4)
                             .build();
                 }

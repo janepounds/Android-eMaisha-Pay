@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.adapters.Shop;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -9,14 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -28,22 +25,16 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.ProductItemBinding;
-import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
 import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
-import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.EcProductCart;
-import com.cabral.emaishapay.utils.Resource;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -55,7 +46,6 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
     MediaPlayer player;
     private List<? extends EcProduct> productData;
     private Context context;
-    private DbHandlerSingleton dbHandler;
     ProductItemBinding binding;
     String currency;
     WeakReference<ShopPOSFragment> fragmentReference;
@@ -233,6 +223,7 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         });
 
         TextView totalPriceTxt = dialogView.findViewById(R.id.txt_online_overall_total_price);
+        currency=context.getString(R.string.currency);
 
         TextView txtQty = (TextView) dialogView.findViewById(R.id.txt_product_qty);
         TextView ProductName = dialogView.findViewById(R.id.product_name);
@@ -241,9 +232,6 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
         ProductPrice.setText( currency+" "+productData.getProduct_sell_price() );
 
         //get cart product
-
-
-
         CartProduct cartProduct=GetCartProduct(productData.getProduct_id(),productData.getProduct_name());
         if(cartProduct!=null && cartProduct.getCustomersBasketProduct()!=null && cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()!=0){
             Log.e("error",cartProduct.getCustomersBasketProduct().getProductsName());

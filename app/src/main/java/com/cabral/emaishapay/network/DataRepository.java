@@ -15,17 +15,17 @@ import com.cabral.emaishapay.network.db.EmaishapayDb;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
-import com.cabral.emaishapay.network.db.daos.EcProductCartDao;
+import com.cabral.emaishapay.network.db.daos.UserCartProductDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcProductWeightDao;
 import com.cabral.emaishapay.network.db.daos.EcProductsDao;
-import com.cabral.emaishapay.network.db.daos.EcUserCartAttributesDao;
-import com.cabral.emaishapay.network.db.daos.EcUserCartDao;
+import com.cabral.emaishapay.network.db.daos.UserCartAttributesDao;
+import com.cabral.emaishapay.network.db.daos.UserCartDao;
 import com.cabral.emaishapay.network.db.daos.RegionDetailsDao;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.EcProductCart;
+import com.cabral.emaishapay.network.db.entities.UserCartProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
@@ -52,12 +52,12 @@ public class DataRepository {
     private final EcManufacturerDao mEcManufacturerDao;
     private final ShopOrderProductsDao mShopOrderProductDao;
     private final ShopOrderDao mShopOrderDao;
-    private final EcProductCartDao mEcProductCartDao;
+    private final UserCartProductDao mUserCartProductDao;
     private final EcProductCategoryDao mEcProductCategoryDao;
     private final EcProductsDao mEcProductsDao;
     private final EcProductWeightDao mEcProductWeightDao;
-    private final EcUserCartAttributesDao mEcUserCartAttributesDao;
-    private final EcUserCartDao mEcUserCartDao;
+    private final UserCartAttributesDao mUserCartAttributesDao;
+    private final UserCartDao mUserCartDao;
     private final RegionDetailsDao mRegionDetailsDao;
 
     private DataRepository(Context context) {
@@ -66,12 +66,12 @@ public class DataRepository {
         mEcManufacturerDao = dbInstance.ecManufacturerDao();
         mShopOrderProductDao = dbInstance.shopOrderProductsDao();
         mShopOrderDao = dbInstance.shopOrderDao();
-        mEcProductCartDao = dbInstance.ecProductCartDao();
+        mUserCartProductDao = dbInstance.ecProductCartDao();
         mEcProductCategoryDao = dbInstance.ecProductCategoryDao();
         mEcProductsDao = dbInstance.ecProductsDao();
         mEcProductWeightDao = dbInstance.ecProductWeightDao();
-        mEcUserCartAttributesDao = dbInstance.ecUserCartAttributesDao();
-        mEcUserCartDao = dbInstance.ecUserCartDao();
+        mUserCartAttributesDao = dbInstance.userCartAttributesDao();
+        mUserCartDao = dbInstance.userCartDao();
         mRegionDetailsDao = dbInstance.regionDetailsDao();
     }
 
@@ -207,7 +207,7 @@ public class DataRepository {
     //*********UPDATE PRODUCT QTY*****************//
     public void updateProductQty(String id, String qty) {
 
-        mEcProductCartDao.updateProductQty(id, qty);
+        mUserCartProductDao.updateProductQty(id, qty);
 
     }
 
@@ -260,13 +260,13 @@ public class DataRepository {
     //************GET CART ITEM COUNT ************//
 
     public int getCartItemCount() {
-        return mEcProductCartDao.getCartItemCount();
+        return mUserCartProductDao.getCartItemCount();
     }
 
     //**************DELETE PRODUCT FROM CART********************************//
     public void deleteProductFromCart(String id) {
 
-        mEcProductCartDao.deleteProductFromCart(id);
+        mUserCartProductDao.deleteProductFromCart(id);
 
     }
 
@@ -274,8 +274,8 @@ public class DataRepository {
     //*****************GET TOTAL PRICE**************************************************//
     public double getTotalPrice() {
 
-        List<EcProductCart> products;
-        products = mEcProductCartDao.getTotalPrice();
+        List<UserCartProduct> products;
+        products = mUserCartProductDao.getTotalPrice();
         double total_price = 0;
 
         if (products != null) {
@@ -317,20 +317,9 @@ public class DataRepository {
 
     }
 
-    //******************GET ORDER HISTORY DATA****************************************************//
-
-    public LiveData<Integer> addToCart(String product_id,EcProductCart productCart) {
-        LiveData<List<EcProductCart>> cartProducts = mEcProductCartDao.selectCartProduct(product_id);
-
-        LiveData<Integer> result = Transformations.switchMap(
-                cartProducts, mycartProduct ->insertIfDoesnotexist(mycartProduct,productCart) );
 
 
-
-        return result;
-    }
-
-    private LiveData<Integer> insertIfDoesnotexist(List<EcProductCart> mycartProduct, EcProductCart productCart) {
+    private LiveData<Integer> insertIfDoesnotexist(List<UserCartProduct> mycartProduct, UserCartProduct userCartProduct) {
         MutableLiveData<Integer> results = new MutableLiveData<>();
         if (mycartProduct.size() > 0) {
             results.setValue(new Integer(2 + ""));
@@ -339,7 +328,7 @@ public class DataRepository {
         } else {
 
             //if data insert success, its return 1, if failed return -1
-            if (mEcProductCartDao.insertCartProduct(productCart) == -1) {
+            if (mUserCartProductDao.insertCartProduct(userCartProduct) == -1) {
                 results.setValue(new Integer(-1 + ""));
 
 
@@ -487,6 +476,22 @@ public class DataRepository {
        mEcProductsDao.updateProductStock(product_id, product_name, product_code,  product_category, product_description, product_buy_price, product_sell_price, product_supplier, product_image,  product_stock, product_weight_unit, product_weight, manufacturer);
 
     }
+
+    //******************GET ORDER HISTORY DATA****************************************************//
+
+    public LiveData<Integer> addToCart(String product_id, UserCartProduct userCartProduct) {
+        LiveData<List<UserCartProduct>> cartProducts = mUserCartProductDao.selectCartProduct(product_id);
+
+        LiveData<Integer> result = Transformations.switchMap(
+                cartProducts, mycartProduct ->insertIfDoesnotexist(mycartProduct, userCartProduct) );
+
+        return result;
+    }
+
+    public void  clearCart(){
+        mUserCartDao.clearCart();
+    }
+
 }
 
 
