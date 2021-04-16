@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -49,7 +50,7 @@ public class ShopPOSFragment extends Fragment {
     Activity shop;
     private Context context;
     public static EditText etxtSearch, etxtCharge;
-    ProductAdapter productAdapter;
+    PosProductAdapter productAdapter;
     TextView txtNoProducts, txtEnter, txtItems;
     public  TextView totalItems,totalprice;
     View enterView, itemsView;
@@ -159,7 +160,7 @@ public class ShopPOSFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        productAdapter = new ProductAdapter(context);
+        productAdapter = new PosProductAdapter(context,viewModel,getViewLifecycleOwner());
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.posRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView

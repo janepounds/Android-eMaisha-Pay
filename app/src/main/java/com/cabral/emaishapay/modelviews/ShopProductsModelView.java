@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.savedstate.SavedStateRegistryOwner;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
@@ -28,12 +29,14 @@ import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCart;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,12 +50,10 @@ public class ShopProductsModelView extends AndroidViewModel {
     private final SavedStateHandle mSavedStateHandler;
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private LiveData<Resource<List<EcProduct>>> repositorySource;
-    private final MediatorLiveData<Resource<List<EcProduct>>> merchantProducts=new MediatorLiveData<>();
+    private LiveData<Integer>cartReipositorySource;
+    private EcProductCart productCart;
 
-    private String wallet_id;
-    private boolean cancelRequest;
-    private long requestStartTime;
-
+    private String wallet_id,product_id;
     public ShopProductsModelView(@NonNull Application application,
                                  @NonNull SavedStateHandle savedStateHandle) {
         super(application);
@@ -69,6 +70,9 @@ public class ShopProductsModelView extends AndroidViewModel {
                 });
 
         //executeFetchMerchantProducts( repositorySource );
+
+        cartReipositorySource = mRepository.addToCart(product_id,productCart);
+
 
         requestOnlineManufacturers();
 
@@ -115,6 +119,12 @@ public class ShopProductsModelView extends AndroidViewModel {
         return repositorySource;
     }
 
+    public LiveData<Integer> addToCart() {
+
+
+        return cartReipositorySource;
+    }
+
 
 
     public void setQuery(CharSequence query) {
@@ -125,5 +135,35 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
 
+    public void deleteProduct(EcProduct product) {
+        Call<ResponseBody> call1 = BuyInputsAPIClient
+                .getInstance()
+                .deleteMerchantProduct(product.getProduct_id(),wallet_id);
+        call1.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRepository.deleteProductStock(product);
+                        }
+                    });
+                    //Log.d("Categories", String.valueOf(categories));
 
+                } else {
+                    Log.d("Failed", "Manufacturers Fetch failed");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                Log.d("Failed", "Manufacturers Fetch failed");
+            }
+        });
+
+
+    }
 }

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -320,11 +319,37 @@ public class DataRepository {
 
     //******************GET ORDER HISTORY DATA****************************************************//
 
-    public void addToCart(String product_id) {
+    public LiveData<Integer> addToCart(String product_id,EcProductCart productCart) {
+        LiveData<List<EcProductCart>> cartProducts = mEcProductCartDao.selectCartProduct(product_id);
+
+        LiveData<Integer> result = Transformations.switchMap(
+                cartProducts, mycartProduct ->insertIfDoesnotexist(mycartProduct,productCart) );
 
 
-        mEcProductCartDao.addToCart(product_id);
 
+        return result;
+    }
+
+    private LiveData<Integer> insertIfDoesnotexist(List<EcProductCart> mycartProduct, EcProductCart productCart) {
+        MutableLiveData<Integer> results = new MutableLiveData<>();
+        if (mycartProduct.size() > 0) {
+            results.setValue(new Integer(2 + ""));
+
+
+        } else {
+
+            //if data insert success, its return 1, if failed return -1
+            if (mEcProductCartDao.insertCartProduct(productCart) == -1) {
+                results.setValue(new Integer(-1 + ""));
+
+
+            } else {
+                results.setValue(new Integer(1 + ""));
+            }
+
+
+        }
+        return results;
     }
 
 
@@ -451,6 +476,11 @@ public class DataRepository {
         return results;
     }
 
+    public void deleteProductStock(EcProduct product) {
+        //product_id
+
+        mEcProductsDao.deleteProduct(product);
+    }
 }
 
 

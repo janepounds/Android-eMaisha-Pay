@@ -8,9 +8,10 @@ import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.entities.ShopUserCart;
 import com.cabral.emaishapay.network.db.entities.ShopUserCartAttributes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ShopOrderWithProducts {
+public class ShopOrderWithProducts implements Serializable {
     @Embedded
     public ShopOrder shopOrder;
     @Relation(
