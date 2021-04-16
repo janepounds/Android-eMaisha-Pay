@@ -89,7 +89,7 @@ public class ShopProductsFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment addProductDialog = new AddShopProductFragment(manufacturers);
+                DialogFragment addProductDialog = new AddShopProductFragment(manufacturers,getString(R.string.add_new_product),viewModel);
                 addProductDialog.show(ft, "dialog");
             }
         });

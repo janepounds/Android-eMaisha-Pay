@@ -14,6 +14,7 @@
         android:background="@drawable/top_rounded_blue">
 
         <TextView
+            android:id="@+id/add_product_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".1"

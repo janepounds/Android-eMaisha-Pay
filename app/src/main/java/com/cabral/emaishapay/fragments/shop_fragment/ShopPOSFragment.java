@@ -124,11 +124,9 @@ public class ShopPOSFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ShopPayments nextFrag= new ShopPayments(chargeAmount);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                Bundle args=new Bundle();
+                args.putDouble("Charge", Double.parseDouble(binding.posCharge.getText().toString()) );
+                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
 
             }
@@ -138,11 +136,9 @@ public class ShopPOSFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ShopPayments nextFrag= new ShopPayments( Double.parseDouble(binding.posCharge.getText().toString()) );
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.shop_navigation_container, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                Bundle args=new Bundle();
+                args.putDouble("Charge", Double.parseDouble(binding.posCharge.getText().toString()) );
+                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
 
             }

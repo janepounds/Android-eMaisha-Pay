@@ -41,6 +41,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 
@@ -52,6 +55,7 @@ import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 
@@ -69,7 +73,7 @@ public class AddShopProductFragment extends DialogFragment {
     public static EditText etxtProductCode;
     EditText  etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier,etxtproductMeasurement;
     TextView txtAddProdcut;
-    TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer;
+    TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer,tvAddProduct;
     String mediaPath, encodedImage = "N/A";
     Spinner quantityUnit;
     LinearLayout measurement_layout,spn_measurements_layout;
@@ -93,7 +97,7 @@ public class AddShopProductFragment extends DialogFragment {
     private List<String> offlinemanufacturersNames;
     private List<String> offlineCategoryNames;
     private List<String> offlineProductsName;
-    private String measure_id;
+    private String measure_id,key,product_id;
     private DbHandlerSingleton dbHandler;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers;
@@ -101,10 +105,13 @@ public class AddShopProductFragment extends DialogFragment {
     private ArrayList<HashMap<String, String>>offlineProductNames;
     DialogLoader dialogLoader;
     List<HashMap<String, String>> productData;
+    private ShopProductsModelView viewModel;
 
 
-    public AddShopProductFragment(List<EcManufacturer> manufacturers) {
+    public AddShopProductFragment(List<EcManufacturer> manufacturers,String key,ShopProductsModelView viewModel) {
         this.manufacturers=manufacturers;
+        this.key = key;
+        this.viewModel = viewModel;
     }
 
 
@@ -148,12 +155,42 @@ public class AddShopProductFragment extends DialogFragment {
         quantityUnit = view.findViewById(R.id.product_units);
         etxtproductMeasurement = view.findViewById(R.id.etxt_product_measurement);
         measurement_layout= view.findViewById(R.id.measurement_layout);
+        tvAddProduct = view.findViewById(R.id.add_product_tv);
 //        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
 //        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
         txtAddProdcut = view.findViewById(R.id.tx_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
         close.setOnClickListener(v -> dismiss());
+
+        if(getArguments()!=null){
+            tvAddProduct.setText("Edit Product");
+            txtAddProdcut.setText("Update");
+            etxtProductManufucturer.setText(getArguments().getString("manufacturer"));
+            etxtProductCategory.setText(getArguments().getString("category"));
+            etxtProductName.setText(getArguments().getString("product_name"));
+            etxtProductCode.setText(getArguments().getString("product_code"));
+            etxtProductBuyPrice.setText(getArguments().getString("buy_price"));
+            etxtProductSellPrice.setText(getArguments().getString("sell_price"));
+            etxtProductStock.setText(getArguments().getString("stock"));
+            etxtproductMeasurement.setText(getArguments().getString("weight"));
+            product_id = getArguments().getString("product_id");
+            WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
+
+            //set product image
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.add_default_image)
+                    .error(R.drawable.add_default_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+
+
+            Glide.with(context).load(Base64.decode(getArguments().getString("image"), Base64.DEFAULT)).apply(options).into(produce_image);
+
+
+
+        }
 
         //get offline manufacturers;
         offlineManufacturers = new ArrayList<>();
@@ -732,6 +769,9 @@ public class AddShopProductFragment extends DialogFragment {
             public void onClick(View v) {
                 // Toasty.warning(AddProductActivity.this, "Add Product is disable in demo version. Please purchase from Codecanyon.Thank you ", Toast.LENGTH_SHORT).show();
 
+                    //update product online and locally
+
+
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
@@ -746,13 +786,13 @@ public class AddShopProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
                 String manufacturer_name = etxtProductManufucturer.getText().toString().trim();
-                String units =  etxtproductMeasurement.getText().toString().trim()+quantityUnit.getSelectedItem().toString().trim();
+                String units = etxtproductMeasurement.getText().toString().trim() + quantityUnit.getSelectedItem().toString().trim();
                 String sync_status = "0";
-                if(quantityUnit.getSelectedItem().toString().equalsIgnoreCase("Select") || etxtproductMeasurement.getText().toString().equalsIgnoreCase("")){
-                    units=null;
+                if (quantityUnit.getSelectedItem().toString().equalsIgnoreCase("Select") || etxtproductMeasurement.getText().toString().equalsIgnoreCase("")) {
+                    units = null;
                 }
 
-                Log.d(TAG, "onClick: timestamp"+timestamp);
+                Log.d(TAG, "onClick: timestamp" + timestamp);
 
 
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -777,11 +817,18 @@ public class AddShopProductFragment extends DialogFragment {
                 } else if (Integer.parseInt(product_stock) <= 0) {
                     etxtProductStock.setError("Stock should be greater than zero");
                     etxtProductStock.requestFocus();
-                }else{
+                } else {
 //                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
 //                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
 //                    etxtProductSupplier.requestFocus();
 //                } else {
+
+                    if (key.equalsIgnoreCase("update")) {
+                        viewModel.updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier_name,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name,product_code, encodedImage,
+                                selected_weight_units,
+                                selected_weight + "");
+
+                     }else{
 
                     ProgressDialog progressDialog = new ProgressDialog(getContext());
                     progressDialog.setMessage("Loading...");
@@ -805,23 +852,19 @@ public class AddShopProductFragment extends DialogFragment {
                             product_supplier,
                             encodedImage,
                             selected_weight_units,
-                            selected_weight+"",
+                            selected_weight + "",
                             manufacturer_name
 
 
-
-                           );
-
-
-
+                    );
 
 
                     if (check) {
                         progressDialog.dismiss();
                         Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
 
-                      Intent intent = new Intent(getContext(), ShopActivity.class);
-                      startActivity(intent);
+                        Intent intent = new Intent(getContext(), ShopActivity.class);
+                        startActivity(intent);
                         // finish();
                     } else {
                         progressDialog.dismiss();
@@ -833,6 +876,7 @@ public class AddShopProductFragment extends DialogFragment {
                 }
 
             }
+        }
         });
 
         builder.setView(view);

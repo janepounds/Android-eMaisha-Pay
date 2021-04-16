@@ -694,6 +694,8 @@
     <string name="enter_pin">Enter Pin</string>
     <string name="confirm_pin">Confirm PIN</string>
     <string name="orders">Orders</string>
+    <string name="update_product">update</string>
+    <string name="add_new_product">add</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
