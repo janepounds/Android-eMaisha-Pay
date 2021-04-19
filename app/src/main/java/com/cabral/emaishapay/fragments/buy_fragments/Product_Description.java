@@ -67,10 +67,7 @@ import com.cabral.emaishapay.utils.Utilities;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.animations.DescriptionAnimation;
 import com.glide.slider.library.indicators.PagerIndicator;
-import com.glide.slider.library.slidertypes.BaseSliderView;
-import com.glide.slider.library.slidertypes.DefaultSliderView;
 import com.glide.slider.library.slidertypes.TextSliderView;
-import com.glide.slider.library.transformers.BaseTransformer;
 import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -835,14 +832,13 @@ public class Product_Description extends Fragment  {
 
             RequestOptions requestOptions = new RequestOptions();
 
-            requestOptions.centerCrop();
+            requestOptions.centerInside();
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView
-                    .description(name)
+                    //.description(name)
                     .setRequestOption(requestOptions)
                     .image(slider_covers.get(name));
-            Log.e("sliderError",slider_covers.get(name));
 
             // Add DefaultSliderView to the SliderLayout
             sliderLayout.addSlider(defaultSliderView);
@@ -870,24 +866,25 @@ public class Product_Description extends Fragment  {
         });
 
         // Check if the size of Images in the Slider is less than 2
-        if (slider_covers.size() < 2) {
-            // Disable PagerTransformer
-            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
-                @Override
-                protected void onTransform(View view, float v) {
+//        if (slider_covers.size() < 2) {
+//            // Disable PagerTransformer
+//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
+//                @Override
+//                protected void onTransform(View view, float v) {
+//
+//                }
+//            });
+//
+//            // Hide Slider PagerIndicator
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+//
+//        } else {
+//            // Set custom PagerIndicator to the SliderLayout
+//            sliderLayout.setCustomIndicator(pagerIndicator);
+//            // Make PagerIndicator Visible
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+//        }
 
-                }
-            });
-
-            // Hide Slider PagerIndicator
-            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-
-        } else {
-            // Set custom PagerIndicator to the SliderLayout
-            sliderLayout.setCustomIndicator(pagerIndicator);
-            // Make PagerIndicator Visible
-            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-        }
     }
 
     //*********** Request Product Details from the Server based on productID ********//
@@ -1171,10 +1168,6 @@ public class Product_Description extends Fragment  {
 
         return isAnyChecked;
     }
-
-
-
-
 
 
 }
