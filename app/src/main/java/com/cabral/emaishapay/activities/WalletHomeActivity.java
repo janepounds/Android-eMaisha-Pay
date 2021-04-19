@@ -31,6 +31,8 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
+import com.cabral.emaishapay.DailogFragments.DepositPayments;
+import com.cabral.emaishapay.DailogFragments.ScanAndPayDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
@@ -117,7 +119,25 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
+        scanFAB = findViewById(R.id.fab);
 
+        scanFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+
+
+                // Create and show the dialog.
+                DialogFragment scanAndPayDialog = new ScanAndPayDialog();
+                scanAndPayDialog.show(ft, "dialog");
+            }
+        });
 
 
         context = getApplicationContext();
@@ -451,29 +471,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     }
 
-    public void openScanAndPay(View view){
 
-        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context, R.style.DialogFullscreen);
-        View dialogView = getLayoutInflater().inflate(R.layout.new_scan_pay_floating_button, null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
-
-
-        ImageView cancel = dialogView.findViewById(R.id.img_scan_cancel);
-
-
-
-        final android.app.AlertDialog alertDialog = dialog.create();
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                alertDialog.dismiss();
-            }
-        });
-
-        alertDialog.show();
-    }
 
     @Override
     public boolean onSupportNavigateUp() {

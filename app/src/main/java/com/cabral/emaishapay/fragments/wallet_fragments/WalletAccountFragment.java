@@ -75,7 +75,36 @@ public class WalletAccountFragment extends Fragment {
                 .priority(Priority.HIGH);
         Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +user_pic).apply(options).into(binding.userImage);
 
-        //get account info
+        //navigate to cards list
+
+        binding.layoutCards.setOnClickListener(view12->{
+
+            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+
+            }
+            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronBusinessInformation.setRotation(0);
+                binding.layoutBusinessInfo.setVisibility(View.GONE);
+
+            }
+
+            if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+
+
+            }
+
+
+            else {
+                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
+
+
+            }
+
+        });
 
 
 //        binding.personalInformationLayout.setOnClickListener(view12 -> {
@@ -300,6 +329,7 @@ public class WalletAccountFragment extends Fragment {
 
 
         });
+
 
         binding.layoutEmploymentInformation.setOnClickListener(new View.OnClickListener() {
             @Override

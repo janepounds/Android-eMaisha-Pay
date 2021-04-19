@@ -62,6 +62,10 @@ public class CardListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =inflater.inflate(R.layout.fragment_card_list, container, false);
+
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+
         cardRecycler   =rootView.findViewById(R.id.recyclerView_card_fragment);
         layoutCardViewEmpty = rootView.findViewById(R.id.card_view_empty);
         recycler_view_card = rootView.findViewById(R.id.recycler_view_card);
@@ -69,8 +73,8 @@ public class CardListFragment extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar_card_list);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("My Cards");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
         RequestCards();
 
