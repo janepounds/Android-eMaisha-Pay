@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.network.db.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,6 +14,10 @@ import java.util.List;
 
 @Dao
 public interface UserCartDao {
+
+    //insert cart product
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertCartProduct(UserCart userCartProduct);
 
     //get last  cart id
     @Query("SELECT MAX(cart_id)  FROM UserCart")
@@ -35,7 +40,7 @@ public interface UserCartDao {
 
     //get cart product 2
     @Query("SELECT * FROM UserCart WHERE products_id =:product_id OR products_name =:product_name")
-    UserCart getCartProduct2(String product_id, String product_name);
+    UserCart getCartProduct(String product_id, String product_name);
 
 
     //get cart items id
@@ -72,7 +77,15 @@ public interface UserCartDao {
     @Update
     void updateCartItem2(UserCart cart);
 
+    //update product quantity
+    @Query("UPDATE UserCart SET product_quantity=:qty WHERE products_id=:id")
+    void updateProductQty(String id, String qty);
 
+    //get cart item count
+    @Query("SELECT COUNT(*) FROM UserCart")
+    int getCartItemCount();
 
+    @Query("SELECT * FROM UserCart WHERE products_id=:product_id")
+    LiveData<List<UserCart>> selectCartProduct(String product_id);
 
 }

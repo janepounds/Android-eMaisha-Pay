@@ -3,102 +3,55 @@ package com.cabral.emaishapay.network.db.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class UserCart implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int cart_id;
-    @ColumnInfo(name = "products_id")
-    private int products_id;
-    @ColumnInfo(name = "products_name")
-    private String products_name;
-    @ColumnInfo(name = "products_image")
-    private String products_image;
-    @ColumnInfo(name = "products_url")
-    private String products_url;
-    @ColumnInfo(name = "product_model")
-    private String product_model;
-    @ColumnInfo(name = "products_weight")
-    private String products_weight;
-    @ColumnInfo(name = "products_weight_unit")
-    private String products_weight_unit;
-    @ColumnInfo(name = "product_stock")
-    private int product_stock;
-    @ColumnInfo(name = "product_quantity")
-    private int product_quantity;
-    @ColumnInfo(name = "product_price")
-    private String product_price;
-    @ColumnInfo(name = "product_attr_price")
-    private String product_attr_price;
-    @ColumnInfo(name = "product_total_price")
-    private String product_total_price;
-    @ColumnInfo(name = "product_final_price")
-    private String product_final_price;
-    @ColumnInfo(name = "products_description")
-    private String products_description;
-    @ColumnInfo(name = "categories_id")
-    private String categories_id;
-    @ColumnInfo(name = "categories_name")
-    private String categories_name;
-    @ColumnInfo(name = "manufacturers_id")
-    private int manufacturers_id;
-    @ColumnInfo(name = "manufacturer_name")
-    private String manufacturer_name;
-    @ColumnInfo(name = "product_taxClassID")
-    private int product_taxClassID;
-    @ColumnInfo(name = "tax_description")
-    private String tax_description;
-    @ColumnInfo(name = "tax_class_title")
-    private String tax_class_title;
-    @ColumnInfo(name = "tax_class_description")
-    private String tax_class_description;
-    @ColumnInfo(name = "is_sale_product")
-    private String is_sale_product;
-    @ColumnInfo(name = "cart_date_added")
-    private String cart_date_added;
+    public  String products_id;
+    public  String products_name;
+    public  String products_image;
+    public  String products_url;
+    public  String product_model;
+    public  String products_weight;
+    public  String products_weight_unit;
+    public  String product_stock;
+    public  String product_quantity;
+    public  String product_price;
+    public  String product_attr_price;
+    public  String product_total_price;
+    public  String product_final_price;
+    public  String products_description;
+    public  String categories_id;
+    public  String categories_name;
+    public  String manufacturers_id;
+    public  String manufacturer_name;
+    public  String product_taxClassID;
+    public  String tax_description;
+    public  String tax_class_title;
+    public  String tax_class_description;
+    public  String is_sale_product;
+    public  String cart_date_added;
+    @Ignore
+    private String selectedProductsWeight;
+    @Ignore
+    private String selectedProductsWeightUnit;
 
-    public UserCart(int cart_id, int products_id, String products_name, String products_image, String products_url, String product_model, String products_weight, String products_weight_unit, int product_stock, int product_quantity, String product_price, String product_attr_price, String product_total_price, String product_final_price, String products_description, String categories_id, String categories_name, int manufacturers_id, String manufacturer_name, int product_taxClassID, String tax_description, String tax_class_title, String tax_class_description, String is_sale_product, String cart_date_added) {
-        this.cart_id = cart_id;
-        this.products_id = products_id;
-        this.products_name = products_name;
-        this.products_image = products_image;
-        this.products_url = products_url;
-        this.product_model = product_model;
-        this.products_weight = products_weight;
-        this.products_weight_unit = products_weight_unit;
-        this.product_stock = product_stock;
-        this.product_quantity = product_quantity;
-        this.product_price = product_price;
-        this.product_attr_price = product_attr_price;
-        this.product_total_price = product_total_price;
-        this.product_final_price = product_final_price;
-        this.products_description = products_description;
-        this.categories_id = categories_id;
-        this.categories_name = categories_name;
-        this.manufacturers_id = manufacturers_id;
-        this.manufacturer_name = manufacturer_name;
-        this.product_taxClassID = product_taxClassID;
-        this.tax_description = tax_description;
-        this.tax_class_title = tax_class_title;
-        this.tax_class_description = tax_class_description;
-        this.is_sale_product = is_sale_product;
-        this.cart_date_added = cart_date_added;
-    }
 
     protected UserCart(Parcel in) {
         cart_id = in.readInt();
-        products_id = in.readInt();
+        products_id = in.readString();
         products_name = in.readString();
         products_image = in.readString();
         products_url = in.readString();
         product_model = in.readString();
         products_weight = in.readString();
         products_weight_unit = in.readString();
-        product_stock = in.readInt();
-        product_quantity = in.readInt();
+        product_stock = in.readString();
+        product_quantity = in.readString();
         product_price = in.readString();
         product_attr_price = in.readString();
         product_total_price = in.readString();
@@ -106,14 +59,48 @@ public class UserCart implements Parcelable {
         products_description = in.readString();
         categories_id = in.readString();
         categories_name = in.readString();
-        manufacturers_id = in.readInt();
+        manufacturers_id = in.readString();
         manufacturer_name = in.readString();
-        product_taxClassID = in.readInt();
+        product_taxClassID = in.readString();
         tax_description = in.readString();
         tax_class_title = in.readString();
         tax_class_description = in.readString();
         is_sale_product = in.readString();
         cart_date_added = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+       // dest.writeInt(cart_id);
+        dest.writeString(products_id);
+        dest.writeString(products_name);
+        dest.writeString(products_image);
+        dest.writeString(products_url);
+        dest.writeString(product_model);
+        dest.writeString(products_weight);
+        dest.writeString(products_weight_unit);
+        dest.writeString(product_stock);
+        dest.writeString(product_quantity);
+        dest.writeString(product_price);
+        dest.writeString(product_attr_price);
+        dest.writeString(product_total_price);
+        dest.writeString(product_final_price);
+        dest.writeString(products_description);
+        dest.writeString(categories_id);
+        dest.writeString(categories_name);
+        dest.writeString(manufacturers_id);
+        dest.writeString(manufacturer_name);
+        dest.writeString(product_taxClassID);
+        dest.writeString(tax_description);
+        dest.writeString(tax_class_title);
+        dest.writeString(tax_class_description);
+        dest.writeString(is_sale_product);
+        dest.writeString(cart_date_added);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UserCart> CREATOR = new Creator<UserCart>() {
@@ -136,11 +123,11 @@ public class UserCart implements Parcelable {
         this.cart_id = cart_id;
     }
 
-    public int getProducts_id() {
+    public String getProducts_id() {
         return products_id;
     }
 
-    public void setProducts_id(int products_id) {
+    public void setProducts_id(String products_id) {
         this.products_id = products_id;
     }
 
@@ -192,19 +179,19 @@ public class UserCart implements Parcelable {
         this.products_weight_unit = products_weight_unit;
     }
 
-    public int getProduct_stock() {
+    public String getProduct_stock() {
         return product_stock;
     }
 
-    public void setProduct_stock(int product_stock) {
+    public void setProduct_stock(String product_stock) {
         this.product_stock = product_stock;
     }
 
-    public int getProduct_quantity() {
+    public String getProduct_quantity() {
         return product_quantity;
     }
 
-    public void setProduct_quantity(int product_quantity) {
+    public void setProduct_quantity(String product_quantity) {
         this.product_quantity = product_quantity;
     }
 
@@ -264,11 +251,11 @@ public class UserCart implements Parcelable {
         this.categories_name = categories_name;
     }
 
-    public int getManufacturers_id() {
+    public String getManufacturers_id() {
         return manufacturers_id;
     }
 
-    public void setManufacturers_id(int manufacturers_id) {
+    public void setManufacturers_id(String manufacturers_id) {
         this.manufacturers_id = manufacturers_id;
     }
 
@@ -280,11 +267,11 @@ public class UserCart implements Parcelable {
         this.manufacturer_name = manufacturer_name;
     }
 
-    public int getProduct_taxClassID() {
+    public String getProduct_taxClassID() {
         return product_taxClassID;
     }
 
-    public void setProduct_taxClassID(int product_taxClassID) {
+    public void setProduct_taxClassID(String product_taxClassID) {
         this.product_taxClassID = product_taxClassID;
     }
 
@@ -328,37 +315,20 @@ public class UserCart implements Parcelable {
         this.cart_date_added = cart_date_added;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getSelectedProductsWeight() {
+        return this.selectedProductsWeight;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(cart_id);
-        dest.writeInt(products_id);
-        dest.writeString(products_name);
-        dest.writeString(products_image);
-        dest.writeString(products_url);
-        dest.writeString(product_model);
-        dest.writeString(products_weight);
-        dest.writeString(products_weight_unit);
-        dest.writeInt(product_stock);
-        dest.writeInt(product_quantity);
-        dest.writeString(product_price);
-        dest.writeString(product_attr_price);
-        dest.writeString(product_total_price);
-        dest.writeString(product_final_price);
-        dest.writeString(products_description);
-        dest.writeString(categories_id);
-        dest.writeString(categories_name);
-        dest.writeInt(manufacturers_id);
-        dest.writeString(manufacturer_name);
-        dest.writeInt(product_taxClassID);
-        dest.writeString(tax_description);
-        dest.writeString(tax_class_title);
-        dest.writeString(tax_class_description);
-        dest.writeString(is_sale_product);
-        dest.writeString(cart_date_added);
+    public void setSelectedProductsWeight(String selectedProductsWeight) {
+        this.selectedProductsWeight = selectedProductsWeight;
     }
+
+    public String getSelectedProductsWeightUnit() {
+        return  this.selectedProductsWeightUnit;
+    }
+    public void setSelectedProductsWeightUnit(String selectedProductsWeightUnit) {
+        this.selectedProductsWeightUnit = selectedProductsWeightUnit;
+    }
+
 }
+
