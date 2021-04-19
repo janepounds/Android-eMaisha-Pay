@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.cabral.emaishapay.network.db.entities.UserCartAttributes;
 
@@ -31,4 +32,6 @@ public interface UserCartAttributesDao {
     @Query("SELECT * FROM UserCartAttributes  WHERE cart_table_id =:cart_id")
     List<UserCartAttributes>getCartAattributesProduct2(int cart_id);
 
+    @Update
+    void updateCartAttributes(UserCartAttributes cartProductAttributes);
 }
