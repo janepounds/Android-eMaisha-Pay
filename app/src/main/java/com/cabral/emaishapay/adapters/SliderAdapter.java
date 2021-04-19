@@ -13,9 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.cabral.emaishapay.R;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 
-import java.util.ArrayList;
 
 public class SliderAdapter extends PagerAdapter {
     private Context mContext;

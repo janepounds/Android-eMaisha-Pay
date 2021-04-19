@@ -948,7 +948,7 @@
             android:layout_below="@id/text_popular_products"
             android:layout_alignParentBottom="true">
 
-            <com.daimajia.slider.library.SliderLayout
+            <com.glide.slider.library.SliderLayout
                 android:id="@+id/product_cover_slider"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"

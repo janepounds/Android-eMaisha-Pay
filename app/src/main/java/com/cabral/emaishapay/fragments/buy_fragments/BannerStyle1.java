@@ -12,16 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
 
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.Transformers.BaseTransformer;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.BaseSliderView;
+import com.glide.slider.library.slidertypes.DefaultSliderView;
+import com.glide.slider.library.transformers.BaseTransformer;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -83,11 +84,18 @@ public class BannerStyle1 extends Fragment implements BaseSliderView.OnSliderCli
             // Initialize DefaultSliderView
             final DefaultSliderView defaultSliderView = new DefaultSliderView(getContext());
 
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.centerCrop()
+                    //.diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder);
+
             // Set Attributes(Name, Image, Type etc) to DefaultSliderView
             defaultSliderView
                     .description(name)
                     .image(slider_covers.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                    .setRequestOption(requestOptions)
                     .setOnSliderClickListener(this);
 
 

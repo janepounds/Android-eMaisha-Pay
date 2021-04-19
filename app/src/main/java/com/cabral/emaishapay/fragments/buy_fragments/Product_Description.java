@@ -37,6 +37,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.AuthActivity;
@@ -62,10 +64,14 @@ import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.utils.Utilities;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.Transformers.BaseTransformer;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.animations.DescriptionAnimation;
+import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.BaseSliderView;
+import com.glide.slider.library.slidertypes.DefaultSliderView;
+import com.glide.slider.library.slidertypes.TextSliderView;
+import com.glide.slider.library.transformers.BaseTransformer;
+import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -79,7 +85,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Product_Description extends Fragment {
+public class Product_Description extends Fragment  {
     private static final String TAG = "Product_Description";
     public static int productMeasureAdapterCalls=0;
     View rootView;
@@ -825,28 +831,18 @@ public class Product_Description extends Fragment {
         for (String name : slider_covers.keySet()) {
 
             // Initialize DefaultSliderView
-            DefaultSliderView defaultSliderView = new DefaultSliderView(getContext()) {
-                @Override
-                public View getView() {
-                    View v = LayoutInflater.from(getContext()).inflate(com.daimajia.slider.library.R.layout.render_type_default, null);
+            TextSliderView defaultSliderView = new TextSliderView(context);
 
-                    // Get daimajia_slider_image ImageView of DefaultSliderView
-                    sliderImageView = v.findViewById(com.daimajia.slider.library.R.id.daimajia_slider_image);
+            RequestOptions requestOptions = new RequestOptions();
 
-                    // Set ScaleType of ImageView
-                    sliderImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    bindEventAndShow(v, sliderImageView);
-
-                    return v;
-                }
-            };
+            requestOptions.centerCrop();
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView
                     .description(name)
-                    .empty(R.drawable.placeholder)
-                    .image(slider_covers.get(name))
-                    .setScaleType(DefaultSliderView.ScaleType.FitCenterCrop);
+                    .setRequestOption(requestOptions)
+                    .image(slider_covers.get(name));
+            Log.e("sliderError",slider_covers.get(name));
 
             // Add DefaultSliderView to the SliderLayout
             sliderLayout.addSlider(defaultSliderView);
@@ -854,7 +850,24 @@ public class Product_Description extends Fragment {
 
         // Set PresetTransformer type of the SliderLayout
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(4000);
+        sliderLayout.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         // Check if the size of Images in the Slider is less than 2
         if (slider_covers.size() < 2) {
@@ -862,6 +875,7 @@ public class Product_Description extends Fragment {
             sliderLayout.setPagerTransformer(false, new BaseTransformer() {
                 @Override
                 protected void onTransform(View view, float v) {
+
                 }
             });
 
@@ -881,7 +895,6 @@ public class Product_Description extends Fragment {
     public void RequestProductDetail(final int productID) {
 
         dialogLoader.showProgressDialog();
-
 
         GetAllProducts getAllProducts = new GetAllProducts();
         getAllProducts.setPageNumber(0);
@@ -1062,6 +1075,14 @@ public class Product_Description extends Fragment {
                 Toast.makeText(context, "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        sliderLayout.stopAutoCycle();
+        super.onStop();
     }
 
     //*********** Setup the ImageSlider with the given List of Product Images ********//

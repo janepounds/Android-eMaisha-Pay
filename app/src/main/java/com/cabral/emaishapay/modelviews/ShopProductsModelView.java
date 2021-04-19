@@ -18,7 +18,7 @@ import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.UserCartProduct;
+import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
     private LiveData<Resource<List<EcProduct>>> repositorySource;
     private LiveData<Integer>cartReipositorySource;
-    private UserCartProduct userCartProduct;
+    private UserCart userCartProduct;
 
     private String wallet_id,product_id;
     public ShopProductsModelView(@NonNull Application application,

@@ -45,7 +45,7 @@ public interface UserCartDao {
 
     //get cart items id
     @Query("SELECT products_id  FROM UserCart")
-    List<Integer>getCartItemsIDs();
+    List<String>getCartItemsIDs();
 
     //check cart
     @Query("SELECT * FROM UserCart WHERE products_id=:product_id")

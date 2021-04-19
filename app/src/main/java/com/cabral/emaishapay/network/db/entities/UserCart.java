@@ -40,6 +40,33 @@ public class UserCart implements Parcelable {
     @Ignore
     private String selectedProductsWeightUnit;
 
+    public UserCart(int cart_id, String products_id, String products_name, String products_image, String products_url, String product_model, String products_weight, String products_weight_unit, String product_stock, String product_quantity, String product_price, String product_attr_price, String product_total_price, String product_final_price, String products_description, String categories_id, String categories_name, String manufacturers_id, String manufacturer_name, String product_taxClassID, String tax_description, String tax_class_title, String tax_class_description, String is_sale_product, String cart_date_added) {
+        this.cart_id = cart_id;
+        this.products_id = products_id;
+        this.products_name = products_name;
+        this.products_image = products_image;
+        this.products_url = products_url;
+        this.product_model = product_model;
+        this.products_weight = products_weight;
+        this.products_weight_unit = products_weight_unit;
+        this.product_stock = product_stock;
+        this.product_quantity = product_quantity;
+        this.product_price = product_price;
+        this.product_attr_price = product_attr_price;
+        this.product_total_price = product_total_price;
+        this.product_final_price = product_final_price;
+        this.products_description = products_description;
+        this.categories_id = categories_id;
+        this.categories_name = categories_name;
+        this.manufacturers_id = manufacturers_id;
+        this.manufacturer_name = manufacturer_name;
+        this.product_taxClassID = product_taxClassID;
+        this.tax_description = tax_description;
+        this.tax_class_title = tax_class_title;
+        this.tax_class_description = tax_class_description;
+        this.is_sale_product = is_sale_product;
+        this.cart_date_added = cart_date_added;
+    }
 
     protected UserCart(Parcel in) {
         cart_id = in.readInt();
