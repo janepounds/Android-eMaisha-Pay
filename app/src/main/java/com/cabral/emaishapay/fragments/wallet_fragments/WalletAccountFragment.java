@@ -305,6 +305,7 @@ public class WalletAccountFragment extends Fragment {
                 bundle.putString("designation", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_DESIGNATION, context));
                 bundle.putString("location", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LOCATION, context));
                 bundle.putString("employee_id", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, context));
+                bundle.putString("contact", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_CONTACT, context));
 
                 WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_employmentInformationFragment,bundle);
             }
@@ -768,12 +769,14 @@ public class WalletAccountFragment extends Fragment {
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_DESIGNATION, response.body().getEmployeeInfo().getDesignation(), context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LOCATION, response.body().getEmployeeInfo().getLocation(), context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, response.body().getEmployeeInfo().getEmployee_id(), context);
+                            WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_CONTACT, response.body().getEmployeeInfo().getEmployment_contact(), context);
 
                         }else{
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYER, null, context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_DESIGNATION, null, context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LOCATION, null, context);
                             WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_EMPLOYEE_ID, null, context);
+                            WalletHomeActivity.savePreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_CONTACT, null, context);
 
                         }
 
