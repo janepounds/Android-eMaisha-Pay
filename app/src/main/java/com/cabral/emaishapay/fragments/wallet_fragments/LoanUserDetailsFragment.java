@@ -141,7 +141,7 @@ public class LoanUserDetailsFragment extends Fragment {
 
 
         APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication","getReceiverForUser");
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantLoanApplication",request_id,"getReceiverForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {

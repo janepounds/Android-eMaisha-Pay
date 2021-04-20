@@ -5,14 +5,18 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +37,7 @@ import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
 import com.cabral.emaishapay.models.external_transfer_model.TransferFeeResponse;
+import com.cabral.emaishapay.models.marketplace.MyProduce;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
@@ -53,6 +58,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
+
 public class ConfirmTransfer extends DialogFragment {
     private static final String TAG = "ConfirmTransfer";
 
@@ -63,6 +70,7 @@ public class ConfirmTransfer extends DialogFragment {
     Context activity;
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
+    Dialog dialog;
 
     public ConfirmTransfer(Context context) {
         this.activity = context;
@@ -140,17 +148,43 @@ public class ConfirmTransfer extends DialogFragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")){
-                    initiateWalletTransfer(phoneNumber, amount);
-                }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")){
-                    String beneficiary_name = WalletTransactionInitiation.getInstance().getAccount_name();
-                    mobileMoneyTransfer(beneficiary_name, "" + amount, phoneNumber);
-                }else if(methodOfTransfer.equalsIgnoreCase("Bank")){
+                //Inner Dialog to enter PIN
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity, R.style.CustomAlertDialog);
+                //LayoutInflater inflater = requireActivity().getLayoutInflater();
+                View pinDialog = View.inflate(activity,R.layout.dialog_enter_pin,null);
 
-                    queueBankTransfer(account_name,""+amount,account_number,branch,bankCode);
-                }else if(methodOfTransfer.equalsIgnoreCase("eMaisha Card")){
 
-                }
+                builder.setView(pinDialog);
+                dialog = builder.create();
+                builder.setCancelable(false);
+
+                EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+
+                pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
+
+                            if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")){
+                                initiateWalletTransfer(phoneNumber, amount,pinEdittext.getText().toString());
+                            }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")){
+                                String beneficiary_name = WalletTransactionInitiation.getInstance().getAccount_name();
+                                mobileMoneyTransfer(beneficiary_name, "" + amount, phoneNumber,pinEdittext.getText().toString());
+                            }else if(methodOfTransfer.equalsIgnoreCase("Bank")){
+
+                                queueBankTransfer(account_name,""+amount,account_number,branch,bankCode,pinEdittext.getText().toString());
+                            }else if(methodOfTransfer.equalsIgnoreCase("eMaisha Card")){
+
+                            }
+
+                        }else {
+                            pinEdittext.setError("Invalid Pin Entered");
+                        }
+
+                    }
+                });
+
+                dialog.show();
 
 
             }
@@ -187,7 +221,7 @@ public class ConfirmTransfer extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer","getReceiverForUser");
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id,"getReceiverForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
@@ -284,7 +318,7 @@ public class ConfirmTransfer extends DialogFragment {
     }
 
 
-    private void mobileMoneyTransfer(String beneficiary_name, String transfer_amount, String account_number) {
+    private void mobileMoneyTransfer(String beneficiary_name, String transfer_amount, String account_number, String user_pin) {
         String account_bank = "MPS";
         String currency=getString(R.string.currency);
         String narration="eMaisha Pay Mobile Money Transfer outs";
@@ -309,6 +343,7 @@ public class ConfirmTransfer extends DialogFragment {
                     try {
                         com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
                                 response.body().getData();
+                        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
                         recordTransferSettlement("completed","Mobile Money",TransferResponse,dialogLoader);
 
                     } catch (Exception e) {
@@ -334,7 +369,7 @@ public class ConfirmTransfer extends DialogFragment {
         });
     }
 
-    private void queueBankTransfer(String account_name,String transfer_amount, String account_number, String branch_code, String bank_code){
+    private void queueBankTransfer(String account_name, String transfer_amount, String account_number, String branch_code, String bank_code, String user_pin){
 
         String currency=getString(R.string.currency);
         String narration="eMaisha Pay Bank Transfer outs";
@@ -359,6 +394,7 @@ public class ConfirmTransfer extends DialogFragment {
             public void onResponse(@NotNull Call<BankTransferResponse> call, @NotNull Response<BankTransferResponse> response) {
                 if (response.code() == 200 && response.body().getMessage().equals("Transfer Queued Successfully")) {
                     try {
+                        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
                         com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
                                 response.body().getData();
                         recordTransferSettlement("pending","Bank",TransferResponse,dialogLoader);
@@ -388,7 +424,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     }
 
-    public void initiateWalletTransfer(final String phoneNumber, final double amount) {
+    public void initiateWalletTransfer(final String phoneNumber, final double amount, String user_pin) {
         ProgressDialog dialog;
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -399,19 +435,17 @@ public class ConfirmTransfer extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         /*****RETROFIT IMPLEMENTATION*****/
-        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD, requireContext());
-        //encript service code
-        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, requireContext().getString(R.string.iv));
-        String service_code_encripted = encrypter.encrypt(service_code);
-        Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code_encripted);
+        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
+
+        Log.d(TAG, "initiateWalletTransfer: encripted_service_code"+service_code);
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,category,service_code_encripted,"customerInitiateFundsTransfer");
+        Call<InitiateTransferResponse> call = apiRequests.initiateTransfer(access_token, amount,phoneNumber,request_id,category,service_code,"customerInitiateFundsTransfer");
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
-                if(response.code() ==200){
+                if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("1")){
                     dialog.dismiss();
                     final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_successful_message);
@@ -433,6 +467,9 @@ public class ConfirmTransfer extends DialogFragment {
                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     dialog.show();
 
+                } else if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("0")){
+                    dialog.dismiss();
+                    Snackbar.make(serviceTextView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
                 else if(response.code() == 401) {
                     TokenAuthFragment.startAuth( true);
