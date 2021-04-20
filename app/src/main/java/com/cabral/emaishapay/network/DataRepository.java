@@ -99,13 +99,10 @@ public class DataRepository {
 
 
     //***********Default Address ********//
-    public DefaultAddress getDefaultAddress(String customer_id) {
+    public LiveData<List<DefaultAddress>> getDefaultAddress(String customer_id) {
 
-        List<DefaultAddress> addressList = mDefaultAddressDao.getDefaultAddress(customer_id);
-        if (addressList.size() > 0)
-            return addressList.get(0);
 
-        return null;
+        return  mDefaultAddressDao.getDefaultAddress(customer_id);
     }
 
 
@@ -507,6 +504,36 @@ public class DataRepository {
     public void updateCartItem(CartProduct cart) {
         //mUserCartDao.updateCartItem(cart.getCustomersBasketProduct());
     }
+
+
+    //*****************GET DEFAULT ADDRESS *************************//
+//    public LiveData<Resource<List<DefaultAddress>>> getDefaultAddress(String customer_id) {
+//
+//
+//        return new NetworkBoundResource<List<DefaultAddress>, DefaultAddress>() {
+//            @Override
+//            protected void saveCallResult(@NonNull DefaultAddress defaultAddress) {
+//                mDefaultAddressDao.insertDefaultAddress(defaultAddress);
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<List<DefaultAddress>> loadFromDb() {
+//
+//                    return mDefaultAddressDao.getDefaultAddress(customer_id);
+//
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected Call<DefaultAddress> createCall() {
+//                return null;
+//            }
+//
+//
+//        }.getAsLiveData();
+
+
 
 }
 

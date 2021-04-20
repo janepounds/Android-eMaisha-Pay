@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,8 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
+import com.cabral.emaishapay.modelviews.DefaultAddressModelView;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -59,6 +62,7 @@ public class My_Addresses extends Fragment {
     static AddressListAdapter addressListAdapter;
     Toolbar toolbar;
     Boolean enable_back=true;
+    DefaultAddressModelView viewModel;
 
     List<AddressDetails> addressesList = new ArrayList<>();
 
@@ -79,6 +83,7 @@ public class My_Addresses extends Fragment {
         toolbar = rootView.findViewById(R.id.toolbar_addresses);
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.actionAddresses));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
@@ -165,7 +170,8 @@ public class My_Addresses extends Fragment {
 
                 //save a copy in the local database
                 dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
-                dbHandler.insertDefaultAddress( customerID,
+
+                viewModel.insertDefaultAddress(customerID,
                         addressesList.get(i).getFirstname(),
                         addressesList.get(i).getLastname(),
                         //input_contact.getText().toString().trim(),
@@ -173,10 +179,24 @@ public class My_Addresses extends Fragment {
                         addressesList.get(i).getPostcode(),
                         addressesList.get(i).getCity(),
                         addressesList.get(i).getCountryName(),
+                        addressesList.get(i).getContact(),
                         addressesList.get(i).getLatitude()+"",
                         addressesList.get(i).getLongitude()+"",
-                        addressesList.get(i).getContact(),
                         addressesList.get(i).getAddressId()+"");
+
+//
+//                dbHandler.insertDefaultAddress( customerID,
+//                        addressesList.get(i).getFirstname(),
+//                        addressesList.get(i).getLastname(),
+//                        //input_contact.getText().toString().trim(),
+//                        addressesList.get(i).getStreet(),
+//                        addressesList.get(i).getPostcode(),
+//                        addressesList.get(i).getCity(),
+//                        addressesList.get(i).getCountryName(),
+//                        addressesList.get(i).getLatitude()+"",
+//                        addressesList.get(i).getLongitude()+"",
+//                        addressesList.get(i).getContact(),
+//                        addressesList.get(i).getAddressId()+"");
 
 
 

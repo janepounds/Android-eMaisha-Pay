@@ -53,12 +53,14 @@ public class EmploymentInformationFragment extends Fragment {
             String designation =getArguments().getString("designation");
             String location =getArguments().getString("location");
             String employee_id =getArguments().getString("employee_id");
+            String contact = getArguments().getString("contact");
 
             //set edit textviews
             binding.employer.setText(employer);
             binding.designaion.setText(designation);
             binding.location.setText(location);
             binding.employerId.setText(employee_id);
+            binding.contact.setText(contact);
 
         }
 
