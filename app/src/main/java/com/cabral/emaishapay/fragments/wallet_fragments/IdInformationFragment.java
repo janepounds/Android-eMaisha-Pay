@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -232,7 +233,7 @@ public class IdInformationFragment extends Fragment {
             binding.idTypeLayout.requestFocus();
             Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID type is required", Snackbar.LENGTH_LONG).show();
             return false;
-        } else if (binding.idNumber.getText().toString().isEmpty()) {
+        } else if (binding.idNumber.getText().toString().isEmpty() || binding.idNumber.getText().toString().length() < 14) {
             binding.idNumber.setError("Required");
             binding.idNumber.requestFocus();
             Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID number is required", Snackbar.LENGTH_LONG).show();
@@ -254,10 +255,10 @@ public class IdInformationFragment extends Fragment {
             return false;
         } else {
             binding.idNumber.setError(null);
-            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
             return true;
         }
     }

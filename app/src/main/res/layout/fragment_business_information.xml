@@ -8,33 +8,31 @@
         android:layout_height="match_parent"
         tools:context=".fragments.wallet_fragments.BusinessInformationFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary" />
-
-        </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:titleTextColor="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/windowBackground"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:background="#fff"
+            android:layout_marginTop="?actionBarSize">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Enter ID Information and Earn 10 Credit Score Points"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -56,7 +54,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:text="Business Name"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/business_name"
@@ -88,7 +88,9 @@
                         android:layout_marginTop="10dp"
                         android:gravity="start"
                         android:text="Business Location"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -97,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/business_location"
@@ -120,13 +122,15 @@
                         android:layout_marginTop="@dimen/margin_10"
                         android:gravity="center_vertical"
                         android:text="Registration No."
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/registration_number"
@@ -149,13 +153,15 @@
                         android:layout_marginTop="@dimen/margin_10"
                         android:gravity="center_vertical"
                         android:text="License No."
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/licence_number"
@@ -178,7 +184,9 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:text="Upload Documents"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -193,6 +201,7 @@
                             android:layout_marginEnd="@dimen/dimen_20dp"
                             android:gravity="center"
                             android:text="Registration Cert."
+                            android:textColor="@color/textColor"
                             app:layout_constraintEnd_toStartOf="@+id/guideline9"
                             app:layout_constraintHorizontal_bias="0.53"
                             app:layout_constraintStart_toStartOf="parent"
@@ -218,6 +227,7 @@
                             android:layout_marginEnd="@dimen/dimen_20dp"
                             android:gravity="center"
                             android:text="Trade License"
+                            android:textColor="@color/textColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.504"
                             app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -251,17 +261,7 @@
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/submit_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/rectangular_blue_solid"
-                            android:text="@string/submit"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+
 
                         <Button
                             android:id="@+id/cancel_button"
@@ -272,6 +272,18 @@
                             android:layout_weight="1"
                             android:background="@drawable/rectangular_red_solid"
                             android:text="@string/cancel"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/submit_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rectangular_blue_solid"
+                            android:text="@string/submit"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
                     </LinearLayout>

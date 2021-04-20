@@ -58,7 +58,7 @@
 
     <color name="textColorPrimary">#212121</color>
     <color name="textColorPrimaryDark">#8C98A9</color>
-    <color name="textColorPrimaryLight">#bfbfbf</color>
+    <color name="textColorPrimaryLight">#A7B4C7</color>
     <color name="textColorSecondary">#757575</color>
     <color name="textColorSecondaryDark">#212121</color>
     <color name="textColorSecondaryLight">#666666</color>

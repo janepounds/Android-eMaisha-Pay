@@ -49,8 +49,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="?actionBarSize"
                     android:orientation="vertical"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
                     android:paddingBottom="10dp">
 
                     <TextView
@@ -61,6 +61,7 @@
                         android:text="ID Type"
                         android:textColor="@color/textColor"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -102,6 +103,7 @@
                         android:gravity="start"
                         android:text="ID Number"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         android:textColor="@color/textColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +124,8 @@
                             android:background="@android:color/transparent"
                             android:padding="12dp"
                             android:textSize="14sp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:maxLength="14"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -136,7 +139,8 @@
                         android:gravity="center_vertical"
                         android:text="Expiry Date"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
                     <RelativeLayout
                         android:id="@+id/expiry_date_layout"
@@ -152,7 +156,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/textColorPrimaryLight"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -176,7 +180,8 @@
                         android:gravity="center_vertical"
                         android:text="Upload ID"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -249,8 +254,7 @@
                             android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/cancel"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
+                            android:textStyle="bold"/>
 
                         <Button
                             android:id="@+id/submit_button"
@@ -262,8 +266,7 @@
                             android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/submit"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
+                            android:textStyle="bold"/>
 
 
                     </LinearLayout>
