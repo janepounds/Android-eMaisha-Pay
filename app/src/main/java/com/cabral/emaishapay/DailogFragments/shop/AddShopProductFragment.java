@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData;
 
 import es.dmoral.toasty.Toasty;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +77,7 @@ public class AddShopProductFragment extends DialogFragment {
     EditText  etxtProductBuyPrice, etxtProductSellPrice, etxtProductStock, etxtProductSupplier,etxtproductMeasurement;
     TextView txtAddProdcut;
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer,tvAddProduct;
-    String mediaPath, encodedImage = "N/A";
+    String mediaPath, encodedImage = null;
     Spinner quantityUnit;
     LinearLayout measurement_layout,spn_measurements_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
@@ -179,17 +180,22 @@ public class AddShopProductFragment extends DialogFragment {
             product_id = getArguments().getString("product_id");
             WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
 
-            //set product image
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.add_default_image)
-                    .error(R.drawable.add_default_image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.HIGH);
+            try {
+                //set product image
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.add_default_image)
+                        .error(R.drawable.add_default_image)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .priority(Priority.HIGH);
 
 
-            Glide.with(context).load(Base64.decode(getArguments().getString("image"), Base64.DEFAULT)).apply(options).into(produce_image);
 
+                Glide.with(context).load(Base64.decode(getArguments().getString("image") != null ? getArguments().getString("image") : "", Base64.DEFAULT)).apply(options).into(produce_image);
+            }catch (IllegalArgumentException e){
+                e.printStackTrace();
+
+            }
 
 
         }
@@ -619,7 +625,7 @@ public class AddShopProductFragment extends DialogFragment {
                                     productAdapter.notifyDataSetChanged();
                                     add_product.getText().clear();
                                 }else{
-                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
+                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG).show();
                                 }
 
                             }
@@ -776,7 +782,11 @@ public class AddShopProductFragment extends DialogFragment {
                 // Toasty.warning(AddProductActivity.this, "Add Product is disable in demo version. Please purchase from Codecanyon.Thank you ", Toast.LENGTH_SHORT).show();
 
                     //update product online and locally
-
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Loading...");
+                progressDialog.setTitle("Please Wait");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
 
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -830,17 +840,82 @@ public class AddShopProductFragment extends DialogFragment {
 //                } else {
 
                     if (key.equalsIgnoreCase("update")) {
-                        viewModel.updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier_name,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name,product_code, encodedImage,
-                                selected_weight_units,
-                                selected_weight + "");
+
+//                        viewModel.updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier_name,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name,product_code, encodedImage,
+//                                selected_weight_units,
+//                                selected_weight + "");
+
+
+                        Call<ResponseBody> call = BuyInputsAPIClient
+                                .getInstance()
+                                .updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            long update_product =   viewModel.updateProductStock(
+                                                    product_id,
+                                                    product_buy_price,
+                                                    product_sell_price,
+                                                    product_supplier,
+                                                    Integer.parseInt(product_stock),
+                                                    manufacturer_name,
+                                                    product_category_name,
+                                                    product_name,
+                                                    product_code,
+
+                                                    encodedImage,
+
+                                                    selected_weight_units,
+                                                    selected_weight+""
+                                                   );
+
+                                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (update_product>0) {
+                                                        progressDialog.dismiss();
+                                                        Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
+
+                                                        //Intent intent = new Intent(getContext(), ShopActivity.class);
+                                                        //startActivity(intent);
+                                                        // finish();
+                                                    } else {
+                                                        progressDialog.dismiss();
+                                                        Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                    //Log.d("Categories", String.valueOf(categories));
+
+                                } else {
+                                    Log.d("Failed", "Manufacturers Fetch failed");
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                t.printStackTrace();
+
+                            }
+                        });
+
+
+
+
+
 
                      }else{
 
-                    ProgressDialog progressDialog = new ProgressDialog(getContext());
-                    progressDialog.setMessage("Loading...");
-                    progressDialog.setTitle("Please Wait");
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.show();
+
 
                       AppExecutors.getInstance().diskIO().execute(new Runnable() {
                           @Override

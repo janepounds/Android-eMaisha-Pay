@@ -110,10 +110,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 .error(R.drawable.new_product)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
+        try {
 
 
-        Glide.with(context).load(Base64.decode( productData.get(position).getProduct_image()!=null?productData.get(position).getProduct_image():"", Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
+            Glide.with(context).load(Base64.decode(productData.get(position).getProduct_image() != null ? productData.get(position).getProduct_image() : "", Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
 
+        }catch (IllegalArgumentException e){
+
+            e.printStackTrace();
+        }
         holder.binding.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
