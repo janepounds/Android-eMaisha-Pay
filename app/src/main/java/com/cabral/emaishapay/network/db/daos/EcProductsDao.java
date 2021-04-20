@@ -34,7 +34,7 @@ public interface EcProductsDao {
     //update product
     @Query("UPDATE EcProduct SET product_name=:product_name, product_code=:product_code,product_category=:product_category, product_description=:product_description,product_buy_price=:product_buy_price, product_sell_price=:product_sell_price,product_supplier=:product_supplier, product_image=:product_image" +
             "+product_stock=:product_stock,product_weight_unit=:product_weight_unit,product_weight=:product_weight,manufacturer=:manufacturer WHERE product_id=:product_id")
-    void updateProductStock(String product_id,String product_name,String product_code, String product_category,String product_description,String product_buy_price,String product_sell_price,String product_supplier,String product_image, String product_stock,String product_weight_unit,String product_weight,String manufacturer);
+    int updateProductStock(String product_id,String product_name,String product_code, String product_category,String product_description,String product_buy_price,String product_sell_price,String product_supplier,String product_image, String product_stock,String product_weight_unit,String product_weight,String manufacturer);
 
     //get product data
     @Query("SELECT EcProduct.* FROM EcProduct JOIN EcProductFts ON (EcProduct.id = EcProductFts.rowid) WHERE EcProductFts MATCH :query")
