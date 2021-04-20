@@ -184,7 +184,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
 
     <style name="Button_DW" parent="Base.TextAppearance.AppCompat.Button">
         <item name="background">@color/colorPrimary</item>

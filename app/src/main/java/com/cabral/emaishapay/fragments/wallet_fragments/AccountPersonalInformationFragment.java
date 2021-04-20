@@ -19,8 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -114,6 +116,25 @@ public class AccountPersonalInformationFragment extends Fragment {
                 binding.nextOfKinContact.setText(nok_contact.substring(4));
             Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +pic).apply(options).into(binding.userPic);
             Log.d(TAG, "onViewCreated: "+pic +gender);
+
+            binding.gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        //Change selected text color
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                    } catch (Exception e) {
+
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
         }
 

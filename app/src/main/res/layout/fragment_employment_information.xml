@@ -9,33 +9,32 @@
         android:layout_height="match_parent"
         tools:context=".fragments.wallet_fragments.EmploymentInformationFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:titleTextColor="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"/>
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary" />
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/windowBackground"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:background="#fff"
+            android:layout_marginTop="?actionBarSize">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Enter Employment Information and Earn 20 Credit Score Points"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -57,7 +56,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:text="Employer"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/employer"
@@ -75,8 +76,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -89,7 +90,9 @@
                         android:layout_marginTop="10dp"
                         android:gravity="start"
                         android:text="Designation"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/designaion"
@@ -107,8 +110,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +124,9 @@
                         android:layout_marginTop="10dp"
                         android:gravity="start"
                         android:text="Location"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -130,7 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/location"
@@ -139,8 +144,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -153,14 +158,16 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:text="Contact"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
 
                         <TextView
@@ -184,7 +191,8 @@
                             android:inputType="phone"
                             android:maxLength="9"
                             android:padding="12dp"
-                            android:textSize="18sp" />
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
@@ -193,13 +201,15 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:text="Employee ID"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/edittext_corner">
+                        android:background="@drawable/outline_primary">
 
                         <EditText
                             android:id="@+id/employer_id"
@@ -208,8 +218,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/textColorPrimaryLight"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -223,6 +233,19 @@
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
+
+
+                        <Button
+                            android:id="@+id/cancel_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rectangular_blue_solid"
+                            android:text="@string/cancel"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
                         <Button
                             android:id="@+id/submit_button"
                             android:layout_width="match_parent"
@@ -232,18 +255,6 @@
                             android:layout_weight="1"
                             android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/submit"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/cancel_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/rectangular_red_solid"
-                            android:text="@string/cancel"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
                     </LinearLayout>
