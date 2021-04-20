@@ -52,10 +52,11 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
     ShopProductsModelView viewModel;
     LifecycleOwner viewLifecycleOwner;
 
-    public PosProductAdapter(Context context, ShopProductsModelView viewModel, LifecycleOwner viewLifecycleOwner) {
+    public PosProductAdapter(Context context, ShopProductsModelView viewModel, LifecycleOwner viewLifecycleOwner, WeakReference<ShopPOSFragment> fragmentReference) {
         this.context = context;
         this.viewModel = viewModel;
         this.viewLifecycleOwner = viewLifecycleOwner;
+        this.fragmentReference = fragmentReference;
         setHasStableIds(true);
     }
 

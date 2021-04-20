@@ -747,14 +747,15 @@ public interface APIRequests {
 
   //initiate agent transaction
   @FormUrlEncoded
-  @POST("wallet/agent/initiate-customer-transfers")
+  @POST("wallet/agent/initiate-customer-transfer")
   Call<InitiateTransferResponse> initiateAgentTransaction(@Header("Authorization") String token,
                                                           @Field("amount") Double amount,
                                                           @Field("customerPhoneNumber") String customerPhoneNumber,
                                                           @Field("type") String type,
                                                           @Field("request_id") String request_id,
                                                           @Field("category") String category,
-                                                          @Field("action_id")String action_id
+                                                          @Field("action_id")String action_id,
+                                                          @Field("service_code")String service_code
   );
 
   // Comfirm Accept Payment

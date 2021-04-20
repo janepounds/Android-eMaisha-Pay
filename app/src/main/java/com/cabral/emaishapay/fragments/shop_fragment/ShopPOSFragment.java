@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,20 +50,14 @@ public class ShopPOSFragment extends Fragment {
     FragmentManager fm;
     Activity shop;
     private Context context;
-    public static EditText etxtSearch, etxtCharge;
     PosProductAdapter productAdapter;
-    TextView txtNoProducts, txtEnter, txtItems;
+    TextView txtNoProducts;
     public  TextView totalItems,totalprice;
-    View enterView, itemsView;
-    ConstraintLayout layoutCart;
-    ImageView imgNoProduct, imgScanner;
+    ImageView imgNoProduct;
     private RecyclerView recyclerView;
-    Toolbar toolbar; String userId;
     private DbHandlerSingleton dbHandler;
     public double chargeAmount;
     private WeakReference<ShopPOSFragment> fragmentReference;
-    FrameLayout posChargeLayout;
-    ImageView imageTick;
     private ShopProductsModelView viewModel;
     FragmentShopPosBinding binding;
 
@@ -72,16 +67,6 @@ public class ShopPOSFragment extends Fragment {
     List<CartProduct> cartItemsList = new ArrayList<>();
     List<CartProduct> finalCartItemsList = new ArrayList<>();
     List<ProductDetails> cartProducts = new ArrayList<>();
-    public ShopPOSFragment() {
-    }
-
-    public ShopPOSFragment(ShopActivity shopActivity, FragmentManager supportFragmentManager) {
-        this.fm = supportFragmentManager;
-        this.shop = shopActivity;
-    }
-
-    public ShopPOSFragment(boolean b) {
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -105,6 +90,10 @@ public class ShopPOSFragment extends Fragment {
 
         dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
 
+        totalItems = binding.totalItems;
+        totalprice = binding.tvTotalPrice;
+
+
        binding.txtEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +114,10 @@ public class ShopPOSFragment extends Fragment {
             public void onClick(View view) {
 
                 Bundle args=new Bundle();
-                args.putDouble("Charge", Double.parseDouble(binding.posCharge.getText().toString()) );
+
+
+                args.putDouble("Charge", chargeAmount );
+
                 ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
 
@@ -135,9 +127,9 @@ public class ShopPOSFragment extends Fragment {
         binding.imgCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
                 Bundle args=new Bundle();
-                args.putDouble("Charge", Double.parseDouble(binding.posCharge.getText().toString()) );
+                args.putDouble("Charge", chargeAmount );
                 ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
 
@@ -156,7 +148,7 @@ public class ShopPOSFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        productAdapter = new PosProductAdapter(context,viewModel,getViewLifecycleOwner());
+        productAdapter = new PosProductAdapter(context,viewModel,getViewLifecycleOwner(),fragmentReference);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.posRecycler.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
