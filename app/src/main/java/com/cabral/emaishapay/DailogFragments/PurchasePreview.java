@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,7 +128,7 @@ public class PurchasePreview extends DialogFragment implements
         SimpleDateFormat incomingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         incomingFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-            currentDateandTime = localFormat.format(new Date());
+        currentDateandTime = localFormat.format(new Date());
         purchase_date_label_TextView.setText(getString(R.string.purchase_date));
         datetimeTextView.setText(currentDateandTime);
 
@@ -189,13 +190,13 @@ public class PurchasePreview extends DialogFragment implements
                     mechantNameTextView.setText(businessName);
                     confirmBtn.setVisibility(View.VISIBLE);
 
-                    dialog.dismiss();
                 }else if(response.code()==412) {
 //                    businessName = response.body().getMessage();
                     mechantNameTextView.setText("Unknown Merchant");
+                    mechantNameTextView.setTextColor( getResources().getColor(R.color.textRed));
                     errorTextView.setText("Unknown Merchant");
                     errorTextView.setVisibility(View.VISIBLE);
-                    return;
+
                     // confirmBtn.setEnabled(true);
                 }
                 else if(response.code()==401){
@@ -360,7 +361,7 @@ public class PurchasePreview extends DialogFragment implements
     }
 
     private void processWalletPayment() {
-        int merchantId = Integer.parseInt(WalletTransactionInitiation.getInstance().getMechantId());
+        String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -374,31 +375,43 @@ public class PurchasePreview extends DialogFragment implements
         dialog.setMessage("Please Wait..");
         dialog.setCancelable(false);
         dialog.show();
+        String service_code = "121518";
 
-        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant");
+        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant",service_code);
 
         call.enqueue(new Callback<WalletPurchaseResponse>() {
             @Override
             public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
                 if(response.code()== 200){
-                    dialog.dismiss();
-                    final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.dialog_successful_message);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                    text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
-
-
-                    dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                            startActivity(goToWallet);
+                    if(response.body().getStatus().equals("0")){
+                        dialog.dismiss();
+                        try {
+                            Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Log.e("Error", e.getMessage());
                         }
-                    });
-                    dialog.show();
+                    }else {
+                        dialog.dismiss();
+                        final Dialog dialog = new Dialog(activity);
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
+
+
+                        dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.show();
+                    }
+
 
                 }else{
                     errorTextView.setText(response.errorBody().toString());
