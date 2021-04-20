@@ -112,7 +112,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 .priority(Priority.HIGH);
 
 
-        Glide.with(context).load(Base64.decode(productData.get(position).getProduct_image(), Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
+        Glide.with(context).load(Base64.decode( productData.get(position).getProduct_image()!=null?productData.get(position).getProduct_image():"", Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
 
         holder.binding.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override

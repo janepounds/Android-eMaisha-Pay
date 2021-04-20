@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.network;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -10,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.cabral.emaishapay.database.BuyInputsDB_Manager;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
@@ -32,7 +30,6 @@ import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.entities.UserCart;
-import com.cabral.emaishapay.network.db.relations.CartItem;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 import com.cabral.emaishapay.utils.NetworkBoundResource;
 import com.cabral.emaishapay.utils.Resource;
@@ -190,8 +187,9 @@ public class DataRepository {
     }
 
     //**********ADD PRODUCT NAME *******************//
-    public void addProductName(EcProduct product) {
-        mEcProductsDao.addProductName(product);
+    public long addProduct(EcProduct product) {
+
+        return mEcProductsDao.addProduct(product);
     }
 
     //**********ADD PRODUCT CATEGORY *******************//

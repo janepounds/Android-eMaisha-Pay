@@ -21,6 +21,8 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.utils.Resource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -184,5 +186,22 @@ public class ShopProductsModelView extends AndroidViewModel {
 
             }
         });
+    }
+
+    public ArrayList<HashMap<String, String>> getOfflineManufacturers() {
+        return mRepository.getOfflineManufacturers();
+    }
+    //get offline product categories
+    public ArrayList<HashMap<String, String>> getOfflineProductCategories() {
+
+        return mRepository.getOfflineProductCategories();
+    }
+
+    public ArrayList<HashMap<String, String>> getOfflineProductNames() {
+        return mRepository.getOfflineProductNames();
+    }
+
+    public long addProduct(EcProduct product) {
+        return mRepository.addProduct(product);
     }
 }
