@@ -3,6 +3,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -251,8 +252,16 @@ public class PayFragment extends Fragment {
     }
 
     public void processPayment(){
-        float amount = Float.parseFloat(totalAmountEdt.getText().toString());
+
         methodOfPayment= spPaymentMethod.getSelectedItem().toString();
+        if(methodOfPayment.equalsIgnoreCase("Wallet"))
+            if(!validateWalletPurchase()) return;
+        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
+            if(!validateBankCardPurchase())  return;
+        else if(methodOfPayment.equals("Mobile Money"))
+            if(!validateMobileMoneyPurchase()) return;
+
+        float amount = Float.parseFloat(totalAmountEdt.getText().toString());
         if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
             Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
             return ;
@@ -264,12 +273,6 @@ public class PayFragment extends Fragment {
             mobileNo = mobileNumberEdt.getText().toString();
         }
 
-        if(methodOfPayment.equals("Wallet"))
-            validateWalletPurchase();
-        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
-            validateBankCardPurchase();
-        else if(methodOfPayment.equals("Mobile Money"))
-            validateMobileMoneyPurchase();
 
 
         if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
@@ -320,10 +323,10 @@ public class PayFragment extends Fragment {
     }
 
     private boolean validateWalletPurchase() {
-        if (mechantIdEdt.getText().toString().trim().isEmpty()) {
+        if ( TextUtils.isEmpty(mechantIdEdt.getText()) ) {
             mechantIdEdt.setError("Enter merchant id");
             return false;
-        }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
+        }  else if( TextUtils.isEmpty(totalAmountEdt.getText()) ){
             totalAmountEdt.setError(getString(R.string.invalid_number));
             return false;
         }  else {

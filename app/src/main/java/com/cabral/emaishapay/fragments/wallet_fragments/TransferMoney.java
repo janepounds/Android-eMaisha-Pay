@@ -3,6 +3,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -287,6 +288,20 @@ public class TransferMoney extends Fragment {
             }
         });
         addMoneyImg.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(etMobileMoneyNumber.getText())){
+                etMobileMoneyNumber.setError("Phone Number Required");
+                return;
+            }else if(etMobileMoneyNumber.getText().length()!=9){
+                etMobileMoneyNumber.setError("Invalid Phone Number");
+                return;
+            }
+            if(TextUtils.isEmpty(etAmount.getText())){
+                etAmount.setError("Amount required");
+                return;
+            }else if( Integer.parseInt(etAmount.getText().toString())<0 ){
+                etAmount.setError("Invalid Amount");
+                return;
+            }
            // double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
 
             String phoneNumber = "0"+etMobileMoneyNumber.getText().toString();

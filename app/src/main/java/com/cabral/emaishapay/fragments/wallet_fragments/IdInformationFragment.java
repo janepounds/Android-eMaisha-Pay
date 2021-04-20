@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -18,7 +19,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -67,6 +70,7 @@ public class IdInformationFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_id_information, container, false);
 
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle("ID Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,6 +92,28 @@ public class IdInformationFragment extends Fragment {
 
             //set edit textviews
             selectSpinnerItemByValue(binding.idType, idtype);
+
+            binding.idType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        //Change selected text color
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                    } catch (Exception e) {
+
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+
             binding.idNumber.setText(idNumber);
             binding.expiryDate.setText(expiryDate);
             Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN+front).apply(options).into(binding.idFront);
@@ -207,7 +233,7 @@ public class IdInformationFragment extends Fragment {
             binding.idTypeLayout.requestFocus();
             Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID type is required", Snackbar.LENGTH_LONG).show();
             return false;
-        } else if (binding.idNumber.getText().toString().isEmpty()) {
+        } else if (binding.idNumber.getText().toString().isEmpty() || binding.idNumber.getText().toString().length() < 14) {
             binding.idNumber.setError("Required");
             binding.idNumber.requestFocus();
             Snackbar.make(requireActivity().findViewById(android.R.id.content), "ID number is required", Snackbar.LENGTH_LONG).show();
@@ -229,10 +255,10 @@ public class IdInformationFragment extends Fragment {
             return false;
         } else {
             binding.idNumber.setError(null);
-            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
-            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.edittext_corner));
+            binding.idTypeLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.expiryDateLayout.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.idFront.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
+            binding.idBack.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.outline_primary));
             return true;
         }
     }

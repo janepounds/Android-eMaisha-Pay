@@ -7,6 +7,10 @@ public class WalletPurchaseResponse {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("status")
+    @Expose
+    private String status;
+
     @SerializedName("data")
     @Expose
     private PurchaseData data;
@@ -52,7 +56,13 @@ public class WalletPurchaseResponse {
         }
     }
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
 
 

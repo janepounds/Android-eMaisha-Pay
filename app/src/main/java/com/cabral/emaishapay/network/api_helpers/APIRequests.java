@@ -170,12 +170,13 @@ public interface APIRequests {
     @Headers({"Accept: application/json"})
     @POST("wallet/payments/merchant")
     Call<WalletPurchaseResponse> makeTransaction(@Header("Authorization") String token,
-                                                 @Field("merchantId") int merchantId,
+                                                 @Field("merchantId") String merchantId,
                                                  @Field("amount") Double amount,
                                                  @Field("coupon") String coupon,
                                                  @Field("request_id") String request_id,
                                                  @Field("category") String category,
-                                                 @Field("action_id")String action_id
+                                                 @Field("action_id")String action_id,
+                                                    @Field("service_code") String service_code
     );
 
     // /confirm payment
