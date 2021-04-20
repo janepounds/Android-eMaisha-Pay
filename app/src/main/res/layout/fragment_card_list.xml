@@ -18,7 +18,8 @@
             android:id="@+id/toolbar_card_list"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,7 +36,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        app:backgroundTint="@color/white"
+        app:tint="@color/colorPrimary"/>
     <LinearLayout
         android:id="@+id/card_view_empty"
         android:layout_width="match_parent"

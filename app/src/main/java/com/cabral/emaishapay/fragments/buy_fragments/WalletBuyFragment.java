@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -77,6 +78,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_fragment_buy_home, container, false);
+
+
         setHasOptionsMenu(true);
 
         toolbar = view.findViewById(R.id.toolbar_orders_home);
@@ -95,11 +98,11 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         //text_categories_placeholder
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setVisibility(View.VISIBLE);
-        //toolbar.setTitle("Buy and Sell");
+        toolbar.setTitle("Shop");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setElevation(0.5f);
 
         // Add Top_Seller Fragment to specified FrameLayout

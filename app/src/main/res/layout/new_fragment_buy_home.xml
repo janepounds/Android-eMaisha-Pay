@@ -282,7 +282,11 @@
             android:layout_height="?actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:background="@android:color/transparent"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            app:title="Shop"
+            app:titleTextColor="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"
+           />
 
 
 

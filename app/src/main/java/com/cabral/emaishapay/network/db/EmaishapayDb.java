@@ -10,7 +10,6 @@ import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
-import com.cabral.emaishapay.network.db.daos.UserCartProductDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
 import com.cabral.emaishapay.network.db.daos.EcProductWeightDao;
 import com.cabral.emaishapay.network.db.daos.EcProductsDao;
@@ -24,34 +23,35 @@ import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderFts;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
-import com.cabral.emaishapay.network.db.entities.UserCartProduct;
+import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.EcProductWeight;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcSupplier;
-import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.network.db.entities.UserCartAttributes;
+import com.cabral.emaishapay.network.db.relations.CartItem;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
 @Database(entities = {DefaultAddress.class, EcManufacturer.class, ShopOrderProducts.class, ShopOrder.class, ShopOrderFts.class,
-        UserCartProduct.class, EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcProductFts.class,
+        EcProductCategory.class, EcProductWeight.class, EcProduct.class, EcProductFts.class,
         EcSupplier.class, UserCart.class, UserCartAttributes.class, RegionDetails.class},
         version = 1,
         exportSchema = false
         )
 public abstract class EmaishapayDb extends RoomDatabase {
 
+
+
     public abstract DefaultAddressDao defaultAddressDao();
     public abstract EcManufacturerDao ecManufacturerDao();
     public abstract ShopOrderProductsDao shopOrderProductsDao();
     public abstract ShopOrderDao shopOrderDao();
-    public abstract UserCartProductDao ecProductCartDao();
     public abstract EcProductCategoryDao ecProductCategoryDao();
     public abstract EcProductsDao ecProductsDao();
     public abstract EcProductWeightDao ecProductWeightDao();
+    public abstract RegionDetailsDao regionDetailsDao();
     public abstract UserCartAttributesDao userCartAttributesDao();
     public abstract UserCartDao userCartDao();
-    public abstract RegionDetailsDao regionDetailsDao();
 
 
 
@@ -61,7 +61,7 @@ public abstract class EmaishapayDb extends RoomDatabase {
         if(INSTANCE==null){
             synchronized (RoomDatabase.class){
                 if(INSTANCE==null){
-                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb19")
+                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(), EmaishapayDb.class,"emaishapayDb20")
                             //.addMigrations(MIGRATION_3_4)
                             .build();
                 }
@@ -90,5 +90,40 @@ public abstract class EmaishapayDb extends RoomDatabase {
 
     }
 
+
+    public static void insertCartItem(final EmaishapayDb database,
+                                                   final CartItem cartItem) {
+        database.runInTransaction(() -> {
+            database.userCartDao().addCartItem(cartItem.userCart);
+
+            //Log.d("OrderProducts","==="+orderWithProducts.getOrderProducts().size());
+
+            if(cartItem.getUserCartAttributesList()!=null){
+                for (UserCartAttributes cartProductAttributes: cartItem.getUserCartAttributesList()) {
+
+                    database.userCartAttributesDao().addCartAttributes(cartProductAttributes);
+                }
+            }
+
+        });
+
+    }
+
+
+    public static void updateCartItem(final EmaishapayDb database, final CartItem  cartItem) {
+        database.runInTransaction(() -> {
+            database.userCartDao().updateCartItem(cartItem.userCart);
+
+            //Log.d("OrderProducts","==="+orderWithProducts.getOrderProducts().size());
+
+            if(cartItem.getUserCartAttributesList()!=null){
+                for (UserCartAttributes cartProductAttributes: cartItem.getUserCartAttributesList()) {
+
+                    database.userCartAttributesDao().updateCartAttributes(cartProductAttributes);
+                }
+            }
+
+        });
+    }
 
 }

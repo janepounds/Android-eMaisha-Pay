@@ -48,7 +48,7 @@
                     android:background="@color/white"
                     android:layout_margin="15dp">
 
-                <com.daimajia.slider.library.SliderLayout
+                <com.glide.slider.library.SliderLayout
                     android:id="@+id/product_cover_slider"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -57,8 +57,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/background_round_white"
-                    custom:auto_cycle="true"
-                    custom:indicator_visibility="visible" />
+                    />
                     <LinearLayout
                         android:id="@+id/layout_weights"
                         android:layout_width="match_parent"
@@ -75,7 +74,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.daimajia.slider.library.Indicators.PagerIndicator
+                <com.glide.slider.library.indicators.PagerIndicator
                     android:id="@+id/product_slider_indicator"
                     style="@style/AndroidImageSlider_Indicator"
                     android:layout_width="wrap_content"

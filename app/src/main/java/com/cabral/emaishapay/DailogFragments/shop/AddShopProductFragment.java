@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 
 import es.dmoral.toasty.Toasty;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
@@ -44,12 +45,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
@@ -58,6 +59,7 @@ import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;
@@ -100,8 +102,8 @@ public class AddShopProductFragment extends DialogFragment {
     private String measure_id,key,product_id;
     private DbHandlerSingleton dbHandler;
     private ImageView produce_image;
-    private ArrayList<HashMap<String, String>>offlineManufacturers;
-    private ArrayList<HashMap<String, String>>offlineCategories;
+    private ArrayList<HashMap<String, String>>offlineManufacturers = new ArrayList<>();
+    private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineProductNames;
     DialogLoader dialogLoader;
     List<HashMap<String, String>> productData;
@@ -192,15 +194,19 @@ public class AddShopProductFragment extends DialogFragment {
 
         }
 
-        //get offline manufacturers;
-        offlineManufacturers = new ArrayList<>();
-        offlineManufacturers = dbHandler.getOfflineManufacturers();
-        //get offline product categories
-        offlineCategories = new ArrayList<>();
-        offlineCategories = dbHandler.getOfflineProductCategories();
-        //get offline product names
-        offlineProductNames = new ArrayList<>();
-        offlineProductNames = dbHandler.getOfflineProductNames();
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                //get offline manufacturers
+                offlineManufacturers =viewModel.getOfflineManufacturers();
+                //get offline product categories
+                offlineCategories =viewModel.getOfflineProductCategories();
+                //get offline product names
+                offlineProductNames = viewModel.getOfflineProductNames();
+            }
+        });
+
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
@@ -836,41 +842,48 @@ public class AddShopProductFragment extends DialogFragment {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
 
-                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
-                    databaseAccess.open();
+                      AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                          @Override
+                          public void run() {
+
+                              long checkAddedProduct=viewModel.addProduct(new EcProduct(
+                                      unique_id,
+                                      product_name,
+                                      product_code,
+                                      product_category_name,
+                                       "",
+                                      product_buy_price,
+                                      product_sell_price,
+                                      product_stock,
+                                      product_supplier,
+                                      encodedImage,
+                                      selected_weight_units,
+                                      selected_weight + "",
+                                      manufacturer_name
+                              ));
+
+                              AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      if (checkAddedProduct>0) {
+                                          progressDialog.dismiss();
+                                          Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
+
+                                          //Intent intent = new Intent(getContext(), ShopActivity.class);
+                                          //startActivity(intent);
+                                          // finish();
+                                      } else {
+                                          progressDialog.dismiss();
+                                          Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                      }
+                                  }
+                              });
+
+                          }
+                      });
 
                     //save product info in the database
-                    boolean check = databaseAccess.addProduct(
-                            unique_id,
-                            product_name,
-                            product_code,
-                            product_category_name,
-                            "",
-                            product_buy_price,
-                            product_sell_price,
-                            product_stock,
-                            product_supplier,
-                            encodedImage,
-                            selected_weight_units,
-                            selected_weight + "",
-                            manufacturer_name
-
-
-                    );
-
-
-                    if (check) {
-                        progressDialog.dismiss();
-                        Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(getContext(), ShopActivity.class);
-                        startActivity(intent);
-                        // finish();
-                    } else {
-                        progressDialog.dismiss();
-                        Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
-
-                    }
 
 
                 }
@@ -886,6 +899,7 @@ public class AddShopProductFragment extends DialogFragment {
         return dialog;
 
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

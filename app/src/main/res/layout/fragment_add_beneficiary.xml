@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight=".9"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center_vertical"
             android:layout_margin="5dp"
-            android:src="@drawable/close" />
+            android:src="@drawable/ic_close_white" />
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -126,7 +126,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
 
                         <Spinner
@@ -175,7 +175,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
 
                         <Spinner
@@ -223,7 +223,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:inputType="text"
                         android:textColor="@color/textColor"/>
 
@@ -248,7 +248,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:inputType="number"
                         android:textColor="@color/textColor"/>
 
@@ -285,7 +285,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
 
                         <EditText
@@ -331,7 +331,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -407,18 +407,18 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="@dimen/margin_10"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:layout_margin="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:layout_gravity="center_horizontal">
 
                 <Button
                     android:id="@+id/button_add_money"
                     style="@style/Button_DW"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dip"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
@@ -429,17 +429,6 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
 
             </FrameLayout>
 

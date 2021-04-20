@@ -50,7 +50,7 @@ public interface EcProductsDao {
 
     //add product name
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addProductName(EcProduct products);
+    long addProduct(EcProduct products);
 
     //get offline product names
     @Query("SELECT * FROM EcProduct ORDER BY product_name DESC ")
