@@ -757,7 +757,7 @@
     <string-array name="transfer_to">
         <item>Select</item>
         <item>eMaisha Account</item>
-        <item>eMaisha Card</item>
+<!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
         <item>Bank</item>
     </string-array>
@@ -769,7 +769,7 @@
     <string-array name="deposit_to">
         <item>Select</item>
         <item>Wallet</item>
-        <item>eMaisha Card</item>
+<!--        <item>eMaisha Card</item>-->
     </string-array>
     <string-array name="banks_list">
         <item>Select</item>
@@ -777,7 +777,7 @@
     <string-array name="payment_method">
         <item>Select</item>
         <item>Wallet</item>
-        <item>eMaisha Card</item>
+<!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
         <item>Bank Cards</item>
     </string-array>
