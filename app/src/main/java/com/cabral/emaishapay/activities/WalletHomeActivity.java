@@ -90,6 +90,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCE_ACCOUNT_DESIGNATION ="designation";
     public static final String PREFERENCE_ACCOUNT_LOCATION ="location";
     public static final String PREFERENCE_ACCOUNT_EMPLOYEE_ID ="employeeId";
+    public static final String PREFERENCE_ACCOUNT_CONTACT ="contact";
 
     public static final String PREFERENCE_ACCOUNT_BUSINESS_NAME ="business_name";
     public static final String PREFERENCE_ACCOUNT_BUSINESS_LOCATION ="business_location";

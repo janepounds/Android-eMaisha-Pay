@@ -3,6 +3,8 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -19,6 +21,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.FragmentEmploymentInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,44 +67,92 @@ public class EmploymentInformationFragment extends Fragment {
 
         }
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.submitButton.setOnClickListener(v -> {
-            progressDialog.show();
-            String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-            String request_id = WalletHomeActivity.generateRequestId();
-            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-            Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
-                    .storeEmploymentInfo(access_token,userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
-                            "+256 " + binding.contact.getText().toString(), binding.employerId.getText().toString(),request_id,category,"storeUserEmployementInfo");
-            call.enqueue(new Callback<AccountResponse>() {
-                @Override
-                public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
-                    if (response.isSuccessful()) {
-                        Log.d(TAG, "onResponse: successful");
+            boolean isValid = validateForm();
+            if(isValid) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Please Wait..");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                String request_id = WalletHomeActivity.generateRequestId();
+                String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
+                        .storeEmploymentInfo(access_token,userId, binding.employer.getText().toString(), binding.designaion.getText().toString(), binding.location.getText().toString(),
+                                "+256 " + binding.contact.getText().toString(), binding.employerId.getText().toString(),request_id,category,"storeUserEmployementInfo");
+                call.enqueue(new Callback<AccountResponse>() {
+                    @Override
+                    public void onResponse(@NotNull Call<AccountResponse> call, @NotNull Response<AccountResponse> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: successful");
 
-                        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
-                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
-                    } else {
-                        Log.d(TAG, "onResponse: failed" + response.errorBody());
-                        Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
+                            WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                            WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
+                        } else {
+                            Log.d(TAG, "onResponse: failed" + response.errorBody());
+                            Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
+                        }
+                        progressDialog.dismiss();
                     }
-                    progressDialog.dismiss();
-                }
 
-                @Override
-                public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
-                    Log.d(TAG, "onFailure: failed" + t.getMessage());
-                }
-            });
+                    @Override
+                    public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
+                        Log.d(TAG, "onFailure: failed" + t.getMessage());
+                    }
+                });
+
+            }
+
+
         });
+
+
+
+
 
         binding.cancelButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
-        return binding.getRoot();
+    }
+
+    public boolean validateForm(){
+        boolean check = true;
+        if(binding.employer.getText().toString().isEmpty()){
+            binding.employer.setError("Required");
+            binding.employer.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "Employer name is required", Snackbar.LENGTH_LONG).show();
+            check = false;
+        }else if(binding.designaion.getText().toString().isEmpty()){
+            binding.designaion.setError("Required");
+            binding.designaion.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "designation is required", Snackbar.LENGTH_LONG).show();
+            check = false;
+        }else if(binding.location.getText().toString().isEmpty()){
+            binding.location.setError("Required");
+            binding.location.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "location is required", Snackbar.LENGTH_LONG).show();
+            check = false;
+        }else if(binding.contact.getText().toString().isEmpty()){
+            binding.contact.setError("Required");
+            binding.contact.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "contact is required", Snackbar.LENGTH_LONG).show();
+            check = false;
+        }else if(binding.employerId.getText().toString().isEmpty()){
+            binding.employerId.setError("Required");
+            binding.employerId.requestFocus();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content), "employer id is required", Snackbar.LENGTH_LONG).show();
+            check = false;
+        }
+
+    return check;
     }
 
 
