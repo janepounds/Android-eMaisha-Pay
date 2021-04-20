@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +43,11 @@ import com.cabral.emaishapay.models.product_model.GetStock;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.ProductStock;
+import com.cabral.emaishapay.modelviews.DefaultAddressModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.DefaultAddress;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.utils.Resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,6 +78,7 @@ public class My_Cart extends Fragment {
     Toolbar toolbar;
     private Context context;
     private DbHandlerSingleton dbHandler;
+    DefaultAddressModelView viewModel;
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -99,7 +106,7 @@ public class My_Cart extends Fragment {
 
         setHasOptionsMenu(true);
         dialogLoader = new DialogLoader(getContext());
-
+        viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         toolbar = rootView.findViewById(R.id.toolbar_product_home);
@@ -151,7 +158,8 @@ public class My_Cart extends Fragment {
         cartItemsAdapter.notifyDataSetChanged();
 
         Log.d(TAG, "onCreateView: "+finalCartItemsList);
-        getDefaultAddress();
+        subscribeToDefaultAddress(viewModel.getDefaultAddress());
+//        getDefaultAddress();
 
         clear_cart.setOnClickListener(view -> {
             // Delete CartItem from Local Database using static method of My_Cart
@@ -250,33 +258,55 @@ public class My_Cart extends Fragment {
 
         return rootView;
     }
-
-    public void getDefaultAddress(){
-
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
+    public void subscribeToDefaultAddress(LiveData<List<DefaultAddress>> defaultAddress) {
 
 
-        //get from the database
-        ArrayList<String> default_address = new ArrayList<>();
-        default_address= dbHandler.getDefaultAddress(customerID);
-        if(default_address.size()>0) {
-            for (int i = 0; i < default_address.size(); i++) {
-                String street = default_address.get(0);
-                String city = default_address.get(1);
-                String country = default_address.get(2);
+        defaultAddress.observe(this.getViewLifecycleOwner(), myAddresses -> {
+            // dialogLoader.showProgressDialog();
 
-                default_address_.setText(street + " " + city + " " + country);
+            if (myAddresses != null && myAddresses.size() != 0) {
+                for (int i = 0; i < myAddresses.size(); i++) {
+                    String street = myAddresses.get(i).getEntry_street_address();
+                    String city = myAddresses.get(i).getEntry_city();
+                    String country = myAddresses.get(i).getEntry_country_id();
+
+
+                    default_address_.setText(street + " " + city + " " + country);
+                }
+
+                //dialogLoader.hideProgressDialog();
+            } else {
+                locationLayout.setVisibility(View.GONE);
             }
-        }else{
-
-        locationLayout.setVisibility(View.GONE);
-        }
-
-
-
-
+        });
     }
+
+//    public void getDefaultAddress(){
+//
+//        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+//        String request_id = WalletHomeActivity.generateRequestId();
+//
+//
+//        //get from the database
+//        ArrayList<String> default_address = new ArrayList<>();
+//        default_address= dbHandler.getDefaultAddress(customerID);
+//        if(default_address.size()>0) {
+//            for (int i = 0; i < default_address.size(); i++) {
+//                String street = default_address.get(0);
+//                String city = default_address.get(1);
+//                String country = default_address.get(2);
+//
+//                default_address_.setText(street + " " + city + " " + country);
+//            }
+//        }else{
+//
+//        locationLayout.setVisibility(View.GONE);
+//        }
+//
+//
+//
+//
+//    }
 
     //*********** Change the Layout View of My_Cart Fragment based on Cart Items ********//
 

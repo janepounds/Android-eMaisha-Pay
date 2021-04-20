@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
@@ -88,24 +89,28 @@ public class DataRepository {
     public void insertDefaultAddress(String customer_id, String entry_first_name, String entry_last_name, String entry_street_address, String entry_postal_code, String entry_city, String entry_country_id, String entry_contact, String latitude, String longitude, String is_default) {
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
 
-        mDefaultAddressDao.insertDefaultAddress(new DefaultAddress(
-                customer_id, entry_first_name,
-                entry_last_name, entry_street_address,
-                entry_postal_code, entry_city,
-                entry_country_id, entry_contact,
-                latitude, longitude, is_default
-        ));
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDefaultAddressDao.insertDefaultAddress(new DefaultAddress(
+                        customer_id, entry_first_name,
+                        entry_last_name, entry_street_address,
+                        entry_postal_code, entry_city,
+                        entry_country_id, entry_contact,
+                        latitude, longitude, is_default
+                ));
+            }
+        });
+
+
     }
 
 
     //***********Default Address ********//
-    public DefaultAddress getDefaultAddress(String customer_id) {
+    public LiveData<List<DefaultAddress>> getDefaultAddress(String customer_id) {
 
-        List<DefaultAddress> addressList = mDefaultAddressDao.getDefaultAddress(customer_id);
-        if (addressList.size() > 0)
-            return addressList.get(0);
 
-        return null;
+        return  mDefaultAddressDao.getDefaultAddress(customer_id);
     }
 
 
@@ -507,6 +512,36 @@ public class DataRepository {
     public void updateCartItem(CartProduct cart) {
         //mUserCartDao.updateCartItem(cart.getCustomersBasketProduct());
     }
+
+
+    //*****************GET DEFAULT ADDRESS *************************//
+//    public LiveData<Resource<List<DefaultAddress>>> getDefaultAddress(String customer_id) {
+//
+//
+//        return new NetworkBoundResource<List<DefaultAddress>, DefaultAddress>() {
+//            @Override
+//            protected void saveCallResult(@NonNull DefaultAddress defaultAddress) {
+//                mDefaultAddressDao.insertDefaultAddress(defaultAddress);
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected LiveData<List<DefaultAddress>> loadFromDb() {
+//
+//                    return mDefaultAddressDao.getDefaultAddress(customer_id);
+//
+//            }
+//
+//            @NonNull
+//            @Override
+//            protected Call<DefaultAddress> createCall() {
+//                return null;
+//            }
+//
+//
+//        }.getAsLiveData();
+
+
 
 }
 
