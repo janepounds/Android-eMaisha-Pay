@@ -223,11 +223,18 @@ public class LoginFragment  extends Fragment {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
                 if(response.isSuccessful()){
-                    //call change password dialog
+                    if(response.body().getStatus().equalsIgnoreCase("1")){
+                        //call change password dialog
 
-                    // Create and show the dialog.
-                    DialogFragment depositDialog = new ChangePassword();
-                    depositDialog.show(getFragmentManager(), "dialog");
+                        // Create and show the dialog.
+                        DialogFragment depositDialog = new ChangePassword();
+                        depositDialog.show(getFragmentManager(), "dialog");
+
+                    }else{
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                    }
+
 
                 }else if (response.code() == 401) {
                     Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
