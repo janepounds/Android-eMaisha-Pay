@@ -866,6 +866,18 @@ public interface APIRequests {
 
 
 
-
+    //forgot password
+    @FormUrlEncoded
+    @POST("wallet/security-qns/validate")
+    Call<SecurityQnsResponse>validateSecurityQns(@Header("Authorization") String token,
+                                          @Field("phoneNumber") String phoneNumber,
+                                          @Field("sec_qn_one") String sec_qn_one,
+                                          @Field("sec_qn_two") String sec_qn_two,
+                                          @Field("sec_qn_three") String sec_qn_three,
+                                          @Field("sec_ans_one") String sec_ans_one,
+                                          @Field("sec_ans_two") String sec_ans_two,
+                                          @Field("sec_ans_three") String sec_ans_three,
+                                          @Field("request_id") String request_id,
+                                          @Field("action_id") String action_id);
 
 }
