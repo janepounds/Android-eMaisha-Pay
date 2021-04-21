@@ -29,7 +29,6 @@ import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.modelviews.DefaultAddressModelView;
@@ -67,7 +66,6 @@ public class My_Addresses extends Fragment {
     List<AddressDetails> addressesList = new ArrayList<>();
 
     private int defaultAddressPosition = -1;
-    private DbHandlerSingleton dbHandler;
 
 
     public  My_Addresses(Boolean enable_back){ this.enable_back = enable_back; }
@@ -169,7 +167,6 @@ public class My_Addresses extends Fragment {
                 defaultAddressPosition = i;
 
                 //save a copy in the local database
-                dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
 
                 viewModel.insertDefaultAddress(customerID,
                         addressesList.get(i).getFirstname(),
@@ -184,19 +181,7 @@ public class My_Addresses extends Fragment {
                         addressesList.get(i).getLongitude()+"",
                         addressesList.get(i).getAddressId()+"");
 
-//
-//                dbHandler.insertDefaultAddress( customerID,
-//                        addressesList.get(i).getFirstname(),
-//                        addressesList.get(i).getLastname(),
-//                        //input_contact.getText().toString().trim(),
-//                        addressesList.get(i).getStreet(),
-//                        addressesList.get(i).getPostcode(),
-//                        addressesList.get(i).getCity(),
-//                        addressesList.get(i).getCountryName(),
-//                        addressesList.get(i).getLatitude()+"",
-//                        addressesList.get(i).getLongitude()+"",
-//                        addressesList.get(i).getContact(),
-//                        addressesList.get(i).getAddressId()+"");
+
 
 
 

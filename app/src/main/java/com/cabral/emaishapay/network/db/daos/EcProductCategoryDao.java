@@ -15,7 +15,7 @@ public interface EcProductCategoryDao {
 
     //add product category
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addProductCategory(EcProductCategory product_category);
+    long addProductCategory(EcProductCategory product_category);
 
 
     //get offline product categories

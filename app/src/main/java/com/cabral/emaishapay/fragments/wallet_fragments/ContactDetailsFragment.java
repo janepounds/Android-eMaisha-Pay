@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,19 +26,19 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.SpinnerItem;
+import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-import static android.content.ContentValues.TAG;
+
 
 public class ContactDetailsFragment extends Fragment {
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
@@ -45,8 +48,9 @@ public class ContactDetailsFragment extends Fragment {
     private int pickedDistrictId;
     private int pickedSubCountyId;
     private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
-    private ArrayList<String> villageList = new ArrayList<>();
-    private DbHandlerSingleton dbHandler;
+    private ArrayList<SpinnerItem> villageList = new ArrayList<>();
+    private Context context;
+    private AutoCompleteTextView act_districts,act_sub_counties,act_villages;
 
     @Nullable
     @Override
@@ -60,18 +64,26 @@ public class ContactDetailsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_contact_details, container, false);
     }
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final SignUpModelView viewModel = new ViewModelProvider(this).get(SignUpModelView.class);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_contact_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         Button next = view.findViewById(R.id.txt_next_three);
 
-        AutoCompleteTextView act_districts = view.findViewById(R.id.act_district);
-        AutoCompleteTextView act_sub_counties = view.findViewById(R.id.act_sub_county);
-        AutoCompleteTextView act_villages = view.findViewById(R.id.act_village);
+         act_districts = view.findViewById(R.id.act_district);
+         act_sub_counties = view.findViewById(R.id.act_sub_county);
+         act_villages = view.findViewById(R.id.act_village);
 
         EditText etxt_land_mark = view.findViewById(R.id.etxt_landmark);
         EditText etxt_phonenumber = view.findViewById(R.id.etxt_phone_number);
@@ -92,32 +104,11 @@ public class ContactDetailsFragment extends Fragment {
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
 
+
         ArrayList<SpinnerItem> districtList = new ArrayList<>();
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
-        try {
-            for (RegionDetails x : dbHandler.getRegionDetails("district")) {
-                districtList.add(new SpinnerItem() {
-                    @Override
-                    public String getId() {
-                        return String.valueOf(x.getId());
-                    }
 
+        subscribeDistrictList(viewModel.getDistricts(),districtList);
 
-                    @NonNull
-                    @Override
-                    public String toString() {
-                        return x.getRegion();
-                    }
-                });
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //Log.d(TAG, "onCreate: " + districtList + districtList.size());
-        ArrayAdapter<SpinnerItem> districtListAdapter = new ArrayAdapter<SpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, districtList);
-        act_districts.setThreshold(1);
-        act_districts.setAdapter(districtListAdapter);
         act_districts.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -132,38 +123,22 @@ public class ContactDetailsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 act_districts.showDropDown();
-                for (int i = 0; i < districtList.size(); i++) {
+                String districtInput =act_districts.getText().toString();
 
-                    if (districtList.get(i).toString().equals(act_districts.getText().toString())) {
-                        pickedDistrictId = Integer.parseInt(districtList.get(i).getId());
+                if(districtInput.length()<4)
+                    return;
 
-                        Log.d(TAG, "onCreate: " + pickedDistrictId);
+                viewModel.getRegionDetail(districtInput).observe(getViewLifecycleOwner(),myRegion->{
+                    if(myRegion!=null){
+                        pickedDistrictId=myRegion.getId();
 
                         subCountyList.clear();
-                        try {
-                            for (RegionDetails x : dbHandler.getSubcountyDetails(String.valueOf(pickedDistrictId), "subcounty")) {
-                                subCountyList.add(new SpinnerItem() {
-                                    @Override
-                                    public String getId() {
-                                        return String.valueOf(x.getId());
-                                    }
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return x.getRegion();
-                                    }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d(TAG, "onCreate: " + subCountyList);
-                        ArrayAdapter<SpinnerItem> subCountyListAdapter = new ArrayAdapter<SpinnerItem>(getContext(), android.R.layout.simple_dropdown_item_1line, subCountyList);
-                        act_sub_counties.setThreshold(1);
-                        act_sub_counties.setAdapter(subCountyListAdapter);
+                        subscribeSubcountyList(viewModel.getSubcountyDetails(String.valueOf(pickedDistrictId)));
                     }
 
-                }
+                });
+
+
             }
         });
 
@@ -181,52 +156,24 @@ public class ContactDetailsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 act_sub_counties.showDropDown();
+                String subCountyInput =act_sub_counties.getText().toString();
 
-                for (int i = 0; i < subCountyList.size(); i++) {
+                if(subCountyInput.length()<4)
+                    return;
 
-                    if (subCountyList.get(i).toString().equals(act_sub_counties.getText().toString())) {
-                        pickedSubCountyId = Integer.parseInt(subCountyList.get(i).getId());
-
-                        Log.d(TAG, "onCreate: " + pickedSubCountyId);
+                viewModel.getRegionDetail(subCountyInput).observe(getViewLifecycleOwner(),myRegion->{
+                    if(myRegion!=null){
+                        pickedSubCountyId=myRegion.getId();
 
                         villageList.clear();
-                        try {
-                            for (RegionDetails x : dbHandler.getVillageDetails(String.valueOf(pickedSubCountyId), "village")) {
-                                villageList.add(x.getRegion());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d(TAG, "onCreate: " + villageList);
-                        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, villageList);
-                        act_villages.setThreshold(1);
-                        act_villages.setAdapter(villageListAdapter);
+                        subscribeVillageList(viewModel.getVillageDetails(String.valueOf(pickedSubCountyId)));
                     }
 
+                });
 
-                }
-            }
-        });
-
-        act_villages.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
 
             }
         });
-
-
-
 
 
         Button previous = view.findViewById(R.id.previous_button);
@@ -330,6 +277,84 @@ public class ContactDetailsFragment extends Fragment {
             }
         });
 
+    }
+
+    private void subscribeDistrictList(LiveData<List<RegionDetails>> districts, ArrayList<SpinnerItem> districtList){
+        districts.observe(getViewLifecycleOwner(),myDistricts->{
+            if(myDistricts!=null && myDistricts.size()!=0){
+                for (RegionDetails x : myDistricts) {
+                    districtList.add(new SpinnerItem() {
+                        @Override
+                        public String getId() {
+                            return ""+x.getId();
+                        }
+
+                        @Override
+                        public String toString() {
+                            return x.getRegion();
+                        }
+                    });
+
+                }
+
+                //Log.d(TAG, "onCreate: " + districtList + districtList.size());
+                ArrayAdapter<SpinnerItem> districtListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, districtList);
+                act_districts.setThreshold(1);
+                act_districts.setAdapter(districtListAdapter);
+            }
+        });
+    }
+
+    private void subscribeSubcountyList(LiveData<List<RegionDetails>> subcounties){
+        subcounties.observe(getViewLifecycleOwner(),mySubcounties->{
+            if(mySubcounties!=null && mySubcounties.size()!=0){
+                for (RegionDetails x : mySubcounties) {
+                    subCountyList.add(new SpinnerItem() {
+                        @Override
+                        public String getId() {
+                            return ""+x.getId();
+                        }
+
+                        @Override
+                        public String toString() {
+                            return x.getRegion();
+                        }
+                    } );
+
+                }
+
+                //Log.d(TAG, "onCreate: " + subCountyList);
+                ArrayAdapter<SpinnerItem> subCountyListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, subCountyList);
+                act_sub_counties.setThreshold(1);
+                act_sub_counties.setAdapter(subCountyListAdapter);
+            }
+        });
+    }
+
+    private void subscribeVillageList(LiveData<List<RegionDetails>> villageDetailsList) {
+        villageDetailsList.observe(getViewLifecycleOwner(),myVillages->{
+            if(myVillages!=null && myVillages.size()!=0){
+                for (RegionDetails x : myVillages) {
+                    villageList.add(new SpinnerItem() {
+                        @Override
+                        public String getId() {
+                            return ""+x.getId();
+                        }
+
+                        @Override
+                        public String toString() {
+                            return x.getRegion();
+                        }
+                    });
+
+                }
+
+                //Log.d(TAG, "onCreate: " + villageList);
+                ArrayAdapter<SpinnerItem> villageListAdapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, villageList);
+                act_villages.setThreshold(1);
+                act_villages.setAdapter(villageListAdapter);
+            }
+        });
     }
 
 

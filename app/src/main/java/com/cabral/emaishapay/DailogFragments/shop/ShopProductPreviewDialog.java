@@ -18,30 +18,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
+
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
 
-import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.database.DatabaseAccess;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
-import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ShopProductPreviewDialog extends DialogFragment {
     private static final String TAG = "ProductPreviewDialog";
