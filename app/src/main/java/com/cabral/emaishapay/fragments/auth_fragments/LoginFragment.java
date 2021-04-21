@@ -94,32 +94,9 @@ public class LoginFragment  extends Fragment {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean validSecurityQns = validateSecurityQns();
-                    if(validSecurityQns){
-                        //enter new pin
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
-                        dialog.setView(dialogView);
-                        dialog.setCancelable(true);
-                        final EditText current_pin = dialogView.findViewById(R.id.current_pin);
-                        current_pin.setVisibility(View.GONE);
-                        final EditText new_pin = dialogView.findViewById(R.id.new_pin);
-                        final EditText confirm_new_pin = dialogView.findViewById(R.id.confirm_new_pin);
-                        final TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-                        final Button submit = dialogView.findViewById(R.id.update);
-                        final Button cancel = dialogView.findViewById(R.id.cancel);
-                        dialog_title.setText("Create New Pin");
+                    validateSecurityQns();
 
 
-                        final AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                alertDialog.dismiss();
-                            }
-                        });
-                    }
 
                 }
             });
@@ -212,7 +189,7 @@ public class LoginFragment  extends Fragment {
 
     }
 
-    private boolean validateSecurityQns() {
+    private void validateSecurityQns() {
         String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
@@ -227,8 +204,28 @@ public class LoginFragment  extends Fragment {
                         //call change password dialog
 
                         // Create and show the dialog.
-                        DialogFragment depositDialog = new ChangePassword();
-                        depositDialog.show(getFragmentManager(), "dialog");
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
+                        dialog.setView(dialogView);
+                        dialog.setCancelable(true);
+                        final EditText current_pin = dialogView.findViewById(R.id.current_pin);
+                        current_pin.setVisibility(View.GONE);
+                        final EditText new_pin = dialogView.findViewById(R.id.new_pin);
+                        final EditText confirm_new_pin = dialogView.findViewById(R.id.confirm_new_pin);
+                        final TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
+                        final Button submit = dialogView.findViewById(R.id.update);
+                        final Button cancel = dialogView.findViewById(R.id.cancel);
+                        dialog_title.setText("Create New Pin");
+
+
+                        final AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                alertDialog.dismiss();
+                            }
+                        });
 
                     }else{
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
@@ -248,7 +245,6 @@ public class LoginFragment  extends Fragment {
             }
         });
 
-        return true;
 
     }
 
