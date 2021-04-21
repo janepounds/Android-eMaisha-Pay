@@ -190,6 +190,7 @@ public class LoginFragment  extends Fragment {
     }
 
     private void validateSecurityQns() {
+        dialogLoader.showProgressDialog();
         String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
@@ -217,7 +218,7 @@ public class LoginFragment  extends Fragment {
                         final Button cancel = dialogView.findViewById(R.id.cancel);
                         dialog_title.setText("Create New Pin");
 
-
+                        dialogLoader.hideProgressDialog();
                         final AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
                         cancel.setOnClickListener(new View.OnClickListener() {
@@ -229,12 +230,14 @@ public class LoginFragment  extends Fragment {
 
                     }else{
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                        dialogLoader.hideProgressDialog();
 
                     }
 
 
                 }else if (response.code() == 401) {
                     Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    dialogLoader.hideProgressDialog();
 
                 }
 
@@ -242,6 +245,7 @@ public class LoginFragment  extends Fragment {
 
             @Override
             public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+                dialogLoader.hideProgressDialog();
             }
         });
 
