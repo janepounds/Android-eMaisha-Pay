@@ -469,6 +469,7 @@ public interface APIRequests {
     @POST("apply_for_business")
     Call<AccountResponse> applyForBusiness(
             @Header("Authorization") String token,
+            @Field("role") String role,
             @Field("user_id") String user_id,
             @Field("business_name") String business_name,
             @Field("registration_no") String reg_no,
@@ -478,7 +479,6 @@ public interface APIRequests {
             @Field("proprietor_nin") String proprietor_nin,
             @Field("national_id_front") String national_id_front,
             @Field("national_id_back") String national_id_back,
-            @Field("role") String role,
             @Field("latitude") double latitude,
             @Field("longitude") double longitude,
             @Field("request_id") String request_id,

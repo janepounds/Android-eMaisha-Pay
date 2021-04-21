@@ -74,7 +74,6 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private String encodedIdreg_cert;
     private String encodedIdtradelicense;
     private ProgressDialog progressDialog;
-    Bundle localBundle;
 
 
     private static final String TAG ="Maps Error";
@@ -97,17 +96,6 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     public static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     private LatLng mCenterLatLong;
-
-
-    public BusinessAccountFragment() {
-    }
-
-    public BusinessAccountFragment(Bundle bundle) {
-        this.localBundle=bundle;
-    }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,24 +160,26 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public void initializeViews(){
-        if(localBundle!=null) {
+        if(getArguments()!=null) {
 
-            if (localBundle.getString("Agent")!=null) {
-                binding.toolbar.setTitle(localBundle.getString("Agent"));
+            if (getArguments().getString("Agent")!=null) {
+                binding.toolbar.setTitle(getArguments().getString("Agent"));
                 role = "AGENT";
 
-            }else if(localBundle.getString("Merchant")!=null){
-                binding.toolbar.setTitle(localBundle.getString("Merchant"));
+            }else if(getArguments().getString("Merchant")!=null){
+                binding.toolbar.setTitle(getArguments().getString("Merchant"));
                 role = "MERCHANT";
 
-            }else if(localBundle.getString("AgentMerchant")!=null) {
-                binding.toolbar.setTitle(localBundle.getString("AgentMerchant"));
+            }else if(getArguments().getString("AgentMerchant")!=null) {
+                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
                 //set business info
                 role = "AGENT_MERCHANT";
 
             }
 
 
+        }else{
+            role="DEFAULT";
         }
         //set business info
         String business_name = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_NAME,getContext());
@@ -305,9 +295,9 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
         //**************RETROFIT IMPLEMENTATION******************//
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
-                .applyForBusiness(access_token,user_Id,business_name,registration_no,
+                .applyForBusiness(access_token,role,user_Id,business_name,registration_no,
                         encodedIdreg_cert,encodedIdtradelicense,proprietor_name,
-                        proprietor_nin,encodedIdFront,encodedIdBack,role,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id,category,"applyForBusinessAccount");
+                        proprietor_nin,encodedIdFront,encodedIdBack,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id,category,"applyForBusinessAccount");
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {

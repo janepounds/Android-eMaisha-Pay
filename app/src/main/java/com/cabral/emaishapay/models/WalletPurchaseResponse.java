@@ -35,9 +35,27 @@ public class WalletPurchaseResponse {
         @SerializedName("status")
         @Expose
         private String status;
+
         @SerializedName("transactionId")
         @Expose
         private String transactionId;
+
+        @SerializedName("perweek")
+        @Expose
+        private String perweek;
+
+        @SerializedName("total")
+        @Expose
+        private String total;
+
+        @SerializedName("level")
+        @Expose
+        private String level;
+
+
+        @SerializedName("amount")
+        @Expose
+        private String amount;
 
         public String getStatus() {
             return status;
@@ -53,6 +71,22 @@ public class WalletPurchaseResponse {
 
         public void setTransactionId(String transactionId) {
             this.transactionId = transactionId;
+        }
+
+        public String getPerweek() {
+            return perweek;
+        }
+
+        public String getTotal() {
+            return total;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public String getAmount() {
+            return amount;
         }
     }
 

@@ -44,8 +44,6 @@ public class AgentCustomerDeposits extends DialogFragment {
     LinearLayout layoutMobileNumber, layoutWalletNumber,layoutAccountNumber;
     Spinner spDepositTo;
     Button addMoneyBtn;
-    TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    TextView balanceTextView;
     double balance;
     private String txRef, business_name= "";
     ProgressDialog dialog;
