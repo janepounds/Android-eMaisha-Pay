@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.receivers;
+package com.cabral.emaishapay.services;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
