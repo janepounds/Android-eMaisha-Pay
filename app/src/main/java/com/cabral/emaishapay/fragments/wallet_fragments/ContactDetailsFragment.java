@@ -29,7 +29,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.SpinnerItem;
 import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
-import com.google.firebase.auth.FirebaseAuth;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 
@@ -44,7 +43,6 @@ public class ContactDetailsFragment extends Fragment {
     String[] descriptionData = {"Personal\n Details", "Contact\n Details", "Identity\n Proof" , "Card\n Details"};
 
     String firstname, lastname, middlename, customer_gender, date_of_birth;
-    private FirebaseAuth mAuth;
     private int pickedDistrictId;
     private int pickedSubCountyId;
     private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
@@ -99,10 +97,6 @@ public class ContactDetailsFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account Opening");
-
-
-        //initializing objects
-        mAuth = FirebaseAuth.getInstance();
 
 
         ArrayList<SpinnerItem> districtList = new ArrayList<>();
