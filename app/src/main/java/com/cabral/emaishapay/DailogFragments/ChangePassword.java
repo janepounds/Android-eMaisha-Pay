@@ -82,8 +82,9 @@ public class ChangePassword extends DialogFragment {
                     //call endpoint for change password
                     String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                    String request_id = WalletHomeActivity.generateRequestId();
                     /******************RETROFIT IMPLEMENTATION***********************/
-                    Call<ChangePinResponse> call = APIClient.getWalletInstance(getContext()).changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString());
+                    Call<ChangePinResponse> call = APIClient.getWalletInstance(getContext()).changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
                     call.enqueue(new Callback<ChangePinResponse>() {
                         @Override
                         public void onResponse(Call<ChangePinResponse> call, Response<ChangePinResponse> response) {

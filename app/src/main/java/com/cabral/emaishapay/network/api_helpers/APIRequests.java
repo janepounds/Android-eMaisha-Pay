@@ -855,12 +855,14 @@ public interface APIRequests {
 
     //change passowrd
     @FormUrlEncoded
-    @POST("wallet/change-pin")
+    @POST("wallet/customer/change-pin")
     Call<ChangePinResponse>changePassword(@Header("Authorization") String token,
                                           @Field("phoneNumber") String phoneNumber,
                                           @Field("currentPin") String currentPin,
                                           @Field("newPin") String newPin,
-                                          @Field("comfirmNewPin") String comfirmNewPin);
+                                          @Field("comfirmNewPin") String comfirmNewPin,
+                                          @Field("request_id") String request_id,
+                                          @Field("action_id") String action_id);
 
 
 
