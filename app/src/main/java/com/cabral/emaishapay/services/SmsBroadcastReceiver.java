@@ -10,7 +10,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Status;
 
 public class SmsBroadcastReceiver extends BroadcastReceiver {
-    SmsBroadcastReceiverListener smsBroadcastReceiverListener;
+    public SmsBroadcastReceiverListener smsBroadcastReceiverListener;
 
     @Override
     public void onReceive(Context context, Intent intent) {

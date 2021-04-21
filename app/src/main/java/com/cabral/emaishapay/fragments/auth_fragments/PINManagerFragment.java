@@ -4,7 +4,9 @@ package com.cabral.emaishapay.fragments.auth_fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -50,6 +52,7 @@ import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.cabral.emaishapay.services.SmsBroadcastReceiver;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,11 +66,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.navController;
@@ -78,6 +84,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     private static final String TAG = "TokenAuthFragment";
     private Context context;
     private  String pin="", pin1="",phonenumber,otp_code,smsResults;
+    EditText code1, code2, code3, code4, code5, code6;
     static FragmentTokenAuthBinding binding;
 
     private static SharedPreferences sharedPreferences;
@@ -97,6 +104,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     public static int ACTION;
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
+    SmsBroadcastReceiver  smsBroadcastReceiver;
+    private static final int REQ_USER_CONSENT = 200;
 
     private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
@@ -443,12 +452,13 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         otpDialog.setCancelable(false);
 
-        EditText code1= otpDialog.findViewById(R.id.otp_code1_et);
-        EditText code2= otpDialog.findViewById(R.id.otp_code2_et);
-        EditText code3= otpDialog.findViewById(R.id.otp_code3_et);
-        EditText code4= otpDialog.findViewById(R.id.otp_code4_et);
-        EditText code5=otpDialog.findViewById(R.id.otp_code5_et);
-        EditText code6= otpDialog.findViewById(R.id.otp_code6_et);
+
+        code1= otpDialog.findViewById(R.id.otp_code1_et);
+        code2= otpDialog.findViewById(R.id.otp_code2_et);
+        code3= otpDialog.findViewById(R.id.otp_code3_et);
+        code4= otpDialog.findViewById(R.id.otp_code4_et);
+        code5=otpDialog.findViewById(R.id.otp_code5_et);
+        code6= otpDialog.findViewById(R.id.otp_code6_et);
         TextView resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
         TextView tvTimer= otpDialog.findViewById(R.id.tv_timer);
         RelativeLayout layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
@@ -591,6 +601,19 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
 
 
+        registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
+        otpDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                context.unregisterReceiver(smsBroadcastReceiver);
+            }
+        });
+        otpDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                context.unregisterReceiver(smsBroadcastReceiver);
+            }
+        });
 
         otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
@@ -942,6 +965,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     }
 
+
     private void startSmsUserConsent() {
         SmsRetrieverClient client = SmsRetriever.getClient(context);
         //We can add sender phone number or leave it blank
@@ -959,5 +983,62 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         });
     }
 
+    private void getOtpFromMessage(String message) {
+        // This will match any 6 digit number in the message
+        Pattern pattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = pattern.matcher(message);
+        if (matcher.find()) {
+            String retrievedCode=matcher.group(0);
+            if(retrievedCode.length()==6){
+                code1.setText(retrievedCode.charAt(0));
+                code2.setText(retrievedCode.charAt(1));
+                code3.setText(retrievedCode.charAt(2));
+                code4.setText(retrievedCode.charAt(3));
+                code5.setText(retrievedCode.charAt(4));
+                code6.setText(retrievedCode.charAt(5));
+
+                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
+                otp_code = otp_code.replaceAll("\\s+", "");
+                if(otp_code.length()>=6){
+                    String password = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                    confirmLogin(password, phonenumber,otp_code,otpDialog);
+                }
+            }
+
+        }
+    }
+
+    private void registerBroadcastReceiver() {
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
+        smsBroadcastReceiver.smsBroadcastReceiverListener =
+                new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, REQ_USER_CONSENT);
+                    }
+                    @Override
+                    public void onFailure() {
+                    }
+                };
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        context.registerReceiver(smsBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_USER_CONSENT) {
+            if ((resultCode == RESULT_OK) && (data != null)) {
+                //That gives all message to us.
+                // We need to get the code from inside with regex
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+
+                getOtpFromMessage(message);
+            }
+        }
+    }
 
 }
