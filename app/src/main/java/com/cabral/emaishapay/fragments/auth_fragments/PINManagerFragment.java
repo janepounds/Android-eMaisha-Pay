@@ -50,6 +50,10 @@ import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -106,7 +110,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
-
+        startSmsUserConsent();
         keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
         keyValues.put(R.id.tv_key_2, "2");
@@ -449,6 +453,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         TextView tvTimer= otpDialog.findViewById(R.id.tv_timer);
         RelativeLayout layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
         TextView tvChangeNumber = otpDialog.findViewById(R.id.text_view_change_number);
+
+
 
         CountDownTimer timer = new CountDownTimer(90000, 1000) {
 
@@ -934,9 +940,23 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         });
 
 
+    }
 
-
-
+    private void startSmsUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(context);
+        //We can add sender phone number or leave it blank
+        // I'm adding null here
+        client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "On Success", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "On OnFailure", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
