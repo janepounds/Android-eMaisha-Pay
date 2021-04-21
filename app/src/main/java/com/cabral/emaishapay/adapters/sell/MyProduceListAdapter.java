@@ -28,9 +28,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
+
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+
 import com.cabral.emaishapay.fragments.sell_fragment.MyProduceFragment;
 import com.cabral.emaishapay.models.marketplace.MyProduce;
 
@@ -47,7 +47,6 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
     private ArrayList<MyProduce> myProduceArrayList;
     private   WeakReference<MyProduceFragment> fragmentReference;
     FragmentManager fm;
-    private DbHandlerSingleton dbHandler;
     Dialog dialog;
     public static class MyProduceListViewHolder extends RecyclerView.ViewHolder {
         public TextView name, variety, quantity, price, date;
@@ -73,7 +72,6 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
     public MyProduceListAdapter(Context context, WeakReference<MyProduceFragment> fragmentReference) {
         this.context = context;
         this.myProduceArrayList = fragmentReference.get().produceList;
-        this.dbHandler = DbHandlerSingleton.getHandlerInstance(context);
         this.fragmentReference=fragmentReference;
     }
 
@@ -206,7 +204,7 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
 
                     // create worker thread to insert data into database
                     try {
-                        dbHandler.updateProduce(myProduce,myProduce.getId()+"");
+//                        dbHandler.updateProduce(myProduce,myProduce.getId()+"");
                     }catch (SQLiteException exception){
                         exception.printStackTrace();
                         Toast.makeText(context, ""+exception.getMessage(), Toast.LENGTH_SHORT).show();

@@ -15,7 +15,7 @@ public interface EcManufacturerDao {
 
     //insert manufacturer
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addManufacturers(EcManufacturer manufacturers);
+    long addManufacturers(EcManufacturer manufacturers);
 
     //get offline manufacturers
     @Query("SELECT * FROM EcManufacturer ORDER BY manufacturer_name DESC ")

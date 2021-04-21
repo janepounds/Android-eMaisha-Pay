@@ -15,6 +15,7 @@ import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.EmaishapayDb;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
+import com.cabral.emaishapay.network.db.daos.EcSupplierDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
@@ -27,6 +28,8 @@ import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
+import com.cabral.emaishapay.network.db.entities.EcProductWeight;
+import com.cabral.emaishapay.network.db.entities.EcSupplier;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
@@ -59,9 +62,11 @@ public class DataRepository {
     private final UserCartAttributesDao mUserCartAttributesDao;
     private final UserCartDao mUserCartDao;
     private final RegionDetailsDao mRegionDetailsDao;
+    private final EcSupplierDao mEcSupplierDao;
 
     private DataRepository(Context context) {
         this.dbInstance = EmaishapayDb.getDatabase(context);
+        mEcSupplierDao =dbInstance.supplierDao();
         mDefaultAddressDao = dbInstance.defaultAddressDao();
         mEcManufacturerDao = dbInstance.ecManufacturerDao();
         mShopOrderProductDao = dbInstance.shopOrderProductsDao();
@@ -120,10 +125,7 @@ public class DataRepository {
         return mEcProductsDao.getUnsyncedProducts(sync_status);
     }
 
-    public void updateProductSyncStatus(String product_id, String sync_status) {
-        mEcProductsDao.updateProductSyncStatus(product_id, sync_status);
 
-    }
 
     //get offline product names
     public ArrayList<HashMap<String, String>> getOfflineProductNames() {
@@ -136,6 +138,32 @@ public class DataRepository {
         }
         return productnames;
     }
+
+    //get product supplier
+    public ArrayList<HashMap<String, String>> getProductSupplier() {
+        ArrayList<HashMap<String, String>> suppliers = new ArrayList<>();
+
+        for (EcSupplier supplier : mEcSupplierDao.getProductSupplier()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("suppliers_name", supplier.getSuppliers_name());
+            suppliers.add(map);
+        }
+        return suppliers;
+    }
+
+    //get product weight
+    public ArrayList<HashMap<String, String>> getWeightUnit() {
+        ArrayList<HashMap<String, String>> productWeights = new ArrayList<>();
+
+        for (EcProductWeight productWeight : mEcProductWeightDao.getWeightUnit()) {
+            HashMap<String, String> map = new HashMap();
+            map.put("weight_unit", productWeight.getWeight_unit());
+
+            productWeights.add(map);
+        }
+        return productWeights;
+    }
+
 
     //get offline product categories
     public ArrayList<HashMap<String, String>> getOfflineProductCategories() {
@@ -198,13 +226,14 @@ public class DataRepository {
     }
 
     //**********ADD PRODUCT CATEGORY *******************//
-    public void addProductCategory(EcProductCategory productCategory) {
-        mEcProductCategoryDao.addProductCategory(productCategory);
+    public long addProductCategory(EcProductCategory productCategory) {
+
+        return   mEcProductCategoryDao.addProductCategory(productCategory);
     }
 
     //**********ADD MANUFACTURERS *******************//
-    public void addManufacturers(EcManufacturer manufacturer) {
-        mEcManufacturerDao.addManufacturers(manufacturer);
+    public long addManufacturers(EcManufacturer manufacturer) {
+       return mEcManufacturerDao.addManufacturers(manufacturer);
     }
 
 
@@ -314,6 +343,12 @@ public class DataRepository {
 
         return productnames;
 
+    }
+
+    //**********ADD PRODUCT NAME *******************//
+    public long updateOrder(String order_id,String status) {
+
+        return mShopOrderDao.updateOrder(order_id,status);
     }
 
 
@@ -474,6 +509,11 @@ public class DataRepository {
 
     }
 
+    public long updateProductSyncStatus(String product_id,String status){
+
+        return mEcProductsDao.updateProductSyncStatus(product_id, status);
+
+    }
     //******************GET ORDER HISTORY DATA****************************************************//
 
     public LiveData<Integer> addToCart(String product_id, UserCart userCartProduct) {

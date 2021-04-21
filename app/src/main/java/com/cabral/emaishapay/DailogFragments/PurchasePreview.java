@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,8 +74,8 @@ public class PurchasePreview extends DialogFragment implements
 
     String businessName ="", cardNumber;
     Context activity;
-
-    ProgressDialog dialog;
+    Dialog dialog;
+    DialogLoader dialogLoader;
 
     private RaveVerificationUtils verificationUtils;
     private CardPaymentManager cardPayManager;
@@ -133,6 +135,9 @@ public class PurchasePreview extends DialogFragment implements
         datetimeTextView.setText(currentDateandTime);
 
         mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
+
+        dialogLoader = new DialogLoader(activity);
+
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,12 +174,8 @@ public class PurchasePreview extends DialogFragment implements
     public void getMechantName(){
 
         /***************RETROFIT IMPLEMENTATION***********************/
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
+
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -204,8 +205,8 @@ public class PurchasePreview extends DialogFragment implements
 
                 }
 
+                dialogLoader.hideProgressDialog();
 
-                dialog.dismiss();
             }
 
             @Override
@@ -227,31 +228,57 @@ public class PurchasePreview extends DialogFragment implements
 
     public void processPayment(){
         String methodOfPayment= WalletTransactionInitiation.getInstance().getMethodOfPayment();
-        if(methodOfPayment.equalsIgnoreCase("wallet")){
-          processWalletPayment();
-        }
-        else if(methodOfPayment.equalsIgnoreCase("eMaisha Card") || methodOfPayment.equalsIgnoreCase("Bank Cards") ){
+        //Inner Dialog to enter PIN
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomAlertDialog);
+        //LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View pinDialog = View.inflate(activity,R.layout.dialog_enter_pin,null);
 
-            processCardPayment();
-        }
-        else if(methodOfPayment.equalsIgnoreCase("Mobile Money")){
 
-            processMobileMoneyPayment();
-        }
+        builder.setView(pinDialog);
+        dialog = builder.create();
+        builder.setCancelable(false);
+
+        EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+
+        pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
+                    String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
+                    dialogLoader.showProgressDialog();
+                    if(methodOfPayment.equalsIgnoreCase("wallet")){
+                        processWalletPayment(service_code );
+                    }
+                    else if(methodOfPayment.equalsIgnoreCase("eMaisha Card") || methodOfPayment.equalsIgnoreCase("Bank Cards") ){
+
+                        processCardPayment(service_code);
+                    }
+                    else if(methodOfPayment.equalsIgnoreCase("Mobile Money")){
+
+                        processMobileMoneyPayment(service_code);
+                    }
+
+                }else {
+                    pinEdittext.setError("Invalid Pin Entered");
+                }
+
+            }
+        });
+
+        dialog.show();
+
+
+
 
     }
 
-    private void processMobileMoneyPayment() {
+    private void processMobileMoneyPayment(String service_code) {
         String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String txRef= "MMP"+userId+ System.currentTimeMillis();
         String eMaishaPayServiceMail="info@cabraltech.com";
 
-
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Processing the transaction..");
 
         RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
                 .setCurrency("UGX")
@@ -272,17 +299,10 @@ public class PurchasePreview extends DialogFragment implements
             public void showProgressIndicator(boolean active) {
                 try {
 
-                    if (dialog == null) {
-                        dialog = new ProgressDialog(activity);
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setMessage("Please wait...");
+                    if (dialogLoader == null) {
+                        dialogLoader.showProgressDialog();
                     }
 
-                    if (active && !dialog.isShowing()) {
-                        dialog.show();
-                    } else {
-                        //dialog.dismiss();
-                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -290,13 +310,13 @@ public class PurchasePreview extends DialogFragment implements
 
             @Override
             public void onError(String errorMessage, @Nullable String flwRef) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Log.e("MobileMoneypaymentError", errorMessage);
             }
 
             @Override
             public void onSuccessful(String flwRef) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Log.e("Success code :", flwRef);
                 Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
                 recordPurchase(flwRef,"0" + mobileNumber);
@@ -314,7 +334,7 @@ public class PurchasePreview extends DialogFragment implements
 
     }
 
-    private void processCardPayment() {
+    private void processCardPayment(String service_code) {
 
         String expiryDate= WalletTransactionInitiation.getInstance().getCardExpiry();
         cardNumber= WalletTransactionInitiation.getInstance().getCardNumber();
@@ -325,9 +345,7 @@ public class PurchasePreview extends DialogFragment implements
         String eMaishaPayServiceMail="info@cabraltech.com";
 
 
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Processing the transaction..");
+        dialogLoader.showProgressDialog();
 
         RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
                 .setCurrency("UGX")
@@ -360,7 +378,7 @@ public class PurchasePreview extends DialogFragment implements
 
     }
 
-    private void processWalletPayment() {
+    private void processWalletPayment(String service_code) {
         String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
@@ -369,13 +387,6 @@ public class PurchasePreview extends DialogFragment implements
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
-        String service_code = "121518";
 
         Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant",service_code);
 
@@ -383,8 +394,10 @@ public class PurchasePreview extends DialogFragment implements
             @Override
             public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
                 if(response.code()== 200){
+                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                     if(response.body().getStatus().equals("0")){
-                        dialog.dismiss();
+
                         try {
                             Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }catch (Exception e){
@@ -392,7 +405,7 @@ public class PurchasePreview extends DialogFragment implements
                             Log.e("Error", e.getMessage());
                         }
                     }else {
-                        dialog.dismiss();
+
                         final Dialog dialog = new Dialog(activity);
                         dialog.setContentView(R.layout.dialog_successful_message);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -401,7 +414,7 @@ public class PurchasePreview extends DialogFragment implements
                         text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
 
 
-                        dialog.findViewById(R.id.dialog_success_txt_message).setOnClickListener(new View.OnClickListener() {
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
@@ -421,7 +434,7 @@ public class PurchasePreview extends DialogFragment implements
                         Log.e("BACKUP RESPONSE 1A"+response.code(),response.errorBody().toString());
                     }
 
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
 
                 }
             }
@@ -435,7 +448,7 @@ public class PurchasePreview extends DialogFragment implements
                 errorTextView.setText("Error occured! Try again later");
                 error_message_layout.setVisibility(View.VISIBLE);
                 errorTextView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
 
@@ -530,16 +543,14 @@ public class PurchasePreview extends DialogFragment implements
     public void showProgressIndicator(boolean active) {
         try {
 
-            if (dialog == null) {
-                dialog = new ProgressDialog(activity);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setMessage("Please wait...");
+            if (dialogLoader == null) {
+                dialogLoader.showProgressDialog();
             }
 
-            if (active && !dialog.isShowing()) {
-                dialog.show();
+            if (active ) {
+                dialogLoader.showProgressDialog();
             } else {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         } catch (NullPointerException e) {
             e.printStackTrace();

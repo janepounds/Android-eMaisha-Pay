@@ -38,7 +38,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.sell.MyProduceListAdapter;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.marketplace.MyProduce;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -73,7 +72,6 @@ public class MyProduceFragment extends Fragment {
 
     private MyProduce myProduce;
 
-    private DbHandlerSingleton dbHandler;
 
     private RecyclerView recyclerView;
     LinearLayout layoutEmptyProduceList;
@@ -87,8 +85,6 @@ public class MyProduceFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView_my_produce_fragment);
         layoutEmptyProduceList = view.findViewById(R.id.produce_view_empty);
         FloatingActionButton addProduce = view.findViewById(R.id.btn_add_my_produce);
-
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
         getAllProduce();
         Log.d(TAG, "onCreateView: " + produceList.size());
@@ -280,8 +276,8 @@ public class MyProduceFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            ArrayList<MyProduce> produce = fragmentReference.get().dbHandler.getAllProduce();
-            fragmentReference.get().produceList = produce;
+//            ArrayList<MyProduce> produce = fragmentReference.get().dbHandler.getAllProduce();
+//            fragmentReference.get().produceList = produce;
 
 
             return true;
@@ -335,7 +331,7 @@ public class MyProduceFragment extends Fragment {
         @Override
         protected Boolean doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: Executing"+myProduce.getUnits());
-            fragmentReference.get().dbHandler.insertProduce(myProduce);
+//            fragmentReference.get().dbHandler.insertProduce(myProduce);
             return true;
         }
 

@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+
 import com.cabral.emaishapay.models.marketplace.MarketPriceItem;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class MarketPriceListAdapter extends RecyclerView.Adapter<MarketPriceList
     LayoutInflater layoutInflater;
     Context mContext;
     ArrayList<MarketPriceItem> marketPriceArrayList = new ArrayList<>();
-    DbHandlerSingleton dbHandler;
+
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
     public MarketPriceListAdapter(Context context, List<MarketPriceItem> marketPrices) {
@@ -52,7 +52,6 @@ public class MarketPriceListAdapter extends RecyclerView.Adapter<MarketPriceList
     public MarketPriceListAdapter.MarketPriceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = layoutInflater.inflate(R.layout.market_price_list_item, parent, false);
-        dbHandler = DbHandlerSingleton.getHandlerInstance(mContext);
         MarketPriceListAdapter.MarketPriceViewHolder holder = new MarketPriceListAdapter.MarketPriceViewHolder(view);
         return holder;
     }

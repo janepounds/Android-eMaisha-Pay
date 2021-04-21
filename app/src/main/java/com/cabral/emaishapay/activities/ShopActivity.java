@@ -3,47 +3,26 @@ package com.cabral.emaishapay.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.database.DatabaseAccess;
+
 import com.cabral.emaishapay.databinding.ActivityShopBinding;
-import com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment;
-import com.cabral.emaishapay.fragments.shop_fragment.ShopPOSFragment;
-import com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment;
-import com.cabral.emaishapay.fragments.shop_fragment.ShopSalesFragment;
-import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ShopActivity extends AppCompatActivity {
 

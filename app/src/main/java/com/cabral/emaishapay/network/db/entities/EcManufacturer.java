@@ -14,8 +14,7 @@ public class EcManufacturer implements Parcelable {
     @ColumnInfo(name = "manufacturer_name")
     private String manufacturer_name;
 
-    public EcManufacturer(int manufacturer_id, String manufacturer_name) {
-        this.manufacturer_id = manufacturer_id;
+    public EcManufacturer( String manufacturer_name) {
         this.manufacturer_name = manufacturer_name;
     }
 

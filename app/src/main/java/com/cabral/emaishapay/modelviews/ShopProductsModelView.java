@@ -18,6 +18,7 @@ import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.utils.Resource;
 
@@ -160,37 +161,10 @@ public class ShopProductsModelView extends AndroidViewModel {
         return mRepository.updateProductStock(product_id,new_product_name,product_code,new_category_name,"",product_buy_price,product_sell_price,product_supplier,product_image,product_stock+"",product_weight_unit,product_weight,new_manufacturer_name);
     }
 
-//    public void updateProduct( String token, String id, String measure_id, String wallet_id, String product_id, String product_buy_price, String product_sell_price, String product_supplier, int product_stock, String new_manufacturer_name, String new_category_name, String new_product_name,String product_code,String product_image,String product_weight_unit,String product_weight){
-//        Call<ResponseBody> call = BuyInputsAPIClient
-//                .getInstance()
-//                .updateProduct(token,id,measure_id,wallet_id,product_id,product_buy_price,product_sell_price,product_supplier,product_stock,new_manufacturer_name,new_category_name,new_product_name);
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.isSuccessful()) {
-//                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-////                            String product_id,String product_name,String product_code, String product_category,String product_description,String product_buy_price,String product_sell_price,String product_supplier,String product_image, String product_stock,String product_weight_unit,String product_weight,String manufacturer
-//                            mRepository.updateProductStock(product_id,new_product_name,product_code,new_category_name,"",product_buy_price,product_sell_price,product_supplier,product_image,product_stock+"",product_weight_unit,product_weight,new_manufacturer_name);
-//                        }
-//                    });
-//                    //Log.d("Categories", String.valueOf(categories));
-//
-//                } else {
-//                    Log.d("Failed", "Manufacturers Fetch failed");
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                t.printStackTrace();
-//
-//            }
-//        });
-//    }
+    public long addManufacturer(EcManufacturer manufacturer) {
+        return mRepository.addManufacturers(manufacturer);
+    }
+
 
     public ArrayList<HashMap<String, String>> getOfflineManufacturers() {
         return mRepository.getOfflineManufacturers();
@@ -209,5 +183,25 @@ public class ShopProductsModelView extends AndroidViewModel {
         return mRepository.addProduct(product);
     }
 
+    public long addProductName(EcProduct product) {
+        return mRepository.addProduct(product);
+    }
+
+    //get offline product categories
+    public ArrayList<HashMap<String, String>> getProductSupplier() {
+
+        return mRepository.getProductSupplier();
+    }
+
+    public ArrayList<HashMap<String, String>> getWeightUnit() {
+        return mRepository.getWeightUnit();
+    }
+    public long addProductCategory(EcProductCategory category) {
+        return mRepository.addProductCategory(category);
+    }
+
+    public long updateProductSyncStatus( String product_id, String status) {
+        return mRepository.updateProductSyncStatus(product_id,status);
+    }
 
 }

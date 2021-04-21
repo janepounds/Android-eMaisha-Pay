@@ -52,7 +52,6 @@ import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
 import com.cabral.emaishapay.models.shop_model.Product;
@@ -61,6 +60,7 @@ import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Timestamp;
@@ -82,7 +82,7 @@ public class AddShopProductFragment extends DialogFragment {
     LinearLayout measurement_layout,spn_measurements_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
-
+    List<HashMap<String, String>> productCategory, productSupplier, weightUnit;
     private String selected_measure_id;
     Integer selectedProductID;
     Integer selectedManufacturersID;
@@ -101,7 +101,6 @@ public class AddShopProductFragment extends DialogFragment {
     private List<String> offlineCategoryNames;
     private List<String> offlineProductsName;
     private String measure_id,key,product_id;
-    private DbHandlerSingleton dbHandler;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
@@ -146,7 +145,6 @@ public class AddShopProductFragment extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.fragment_add_product, null);
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
         etxtProductName = view.findViewById(R.id.etxt_product_name);
         etxtProductCode = view.findViewById(R.id.etxt_product_code);
         etxtProductCategory = view.findViewById(R.id.etxt_product_category);
@@ -210,6 +208,8 @@ public class AddShopProductFragment extends DialogFragment {
                 offlineCategories =viewModel.getOfflineProductCategories();
                 //get offline product names
                 offlineProductNames = viewModel.getOfflineProductNames();
+
+
             }
         });
 
@@ -254,16 +254,20 @@ public class AddShopProductFragment extends DialogFragment {
             }
         });
 
-        //get data from local database
-        final List<HashMap<String, String>> productCategory, productSupplier, weightUnit;
-        productCategory = dbHandler.getProductCategory();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                //get product category
+                productCategory  =viewModel.getOfflineProductCategories();
+                //get product supplier
+                productSupplier =viewModel.getProductSupplier();
+                //get weight unit
+                weightUnit = viewModel.getWeightUnit();
 
-        //need to open database in every query to get data from local db
-        productSupplier = dbHandler.getProductSupplier();
 
+            }
+        });
 
-        //need to open database in every query to get data from local db
-        weightUnit = dbHandler.getWeightUnit();
 
         for (int i = 0; i < productCategory.size(); i++) {
             // Get the ID of selected Country
@@ -339,15 +343,32 @@ public class AddShopProductFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         if(!dialog_add_edit_text.getText().toString().isEmpty()){
-                            boolean check = dbHandler.addManufacturers(dialog_add_edit_text.getText().toString());
-                            if(check){
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //add manufacturer
+                                    long addManufacturer= viewModel.addManufacturer(new EcManufacturer(
+                                            dialog_add_edit_text.getText().toString()
+                                    ));
 
-                                manufacturersAdapter.add(dialog_add_edit_text.getText().toString());
-                                manufacturersAdapter.notifyDataSetChanged();
-                                dialog_add_edit_text.getText().clear();
-                            }else{
-                                Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
-                            }
+
+                                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (addManufacturer>0) {
+                                                manufacturersAdapter.add(dialog_add_edit_text.getText().toString());
+                                                manufacturersAdapter.notifyDataSetChanged();
+                                                dialog_add_edit_text.getText().clear();
+                                            } else {
+
+                                                Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
 
                         }
                     }
@@ -463,15 +484,32 @@ public class AddShopProductFragment extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             if(!dialog_add_edit_text.getText().toString().isEmpty()){
-                                boolean check = dbHandler.addProductCategory(dialog_add_edit_text.getText().toString());
-                                if(check){
+                                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //add manufacturer
+                                        long category =viewModel.addProductCategory(new EcProductCategory(
+                                                dialog_add_edit_text.getText().toString()
+                                        ));
 
-                                    categoryAdapter.add(dialog_add_edit_text.getText().toString());
-                                    categoryAdapter.notifyDataSetChanged();
-                                    dialog_add_edit_text.getText().clear();
-                                }else{
-                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG);
-                                }
+
+                                        AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (category>0) {
+                                                    categoryAdapter.add(dialog_add_edit_text.getText().toString());
+                                                    categoryAdapter.notifyDataSetChanged();
+                                                    dialog_add_edit_text.getText().clear();
+                                                } else {
+
+                                                    Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+
 
                             }
                         }
@@ -619,14 +657,43 @@ public class AddShopProductFragment extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             if(!add_product.getText().toString().isEmpty()){
-                                boolean check = dbHandler.addProductName(add_product.getText().toString());
-                                if(check){
-                                    productAdapter.add(add_product.getText().toString());
-                                    productAdapter.notifyDataSetChanged();
-                                    add_product.getText().clear();
-                                }else{
-                                    Toast.makeText(context,"Failed to update",Toast.LENGTH_LONG).show();
-                                }
+                                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //add manufacturer
+                                        long product = viewModel.addProduct(new EcProduct(
+                                                "",
+                                                add_product.getText().toString(),
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                 "",
+                                                "",
+                                                ""
+                                        ));
+
+
+                                        AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (product>0) {
+                                                    productAdapter.add(add_product.getText().toString());
+                                                    productAdapter.notifyDataSetChanged();
+                                                    add_product.getText().clear();
+                                                } else {
+
+                                                    Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
 
                             }
                         }

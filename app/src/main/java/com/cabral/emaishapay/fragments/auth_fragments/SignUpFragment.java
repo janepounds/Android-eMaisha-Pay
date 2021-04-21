@@ -29,10 +29,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
+
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+
 import com.cabral.emaishapay.databinding.SignupFragmentBinding;
 import com.cabral.emaishapay.models.SpinnerItem;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -54,7 +54,7 @@ public class SignUpFragment  extends Fragment {
     private static final String TAG = "SignUp";
     private SignupFragmentBinding binding;
 
-    private DbHandlerSingleton dbHandler;
+
     private Context context;
     private String phoneNumber;
     DialogLoader dialogLoader;

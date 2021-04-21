@@ -34,7 +34,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
@@ -77,7 +77,6 @@ public class My_Cart extends Fragment {
     DialogLoader dialogLoader;
     Toolbar toolbar;
     private Context context;
-    private DbHandlerSingleton dbHandler;
     DefaultAddressModelView viewModel;
 
     @Override
@@ -132,7 +131,7 @@ public class My_Cart extends Fragment {
         default_address_ = rootView.findViewById(R.id.default_delivery_location2_tv);
         locationLayout = rootView.findViewById(R.id.location_layout);
 
-        dbHandler =  DbHandlerSingleton.getHandlerInstance(getContext());
+
 //        cart_item_discount_price = rootView.findViewById(R.id.cart_item_discount_price);
 
         // Change the Visibility of cart_view and cart_view_empty LinearLayout based on CartItemsList's Size

@@ -3,14 +3,20 @@ package com.cabral.emaishapay.network;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 
+import androidx.lifecycle.ViewModelProvider;
+
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
+import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIClient;
@@ -23,7 +29,6 @@ import com.google.gson.Gson;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 import com.cabral.emaishapay.models.user_model.UserData;
@@ -34,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +53,6 @@ import retrofit2.Response;
 public class StartAppRequests {
     private static final String TAG = "StartAppRequests";
     private List<Regions> dataList = new ArrayList<>();
-    private DbHandlerSingleton dbHandler;
     private static BuyInputsDB_Handler db_handler;
     private Context context;
     private List<HashMap<String, String>> productList;
@@ -60,7 +65,6 @@ public class StartAppRequests {
     public StartAppRequests(Context context) {
         emaishaPayApp = ((EmaishaPayApp) EmaishaPayApp.getContext());
         db_handler = new BuyInputsDB_Handler();
-        dbHandler =DbHandlerSingleton.getHandlerInstance(context);
         BuyInputsDB_Manager.initializeInstance(db_handler);
         this.context = context;
     }
@@ -78,7 +82,7 @@ public class StartAppRequests {
     }
 
     public void RequestAllRegions() {
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
+
         int regionId = DataRepository.getOurInstance(context).getMaxRegionId();
         Log.d(TAG, "RequestAllRegions: "+ regionId);
         Call<Regions> call = ExternalAPIClient.getInstance()
@@ -113,9 +117,7 @@ public class StartAppRequests {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
-
-            productList = dbHandler.getUnsyncedProducts(sync_status);
-            for (int i = 0; i < productList.size(); i++) {
+            for (int i = 0; i < productsList.size(); i++) {
                 Log.e("WAlletIDError",productList.get(i).get("user_id")+"");
                 saveProductList(
                         productList.get(i).get("product_id"),
@@ -160,14 +162,27 @@ public class StartAppRequests {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     //update product status
-                    boolean check = dbHandler.updateProductSyncStatus(product_id,"1");
-                    if(check){
-                        Log.d("Sync Status", "Product Synced");
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //update Sync Status
+                            long updateStatus =  DataRepository.getOurInstance(context).updateProductSyncStatus(product_id,"1");
+                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (updateStatus>0) {
+                                        Log.d("Sync Status", "Product Synced");
+                                    } else {
 
-                    }else{
+                                        Log.d("Sync Status", "Sync Failed");
 
-                        Log.d("Sync Status", "Sync Failed");
-                    }
+                                    }
+                                }
+                            });
+
+
+                        }
+                    });
 
 
 
@@ -181,7 +196,8 @@ public class StartAppRequests {
             }
         });
     }
-    //*********** API Request Method to Fetch App Banners ********//
+
+
 
 
 
