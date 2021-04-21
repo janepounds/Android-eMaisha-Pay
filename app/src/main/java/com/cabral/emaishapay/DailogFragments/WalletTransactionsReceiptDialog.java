@@ -17,7 +17,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,7 +87,7 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
             totalTextView.setText("UGX "+ NumberFormat.getInstance().format(transaction.getAmount()));
             referenceNoTextView.setText(transaction.getReferenceNumber());
             merchantNameTextView.setText(transaction.getReceiver());
-            SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat()+" '|' HH:mm:ss a", Locale.ENGLISH);
+            SimpleDateFormat localFormat = new SimpleDateFormat(getString(R.string.date_format_preffered)+" '|' HH:mm:ss a", Locale.ENGLISH);
             localFormat.setTimeZone(TimeZone.getDefault());
             String currentDateandTime = null;
             SimpleDateFormat incomingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

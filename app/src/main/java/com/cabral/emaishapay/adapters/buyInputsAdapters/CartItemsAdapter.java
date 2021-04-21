@@ -33,8 +33,10 @@ import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Value;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -114,6 +116,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             
         }
         else {
+            NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
             // Get the data model based on Position
             final CartProduct cartProduct = cartItemsList.get(position);
     
@@ -124,7 +127,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             holder.cart_item_title.setText(cart_title.substring(0, 1).toUpperCase() + cart_title.substring(1).toLowerCase());
             //holder.cart_item_category.setText(cartProduct.getCustomersBasketProduct().getCategoryNames());
             holder.cart_item_quantity.setText("" + cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity());
-            holder.cart_item_base_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getProductsPrice())));
+            holder.cart_item_base_price.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getProductsPrice())));
 //            holder.cart_item_sub_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(cartProduct.getCustomersBasketProduct().getTotalPrice())));
 
             holder.cart_item_measure.setText(cartProduct.getCustomersBasketProduct().getSelectedProductsWeight());
@@ -303,7 +306,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
 
     //*********** Calculate and Set the Cart's Total Price ********//
     public void setCartTotal() {
-
+        NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         double finalPrice = 0;
         List<CartProduct> cartItemsList = user_cart_BuyInputs_db.getCartItems();
 
@@ -312,7 +315,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             finalPrice += Double.parseDouble(cartItemsList.get(i).getCustomersBasketProduct().getTotalPrice());
         }
 
-        cartFragment.cart_item_total_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(finalPrice));
+        cartFragment.cart_item_total_price.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(finalPrice));
 //        cartFragment.cart_item_discount_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(0.0));
 //        cartFragment.cart_item_subtotal_price.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(finalPrice));
     }
@@ -348,6 +351,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             cart_item_measure = itemView.findViewById(R.id.cart_item_measure);
             
             attributes_recycler = itemView.findViewById(R.id.cart_item_attributes_recycler);
+            NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         }
         
     }

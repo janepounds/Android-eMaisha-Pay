@@ -3,20 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    android:background="#f8f8ff">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_product_home"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="#f8f8ff"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"
+            app:titleTextColor="@color/colorPrimary"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/topBar"
@@ -24,7 +21,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="@color/windowBackground"
+        android:background="#f8f8ff"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"

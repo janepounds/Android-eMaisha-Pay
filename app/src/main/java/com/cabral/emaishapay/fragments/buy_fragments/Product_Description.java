@@ -73,9 +73,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
@@ -188,6 +190,8 @@ public class Product_Description extends Fragment  {
                     .addToBackStack(null).commit();
         });
 
+
+
         title = rootView.findViewById(R.id.product_title);
         category = rootView.findViewById(R.id.product_category);
         price_old = rootView.findViewById(R.id.product_price_old);
@@ -198,7 +202,7 @@ public class Product_Description extends Fragment  {
         product_tag_discount = rootView.findViewById(R.id.product_tag_discount);
         product_description_webView = rootView.findViewById(R.id.product_description_webView);
         sliderLayout = rootView.findViewById(R.id.product_cover_slider);
-        pagerIndicator = rootView.findViewById(R.id.product_slider_indicator);
+       // pagerIndicator = rootView.findViewById(R.id.product_slider_indicator);
         product_like_btn = rootView.findViewById(R.id.product_like_btn);
         product_share_btn = rootView.findViewById(R.id.product_share_btn);
         product_attributes = rootView.findViewById(R.id.product_attributes);
@@ -644,8 +648,9 @@ public class Product_Description extends Fragment  {
             product_attributes.setVisibility(View.GONE);
         }
 
+        NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         productFinalPrice = productBasePrice + attributesPrice;
-        price_new.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(productFinalPrice));
+        price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
 
         // Check if the User has Liked the Product
         if (productDetails.getIsLiked().equalsIgnoreCase("1")) {
@@ -746,8 +751,9 @@ public class Product_Description extends Fragment  {
 
         // Check if product from flash sale
         // Calculate and Set Product's total Price
+        NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         productFinalPrice = productBasePrice + attributesPrice;
-        price_new.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(productFinalPrice));
+        price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
 
     }
 
@@ -773,10 +779,10 @@ public class Product_Description extends Fragment  {
         }
 
         // Check if product from flash sale
-
+        NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         if (productDetails.getFlashPrice() != null) {
             if (!productDetails.getFlashPrice().isEmpty()) {
-                price_new.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(Double.parseDouble(productDetails.getFlashPrice())));
+                price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(Double.parseDouble(productDetails.getFlashPrice())));
                 long serverTime = Long.parseLong(productDetails.getServerTime()) * 1000L;
                 long startDate = Long.parseLong(productDetails.getFlashStartDate()) * 1000L;
                 productBasePrice = Double.parseDouble(productDetails.getFlashPrice());
@@ -865,6 +871,7 @@ public class Product_Description extends Fragment  {
             }
         });
 
+        sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
         // Check if the size of Images in the Slider is less than 2
 //        if (slider_covers.size() < 2) {
 //            // Disable PagerTransformer

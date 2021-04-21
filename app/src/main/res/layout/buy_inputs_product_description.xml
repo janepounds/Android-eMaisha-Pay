@@ -6,24 +6,20 @@
     xmlns:custom="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
+    android:background="#f8f8ff"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_product_home"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="#f8f8ff"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"
+            app:titleTextColor="@color/colorPrimary"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -56,8 +52,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/background_round_white"
-                    />
+                    app:indicator_visibility="invisible"/>
                     <LinearLayout
                         android:id="@+id/layout_weights"
                         android:layout_width="match_parent"
@@ -74,17 +69,19 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.glide.slider.library.indicators.PagerIndicator
-                    android:id="@+id/product_slider_indicator"
-                    style="@style/AndroidImageSlider_Indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/img_slider_and_weights"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="20dp"
-                    app:selected_color="@color/colorPrimary"
-                    app:unselected_color="@color/layoutBackground" />
+<!--                <com.glide.slider.library.indicators.PagerIndicator-->
+<!--                    android:id="@+id/product_slider_indicator"-->
+<!--                    style="@style/AndroidImageSlider_Indicator"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_alignBottom="@+id/img_slider_and_weights"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:paddingBottom="20dp"-->
+<!--                    app:selected_color="@color/colorPrimary"-->
+<!--                    app:unselected_color="@color/layoutBackground"-->
+<!--                    android:visibility="gone"/>-->
 
 
 
