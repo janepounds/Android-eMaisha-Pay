@@ -165,7 +165,8 @@
                 android:layout_height="wrap_content"
                 android:text="Shop by category"
                 android:textSize="14sp"
-                android:textColor="#F5F5F5"
+                android:textColor="#FFF"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
@@ -215,7 +216,7 @@
         android:layout_marginTop="10dp"
         android:text="Most Popular"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/btn_view_all_most_popular"
@@ -229,7 +230,7 @@
         android:text="See All"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="9sp" />
+        android:textSize="12sp" />
 
     <FrameLayout
         android:id="@+id/layout_most_popular"
@@ -248,7 +249,7 @@
         android:layout_marginTop="10dp"
         android:text="Deals"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/btn_view_all_deals"
@@ -262,7 +263,7 @@
         android:text="See All"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="9sp" />
+        android:textSize="12sp" />
 
     <FrameLayout
         android:id="@+id/layout_deals"

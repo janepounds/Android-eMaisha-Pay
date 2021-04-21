@@ -46,7 +46,9 @@ import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * ProductAdapter is the adapter class of RecyclerView holding List of Products in All_Products and other Product relevant Classes
@@ -167,11 +169,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             // Calculate the Discount on Product with static method of Helper class
             final String discount = Utilities.checkDiscount(product.getProductsMeasure().get(0).getProducts_price(), product.getDiscountPrice());
 
+            NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
             if (discount != null) {
                 // Set Product's Price
                 holder.product_price_old.setVisibility(View.VISIBLE);
-                holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsPrice())));
-                holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getDiscountPrice())));
+                holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " +  nf.format(product.getProductsPrice()));
+                holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getDiscountPrice()));
 
 
             } else {
@@ -185,7 +188,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
                 double thisprice = Double.parseDouble(product.getProductsMeasure().get(0).getProducts_price().replace(",", ""));
                 Log.e("NumberFormat: ", thisprice + "");
-                holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(thisprice));
+                holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(thisprice));
             }
 
 //
@@ -291,8 +294,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                     //  remainingTime =  end-server ;
 
                     if (server > start) {
-                        holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getFlashPrice())));
-                        holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + "" + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsPrice())));
+                        holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getFlashPrice()));
+                        holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getProductsPrice()));
 
                         mCountDownTimer = new CountDownTimer(end, 1000) {
                             @Override
@@ -314,9 +317,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                             }
                         }.start();
                     } else {
-                        holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + new DecimalFormat("#0.00").format(Double.valueOf(product.getFlashPrice())));
+                        holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getFlashPrice()));
                         if (product.getProductsMeasure().size() > 0)
-                            holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " + new DecimalFormat("#0.00").format(Double.valueOf(product.getProductsMeasure().get(0).getProducts_price())));
+                            holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getProductsMeasure().get(0).getProducts_price()));
 
                     }
 

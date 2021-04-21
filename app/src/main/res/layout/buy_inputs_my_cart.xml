@@ -7,19 +7,16 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_product_home"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_blue"
+            android:background="@color/windowBackground"
+            app:titleTextColor="@color/colorPrimary"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
         android:id="@+id/cart_view_empty"
         android:layout_width="match_parent"
@@ -215,8 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_10dp"
-                    android:background="@drawable/round_button_red"
-                    android:drawableEnd="@drawable/ic_right_chevron"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:padding="@dimen/dimen_8dp"
                     android:text="clear cart"
                     android:textAllCaps="true"
@@ -308,9 +304,10 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/rounded_corners_button"
-                            android:drawableEnd="@drawable/ic_right_chevron"
-                            android:padding="8dp"
+                            android:background="@drawable/rectangular_blue_solid"
+                            android:paddingEnd="20dp"
+                            android:drawablePadding="10dp"
+                            android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
                             android:text="Checkout"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
