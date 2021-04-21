@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,13 +35,10 @@ import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
 import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
 import com.cabral.emaishapay.models.external_transfer_model.TransferFeeResponse;
-import com.cabral.emaishapay.models.marketplace.MyProduce;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
 import com.cabral.emaishapay.network.api_helpers.FlutterwaveV3APIClient;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -134,7 +129,7 @@ public class ConfirmTransfer extends DialogFragment {
 
         totalTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(amount));
 
-        SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat(), Locale.ENGLISH);
+        SimpleDateFormat localFormat = new SimpleDateFormat(getString(R.string.date_format_preffered), Locale.ENGLISH);
         localFormat.setTimeZone(TimeZone.getDefault());
         String currentDateandTime = null;
         SimpleDateFormat incomingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.LoanApplication;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -51,7 +50,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
         holder.numberTxt.setText(data.getLoan_no());
 
-        SimpleDateFormat localFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat().replace("mm", "MM"), Locale.ENGLISH);
+        SimpleDateFormat localFormat = new SimpleDateFormat(context.getString(R.string.date_format_preffered).replace("mm", "MM"), Locale.ENGLISH);
         localFormat.setTimeZone(TimeZone.getDefault());
         String currentDateandTime = null, prevDate = null;
 
@@ -70,7 +69,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
             else
                 holder.dateTxt.setVisibility(View.VISIBLE);
 
-            Log.d("DATE ", data.getRequestDate() + " => " + WalletSettingsSingleton.getInstance().getDateFormat());
+            Log.d("DATE ", data.getRequestDate() + " => " + context.getString(R.string.date_format_preffered));
 
             holder.amountTxt.setText("UGX " + NumberFormat.getInstance().format(data.getAmount()));
             holder.statusTxt.setText(data.generateStatus());

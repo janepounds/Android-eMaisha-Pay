@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.cabral.emaishapay.singletons.WalletSettingsSingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -365,8 +364,8 @@ public class LoanApplication implements Serializable {
     }
 
     public String computeDueDate(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat(WalletSettingsSingleton.getInstance().getDateFormat().replace("mm","MM"));
-        Log.d("DATE FORMAT", WalletSettingsSingleton.getInstance().getDateFormat().replace("MM","mm"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/LL/yyyy".replace("mm","MM"));
+        Log.d("DATE FORMAT", "dd/LL/yyyy".replace("MM","mm"));
 
         Calendar todayCalendar = Calendar.getInstance();
         todayCalendar.setTime(new Date());

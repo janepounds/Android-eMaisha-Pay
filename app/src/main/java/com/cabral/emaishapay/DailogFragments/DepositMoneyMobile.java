@@ -47,7 +47,6 @@ public class DepositMoneyMobile extends DialogFragment {
     LinearLayout layoutAddMoney;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    static String PENDING_DEPOSIT_REFERENCE_NUMBER;
     TextView balanceTextView;
     double balance;
     private String txRef;
