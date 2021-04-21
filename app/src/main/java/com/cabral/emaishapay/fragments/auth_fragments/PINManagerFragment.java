@@ -973,12 +973,12 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "On Success", Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, "On Success", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "On OnFailure", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "On OnFailure", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -990,12 +990,12 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         if (matcher.find()) {
             String retrievedCode=matcher.group(0);
             if(retrievedCode.length()==6){
-                code1.setText(retrievedCode.charAt(0));
-                code2.setText(retrievedCode.charAt(1));
-                code3.setText(retrievedCode.charAt(2));
-                code4.setText(retrievedCode.charAt(3));
-                code5.setText(retrievedCode.charAt(4));
-                code6.setText(retrievedCode.charAt(5));
+                code1.setText(retrievedCode.charAt(0)+"");
+                code2.setText(retrievedCode.charAt(1)+"");
+                code3.setText(retrievedCode.charAt(2)+"");
+                code4.setText(retrievedCode.charAt(3)+"");
+                code5.setText(retrievedCode.charAt(4)+"");
+                code6.setText(retrievedCode.charAt(5)+"");
 
                 otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
                 otp_code = otp_code.replaceAll("\\s+", "");
@@ -1033,7 +1033,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 // We need to get the code from inside with regex
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
 
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
 
                 getOtpFromMessage(message);
