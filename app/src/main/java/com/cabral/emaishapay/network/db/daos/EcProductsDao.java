@@ -62,5 +62,8 @@ public interface EcProductsDao {
 
     //update sync status
     @Query("UPDATE EcProduct SET sync_status=:sync_status WHERE product_id=:product_id")
-    void updateProductSyncStatus(String product_id,String sync_status);
+    int updateProductSyncStatus(String product_id,String sync_status);
+
+
+
 }

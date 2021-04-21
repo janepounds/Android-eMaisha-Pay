@@ -33,7 +33,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
@@ -123,7 +122,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     private static final String KEY_LOCATION = "location";
     // [END maps_current_place_state_keys]
     private LatLng mCenterLatLong;
-    private DbHandlerSingleton dbHandler;
+
 
 
     public Shipping_Address(My_Cart my_cart,My_Addresses parentFrag) {

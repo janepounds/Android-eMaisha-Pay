@@ -9,37 +9,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
 import com.cabral.emaishapay.adapters.Shop.SalesDetailsAdapter;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
-import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
-import com.cabral.emaishapay.modelviews.ShopProductsModelView;
-import com.cabral.emaishapay.modelviews.ShopSalesModelView;
-import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
+
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
-import com.cabral.emaishapay.utils.Resource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import es.dmoral.toasty.Toasty;
-
 
 public class SalesDetailsFragment extends Fragment {
 

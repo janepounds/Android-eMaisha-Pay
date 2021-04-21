@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.sell.MarketPriceItemAdapter;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
 import com.cabral.emaishapay.models.marketplace.MarketPrice;
 import com.cabral.emaishapay.models.marketplace.MarketPriceItem;
 import com.cabral.emaishapay.models.marketplace.MarketPriceSubItem;
@@ -35,7 +34,6 @@ public class MarketPriceFragment extends Fragment {
     private ArrayList<MarketPriceItem> marketPriceItemArrayListBackUp = new ArrayList<>();
     private ArrayList<MarketPriceSubItem> marketPriceSubItemArrayList = new ArrayList<>();
 
-    private DbHandlerSingleton dbHandler;
     MarketPriceItemAdapter adapter;
 
     private RecyclerView recyclerView;
@@ -52,14 +50,14 @@ public class MarketPriceFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView_market_price_fragment);
         spinner = view.findViewById(R.id.spinner_market_price_fragment);
 
-        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
+//        dbHandler = DbHandlerSingleton.getHandlerInstance(context);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         adapter = new MarketPriceItemAdapter(context, marketPriceItemArrayList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        loadMarketPrices();
+//        loadMarketPrices();
 //        dbHandler.insertMarketPrice(new MarketPrice("Ginger", "Tororo", "1,000", "600"));
 //        dbHandler.insertMarketPrice(new MarketPrice("Millet", "Mbarara", "1,800", "1,500"));
 //        dbHandler.insertMarketPrice(new MarketPrice("Milk", "Gulu", "1,000", "800"));
@@ -94,14 +92,14 @@ public class MarketPriceFragment extends Fragment {
                     marketPriceSubItemArrayList.clear();
                     for (MarketPriceItem x : marketPriceItemArrayListBackUp) {
                         if ((x.getTitle().toLowerCase()).contains(selection.toLowerCase())) {
-                            marketPriceArrayList = dbHandler.filterMarketPrices(x.getTitle());
+//                            marketPriceArrayList = dbHandler.filterMarketPrices(x.getTitle());
 
                             for (int k = 0; k < marketPriceArrayList.size(); k++) {
                                 Log.d(TAG, "onItemSelected: Array = " + marketPriceArrayList.get(k));
                                 MarketPrice marketPrice = marketPriceArrayList.get(k);
                                 Log.d(TAG, "onItemSelected: Name = " + marketPrice.getCrop());
 
-                                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem(marketPrice.getCrop());
+//                                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem(marketPrice.getCrop());
 
                             }
 
@@ -113,7 +111,7 @@ public class MarketPriceFragment extends Fragment {
 
                     adapter.changeList(filteredList);
                 }else {
-                    loadMarketPrices();
+//                    loadMarketPrices();
                 }
             }
 
@@ -132,28 +130,28 @@ public class MarketPriceFragment extends Fragment {
         this.context = context;
     }
 
-    public void loadMarketPrices(){
-        marketPriceArrayList = dbHandler.getAllMarketPrices();
-
-        for (int k = 0; k < marketPriceArrayList.size(); k++) {
-            Log.d(TAG, "onItemSelected: Array = " + marketPriceArrayList.get(k));
-            MarketPrice marketPrice = marketPriceArrayList.get(k);
-            Log.d(TAG, "onItemSelected: Name = " + marketPrice.getCrop());
-            if(marketPrice.getCrop().equals("Ginger")){
-                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Ginger");
-
-            }else if(marketPrice.getCrop().equals("Millet")){
-                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Millet");
-            }else if(marketPrice.getCrop().equals("Milk")){
-                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Milk");
-            }
-
-            MarketPriceItem marketPriceItem = new MarketPriceItem(marketPrice.getCrop(), marketPriceSubItemArrayList);
-            adapter.addMarketPriceItem(marketPriceItem);
-
-
-
-
-        }
-    }
+//    public void loadMarketPrices(){
+//        marketPriceArrayList = dbHandler.getAllMarketPrices();
+//
+//        for (int k = 0; k < marketPriceArrayList.size(); k++) {
+//            Log.d(TAG, "onItemSelected: Array = " + marketPriceArrayList.get(k));
+//            MarketPrice marketPrice = marketPriceArrayList.get(k);
+//            Log.d(TAG, "onItemSelected: Name = " + marketPrice.getCrop());
+//            if(marketPrice.getCrop().equals("Ginger")){
+//                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Ginger");
+//
+//            }else if(marketPrice.getCrop().equals("Millet")){
+//                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Millet");
+//            }else if(marketPrice.getCrop().equals("Milk")){
+//                marketPriceSubItemArrayList = dbHandler.filterMarketPriceSubItem("Milk");
+//            }
+//
+//            MarketPriceItem marketPriceItem = new MarketPriceItem(marketPrice.getCrop(), marketPriceSubItemArrayList);
+//            adapter.addMarketPriceItem(marketPriceItem);
+//
+//
+//
+//
+//        }
+//    }
 }

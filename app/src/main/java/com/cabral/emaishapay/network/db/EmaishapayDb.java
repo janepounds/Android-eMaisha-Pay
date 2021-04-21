@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.cabral.emaishapay.network.db.daos.DefaultAddressDao;
 import com.cabral.emaishapay.network.db.daos.EcManufacturerDao;
+import com.cabral.emaishapay.network.db.daos.EcSupplierDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderProductsDao;
 import com.cabral.emaishapay.network.db.daos.ShopOrderDao;
 import com.cabral.emaishapay.network.db.daos.EcProductCategoryDao;
@@ -52,6 +53,7 @@ public abstract class EmaishapayDb extends RoomDatabase {
     public abstract RegionDetailsDao regionDetailsDao();
     public abstract UserCartAttributesDao userCartAttributesDao();
     public abstract UserCartDao userCartDao();
+    public abstract EcSupplierDao supplierDao();
 
 
 

@@ -4,22 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
+
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,8 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
-import com.cabral.emaishapay.adapters.Shop.ProductAdapter;
-import com.cabral.emaishapay.database.DbHandlerSingleton;
+
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentShopPosBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
@@ -55,7 +51,6 @@ public class ShopPOSFragment extends Fragment {
     public  TextView totalItems,totalprice;
     ImageView imgNoProduct;
     private RecyclerView recyclerView;
-    private DbHandlerSingleton dbHandler;
     public double chargeAmount;
     private WeakReference<ShopPOSFragment> fragmentReference;
     private ShopProductsModelView viewModel;
@@ -88,7 +83,6 @@ public class ShopPOSFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);
         fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
-        dbHandler = DbHandlerSingleton.getHandlerInstance(getContext());
 
         totalItems = binding.totalItems;
         totalprice = binding.tvTotalPrice;
