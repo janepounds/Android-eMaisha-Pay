@@ -32,7 +32,7 @@ public interface ShopOrderDao {
 
     //update order
     @Query("UPDATE ShopOrder SET order_status=:status WHERE order_id=:id ")
-    void updateOrder(String id, String status);
+    int updateOrder(String id, String status);
 
     //search order
     @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")

@@ -56,4 +56,9 @@ public class ShopOrdersModelView extends AndroidViewModel {
         mSavedStateHandler.set(QUERY_KEY, query);
     }
 
+    public long updateOrder(String order_id,String status){
+        return mRepository.updateOrder(order_id,status);
+    }
+
+
 }

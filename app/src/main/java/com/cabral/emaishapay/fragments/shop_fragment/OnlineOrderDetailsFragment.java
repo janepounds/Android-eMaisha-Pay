@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -19,11 +20,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
-import com.cabral.emaishapay.database.DatabaseAccess;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
+import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
@@ -44,6 +46,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
     FragmentOnlineOrderDetailsBinding binding;
     private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
     ShopOrder shopOrderDetails;
+    private ShopOrdersModelView viewModel;
 
 
     @Override
@@ -76,6 +79,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
         binding.txtOnlineOrderStatus.setText(order_status);
         if(order_status!=null){
             if(  !order_status.equalsIgnoreCase("Pending")){
@@ -159,20 +163,32 @@ public class OnlineOrderDetailsFragment extends Fragment {
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
 
-                                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
-                                    databaseAccess.open();
-                                    boolean check = databaseAccess.updateOrder(order_id, "Cancelled");
-                                    binding.txtOnlineOrderStatus.setText("Cancelled");
-                                    binding.rejectApproveLayout.setVisibility(View.GONE);
-                                    alertDialog.cancel();
-                                    if (check) {
-                                        progressDialog.dismiss();
-                                        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
-                                        Toasty.success(getContext(), "Order Successfully Rejected", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        progressDialog.dismiss();
-                                        Toasty.error(getContext(), "Order Rejection failed", Toast.LENGTH_SHORT).show();
-                                    }
+                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            long updateOrder = viewModel.updateOrder(order_id, "Cancelled");
+
+                                                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            if (updateOrder>0) {
+                                                                progressDialog.dismiss();
+                                                                binding.txtOnlineOrderStatus.setText("Cancelled");
+                                                                binding.rejectApproveLayout.setVisibility(View.GONE);
+                                                                alertDialog.cancel();
+                                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                                Toasty.success(getContext(), "Order Successfully Rejected", Toast.LENGTH_SHORT).show();
+                                                            } else {
+
+                                                                progressDialog.dismiss();
+                                                                Toasty.error(getContext(), "Order Rejection failed", Toast.LENGTH_SHORT).show();
+
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    });
+
 
                                 } else {
                                     progressDialog.dismiss();
@@ -215,20 +231,33 @@ public class OnlineOrderDetailsFragment extends Fragment {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
 
-                            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
-                            databaseAccess.open();
-                            boolean check = databaseAccess.updateOrder(order_id, "Approved");
-                            binding.txtOnlineOrderStatus.setText("Approved");
-                            binding.rejectApproveLayout.setVisibility(View.GONE);
-                            if (check) {
-                                progressDialog.dismiss();
-                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
-                                binding.txtApproveOnline.setVisibility(View.GONE);
-                                Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
-                            } else {
-                                progressDialog.dismiss();
-                                Toasty.error(getContext(), "Order Approval failed", Toast.LENGTH_SHORT).show();
-                            }
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    long updateOrder = viewModel.updateOrder(order_id, "Approved");
+
+                                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (updateOrder>0) {
+                                                progressDialog.dismiss();
+                                                binding.txtOnlineOrderStatus.setText("Approved");
+                                                binding.rejectApproveLayout.setVisibility(View.GONE);
+                                                progressDialog.dismiss();
+                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                binding.txtApproveOnline.setVisibility(View.GONE);
+                                                Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                progressDialog.dismiss();
+                                                Toasty.error(getContext(), "Order Approval failed", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
 
                         } else {
                             progressDialog.dismiss();

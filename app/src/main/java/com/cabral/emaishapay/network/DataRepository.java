@@ -345,7 +345,11 @@ public class DataRepository {
 
     }
 
+    //**********ADD PRODUCT NAME *******************//
+    public long updateOrder(String order_id,String status) {
 
+        return mShopOrderDao.updateOrder(order_id,status);
+    }
 
 
 
