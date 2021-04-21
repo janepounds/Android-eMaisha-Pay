@@ -17,8 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -211,7 +213,33 @@ public class LoginFragment  extends Fragment {
     }
 
     private boolean validateSecurityQns() {
+        String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
         //load answered security Qns(locally or from an endpoint)
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).validateSecurityQns(access_token,phone_number,firstSecurityQn.getSelectedItem().toString(),secondSecurityQn.getSelectedItem().toString(),thirdSecurityQn.getSelectedItem().toString(),firstQnAnswer.getText().toString(),secondQnAnswer.getText().toString(),thirdQnAnswer.getText().toString(),request_id,"validateSecurityQns");
+        call.enqueue(new Callback<SecurityQnsResponse>() {
+            @Override
+            public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
+                if(response.isSuccessful()){
+                    //call change password dialog
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new ChangePassword();
+                    depositDialog.show(getFragmentManager(), "dialog");
+
+                }else if (response.code() == 401) {
+                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+            }
+        });
 
         return true;
 
