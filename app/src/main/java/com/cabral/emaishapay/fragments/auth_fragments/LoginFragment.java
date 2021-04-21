@@ -54,7 +54,7 @@ public class LoginFragment  extends Fragment {
     ArrayList<String> securityQnsSubList2 = new ArrayList<>();
     ArrayList<String> securityQnsSubList3 = new ArrayList<>();
     private Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
-    private EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer;
+    private EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer,phone_number;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -102,6 +102,7 @@ public class LoginFragment  extends Fragment {
             });
 
             //calling security qns form
+            phone_number =dialogView.findViewById(R.id.phone_no);
             firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
             secondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
             thirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
@@ -193,10 +194,10 @@ public class LoginFragment  extends Fragment {
         dialogLoader.showProgressDialog();
         String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
-        String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
+//        String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
         //load answered security Qns(locally or from an endpoint)
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).validateSecurityQns(access_token,phone_number,firstSecurityQn.getSelectedItem().toString(),secondSecurityQn.getSelectedItem().toString(),thirdSecurityQn.getSelectedItem().toString(),firstQnAnswer.getText().toString(),secondQnAnswer.getText().toString(),thirdQnAnswer.getText().toString(),request_id,"validateSecurityQns");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).validateSecurityQns(access_token,phone_number.getText().toString(),firstSecurityQn.getSelectedItem().toString(),secondSecurityQn.getSelectedItem().toString(),thirdSecurityQn.getSelectedItem().toString(),firstQnAnswer.getText().toString(),secondQnAnswer.getText().toString(),thirdQnAnswer.getText().toString(),request_id,"validateSecurityQns");
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
@@ -205,28 +206,11 @@ public class LoginFragment  extends Fragment {
                         //call change password dialog
 
                         // Create and show the dialog.
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
-                        dialog.setView(dialogView);
-                        dialog.setCancelable(true);
-                        final EditText current_pin = dialogView.findViewById(R.id.current_pin);
-                        current_pin.setVisibility(View.GONE);
-                        final EditText new_pin = dialogView.findViewById(R.id.new_pin);
-                        final EditText confirm_new_pin = dialogView.findViewById(R.id.confirm_new_pin);
-                        final TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-                        final Button submit = dialogView.findViewById(R.id.update);
-                        final Button cancel = dialogView.findViewById(R.id.cancel);
-                        dialog_title.setText("Create New Pin");
-
+                        // Create and show the dialog.
+                        DialogFragment depositDialog = new ChangePassword();
+                        depositDialog.show(getFragmentManager(), "dialog");
                         dialogLoader.hideProgressDialog();
-                        final AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                alertDialog.dismiss();
-                            }
-                        });
+
 
                     }else{
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
