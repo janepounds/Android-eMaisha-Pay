@@ -76,6 +76,7 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.navController;
 
 //This fragment is used for creating or picking a user's PIN and Continue with Login or SignUp processes.
@@ -754,6 +755,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
                             Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
                             otpDialog.dismiss();
+                            WalletHomeActivity.savePreferences(PREFERENCES_WALLET_BUSINESS_ID, userDetails.getBusiness_id(), context);
                             loginUser(userDetails, rawpassword);
 
                             Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
@@ -763,6 +765,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             Log.d(TAG, accessToken);
                             WalletHomeActivity.WALLET_ACCESS_TOKEN = accessToken;
                             WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
+
+                            Log.d(TAG, "onResponse: business_id"+userDetails.getBusiness_id());
                             if (dialogLoader != null)
                                 dialogLoader.hideProgressDialog();
                             WalletHomeActivity.startHome(context);

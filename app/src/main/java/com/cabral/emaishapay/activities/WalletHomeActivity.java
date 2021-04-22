@@ -52,6 +52,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 
 public class WalletHomeActivity extends AppCompatActivity{
+
     public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
     private static Context context;
@@ -63,6 +64,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCES_USER_PIN = "";
     public static final String PREFERENCES_PREPIN_ENCRYPTION = "12";
     public static final String PREFERENCES_USER_BALANCE = "0";
+    public static final String PREFERENCES_WALLET_BUSINESS_ID = "business_id";
 
     public static final String PREFERENCES_FILE_NAME = "UserInfo";
     public static final String PREFERENCES_FIRST_NAME = "firstname";

@@ -19,6 +19,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_shop_products"
                 android:layout_width="match_parent"
+                app:navigationIcon="@drawable/ic_chevron_left_white"
                 android:layout_height="?actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
@@ -29,22 +30,53 @@
             android:orientation="vertical"
             android:layout_below="@id/appbar">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
 
-            <EditText
-                android:id="@+id/etxt_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginEnd="14dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="52dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/round_border"
-                android:drawableEnd="@drawable/ic_search"
-                android:ems="10"
-                android:fontFamily="@font/josefin_sans"
-                android:hint="@string/search_here"
-                android:inputType="textPersonName"
-                android:padding="10dp" />
+                android:background="@drawable/rounded_corners_edittext_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:elevation="5dp">
+
+                <EditText
+                    android:id="@+id/etxt_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Search for Items"
+                    android:textColorHint="@color/colorPrimary"
+                    android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/guideline42"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.18" />
+
+                <ImageView
+                    android:id="@+id/buy_inputs_search_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline42"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_search_blue" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shop_product_recyclerview"
@@ -77,6 +109,7 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 app:backgroundTint="@color/colorPrimary"
+                app:tint="@color/white"
                 app:srcCompat="@drawable/ic_add"
                 tools:ignore="VectorDrawableCompat" />
 

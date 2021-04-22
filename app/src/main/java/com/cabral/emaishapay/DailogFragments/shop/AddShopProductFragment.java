@@ -52,6 +52,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
@@ -88,7 +89,7 @@ public class AddShopProductFragment extends DialogFragment {
     Integer selectedProductID;
     Integer selectedManufacturersID;
     Integer selectedCategoryID;
-    String selectedSupplierID;
+    String selectedSupplierID,productImage;
     double selected_weight;
 
     String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units,product_description;
@@ -171,6 +172,7 @@ public class AddShopProductFragment extends DialogFragment {
             etxtproductMeasurement.setText(getArguments().getString("weight"));
             product_id = getArguments().getString("product_id");
             WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
+
 
             try {
                 //set product image
@@ -608,6 +610,7 @@ public class AddShopProductFragment extends DialogFragment {
                         for (int i = 0; i < products.size(); i++) {
                             productNames.add(products.get(i).getProducts_name() + " " + products.get(i).getProducts_weight() + products.get(i).getProducts_weight_unit());
                             measure_id = products.get(i).getMeasure_id();
+
                         }
                     }
 
@@ -740,6 +743,13 @@ public class AddShopProductFragment extends DialogFragment {
                                     selectedProductName = products.get(i).getProducts_name()+ " "+ products.get(i).getProducts_weight()+ products.get(i).getProducts_weight_unit();
                                     selected_weight = products.get(i).getProducts_weight();
                                     selected_weight_units = products.get(i).getProducts_weight_unit();
+                                    productImage =products.get(i).getImageUrl();
+
+                                    Log.d(TAG, "onItemClick: imageUrl"+productImage);
+                                    Log.d(TAG, "onItemClick: image"+ConstantValues.WALLET_DOMAIN +productImage);
+
+                                    //set image using Glide
+                                     Glide.with(context).load(ConstantValues.WALLET_DOMAIN +productImage).into(produce_image);
 
                                     //measurement_layout.setVisibility(View.GONE);
                                     //spn_measurements_layout.setVisibility(View.VISIBLE);
