@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -512,8 +511,6 @@ public class GetStartedSignUpFragment extends Fragment {
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
 
                 //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-
                 getOtpFromMessage(message);
             }
         }
