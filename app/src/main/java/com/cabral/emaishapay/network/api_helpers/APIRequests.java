@@ -122,6 +122,17 @@ public interface APIRequests {
     );
 
     @FormUrlEncoded
+    @POST("wallet/resend-phone-auth")
+    Call<WalletAuthentication> restartInitiatePhoneAuth(
+            @Field("phoneNumber") String phoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code") String service_code,
+            @Field("action_id")String action_id
+
+    );
+
+    @FormUrlEncoded
     @POST("wallet/validate-phone")
     Call<WalletAuthentication> validatePhoneNo(
             @Field("phoneNumber") String phoneNumber,
