@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/top_rounded_blue">
+
+        <TextView
+            android:id="@+id/text_view_title_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:text="MERCHANT CODE"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+        <ImageView
+            android:id="@+id/img_merchant_qr_code_close"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight=".9"
+            android:layout_gravity="end|center_vertical"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_close_white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_margin="15dp"
+           android:layout_gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>
