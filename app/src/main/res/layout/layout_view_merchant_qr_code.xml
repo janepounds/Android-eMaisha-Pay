@@ -43,6 +43,7 @@
         android:paddingRight="15dp">
 
        <ImageView
+           android:id="@+id/merchant_qr_code"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_margin="15dp"

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,10 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.DailogFragments.ChangePassword;
+import com.cabral.emaishapay.DailogFragments.MerchantQrCode;
+import com.cabral.emaishapay.DailogFragments.PayLoan;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.AuthActivity;
@@ -117,6 +121,27 @@ public class WalletAccountFragment extends Fragment {
 
 
             alertDialog.show();
+
+        });
+
+        //show Qr code dialog
+        binding.imgQrCode.setOnClickListener(v -> {
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("merchant_id","12345");
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Fragment prev = fm.findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+
+            // Create and show the dialog.
+            DialogFragment qrDialog = new MerchantQrCode();
+            qrDialog.setArguments(bundle);
+            qrDialog.show(ft, "dialog");
 
         });
 
