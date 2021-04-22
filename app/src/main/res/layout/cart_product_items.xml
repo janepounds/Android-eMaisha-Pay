@@ -37,7 +37,8 @@
                     android:layout_weight="1"
                     android:contentDescription="TODO"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/new_product" />
+                    app:srcCompat="@drawable/new_product"
+                    tools:ignore="VectorDrawableCompat" />
             </LinearLayout>
 
             <LinearLayout

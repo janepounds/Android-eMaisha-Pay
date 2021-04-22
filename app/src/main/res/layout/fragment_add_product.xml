@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight=".9"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center"
             android:layout_margin="5dp"
-            android:src="@drawable/close" />
+            android:src="@drawable/ic_close_white" />
 
     </LinearLayout>
 
@@ -55,7 +55,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="Manufacturer"
                         android:textColor="@color/textColorSecondaryLight"
@@ -82,7 +81,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="Category"
                         android:textColor="@color/textColorSecondaryLight"
@@ -225,7 +223,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="3.4dp">
@@ -451,19 +449,19 @@
 
             <LinearLayout
                 android:id="@+id/layout_submit_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/margin_15"
-                android:layout_marginEnd="@dimen/dimen_20dp"
-                android:layout_marginBottom="@dimen/dimen_20dp"
-                android:background="@drawable/rounded_corners_button"
-                android:visibility="visible">
+                android:layout_margin="@dimen/dimen_20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/tx_add_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="@string/submit"
@@ -471,8 +469,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
-                    android:background="@color/transparent"
-                    app:drawableEndCompat="@drawable/ic_right_chevron" />
+                    android:background="@color/transparent" />
             </LinearLayout>
 
 

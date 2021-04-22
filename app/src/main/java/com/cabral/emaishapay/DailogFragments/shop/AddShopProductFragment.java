@@ -172,6 +172,7 @@ public class AddShopProductFragment extends DialogFragment {
             product_id = getArguments().getString("product_id");
             WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
 
+
             try {
                 //set product image
                 RequestOptions options = new RequestOptions()
