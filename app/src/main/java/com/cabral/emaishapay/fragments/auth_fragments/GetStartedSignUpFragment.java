@@ -13,18 +13,33 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentGetStartedSignUpBinding;
+import com.cabral.emaishapay.models.SecurityQnsResponse;
+import com.cabral.emaishapay.models.WalletAuthentication;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.zip.CheckedOutputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GetStartedSignUpFragment extends Fragment {
     FragmentGetStartedSignUpBinding binding;
@@ -35,6 +50,7 @@ public class GetStartedSignUpFragment extends Fragment {
     private RelativeLayout layoutResendCode;
     private Dialog dialog;
     private DialogLoader dialogLoader;
+     String phone_no;
     // Verification id that will be sent to the user
     private String mVerificationId;
 
@@ -68,6 +84,10 @@ public class GetStartedSignUpFragment extends Fragment {
                     // Proceed User Registration
                     //sendVerificationCode(getResources().getString(R.string.ugandan_code) + binding.userMobile.getText().toString().trim());
 
+                    //authenticate phone
+                    phone_no = "256" + binding.userMobile.getText().toString().trim();
+                    authenticatePhoneNo(phone_no);
+
                 }
                 //navigate to Sign Up Fragment
 
@@ -94,6 +114,95 @@ public class GetStartedSignUpFragment extends Fragment {
         else {
             return true;
         }
+    }
+
+    public void authenticatePhoneNo(String phoneNumber){
+        dialogLoader.showProgressDialog();
+        String request_id = WalletHomeActivity.generateRequestId();
+        String service_code = "120224";
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<WalletAuthentication> call = APIClient.getWalletInstance(context).initiatePhoneAuth(phoneNumber,request_id,category,service_code,"initiatePhoneAuth");
+        call.enqueue(new Callback<WalletAuthentication>() {
+            @Override
+            public void onResponse(Call<WalletAuthentication> call, Response<WalletAuthentication> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatus()==1){
+                        if(response.body().getMessage().equalsIgnoreCase("Phone was already Verified")){
+                            //navigate to signup
+                            dialogLoader.hideProgressDialog();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone",phoneNumber.substring(3));
+                            AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_signUpFragment,bundle);
+
+                        }else {
+
+                            showOTPDialog(getActivity());
+                        }
+                    }else{
+
+                        Snackbar.make(context,getView(),response.body().getMessage(),Snackbar.LENGTH_SHORT).show();
+                    }
+
+
+                }else if (response.code() == 401) {
+                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    dialogLoader.hideProgressDialog();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthentication> call, Throwable t){
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    public void sendOtp(String code){
+        dialogLoader.showProgressDialog();
+
+        String request_id = WalletHomeActivity.generateRequestId();
+        String service_code = "120224";
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        /******************RETROFIT IMPLEMENTATION***********************/
+        Call<WalletAuthentication> call = APIClient.getWalletInstance(context).validatePhoneNo(phone_no,request_id,category,service_code,"validatePhoneNumber",code);
+        call.enqueue(new Callback<WalletAuthentication>() {
+            @Override
+            public void onResponse(Call<WalletAuthentication> call, Response<WalletAuthentication> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatus()==1){
+                        //go to signup fragment
+                        dialogLoader.hideProgressDialog();
+                        //navigate to signup
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phone",phone_no.substring(3));
+                        AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_signUpFragment,bundle);
+
+
+                    }else{
+
+                        Snackbar.make(context,getView(),response.body().getMessage(),Snackbar.LENGTH_SHORT).show();
+                        dialogLoader.hideProgressDialog();
+                    }
+
+
+                }else if (response.code() == 401) {
+                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    dialogLoader.hideProgressDialog();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthentication> call, Throwable t){
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
     }
 
 
@@ -215,6 +324,7 @@ public class GetStartedSignUpFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
 
+                sendOtp(code);
                 //verifyVerificationCode(code);
             }
         });
