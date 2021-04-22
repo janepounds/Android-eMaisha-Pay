@@ -63,35 +63,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/edit_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_dark_green"
-                    android:text="@string/bt_edit"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:drawableEnd="@drawable/ic_right_chevron"/>
+
 
                 <Button
                     android:id="@+id/delete_address"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:text="@string/bt_delete"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
+                <Button
+                    android:id="@+id/edit_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_weight="1"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_red"
-                    android:text="@string/bt_delete"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:text="@string/bt_edit"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:drawableEnd="@drawable/ic_right_chevron" />
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
 

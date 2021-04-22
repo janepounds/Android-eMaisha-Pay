@@ -110,6 +110,31 @@ public interface APIRequests {
             @Field("action_id")String action_id
     );
 
+    @FormUrlEncoded
+    @POST("wallet/phone-auth")
+    Call<WalletAuthentication> initiatePhoneAuth(
+            @Field("phoneNumber") String phoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code") String service_code,
+            @Field("action_id")String action_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/validate-phone")
+    Call<WalletAuthentication> validatePhoneNo(
+            @Field("phoneNumber") String phoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code") String service_code,
+            @Field("action_id")String action_id,
+            @Field("otp") String otp
+
+    );
+
+
+
     // //request balance
 
     @GET("wallet/balance/request")

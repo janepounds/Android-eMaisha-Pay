@@ -19,13 +19,18 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.DailogFragments.ChangePassword;
+import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LoginFragmentBinding;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -95,9 +100,6 @@ public class LoginFragment  extends Fragment {
                 @Override
                 public void onClick(View v) {
                     validateSecurityQns();
-
-
-
                 }
             });
 
@@ -202,21 +204,27 @@ public class LoginFragment  extends Fragment {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getStatus().equalsIgnoreCase("1")){
+                    String status = response.body().getStatus();
+                    if(status.equalsIgnoreCase("1")){
                         //call change password dialog
-
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        Fragment prev =fm.findFragmentByTag("dialog");
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
                         // Create and show the dialog.
-                        // Create and show the dialog.
-                        DialogFragment depositDialog = new ChangePassword();
-                        depositDialog.show(getFragmentManager(), "dialog");
-                        dialogLoader.hideProgressDialog();
+                        DialogFragment changePassword =new ChangePassword();
+                        changePassword.show( ft, "dialog");
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
 
 
                     }else{
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
-                        dialogLoader.hideProgressDialog();
 
                     }
+                    dialogLoader.hideProgressDialog();
 
 
                 }else if (response.code() == 401) {
