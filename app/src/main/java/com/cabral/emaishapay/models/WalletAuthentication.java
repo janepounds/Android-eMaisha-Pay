@@ -96,6 +96,11 @@ public class WalletAuthentication {
         @Expose
         private String balance;
 
+        @SerializedName("business_id")
+        @Expose
+        private String business_id;
+
+
         UserData(){ }
 
         public int getId() {
@@ -224,6 +229,14 @@ public class WalletAuthentication {
 
         public void setBusiness_role(String business_role) {
             this.business_role = business_role;
+        }
+
+        public String getBusiness_id() {
+            return business_id;
+        }
+
+        public void setBusiness_id(String business_id) {
+            this.business_id = business_id;
         }
     }
 }

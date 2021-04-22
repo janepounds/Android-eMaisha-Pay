@@ -51,6 +51,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID;
+
 public class WalletAccountFragment extends Fragment {
     private static final String TAG = "WalletAccountFragment";
     private NewFragmentWalletAccountBinding binding;
@@ -129,7 +131,7 @@ public class WalletAccountFragment extends Fragment {
 
 
             Bundle bundle = new Bundle();
-            bundle.putString("merchant_id","12345");
+            bundle.putString("merchant_id",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID,context));
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             Fragment prev = fm.findFragmentByTag("dialog");
@@ -142,6 +144,7 @@ public class WalletAccountFragment extends Fragment {
             DialogFragment qrDialog = new MerchantQrCode();
             qrDialog.setArguments(bundle);
             qrDialog.show(ft, "dialog");
+            Log.d(TAG, "onCreateView: merchant_id"+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID,context));
 
         });
 
