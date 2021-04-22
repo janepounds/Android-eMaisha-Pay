@@ -236,12 +236,12 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         autocompleteFragment.setCountries("UG");
         autocompleteFragment.setHint(getString(R.string.searchShippingAddress));
         // ((Button)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_button)).setTextColor(getResources().getColor(R.color.colorWhite));
-        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextColor(getResources().getColor(R.color.colorWhite));
-        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextSize(10.5f);
-        ImageView searchIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(0);
-        ImageView cancelIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(2);
-        cancelIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
-        searchIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
+//        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextColor(getResources().getColor(R.color.colorWhite));
+//        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextSize(10.5f);
+//       ImageView searchIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(0);
+     //   ImageView cancelIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(2);
+      //  cancelIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
+      //  searchIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
