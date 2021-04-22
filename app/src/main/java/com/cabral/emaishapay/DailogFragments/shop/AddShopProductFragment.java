@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -839,9 +840,6 @@ public class AddShopProductFragment extends DialogFragment {
         txtAddProdcut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toasty.warning(AddProductActivity.this, "Add Product is disable in demo version. Please purchase from Codecanyon.Thank you ", Toast.LENGTH_SHORT).show();
-
-                    //update product online and locally
                 ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Loading...");
                 progressDialog.setTitle("Please Wait");
@@ -872,28 +870,11 @@ public class AddShopProductFragment extends DialogFragment {
 
 
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                if (product_name == null || product_name.isEmpty()) {
-                    etxtProductName.setError(getString(R.string.product_name_cannot_be_empty));
-                    etxtProductName.requestFocus();
-                } else if (product_code == null || product_code.isEmpty()) {
-                    etxtProductCode.setError(getString(R.string.product_code_cannot_be_empty));
-                    etxtProductCode.requestFocus();
-                } else if (product_category_name == null || product_category_id == null || product_category_name.isEmpty() || product_category_id.isEmpty()) {
-                    etxtProductCategory.setError(getString(R.string.product_category_cannot_be_empty));
-                    etxtProductCategory.requestFocus();
-                } else if (product_buy_price == null || product_buy_price.isEmpty()) {
-                    etxtProductBuyPrice.setError(getString(R.string.product_buy_price_cannot_be_empty));
-                    etxtProductBuyPrice.requestFocus();
-                } else if (product_sell_price == null || product_sell_price.isEmpty()) {
-                    etxtProductSellPrice.setError(getString(R.string.product_sell_price_cannot_be_empty));
-                    etxtProductSellPrice.requestFocus();
-                } else if (product_stock == null || product_stock.isEmpty()) {
-                    etxtProductStock.setError(getString(R.string.product_stock_cannot_be_empty));
-                    etxtProductStock.requestFocus();
-                } else if (Integer.parseInt(product_stock) <= 0) {
-                    etxtProductStock.setError("Stock should be greater than zero");
-                    etxtProductStock.requestFocus();
-                } else {
+                if(!is_validAddProductForm()){
+                    progressDialog.dismiss();
+                    return;
+                }
+                else {
 //                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
 //                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
 //                    etxtProductSupplier.requestFocus();
@@ -1035,6 +1016,42 @@ public class AddShopProductFragment extends DialogFragment {
         setCancelable(true);
         return dialog;
 
+    }
+
+    private boolean is_validAddProductForm() {
+
+        String product_category_id = selectedCategoryID + "";
+
+        if ( TextUtils.isEmpty(etxtProductManufucturer.getText()) ) {
+            etxtProductManufucturer.setError(getString(R.string.product_manfacturer_is_empty));
+            etxtProductManufucturer.requestFocus();
+            return false;
+        }else if ( TextUtils.isEmpty(etxtProductCategory.getText()) || product_category_id == null || product_category_id.isEmpty()) {
+            etxtProductCategory.setError(getString(R.string.product_category_cannot_be_empty));
+            etxtProductCategory.requestFocus();
+            return false;
+        }else if (TextUtils.isEmpty(etxtProductName.getText())) {
+            etxtProductName.setError(getString(R.string.product_name_cannot_be_empty));
+            etxtProductName.requestFocus();
+            return false;
+        } else  if ( TextUtils.isEmpty(etxtProductBuyPrice.getText())  ) {
+            etxtProductBuyPrice.setError(getString(R.string.product_buy_price_cannot_be_empty));
+            etxtProductBuyPrice.requestFocus();
+            return false;
+        } else if (  TextUtils.isEmpty(etxtProductSellPrice.getText()) ) {
+            etxtProductSellPrice.setError(getString(R.string.product_sell_price_cannot_be_empty));
+            etxtProductSellPrice.requestFocus();
+            return false;
+        } else if ( TextUtils.isEmpty(etxtProductStock.getText()) ) {
+            etxtProductStock.setError(getString(R.string.product_stock_cannot_be_empty));
+            etxtProductStock.requestFocus();
+        } else if (Integer.parseInt(etxtProductStock.getText().toString()) <= 0) {
+            etxtProductStock.setError("Stock should be greater than zero");
+            etxtProductStock.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
 
