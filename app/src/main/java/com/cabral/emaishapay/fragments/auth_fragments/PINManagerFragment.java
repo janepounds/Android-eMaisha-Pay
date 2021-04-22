@@ -107,8 +107,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     private static InputConnection inputConnection;
     SmsBroadcastReceiver  smsBroadcastReceiver;
     private static final int REQ_USER_CONSENT = 200;
-
-    private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
+    private String userFirstname, userLastname, village, subCounty, district,idType,idNo,phone_number,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -150,7 +149,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 binding.layoutSignin.setVisibility(View.GONE);
                 binding.tokenAuthClose.setVisibility(View.GONE);
 
-
                 userFirstname=getArguments().getString("userFirstname");
                 userLastname=getArguments().getString("userLastname");
                 village=getArguments().getString("village");
@@ -168,7 +166,41 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
             else{
                 binding.pinTitle.setText(getString(R.string.enter_pin));
+                binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Go to security qns
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
+                        View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
+                        dialog.setView(dialogView);
+                        dialog.setCancelable(true);
 
+                        //            RequestUserQns(user_id);
+                        //display security qns and
+                        Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
+                        submit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                validateSecurityQns();
+                            }
+                        });
+                        Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
+                        EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer,phoneNumber;
+
+                        //calling security qns form
+                        phoneNumber =dialogView.findViewById(R.id.phone_no);
+                        firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
+                        secondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
+                        thirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
+                        firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
+                        secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
+                        thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+                        RequestSecurityQns();
+
+                        final AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
+                    }
+                });
             }
         }
 
@@ -187,9 +219,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         binding.tvKeyClear.setOnClickListener(this);
         binding.textForgotPin.setOnClickListener(this);
         binding.tokenAuthClose.setOnClickListener(this);
-
-
-
 
         binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         binding.pinCode1Edt.setTextIsSelectable(true);
