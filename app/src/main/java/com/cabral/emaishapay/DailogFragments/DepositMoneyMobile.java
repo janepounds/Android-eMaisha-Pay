@@ -20,6 +20,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -34,6 +37,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -102,78 +106,185 @@ public class DepositMoneyMobile extends DialogFragment {
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initiateDeposit();
+                enterPin();
             }
         });
 
-        verificationUtils = new RaveVerificationUtils(this, false, BuildConfig.PUBLIC_KEY);
+//        verificationUtils = new RaveVerificationUtils(this, false, BuildConfig.PUBLIC_KEY);
+
+    }
+    public void enterPin(){
+        // Create and show the dialog.
+        FragmentManager fragmentManager = getChildFragmentManager();
+
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment prev = fragmentManager.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("key","mobile_deposit");
+        bundle.putString("amount",addMoneyTxt.getText().toString());
+        bundle.putString("phone_number","0"+phoneNumberTxt.getText().toString());
+
+        // Create and show the dialog.
+        DialogFragment depositDialog = new EnterPin();
+        depositDialog.setArguments(bundle);
+        depositDialog.show(ft, "dialog");
+
 
     }
 
+//    public void initiateDeposit(){
+//        dialogLoader.showProgressDialog();
+//        String phoneNumber = "0"+phoneNumberTxt.getText().toString();
+//        String amountEntered = addMoneyTxt.getText().toString();
+//        double amount = Float.parseFloat(amountEntered);
+//        String request_id = WalletHomeActivity.generateRequestId();
+//        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+//        String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
+//
+//        //********************* RETROFIT IMPLEMENTATION ********************************//
+//        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+//        Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token,amount,phoneNumber,request_id,category,"customerMobileMoneyDeposit","120224");
+//        call.enqueue(new Callback<WalletTransaction>() {
+//            @Override
+//            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+//                if(response.code() == 200){
+//                    if(response.body().getStatus().equalsIgnoreCase("1")){
+//                        dialogLoader.hideProgressDialog();
+//                        Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+////                        Snackbar.make(getContext(),getView(),"",Snackbar.LENGTH_SHORT).show();
+//
+//                        refreshActivity();
+//
+//                    }else {
+//                        dialogLoader.hideProgressDialog();
+//                        Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+//
+//                    }
+//
+//
+//                }else if(response.code() == 401){
+//
+//                    TokenAuthFragment.startAuth( true);
+//
+//                } else if (response.code() == 500) {
+//                    if (response.errorBody() != null) {
+//                        Toast.makeText(activity,response.body().getMessage(), Toast.LENGTH_LONG).show();
+//                    } else {
+//
+//                        Log.e("info", "Something got very very wrong, code: " + response.code());
+//                    }
+//                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+//                } else if (response.code() == 400) {
+//                    if (response.errorBody() != null) {
+//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+//                    } else {
+//
+//                        Log.e("info", "Something got very very wrong, code: " + response.code());
+//                    }
+//                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+//                } else if (response.code() == 406) {
+//                    if (response.errorBody() != null) {
+//
+//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+//                    } else {
+//
+//                        Log.e("info", "Something got very very wrong, code: " + response.code());
+//                    }
+//                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+//                } else {
+//
+//                    if (response.errorBody() != null) {
+//
+//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
+//                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+//                    } else {
+//
+//                        Log.e("info", "Something got very very wrong, code: " + response.code());
+//                    }
+//                }
+//                dialogLoader.hideProgressDialog();
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<WalletTransaction> call, Throwable t) {
+//
+//            }
+//        });
+//
+//
+//
+//    }
 
-    public void initiateDeposit() {
-      
-        dialogLoader.showProgressDialog();
-        String phoneNumber = phoneNumberTxt.getText().toString();
-        String amountEntered = addMoneyTxt.getText().toString();
 
-        double amount = Float.parseFloat(amountEntered);
-        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
-        String eMaishaPayServiceMail="info@cabraltech.com";
-        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
-                .setCurrency("UGX")
-                .setEmail(eMaishaPayServiceMail)
-                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.activity))
-                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.activity))
-                .setPhoneNumber("0" + phoneNumber)
-                .setNarration("eMaisha Pay")
-                .setPublicKey(BuildConfig.PUBLIC_KEY)
-                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
-                .setTxRef(txRef)
-                .onStagingEnv(false)
-                .isPreAuth(true)
-                .initialize();
-
-        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
-            @Override
-            public void showProgressIndicator(boolean active) {
-                try {
-
-                    if (dialogLoader == null) {
-                        dialogLoader = new DialogLoader(getContext());
-                        dialogLoader.showProgressDialog();
-                    }
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage, @Nullable String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
-                Log.e("MobileMoneypaymentError", errorMessage);
-            }
-
-            @Override
-            public void onSuccessful(String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Log.e("Success code :", flwRef);
-                Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-                creditAfterDeposit(flwRef,"0" + phoneNumber);
-            }
-
-            @Override
-            public void showAuthenticationWebPage(String authenticationUrl) {
-                Log.e("Loading auth web page: ", authenticationUrl);
-                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-            }
-        };
-        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
-
-        mobilePayManager.charge();
-    }
+//    public void initiateDeposit() {
+//
+//        dialogLoader.showProgressDialog();
+//        String phoneNumber = phoneNumberTxt.getText().toString();
+//        String amountEntered = addMoneyTxt.getText().toString();
+//
+//        double amount = Float.parseFloat(amountEntered);
+//        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
+//        String eMaishaPayServiceMail="info@cabraltech.com";
+//        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
+//                .setCurrency("UGX")
+//                .setEmail(eMaishaPayServiceMail)
+//                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.activity))
+//                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.activity))
+//                .setPhoneNumber("0" + phoneNumber)
+//                .setNarration("eMaisha Pay")
+//                .setPublicKey(BuildConfig.PUBLIC_KEY)
+//                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
+//                .setTxRef(txRef)
+//                .onStagingEnv(false)
+//                .isPreAuth(true)
+//                .initialize();
+//
+//        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
+//            @Override
+//            public void showProgressIndicator(boolean active) {
+//                try {
+//
+//                    if (dialogLoader == null) {
+//                        dialogLoader = new DialogLoader(getContext());
+//                        dialogLoader.showProgressDialog();
+//                    }
+//
+//                } catch (NullPointerException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(String errorMessage, @Nullable String flwRef) {
+//                dialogLoader.hideProgressDialog();
+//                Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
+//                Log.e("MobileMoneypaymentError", errorMessage);
+//            }
+//
+//            @Override
+//            public void onSuccessful(String flwRef) {
+//                dialogLoader.hideProgressDialog();
+//                Log.e("Success code :", flwRef);
+//                Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
+//                creditAfterDeposit(flwRef,"0" + phoneNumber);
+//            }
+//
+//            @Override
+//            public void showAuthenticationWebPage(String authenticationUrl) {
+//                Log.e("Loading auth web page: ", authenticationUrl);
+//                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
+//            }
+//        };
+//        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
+//
+//        mobilePayManager.charge();
+//    }
 
 
     public void creditAfterDeposit(String txRef, String phonumber) {
