@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -245,7 +246,10 @@ public class PayFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processPayment();
+                if(validateForm()){
+                    processPayment();
+                }
+
 
             }
         });
@@ -347,6 +351,17 @@ public class PayFragment extends Fragment {
         }  else {
             return true;
         }
+    }
+
+    public boolean validateForm(){
+        if(spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")){
+            Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+
+            return  true;
+        }
+
     }
 
     public void getCards(){
