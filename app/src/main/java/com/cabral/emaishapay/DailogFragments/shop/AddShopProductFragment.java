@@ -82,7 +82,7 @@ public class AddShopProductFragment extends DialogFragment {
     LinearLayout measurement_layout,spn_measurements_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
-    List<HashMap<String, String>> productCategory, productSupplier, weightUnit;
+    List<HashMap<String, String>> productCategory=new ArrayList<>(), productSupplier =new ArrayList<>(), weightUnit=new ArrayList<>();
     private String selected_measure_id;
     Integer selectedProductID;
     Integer selectedManufacturersID;
@@ -106,7 +106,6 @@ public class AddShopProductFragment extends DialogFragment {
     private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineProductNames;
     DialogLoader dialogLoader;
-    List<HashMap<String, String>> productData;
     private ShopProductsModelView viewModel;
 
 
@@ -114,12 +113,6 @@ public class AddShopProductFragment extends DialogFragment {
         this.manufacturers=manufacturers;
         this.key = key;
         this.viewModel = viewModel;
-    }
-
-
-    public AddShopProductFragment(List<EcManufacturer> manufacturers, List<HashMap<String, String>> productData) {
-        this.manufacturers=manufacturers;
-        this.productData=productData;
     }
 
 
@@ -945,6 +938,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                 public void run() {
                                                     if (update_product>0) {
                                                         progressDialog.dismiss();
+                                                        AddShopProductFragment.this.dismiss();
                                                         Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
                                                         //Intent intent = new Intent(getContext(), ShopActivity.class);
@@ -952,6 +946,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                         // finish();
                                                     } else {
                                                         progressDialog.dismiss();
+                                                        AddShopProductFragment.this.dismiss();
                                                         Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
 
                                                     }
@@ -1112,6 +1107,7 @@ public class AddShopProductFragment extends DialogFragment {
             return true;
         }
     }
+
     private void setSelectionValue(String compareValue,Spinner mSpinner, int array_ressouce_id){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,array_ressouce_id, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
