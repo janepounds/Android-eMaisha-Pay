@@ -798,15 +798,17 @@ public interface APIRequests {
 
   // Comfirm Accept Payment
   @FormUrlEncoded
-  @POST("wallet/agent/confirm-payment")
+  @POST("wallet/merchant/accept-customer-payment")
   Call<InitiateWithdrawResponse>confirmAcceptPayment(
           @Header("Authorization") String token,
           @Field("amount") double amount,
           @Field("customerPhoneNumber") String customerPhoneNumber,
+          @Field("receiverPhoneNumber") String receiverPhoneNumber,
           @Field("otp") String OTPCode,
           @Field("request_id") String request_id,
           @Field("category") String category,
-          @Field("action_id")String action_id
+          @Field("action_id")String action_id,
+          @Field("service_code")String service_code
 
   );
 

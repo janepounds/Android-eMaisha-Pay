@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -103,7 +104,7 @@ public class ShopPayments extends Fragment implements
 
 
     private RaveVerificationUtils verificationUtils;
-    private Dialog otpDialog;
+    private Dialog otpDialog,dialog;
     private EditText code1,code2,code3,code4,code5,code6;
 
 
@@ -635,9 +636,16 @@ public class ShopPayments extends Fragment implements
         dialogLoader.showProgressDialog();
         String service_code = "121518";
 
+        String type="";
+        if(category.equalsIgnoreCase("Agent Merchant")){
+            type="Merchant Transfer";
+        }else if(category.equalsIgnoreCase("Agent")){
+            type="Agent Transfer";
+        }
+
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,"Agent Payment",request_id,category,"customerTransactionOTP",service_code);
+        Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,type,request_id,category,"customerTransactionOTP",service_code);
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
@@ -678,15 +686,51 @@ public class ShopPayments extends Fragment implements
 
     }
 
-    public void comfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
-        ProgressDialog dialog;
+    public void preparecomfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
+
+        //Inner Dialog to enter PIN
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
+        //LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View pinDialog = View.inflate(context,R.layout.dialog_enter_pin,null);
+
+
+        builder.setView(pinDialog);
+        dialog = builder.create();
+        builder.setCancelable(false);
+
+        EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+
+        pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
+                    String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
+
+                    comfirmAcceptPayment(OTPCode,customerNumber,amount,service_code);
+
+                }else {
+                    pinEdittext.setError("Invalid Pin Entered");
+                }
+
+            }
+        });
+
+        dialog.show();
+
+
+    }
+
+    private void comfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount,String service_code){
+
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String receiverPhoneNumber = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,requireContext());
+
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<InitiateWithdrawResponse> call = apiRequests.confirmAcceptPayment(access_token, amount,customerNumber,OTPCode,request_id,category,"confirmAgentPayment");
+        Call<InitiateWithdrawResponse> call = apiRequests.confirmAcceptPayment(access_token, amount,customerNumber,receiverPhoneNumber,OTPCode,request_id,category,"confirmAgentPayment",service_code);
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -721,7 +765,6 @@ public class ShopPayments extends Fragment implements
         });
 
     }
-
     private void getOTPFromUser(final String customerNumber, final double amount) {
         otpDialog  = new Dialog(context);
         otpDialog.setContentView(R.layout.login_dialog_otp);
@@ -839,7 +882,7 @@ public class ShopPayments extends Fragment implements
                 otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
                 otp_code = otp_code.replaceAll("\\s+", "");
                 if(otp_code.length()>=6){
-                    comfirmAcceptPayment(otp_code,customerNumber,amount);
+                    preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
                 }
 
             }
@@ -857,7 +900,7 @@ public class ShopPayments extends Fragment implements
             public void onClick(View v) {
                 otpDialog.dismiss();
                 otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-                comfirmAcceptPayment(otp_code,customerNumber,amount);
+                preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
             }
         });
 
