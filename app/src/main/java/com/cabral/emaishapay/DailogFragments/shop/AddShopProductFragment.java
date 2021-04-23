@@ -735,12 +735,14 @@ public class AddShopProductFragment extends DialogFragment {
 
                                      //encode image
 
-                                    produce_image.buildDrawingCache();
+//                                    produce_image.buildDrawingCache();
+
+
+//                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
+//                                    byte[] b = baos.toByteArray();
                                     Bitmap bitmap = produce_image.getDrawingCache();
-                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
-                                    byte[] b = baos.toByteArray();
-                                    encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                                    encodedImage = encodeImage(bitmap);
                                     Log.d(TAG, "onItemClick: encodedImage"+encodedImage);
 
 
@@ -990,9 +992,7 @@ public class AddShopProductFragment extends DialogFragment {
                                           progressDialog.dismiss();
                                           Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
 
-                                          //Intent intent = new Intent(getContext(), ShopActivity.class);
-                                          //startActivity(intent);
-                                          // finish();
+                                          AddShopProductFragment.this.dismiss();
                                       } else {
                                           progressDialog.dismiss();
                                           Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
