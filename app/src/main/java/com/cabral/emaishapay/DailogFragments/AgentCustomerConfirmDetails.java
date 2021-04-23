@@ -189,10 +189,25 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     depositDialog.show(ft, "dialog");
 
                 }else if(key.equalsIgnoreCase("withdraw")){
-
-                    initiateFundsTransfer(customerNo,transferAmount,"Agent Withdraw" );
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                    String type="";
+                    if(category.equalsIgnoreCase("Agent Merchant")){
+                        type="Merchant Withdraw";
+                    }else if(category.equalsIgnoreCase("Agent")){
+                        type="Agent Withdraw";
+                    }
+                    initiateFundsTransfer(customerNo,transferAmount, type );
                 }else{
-                    initiateFundsTransfer(customerNo,transferAmount,"Agent Transfer" );
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
+                    String type="";
+                    if(category.equalsIgnoreCase("Agent Merchant")){
+                        type="Merchant Transfer";
+                    }else if(category.equalsIgnoreCase("Agent")){
+                        type="Agent Transfer";
+                    }
+
+                    initiateFundsTransfer(customerNo, transferAmount, type );
                 }
 
             }
