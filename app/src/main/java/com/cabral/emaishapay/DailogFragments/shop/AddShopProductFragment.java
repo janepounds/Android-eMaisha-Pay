@@ -66,6 +66,11 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -741,8 +746,29 @@ public class AddShopProductFragment extends DialogFragment {
 //                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
 //                                    byte[] b = baos.toByteArray();
-                                    Bitmap bitmap = produce_image.getDrawingCache();
-                                    encodedImage = encodeImage(bitmap);
+
+                                    Thread thread = new Thread(new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            try  {
+                                                //Your code goes here
+                                                String imagePath = ConstantValues.ECOMMERCE_URL +productImage;
+                                                URL url = new URL(imagePath);
+                                                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                                                connection.setDoInput(true);
+                                                connection.connect();
+                                                InputStream input = connection.getInputStream();
+                                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                                encodedImage = encodeImage(myBitmap);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+
+                                    thread.start();
+
                                     Log.d(TAG, "onItemClick: encodedImage"+encodedImage);
 
 
