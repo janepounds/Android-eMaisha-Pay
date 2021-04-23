@@ -29,7 +29,7 @@
                 android:id="@+id/img_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/user"
+                android:src="@drawable/ic_user_profile_placeholder_home"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="18dp"/>

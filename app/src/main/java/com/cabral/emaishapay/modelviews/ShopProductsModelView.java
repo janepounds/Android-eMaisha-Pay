@@ -80,6 +80,7 @@ public class ShopProductsModelView extends AndroidViewModel {
             @Override
             public void onResponse(Call<ManufacturersResponse> call, Response<ManufacturersResponse> response) {
                 if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: "+response.body().getManufacturers());
 
                     manufacturers.setValue(response.body().getManufacturers());
                     //Log.d("Categories", String.valueOf(categories));
