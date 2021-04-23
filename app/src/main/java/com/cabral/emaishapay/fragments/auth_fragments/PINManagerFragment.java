@@ -699,7 +699,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 if(response.isSuccessful() && response.body().getStatus()==1 ) {
                     smsResults = response.body().getData().getSms_results();
                     timer.start();
-                    //registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
+                    registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
                 }
                 else{
                     Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
