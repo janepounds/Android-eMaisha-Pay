@@ -733,6 +733,9 @@ public class AddShopProductFragment extends DialogFragment {
                             final String selectedItem = productAdapter.getItem(position);
 
                             etxtProductName.setText(selectedItem);
+                            productImage =products.get(position).getImageUrl();
+
+                            Log.d(TAG, "onItemClick: imageUrl"+productImage);
 
                             //Need to use hashMap to reduce Order to O(1)
                             for (int i = 0; i < productNames.size(); i++) {
