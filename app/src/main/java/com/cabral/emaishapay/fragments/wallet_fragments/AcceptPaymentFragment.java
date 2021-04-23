@@ -444,6 +444,8 @@ public class AcceptPaymentFragment extends Fragment {
                     //LayoutInflater inflater = requireActivity().getLayoutInflater();
                     View pinDialog = View.inflate(context,R.layout.dialog_enter_pin,null);
 
+                    TextView txtTitle=pinDialog.findViewById(R.id.dialog_title);
+                    txtTitle.setText("ENTER MERCHANT PIN");
 
                     builder.setView(pinDialog);
                     dialog = builder.create();
