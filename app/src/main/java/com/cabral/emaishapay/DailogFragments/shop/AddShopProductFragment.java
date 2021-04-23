@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -412,7 +413,7 @@ public class AddShopProductFragment extends DialogFragment {
                         for (int i = 0; i < manufacturersNames.size(); i++) {
                             if (manufacturersNames.get(i).equalsIgnoreCase(selectedItem)) {
                                 // Get the ID of selected Country
-                                manufacturers_id = manufacturers.get(i).getManufacturer_id();
+                                manufacturers_id = Integer.parseInt(manufacturers.get(i).getManufacturers_id());
                                 manufacturers_name = manufacturers.get(i).getManufacturer_name();
                             }
                         }
@@ -559,34 +560,14 @@ public class AddShopProductFragment extends DialogFragment {
                                 }
                             }
 
-                            dialogLoader.showProgressDialog();
-                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                            Call<ProductResponse> call = BuyInputsAPIClient
-                                    .getInstance()
-                                    .getProducts(
-                                            access_token,
-                                            category_id,
-                                            selectedManufacturersID
-                                    );
-                            call.enqueue(new Callback<ProductResponse>() {
-                                @Override
-                                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        products = response.body().getProducts();
-                                        savePtdList(products);
-                                        Log.d("Products", String.valueOf(products));
-                                    } else {
-                                        Log.d("Product Fetch", "Product Fetch failed");
-                                    }
-                                    dialogLoader.hideProgressDialog();
-                                }
 
-                                @Override
-                                public void onFailure(Call<ProductResponse> call, Throwable t) {
-                                    t.printStackTrace();
-                                    dialogLoader.hideProgressDialog();
-                                }
-                            });
+                            dialogLoader.showProgressDialog();
+
+                            if(selectedManufacturersID > 0){
+                                getProductByManufacturer(category_id);
+                            }
+
+
 
 
                             selectedCategoryID = category_id;
@@ -733,9 +714,8 @@ public class AddShopProductFragment extends DialogFragment {
                             final String selectedItem = productAdapter.getItem(position);
 
                             etxtProductName.setText(selectedItem);
-                            productImage =products.get(position).getImageUrl();
 
-                            Log.d(TAG, "onItemClick: imageUrl"+productImage);
+
 
                             //Need to use hashMap to reduce Order to O(1)
                             for (int i = 0; i < productNames.size(); i++) {
@@ -748,11 +728,21 @@ public class AddShopProductFragment extends DialogFragment {
                                     selected_weight_units = products.get(i).getProducts_weight_unit();
                                     productImage =products.get(i).getImageUrl();
 
-                                    Log.d(TAG, "onItemClick: imageUrl"+productImage);
                                     Log.d(TAG, "onItemClick: image"+ConstantValues.WALLET_DOMAIN +productImage);
 
                                     //set image using Glide
-                                     Glide.with(context).load(ConstantValues.WALLET_DOMAIN +productImage).into(produce_image);
+                                     Glide.with(context).load(ConstantValues.ECOMMERCE_URL +productImage).into(produce_image);
+
+                                     //encode image
+
+                                    produce_image.buildDrawingCache();
+                                    Bitmap bitmap = produce_image.getDrawingCache();
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
+                                    byte[] b = baos.toByteArray();
+                                    encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                                    Log.d(TAG, "onItemClick: encodedImage"+encodedImage);
+
 
                                     //measurement_layout.setVisibility(View.GONE);
                                     //spn_measurements_layout.setVisibility(View.VISIBLE);
@@ -986,8 +976,8 @@ public class AddShopProductFragment extends DialogFragment {
                                       product_buy_price,
                                       product_sell_price,
                                       product_stock,
-                                      product_supplier,
                                       encodedImage,
+                                      product_stock,
                                       selected_weight_units,
                                       selected_weight + "",
                                       manufacturer_name
@@ -1029,6 +1019,37 @@ public class AddShopProductFragment extends DialogFragment {
         setCancelable(true);
         return dialog;
 
+    }
+
+    private void getProductByManufacturer(Integer category_id) {
+
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        Call<ProductResponse> call = BuyInputsAPIClient
+                .getInstance()
+                .getProducts(
+                        access_token,
+                        category_id,
+                        selectedManufacturersID
+                );
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+                    products = response.body().getProducts();
+                    savePtdList(products);
+                    Log.d("Products", String.valueOf(products));
+                } else {
+                    Log.d("Product Fetch", "Product Fetch failed");
+                }
+                dialogLoader.hideProgressDialog();
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                t.printStackTrace();
+                dialogLoader.hideProgressDialog();
+            }
+        });
     }
 
     private boolean is_validAddProductForm() {

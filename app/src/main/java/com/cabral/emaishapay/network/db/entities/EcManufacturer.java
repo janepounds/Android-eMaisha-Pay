@@ -11,6 +11,8 @@ import androidx.room.PrimaryKey;
 public class EcManufacturer implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int manufacturer_id;
+    @ColumnInfo(name = "manufacturers_id")
+    private String manufacturers_id;
     @ColumnInfo(name = "manufacturer_name")
     private String manufacturer_name;
 
@@ -19,13 +21,13 @@ public class EcManufacturer implements Parcelable {
     }
 
     protected EcManufacturer(Parcel in) {
-        manufacturer_id = in.readInt();
+        manufacturers_id = in.readString();
         manufacturer_name = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(manufacturer_id);
+        dest.writeString(manufacturers_id);
         dest.writeString(manufacturer_name);
     }
 
@@ -48,6 +50,14 @@ public class EcManufacturer implements Parcelable {
 
     public int getManufacturer_id() {
         return manufacturer_id;
+    }
+
+    public String getManufacturers_id() {
+        return manufacturers_id;
+    }
+
+    public void setManufacturers_id(String manufacturers_id) {
+        this.manufacturers_id = manufacturers_id;
     }
 
     public void setManufacturer_id(int manufacturer_id) {
