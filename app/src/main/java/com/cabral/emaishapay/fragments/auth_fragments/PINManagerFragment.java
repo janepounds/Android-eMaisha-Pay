@@ -108,6 +108,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     SmsBroadcastReceiver  smsBroadcastReceiver;
     private static final int REQ_USER_CONSENT = 200;
     private String userFirstname, userLastname, village, subCounty, district,idType,idNo,phone_number,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
+    CountDownTimer timer;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -476,7 +477,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         inputConnection = ic;
     }
 
-    private void getLogInOTPFromUser(String password) {
+    private void showOTPDialog(String password) {
         otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -496,7 +497,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
 
 
-        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+        timer = new CountDownTimer(90000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
@@ -668,7 +669,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                     smsResults =response.body().getData().getSms_results();
 
                     //Call the OTP Dialog
-                    getLogInOTPFromUser(password);
+                    showOTPDialog(password);
                 }else{
                     Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
                 }
@@ -697,9 +698,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful() && response.body().getStatus()==1 ) {
                     smsResults = response.body().getData().getSms_results();
-
-                    //Call the OTP Dialog
-                    getLogInOTPFromUser(password);
+                    timer.start();
+                    //registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
                 }
                 else{
                     Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
