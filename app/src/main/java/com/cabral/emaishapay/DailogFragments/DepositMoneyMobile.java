@@ -100,7 +100,7 @@ public class DepositMoneyMobile extends DialogFragment {
         addMoneyTxt = view.findViewById(R.id.crop_add_money_amount);
         balanceTextView = view.findViewById(R.id.crop_add_money_balance);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
-
+        addMoneyImg.setText("Top Up");
         balanceTextView.setText(NumberFormat.getInstance().format(balance));
         this.txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
