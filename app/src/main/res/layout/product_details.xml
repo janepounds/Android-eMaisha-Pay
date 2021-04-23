@@ -40,9 +40,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight=".9"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center"
                     android:layout_margin="5dp"
-                    android:src="@drawable/close" />
+                    android:src="@drawable/ic_close_white" />
             </LinearLayout>
 
             <LinearLayout
@@ -261,7 +261,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:background="@drawable/rectangular_purple_solid"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
@@ -289,7 +289,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:background="@drawable/rectangular_red_solid"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
