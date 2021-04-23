@@ -30,7 +30,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:background="@drawable/balance_cards"
         android:visibility="gone">
@@ -241,9 +241,11 @@
 
 
     <ScrollView
+        android:id="@+id/scrollviewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?actionBarSize">
+        android:layout_marginBottom="?actionBarSize"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -275,112 +277,163 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:id="@+id/layout_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginBottom="?actionBarSize">
     <TableLayout
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="bottom"
-        android:divider="@drawable/keyboard_divider"
-        android:visibility="gone">
+        android:divider="@drawable/keyboard_divider2"
+        android:visibility="visible"
+        android:background="#fafdff"
+        android:layout_alignParentBottom="true">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <TableRow style="@style/keyboard_row">
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+        </TableRow>
+        <TableRow style="@style/keyboard_row2">
 
             <TextView
                 android:id="@+id/tv_key_1"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_one"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp"/>
 
             <TextView
                 android:id="@+id/tv_key_2"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_two"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp"/>
 
             <TextView
                 android:id="@+id/tv_key_3"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_three"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
         </TableRow>
 
-        <TableRow style="@style/keyboard_row">
+        <TableRow style="@style/keyboard_row2">
 
             <TextView
                 android:id="@+id/tv_key_4"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_four"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/tv_key_5"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_five"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/tv_key_6"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_six"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
         </TableRow>
 
-        <TableRow style="@style/keyboard_row">
+        <TableRow style="@style/keyboard_row2">
 
             <TextView
                 android:id="@+id/tv_key_7"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_seven"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/tv_key_8"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_eight"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/tv_key_9"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_nine"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
         </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <TableRow style="@style/keyboard_row">
-
-            <TextView
-                android:id="@+id/tv_key_clear"
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+        </TableRow>
+        <TableRow style="@style/keyboard_row2">
+            <ImageView
+                android:id="@+id/tv_key_backspace"
                 style="@style/keyboard_button"
-                android:text="@string/btn_clear"
+                android:src="@drawable/ic_btn_delete"
+                android:text="@string/btn_backspace"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#2D84B7" />
+                app:tint="#2D84B7" />
 
             <TextView
                 android:id="@+id/tv_key_0"
                 style="@style/keyboard_number_button"
-                android:alpha=".56"
                 android:text="@string/number_zero"
-                android:textColor="#123365" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="34sp" />
+
 
             <ImageView
-                android:id="@+id/tv_key_backspace"
+                android:id="@+id/tv_key_enter"
                 style="@style/keyboard_button"
-                android:src="@android:drawable/ic_input_delete"
-                android:text="@string/btn_backspace"
+                android:src="@drawable/ic_btn_enter"
+                android:text="@string/btn_clear"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                app:tint="#2D84B7" />
+                android:textColor="#2D84B7" />
+
         </TableRow>
     </TableLayout>
+    </RelativeLayout>
 </LinearLayout>
 </layout>

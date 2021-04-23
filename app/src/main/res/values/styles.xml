@@ -272,6 +272,14 @@
         <item name="android:gravity">center</item>
         <item name="android:showDividers">beginning|middle|end</item>
     </style>
+    <style name="keyboard_row2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@drawable/keyboard_divider2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:showDividers">beginning|middle|end</item>
+    </style>
+
 
     <style name="keyboard_button">
         <item name="android:layout_width">0dp</item>

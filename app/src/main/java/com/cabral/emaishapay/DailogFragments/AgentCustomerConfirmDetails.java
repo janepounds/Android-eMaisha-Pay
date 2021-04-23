@@ -184,6 +184,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     bundle.putString("key",key);
                     bundle.putString("amount",textTotalAmount.getText().toString());
                     bundle.putString("phone_number",textPhoneNumber.getText().toString());
+                    bundle.putString("customer_name",textName.getText().toString());
 
                     // Create and show the dialog.
                     DialogFragment depositDialog = new EnterPin();

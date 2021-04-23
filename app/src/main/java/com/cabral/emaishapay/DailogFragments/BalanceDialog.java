@@ -42,7 +42,9 @@ public class BalanceDialog extends DialogFragment {
         Button ok = view.findViewById(R.id.dialog_button);
 
         TextView bal = view.findViewById(R.id.balance);
+        TextView customerName = view.findViewById(R.id.balance_text_view_name);
         bal.setText(getArguments().getString("balance"));
+        customerName.setText(getArguments().getString("customer_name"));
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +52,7 @@ public class BalanceDialog extends DialogFragment {
                 startActivity(intent);
             }
         });
+
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);

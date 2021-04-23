@@ -76,8 +76,8 @@ public class WalletAccountFragment extends Fragment {
         String user_pic =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context);
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.user)
-                .error(R.drawable.user)
+                .placeholder(R.drawable.ic_rectangle_profile_place_holder)
+                .error(R.drawable.ic_rectangle_profile_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +user_pic).apply(options).into(binding.userImage);
