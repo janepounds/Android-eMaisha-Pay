@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,11 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
+import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 
 import androidx.annotation.NonNull;
@@ -82,12 +86,13 @@ public class EnterPin extends DialogFragment {
                 dialog.show();
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
-                String[] amount = totalAmount.split("\\s+");
-                String amount_only = amount[1];
+
 
                 if(getArguments().getString("key").equalsIgnoreCase("deposit")) {
+                    String[] amount = totalAmount.split("\\s+");
+                    String amount_only = amount[1];
                     /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
-                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).confrmDeposit(access_token, Double.parseDouble(amount_only), "12"+confirm_pin.getText().toString(), phoneNumber,request_id,category,"merchantInitiateDeposit");
+                    Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).confrmDeposit(access_token, Double.parseDouble(amount_only), "12" + confirm_pin.getText().toString(), phoneNumber, request_id, category, "merchantInitiateDeposit");
                     call.enqueue(new Callback<InitiateWithdrawResponse>() {
                         @Override
                         public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -122,6 +127,84 @@ public class EnterPin extends DialogFragment {
                             dialog.dismiss();
                         }
                     });
+
+                }else if(key.equalsIgnoreCase("mobile_deposit")){
+
+                    double amount_entered = Float.parseFloat(totalAmount);
+
+                    //********************* RETROFIT IMPLEMENTATION ********************************//
+                    APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+                    Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token,amount_entered,phoneNumber,request_id,category,"customerMobileMoneyDeposit","12"+confirm_pin.getText().toString());
+                    call.enqueue(new Callback<WalletTransaction>() {
+                        @Override
+                        public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                            if(response.code() == 200){
+                                if(response.body().getStatus().equalsIgnoreCase("1")){
+                                    dialog.dismiss();
+                                    Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                                    Intent intent = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(intent);
+
+                                }else {
+                                    dialog.dismiss();
+                                    Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                                }
+
+
+                            }else if(response.code() == 401){
+
+                                TokenAuthFragment.startAuth( true);
+
+                            } else if (response.code() == 500) {
+                                if (response.errorBody() != null) {
+                                    Toast.makeText(getContext(),response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                } else {
+
+                                    Log.e("info", "Something got very very wrong, code: " + response.code());
+                                }
+                                Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            } else if (response.code() == 400) {
+                                if (response.errorBody() != null) {
+                                    Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                                } else {
+
+                                    Log.e("info", "Something got very very wrong, code: " + response.code());
+                                }
+                                Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            } else if (response.code() == 406) {
+                                if (response.errorBody() != null) {
+
+                                    Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                                } else {
+
+                                    Log.e("info", "Something got very very wrong, code: " + response.code());
+                                }
+                                Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            } else {
+
+                                if (response.errorBody() != null) {
+
+                                    Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                                    Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                                } else {
+
+                                    Log.e("info", "Something got very very wrong, code: " + response.code());
+                                }
+                            }
+                            dialog.dismiss();
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<WalletTransaction> call, Throwable t) {
+
+                        }
+                    });
+
+
+
                 }else{
                     /***************RETROFIT IMPLEMENTATION FOR BALANCE INQUIRY************************/
                     Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).balanceInquiry(access_token, "12"+confirm_pin.getText().toString(), phoneNumber,request_id,category,"merchantBalanceInquiry");

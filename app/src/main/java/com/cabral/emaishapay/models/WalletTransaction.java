@@ -8,6 +8,7 @@ public class WalletTransaction {
     double amount;
     String date;
     String referenceNumber;
+    String message;
 
 
     boolean isPurchase;
@@ -59,6 +60,14 @@ public class WalletTransaction {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setStatus(String status) {
