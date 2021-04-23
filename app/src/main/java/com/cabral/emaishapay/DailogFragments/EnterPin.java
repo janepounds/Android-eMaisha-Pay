@@ -88,7 +88,7 @@ public class EnterPin extends DialogFragment {
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                    dialogLoader=new DialogLoader(getContext());
+                    dialogLoader=new DialogLoader(getActivity());
 
                     if(getArguments().getString("key").equalsIgnoreCase("deposit")) {
                         String[] amount = totalAmount.split("\\s+");
@@ -129,8 +129,9 @@ public class EnterPin extends DialogFragment {
                             }
                         });
 
-                    } else if (key.equalsIgnoreCase("mobile_deposit")) {
-
+                    }
+                    else if (key.equalsIgnoreCase("mobile_deposit")) {
+                        dialogLoader.showProgressDialog();
                         double amount_entered = Float.parseFloat(totalAmount);
 
                         //********************* RETROFIT IMPLEMENTATION ********************************//
@@ -221,7 +222,8 @@ public class EnterPin extends DialogFragment {
                         });
 
 
-                    }else{
+                    }
+                    else{
                         prepareBalanceRequest(request_id,category,access_token);
                     }
 
@@ -230,7 +232,13 @@ public class EnterPin extends DialogFragment {
             }
             });
 
-        return builder.create();
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        setCancelable(false);
+
+        return dialog;
+
     }
 
     private void prepareBalanceRequest(String request_id, String category, String access_token) {
