@@ -398,7 +398,7 @@ public class PurchasePreview extends DialogFragment implements
                     if(response.body().getStatus().equals("0")){
 
                         try {
-                            Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_LONG).show();
                         }catch (Exception e){
                             e.printStackTrace();
                             Log.e("Error", e.getMessage());
