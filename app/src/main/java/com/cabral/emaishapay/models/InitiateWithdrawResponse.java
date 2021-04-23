@@ -39,9 +39,6 @@ public class InitiateWithdrawResponse {
     }
 
     public class InitiateResponseData {
-        @SerializedName("referenceNumber")
-        @Expose
-        private String referenceNumber;
         @SerializedName("status")
         @Expose
         private String status;
@@ -49,6 +46,10 @@ public class InitiateWithdrawResponse {
         @SerializedName("balance")
         @Expose
         private double balance;
+
+        @SerializedName("referenceNumber")
+        @Expose
+        private String referenceNumber;
 
         public double getBalance() {
             return balance;

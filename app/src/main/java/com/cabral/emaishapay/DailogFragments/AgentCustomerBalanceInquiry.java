@@ -114,9 +114,8 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
             public void onClick(View v) {
                 //call confirm details layout
                 //call customer details dialog
-                if(spAccountType.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
+                //if(spAccountType.getSelectedItem().toString().equalsIgnoreCase("wallet"))
                     getReceiverName("0" + walletNo.getText().toString());
-                }
 
             }
         });

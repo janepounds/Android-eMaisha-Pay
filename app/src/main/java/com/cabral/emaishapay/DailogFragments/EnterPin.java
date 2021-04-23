@@ -224,7 +224,7 @@ public class EnterPin extends DialogFragment {
 
                     }
                     else{
-                        prepareBalanceRequest(request_id,category,access_token);
+                        prepareBalanceRequest(request_id,category,access_token,getArguments().getString("customer_name"));
                     }
 
 
@@ -235,13 +235,13 @@ public class EnterPin extends DialogFragment {
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
-        setCancelable(false);
+        setCancelable(true);
 
         return dialog;
 
     }
 
-    private void prepareBalanceRequest(String request_id, String category, String access_token) {
+    private void prepareBalanceRequest(String request_id, String category, String access_token, String customer_name) {
         //Inner Dialog to enter PIN
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
         //LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -263,7 +263,7 @@ public class EnterPin extends DialogFragment {
                     String service_code= WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString();
                     String customerPin = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_pin.getText().toString();
 
-                    requestBalanceInquiry(access_token,customerPin,request_id,category,service_code);
+                    requestBalanceInquiry(customer_name,access_token,customerPin,request_id,category,service_code);
 
                 }else {
                     pinEdittext.setError("Invalid Pin Entered");
@@ -275,7 +275,7 @@ public class EnterPin extends DialogFragment {
         agentPinDialog.show();
     }
 
-    private void requestBalanceInquiry( String access_token, String customerPin,String request_id, String category, String service_code) {
+    private void requestBalanceInquiry(String customer_name, String access_token, String customerPin, String request_id, String category, String service_code) {
 
         dialogLoader.showProgressDialog();
 
@@ -289,7 +289,7 @@ public class EnterPin extends DialogFragment {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().equalsIgnoreCase("1")) {
                         balance = response.body().getData().getBalance();
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                         //call balance dialog
                         FragmentManager fragmentManager = getChildFragmentManager();
@@ -302,25 +302,19 @@ public class EnterPin extends DialogFragment {
                         ft.addToBackStack(null);
                         Bundle bundle = new Bundle();
                         bundle.putString("balance",balance+"");
-
-
+                        bundle.putString("customer_name",customer_name);
 
                         // Create and show the dialog.
                         DialogFragment balanceDialog = new BalanceDialog();
                         balanceDialog.setArguments(bundle);
 
                         balanceDialog.show(ft, "dialog");
-                        balancePreviewDialog.dismiss();
 
                     } else {
+                        EnterPin.this.dismiss();
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        //redirect to home;
-                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                        startActivity(intent);
 
-
-                        balancePreviewDialog.dismiss();
-
+                        Log.w("BalanceError",response.body().getMessage());
                     }
                 }
 
@@ -330,11 +324,12 @@ public class EnterPin extends DialogFragment {
             @Override
             public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
-
+                Log.e("BalanceError","something went wrong");
+                EnterPin.this.dismiss();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getContext(), WalletHomeActivity.class);
                 startActivity(intent);
-                balancePreviewDialog.dismiss();
+
             }
         });
     }
