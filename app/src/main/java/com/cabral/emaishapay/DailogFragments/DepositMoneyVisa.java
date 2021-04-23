@@ -127,7 +127,7 @@ public class DepositMoneyVisa extends DialogFragment implements
         card_details_layout = view.findViewById(R.id.card_details_layout);
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
         verificationUtils = new RaveVerificationUtils( this, false, BuildConfig.PUBLIC_KEY);
-
+        addMoneyImg.setText("Top Up");
 
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
             @Override
