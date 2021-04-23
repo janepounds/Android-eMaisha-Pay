@@ -45,21 +45,11 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
     LinearLayout layoutWalletNumber,layoutAccountNumber,layoutPhoneNumber;
     Spinner spAccountType;
     Button addMoney;
-    TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    static String PENDING_DEPOSIT_REFERENCE_NUMBER;
-    TextView balanceTextView;
-    double balance;
-    private String txRef;
-    ProgressDialog dialog;
-    Context activity;
-    private RaveVerificationUtils verificationUtils;
     private String business_name = " ";
     EditText walletNo;
 
 
     public AgentCustomerBalanceInquiry() {
-
-
     }
 
 
@@ -122,15 +112,11 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
         addMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //call confirm details layout
                 //call customer details dialog
                 if(spAccountType.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
                     getReceiverName("0" + walletNo.getText().toString());
                 }
-
-
-
 
             }
         });
@@ -198,8 +184,6 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
 
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");
-
-
 
             }
         });

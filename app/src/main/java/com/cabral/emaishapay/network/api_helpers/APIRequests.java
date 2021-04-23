@@ -821,7 +821,8 @@ public interface APIRequests {
             @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code
     );
 
     

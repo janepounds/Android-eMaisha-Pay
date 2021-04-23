@@ -105,8 +105,9 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         if(getArguments()!=null){
             /**************WITHDRAW********************/
             key = getArguments().getString("key");
-            this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
+
             if(key.equalsIgnoreCase("withdraw")){
+                this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textTitleLabel.setText(getArguments().getString("title"));
                 textTitleAmount.setText("Amount Received");
                 textName.setText(getArguments().getString("customer_name"));
@@ -118,7 +119,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
             }else if(key.equalsIgnoreCase("deposit")){
                 /*****************DEPOSIT*************/
-
+                this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textName.setText(getArguments().getString("customer_name"));
                 textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
                 textAmount.setText("UGX "+this.transferAmount);
@@ -127,6 +128,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
             }else if(key.equalsIgnoreCase("transfer")){
                 /*****************TRANSFER*************/
+                this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textTitleLabel.setText(getArguments().getString("title"));
                 textReceiverAccount.setText("Receiver");
                 textName.setText(getArguments().getString("receiver_name"));
@@ -197,7 +199,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                         type="Agent Withdraw";
                     }
                     initiateFundsTransfer(customerNo,transferAmount, type );
-                }else{
+                }else if(key.equalsIgnoreCase("transfer")){
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
                     String type="";
@@ -206,8 +208,27 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     }else if(category.equalsIgnoreCase("Agent")){
                         type="Agent Transfer";
                     }
-
                     initiateFundsTransfer(customerNo, transferAmount, type );
+
+                }else{
+                    FragmentManager fragmentManager = getChildFragmentManager();
+
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key",key);
+                    bundle.putString("amount",null);
+                    bundle.putString("phone_number",textPhoneNumber.getText().toString());
+
+
+                    // Create and show the dialog.
+                    DialogFragment depositDialog = new EnterPin();
+                    depositDialog.setArguments(bundle);
+                    depositDialog.show(ft, "dialog");
                 }
 
             }
