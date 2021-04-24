@@ -40,7 +40,7 @@ import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WA
 
 public class TokenAuthFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "TokenAuthFragment";
-    private Context context;
+    private static Context context;
     private  String pin;
     static FragmentTokenAuthBinding binding;
 
@@ -188,9 +188,6 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
                     }
 
-                } else {
-                    Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
-
                 }
             }
 
@@ -223,9 +220,9 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 0) {
-                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         clearPin(binding);
-                        if (dialogLoader != null)
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
 
                     }
@@ -247,7 +244,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                     }
 
                 } else {
-
+                        clearPin(binding);
                     if (response.code() == 403) {
 
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
@@ -269,6 +266,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onFailure(@NotNull Call<TokenResponse> call, @NotNull Throwable t) {
                 Log.e(TAG, String.valueOf(t.getMessage()));
+                clearPin(binding);
                 if (dialogLoader != null)
                     dialogLoader.hideProgressDialog();
                 if(!Connectivity.isConnectedFast(context)){
@@ -330,10 +328,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         }
         else if(v.getId() == R.id.tv_key_clear){
             clearPin(binding);
-            binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-            binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-            binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-            binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
         }
        else {
             String value = keyValues.get(v.getId()).toString();
@@ -368,7 +363,12 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         binding.pinCode3Edt.setText("");
         binding.pinCode4Edt.setText("");
 
+        binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
         InputConnection ic = binding.pinCode1Edt.onCreateInputConnection(new EditorInfo());
+
         inputConnection = ic;
     }
 

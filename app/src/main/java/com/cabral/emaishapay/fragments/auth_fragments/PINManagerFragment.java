@@ -83,7 +83,7 @@ import static com.cabral.emaishapay.activities.WalletHomeActivity.navController;
 public class PINManagerFragment  extends  Fragment  implements View.OnClickListener  {
 
     private static final String TAG = "TokenAuthFragment";
-    private Context context;
+    private static Context context;
     private  String pin="", pin1="",phonenumber,otp_code,smsResults;
     EditText code1, code2, code3, code4, code5, code6;
     static FragmentTokenAuthBinding binding;
@@ -237,6 +237,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void afterTextChanged(Editable s) {
                 binding.pinCode2Edt.requestFocus();
                 binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
+                submitAction();
             }
         });
 
@@ -256,6 +257,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void afterTextChanged(Editable s) {
                 binding.pinCode3Edt.requestFocus();
                 binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
+                submitAction();
             }
         });
 
@@ -274,6 +276,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void afterTextChanged(Editable s) {
                 binding.pinCode4Edt.requestFocus();
                 binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
+                submitAction();
             }
         });
 
@@ -292,43 +295,47 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void afterTextChanged(Editable s) {
 
                 binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_dark_blue_bg, null));
-
-                pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
-                pin = pin.replaceAll("\\s+", "");
-                if (pin.length() >= 4) {
-                    //if Action 1 login , if 2 proceed with registration
-                    if(ACTION==1){
-                        String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                        initiateLoginProcess(WalletPass,phonenumber);
-                    }else if(ACTION==2){
-                        if(pin1.length()==0){
-                            pin1=pin;
-                            binding.pinTitle.setText(getString(R.string.confirm_pin));
-                            clearPin(binding);
-                            binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-                            binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-                            binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-                            binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
-
-                        }else if(pin1.length()==4 && pin.equals(pin1)){
-
-                            String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                            processRegistration( WalletPass,phonenumber, userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer);
-
-                        }
-
-                    }
-
-                }
-                else {
-                    Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
-
-                }
+                submitAction();
 
             }
 
         });
 
+    }
+
+    private void submitAction() {
+
+        pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
+        pin = pin.replaceAll("\\s+", "");
+        if (pin.length() >= 4) {
+            //if Action 1 login , if 2 proceed with registration
+            if(ACTION==1){
+                String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                initiateLoginProcess(WalletPass,phonenumber);
+            }else if(ACTION==2){
+                if(pin1.length()==0){
+                    pin1=pin;
+                    binding.pinTitle.setText(getString(R.string.confirm_pin));
+                    clearPin(binding);
+                    binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                    binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                    binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+                    binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_light_blue_bg, null));
+
+                }else if(pin1.length()==4 && pin.equals(pin1)){
+
+                    String WalletPass = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
+                    processRegistration( WalletPass,phonenumber, userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer);
+
+                }
+
+            }
+
+        }
+        else {
+            Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 
@@ -467,6 +474,11 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         binding.pinCode2Edt.setText("");
         binding.pinCode3Edt.setText("");
         binding.pinCode4Edt.setText("");
+
+        binding.pinCode1Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode2Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode3Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
+        binding.pinCode4Edt.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.round_light_blue_bg, null));
 
         InputConnection ic = binding.pinCode1Edt.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
@@ -667,10 +679,10 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful() && response.body().getStatus()==1 ){
                     smsResults =response.body().getData().getSms_results();
-
                     //Call the OTP Dialog
                     showOTPDialog(password);
                 }else{
+                    clearPin(binding);
                     Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
                 }
                 dialogLoader.hideProgressDialog();
@@ -681,6 +693,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
                 Snackbar.make(binding.textForgotPin,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
                 dialogLoader.hideProgressDialog();
+                clearPin(binding);
             }
         });
 
@@ -731,7 +744,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 if (response.code() == 200) {
 
                     if (response.body().getStatus() == 0) {
-                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Snackbar.make(binding.textForgotPin, response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                        clearPin(binding);
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
 
@@ -772,15 +786,14 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             WalletHomeActivity.startHome(context);
 
 
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e) {
                             Log.e("response", response.toString());
                             e.printStackTrace();
                         } finally {
                             dialogLoader.hideProgressDialog();
                         }
                     }
-
-
 
                 }
                 else {
@@ -789,6 +802,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                     //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String message = response.body().getMessage();
                     Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
+                    clearPin(binding);
                 }
 
 
@@ -840,7 +854,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         // Set isLogged_in of ConstantValues
         ConstantValues.IS_USER_LOGGED_IN = myAppPrefsManager.isUserLoggedIn();
 
-
         // Navigate back to MainActivity
         Intent i = new Intent(context, WalletHomeActivity.class);
         startActivity(i);
@@ -867,9 +880,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         call.enqueue(new Callback<WalletAuthentication>() {
             @Override
             public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull retrofit2.Response<WalletAuthentication> response) {
-
                 dialogLoader.hideProgressDialog();
-
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
                     if (response.body().getStatus()==1) {
@@ -895,11 +906,11 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                         Toast.makeText(context, getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
                     }
 
-                } else {
+                }
+                else {
                     // Show the Error Message
                     String Str = response.message();
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
-
                 }
             }
 
@@ -914,9 +925,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     private boolean validateSecurityQns() {
         //load answered security Qns(locally or from an endpoint)
-
         return true;
-
     }
 
     public void RequestSecurityQns(){
@@ -930,9 +939,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 if(response.isSuccessful()){
 
                     try {
-
                         securityQnsList = response.body().getSecurity_qnsList();
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -943,27 +950,14 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                         for(int i=0;i<securityQnsList.size();i++){
                             String security_Qn_name = securityQnsList.get(i).getSecurity_qn_name();
                             securityQns.add(security_Qn_name);
-
-
                         }
                         for(int i=0;i<3;i++) {
                             securityQnsSubList1.add(securityQns.get(i));
-
                         }for(int i=3;i<6;i++){
                             securityQnsSubList2.add(securityQns.get(i));
-
-
                         }for(int i=6;i<9;i++){
-
                             securityQnsSubList3.add(securityQns.get(i));
-
-
-
                         }
-
-
-
-
 
                         //set list in beneficiary spinner
                         ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, securityQnsSubList1);
@@ -978,14 +972,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                     }
 
                 }else if (response.code() == 401) {
-
-//                    TokenAuthActivity.startAuth(, true);
-//                    finishAffinity();
-//                    if (response.errorBody() != null) {
-//                        Log.e("info", new String(String.valueOf(response.errorBody())));
-//                    } else {
-//                        Log.e("info", "Something got very very wrong");
-//                    }
+                    Log.e("info", "Something got very very wrong");
                 }
 
             }
@@ -1065,9 +1052,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 //That gives all message to us.
                 // We need to get the code from inside with regex
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-
-                //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
 
                 getOtpFromMessage(message);
             }
