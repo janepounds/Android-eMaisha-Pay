@@ -935,6 +935,49 @@ public interface APIRequests {
 
 
     );
+
+    @FormUrlEncoded
+    @POST("wallet/agent/momo-deposit")
+    Call<WalletTransaction>depositMobileMoneyAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+
+
+    );
+    @FormUrlEncoded
+    @POST("wallet/merchant/momo-deposit")
+    Call<WalletTransaction>depositMobileMoneyMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+
+
+    );
+    @FormUrlEncoded
+    @POST("wallet/mechant-agent/momo-deposit")
+    Call<WalletTransaction>depositMobileMoneyAgentMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+
+
+    );
     @FormUrlEncoded
     @POST("wallet/transactions/summary")
     Call<WalletTransactionSummary> getSummary(
