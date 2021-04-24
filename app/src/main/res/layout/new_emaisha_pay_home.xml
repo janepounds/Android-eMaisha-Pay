@@ -831,6 +831,7 @@
                     android:gravity="center"
                     android:layout_below="@id/text_credit_name"/>
                 <TextView
+                    android:id="@+id/date_credit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="24 Feb 2021 14:23 PM"
@@ -905,6 +906,7 @@
                     android:gravity="center"
                     android:layout_below="@id/text_debit_name"/>
                 <TextView
+                    android:id="@+id/date_debit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="24 Feb 2021 14:23 PM"
