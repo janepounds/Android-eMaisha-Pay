@@ -71,10 +71,16 @@ public class WalletTransactionResponse {
             @SerializedName("amount")
             @Expose
             private double amount;
-            @SerializedName("dateCompleted")
+            @SerializedName("ft_discount")
+            @Expose
+            private double discount;
+            @SerializedName("charge")
+            @Expose
+            private double charge;
+            @SerializedName("created_at")
             @Expose
             private String dateCompleted;
-            @SerializedName("status")
+            @SerializedName("trans_message")
             @Expose
             private String status;
             @SerializedName("referenceNumber")

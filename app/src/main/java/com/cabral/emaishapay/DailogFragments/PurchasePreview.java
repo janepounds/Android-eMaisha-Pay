@@ -410,7 +410,7 @@ public class PurchasePreview extends DialogFragment implements
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false);
                         TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                        text.setText("Processed Purchase worth UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" from "+businessName);
+                        text.setText(response.body().getMessage());
 
 
                         dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
