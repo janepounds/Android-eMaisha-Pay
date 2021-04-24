@@ -9,6 +9,7 @@ import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
+import com.cabral.emaishapay.models.WalletTransactionSummary;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
@@ -933,6 +934,13 @@ public interface APIRequests {
 
 
 
+    );
+    @FormUrlEncoded
+    @POST("wallet/transactions/summary")
+    Call<WalletTransactionSummary> getSummary(
+            @Header("Authorization") String token,
+            @Field("request_id") String request_id,
+            @Field("action_id") String action_id
     );
 
 
