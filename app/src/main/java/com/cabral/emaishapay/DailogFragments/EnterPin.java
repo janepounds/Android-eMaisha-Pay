@@ -48,6 +48,8 @@ public class EnterPin extends DialogFragment {
     private double balance;  String key = "";
     Dialog agentPinDialog, balancePreviewDialog;
     DialogLoader dialogLoader;
+    String role;
+    TextView dialog_title;
 
 
 
@@ -67,14 +69,18 @@ public class EnterPin extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.dialog_enter_pin, null);
         confirm_pin = view.findViewById(R.id.etxt_create_agent_pin);
+        dialog_title =view.findViewById(R.id.dialog_title);
         submit = view.findViewById(R.id.txt_custom_add_agent_submit_pin);
+        role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, getContext());
         if(getArguments()!=null){
             totalAmount = getArguments().getString("amount");
             phoneNumber = getArguments().getString("phone_number");
             key = getArguments().getString("key");
         }
         if(key.equalsIgnoreCase("deposit")){
-            TextView dialog_title=view.findViewById(R.id.dialog_title);
+            dialog_title.setText("ENTER AGENT PIN");
+        }else if(key.equalsIgnoreCase("mobile_deposit") && (role.equalsIgnoreCase("agent")|| role.equalsIgnoreCase("merchant") ||role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT"))){
+
             dialog_title.setText("ENTER AGENT PIN");
         }
 
@@ -131,7 +137,7 @@ public class EnterPin extends DialogFragment {
 
                     }
                     else if (key.equalsIgnoreCase("mobile_deposit")) {
-                        String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, getContext());
+
                         if (role.equalsIgnoreCase("agent")) {
                             //call agent end point
 
