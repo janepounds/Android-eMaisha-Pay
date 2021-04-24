@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.models.WalletTransactionSummary;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
@@ -69,7 +71,6 @@ public class WalletHomeFragment extends Fragment {
                 (NavHostFragment) fm.findFragmentById(R.id.wallet_home_container);
 
         navController = navHostFragment.getNavController();
-        
 //        getTransactionsData();
         getBalanceAndCommission();
 
@@ -78,11 +79,13 @@ public class WalletHomeFragment extends Fragment {
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
 
-
+        getTransactionSummary();
 
 
         return binding.getRoot();
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -337,7 +340,7 @@ public class WalletHomeFragment extends Fragment {
 //                    dialog.hideProgressDialog();
 //                } else if (response.code() == 401) {
 //
-//                    navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+//                    TokenAuthFragment.startAuth(true);
 //                    //getActivity().finish();
 //                    if (response.errorBody() != null) {
 //                        Log.e("info", new String(String.valueOf(response.errorBody())));
@@ -357,6 +360,63 @@ public class WalletHomeFragment extends Fragment {
 //
 //
 //    }
+
+    private void getTransactionSummary() {
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        Call<WalletTransactionSummary> call = apiRequests.getSummary(access_token,request_id,"getTransactionsSummary");
+        call.enqueue(new Callback<WalletTransactionSummary>() {
+            @Override
+            public void onResponse(@NotNull Call<WalletTransactionSummary> call, @NotNull Response<WalletTransactionSummary> response) {
+                dialog.hideProgressDialog();
+
+                if (response.isSuccessful()) {
+                    if(response.body().getStatus()==1){
+                        if(response.body().getData().getLastCredit()!=null){
+                            String receiver_name = response.body().getData().getLastCredit().getReceiver();
+                            double amount = response.body().getData().getLastCredit().getAmount();
+                            String date_completed =response.body().getData().getLastCredit().getDateCompleted();
+                            binding.textCreditName.setText(receiver_name);
+                            binding.textAmountCredit.setText("UGX "+amount);
+                            binding.dateCredit.setText(date_completed);
+
+                        }else if(response.body().getData().getLastDebit()!=null){
+                            String sender_name = response.body().getData().getLastDebit().getSender();
+                            double amount = response.body().getData().getLastDebit().getAmount();
+                            String date_completed =response.body().getData().getLastDebit().getDateCompleted();
+                            binding.textDebitName.setText(sender_name);
+                            binding.textAmountDebit.setText("UGX "+amount);
+                            binding.dateDebit.setText(date_completed);
+
+
+                        }
+
+                    }else{
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                } else if (response.code() == 401) {
+                    Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
+                    //Omitted to avoid current Destination conflicts
+                    TokenAuthFragment.startAuth(true);
+                } else {
+                    Log.e("info", new String(String.valueOf(response.body().getMessage())));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<WalletTransactionSummary> call, @NotNull Throwable t) {
+                dialog.hideProgressDialog();
+                Log.e("info : ", new String(String.valueOf(t.getMessage())));
+                Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+    }
 
     public void getBalanceAndCommission() {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -389,7 +449,7 @@ public class WalletHomeFragment extends Fragment {
                 } else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
-                     navController.navigate(R.id.action_walletHomeFragment2_to_tokenAuthFragment);
+                    TokenAuthFragment.startAuth(true);
                 } else {
                     Log.e("info", new String(String.valueOf(response.body().getMessage())));
                 }
