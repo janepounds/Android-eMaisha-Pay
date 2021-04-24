@@ -101,6 +101,17 @@ public class WalletTransactionResponse {
             @SerializedName("receiptNumber")
             @Expose
             private String receiptNumber;
+            @SerializedName("trans_currency")
+            @Expose
+            private String trans_currency;
+
+            public String getTrans_currency() {
+                return trans_currency;
+            }
+
+            public void setTrans_currency(String trans_currency) {
+                this.trans_currency = trans_currency;
+            }
 
             public String getType() {
                 return type;

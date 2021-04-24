@@ -72,6 +72,7 @@ public class WalletHomeFragment extends Fragment {
 
         navController = navHostFragment.getNavController();
 //        getTransactionsData();
+        getTransactionSummary();
         getBalanceAndCommission();
 
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
@@ -79,7 +80,7 @@ public class WalletHomeFragment extends Fragment {
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
 
-        getTransactionSummary();
+
 
 
         return binding.getRoot();
@@ -378,17 +379,28 @@ public class WalletHomeFragment extends Fragment {
                             double amount = response.body().getData().getLastCredit().getAmount();
                             String date_completed =response.body().getData().getLastCredit().getDateCompleted();
                             binding.textCreditName.setText(receiver_name);
-                            binding.textAmountCredit.setText("UGX "+amount);
+                            binding.textAmountCredit.setText(response.body().getData().getLastDebit().getTrans_currency()+amount);
                             binding.dateCredit.setText(date_completed);
 
-                        }else if(response.body().getData().getLastDebit()!=null){
-                            String sender_name = response.body().getData().getLastDebit().getSender();
+                        } else{
+
+                            binding.textCreditName.setText("");
+                            binding.textAmountCredit.setText("0.00");
+                            binding.dateCredit.setText("");
+                        }
+                        if(response.body().getData().getLastDebit()!=null){
+                            String sender_name = response.body().getData().getLastDebit().getReceiver();
                             double amount = response.body().getData().getLastDebit().getAmount();
                             String date_completed =response.body().getData().getLastDebit().getDateCompleted();
                             binding.textDebitName.setText(sender_name);
-                            binding.textAmountDebit.setText("UGX "+amount);
+                            binding.textAmountDebit.setText(response.body().getData().getLastDebit().getTrans_currency() +amount);
                             binding.dateDebit.setText(date_completed);
 
+
+                        }else{
+                            binding.textDebitName.setText("");
+                            binding.textAmountDebit.setText("0.00");
+                            binding.dateDebit.setText("");
 
                         }
 
