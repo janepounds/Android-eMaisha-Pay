@@ -159,7 +159,7 @@ public interface APIRequests {
 
     // //initiate transfer
     @FormUrlEncoded
-    @POST("wallet/transfer/initiate")
+    @POST("wallet/customer/transfer/initiate")
     Call<InitiateTransferResponse> initiateTransfer(@Header("Authorization") String token,
                                                     @Field("amount") Double amount,
                                                     @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -205,7 +205,7 @@ public interface APIRequests {
     // //make transaction
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
-    @POST("wallet/payments/merchant")
+    @POST("wallet/merchant/pay")
     Call<WalletPurchaseResponse> makeTransaction(@Header("Authorization") String token,
                                                  @Field("merchantId") String merchantId,
                                                  @Field("amount") Double amount,
@@ -796,6 +796,21 @@ public interface APIRequests {
 
     );
 
+    // //initiate withdraw
+    @FormUrlEncoded
+    @POST("wallet/master-agent/confirm-withdraw")
+    Call<InitiateWithdrawResponse> confirmMasterAgentWithdraw(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("otp") String otp_code,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
+
+    );
+
+
   //initiate agent transaction
   @FormUrlEncoded
   @POST("wallet/agent/initiate-customer-transfer")
@@ -962,6 +977,7 @@ public interface APIRequests {
 
 
     );
+
     @FormUrlEncoded
     @POST("wallet/merchant/momo-deposit")
     Call<WalletTransaction>depositMobileMoneyMerchant(
@@ -973,9 +989,9 @@ public interface APIRequests {
             @Field("action_id") String action_id,
             @Field("service_code") String service_code
 
-
-
     );
+
+
     @FormUrlEncoded
     @POST("wallet/mechant-agent/momo-deposit")
     Call<WalletTransaction>depositMobileMoneyAgentMerchant(
