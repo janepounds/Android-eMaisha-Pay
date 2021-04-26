@@ -162,18 +162,13 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     public void initializeViews(){
         if(getArguments()!=null) {
 
-            if (getArguments().getString(getString(R.string.role_agent))!=null) {
+            if (getArguments().getString(getString(R.string.role_master_agent))!=null) {
                 binding.toolbar.setTitle(getArguments().getString("Agent"));
                 role = "AGENT";
 
             }else if(getArguments().getString("Merchant")!=null){
                 binding.toolbar.setTitle(getArguments().getString("Merchant"));
                 role = "MERCHANT";
-
-            }else if(getArguments().getString("AgentMerchant")!=null) {
-                binding.toolbar.setTitle(getArguments().getString("AgentMerchant"));
-                //set business info
-                role = "AGENT_MERCHANT";
 
             }
 
