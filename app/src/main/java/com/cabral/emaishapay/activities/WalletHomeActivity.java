@@ -464,11 +464,13 @@ public class WalletHomeActivity extends AppCompatActivity{
         DialogFragment customerWithdrawDialog = new AgentCustomerWithdraw();
         customerWithdrawDialog.show(ft, "dialog");
     }
+
     public void openAgentCustomerAccountOpening(View view) {
         // To PersonalDetailsFragment
      navController.navigate(R.id.action_walletHomeFragment2_to_personalDetailsFragment);
 
     }
+
     public void openAgentCustomerLoanApplication(View view) {
         navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
 
@@ -486,7 +488,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void onBackPressed() {
         if(navController.getCurrentDestination()!=null){
             currentFragment= navController.getCurrentDestination().getId();
-            if (currentFragment == R.id.walletHomeFragment2)
+            if (currentFragment == R.id.walletHomeFragment2  || currentFragment == R.id.tokenAuthFragment)
                 new AlertDialog.Builder(this)
                         .setMessage("Are you sure you want to exit?")
                         .setCancelable(false)
