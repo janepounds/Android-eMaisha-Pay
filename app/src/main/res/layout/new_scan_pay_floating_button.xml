@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transparent"
-    >
+    android:background="@color/transparent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +26,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:fabCustomSize="80dp"
-    android:src="@drawable/ic_barcode_scanner"
+    android:src="@drawable/scan_and_pay2"
+    app:maxImageSize="50dp"
     android:layout_marginEnd="30dp"
     app:backgroundTint="@color/white"
     app:tint="@color/colorPrimary"/>
@@ -32,7 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabCustomSize="80dp"
-        android:src="@drawable/ic_emaisha_pay_scan"
+        android:src="@drawable/emaisha_pay2"
+        app:maxImageSize="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         app:backgroundTint="@color/white"
@@ -43,8 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cancel_blue"
+
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="?actionBarSize"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

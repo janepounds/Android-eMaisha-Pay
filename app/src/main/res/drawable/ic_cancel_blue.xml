@@ -7,12 +7,12 @@
       android:pathData="M1.4145,1.6436L16.0714,16.3005"
       android:strokeWidth="2"
       android:fillColor="#00000000"
-      android:strokeColor="#2d84b7"
+      android:strokeColor="#fff"
       android:strokeLineCap="square"/>
   <path
       android:pathData="M16.3005,1.4145L1.6436,16.0714"
       android:strokeWidth="2"
       android:fillColor="#00000000"
-      android:strokeColor="#2d84b7"
+      android:strokeColor="#fff"
       android:strokeLineCap="square"/>
 </vector>
