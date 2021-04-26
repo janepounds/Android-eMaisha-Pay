@@ -1,0 +1,355 @@
+
+<layout>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/windowBackgroundDark">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_scan_pay_process_2"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_white"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:orientation="horizontal"
+            android:layout_below="@id/appbar"
+            android:background="@color/colorPrimary"
+            android:layout_marginBottom="20dp"/>
+
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UGX 0"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_below="@id/layout_merchant_name"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_merchant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearlayout"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_merchant_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paying "
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/text_merchant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/text_merchant_pay"
+            android:text="Merchant Name"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textAlignment="gravity"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/enter_pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter PIN"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@id/amount"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/pin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+       android:layout_below="@id/enter_pin">
+
+        <EditText
+            android:id="@+id/pin_code1_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_bottom_line_gray"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:cursorVisible="false"/>
+
+        <EditText
+            android:id="@+id/pin_code2_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_bottom_line_gray"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:cursorVisible="false"/>
+
+        <EditText
+            android:id="@+id/pin_code3_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_bottom_line_gray"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:cursorVisible="false"/>
+
+        <EditText
+            android:id="@+id/pin_code4_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_text_bottom_line_gray"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:cursorVisible="false"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/pin_layout">
+        <LinearLayout
+            android:id="@+id/layout_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_above="@id/keyboard"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Forgot Pin?  "
+                android:textColor="#123365"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_forgot_pin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/signin1"
+                android:text=" Click here "
+                android:textColor="#2D84B7"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <TableLayout
+            android:id="@+id/keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="@drawable/keyboard_divider2"
+            android:visibility="visible"
+            android:background="#fafdff"
+            android:layout_alignParentBottom="true">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <View
+                    android:id="@+id/line5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary" />
+            </TableRow>
+            <TableRow style="@style/keyboard_row2">
+
+                <TextView
+                    android:id="@+id/tv_key_1"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_one"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp"/>
+
+                <TextView
+                    android:id="@+id/tv_key_2"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_two"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp"/>
+
+                <TextView
+                    android:id="@+id/tv_key_3"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_three"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow style="@style/keyboard_row2">
+
+                <TextView
+                    android:id="@+id/tv_key_4"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_four"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/tv_key_5"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_five"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/tv_key_6"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_six"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow style="@style/keyboard_row2">
+
+                <TextView
+                    android:id="@+id/tv_key_7"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_seven"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/tv_key_8"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_eight"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/tv_key_9"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_nine"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary" />
+            </TableRow>
+            <TableRow style="@style/keyboard_row2">
+                <ImageView
+                    android:id="@+id/tv_key_backspace"
+                    style="@style/keyboard_button"
+                    android:src="@drawable/ic_btn_delete"
+                    android:text="@string/btn_backspace"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    app:tint="#2D84B7" />
+
+                <TextView
+                    android:id="@+id/tv_key_0"
+                    style="@style/keyboard_number_button"
+                    android:text="@string/number_zero"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="34sp" />
+
+
+                <ImageView
+                    android:id="@+id/tv_key_enter"
+                    style="@style/keyboard_button"
+                    android:src="@drawable/ic_btn_enter"
+                    android:text="@string/btn_clear"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#2D84B7" />
+
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</RelativeLayout>
+
+</layout>

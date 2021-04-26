@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.BlurMaskFilter;
@@ -8,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -180,8 +184,18 @@ public class WalletHomeFragment extends Fragment {
         binding.layoutLoan.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-                  //To WalletLoanListFragment
-                  navController.navigate(R.id.action_walletHomeFragment2_to_walletLoansListFragment);
+
+
+                  //Go to security qns
+                  AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                  View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+                  dialog.setView(dialogView);
+                  dialog.setCancelable(true);
+
+
+                  final AlertDialog alertDialog = dialog.create();
+                  alertDialog.show();
+
 
               }
           }
