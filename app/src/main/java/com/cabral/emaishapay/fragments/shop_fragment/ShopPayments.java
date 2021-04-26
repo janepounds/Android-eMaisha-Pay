@@ -637,9 +637,9 @@ public class ShopPayments extends Fragment implements
         String service_code = "121518";
 
         String type="";
-        if(category.equalsIgnoreCase("Agent Merchant")){
+        if(category.equalsIgnoreCase( getString(R.string.role_master_agent) )){
             type="Merchant Transfer";
-        }else if(category.equalsIgnoreCase("Agent")){
+        }else if(category.equalsIgnoreCase(getString(R.string.role_agent))){
             type="Agent Transfer";
         }
 

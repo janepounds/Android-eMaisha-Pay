@@ -79,7 +79,7 @@ public class EnterPin extends DialogFragment {
         }
         if(key.equalsIgnoreCase("deposit")){
             dialog_title.setText("ENTER AGENT PIN");
-        }else if(key.equalsIgnoreCase("mobile_deposit") && (role.equalsIgnoreCase("agent")|| role.equalsIgnoreCase("merchant") ||role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT"))){
+        }else if(key.equalsIgnoreCase("mobile_deposit") && (role.equalsIgnoreCase(getString(R.string.role_agent))|| role.equalsIgnoreCase("merchant") ||role.equalsIgnoreCase(getString(R.string.role_master_agent) ) )){
 
             dialog_title.setText("ENTER AGENT PIN");
         }
@@ -94,6 +94,8 @@ public class EnterPin extends DialogFragment {
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                    String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+  confirm_pin.getText().toString();
+
                     dialogLoader=new DialogLoader(getActivity());
 
                     if(getArguments().getString("key").equalsIgnoreCase("deposit")) {
@@ -101,7 +103,15 @@ public class EnterPin extends DialogFragment {
                         String amount_only = amount[1];
                         dialogLoader.showProgressDialog();
                         /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
-                        Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).confrmDeposit(access_token, Double.parseDouble(amount_only), "12" + confirm_pin.getText().toString(), phoneNumber, request_id, category, "merchantInitiateDeposit");
+                        Call<InitiateWithdrawResponse> call = null;
+                         if(category.equalsIgnoreCase(getString(R.string.role_master_agent))  ){
+                             call= APIClient.getWalletInstance(getContext()).confrmMasterAgentDeposit(access_token, Double.parseDouble(amount_only), phoneNumber, request_id, category,"merchantInitiateDeposit",service_code);
+
+                         }else if( category.equalsIgnoreCase(getString(R.string.role_agent))  ){
+                             call = APIClient.getWalletInstance(getContext()).confrmDeposit(access_token, Double.parseDouble(amount_only), phoneNumber, request_id, category,"masterAgentInitiateCustomerDeposit",service_code);
+
+                         }
+                        
                         call.enqueue(new Callback<InitiateWithdrawResponse>() {
                             @Override
                             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -115,9 +125,7 @@ public class EnterPin extends DialogFragment {
 
                                     } else {
                                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                        //redirect to home;
-                                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                                        startActivity(intent);
+                                       EnterPin.this.dismiss();
 
                                     }
 
@@ -138,7 +146,7 @@ public class EnterPin extends DialogFragment {
                     }
                     else if (key.equalsIgnoreCase("mobile_deposit")) {
 
-                        if (role.equalsIgnoreCase("agent")) {
+                        if (role.equalsIgnoreCase(getString(R.string.role_agent))) {
                             //call agent end point
 
                             dialogLoader.showProgressDialog();
@@ -325,7 +333,7 @@ public class EnterPin extends DialogFragment {
                                 }
                             });
 
-                        } else if (role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")) {
+                        } else if (role.equalsIgnoreCase(getString(R.string.role_master_agent)) ) {
                             //call agent merchant endpoint
 
                             dialogLoader.showProgressDialog();
@@ -427,6 +435,7 @@ public class EnterPin extends DialogFragment {
                         //********************* RETROFIT IMPLEMENTATION ********************************//
                         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
                         Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token, amount_entered, phoneNumber, request_id, category, "customerMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+
                         call.enqueue(new Callback<WalletTransaction>() {
                             @Override
                             public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {

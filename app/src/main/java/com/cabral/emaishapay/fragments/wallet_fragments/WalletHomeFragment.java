@@ -94,7 +94,7 @@ public class WalletHomeFragment extends Fragment {
 
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
 
-        if(role.equalsIgnoreCase("agent")){
+        if(role.equalsIgnoreCase(getString(R.string.role_agent))){
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
@@ -114,14 +114,13 @@ public class WalletHomeFragment extends Fragment {
 
 
         }
-        else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+        else if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
 
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
-
 
         }
         else{
@@ -131,8 +130,7 @@ public class WalletHomeFragment extends Fragment {
             binding.layoutTransfer.setVisibility(View.VISIBLE);
             binding.layoutSettle.setVisibility(View.INVISIBLE);
             binding.cardBalanceLabel.setText("Card");
-            Log.d(TAG, "onCreateView: *"+role+"*");
-
+            //Log.d(TAG, "onCreateView: *"+role+"*");
 
         }
 
@@ -195,15 +193,6 @@ public class WalletHomeFragment extends Fragment {
                 navController.navigate(R.id.action_walletHomeFragment2_to_payFragment);
             }
         });
-//        binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //To WalletTrasactionListFragment
-//                Bundle args=new Bundle();
-//                args.putString("KEY_TITLE", context.getString(R.string.transactions) );
-//                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
-//            }
-//        });
 
         binding.layoutBeneficiaries.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,7 +229,6 @@ public class WalletHomeFragment extends Fragment {
             }
         });
 
-
         binding.imgAmountBlur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +248,6 @@ public class WalletHomeFragment extends Fragment {
                 binding.cardBalance.getPaint().setMaskFilter(null);
             }
         });
-
 
         binding.layoutUsername.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -469,14 +469,14 @@ public class WalletAccountFragment extends Fragment {
             });
 
             String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-            if(role.equalsIgnoreCase("agent") || role.equalsIgnoreCase("merchant")){
+            if(role.equalsIgnoreCase(getString(R.string.role_agent)) || role.equalsIgnoreCase("merchant")){
                 agent_merchant.setText("Master Agent");
                 layout_agent.setVisibility(View.GONE);
                 layout_merchant.setVisibility(View.GONE);
                 view4.setVisibility(View.GONE);
                 view5.setVisibility(View.GONE);
 
-            }else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+            }else if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
                 //
 
             }
@@ -492,7 +492,7 @@ public class WalletAccountFragment extends Fragment {
 
         //Setting the account type
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-        if(role.equalsIgnoreCase("agent") ){
+        if(role.equalsIgnoreCase(getString(R.string.role_agent)) ){
 
             binding.textAccountType.setText("Agent");
 
@@ -502,7 +502,7 @@ public class WalletAccountFragment extends Fragment {
             binding.textAccountType.setText("Merchant");
         }
 
-        else if(role.equalsIgnoreCase("agent merchant") || role.equalsIgnoreCase("AGENT_MERCHANT")){
+        else if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
 
             binding.textAccountType.setText("Master Agent");
             binding.textChangeAccountType.setOnClickListener(null);
