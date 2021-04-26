@@ -748,11 +748,23 @@ public interface APIRequests {
     Call<InitiateWithdrawResponse>confrmDeposit(
             @Header("Authorization") String token,
             @Field("amount") double amount,
-            @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/master-agent/confirm-deposit")
+    Call<InitiateWithdrawResponse>confrmMasterAgentDeposit(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code
     );
 
 
