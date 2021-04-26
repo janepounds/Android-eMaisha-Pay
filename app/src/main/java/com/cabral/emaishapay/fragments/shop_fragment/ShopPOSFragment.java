@@ -7,16 +7,21 @@ import android.text.Editable;
 
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -41,10 +46,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopPOSFragment extends Fragment {
+public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
-    FragmentManager fm;
-    Activity shop;
     private Context context;
     PosProductAdapter productAdapter;
     TextView txtNoProducts;
@@ -56,12 +59,10 @@ public class ShopPOSFragment extends Fragment {
     private ShopProductsModelView viewModel;
     FragmentShopPosBinding binding;
 
-
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-
     List<CartProduct> cartItemsList = new ArrayList<>();
-    List<CartProduct> finalCartItemsList = new ArrayList<>();
-    List<ProductDetails> cartProducts = new ArrayList<>();
+    private SparseArray<String> keyValues = new SparseArray<>();
+    private static InputConnection inputConnection;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -83,12 +84,8 @@ public class ShopPOSFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ShopProductsModelView.class);
         fragmentReference = new WeakReference<>(ShopPOSFragment.this);
 
-
         totalItems = binding.totalItems;
         totalprice = binding.tvTotalPrice;
-
-
-
 
         binding.layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,13 +114,48 @@ public class ShopPOSFragment extends Fragment {
             }
         });
 
-
 //        binding.imageNoProduct.setVisibility(View.GONE);
 //        binding.txtNoProducts.setVisibility(View.GONE);
 
-
 //        refreshCartProducts();
+        setKeyValues();
+        setKeyListeningEvents();
+
         return binding.getRoot();
+    }
+
+
+    private void setKeyValues() {
+        keyValues.put(R.id.tv_key_0, "0");
+        keyValues.put(R.id.tv_key_1, "1");
+        keyValues.put(R.id.tv_key_2, "2");
+        keyValues.put(R.id.tv_key_3, "3");
+        keyValues.put(R.id.tv_key_4, "4");
+        keyValues.put(R.id.tv_key_5, "5");
+        keyValues.put(R.id.tv_key_6, "6");
+        keyValues.put(R.id.tv_key_7, "7");
+        keyValues.put(R.id.tv_key_8, "8");
+        keyValues.put(R.id.tv_key_9, "9");
+    }
+
+    private void setKeyListeningEvents() {
+        binding.tvKey0.setOnClickListener(this);
+        binding.tvKey1.setOnClickListener(this);
+        binding.tvKey2.setOnClickListener(this);
+        binding.tvKey3.setOnClickListener(this);
+        binding.tvKey4.setOnClickListener(this);
+        binding.tvKey5.setOnClickListener(this);
+        binding.tvKey6.setOnClickListener(this);
+        binding.tvKey7.setOnClickListener(this);
+        binding.tvKey8.setOnClickListener(this);
+        binding.tvKey9.setOnClickListener(this);
+        binding.tvKeyBackspace.setOnClickListener(this);
+        binding.tvKeyEnter.setOnClickListener(this);
+    }
+
+    public void setInputConnection(EditText editText) {
+        InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
+        inputConnection = ic;
     }
 
     @Override
@@ -143,8 +175,6 @@ public class ShopPOSFragment extends Fragment {
                 binding.posCharge.requestFocus();
                 binding.layoutKeyboard.setVisibility(View.VISIBLE);
                 binding.scrollviewLayout.setVisibility(View.GONE);
-
-
             }
         });
 
@@ -170,21 +200,12 @@ public class ShopPOSFragment extends Fragment {
             binding.posCharge.clearFocus();
             binding.layoutKeyboard.setVisibility(View.GONE);
             binding.scrollviewLayout.setVisibility(View.VISIBLE);
-
         }
-
-
-
-
-
-
-
 
 
         binding.txtItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 productAdapter = new PosProductAdapter(context,viewModel,getViewLifecycleOwner(),fragmentReference);
                 // set a LinearLayoutManager with default vertical orientation
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -192,10 +213,6 @@ public class ShopPOSFragment extends Fragment {
                 binding.posRecycler.setHasFixedSize(true);
                 binding.posRecycler.setAdapter(productAdapter);
                 subscribeToProducts(viewModel.getMerchantProducts());
-
-
-
-
 
                 binding.enterSelected.setVisibility(View.INVISIBLE);
                 binding.itemsSelected.setVisibility(View.VISIBLE);
@@ -207,28 +224,19 @@ public class ShopPOSFragment extends Fragment {
                 binding.layoutKeyboard.setVisibility(View.GONE);
                 binding.scrollviewLayout.setVisibility(View.VISIBLE);
 
-
-
-
                 binding.etxtSearch.addTextChangedListener(new TextWatcher() {
-
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                     }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         viewModel.setQuery(s);
-
-
                     }
 
                     @Override
                     public void afterTextChanged(Editable s) {
-
                     }
-
 
                 });
 
@@ -257,9 +265,8 @@ public class ShopPOSFragment extends Fragment {
 
         binding.totalItems.setText(itemsCounter+" Items");
         binding.tvTotalPrice.setText(currency+" "+priceCounter);
-
-
     }
+
     public static void ClearCart() {
         User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
         user_cart_BuyInputs_db.clearCart();
@@ -276,17 +283,11 @@ public class ShopPOSFragment extends Fragment {
                 binding.txtNoProducts.setVisibility(View.GONE);
                 productAdapter.setProductList( myProducts.data);
 
-
-
             }else {
-
                 binding.posRecycler.setVisibility(View.GONE);
                 binding.imageNoProduct.setVisibility(View.VISIBLE);
                 binding.imageNoProduct.setImageResource(R.drawable.not_found);
                 binding.txtNoProducts.setVisibility(View.VISIBLE);
-
-
-
             }
         });
 
@@ -314,4 +315,22 @@ public class ShopPOSFragment extends Fragment {
             }
         });
     }
+
+
+    @Override
+    public void onClick(View v) {
+        if (inputConnection == null)
+            return;
+
+        if(  v.getId()==R.id.tv_key_backspace ){
+            binding.posCharge.setText( binding.posCharge.getText().toString());
+
+        }else if( v.getId()==R.id.tv_key_enter  ){
+
+        }else{
+
+        }
+
+    }
+
 }

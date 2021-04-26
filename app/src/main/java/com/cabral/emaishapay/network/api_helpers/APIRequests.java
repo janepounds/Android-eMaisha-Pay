@@ -241,7 +241,8 @@ public interface APIRequests {
                                                      @Path("phonenumber") String phonenumber,
                                                      @Path("purpose") String purpose,
                                                      @Query("request_id") String request_id,
-                                                     @Query("action_id")String action_id
+                                                     @Query("action_id")String action_id,
+                                                     @Query("category")String category
   );
 
 
@@ -745,19 +746,7 @@ public interface APIRequests {
     // //initiate deposit
     @FormUrlEncoded
     @POST("wallet/agent/confirm-deposit")
-    Call<InitiateWithdrawResponse>confrmDeposit(
-            @Header("Authorization") String token,
-            @Field("amount") double amount,
-            @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id,
-            @Field("service_code")String service_code
-    );
-
-    @FormUrlEncoded
-    @POST("wallet/master-agent/confirm-deposit")
-    Call<InitiateWithdrawResponse>confrmMasterAgentDeposit(
+    Call<InitiateWithdrawResponse>confrmAgentDeposit(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("customerPhoneNumber") String customerPhoneNumber,
@@ -792,21 +781,8 @@ public interface APIRequests {
             @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
-
-    );
-
-    // //initiate withdraw
-    @FormUrlEncoded
-    @POST("wallet/master-agent/confirm-withdraw")
-    Call<InitiateWithdrawResponse> confirmMasterAgentWithdraw(
-            @Header("Authorization") String token,
-            @Field("amount") double amount,
-            @Field("otp") String otp_code,
-            @Field("customerPhoneNumber") String customerPhoneNumber,
-            @Field("request_id") String request_id,
-            @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
 
     );
 

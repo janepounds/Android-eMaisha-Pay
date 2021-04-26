@@ -121,6 +121,17 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
         startSmsUserConsent();
+        setKeyValues();
+
+        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        userInfoDB = new User_Info_DB();
+        dialogLoader = new DialogLoader(context);
+        apiRequests = APIClient.getWalletInstance(getContext());
+
+        return binding.getRoot();
+    }
+
+    private void setKeyValues() {
         keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
         keyValues.put(R.id.tv_key_2, "2");
@@ -131,13 +142,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         keyValues.put(R.id.tv_key_7, "7");
         keyValues.put(R.id.tv_key_8, "8");
         keyValues.put(R.id.tv_key_9, "9");
-
-        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
-        userInfoDB = new User_Info_DB();
-        dialogLoader = new DialogLoader(context);
-        apiRequests = APIClient.getWalletInstance(getContext());
-
-        return binding.getRoot();
     }
 
     @Override

@@ -201,7 +201,9 @@ public class ConfirmTransfer extends DialogFragment {
             charges_layount.setVisibility(View.VISIBLE);
             discount_layount.setVisibility(View.GONE);
         }
+
     }
+
 
     public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/
@@ -216,7 +218,7 @@ public class ConfirmTransfer extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id,"getReceiverForUser");
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"CustomersTransfer",request_id,"getReceiverForUser",category);
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {

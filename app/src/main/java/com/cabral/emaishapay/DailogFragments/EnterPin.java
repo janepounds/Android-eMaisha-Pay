@@ -106,12 +106,9 @@ public class EnterPin extends DialogFragment {
                         String amount_only = amount[1];
                         dialogLoader.showProgressDialog();
                         /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
-                        Call<InitiateWithdrawResponse> call = null;
-                         if(category.equalsIgnoreCase(getString(R.string.role_master_agent))  ){
-                             call= APIClient.getWalletInstance(getContext()).confrmMasterAgentDeposit(access_token, Double.parseDouble(amount_only), phoneNumber, request_id, category,"merchantInitiateDeposit",service_code);
+                        Call<InitiateWithdrawResponse> call= APIClient.getWalletInstance(getContext()).confrmAgentDeposit(access_token, Double.parseDouble(amount_only), phoneNumber, request_id, category,"merchantInitiateDeposit",service_code);
 
-                         }
-                        
+
                         call.enqueue(new Callback<InitiateWithdrawResponse>() {
                             @Override
                             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -428,7 +425,6 @@ public class EnterPin extends DialogFragment {
                             }
                         });
                     }
-
 
                     }
                     else{

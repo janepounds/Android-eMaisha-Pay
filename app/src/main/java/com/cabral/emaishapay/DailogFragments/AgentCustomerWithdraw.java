@@ -163,11 +163,11 @@ public class AgentCustomerWithdraw extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantWithdraw",request_id,"getReceiverForUser");
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token,receiverPhoneNumber,"MerchantWithdraw",request_id,"getReceiverForUser",category);
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")){
                     business_name = response.body().getData().getBusinessName();
 
                     //call confirm withdraw  details
@@ -191,12 +191,8 @@ public class AgentCustomerWithdraw extends DialogFragment {
                     addCardDialog.show( ft, "dialog");
 
 
-                }else if(response.code()==412) {
-
-                    Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
-                    //redirect to previous step
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    // confirmBtn.setEnabled(true);
+                }else if( response.isSuccessful() ) {
+                    Toast.makeText(getContext(),response.body().getStatus(),Toast.LENGTH_LONG).show();
                 }
                 else if(response.code()==401){
                     TokenAuthFragment.startAuth( true);

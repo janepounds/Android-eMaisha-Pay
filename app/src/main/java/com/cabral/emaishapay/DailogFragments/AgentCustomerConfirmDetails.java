@@ -20,6 +20,7 @@ import retrofit2.Response;
 
 import android.os.CountDownTimer;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
+import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
@@ -52,7 +54,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     DialogLoader dialogLoader;
     RelativeLayout layoutResendCode;
 
-    private Dialog otpDialog;
+    private Dialog otpDialog,dialog;
     private EditText code1,code2,code3,code4,code5,code6;
     TextView resendtxtview;
     private  String otp_code, sms_code;
@@ -418,7 +420,38 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     if(key.equalsIgnoreCase("transfer")){
                         comfirmAgentFundsTransfer(otp_code,customerNumber,amount);
                     }else if(key.equalsIgnoreCase("withdraw")){
-                        comfirmAgentWithdraw(otp_code,customerNumber,amount);
+
+                        //Inner Dialog to enter PIN
+                        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
+                        //LayoutInflater inflater = requireActivity().getLayoutInflater();
+                        View pinDialog = View.inflate(getContext(),R.layout.dialog_enter_pin,null);
+
+
+                        builder.setView(pinDialog);
+                        dialog = builder.create();
+                        builder.setCancelable(false);
+
+                        EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+
+                        pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
+
+                                    comfirmAgentWithdraw(otp_code, customerNumber, amount ,pinEdittext.getText().toString());
+
+                                }else {
+                                    pinEdittext.setError("Invalid Pin Entered");
+                                }
+
+                            }
+                        });
+
+                        dialog.show();
+
+
+
+
                     }
                 }
 
@@ -457,6 +490,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
         Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).
                 confirmAgentTransfer(access_token, amount, otp_code,customerNumber, receiverPhoneNumber,request_id,category,"confirmAgentTransfer");
+
+
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
@@ -492,14 +527,14 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         });
     }
 
-    private  void comfirmAgentWithdraw(String otp_code, String customerNumber, double amount){
+    private  void comfirmAgentWithdraw(String otp_code, String customerNumber, double amount, String service_code){
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
 
         Call<InitiateWithdrawResponse>  call = APIClient.getWalletInstance(getContext()).
-                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeAgentCustomerWithdraw");
+                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeAgentCustomerWithdraw",service_code);
 
 
         call.enqueue(new Callback<InitiateWithdrawResponse>() {

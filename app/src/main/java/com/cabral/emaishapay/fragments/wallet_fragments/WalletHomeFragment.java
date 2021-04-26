@@ -111,14 +111,12 @@ public class WalletHomeFragment extends Fragment {
 
         }
         else{
-
             binding.layoutTransactWithCustomers.setVisibility(View.GONE);
             binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.VISIBLE);
             binding.layoutSettle.setVisibility(View.INVISIBLE);
             binding.cardBalanceLabel.setText("Card");
             //Log.d(TAG, "onCreateView: *"+role+"*");
-
         }
 
 
@@ -242,11 +240,6 @@ public class WalletHomeFragment extends Fragment {
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
             }
         });
-
-
-
-
-
 
 
     }
