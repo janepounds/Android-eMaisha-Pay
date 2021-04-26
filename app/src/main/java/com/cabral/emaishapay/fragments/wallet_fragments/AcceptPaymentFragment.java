@@ -223,12 +223,7 @@ public class AcceptPaymentFragment extends Fragment {
         String service_code = "121518";
         dialogLoader.showProgressDialog();
 
-        String type="";
-        if(category.equalsIgnoreCase(getString(R.string.role_master_agent))){
-            type="Merchant Transfer";
-        }else if(category.equalsIgnoreCase(getString(R.string.role_agent))){
-            type="Agent Transfer";
-        }
+        String type="Agent Transfer";
 
 
         /*****RETROFIT IMPLEMENTATION*****/

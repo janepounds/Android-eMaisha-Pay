@@ -636,12 +636,7 @@ public class ShopPayments extends Fragment implements
         dialogLoader.showProgressDialog();
         String service_code = "121518";
 
-        String type="";
-        if(category.equalsIgnoreCase( getString(R.string.role_master_agent) )){
-            type="Merchant Transfer";
-        }else if(category.equalsIgnoreCase(getString(R.string.role_agent))){
-            type="Agent Transfer";
-        }
+        String type="Agent Transfer";
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());

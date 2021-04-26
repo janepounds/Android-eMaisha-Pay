@@ -98,25 +98,12 @@ public class WalletHomeFragment extends Fragment {
 
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
 
-        if(role.equalsIgnoreCase(getString(R.string.role_agent))){
+        if(role.equalsIgnoreCase("merchant")){
             binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
             binding.labelTransact.setVisibility(View.VISIBLE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
-
-
-        }
-        else if(role.equalsIgnoreCase("merchant")){
-            binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
-            binding.labelTransact.setVisibility(View.VISIBLE);
-            binding.layoutTransfer.setVisibility(View.INVISIBLE);
-            binding.layoutSettle.setVisibility(View.VISIBLE);
-            binding.cardBalanceLabel.setText("Commission");
-
-
-
-
         }
         else if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
 

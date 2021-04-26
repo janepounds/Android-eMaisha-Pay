@@ -699,8 +699,7 @@
     <string name="product_successfully_updated">product successfully updated</string>
     <string name="date_format_preffered">dd/LL/yyyy</string>
     <string name="product_manfacturer_is_empty">Manufacturer is  required</string>
-    <string name="role_master_agent">Agent Merchant</string>
-    <string name="role_agent">Agent</string>
+    <string name="role_master_agent">Agent</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>

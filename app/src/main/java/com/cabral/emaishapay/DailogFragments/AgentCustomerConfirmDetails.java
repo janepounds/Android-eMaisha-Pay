@@ -193,22 +193,14 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
                 }else if(key.equalsIgnoreCase("withdraw")){
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-                    String type="";
-                    if(category.equalsIgnoreCase( getString(R.string.role_master_agent) )){
-                        type="Merchant Withdraw";
-                    }else if(category.equalsIgnoreCase(getString(R.string.role_agent))){
-                        type="Agent Withdraw";
-                    }
+                    String type="Agent Withdraw";
+
                     initiateFundsTransfer(customerNo,transferAmount, type );
                 }else if(key.equalsIgnoreCase("transfer")){
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-                    String type="";
-                    if(category.equalsIgnoreCase( getString(R.string.role_master_agent) )){
-                        type="Merchant Transfer";
-                    }else if(category.equalsIgnoreCase(getString(R.string.role_agent))){
-                        type="Agent Transfer";
-                    }
+                    String type="Agent Transfer";
+
                     initiateFundsTransfer(customerNo, transferAmount, type );
 
                 }else{
@@ -506,14 +498,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
 
-        Call<InitiateWithdrawResponse> call=null;
-        if (category.equalsIgnoreCase( getString(R.string.role_agent) )) {
-            call = APIClient.getWalletInstance(getContext()).
-                    confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeAgentCustomerWithdraw");
-        }else if( category.equalsIgnoreCase( getString(R.string.role_master_agent) ) ) {
-            call = APIClient.getWalletInstance(getContext()).
-                    confirmMasterAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeMasterAgentCustomerWithdraw");
-        }
+        Call<InitiateWithdrawResponse>  call = APIClient.getWalletInstance(getContext()).
+                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeAgentCustomerWithdraw");
 
 
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
