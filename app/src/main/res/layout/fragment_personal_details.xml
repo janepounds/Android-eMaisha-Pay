@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.wallet_fragments.PersonalDetailsFragment">
     <com.google.android.material.appbar.AppBarLayout
@@ -20,20 +20,21 @@
             android:id="@+id/toolbar_account_opening"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
     </com.google.android.material.appbar.AppBarLayout>
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="10sp"
+        android:layout_marginTop="15dp"
         android:text="Enter Personal Details"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_below="@id/appbar_account_opening"/>
 
@@ -54,7 +55,7 @@
         app:spb_maxStateNumber="four"
         app:spb_animationDuration="500"
         app:spb_maxDescriptionLines="2"
-        app:spb_stateDescriptionSize="18sp"
+        app:spb_stateDescriptionSize="16sp"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
         app:spb_stateForegroundColor="@color/colorPrimary"
@@ -85,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:padding="10dp"
-                android:background="@drawable/edittext_corner"
+                android:background="@drawable/outline_primary"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:layout_marginTop="4dp" />
@@ -104,8 +105,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="4dp"
                 android:padding="10dp"
-                android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
+                android:background="@drawable/outline_primary"
                 android:inputType="text"
                 android:textColor="#000" />
 
@@ -122,8 +122,7 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="4dp"
                 android:padding="10dp"
-                android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
+                android:background="@drawable/outline_primary"
                 android:inputType="text"
                 android:textColor="#000" />
             <TextView
@@ -138,9 +137,9 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="4dp"
                 android:padding="10dp"
-                android:background="@drawable/edittext_corner"
-                android:drawableEnd="@drawable/ic_chevron_down"
-                android:fontFamily="@font/josefin_sans" />
+                android:textColor="@color/white"
+                android:background="@drawable/rectangular_blue_solid"
+                android:drawableEnd="@drawable/ic_down_chevron" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -154,9 +153,8 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_corner"
+                android:background="@drawable/outline_primary"
                 android:drawableEnd="@drawable/ic_baseline_date_range_24"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textColor="#000"
@@ -171,34 +169,22 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
+                android:background="@drawable/rectangular_blue_solid"
                 android:gravity="right">
 
                 <Button
                     android:id="@+id/txt_next_two"
-                    style="@style/Button_DW"
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@color/transparent"
-                    android:backgroundTint="@color/textColor"
                     android:text="@string/next"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:drawableEnd="@drawable/ic_right_chevron_arrow_white"/>
 
             </FrameLayout>
         </LinearLayout>

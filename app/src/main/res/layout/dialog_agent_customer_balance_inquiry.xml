@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight=".9"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center"
             android:layout_margin="5dp"
-            android:src="@drawable/close" />
+            android:src="@drawable/ic_close_white" />
 
     </LinearLayout>
 
@@ -46,7 +46,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:paddingTop="@dimen/margin_10">
 
@@ -79,7 +80,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -102,7 +103,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_chevron_down" />
+                        android:src="@drawable/ic_down_chevron" />
 
                 </RelativeLayout>
 
@@ -132,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -187,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:inputType="number"
                     android:textColor="@android:color/black"
                     android:layout_marginTop="8dp" />
@@ -204,7 +205,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Phone Number"
                     android:textSize="@dimen/margin_16" />
 
@@ -218,7 +218,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -237,7 +237,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
                             android:inputType="phone"
                             android:maxLength="9"
@@ -253,15 +252,14 @@
                 </LinearLayout>
             </LinearLayout>
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right"
-                android:paddingRight="@dimen/dimen_10dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:layout_gravity="center"
+                android:paddingEnd="@dimen/dimen_10dp"
+                android:paddingStart="10dp"
                 android:visibility="gone">
 
                 <Button
@@ -273,32 +271,23 @@
                     android:background="@color/transparent"
                     android:backgroundTint="@color/textColor"
                     android:text="@string/withdraw"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_arrow">
-
-                </ImageView>
 
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:layout_gravity="center">
 
                 <Button
                     android:id="@+id/button_add_money"
@@ -313,56 +302,15 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textSize="16sp" />
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
 
-                </ImageView>
 
             </FrameLayout>
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingEnd="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="6dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                android:text="My Balance"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:text="UGX"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/crop_add_money_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

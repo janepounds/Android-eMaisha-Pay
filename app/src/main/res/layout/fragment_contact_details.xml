@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.wallet_fragments.ContactDetailsFragment">
     <com.google.android.material.appbar.AppBarLayout
@@ -20,6 +20,7 @@
             android:id="@+id/toolbar_account_opening"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            app:navigationIcon="@drawable/ic_chevron_left_white"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -27,13 +28,13 @@
         android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="10sp"
+        android:layout_marginTop="15dp"
         android:text="Enter Contact Details"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_below="@id/appbar_account_opening"/>
 
@@ -54,7 +55,7 @@
         app:spb_maxStateNumber="four"
         app:spb_animationDuration="500"
         app:spb_maxDescriptionLines="2"
-        app:spb_stateDescriptionSize="18sp"
+        app:spb_stateDescriptionSize="16sp"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
         app:spb_stateForegroundColor="@color/colorPrimary"
@@ -99,9 +100,8 @@
                         android:id="@+id/act_district"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:drawableRight="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/josefin_sans"
                         android:padding="10dp" />
                 </LinearLayout>
 
@@ -123,9 +123,8 @@
                         android:id="@+id/act_sub_county"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:drawableRight="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/josefin_sans"
                         android:padding="10dp" />
                 </LinearLayout>
 
@@ -154,9 +153,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:padding="10dp"
-                        android:background="@drawable/edittext_corner"
-                        android:drawableRight="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/josefin_sans"/>
+                        android:background="@drawable/outline_primary"
+                        android:drawableRight="@drawable/ic_chevron_down"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,8 +176,7 @@
                         android:layout_height="45dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
+                        android:background="@drawable/outline_primary"
                         android:inputType="text"
                         android:textColor="#000"/>
                 </LinearLayout>
@@ -208,7 +205,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:orientation="horizontal">
                         <TextView
                             android:id="@+id/txt_crops_estimated_revenue_units"
@@ -228,7 +225,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
                             android:inputType="phone"
                             android:maxLength="9"
@@ -259,8 +255,7 @@
                         android:layout_height="45dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
+                        android:background="@drawable/outline_primary"
                         android:inputType="textEmailAddress"
                         android:textColor="#000"/>
                 </LinearLayout>
@@ -296,8 +291,7 @@
                         android:layout_height="45dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
+                        android:background="@drawable/outline_primary"
                         android:inputType="text"
                         android:textColor="#000" />
 
@@ -323,8 +317,7 @@
                         android:layout_height="45dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
+                        android:background="@drawable/outline_primary"
                         android:inputType="text"
                         android:textColor="#000" />
 
@@ -351,7 +344,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -375,7 +368,7 @@
                         android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_chevron_down" />
+                        android:src="@drawable/ic_down_chevron" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -394,7 +387,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:orientation="horizontal">
                     <TextView
                          android:layout_width="0dp"
@@ -413,7 +406,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center_vertical"
                         android:inputType="phone"
                         android:maxLength="9"
@@ -436,27 +428,21 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:background="@drawable/round_corners_button_darkgray"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:layout_marginRight="@dimen/dimen_5dp">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/ic_left_chevron"/>
+
                     <Button
                         android:id="@+id/previous_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:paddingStart="6dp"
                         android:background="@color/transparent"
                         android:text="@string/previous"
                         android:textColor="@color/white"
                         android:textSize="@dimen/button_text_size"
                         android:textStyle="bold"
-                        android:paddingLeft="6dp" />
+                        android:drawableLeft="@drawable/ic_chevron_left_white" />
 
 
 
@@ -466,7 +452,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_marginStart="@dimen/dimen_5dp"
-                    android:background="@drawable/rounded_corners_button"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:layout_marginLeft="@dimen/dimen_5dp">
 
                     <Button
@@ -476,23 +462,12 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@color/transparent"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="4dp"
                         android:text="@string/next"
                         android:textColor="@color/white"
                         android:textSize="@dimen/button_text_size"
                         android:textStyle="bold"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="4dp" />
+                        android:drawableEnd="@drawable/ic_right_chevron_arrow_white" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/ic_right_chevron">
-
-                    </ImageView>
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>

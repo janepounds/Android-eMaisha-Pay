@@ -75,7 +75,8 @@ public class IdentityProofFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_identity_proof);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
 
         Button next = view.findViewById(R.id.txt_next_submit);
         TextView finger_print = view.findViewById(R.id.txt_next_finger_print);

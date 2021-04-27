@@ -427,12 +427,18 @@ public class WalletAccountFragment extends Fragment {
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
             binding.textAccountType.setText("Agent");
+            binding.textChangeAccountType.setVisibility(View.GONE);
+            binding.cardViewQrCode.setVisibility(View.VISIBLE);
         }
 
         else if(role.equalsIgnoreCase("merchant")){
             binding.textAccountType.setText("Merchant");
+            binding.textChangeAccountType.setVisibility(View.GONE);
+            binding.cardViewQrCode.setVisibility(View.VISIBLE);
         } else{
             binding.textAccountType.setText("Default User");
+            binding.textChangeAccountType.setVisibility(View.VISIBLE);
+            binding.cardViewQrCode.setVisibility(View.GONE);
         }
 
 

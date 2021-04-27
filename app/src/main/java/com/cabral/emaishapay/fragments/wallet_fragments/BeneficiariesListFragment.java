@@ -62,7 +62,7 @@ public class BeneficiariesListFragment extends Fragment {
         View rootView =inflater.inflate(R.layout.fragment_beneficiaries_list, container, false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
-
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
 
         btnAddBeneficiary = rootView.findViewById(R.id.btn_add_beneficiary);
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);

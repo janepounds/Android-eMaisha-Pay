@@ -21,12 +21,12 @@
         android:title="ACCEPT PAYMENT"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/walletSettlementFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_pay24"
-        android:title="SETTLEMENT"
-        app:showAsAction="ifRoom"/>
+<!--    <item-->
+<!--        android:id="@+id/walletSettlementFragment"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_pay24"-->
+<!--        android:title="SETTLEMENT"-->
+<!--        app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/walletAccountFragment_agent"
