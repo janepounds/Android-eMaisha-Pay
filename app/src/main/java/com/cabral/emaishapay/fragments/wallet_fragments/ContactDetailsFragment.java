@@ -181,11 +181,11 @@ public class ContactDetailsFragment extends Fragment {
                 String village = act_villages.getText().toString().trim();
                 String landmark = etxt_land_mark.getText().toString().trim();
                 String email = etxt_email.getText().toString().trim();
-                String phonenumber = "0"+etxt_phonenumber.getText().toString().trim();
+                String phonenumber = getString(R.string.phone_number_code)+etxt_phonenumber.getText().toString().trim();
                 String next_of_kin_name = etxt_next_of_kin_name.getText().toString().trim();
                 String next_of_kin_second_name = etxt_next_of_kin_second_name.getText().toString().trim();
                 String next_of_kin_relationship = sp_next_of_kin_relationship.getSelectedItem().toString().trim();
-                String next_of_kin_contact = "0"+etxt_next_of_kin_contact.getText().toString().trim();
+                String next_of_kin_contact = getString(R.string.phone_number_code)+etxt_next_of_kin_contact.getText().toString().trim();
                 if (district.equals("") || district.length()<3){
                     act_districts.setError("Enter valid district name");
                     act_districts.requestFocus();

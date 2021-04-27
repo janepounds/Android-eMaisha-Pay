@@ -470,7 +470,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
 
-                String mobileNumber="0"+mobilePhonenumber.getText().toString();
+                String mobileNumber=getString(R.string.phone_number_code)+mobilePhonenumber.getText().toString();
                 if(mobileNumber.length()>9){
                     mobileMoneyChargePayment(mobileNumber);
                 }

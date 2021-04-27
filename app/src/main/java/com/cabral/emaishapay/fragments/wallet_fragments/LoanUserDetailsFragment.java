@@ -104,7 +104,7 @@ public class LoanUserDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //check whether account exists
-                phone = "0"+etxteMaishaAcc.getText().toString();
+                phone = getString(R.string.phone_number_code)+etxteMaishaAcc.getText().toString();
                 account_name =  etxtFirstName.getText().toString() + " "+  etxtSecondName.getText().toString();
 
                 //check whether account exists
@@ -287,7 +287,7 @@ public class LoanUserDetailsFragment extends Fragment {
                         dialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                getReceiverName("0"+etxteMaishaAcc.getText().toString());
+                                getReceiverName(getString(R.string.phone_number_code)+etxteMaishaAcc.getText().toString());
                                 layoutResendCode.setVisibility(View.GONE);
                             }
                         });
@@ -365,7 +365,7 @@ public class LoanUserDetailsFragment extends Fragment {
     }
 
     private void validateEnteredCode(String code,String sent_code) {
-        String phone ="0"+etxteMaishaAcc.getText().toString();
+        String phone =getString(R.string.phone_number_code)+etxteMaishaAcc.getText().toString();
 
         if (sent_code.equalsIgnoreCase(code)) {
 

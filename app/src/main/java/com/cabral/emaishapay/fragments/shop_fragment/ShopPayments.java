@@ -268,7 +268,7 @@ public class ShopPayments extends Fragment implements
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
                 selectedPaymentMethod = "eMaisha Wallet";
-                initiateAcceptPayment("0"+emaishapay_phone_number.getText().toString(),chargeAmount);
+                initiateAcceptPayment(getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),chargeAmount);
 //              GenerateBrainTreeToken();
             } else if (eMaishaCard.isChecked()) {
                 selectedPaymentMethod = "eMaisha Card";
@@ -283,8 +283,8 @@ public class ShopPayments extends Fragment implements
 
             } else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
-                Log.w("eMaishaMM",chargeAmount+" "+"0"+monileMoneyPhoneEdtx.getText().toString());
-                initiateMobileMoneyCharge( "0"+monileMoneyPhoneEdtx.getText().toString(),chargeAmount);
+                Log.w("eMaishaMM",chargeAmount+" "+getString(R.string.phone_number_code)+monileMoneyPhoneEdtx.getText().toString());
+                initiateMobileMoneyCharge( getString(R.string.phone_number_code)+monileMoneyPhoneEdtx.getText().toString(),chargeAmount);
                 //proceedOrder();
             }
         });

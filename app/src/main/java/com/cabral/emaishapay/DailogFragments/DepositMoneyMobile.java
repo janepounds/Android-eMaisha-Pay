@@ -444,7 +444,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
 //    public void initiateDeposit(){
 //        dialogLoader.showProgressDialog();
-//        String phoneNumber = "0"+phoneNumberTxt.getText().toString();
+//        String phoneNumber = getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 //        String amountEntered = addMoneyTxt.getText().toString();
 //        double amount = Float.parseFloat(amountEntered);
 //        String request_id = WalletHomeActivity.generateRequestId();

@@ -130,7 +130,7 @@ public class LoginFragment  extends Fragment {
 
             if (isValidData) {
                 // Proceed User Login
-                String phone ="0"+binding.userPhone.getText().toString();
+                String phone =getString(R.string.phone_number_code)+binding.userPhone.getText().toString();
                 Bundle args= new Bundle();
                 args.putInt("action",1);
                 args.putString("phone",phone);
