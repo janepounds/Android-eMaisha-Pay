@@ -49,6 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PayFragment extends Fragment {
+    private static final String TAG = "PayFragment";
     TextView mechantIdEdt, text_coupon;
     EditText totalAmountEdt, couponAmout, cardNumberEdt, expiryEdt, cvvEdt, mobileNumberEdt;
     Spinner spinner_select_card;
@@ -56,7 +57,7 @@ public class PayFragment extends Fragment {
     DialogLoader dialog;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
-    String decripted_card_number = null;
+    String card_number,decripted_expiryDate;
 
     private String cardNo,cvv,expiry,mobileNo,methodOfPayment;
 
@@ -400,46 +401,52 @@ public class PayFragment extends Fragment {
                                 return "Select Card";
                             }
                         });
-                        for(int i =0; i<cardlists.size();i++){
+                        for(int i =0; i<cardlists.size();i++) {
                             //decript card number
-                            CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
+                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getContext().getString(R.string.iv));
 
 
-                            String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                            String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
+                             card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
+                             decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
+                            String cvv = encrypter.decrypt(cardlists.get(i).getCvv());
+                            Log.d(TAG, "onResponse: decripter_card_no" + card_number);
 
-                            if(card_number.length()>4) {
+                            if (card_number.length() > 4) {
 
-                                String first_four_digits = (card_number.substring(0,  4));
+                                String first_four_digits = (card_number.substring(0, 4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));
-                                decripted_card_number = first_four_digits + "*******"+last_four_digits;
+                                final String decripted_card_number = first_four_digits + "*******" + last_four_digits;
+
+                                Log.d(TAG, "onResponse: masked " + decripted_card_number);
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getCardNumber() {
+                                        return card_number;
+                                    }
+
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return decripted_expiryDate;
+                                    }
+
+                                    @Override
+                                    public String getCvv() {
+                                        return cvv;
+                                    }
+
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return decripted_card_number;
+                                    }
+                                });
+
 
                             }
-
-                            cardItems.add(new CardSpinnerItem() {
-                                @Override
-                                public String getCardNumber() {
-                                    return card_number;
-                                }
-
-                                @Override
-                                public String getExpiryDate() {
-                                    return decripted_expiryDate;
-                                }
-
-                                @Override
-                                public String getCvv() {
-                                    return cvv;
-                                }
-
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return decripted_card_number;
-                                }
-                            });
                         }
+
+
+
 
                         cardItems.add(new CardSpinnerItem() {
                             @Override
@@ -462,17 +469,18 @@ public class PayFragment extends Fragment {
                                 return "Add New";
                             }
                         });
+                        Log.d(TAG, "onResponse: cards"+cardItems);
 
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }finally {
                         ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
                         spinner_select_card.setAdapter(cardListAdapter);
                         dialog.hideProgressDialog();
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
                     }
+
+
 
                 }else if (response.code() == 401) {
 
