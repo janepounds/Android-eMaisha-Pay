@@ -388,7 +388,6 @@ public class WalletAccountFragment extends Fragment {
 
             LinearLayout layout_agent = dialogView.findViewById(R.id.layout_agent);
             LinearLayout layout_merchant = dialogView.findViewById(R.id.layout_merchant);
-            TextView agent_merchant = dialogView.findViewById(R.id.agent_merchant);
             View view4 = dialogView.findViewById(R.id.view4);
             View view5 = dialogView.findViewById(R.id.view5);
 
@@ -419,15 +418,6 @@ public class WalletAccountFragment extends Fragment {
             });
 
 
-            String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-            if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) || role.equalsIgnoreCase("merchant")){
-                agent_merchant.setText( getString(R.string.role_master_agent) );
-                layout_agent.setVisibility(View.GONE);
-                layout_merchant.setVisibility(View.GONE);
-                view4.setVisibility(View.GONE);
-                view5.setVisibility(View.GONE);
-
-            }
 
             alertDialog.show();
 
