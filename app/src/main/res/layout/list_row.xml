@@ -3,7 +3,6 @@
     android:id="@+id/tv"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fontFamily="@font/josefin_sans"
     android:gravity="start"
     android:padding="10dp"
     android:textColor="#000" />

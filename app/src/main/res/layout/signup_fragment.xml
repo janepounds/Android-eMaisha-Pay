@@ -178,7 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -450,7 +450,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="right|center_vertical"
                                 android:layout_margin="10dip"
-                                android:src="@drawable/ic_right_arrow"
+                                android:src="@drawable/ic_right_chevron_arrow_white"
                                 android:visibility="gone">
 
                             </ImageView>
@@ -463,7 +463,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
 
                         <LinearLayout

@@ -254,14 +254,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Savings"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:buttonTint="@color/colorPrimary"/>
                     <CheckBox
                         android:id="@+id/checkbox_agric_inputs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Agriculture Inputs"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:buttonTint="@color/colorPrimary"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

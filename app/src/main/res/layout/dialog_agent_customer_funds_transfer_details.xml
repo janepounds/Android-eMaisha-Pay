@@ -53,7 +53,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Receiver"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -61,7 +60,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="John Zimula"
                         android:textColor="@color/colorPrimary"
@@ -87,7 +85,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Receiver Account"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -95,7 +92,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="0112378934459034"
                         android:textColor="@color/colorPrimary"
@@ -121,7 +117,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Receiver Mobile"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -129,7 +124,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="0750532902"
                         android:textColor="@color/colorPrimary"
@@ -155,7 +149,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Amount"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -163,7 +156,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="UGX 400,000"
                         android:textColor="@color/colorPrimary"
@@ -189,7 +181,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Transfer Charge"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -197,7 +188,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="UGX 0"
                         android:textColor="@color/colorPrimary"
@@ -223,7 +213,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Total Amount"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -231,7 +220,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
                         android:text="UGX 400,000"
                         android:textColor="@color/colorPrimary"

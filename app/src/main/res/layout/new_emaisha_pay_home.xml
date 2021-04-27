@@ -328,6 +328,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Transact with Customers"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:visibility="gone"/>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -338,7 +339,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/background_round_white"
+            android:background="@drawable/outline_primary"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:visibility="gone">
@@ -590,6 +591,7 @@
                 android:layout_height="wrap_content"
                 android:text="Balance and saving"
                 android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
                 android:layout_centerHorizontal="true"/>
 
             <ImageView
@@ -753,7 +755,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recent Transactions"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/more_transaction_cards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View All"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>
 

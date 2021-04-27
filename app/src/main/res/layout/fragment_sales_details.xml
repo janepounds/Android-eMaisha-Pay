@@ -87,7 +87,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:paddingStart="15dp"
                     android:paddingBottom="5dp"
                     android:text="TOTAL PRICE"
@@ -98,7 +97,6 @@
                     android:id="@+id/txt_total_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:paddingStart="15dp"
                     android:paddingBottom="10dp"
                     android:text="$350000"
@@ -117,7 +115,6 @@
                 android:layout_marginBottom="18dp"
                 android:layout_weight="4"
                 android:background="@drawable/balance_cards"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="PDF RECEIPT"

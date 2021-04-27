@@ -20,16 +20,16 @@
             android:layout_height="50dp"
             android:layout_weight=".1"
             android:gravity="center"
-            android:text="@string/addmoney"
+            android:text="ADD VOUCHER"
             android:theme="@style/HeaderTheme"/>
         <ImageView
             android:id="@+id/wallet_deposit_close"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight=".9"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center"
             android:layout_margin="5dp"
-            android:src="@drawable/close" />
+            android:src="@drawable/ic_close_white" />
 
     </LinearLayout>
 
@@ -119,34 +119,34 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="Voucher Code"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:text="Voucher Code" />
 
                 <EditText
                     android:id="@+id/wallet_add_money_amount"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
-                    android:hint="Enter.."
+                    android:background="@drawable/outline_primary"
                     android:inputType="text"
                     android:paddingLeft="2dp"
                     android:textSize="12sp" />
             </LinearLayout>
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_10"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:layout_gravity="center">
 
                 <Button
                     android:id="@+id/button_add_money"
                     style="@style/Button_DW"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dip"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
@@ -158,16 +158,6 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
 
             </FrameLayout>
 

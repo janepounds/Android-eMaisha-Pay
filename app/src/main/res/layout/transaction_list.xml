@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:fitsSystemWindows="true"
-        android:background="@drawable/ic_medium_bg"
+        android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar

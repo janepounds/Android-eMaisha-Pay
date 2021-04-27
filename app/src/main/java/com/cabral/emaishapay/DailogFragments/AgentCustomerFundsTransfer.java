@@ -94,7 +94,7 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                     } catch (Exception e) {
 
                     }

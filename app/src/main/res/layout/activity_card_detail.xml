@@ -28,7 +28,6 @@
         android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="10sp"
@@ -79,7 +78,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="@font/josefin_sans"
                 android:text="Account Number"
                 android:textSize="16sp" />
             <EditText
@@ -87,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="#000"/>
@@ -97,7 +94,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="@font/josefin_sans"
                 android:text="Card Number"
                 android:textSize="16sp" />
 
@@ -106,7 +102,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="number"
                 android:maxLength="19"
                 android:padding="10dp"
@@ -129,7 +124,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Expiry Date"
                         android:textSize="16sp" />
 
@@ -158,7 +152,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="CVV"
                         android:textSize="16sp"
                         android:layout_marginStart="5dp"/>
@@ -170,7 +163,6 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
                         android:inputType="number"
                         android:maxLength="3"
                         android:padding="10dp"
@@ -187,7 +179,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="@font/josefin_sans"
                 android:text="Enter Pin"
                 android:textSize="16sp" />
             <EditText
@@ -195,7 +186,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="numberPassword"
                 android:maxLength="4"
                 android:padding="10dp"
@@ -206,7 +196,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="@font/josefin_sans"
                 android:text="Confirm Pin"
                 android:textSize="16sp" />
 
@@ -215,7 +204,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="numberPassword"
                 android:maxLength="4"
                 android:padding="10dp"

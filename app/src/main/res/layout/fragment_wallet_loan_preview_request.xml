@@ -46,7 +46,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="left"
                 android:paddingLeft="5dp"
                 android:text="Confirm Details"
@@ -129,7 +128,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Loan Amount"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -148,7 +146,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="UGX 80,000"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -167,7 +164,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Loan Purpose"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -186,7 +182,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="--"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -206,7 +201,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Interest Rate"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -215,7 +209,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/textColor"
@@ -226,7 +219,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="8%"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -245,7 +237,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Payment Schedule"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -254,7 +245,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/textColor"
@@ -265,7 +255,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Monthly"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -284,7 +273,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Loan Duration"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -293,7 +281,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/textColor"
@@ -304,7 +291,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="3 Weeks"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -323,7 +309,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Due Date"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -332,7 +317,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/textColor"
@@ -343,7 +327,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="29/10/2020"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -362,7 +345,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Amount Due"
                         android:textColor="@color/textColor"
                         android:textSize="14sp" />
@@ -371,7 +353,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        android:fontFamily="@font/josefin_sans"
                         android:gravity="center"
                         android:text=":"
                         android:textColor="@color/textColor"
@@ -382,7 +363,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="UGX 96400"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />

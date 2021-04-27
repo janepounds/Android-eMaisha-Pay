@@ -339,7 +339,7 @@ public class SignUpFragment  extends Fragment {
         }else if (binding.idNumber.getText().toString().isEmpty()) {
             Toast.makeText(context, "Please enter Id no", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (binding.idType.getSelectedItem().toString().equalsIgnoreCase("national id") && binding.idNumber.getText().toString().length()<15) {
+        }else if (binding.idType.getSelectedItem().toString().equalsIgnoreCase("national id") && binding.idNumber.getText().toString().length()<14) {
             Toast.makeText(context, "Please enter valid id", Toast.LENGTH_SHORT).show();
             return false;
         }

@@ -61,7 +61,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
-                    android:fontFamily="@font/josefin_sans"
                     android:paddingTop="1dp"
                     android:text="Customer Name"
                     android:textColor="@color/creditCardBackground"
@@ -83,7 +82,6 @@
                         android:id="@+id/txt_order_id_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="@string/order_id_value"
                         android:textColor="@color/textColorPrimaryDark"
                         android:textSize="20sp"
@@ -108,7 +106,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="@string/order_payment_method"
                         android:textColor="#B9B9B9" />
                     <TextView
@@ -117,7 +114,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="UGX 0"
                         android:textColor="#B9B9B9"/>
 
@@ -137,7 +133,6 @@
                         android:id="@+id/txt_order_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="@string/order_type"
                         android:textColor="#000"
                         android:textSize="14sp"
@@ -147,7 +142,6 @@
                         android:id="@+id/txt_order_type_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingStart="7dp"
                         android:text="@string/order_type_value"
                         android:textColor="#000"
@@ -160,7 +154,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="@string/order_date"
                     android:textColor="#B9B9B9"
                     android:textSize="15sp"/>
