@@ -141,9 +141,9 @@ public class AcceptPaymentFragment extends Fragment {
             public void onClick(View v) {
                 String paymentMethod=txtPaymentMethod.getText().toString();
                 if(paymentMethod.equalsIgnoreCase("Mobile Number")){
-                    initiateMobileMoneyCharge("0"+mobileMoneyNo.getText().toString(), Double.parseDouble(amountEdt.getText().toString()) );
+                    initiateMobileMoneyCharge(getString(R.string.phone_number_code)+mobileMoneyNo.getText().toString(), Double.parseDouble(amountEdt.getText().toString()) );
                 }else if(paymentMethod.equalsIgnoreCase("eMaisha Account")){
-                    initiateAcceptPayment("0"+mobileMoneyNo.getText().toString(), Double.parseDouble(amountEdt.getText().toString()) );
+                    initiateAcceptPayment(getString(R.string.phone_number_code)+mobileMoneyNo.getText().toString(), Double.parseDouble(amountEdt.getText().toString()) );
                 }
             }
         });

@@ -127,7 +127,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
         bundle.putString("key","mobile_deposit");
         bundle.putString("amount",addMoneyTxt.getText().toString());
-        bundle.putString("phone_number","0"+phoneNumberTxt.getText().toString());
+        bundle.putString("phone_number",getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString());
 
         // Create and show the dialog.
         DialogFragment depositDialog = new EnterPin();
@@ -139,7 +139,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
 //    public void initiateDeposit(){
 //        dialogLoader.showProgressDialog();
-//        String phoneNumber = "0"+phoneNumberTxt.getText().toString();
+//        String phoneNumber = getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 //        String amountEntered = addMoneyTxt.getText().toString();
 //        double amount = Float.parseFloat(amountEntered);
 //        String request_id = WalletHomeActivity.generateRequestId();

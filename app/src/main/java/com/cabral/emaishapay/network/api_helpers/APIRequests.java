@@ -821,7 +821,6 @@ public interface APIRequests {
     @POST("wallet/agent/balance-inquiry")
     Call<InitiateWithdrawResponse>balanceInquiry(
             @Header("Authorization") String token,
-            @Field("pin") String pin,
             @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,

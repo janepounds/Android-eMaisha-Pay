@@ -92,8 +92,6 @@ public class EnterPin extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(confirm_pin.getText().toString()) && confirm_pin.getText().toString().length() == 4) {
-
-
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -427,9 +425,7 @@ public class EnterPin extends DialogFragment {
                     }
 
                     }
-                    else{
-                        prepareBalanceRequest(request_id,category,access_token,getArguments().getString("customer_name"));
-                    }
+                   
 
 
                 }
@@ -445,98 +441,6 @@ public class EnterPin extends DialogFragment {
 
     }
 
-    private void prepareBalanceRequest(String request_id, String category, String access_token, String customer_name) {
-        //Inner Dialog to enter PIN
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
-        //LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View pinDialog = View.inflate(getContext(),R.layout.dialog_enter_pin,null);
-
-
-        builder.setView(pinDialog);
-        agentPinDialog= builder.create();
-        builder.setCancelable(false);
-
-        EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
-        TextView titleTxt = pinDialog.findViewById(R.id.dialog_title);
-        titleTxt.setText("ENTER AGENT PIN");
-
-        pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
-                    String service_code= WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString();
-                    String customerPin = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_pin.getText().toString();
-
-                    requestBalanceInquiry(customer_name,access_token,customerPin,request_id,category,service_code);
-
-                }else {
-                    pinEdittext.setError("Invalid Pin Entered");
-                }
-
-            }
-        });
-
-        agentPinDialog.show();
-    }
-
-    private void requestBalanceInquiry(String customer_name, String access_token, String customerPin, String request_id, String category, String service_code) {
-
-        dialogLoader.showProgressDialog();
-
-        /***************RETROFIT IMPLEMENTATION FOR BALANCE INQUIRY************************/
-        Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).balanceInquiry(access_token,customerPin , this.phoneNumber,request_id,category,"merchantBalanceInquiry",service_code);
-        call.enqueue(new Callback<InitiateWithdrawResponse>() {
-            @Override
-            public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
-
-                dialogLoader.hideProgressDialog();
-                if (response.isSuccessful()) {
-                    if (response.body().getStatus().equalsIgnoreCase("1")) {
-                        balance = response.body().getData().getBalance();
-                        //Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                        //call balance dialog
-                        FragmentManager fragmentManager = getChildFragmentManager();
-
-                        FragmentTransaction ft = fragmentManager.beginTransaction();
-                        Fragment prev = fragmentManager.findFragmentByTag("dialog");
-                        if (prev != null) {
-                            ft.remove(prev);
-                        }
-                        ft.addToBackStack(null);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("balance",balance+"");
-                        bundle.putString("customer_name",customer_name);
-
-                        // Create and show the dialog.
-                        DialogFragment balanceDialog = new BalanceDialog();
-                        balanceDialog.setArguments(bundle);
-
-                        balanceDialog.show(ft, "dialog");
-
-                    } else {
-                        EnterPin.this.dismiss();
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                        Log.w("BalanceError",response.body().getMessage());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
-                dialogLoader.hideProgressDialog();
-                Log.e("BalanceError","something went wrong");
-                EnterPin.this.dismiss();
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                startActivity(intent);
-
-            }
-        });
-    }
 
 
 }

@@ -114,8 +114,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTitleAmount.setText("Amount Received");
                 textName.setText(getArguments().getString("customer_name"));
                 textReceiverAccount.setText("Customer");
-                customerNo = "0"+getArguments().getString("customer_no");
-                textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
+                customerNo = getString(R.string.phone_number_code)+getArguments().getString("customer_no");
+                textPhoneNumber.setText(getString(R.string.phone_number_code)+getArguments().getString("customer_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
@@ -123,7 +123,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 /*****************DEPOSIT*************/
                 this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textName.setText(getArguments().getString("customer_name"));
-                textPhoneNumber.setText("0"+getArguments().getString("phone_number"));
+                textPhoneNumber.setText(getString(R.string.phone_number_code)+getArguments().getString("phone_number"));
                 textAmount.setText("UGX "+this.transferAmount);
                 textTotalAmount.setText("UGX "+this.transferAmount);
 
@@ -135,24 +135,24 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textReceiverAccount.setText("Receiver");
                 textName.setText(getArguments().getString("receiver_name"));
                 textTitlePhoneNumber.setText("Receiver Mobile");
-                textPhoneNumber.setText("0"+getArguments().getString("receipient_no"));
+                textPhoneNumber.setText(getString(R.string.phone_number_code)+getArguments().getString("receipient_no"));
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
-                customerNo = "0"+getArguments().getString("customer_no");
+                customerNo = getString(R.string.phone_number_code)+getArguments().getString("customer_no");
                 textTitleCharge.setText("Transfer Charge");
                 textTitleAmount.setText("Transfer Amount");
                 textTitleName.setText("Receiver");
                 layoutSenderName.setVisibility(View.VISIBLE);
                 layoutSenderMobile.setVisibility(View.VISIBLE);
                 textSenderName.setText(getArguments().getString("customer_name"));
-                textSenderMobile.setText("0"+getArguments().getString("customer_no"));
+                textSenderMobile.setText(getString(R.string.phone_number_code)+getArguments().getString("customer_no"));
 
 
             }else{
                 /*****************BALANCE INQUIRY*************/
                 textTitleLabel.setText(getArguments().getString("title"));
                 textName.setText(getArguments().getString("customer_name"));
-                textPhoneNumber.setText("0"+getArguments().getString("customer_no"));
+                textPhoneNumber.setText(getString(R.string.phone_number_code)+getArguments().getString("customer_no"));
                 totalAmount.setVisibility(View.GONE);
                 charge.setVisibility(View.GONE);
                 depositAmount.setVisibility(View.GONE);
@@ -194,12 +194,12 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     depositDialog.show(ft, "dialog");
 
                 }else if(key.equalsIgnoreCase("withdraw")){
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
                     String type="Agent Withdraw";
 
                     initiateFundsTransfer(customerNo,transferAmount, type );
                 }else if(key.equalsIgnoreCase("transfer")){
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
 
                     String type="Agent Transfer";
 
