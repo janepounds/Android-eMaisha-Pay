@@ -139,10 +139,11 @@ public class AddCardFragment extends DialogFragment {
                                 dialog.dismiss();
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
+
                             } else {
                                 String message = response.body().getMessage();
                                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
+                                AddCardFragment.this.dismiss();
 
 
                                 //To CardListFragment
@@ -245,6 +246,7 @@ public class AddCardFragment extends DialogFragment {
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
                                     dialog.dismiss();
+                                    AddCardFragment.this.dismiss();
                                     //To CardListFragment
                                     WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
                                     WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);

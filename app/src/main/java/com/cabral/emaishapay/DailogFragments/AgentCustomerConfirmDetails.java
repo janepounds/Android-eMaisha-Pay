@@ -276,14 +276,13 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     }
 
 
-    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type, String user_pin ){
+    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type, String service_code ){
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+  user_pin;
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -551,7 +550,14 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         dialogLoader.showProgressDialog();
 
         Call<InitiateWithdrawResponse>  call = APIClient.getWalletInstance(getContext()).
-                confirmAgentWithdraw(access_token, amount, otp_code,customerNumber,request_id,category,"completeAgentCustomerWithdraw",service_code);
+                confirmAgentWithdraw(access_token,
+                        amount,
+                        otp_code,
+                        customerNumber,
+                        request_id,
+                        category,
+                        "completeAgentCustomerWithdraw",
+                        service_code);
 
 
         call.enqueue(new Callback<InitiateWithdrawResponse>() {

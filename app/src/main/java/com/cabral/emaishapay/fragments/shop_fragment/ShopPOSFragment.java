@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
@@ -151,12 +153,31 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
         binding.tvKey9.setOnClickListener(this);
         binding.tvKeyBackspace.setOnClickListener(this);
         binding.tvKeyEnter.setOnClickListener(this);
+        binding.posCharge.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+        setInputConnection(binding.posCharge);
+        binding.posCharge.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
     }
 
-    public void setInputConnection(EditText editText) {
+    public void setInputConnection(TextView editText) {
         InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -324,11 +345,23 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
         if(  v.getId()==R.id.tv_key_backspace ){
             binding.posCharge.setText( binding.posCharge.getText().toString());
+//            CharSequence selectedText = inputConnection.getSelectedText(0);
+//
+//            if (TextUtils.isEmpty(selectedText)) {
+//                inputConnection.deleteSurroundingText(binding.posCharge.getText().toString().length(), 0);
+//            } else {
+//                inputConnection.commitText( binding.posCharge.getText().toString(), 1);
+//            }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
-
+            chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
+            Bundle args=new Bundle();
+            args.putDouble("Charge", chargeAmount );
+            ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
         }else{
-
+            String value = keyValues.get(v.getId()).toString();
+            inputConnection.commitText(value, 1);
+            setInputConnection( binding.posCharge);
         }
 
     }
