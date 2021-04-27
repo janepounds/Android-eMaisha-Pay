@@ -279,7 +279,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
                         CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                         beneficiary_name = encrypter.encrypt(beneficiary_name_mm.getText().toString());
-                        beneficiary_number = encrypter.encrypt("0"+beneficiary_no.getText().toString());
+                        beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+beneficiary_no.getText().toString());
                         bankk = "Mobile Money Bank";
                         branch = "";
 

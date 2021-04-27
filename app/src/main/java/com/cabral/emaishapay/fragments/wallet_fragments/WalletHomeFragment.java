@@ -238,7 +238,6 @@ public class WalletHomeFragment extends Fragment {
                 binding.totalBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                 binding.totalBalance.getPaint().setMaskFilter(null);
 
-
                 binding.walletBalance.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                 binding.walletBalance.getPaint().setMaskFilter(null);
 

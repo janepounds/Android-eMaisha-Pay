@@ -304,7 +304,7 @@ public class TransferMoney extends Fragment {
             }
            // double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
 
-            String phoneNumber = "0"+etMobileMoneyNumber.getText().toString();
+            String phoneNumber = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
             String amountEntered = etAmount.getText().toString();
             float amount = Float.parseFloat(amountEntered);
             String beneficiary_name =etBeneficiaryName.getText().toString();//required for Mobile Money
