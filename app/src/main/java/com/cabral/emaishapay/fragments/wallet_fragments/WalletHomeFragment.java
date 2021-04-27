@@ -141,12 +141,12 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //To TransferMoney
+                //To List and not form
                 Bundle args=new Bundle();
-                args.putString("KEY_ACTION", getString(R.string.settlements) );
+                args.putString("KEY_TITLE", getString(R.string.settlements) );
 
-                navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
-
+                //navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
+                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
         });
         binding.layoutTopUp.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +171,7 @@ public class WalletHomeFragment extends Fragment {
               public void onClick(View v) {
 
 
-                  //Go to security qns
+                  //Go to coming soon
                   AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                   View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
                   dialog.setView(dialogView);

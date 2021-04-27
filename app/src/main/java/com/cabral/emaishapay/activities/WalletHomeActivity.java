@@ -271,23 +271,23 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 switch (item.getItemId()){
 
-                    case R.id.walletSettlementFragment:
-                         Bundle args=new Bundle();
-                         args.putString("KEY_TITLE", context.getString(R.string.settlements) );
-
-
-                        currentDestination = navController.getCurrentDestination().getId();
-
-                        if (currentDestination  == R.id.walletHomeFragment2) {
-                            navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
-                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
-                            navController.navigate(R.id.action_walletAccountFragment2_to_walletTransactionsListFragment2,args);
-                        }else if (currentDestination == R.id.walletTransactionsListFragment )  {
-
-                        }else if (currentDestination == R.id.acceptPaymentFragment )  {
-                            navController.navigate(R.id.action_acceptPaymentFragment_to_walletTransactionsListFragment2,args);
-                        }
-                        return true;
+//                    case R.id.walletSettlementFragment:
+//                         Bundle args=new Bundle();
+//                         args.putString("KEY_TITLE", context.getString(R.string.settlements) );
+//
+//
+//                        currentDestination = navController.getCurrentDestination().getId();
+//
+//                        if (currentDestination  == R.id.walletHomeFragment2) {
+//                            navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+//                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
+//                            navController.navigate(R.id.action_walletAccountFragment2_to_walletTransactionsListFragment2,args);
+//                        }else if (currentDestination == R.id.walletTransactionsListFragment )  {
+//
+//                        }else if (currentDestination == R.id.acceptPaymentFragment )  {
+//                            navController.navigate(R.id.action_acceptPaymentFragment_to_walletTransactionsListFragment2,args);
+//                        }
+//                        return true;
 
                     case R.id.walletAccountFragment_agent :
                         currentDestination = navController.getCurrentDestination().getId();
@@ -472,7 +472,9 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     public void openAgentCustomerLoanApplication(View view) {
-        navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
+     //   navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
+
+
 
     }
 
