@@ -171,7 +171,6 @@
                             android:id="@+id/money_mobile_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="phone"
                             android:paddingStart="@dimen/dimen_10dp"
                             android:tag="+256 "

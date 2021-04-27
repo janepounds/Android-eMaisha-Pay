@@ -55,7 +55,7 @@ public class DepositMoneyMobile extends DialogFragment {
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
     TextView balanceTextView,dialog_title;;
     double balance;
-    private String txRef,role;
+    private String txRef,role,phoneNumber;
     private Button submit;
     private EditText confirm_pin;
 
@@ -152,7 +152,7 @@ public class DepositMoneyMobile extends DialogFragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+  confirm_pin.getText().toString();
+        phoneNumber =getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 
         dialogLoader=new DialogLoader(getActivity());
 
@@ -164,7 +164,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.depositMobileMoneyMerchant(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoneyMerchant(access_token, amount_entered, phoneNumber, request_id, category, "merchantMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
             call.enqueue(new Callback<WalletTransaction>() {
                 @Override
                 public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -255,10 +255,12 @@ public class DepositMoneyMobile extends DialogFragment {
 
             dialogLoader.showProgressDialog();
             double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
+            phoneNumber =getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.depositMobileMoneyAgent(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantAgentMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoneyAgent(access_token, amount_entered,
+             "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantAgentMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
 
             call.enqueue(new Callback<WalletTransaction>() {
                 @Override
@@ -348,10 +350,19 @@ public class DepositMoneyMobile extends DialogFragment {
         else {
             dialogLoader.showProgressDialog();
             double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
+            phoneNumber =getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "customerMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoney(
+                    access_token,
+                    amount_entered,
+                    phoneNumber,
+                    request_id, 
+                    category,
+                    "customerMobileMoneyDeposit",
+                     "12" + confirm_pin.getText().toString()
+                     );
 
             call.enqueue(new Callback<WalletTransaction>() {
                 @Override
@@ -440,154 +451,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
     }
 
-//    public void initiateDeposit(){
-//        dialogLoader.showProgressDialog();
-//        String phoneNumber = getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
-//        String amountEntered = addMoneyTxt.getText().toString();
-//        double amount = Float.parseFloat(amountEntered);
-//        String request_id = WalletHomeActivity.generateRequestId();
-//        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-//        String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
-//
-//        //********************* RETROFIT IMPLEMENTATION ********************************//
-//        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-//        Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token,amount,phoneNumber,request_id,category,"customerMobileMoneyDeposit","120224");
-//        call.enqueue(new Callback<WalletTransaction>() {
-//            @Override
-//            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
-//                if(response.code() == 200){
-//                    if(response.body().getStatus().equalsIgnoreCase("1")){
-//                        dialogLoader.hideProgressDialog();
-//                        Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
-////                        Snackbar.make(getContext(),getView(),"",Snackbar.LENGTH_SHORT).show();
-//
-//                        refreshActivity();
-//
-//                    }else {
-//                        dialogLoader.hideProgressDialog();
-//                        Toast.makeText(getContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
-//
-//                    }
-//
-//
-//                }else if(response.code() == 401){
-//
-//                    TokenAuthFragment.startAuth( true);
-//
-//                } else if (response.code() == 500) {
-//                    if (response.errorBody() != null) {
-//                        Toast.makeText(activity,response.body().getMessage(), Toast.LENGTH_LONG).show();
-//                    } else {
-//
-//                        Log.e("info", "Something got very very wrong, code: " + response.code());
-//                    }
-//                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-//                } else if (response.code() == 400) {
-//                    if (response.errorBody() != null) {
-//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-//                    } else {
-//
-//                        Log.e("info", "Something got very very wrong, code: " + response.code());
-//                    }
-//                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-//                } else if (response.code() == 406) {
-//                    if (response.errorBody() != null) {
-//
-//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-//                    } else {
-//
-//                        Log.e("info", "Something got very very wrong, code: " + response.code());
-//                    }
-//                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
-//                } else {
-//
-//                    if (response.errorBody() != null) {
-//
-//                        Toast.makeText(activity, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-//                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
-//                    } else {
-//
-//                        Log.e("info", "Something got very very wrong, code: " + response.code());
-//                    }
-//                }
-//                dialogLoader.hideProgressDialog();
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<WalletTransaction> call, Throwable t) {
-//
-//            }
-//        });
-//
-//
-//
-//    }
 
-
-//    public void initiateDeposit() {
-//
-//        dialogLoader.showProgressDialog();
-//        String phoneNumber = phoneNumberTxt.getText().toString();
-//        String amountEntered = addMoneyTxt.getText().toString();
-//
-//        double amount = Float.parseFloat(amountEntered);
-//        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
-//        String eMaishaPayServiceMail="info@cabraltech.com";
-//        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
-//                .setCurrency("UGX")
-//                .setEmail(eMaishaPayServiceMail)
-//                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.activity))
-//                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.activity))
-//                .setPhoneNumber("0" + phoneNumber)
-//                .setNarration("eMaisha Pay")
-//                .setPublicKey(BuildConfig.PUBLIC_KEY)
-//                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
-//                .setTxRef(txRef)
-//                .onStagingEnv(false)
-//                .isPreAuth(true)
-//                .initialize();
-//
-//        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
-//            @Override
-//            public void showProgressIndicator(boolean active) {
-//                try {
-//
-//                    if (dialogLoader == null) {
-//                        dialogLoader = new DialogLoader(getContext());
-//                        dialogLoader.showProgressDialog();
-//                    }
-//
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(String errorMessage, @Nullable String flwRef) {
-//                dialogLoader.hideProgressDialog();
-//                Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
-//                Log.e("MobileMoneypaymentError", errorMessage);
-//            }
-//
-//            @Override
-//            public void onSuccessful(String flwRef) {
-//                dialogLoader.hideProgressDialog();
-//                Log.e("Success code :", flwRef);
-//                Toast.makeText(activity, "Transaction Successful", Toast.LENGTH_LONG).show();
-//                creditAfterDeposit(flwRef,"0" + phoneNumber);
-//            }
-//
-//            @Override
-//            public void showAuthenticationWebPage(String authenticationUrl) {
-//                Log.e("Loading auth web page: ", authenticationUrl);
-//                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-//            }
-//        };
-//        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
-//
-//        mobilePayManager.charge();
-//    }
 
 
     public void creditAfterDeposit(String txRef, String phonumber) {

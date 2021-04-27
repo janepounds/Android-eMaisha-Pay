@@ -71,7 +71,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/outline_primary"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -94,7 +94,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_chevron_down" />
+                        android:src="@drawable/ic_down_chevron" />
 
                 </RelativeLayout>
 
@@ -126,7 +126,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/outline_primary"
+                        android:background="@drawable/rectangular_blue_solid"
                         android:orientation="horizontal">
 
                         <Spinner
@@ -149,7 +149,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_chevron_down" />
+                            android:src="@drawable/ic_down_chevron" />
 
                     </RelativeLayout>
 
@@ -165,8 +165,7 @@
                         android:layout_height="wrap_content"
                         android:text="Beneficiary Bank Branch"
                         android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:layout_marginBottom="5dp" />
 
 
 
@@ -175,7 +174,7 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/outline_primary"
+                        android:background="@drawable/rectangular_blue_solid"
                         android:orientation="horizontal">
 
                         <Spinner
@@ -198,7 +197,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_chevron_down" />
+                            android:src="@drawable/ic_down_chevron" />
 
                     </RelativeLayout>
 
@@ -215,8 +214,7 @@
                         android:layout_height="wrap_content"
                         android:text="Beneficiary Account Name"
                         android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:layout_marginBottom="5dp" />
 
                     <EditText
                         android:id="@+id/et_account_name"
@@ -240,8 +238,7 @@
                         android:layout_height="wrap_content"
                         android:text="Beneficiary Account Number"
                         android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:layout_marginBottom="5dp" />
 
                     <EditText
                         android:id="@+id/et_account_number"
@@ -271,7 +268,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Beneficiary Name"
                     android:textSize="@dimen/margin_16"
                     android:layout_marginBottom="5dp"/>
@@ -294,7 +290,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
                             android:inputType="text"
                             android:paddingStart="@dimen/dimen_10dp"
@@ -317,7 +312,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Beneficiary Mobile"
                     android:textSize="@dimen/margin_16"
                     android:layout_marginBottom="5dp"/>
@@ -350,7 +344,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
                             android:inputType="phone"
                             android:maxLength="9"

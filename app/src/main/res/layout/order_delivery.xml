@@ -30,7 +30,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:layout_marginBottom="5dp"
         android:text="Select Time"
         android:textColor="@color/textColorSecondaryLight"
@@ -42,7 +41,6 @@
         android:layout_height="45dp"
         android:background="@drawable/edittext_corner"
         android:drawableRight="@drawable/drop_down"
-        android:fontFamily="@font/josefin_sans"
         android:inputType="text"
         android:padding="10dp"
         android:textColor="@color/creditCardBackground"
@@ -57,7 +55,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="18dp"
         android:background="@drawable/balance_cards"
-        android:fontFamily="@font/josefin_sans"
         android:gravity="center"
         android:padding="13dp"
         android:text="Accept &amp; Confirm"

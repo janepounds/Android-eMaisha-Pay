@@ -65,18 +65,22 @@
                 android:layout_below="@id/layout_account_type"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:id="@+id/layout_personal_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
                     android:paddingTop="4dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/personal_info_img"
                         android:layout_width="97dp"
-                        android:layout_height="107dp"
+                        android:layout_height="100dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
                         app:cardCornerRadius="10dp"
@@ -100,11 +104,11 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginBottom="3dp"/>
                     <View
                         android:id="@+id/view1"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="0.2dp"
                         android:background="@color/colorPrimary"
                         android:alpha=".79"
                         android:layout_below="@id/user_name"
@@ -117,15 +121,17 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/view1"
                         android:layout_toEndOf="@id/personal_info_img"
-                        android:layout_margin="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="+256704 000 000"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"
-                        android:alpha="0.5"/>
+                        android:alpha="0.7"/>
                     <View
                         android:id="@+id/view2"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="0.2dp"
                         android:background="@color/colorPrimary"
                         android:alpha=".79"
                         android:layout_below="@id/user_phone"
@@ -137,7 +143,7 @@
                         android:id="@+id/layout_view_more_user_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginStart="12dp"
                         android:layout_below="@id/view2"
                         android:layout_toEndOf="@id/personal_info_img">
@@ -148,19 +154,19 @@
                             android:maxLines="1"
                             android:text="View More"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:layout_alignParentBottom="true"
 
-                            android:alpha="0.6"/>
+                            android:alpha="0.8"/>
                         <ImageView
                             android:id="@+id/down_arrow"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:layout_toEndOf="@id/view_more_details"
-                            android:layout_alignParentBottom="true"
+                            android:layout_centerInParent="true"
                             android:src="@drawable/ic_right_arrow_green"
                             android:rotation="90"
-                            android:alpha="0.6"/>
+                            android:alpha="0.8"/>
 
                     </RelativeLayout>
 
@@ -237,7 +243,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/card_view_qr_code"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -879,7 +886,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/card_view_employment_business_info"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:id="@+id/layout_security"
                     android:layout_width="match_parent"
@@ -929,7 +937,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/card_view_security"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -964,7 +973,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/layout_cards"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:id="@+id/layout_help"
                     android:layout_width="match_parent"
@@ -1000,7 +1010,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/layout_customer_support"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:id="@+id/layout_terms_conditions"
                     android:layout_width="match_parent"

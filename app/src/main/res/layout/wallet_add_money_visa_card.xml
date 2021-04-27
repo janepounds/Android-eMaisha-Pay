@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight=".9"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center"
             android:layout_margin="5dp"
-            android:src="@drawable/close" />
+            android:src="@drawable/ic_close_white" />
 
     </LinearLayout>
 
@@ -56,55 +56,9 @@
             android:paddingTop="20dp"
             android:paddingLeft="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone" >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    app:srcCompat="@drawable/wallet_deposit"
-                    tools:ignore="VectorDrawableCompat" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="0.2"
-                    android:text="Withdraw Money"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    app:srcCompat="@drawable/wallet_transfer"
-                    tools:ignore="VectorDrawableCompat" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="0.2"
-                    android:text="Transfer Money"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp" />
-
-            </LinearLayout>
 
 
 
@@ -131,8 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Select Card"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:textSize="16sp" />
 
 
 
@@ -140,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -162,7 +115,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_chevron_down" />
+                        android:src="@drawable/ic_down_chevron" />
 
                 </RelativeLayout>
 
@@ -184,15 +137,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Holder Name"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/add_money_holder_name"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:textColor="@color/textColor"
                     android:layout_marginTop="5dp"
                     android:inputType="text"
@@ -209,15 +161,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Card Number"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/add_money_creditCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:paddingStart="@dimen/dimen_10dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:inputType="number"
                     android:textColor="@color/textColor"
                     android:layout_marginTop="5dp"
@@ -244,15 +195,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Card Expiry"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:textSize="16sp"/>
 
                     <EditText
                         android:id="@+id/add_money_card_expiry"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:inputType="date"
                         android:maxLength="5"
                         android:textColor="@color/textColor"
@@ -271,15 +221,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Card CVV"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/add_money_card_cvv"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:inputType="number"
                         android:textColor="@color/textColor"
                         android:layout_marginTop="5dp"
@@ -310,7 +259,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Purpose"
                     android:textSize="16sp" />
                 <LinearLayout
@@ -318,21 +266,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:padding="8dp"
-                    android:background="@drawable/edittext_corner">
+                    android:background="@drawable/outline_primary">
                     <CheckBox
                         android:id="@+id/checkbox_savings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Savings"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:buttonTint="@color/colorPrimary"/>
                     <CheckBox
                         android:id="@+id/checkbox_agric_inputs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Agriculture Inputs"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:buttonTint="@color/colorPrimary"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -347,14 +297,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Amount"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_corner"
+                    android:background="@drawable/outline_primary"
                     android:orientation="horizontal">
                     <TextView
 
@@ -427,39 +376,41 @@
             </FrameLayout>
             <LinearLayout
                 android:id="@+id/edit_buttons"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center">
 
 
 
                 <Button
                     android:id="@+id/delete_card"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_red"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="@string/bt_delete"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:drawableEnd="@drawable/ic_right_chevron"
                     android:visibility="gone"/>
                 <Button
                     android:id="@+id/button_add_money"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_dark_green"
+                    android:layout_margin="15dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="@string/deposit"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:drawableEnd="@drawable/ic_right_chevron"/>
+                    android:textSize="16sp"/>
             </LinearLayout>
 
         </LinearLayout>

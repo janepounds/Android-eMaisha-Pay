@@ -253,6 +253,16 @@ public class WalletHomeFragment extends Fragment {
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
             }
         });
+        binding.moreTransactionCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args=new Bundle();
+                args.putString("KEY_TITLE", getString(R.string.transactions) );
+
+                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+            }
+        });
+
 
 
     }
@@ -365,7 +375,7 @@ public class WalletHomeFragment extends Fragment {
                         } else{
 
                             binding.textCreditName.setText("");
-                            binding.textAmountCredit.setText("0.00");
+                            binding.textAmountCredit.setText("No Data");
                             binding.dateCredit.setText("");
                         }
                         if(response.body().getData().getLastDebit()!=null){
@@ -379,7 +389,7 @@ public class WalletHomeFragment extends Fragment {
 
                         }else{
                             binding.textDebitName.setText("");
-                            binding.textAmountDebit.setText("0.00");
+                            binding.textAmountDebit.setText("No Data");
                             binding.dateDebit.setText("");
 
                         }

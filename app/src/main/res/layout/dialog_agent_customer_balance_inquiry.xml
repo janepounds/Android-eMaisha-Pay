@@ -54,7 +54,6 @@
                 android:id="@+id/text_view_error_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="center"
                 android:text="Insufficient Funds!"
                 android:textColor="@color/device_problem"
@@ -120,7 +119,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="Account Number"
                     android:textSize="@dimen/margin_16" />
 
@@ -153,7 +151,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center_vertical"
                             android:inputType="phone"
                             android:maxLength="9"
@@ -183,8 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Account Number"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/josefin_sans" />
+                    android:textSize="16sp"/>
 
                 <EditText
                     android:id="@+id/add_money_creditCardNumber"

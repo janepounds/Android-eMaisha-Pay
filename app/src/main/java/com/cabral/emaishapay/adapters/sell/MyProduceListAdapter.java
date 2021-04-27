@@ -142,10 +142,40 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
 
         TextView produceTitle = addProduceDialog.findViewById(R.id.produce_title);
 
+
+        name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(context.getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         quantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedItem=quantityUnit.getSelectedItem().toString();
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(context.getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
+
+
 
                 if(position==0){
                     quantityMeasure.setText("/unit");

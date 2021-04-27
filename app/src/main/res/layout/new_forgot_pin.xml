@@ -111,7 +111,6 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="0.5"
                                     android:background="@android:color/transparent"
-                                    android:fontFamily="@font/josefin_sans"
                                     android:gravity="center_vertical"
                                     android:inputType="phone"
                                     android:maxLength="9"
@@ -179,7 +178,6 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/rounded_gray_background"
-                                android:fontFamily="@font/josefin_sans"
                                 android:inputType="text"
                                 android:padding="10dp"
                                 android:textColor="#000" />
@@ -239,7 +237,6 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/rounded_gray_background"
-                                android:fontFamily="@font/josefin_sans"
                                 android:inputType="text"
                                 android:padding="10dp"
                                 android:textColor="#000" />
@@ -312,7 +309,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="15dp">
 
 
 
@@ -322,21 +319,21 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:layout_weight="1"
-                            android:paddingStart="20dp"
-                            android:background="@drawable/rectangular_red_solid"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="5dp"
+                            android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/cancel"
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:textSize="16sp"
-                            android:drawableStart="@drawable/ic_chevron_left"
-                            android:drawableTint="@color/white"/>
+                            android:drawableLeft="@drawable/ic_chevron_left_white"/>
                         <Button
                             android:id="@+id/btn_submit_security_qn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_margin="15dp"
-                            android:paddingEnd="20dp"
+                            android:paddingEnd="10dp"
                             android:paddingStart="5dp"
                             android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/submit"

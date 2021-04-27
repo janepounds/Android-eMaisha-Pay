@@ -43,9 +43,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight=".9"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center"
                     android:layout_margin="5dp"
-                    android:src="@drawable/close" />
+                    android:src="@drawable/ic_close_white" />
 
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/rectangular_blue_solid"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:padding="3.4dp">
@@ -98,7 +98,7 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="10dp"
-                            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:srcCompat="@drawable/ic_down_chevron"
                             tools:ignore="VectorDrawableCompat" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_alignParentTop="true"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/outline_primary"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:padding="3.4dp">
@@ -163,7 +163,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/edittext_corner"
+                        android:background="@drawable/rectangular_blue_solid"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:padding="3.4dp">
@@ -188,7 +188,7 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="10dp"
-                            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+                            app:srcCompat="@drawable/ic_down_chevron"
                             tools:ignore="VectorDrawableCompat" />
                     </RelativeLayout>
 
@@ -210,7 +210,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                android:background="@drawable/edittext_corner"
+                android:background="@drawable/outline_primary"
                 android:orientation="horizontal">
 
                 <EditText
@@ -252,7 +252,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                android:background="@drawable/edittext_corner"
+                android:background="@drawable/outline_primary"
                 android:orientation="horizontal">
 
                 <EditText
@@ -306,13 +306,16 @@
 
             <LinearLayout
                 android:id="@+id/layout_submit_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/margin_15"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/dimen_20dp"
-                android:background="@drawable/rounded_corners_button"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rectangular_blue_solid"
                 android:visibility="visible">
 
                 <Button
@@ -321,8 +324,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_right_chevron"
-                    android:paddingEnd="15dp"
                     android:text="@string/submit"
                     android:textAllCaps="true"
                     android:textColor="#ffffff"
@@ -341,30 +342,30 @@
 
                 <Button
                     android:id="@+id/delete_produce"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_red"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="@string/bt_delete"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:drawableEnd="@drawable/ic_right_chevron" />
+                    android:textSize="16sp"/>
                 <Button
                     android:id="@+id/edit_Produce"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="15dp"
-                    android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_dark_green"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="Update"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:drawableEnd="@drawable/ic_right_chevron"/>
+                    android:textSize="16sp"/>
             </LinearLayout>
         </LinearLayout>
 

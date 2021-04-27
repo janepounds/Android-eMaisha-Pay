@@ -54,7 +54,6 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:text="Loan Number"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -64,7 +63,6 @@
                         android:layout_weight="1"
                         android:text="REF 001212"
                         android:textSize="14sp"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black"/>
 
 
@@ -89,7 +87,6 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:text="Amount"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -98,7 +95,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="+ UGX 0"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black"/>
 
 
@@ -115,7 +111,6 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:text="Due on"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -124,7 +119,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="29/10/2019"
-                        android:fontFamily="@font/josefin_sans"
                         android:textColor="@color/black"
                         />
 
