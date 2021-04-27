@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
@@ -344,6 +345,13 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
         if(  v.getId()==R.id.tv_key_backspace ){
             binding.posCharge.setText( binding.posCharge.getText().toString());
+//            CharSequence selectedText = inputConnection.getSelectedText(0);
+//
+//            if (TextUtils.isEmpty(selectedText)) {
+//                inputConnection.deleteSurroundingText(binding.posCharge.getText().toString().length(), 0);
+//            } else {
+//                inputConnection.commitText( binding.posCharge.getText().toString(), 1);
+//            }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
             chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
