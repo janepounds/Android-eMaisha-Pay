@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,9 +53,11 @@ public class DepositMoneyMobile extends DialogFragment {
     LinearLayout layoutAddMoney;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
-    TextView balanceTextView;
+    TextView balanceTextView,dialog_title;;
     double balance;
-    private String txRef;
+    private String txRef,role;
+    private Button submit;
+    private EditText confirm_pin;
 
     private DialogLoader dialogLoader;;
     Context activity;
@@ -81,6 +85,7 @@ public class DepositMoneyMobile extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.wallet_add_money, null);
+        role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, getContext());
 
         builder.setView(view);
 
@@ -114,25 +119,325 @@ public class DepositMoneyMobile extends DialogFragment {
 
     }
     public void enterPin(){
-        // Create and show the dialog.
-        FragmentManager fragmentManager = getChildFragmentManager();
 
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment prev = fragmentManager.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
+        //call inner dialog
+        final Dialog dialog1 = new Dialog(getContext());
+        dialog1.setContentView(R.layout.dialog_enter_pin);
+        confirm_pin = dialog1.findViewById(R.id.etxt_create_agent_pin);
+        dialog_title =dialog1.findViewById(R.id.dialog_title);
+        submit = dialog1.findViewById(R.id.txt_custom_add_agent_submit_pin);
+    if( role.equalsIgnoreCase("merchant")){
+
+        dialog_title.setText("ENTER MERCHANT PIN");
+    }else if(role.equalsIgnoreCase(getString(R.string.role_master_agent) )){
+
+        dialog_title.setText("ENTER AGENT PIN");
+    }
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(confirm_pin.getText().toString()) && confirm_pin.getText().toString().length() == 4) {
+                    initiateDeposit();
+                }
+            }
+        });
+        dialog1.show();
+
+
+
+
+    }
+
+    public void initiateDeposit(){
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+  confirm_pin.getText().toString();
+
+        dialogLoader=new DialogLoader(getActivity());
+
+        if (role.equalsIgnoreCase("merchant")) {
+            //call merchant endpoint
+
+            dialogLoader.showProgressDialog();
+            double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
+
+            //********************* RETROFIT IMPLEMENTATION ********************************//
+            APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoneyMerchant(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            call.enqueue(new Callback<WalletTransaction>() {
+                @Override
+                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                    dialogLoader.hideProgressDialog();
+
+                    if (response.code() == 200) {
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+
+                            //call the success dialog
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                    } else if (response.code() == 500) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 400) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 406) {
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else {
+
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+        }else if (role.equalsIgnoreCase(getString(R.string.role_master_agent)) ) {
+            //call agent merchant endpoint
+
+            dialogLoader.showProgressDialog();
+            double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
+
+            //********************* RETROFIT IMPLEMENTATION ********************************//
+            APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoneyAgentMerchant(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantAgentMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            call.enqueue(new Callback<WalletTransaction>() {
+                @Override
+                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                    dialogLoader.hideProgressDialog();
+
+                    if (response.code() == 200) {
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+
+                            //call the success dialog
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                    } else if (response.code() == 500) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 400) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 406) {
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else {
+
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+
+        } else {
+
+            dialogLoader.showProgressDialog();
+            double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
+
+            //********************* RETROFIT IMPLEMENTATION ********************************//
+            APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoney(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "customerMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+
+            call.enqueue(new Callback<WalletTransaction>() {
+                @Override
+                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                    dialogLoader.hideProgressDialog();
+
+                    if (response.code() == 200) {
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+
+                            //call the success dialog
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                    } else if (response.code() == 500) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 400) {
+                        if (response.errorBody() != null) {
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else if (response.code() == 406) {
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    } else {
+
+                        if (response.errorBody() != null) {
+
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        } else {
+
+                            Log.e("info", "Something got very very wrong, code: " + response.code());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
         }
-        ft.addToBackStack(null);
-        Bundle bundle = new Bundle();
 
-        bundle.putString("key","mobile_deposit");
-        bundle.putString("amount",addMoneyTxt.getText().toString());
-        bundle.putString("phone_number","0"+phoneNumberTxt.getText().toString());
 
-        // Create and show the dialog.
-        DialogFragment depositDialog = new EnterPin();
-        depositDialog.setArguments(bundle);
-        depositDialog.show(ft, "dialog");
 
 
     }
