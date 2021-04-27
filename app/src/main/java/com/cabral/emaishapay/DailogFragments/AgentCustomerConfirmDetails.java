@@ -44,6 +44,8 @@ import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
+import java.text.NumberFormat;
+
 
 public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView textTitleLabel,textTitleName,textName,textReceiverAccount,textTitlePhoneNumber,textPhoneNumber,textTitleAmount,textAmount;
@@ -194,7 +196,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     depositDialog.setArguments(bundle);
                     depositDialog.show(ft, "dialog");
 
-                }else if(key.equalsIgnoreCase("withdraw") || key.equalsIgnoreCase("transfer")){
+                }
+                else if(key.equalsIgnoreCase("withdraw") || key.equalsIgnoreCase("transfer")){
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
                     String type="Agent Withdraw";
                     if(key.equalsIgnoreCase("transfer")){
@@ -456,9 +459,6 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
                         comfirmAgentWithdraw(otp_code, customerNumber, amount ,service_code);
 
-
-
-
                     }
                 }
 
@@ -513,11 +513,29 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().equalsIgnoreCase("1")) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
                         //success message
-                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                        startActivity(intent);
                         dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(getContext());
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText( response.body().getMessage() );
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                                Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        dialog.show();
+
 
                     } else {
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
@@ -565,11 +583,28 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().equalsIgnoreCase("1")) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        //success message
-                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                        startActivity(intent);
+
                         dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(getContext());
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText( response.body().getMessage() );
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                                Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        dialog.show();
+
 
                     } else {
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
