@@ -45,8 +45,7 @@ public class EnterPin extends DialogFragment {
     private String totalAmount,phoneNumber;
     private Button submit;
     private EditText confirm_pin;
-    private double balance;  String key = "";
-    Dialog agentPinDialog, balancePreviewDialog;
+    String key = "";
     DialogLoader dialogLoader;
     String role;
     TextView dialog_title;
@@ -98,7 +97,15 @@ public class EnterPin extends DialogFragment {
                         String amount_only = amount[1];
                         dialogLoader.showProgressDialog();
                         /***************RETROFIT IMPLEMENTATION FOR DEPOSIT************************/
-                        Call<InitiateWithdrawResponse> call= APIClient.getWalletInstance(getContext()).confrmAgentDeposit(access_token, Double.parseDouble(amount_only), phoneNumber, request_id, category,"merchantInitiateDeposit",service_code);
+                        Call<InitiateWithdrawResponse> call= APIClient.getWalletInstance(getContext())
+                                .confrmAgentDeposit(
+                                        access_token,
+                                        Double.parseDouble(amount_only),
+                                        phoneNumber,
+                                        request_id,
+                                        category,
+                                        "merchantInitiateDeposit",
+                                        service_code);
 
 
                         call.enqueue(new Callback<InitiateWithdrawResponse>() {

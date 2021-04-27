@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -53,7 +54,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
     private String business_name = " ";
     EditText walletNo;
     DialogLoader dialogLoader;
-    Dialog agentPinDialog;
+    Dialog agentPinDialog,confirmBalanceDialog;
 
 
     public AgentCustomerBalanceInquiry() {
@@ -124,7 +125,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                 if( TextUtils.isEmpty(walletNo.getText()) ){
                     walletNo.setError( getString(R.string.account_number)+" required");
                     return;
-                }else if( walletNo.getText().length() <= 9 ){
+                }else if( walletNo.getText().length() != 9 ){
                     walletNo.setError( getString(R.string.account_number)+" invalid");
                     return;
                 }
@@ -165,10 +166,45 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                 dialogLoader.hideProgressDialog();
                 if(response.isSuccessful() && response.body().getStatus().equals("1")){
                     business_name = response.body().getData().getBusinessName();
-
                     String request_id2 = WalletHomeActivity.generateRequestId();
 
-                    prepareBalanceRequest(request_id2,category,access_token, business_name);
+                    //Inner Dialog to enter PIN
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
+                    //LayoutInflater inflater = requireActivity().getLayoutInflater();
+                    View confirmDialog = View.inflate(getContext(),R.layout.dialog_agent_customer_confirm_details,null);
+
+
+                    builder.setView(confirmDialog);
+                    confirmBalanceDialog= builder.create();
+                    builder.setCancelable(false);
+
+                    TextView textTitlelabel =confirmDialog.findViewById(R.id.agent_confirm_details_title_label);
+                    TextView textPhoneNumber =confirmDialog.findViewById(R.id.text_phone_number);
+                    TextView textName =confirmDialog.findViewById(R.id.text_name);
+
+                    CardView layoutCharge =confirmDialog.findViewById(R.id.card_transaction_charge);
+                    CardView depositAmount =confirmDialog.findViewById(R.id.card_deposit_amount);
+                    CardView totalAmount =confirmDialog.findViewById(R.id.card_total_amount);
+
+                    textPhoneNumber.setText(receiverPhoneNumber);
+                    textName.setText(business_name);
+                    textTitlelabel.setText(getString(R.string.confirm_customer_details));
+
+                    totalAmount.setVisibility(View.GONE);
+                    layoutCharge.setVisibility(View.GONE);
+                    depositAmount.setVisibility(View.GONE);
+
+                    confirmDialog.findViewById(R.id.txt_card_confirm).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            prepareBalanceRequest(request_id2,category,access_token, business_name);
+                        }
+                    });
+
+                    confirmBalanceDialog.show();
+
+
+
 
                 }else if(response.isSuccessful() ){
                     Snackbar.make(addMoney,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
@@ -241,7 +277,6 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                     if (response.body().getStatus().equalsIgnoreCase("1")) {
                         double balance = response.body().getData().getBalance();
                         //Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-
                         //call balance dialog
                         FragmentManager fragmentManager = getChildFragmentManager();
 

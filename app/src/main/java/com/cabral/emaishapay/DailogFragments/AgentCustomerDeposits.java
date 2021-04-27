@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,7 +120,15 @@ public class AgentCustomerDeposits extends DialogFragment {
         addMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spDepositTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
+                if( TextUtils.isEmpty(walletNumber.getText()) ){
+                    walletNumber.setError(getString(R.string.account_number)+" is required");
+                    return;
+                }
+                else if(  walletNumber.length()!=9 ){
+                    walletNumber.setError(getString(R.string.account_number)+" is invalid");
+                    return;
+                }
+                else{
                     getReceiverName("0" + walletNumber.getText().toString());
                 }
 

@@ -249,7 +249,8 @@ public class DepositMoneyMobile extends DialogFragment {
                 }
             });
 
-        }else if (role.equalsIgnoreCase(getString(R.string.role_master_agent)) ) {
+        }
+        else if (role.equalsIgnoreCase(getString(R.string.role_master_agent)) ) {
             //call agent merchant endpoint
 
             dialogLoader.showProgressDialog();
@@ -257,7 +258,8 @@ public class DepositMoneyMobile extends DialogFragment {
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.depositMobileMoneyAgentMerchant(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantAgentMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+            Call<WalletTransaction> call = apiRequests.depositMobileMoneyAgent(access_token, amount_entered, "0"+phoneNumberTxt.getText().toString(), request_id, category, "merchantAgentMobileMoneyDeposit", "12" + confirm_pin.getText().toString());
+
             call.enqueue(new Callback<WalletTransaction>() {
                 @Override
                 public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
@@ -342,9 +344,8 @@ public class DepositMoneyMobile extends DialogFragment {
                 }
             });
 
-
-        } else {
-
+        }
+        else {
             dialogLoader.showProgressDialog();
             double amount_entered = Float.parseFloat(addMoneyTxt.getText().toString());
 
@@ -436,9 +437,6 @@ public class DepositMoneyMobile extends DialogFragment {
                 }
             });
         }
-
-
-
 
     }
 

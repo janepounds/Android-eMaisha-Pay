@@ -16,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,54 +87,73 @@ public class AgentCustomerFundsTransfer extends DialogFragment {
         customerNoTitle.setText("Sender's Number");
 
         if(key.equalsIgnoreCase("Customer Fund Transfer")){
-            String[] transfer_to = {"Select","Wallet","eMaisha Card"};
-            ArrayAdapter transfers = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, transfer_to);
-            spTransferTo.setAdapter(transfers);
-            spTransferTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    try {
-                        //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
-                    } catch (Exception e) {
 
-                    }
-                    if(position==0){
-                        layoutMobileNumber.setVisibility(View.GONE);
-                        layoutEmaishaCard.setVisibility(View.GONE);
-                        layoutBank.setVisibility(View.GONE);
-                        walletLayout.setVisibility(View.GONE);
-
-
-                    }
-                    else if(position==1){
-                        walletLayout.setVisibility(View.VISIBLE);
-                        layoutMobileNumber.setVisibility(View.VISIBLE);
-                        layoutEmaishaCard.setVisibility(View.GONE);
-                        layoutBank.setVisibility(View.GONE);
-                    }
-                    else if(position==2){
-                        layoutMobileNumber.setVisibility(View.GONE);
-                        layoutEmaishaCard.setVisibility(View.VISIBLE);
-                        layoutBank.setVisibility(View.GONE);
-                        walletLayout.setVisibility(View.GONE);
-                    }
-
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
+//            String[] transfer_to = {"Select","Wallet","eMaisha Card"};
+//            ArrayAdapter transfers = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, transfer_to);
+//            spTransferTo.setAdapter(transfers);
+//            spTransferTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                    try {
+//                        //Change selected text color
+//                        ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+//                    } catch (Exception e) {
+//
+//                    }
+//                    if(position==0){
+//                        layoutMobileNumber.setVisibility(View.GONE);
+//                        layoutEmaishaCard.setVisibility(View.GONE);
+//                        layoutBank.setVisibility(View.GONE);
+//                        walletLayout.setVisibility(View.GONE);
+//                    }
+//                    else if(position==1){
+//                        walletLayout.setVisibility(View.VISIBLE);
+//                        layoutMobileNumber.setVisibility(View.VISIBLE);
+//                        layoutEmaishaCard.setVisibility(View.GONE);
+//                        layoutBank.setVisibility(View.GONE);
+//                    }
+//                    else if(position==2){
+//                        layoutMobileNumber.setVisibility(View.GONE);
+//                        layoutEmaishaCard.setVisibility(View.VISIBLE);
+//                        layoutBank.setVisibility(View.GONE);
+//                        walletLayout.setVisibility(View.GONE);
+//                    }
+//
+//
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> parent) {
+//
+//                }
+//            });
+            walletLayout.setVisibility(View.VISIBLE);
+            layoutMobileNumber.setVisibility(View.VISIBLE);
+            layoutEmaishaCard.setVisibility(View.GONE);
+            layoutBank.setVisibility(View.GONE);
 
             addMoney.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //call customer details dialog
-                    if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("wallet")) {
-                        getReceiverName("0" + receipentNo.getText().toString(),"0" + customerNo.getText().toString());
+                    if( TextUtils.isEmpty(receipentNo.getText()) ) {
+                        receipentNo.setError("Receiver Number required");
+                        return;
+                    }else if( TextUtils.isEmpty(customerNo.getText()) ) {
+                        customerNo.setError("Customer Number required");
+                        return;
+                    }else if( customerNo.getText().length()!=9 ) {
+                        customerNo.setError("Customer Number invalid");
+                        return;
+                    }else if( receipentNo.getText().length()!=9  ) {
+                        receipentNo.setError("Receiver Number invalid");
+                        return;
+                    }
+                    else{
+                        getReceiverName(
+                                getString(R.string.phone_number_code)+ receipentNo.getText().toString(),
+                                getString(R.string.phone_number_code) + customerNo.getText().toString()
+                        );
                     }
 
                 }

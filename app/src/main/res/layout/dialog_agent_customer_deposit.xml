@@ -63,7 +63,8 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/josefin_sans"
-                    android:text="Wallet Number"
+                    android:text="@string/account_number"
                     android:textSize="@dimen/margin_16" />
 
                 <LinearLayout
@@ -170,7 +171,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -194,7 +196,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/text_mobile_number"

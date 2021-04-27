@@ -59,6 +59,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     TextView resendtxtview;
     private  String otp_code, sms_code;
     double transferAmount;
+    Dialog agentPinDialog;
 
     public AgentCustomerConfirmDetails() {
 
@@ -193,17 +194,48 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     depositDialog.setArguments(bundle);
                     depositDialog.show(ft, "dialog");
 
-                }else if(key.equalsIgnoreCase("withdraw")){
+                }else if(key.equalsIgnoreCase("withdraw") || key.equalsIgnoreCase("transfer")){
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
                     String type="Agent Withdraw";
+                    if(key.equalsIgnoreCase("transfer")){
+                        type="Agent Transfer";
+                    }
 
-                    initiateFundsTransfer(customerNo,transferAmount, type );
-                }else if(key.equalsIgnoreCase("transfer")){
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
+                    //Inner Dialog to enter PIN
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
+                    //LayoutInflater inflater = requireActivity().getLayoutInflater();
+                    View pinDialog = View.inflate(getContext(),R.layout.dialog_enter_pin,null);
 
-                    String type="Agent Transfer";
 
-                    initiateFundsTransfer(customerNo, transferAmount, type );
+                    builder.setView(pinDialog);
+                    agentPinDialog= builder.create();
+                    builder.setCancelable(false);
+
+                    EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+                    TextView titleTxt = pinDialog.findViewById(R.id.dialog_title);
+                    titleTxt.setText("ENTER AGENT PIN");
+
+                    String finalType = type;
+                    pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
+                                String service_code= WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString();
+
+
+                                initiateFundsTransfer(customerNo, transferAmount, finalType,service_code );
+
+                            }else {
+                                pinEdittext.setError("Invalid Pin Entered");
+                            }
+
+                        }
+                    });
+
+                    agentPinDialog.show();
+
+
+
 
                 }else{
                     FragmentManager fragmentManager = getChildFragmentManager();
@@ -244,13 +276,15 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     }
 
 
-    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type) {
+    public void initiateFundsTransfer(final String customerPhoneNumber, final double amount, String type, String user_pin ){
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        String service_code = "121518";
+
+        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+  user_pin;
+
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,customerPhoneNumber,type,request_id,category,"customerTransactionOTP",service_code);
@@ -261,7 +295,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                     if( response.body().getStatus().equalsIgnoreCase("0") ){
                         Toast.makeText(getContext(),response.body().getMessage()+"",Toast.LENGTH_LONG).show();
                     }else{
-                        getOTPFromUser(customerPhoneNumber,amount);
+                        getOTPFromUser(customerPhoneNumber,amount,service_code);
                     }
                     dialogLoader.hideProgressDialog();
 
@@ -295,7 +329,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
     }
 
 
-    private void getOTPFromUser(final String customerNumber, final double amount) {
+    private void getOTPFromUser(final String customerNumber, final double amount, String service_code) {
         otpDialog  = new Dialog(getContext());
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -418,36 +452,10 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 otp_code = otp_code.replaceAll("\\s+", "");
                 if(otp_code.length()>=6){
                     if(key.equalsIgnoreCase("transfer")){
-                        comfirmAgentFundsTransfer(otp_code,customerNumber,amount);
+                        comfirmAgentFundsTransfer(otp_code,customerNumber,amount,service_code);
                     }else if(key.equalsIgnoreCase("withdraw")){
 
-                        //Inner Dialog to enter PIN
-                        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext(), R.style.CustomAlertDialog);
-                        //LayoutInflater inflater = requireActivity().getLayoutInflater();
-                        View pinDialog = View.inflate(getContext(),R.layout.dialog_enter_pin,null);
-
-
-                        builder.setView(pinDialog);
-                        dialog = builder.create();
-                        builder.setCancelable(false);
-
-                        EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
-
-                        pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
-
-                                    comfirmAgentWithdraw(otp_code, customerNumber, amount ,pinEdittext.getText().toString());
-
-                                }else {
-                                    pinEdittext.setError("Invalid Pin Entered");
-                                }
-
-                            }
-                        });
-
-                        dialog.show();
+                        comfirmAgentWithdraw(otp_code, customerNumber, amount ,service_code);
 
 
 
@@ -481,7 +489,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         otpDialog.show();
     }
 
-    private  void comfirmAgentFundsTransfer(String otp_code, String customerNumber, double amount){
+    private  void comfirmAgentFundsTransfer(String otp_code, String customerNumber, double amount, String service_code){
         String receiverPhoneNumber=textPhoneNumber.getText().toString();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -489,7 +497,16 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         dialogLoader.showProgressDialog();
 
         Call<InitiateWithdrawResponse> call = APIClient.getWalletInstance(getContext()).
-                confirmAgentTransfer(access_token, amount, otp_code,customerNumber, receiverPhoneNumber,request_id,category,"confirmAgentTransfer");
+                confirmAgentTransfer(
+                        access_token,
+                        amount,
+                        otp_code,
+                        customerNumber,
+                        receiverPhoneNumber,
+                        request_id,
+                        category,
+                        "completeAgentCustomerTransfer",
+                        service_code);
 
 
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
