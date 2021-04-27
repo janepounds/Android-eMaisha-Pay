@@ -20,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.text.NumberFormat;
+
 public class BalanceDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,8 +45,12 @@ public class BalanceDialog extends DialogFragment {
 
         TextView bal = view.findViewById(R.id.balance);
         TextView customerName = view.findViewById(R.id.balance_text_view_name);
-        bal.setText(getArguments().getString("balance"));
-        customerName.setText(getArguments().getString("customer_name"));
+
+
+
+
+        bal.setText("UGX " + (getArguments().getString("balance")));
+        customerName.setText(getArguments().getString("customer_name") + "'s");
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

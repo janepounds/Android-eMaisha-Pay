@@ -78,6 +78,7 @@ public class PayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wallet_pay, container, false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
         this.context=getActivity();
         Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
         dialog = new DialogLoader(getContext());

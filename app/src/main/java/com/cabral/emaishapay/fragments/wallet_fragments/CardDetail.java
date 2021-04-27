@@ -131,8 +131,8 @@ public class CardDetail extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_card_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
-
+        stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
 
          account_no = view.findViewById(R.id.etxt_card_account_number);
          card_no = view.findViewById(R.id.etxt_card_number);

@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:padding="10dp"
             android:text="ENTER CUSTOMER'S PIN"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -35,26 +35,25 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/edittext_corner"
+            android:background="@drawable/outline_primary"
             android:inputType="numberPassword"
             android:padding="8dp"
             android:textColor="#000"
             android:textSize="16sp"
             android:maxLength="4"/>
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/rectangular_blue_solid"
+                android:layout_gravity="center"
                 android:visibility="visible">
 
                 <Button
                     android:id="@+id/txt_custom_add_agent_submit_pin"
-                    style="@style/Button_DW"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_gravity="center_vertical"
@@ -65,18 +64,7 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
+                    android:textSize="16sp" />
 
             </FrameLayout>
         </LinearLayout>
@@ -100,7 +88,7 @@
             android:layout_height="45dp"
             android:layout_marginStart="@dimen/dimen_20dp"
             android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@drawable/edittext_corner"
+            android:background="@drawable/outline_primary"
             android:orientation="horizontal">
 
             <EditText
@@ -128,7 +116,7 @@
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp">
@@ -143,15 +131,16 @@
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:background="@drawable/rectangular_red_solid"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
-                    android:layout_marginEnd="5dp"/>
+                    android:layout_marginEnd="10dp"/>
 
 
                 <Button
                     android:id="@+id/button_submit"
                     android:layout_weight="0.33"
                     android:layout_width="0dip"
+                    android:layout_marginStart="10dp"
                     android:layout_height="match_parent"
                     android:text="@string/submit"
                     android:textAllCaps="false"

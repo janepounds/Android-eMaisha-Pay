@@ -97,6 +97,7 @@ public class TransferMoney extends Fragment {
 
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
