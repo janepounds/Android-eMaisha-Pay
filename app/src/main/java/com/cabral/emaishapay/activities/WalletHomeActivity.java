@@ -228,18 +228,18 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 switch (item.getItemId()){
 
-//                    case R.id.walletCardsFragment:
-//                        currentDestination = navController.getCurrentDestination().getId();
-//
-//                        if (currentDestination  == R.id.walletHomeFragment2) {
-//                            navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-//                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
-//                             navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-//                        } else if (currentDestination == R.id.cardListFragment )  {
-//
-//                        }
-//
-//                        return true;
+                    case R.id.walletRewardsFragment:
+                        currentDestination = navController.getCurrentDestination().getId();
+
+                        if (currentDestination  == R.id.walletHomeFragment2) {
+                            navController.navigate(R.id.action_walletHomeFragment2_to_walletRewardsFragment2);
+                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
+                             navController.navigate(R.id.action_walletAccountFragment2_to_walletRewardsFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+
+                        }
+
+                        return true;
 
                     case R.id.walletAccountFragment :
 
@@ -249,8 +249,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                             navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                             // navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-                        } else if (currentDestination == R.id.cardListFragment )  {
-                             navController.navigate(R.id.action_cardListFragment_to_walletAccountFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+                             navController.navigate(R.id.action_walletRewardsFragment2_to_navigation);
                         }
 
                         return true;
@@ -262,8 +262,8 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                              navController.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2);
-                        } else if (currentDestination == R.id.cardListFragment )  {
-                            navController.navigate(R.id.action_cardListFragment_to_walletHomeFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+                            navController.navigate(R.id.action_walletRewardsFragment2_to_walletHomeFragment2);
                         }
                         return true;
 
