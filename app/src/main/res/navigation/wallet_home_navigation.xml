@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_walletHomeFragment2_to_scanAndPayDialog"
             app:destination="@id/scanAndPayDialog" />
+        <action
+            android:id="@+id/action_walletHomeFragment2_to_walletRewardsFragment2"
+            app:destination="@id/walletRewardsFragment2" />
     </fragment>
 
     <fragment
@@ -243,6 +246,9 @@
             <action
                 android:id="@+id/action_walletAccountFragment2_to_personalInformationFragment"
                 app:destination="@id/personalInformationFragment" />
+            <action
+                android:id="@+id/action_walletAccountFragment2_to_walletRewardsFragment2"
+                app:destination="@id/walletRewardsFragment2" />
 
         </fragment>
         <fragment
@@ -433,6 +439,23 @@
     <fragment
         android:id="@+id/scanAndPayStep4"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep4"
-        android:label="ScanAndPayStep4" />
+        android:label="ScanAndPayStep4" >
+        <action
+            android:id="@+id/action_scanAndPayStep4_to_walletHomeFragment2"
+            app:destination="@id/walletHomeFragment2" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/walletRewardsFragment2"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.WalletRewardsFragment"
+        android:label="WalletRewardsFragment" >
+        <action
+            android:id="@+id/action_walletRewardsFragment2_to_walletHomeFragment2"
+            app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_walletRewardsFragment2_to_navigation"
+            app:destination="@id/navigation" />
+
+    </fragment>
 
 </navigation>

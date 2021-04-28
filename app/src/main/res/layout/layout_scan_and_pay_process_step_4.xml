@@ -9,21 +9,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/windowBackgroundDark">
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_scan_pay_process_2"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:background="@color/colorPrimary"
+                app:titleTextColor="@color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
+
 
 
 
@@ -32,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:orientation="horizontal"
-            android:layout_below="@id/appbar"
+            android:layout_below="@id/toolbar_scan_pay_process_2"
             android:background="@color/colorPrimary"
             android:layout_marginBottom="20dp"/>
 

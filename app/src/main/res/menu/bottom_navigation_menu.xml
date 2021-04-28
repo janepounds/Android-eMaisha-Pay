@@ -12,7 +12,7 @@
 
 
     <item
-        android:id="@+id/walletCouponsFragment"
+        android:id="@+id/walletRewardsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_bn_gift"
         android:title="REWARDS"

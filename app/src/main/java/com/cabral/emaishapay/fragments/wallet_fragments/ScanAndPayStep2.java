@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep2Binding;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -41,6 +43,8 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private LayoutScanAndPayProcessStep2Binding binding;
+    private double balance;
+    DialogLoader dialogLoader;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -53,11 +57,11 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding= DataBindingUtil.inflate(inflater,R.layout.layout_scan_and_pay_process_step_2,container,false);
 
-
+        dialogLoader = new DialogLoader(context);
         if(getArguments()!=null){
 
              merchantId = getArguments().getString("merchant_id");
-            binding.textMerchantId.setText(merchantId);
+             binding.textMerchantId.setText(merchantId);
            getMerchantName();
 
         }
@@ -65,6 +69,10 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
         setKeyValues();
         setKeyListeningEvents();
 
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarScanPayProcess2);
+         binding.toolbarScanPayProcess2.setTitle("Scan and Pay");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
 
         return binding.getRoot();
@@ -169,17 +177,25 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.layoutBtnPay.setOnClickListener(v -> {
+        binding.btnSavePayMerchant.setOnClickListener(v -> {
             //navigate to pay merchant step 3
-            ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
-            Bundle bundle = new Bundle();
-            bundle.putString("amount", binding.txtBillTotal.getText().toString());
-            bundle.putString("merchant_name",merchant_name);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            scanMerchantCode.setArguments(bundle);
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            dialogLoader.showProgressDialog();
+            balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
+            if(balance >= Double.parseDouble(binding.txtBillTotal.getText().toString())){
+                double Balance = balance - Double.parseDouble(binding.txtBillTotal.getText().toString());
+                Bundle bundle = new Bundle();
+                bundle.putString("amount", binding.txtBillTotal.getText().toString());
+                bundle.putString("merchant_name",merchant_name);
+                bundle.putString("merchant_id",merchantId);
+                bundle.putString("balance",Balance+"");
+                WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
+
+            }else{
+                Toast.makeText(context,"Insufficient funds",Toast.LENGTH_LONG).show();
+
+            }
+
+        dialogLoader.hideProgressDialog();
         });
     }
 
@@ -217,15 +233,21 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
             }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
-           //navigate to pay merchant step 3
-            ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
-            Bundle bundle = new Bundle();
-            bundle.putString("amount", binding.txtBillTotal.getText().toString());
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            scanMerchantCode.setArguments(bundle);
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
+           //check if balance is enough and navigate to pay merchant step 3
+            dialogLoader.showProgressDialog();
+             balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
+            if(balance >= Double.parseDouble(binding.txtBillTotal.getText().toString())){
+                Bundle bundle = new Bundle();
+                bundle.putString("amount", binding.txtBillTotal.getText().toString());
+                bundle.putString("merchant_name",merchant_name);
+                bundle.putString("merchant_id",merchantId);
+                WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
+
+            }else{
+                Toast.makeText(context,"Insufficient funds",Toast.LENGTH_LONG).show();
+
+            }
+            dialogLoader.hideProgressDialog();
 
         }else{
             String value = keyValues.get(v.getId()).toString();
