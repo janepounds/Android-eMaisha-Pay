@@ -115,7 +115,7 @@ public class ShopOrdersFragment extends Fragment {
                 Log.d("debug", "Orders------->>>>"+myOrders.data.size());
                 orderAdapter.setOrderList(myOrders.data);
             } else {
-                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_bike);
                 binding.imageNoProduct.setVisibility(View.VISIBLE);
                 binding.txtNoProducts.setVisibility(View.VISIBLE);
                 binding.ordersRecycler.setVisibility(View.GONE);

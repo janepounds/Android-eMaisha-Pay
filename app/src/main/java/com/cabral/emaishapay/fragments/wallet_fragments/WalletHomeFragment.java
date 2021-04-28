@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -177,8 +178,20 @@ public class WalletHomeFragment extends Fragment {
                   dialog.setView(dialogView);
                   dialog.setCancelable(true);
 
+                  ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
 
                   final AlertDialog alertDialog = dialog.create();
+
+                  close.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          alertDialog.dismiss();
+                      }
+                  });
+
                   alertDialog.show();
 
 
@@ -260,6 +273,32 @@ public class WalletHomeFragment extends Fragment {
                 args.putString("KEY_TITLE", getString(R.string.transactions) );
 
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+            }
+        });
+        binding.layoutLoanApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Go to coming soon
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
+
+                ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
+
+                final AlertDialog alertDialog = dialog.create();
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
