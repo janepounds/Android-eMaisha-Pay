@@ -1,9 +1,12 @@
 package com.cabral.emaishapay.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +23,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -33,6 +39,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.DailogFragments.ScanAndPayDialog;
+import com.cabral.emaishapay.DailogFragments.shop.ScanMerchantCode;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
@@ -50,6 +57,9 @@ import com.google.firebase.iid.InstanceIdResult;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Random;
+
+import static android.Manifest.permission.VIBRATE;
+import static android.Manifest.permission_group.CAMERA;
 
 public class WalletHomeActivity extends AppCompatActivity{
 
@@ -109,6 +119,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
     public  static CoordinatorLayout scanCoordinatorLayout;
     public static FloatingActionButton scanFAB;
+    private static final int PERMISSION_CODE = 1;
 
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -127,6 +138,22 @@ public class WalletHomeActivity extends AppCompatActivity{
         scanFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //request permissions
+                //check runtime permission
+                    if (checkPermission()) {
+                        // if permission is already granted display a toast message
+                        Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                        //permission granted
+
+                    } else {
+                        String[] permissions = {Manifest.permission.CAMERA, VIBRATE};
+                        //show popup to request runtime permission
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(permissions, PERMISSION_CODE);
+                        }
+
+                    }
+
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev = fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -139,6 +166,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                 // Create and show the dialog.
                 DialogFragment scanAndPayDialog = new ScanAndPayDialog();
                 scanAndPayDialog.show(ft, "dialog");
+
+
             }
         });
 
@@ -582,4 +611,36 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
 
+    private boolean checkPermission() {
+        // here we are checking two permission that is vibrate
+        // and camera which is granted by user and not.
+        // if permission is granted then we are returning
+        // true otherwise false.
+        int camera_permission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+        int vibrate_permission = ContextCompat.checkSelfPermission(getApplicationContext(), VIBRATE);
+        return camera_permission == PackageManager.PERMISSION_GRANTED && vibrate_permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    private void requestPermission() {
+        // this method is to request
+        // the runtime permission.
+        int PERMISSION_REQUEST_CODE = 200;
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA, VIBRATE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        // this method is called when user
+        // allows the permission to use camera.
+        if (grantResults.length > 0) {
+            boolean cameraaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            boolean vibrateaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+            if (cameraaccepted && vibrateaccepted) {
+                Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
