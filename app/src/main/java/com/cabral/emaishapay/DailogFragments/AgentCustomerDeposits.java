@@ -52,10 +52,7 @@ public class AgentCustomerDeposits extends DialogFragment {
     DialogLoader dialogLoader;
     private EditText walletNumber,depositAmount,phoneNumber;
 
-    public AgentCustomerDeposits() {
-
-
-    }
+    public AgentCustomerDeposits() { }
 
 
     @Override

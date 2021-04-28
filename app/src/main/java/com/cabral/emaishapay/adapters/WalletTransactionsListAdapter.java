@@ -115,10 +115,11 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
 
             holder.textReceivedFrom.setText(data.getReceiver());
+
             String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
 
             Log.w("TransactionType",data.getType());
-            if( data.getAmount()>0 ) {
+            if( data.getReceiverUserId().equalsIgnoreCase( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context))) {
                 holder.textAmount.setText("+ UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#2E84BE"));
                 if(data.getSender()!=null && !data.getSender().isEmpty()){

@@ -345,13 +345,13 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
         if(  v.getId()==R.id.tv_key_backspace ){
             binding.posCharge.setText( binding.posCharge.getText().toString());
-//            CharSequence selectedText = inputConnection.getSelectedText(0);
-//
-//            if (TextUtils.isEmpty(selectedText)) {
-//                inputConnection.deleteSurroundingText(binding.posCharge.getText().toString().length(), 0);
-//            } else {
-//                inputConnection.commitText( binding.posCharge.getText().toString(), 1);
-//            }
+            CharSequence selectedText = inputConnection.getSelectedText(0);
+
+            if (TextUtils.isEmpty(selectedText)) {
+                inputConnection.deleteSurroundingText(1, 0);
+            } else {
+                inputConnection.commitText( "", 1);
+            }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
             chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
