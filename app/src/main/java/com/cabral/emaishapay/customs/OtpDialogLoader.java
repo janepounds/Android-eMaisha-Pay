@@ -43,7 +43,7 @@ public abstract class OtpDialogLoader {
     public OtpDialogLoader(Activity activity) {
         this.context=activity.getApplicationContext();
         this.activity=activity;
-        otpDialog  = new Dialog(context, R.style.myFullscreenAlertDialogStyle);
+        otpDialog  = new Dialog(activity, R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         otpDialog.setCancelable(false);

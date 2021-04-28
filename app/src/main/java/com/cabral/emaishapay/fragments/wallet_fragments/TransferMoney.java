@@ -471,7 +471,11 @@ public class TransferMoney extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(context).getBeneficiaries(access_token,spTransferTo.getSelectedItem().toString(),request_id);
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(context).getBeneficiaries(
+                access_token,
+                spTransferTo.getSelectedItem().toString(),
+                request_id,
+                "getBeneficiaries");
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {

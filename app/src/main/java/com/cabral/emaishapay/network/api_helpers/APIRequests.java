@@ -842,11 +842,11 @@ public interface APIRequests {
             @Header("Authorization")String token,
             @Field("otp") String user_id,
             @Field("identifier") String otp,
-            @Field("transaction_type") String beneficary_type,
+            @Field("beneficiary_type") String beneficary_type,
             @Field("bank") String bank,
             @Field("bank_branch") String bank_branch,
-            @Field("account_name") String account_name,
-            @Field("account_number") String account_number,
+            @Field("beneficiary_name") String account_name,
+            @Field("beneficiary_account_number") String account_number,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id
@@ -860,6 +860,8 @@ public interface APIRequests {
             @Header("Authorization")String token,
             @Field("amount") String amount,
             @Field("type") String type,
+            @Field("beneficiaryName") String beneficiaryName,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id
@@ -891,8 +893,10 @@ public interface APIRequests {
 
     //get beneficiaries info
     @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type,
-                                              @Query("request_id") String request_id);
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token,
+                                              @Query("transaction_type") String transaction_type,
+                                              @Query("request_id") String request_id,
+                                              @Query("action_id") String action_id);
 
 
 
