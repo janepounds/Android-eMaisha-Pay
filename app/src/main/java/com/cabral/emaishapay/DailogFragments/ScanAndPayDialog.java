@@ -2,40 +2,25 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cabral.emaishapay.DailogFragments.shop.ScanMerchantCode;
-import com.cabral.emaishapay.DailogFragments.shop.ShopProductPreviewDialog;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep1;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import eu.livotov.labs.android.camview.ScannerLiveView;
-import eu.livotov.labs.android.camview.scanner.decoder.zxing.ZXDecoder;
-
-import static android.Manifest.permission.VIBRATE;
-import static android.Manifest.permission_group.CAMERA;
 
 public class ScanAndPayDialog extends DialogFragment {
    private ScannerLiveView camera;
@@ -65,7 +50,7 @@ public class ScanAndPayDialog extends DialogFragment {
 
 
              //call scan merchant code fragment
-            ScanMerchantCode scanMerchantCode = new ScanMerchantCode();
+            ScanAndPayStep1 scanMerchantCode = new ScanAndPayStep1();
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.wallet_home_container, scanMerchantCode);
             transaction.addToBackStack(null);

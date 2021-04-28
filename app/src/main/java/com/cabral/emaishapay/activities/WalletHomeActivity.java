@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,9 +36,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
-import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.DailogFragments.ScanAndPayDialog;
-import com.cabral.emaishapay.DailogFragments.shop.ScanMerchantCode;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;

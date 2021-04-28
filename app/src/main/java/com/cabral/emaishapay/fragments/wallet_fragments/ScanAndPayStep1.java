@@ -1,10 +1,6 @@
-package com.cabral.emaishapay.DailogFragments.shop;
+package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +11,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 
 import eu.livotov.labs.android.camview.ScannerLiveView;
 import eu.livotov.labs.android.camview.scanner.decoder.zxing.ZXDecoder;
 
-public class ScanMerchantCode extends Fragment {
-    private static final String TAG = "ScanMerchantCode";
+public class ScanAndPayStep1 extends Fragment {
+    private static final String TAG = "ScanAndPayStep1";
     private ScannerLiveView camera;
     private TextView text_merchant_id;
     private Context context;
@@ -75,7 +71,13 @@ public class ScanMerchantCode extends Fragment {
                 text_merchant_id.setText(data);
                 Log.d(TAG, "onCodeScanned: merchant_code"+data);
 
-                //navigate to pay
+                //navigate to step 2
+                //call scan merchant code fragment
+                ScanAndPayStep2 scanMerchantCode = new ScanAndPayStep2();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.wallet_home_container, scanMerchantCode);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
