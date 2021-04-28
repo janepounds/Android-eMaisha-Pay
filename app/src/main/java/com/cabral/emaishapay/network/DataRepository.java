@@ -380,7 +380,7 @@ public class DataRepository {
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
             @Override
             protected void saveCallResult(@NonNull List<EcProduct> productList) {
-                mEcProductsDao.addProduct(productList);
+               mEcProductsDao.addProduct(productList);
             }
 
             @NonNull
