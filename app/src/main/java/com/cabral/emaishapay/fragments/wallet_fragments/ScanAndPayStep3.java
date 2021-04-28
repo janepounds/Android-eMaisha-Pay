@@ -211,8 +211,8 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
 
             } else {
 
-//                Snackbar.make(errorTextView,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
-//                errorTextView.setVisibility(View.VISIBLE);
+                Snackbar.make(binding.errorMessageTxt,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
+                binding.errorMessageTxt.setVisibility(View.VISIBLE);
             }
 
 
@@ -379,8 +379,6 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                     }else {
 
                         //got to step 4
-
-                        ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
                         Bundle bundle = new Bundle();
                         bundle.putString("amount", binding.amount.getText().toString());
                         bundle.putString("merchant_name", binding.textMerchantName.getText().toString());
@@ -388,18 +386,14 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                         bundle.putString("trans_id", response.body().getData().getTransactionId());
                         bundle.putString("Date", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
                         bundle.putString("wallet_balance", Balance+"");
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        scanMerchantCode.setArguments(bundle);
-                        transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep3_to_scanAndPayStep4,bundle);
+
                     }
 
 
                 }else{
-//                    errorTextView.setText(response.errorBody().toString());
-//                    error_message_layout.setVisibility(View.VISIBLE);
-//                    errorTextView.setVisibility(View.VISIBLE);
+                    binding.errorMessageTxt.setText(response.errorBody().toString());
+                    binding.errorMessageTxt.setVisibility(View.VISIBLE);
                     if(response.errorBody() != null){
                         Log.e("BACKUP RESPONSE 1A"+response.code(),response.errorBody().toString());
                     }
@@ -415,9 +409,9 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                 Log.e("info 1A: ", t.getMessage());
                 Log.e("info 1A: ", "Something got very very wrong");
 
-//                errorTextView.setText("Error occured! Try again later");
-//                error_message_layout.setVisibility(View.VISIBLE);
-//                errorTextView.setVisibility(View.VISIBLE);
+                binding.errorMessageTxt.setText("Error occured! Try again later");
+                binding.errorMessageTxt.setVisibility(View.VISIBLE);
+                binding.errorMessageTxt.setVisibility(View.VISIBLE);
                 dialogLoader.hideProgressDialog();
 
             }

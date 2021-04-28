@@ -171,15 +171,13 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
         binding.layoutBtnPay.setOnClickListener(v -> {
             //navigate to pay merchant step 3
-            ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
+
             Bundle bundle = new Bundle();
             bundle.putString("amount", binding.txtBillTotal.getText().toString());
             bundle.putString("merchant_name",merchant_name);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            scanMerchantCode.setArguments(bundle);
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            bundle.putString("merchant_id",merchantId);
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
+
         });
     }
 
@@ -218,14 +216,11 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
 
         }else if( v.getId()==R.id.tv_key_enter  ){
            //navigate to pay merchant step 3
-            ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
             Bundle bundle = new Bundle();
             bundle.putString("amount", binding.txtBillTotal.getText().toString());
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            scanMerchantCode.setArguments(bundle);
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            bundle.putString("merchant_name",merchant_name);
+            bundle.putString("merchant_id",merchantId);
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
 
         }else{
             String value = keyValues.get(v.getId()).toString();

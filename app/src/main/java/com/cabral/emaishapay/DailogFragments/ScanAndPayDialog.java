@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep1;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,11 +51,8 @@ public class ScanAndPayDialog extends DialogFragment {
 
 
              //call scan merchant code fragment
-            ScanAndPayStep1 scanMerchantCode = new ScanAndPayStep1();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
+
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayDialog_to_scanAndPayStep1);
 
         });
 
