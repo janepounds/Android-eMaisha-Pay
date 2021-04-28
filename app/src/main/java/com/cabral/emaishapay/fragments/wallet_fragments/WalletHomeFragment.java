@@ -85,9 +85,6 @@ public class WalletHomeFragment extends Fragment {
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
 
-
-
-
         return binding.getRoot();
     }
 

@@ -151,18 +151,8 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     }
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
 
-
-
-                // Create and show the dialog.
-                DialogFragment scanAndPayDialog = new ScanAndPayDialog();
-                scanAndPayDialog.show(ft, "dialog");
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_scanAndPayDialog);
 
 
             }
@@ -235,7 +225,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                             navController.navigate(R.id.action_walletHomeFragment2_to_walletRewardsFragment2);
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                              navController.navigate(R.id.action_walletAccountFragment2_to_walletRewardsFragment2);
-                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
 
                         }
 
@@ -249,7 +239,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                             navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                             // navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
                              navController.navigate(R.id.action_walletRewardsFragment2_to_navigation);
                         }
 
@@ -262,7 +252,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                              navController.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2);
-                        } else if (currentDestination == R.id.walletRewardsFragment )  {
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
                             navController.navigate(R.id.action_walletRewardsFragment2_to_walletHomeFragment2);
                         }
                         return true;

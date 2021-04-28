@@ -196,10 +196,20 @@ public class LoginFragment  extends Fragment {
         dialogLoader.showProgressDialog();
         String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
-//        String phone_number = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,context);
+
         //load answered security Qns(locally or from an endpoint)
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).validateSecurityQns(access_token,phone_number.getText().toString(),firstSecurityQn.getSelectedItem().toString(),secondSecurityQn.getSelectedItem().toString(),thirdSecurityQn.getSelectedItem().toString(),firstQnAnswer.getText().toString(),secondQnAnswer.getText().toString(),thirdQnAnswer.getText().toString(),request_id,"validateSecurityQns");
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).
+                validateSecurityQns(access_token,
+                        getString(R.string.phone_number_code)+phone_number.getText().toString(),
+                        firstSecurityQn.getSelectedItem().toString(),
+                        secondSecurityQn.getSelectedItem().toString(),
+                        thirdSecurityQn.getSelectedItem().toString(),
+                        firstQnAnswer.getText().toString(),
+                        secondQnAnswer.getText().toString(),
+                        thirdQnAnswer.getText().toString(),
+                        request_id,
+                        "validateSecurityQns");
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {

@@ -29,6 +29,8 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
@@ -52,6 +54,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code,bankk,branch,id;
     TextView title;
+    OtpDialogLoader otpDialogLoader;
+    DialogLoader dialogLoader;
     public AddBeneficiaryFragment() {
         // Required empty public constructor
     }
@@ -88,6 +92,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
         bank_branch = view.findViewById(R.id.sp_bank_branch);
         title = view.findViewById(R.id.agent_bal_inquiry_title_label);
 
+        dialogLoader=new DialogLoader(getContext());
         if(getArguments()!=null){
             //fill views and call update beneficiary
             String beneficiary_type = getArguments().getString("beneficiary_type");
@@ -190,7 +195,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
             });
 
-              bank_branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        bank_branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
@@ -259,22 +264,9 @@ public class AddBeneficiaryFragment extends DialogFragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateEntries()) { ;
 
 
-
-                if (validateEntries()) {
-
-                    ProgressDialog dialog;
-                    dialog = new ProgressDialog(context);
-                    dialog.setIndeterminate(true);
-                    dialog.setMessage("Please Wait..");
-                    dialog.setCancelable(false);
-                    dialog.show();
-
-                    String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                    String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                    String request_id = WalletHomeActivity.generateRequestId();
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
                         CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
@@ -291,11 +283,14 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         bankk = bank.getSelectedItem().toString();
                         branch = bank_branch.getSelectedItem().toString();
 
-
-
                     }
+                    String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                    String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                    String request_id = WalletHomeActivity.generateRequestId();
+                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
                     if(submit.getText().toString().equalsIgnoreCase("update")){
+                        dialogLoader.showProgressDialog();
 
                         /*************RETROFIT IMPLEMENTATION**************/
                         Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id);
@@ -303,8 +298,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                                 if (response.isSuccessful()) {
+                                    dialogLoader.hideProgressDialog();
                                     if (response.body().getStatus() == 0) {
-                                        dialog.dismiss();
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                                     } else {
@@ -316,11 +311,9 @@ public class AddBeneficiaryFragment extends DialogFragment {
                                         WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
                                         WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
 
-                                        dialog.dismiss();
                                     }
 
                                 } else if (response.code() == 401) {
-                                    dialog.dismiss();
                                     Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
 
                                     //redirect to auth
@@ -332,46 +325,13 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                             @Override
                             public void onFailure(Call<CardResponse> call, Throwable t) {
-                                dialog.dismiss();
+                                dialogLoader.hideProgressDialog();
 
                             }
                         });
                     }else {
+                        requestsaveBeneficiary(access_token,user_id, request_id, category);
 
-
-                        /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(access_token, user_id, transactionTypeSp.getSelectedItem().toString(), bankk, branch, beneficiary_name, beneficiary_number,
-                                request_id,category,"saveBeneficiary");
-                        call.enqueue(new Callback<CardResponse>() {
-                            @Override
-                            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                                if (response.isSuccessful()) {
-                                    String message = response.body().getMessage();
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                                    dialog.dismiss();
-                                    //To BeneficiariesListFragment();
-                                    WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
-                                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
-
-
-
-
-                                } else if (response.code() == 401) {
-                                    dialog.dismiss();
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                                    //redirect to auth
-                                    TokenAuthFragment.startAuth( true);
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<CardResponse> call, Throwable t) {
-                                dialog.dismiss();
-
-                            }
-                        });
                     }
 
 
@@ -392,8 +352,117 @@ public class AddBeneficiaryFragment extends DialogFragment {
         return dialog;
 
     }
-    public boolean validateEntries(){
 
+    private void saveBeneficiary(String access_token, String user_id, String request_id, String category, String otp_code) {
+        dialogLoader.showProgressDialog();
+        /*************RETROFIT IMPLEMENTATION**************/
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
+                access_token,
+                otp_code,
+                user_id,
+                transactionTypeSp.getSelectedItem().toString(),
+                bankk,
+                branch,
+                beneficiary_name,
+                beneficiary_number,
+                request_id,
+                category,
+                "saveBeneficiary");
+
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+                if (response.isSuccessful()) {
+                    String message = response.body().getMessage();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    //To BeneficiariesListFragment();
+                    WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
+
+                } else if (response.code() == 401) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    //redirect to auth
+                    TokenAuthFragment.startAuth( true);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+    }
+
+    private void requestsaveBeneficiary(String access_token, String user_id, String request_id, String category) {
+        String type="Customer Add Beneficiary";
+        if(category.equalsIgnoreCase("agent")){
+            type="Agent Add Beneficiary";
+        } else if(category.equalsIgnoreCase("merchant")){
+            type="Merchant Add Beneficiary";
+        }
+
+        dialogLoader.showProgressDialog();
+        /*************RETROFIT IMPLEMENTATION**************/
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext())
+                .requestSaveBeneficiary(
+                        access_token,
+                        user_id,
+                        type,
+                        request_id,
+                        category,
+                        "saveBeneficiary");
+
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+                if (response.isSuccessful()) {
+
+                    String phone_number=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,getActivity());
+                    Log.w("PhoneNumberError",phone_number);
+
+                    otpDialogLoader=new OtpDialogLoader( getActivity()) {
+                        @Override
+                        protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
+                            otpDialog.dismiss();
+                            saveBeneficiary(access_token,user_id, request_id, category,otp_code);
+                        }
+
+                        @Override
+                        protected void onResendOtp() {
+                            otpDialogLoader.resendOtp(
+                                    phone_number,
+                                    dialogLoader,
+                                    submit
+
+                            );
+                        }
+                    };
+                    otpDialogLoader.showOTPDialog();
+
+
+                } else if (response.code() == 401) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                    //redirect to auth
+                    TokenAuthFragment.startAuth( true);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+    }
+
+    public boolean validateEntries(){
 
         boolean check = true;
         if(transactionTypeSp.getSelectedItemPosition()==0){

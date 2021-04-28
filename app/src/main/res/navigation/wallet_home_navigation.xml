@@ -439,7 +439,12 @@
     <fragment
         android:id="@+id/scanAndPayStep4"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep4"
-        android:label="ScanAndPayStep4" />
+        android:label="ScanAndPayStep4" >
+        <action
+            android:id="@+id/action_scanAndPayStep4_to_walletHomeFragment2"
+            app:destination="@id/walletHomeFragment2" />
+
+    </fragment>
     <fragment
         android:id="@+id/walletRewardsFragment2"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.WalletRewardsFragment"
@@ -450,6 +455,7 @@
         <action
             android:id="@+id/action_walletRewardsFragment2_to_navigation"
             app:destination="@id/navigation" />
+
     </fragment>
 
 </navigation>

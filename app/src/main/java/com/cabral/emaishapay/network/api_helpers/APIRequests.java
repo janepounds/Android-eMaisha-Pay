@@ -84,7 +84,6 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("user/resend/otp")
     Call<WalletAuthenticationResponse>resendOtp(@Field("phoneNumber")String phoneNumber,
-                                                   @Field("password")String password,
                                                    @Field("request_id") String request_id,
                                                    @Field("action_id") String action_id
 
@@ -841,7 +840,8 @@ public interface APIRequests {
     @POST("wallet/add_beneficiary")
     Call<CardResponse>saveBeneficiary(
             @Header("Authorization")String token,
-            @Field("identifier") String user_id,
+            @Field("otp") String user_id,
+            @Field("identifier") String otp,
             @Field("transaction_type") String beneficary_type,
             @Field("bank") String bank,
             @Field("bank_branch") String bank_branch,
@@ -851,6 +851,18 @@ public interface APIRequests {
             @Field("category") String category,
             @Field("action_id")String action_id
 
+    );
+
+    // request save Beneficiary Otp
+    @FormUrlEncoded
+    @POST("wallet/customer-request/add-beneficiary")
+    Call<CardResponse>requestSaveBeneficiary(
+            @Header("Authorization")String token,
+            @Field("amount") String amount,
+            @Field("type") String type,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     // //delete card

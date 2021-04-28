@@ -11,19 +11,14 @@
         android:id="@+id/toolbar_wallet_rewards"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/white"
-        app:titleTextColor="@color/colorPrimary"
-        app:navigationIcon="@drawable/ic_chevron_left_blue"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -171,6 +166,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_points_earned_redeemed">
 
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <RelativeLayout
                 android:id="@+id/layout_get_referral_rewards"
                 android:layout_width="match_parent"
@@ -341,9 +342,10 @@
 
 
             </FrameLayout>
-
+            </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
