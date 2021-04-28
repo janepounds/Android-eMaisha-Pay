@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep1Binding;
 
 import eu.livotov.labs.android.camview.ScannerLiveView;
@@ -31,6 +32,7 @@ public class ScanAndPayStep1 extends Fragment {
     private Context context;
     private LayoutScanAndPayProcessStep1Binding binding;
     private Toolbar toolbarScanPayProcess1;
+    DialogLoader dialogLoader;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -45,7 +47,7 @@ public class ScanAndPayStep1 extends Fragment {
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
-
+        dialogLoader = new DialogLoader(context);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarScanPayProcess1);
        // binding.toolbarScanPayProcess1.setTitle("Scan and Pay");
@@ -81,18 +83,20 @@ public class ScanAndPayStep1 extends Fragment {
                 // method is called when camera scans the
                 // qr code and the data from qr code is
                 // stored in data in string format.
-                text_merchant_id.setText(data);
+                binding.textMerchantId.setText(data);
                 Log.d(TAG, "onCodeScanned: merchant_code"+data);
                 if(data!=null) {
 
+                    dialogLoader.showProgressDialog();
                     //navigate to step 2
                     //call scan merchant code fragment
                     Bundle bundle = new Bundle();
                     bundle.putString("merchant_id", data);
                     WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep1_to_scanAndPayStep2,bundle);
                 }else {
-                    camera.startScanner();
+                    binding.cameraPreview.startScanner();
                 }
+                dialogLoader.hideProgressDialog();
             }
         });
     }
@@ -107,15 +111,15 @@ public class ScanAndPayStep1 extends Fragment {
         // to place red marker for scanning.
         decoder.setScanAreaPercent(0.9);
         // below method will set secoder to camera.
-        camera.setDecoder(decoder);
-        camera.startScanner();
+        binding.cameraPreview.setDecoder(decoder);
+        binding.cameraPreview.startScanner();
     }
 
     @Override
     public void onPause() {
         // on app pause the
         // camera will stop scanning.
-        camera.stopScanner();
+        binding.cameraPreview.stopScanner();
         super.onPause();
     }
 }

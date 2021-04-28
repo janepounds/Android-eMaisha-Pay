@@ -151,18 +151,8 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     }
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
 
-
-
-                // Create and show the dialog.
-                DialogFragment scanAndPayDialog = new ScanAndPayDialog();
-                scanAndPayDialog.show(ft, "dialog");
+                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_scanAndPayDialog);
 
 
             }

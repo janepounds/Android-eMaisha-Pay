@@ -71,9 +71,8 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
 
         dialogLoader = new DialogLoader(context);
         if(getArguments()!=null){
-            String amount = getString(R.string.phone_number_code)+ getArguments().getString("amount");
             binding.textMerchantName.setText(getArguments().getString("merchant_name"));
-            binding.amount.setText(amount);
+            binding.amount.setText("UGX "+getArguments().getString("amount"));
             merchant_id = getArguments().getString("merchant_id");
             Amount = Double.parseDouble(getArguments().getString("amount"));
 
@@ -201,19 +200,8 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
         pin = pin.replaceAll("\\s+", "");
         if (pin.length() >= 4) {
             //if Action 1 login , if 2 proceed with registration
-            //call endpoint for pay merchant & proceed to step 4
-            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
-            Float PurchaseCharges = 0F;
-            double amount = Amount + PurchaseCharges;
-            if (balance >= amount) {
-                Balance = balance - amount;
+
                 processPayment("12"+pin);
-
-            } else {
-
-                Snackbar.make(binding.errorMessageTxt,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
-                binding.errorMessageTxt.setVisibility(View.VISIBLE);
-            }
 
 
         }
@@ -352,16 +340,14 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     }
 
     private void processPayment(String service_code) {
-        String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
-        double amount = WalletTransactionInitiation.getInstance().getAmount();
-        String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
+        dialogLoader.showProgressDialog();
+
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-
-        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant",service_code);
+        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchant_id,Amount,"",request_id,category,"payMerchant",service_code);
 
         call.enqueue(new Callback<WalletPurchaseResponse>() {
             @Override
@@ -383,7 +369,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                         bundle.putString("amount", binding.amount.getText().toString());
                         bundle.putString("merchant_name", binding.textMerchantName.getText().toString());
                         bundle.putString("merchant_id", merchant_id);
-                        bundle.putString("trans_id", response.body().getData().getTransactionId());
+                        bundle.putString("trans_id", response.body().getData().getReferenceNumber());
                         bundle.putString("Date", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
                         bundle.putString("wallet_balance", Balance+"");
                         WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep3_to_scanAndPayStep4,bundle);

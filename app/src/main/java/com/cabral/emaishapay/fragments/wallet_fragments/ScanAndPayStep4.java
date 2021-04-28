@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep4Binding;
 
 public class ScanAndPayStep4 extends Fragment {
@@ -47,5 +49,16 @@ public class ScanAndPayStep4 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.rateMerchant.setOnClickListener(v -> {
+            rateMerchant();
+        });
+        binding.textSkip.setOnClickListener(v -> {
+          //navigate to wallet home fragment
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep4_to_walletHomeFragment2);
+
+        });
+    }
+
+    private void rateMerchant() {
     }
 }
