@@ -344,20 +344,28 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
             return;
 
         if(  v.getId()==R.id.tv_key_backspace ){
-            binding.posCharge.setText( binding.posCharge.getText().toString());
-            CharSequence selectedText = inputConnection.getSelectedText(0);
+            try {
+                CharSequence selectedText = inputConnection.getSelectedText(0);
 
-            if (TextUtils.isEmpty(selectedText)) {
-                inputConnection.deleteSurroundingText(1, 0);
-            } else {
-                inputConnection.commitText( "", 1);
+                if (TextUtils.isEmpty(selectedText)) {
+                    inputConnection.deleteSurroundingText(1, 0);
+                } else {
+                    inputConnection.commitText("", 1);
+                }
+            }catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
             }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
-            chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
-            Bundle args=new Bundle();
-            args.putDouble("Charge", chargeAmount );
-            ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+            try {
+                chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
+                Bundle args=new Bundle();
+                args.putDouble("Charge", chargeAmount );
+                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+
         }else{
             String value = keyValues.get(v.getId()).toString();
             inputConnection.commitText(value, 1);
