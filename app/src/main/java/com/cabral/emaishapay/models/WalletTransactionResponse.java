@@ -105,6 +105,13 @@ public class WalletTransactionResponse {
             @Expose
             private String trans_currency;
 
+            @SerializedName("senderUserId")
+            @Expose
+            private String senderUserId;
+
+            @SerializedName("receiverUserId")
+            @Expose
+            private String receiverUserId;
             public String getTrans_currency() {
                 return trans_currency;
             }
@@ -191,6 +198,22 @@ public class WalletTransactionResponse {
 
             public void setReceiptNumber(String receiptNumber) {
                 this.receiptNumber = receiptNumber;
+            }
+
+            public String getSenderUserId() {
+                return senderUserId;
+            }
+
+            public void setSenderUserId(String senderUserId) {
+                this.senderUserId = senderUserId;
+            }
+
+            public String getReceiverUserId() {
+                return receiverUserId;
+            }
+
+            public void setReceiverUserId(String receiverUserId) {
+                this.receiverUserId = receiverUserId;
             }
         }
     }
