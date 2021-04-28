@@ -70,14 +70,21 @@ public class ScanAndPayStep1 extends Fragment {
                 // stored in data in string format.
                 text_merchant_id.setText(data);
                 Log.d(TAG, "onCodeScanned: merchant_code"+data);
+                if(data!=null) {
 
-                //navigate to step 2
-                //call scan merchant code fragment
-                ScanAndPayStep2 scanMerchantCode = new ScanAndPayStep2();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                    //navigate to step 2
+                    //call scan merchant code fragment
+                    ScanAndPayStep2 scanMerchantCode = new ScanAndPayStep2();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("merchant_id", data);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    scanMerchantCode.setArguments(bundle);
+                    transaction.replace(R.id.wallet_home_container, scanMerchantCode);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }else {
+                    camera.startScanner();
+                }
             }
         });
     }
