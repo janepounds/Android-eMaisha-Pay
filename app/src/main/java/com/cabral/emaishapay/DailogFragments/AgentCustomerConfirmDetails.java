@@ -266,8 +266,6 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
 
         });
 
-
-
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
