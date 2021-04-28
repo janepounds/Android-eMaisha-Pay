@@ -25,14 +25,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep3Binding;
+import com.cabral.emaishapay.models.WalletTransactionInitiation;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     private Context context;
     private LayoutScanAndPayProcessStep3Binding binding;
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
-    private String pin;
+    private String pin,merchant_id;
 
 
 
@@ -52,6 +55,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
             String amount = getString(R.string.phone_number_code)+ getArguments().getString("amount");
             binding.textMerchantName.setText(getArguments().getString("merchant_name"));
             binding.amount.setText(amount);
+            merchant_id = getArguments().getString("merchant_id");
 
         }
         setKeyValues();
@@ -177,10 +181,28 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
         pin = pin.replaceAll("\\s+", "");
         if (pin.length() >= 4) {
             //if Action 1 login , if 2 proceed with registration
-            //proceed to step 4
+            //call endpoint for pay merchant & proceed to step 4
+//            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
+//            Float PurchaseCharges = 0F;
+//            double amount = WalletTransactionInitiation.getInstance().getAmount() + PurchaseCharges;
+//            if (balance >= amount) {
+//                processPayment();
+//
+//            } else {
+//
+//                Snackbar.make(errorTextView,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
+//                errorTextView.setVisibility(View.VISIBLE);
+//            }
+
+
             ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
             Bundle bundle = new Bundle();
-            bundle.putString("amount", binding.txtBillTotal.getText().toString());
+            bundle.putString("amount", binding.amount.getText().toString());
+            bundle.putString("merchant_name", binding.textMerchantName.getText().toString());
+            bundle.putString("merchant_id", merchant_id);
+            bundle.putString("trans_id", merchant_id);
+            bundle.putString("Date", merchant_id);
+            bundle.putString("wallet_balance", merchant_id);
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             scanMerchantCode.setArguments(bundle);
             transaction.replace(R.id.wallet_home_container, scanMerchantCode);

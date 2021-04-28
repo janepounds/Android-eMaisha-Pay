@@ -31,11 +31,15 @@ public class ScanAndPayStep4 extends Fragment {
 
 
         if(getArguments()!=null){
-
-
+            binding.amount.setText(getArguments().getString("amount"));
+            binding.textMerchantName.setText(getArguments().getString("merchant_name"));
+            binding.textMerchantId.setText(getArguments().getString("merchant_id"));
+            binding.textDateTime.setText(getArguments().getString("Date"));
+            binding.textTxnId.setText(getArguments().getString("trans_id"));
+            binding.textUpdatedWalletBalanceAmount.setText(getArguments().getString("wallet_balance"));
+            binding.textMerchantName2.setText(getArguments().getString("merchant_name"));
 
         }
-
 
         return binding.getRoot();
     }
