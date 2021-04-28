@@ -114,7 +114,7 @@ public class ScanAndPayStep1 extends Fragment {
         ZXDecoder decoder = new ZXDecoder();
         // 0.5 is the area where we have
         // to place red marker for scanning.
-        decoder.setScanAreaPercent(0.8);
+        decoder.setScanAreaPercent(0.9);
         // below method will set secoder to camera.
         camera.setDecoder(decoder);
         camera.startScanner();

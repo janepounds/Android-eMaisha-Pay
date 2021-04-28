@@ -59,10 +59,10 @@
                 android:layout_margin="12dp"/>
             <eu.livotov.labs.android.camview.ScannerLiveView
                 android:id="@+id/camera_preview"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_margin="20dp"
-                android:layout_centerHorizontal="true"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_margin="10dp"
+                android:layout_centerInParent="true"
                 android:layout_below="@id/text_scan_pay_title"/>
 
             <RelativeLayout
