@@ -1,11 +1,15 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,9 +31,21 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep3Binding;
+import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     private Context context;
@@ -36,6 +53,8 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private String pin,merchant_id;
+    private double Amount,Balance;
+    DialogLoader dialogLoader;
 
 
 
@@ -50,12 +69,13 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding= DataBindingUtil.inflate(inflater, R.layout.layout_scan_and_pay_process_step_3,container,false);
 
-
+        dialogLoader = new DialogLoader(context);
         if(getArguments()!=null){
             String amount = getString(R.string.phone_number_code)+ getArguments().getString("amount");
             binding.textMerchantName.setText(getArguments().getString("merchant_name"));
             binding.amount.setText(amount);
             merchant_id = getArguments().getString("merchant_id");
+            Amount = Double.parseDouble(getArguments().getString("amount"));
 
         }
         setKeyValues();
@@ -182,32 +202,20 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
         if (pin.length() >= 4) {
             //if Action 1 login , if 2 proceed with registration
             //call endpoint for pay merchant & proceed to step 4
-//            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
-//            Float PurchaseCharges = 0F;
-//            double amount = WalletTransactionInitiation.getInstance().getAmount() + PurchaseCharges;
-//            if (balance >= amount) {
-//                processPayment();
-//
-//            } else {
-//
+            double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
+            Float PurchaseCharges = 0F;
+            double amount = Amount + PurchaseCharges;
+            if (balance >= amount) {
+                Balance = balance - amount;
+                processPayment("12"+pin);
+
+            } else {
+
 //                Snackbar.make(errorTextView,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
 //                errorTextView.setVisibility(View.VISIBLE);
-//            }
+            }
 
 
-            ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
-            Bundle bundle = new Bundle();
-            bundle.putString("amount", binding.amount.getText().toString());
-            bundle.putString("merchant_name", binding.textMerchantName.getText().toString());
-            bundle.putString("merchant_id", merchant_id);
-            bundle.putString("trans_id", merchant_id);
-            bundle.putString("Date", merchant_id);
-            bundle.putString("wallet_balance", merchant_id);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            scanMerchantCode.setArguments(bundle);
-            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
-            transaction.addToBackStack(null);
-            transaction.commit();
         }
         else {
             Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
@@ -341,5 +349,79 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     public void setInputConnection(EditText editText) {
         InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
+    }
+
+    private void processPayment(String service_code) {
+        String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
+
+        Call<WalletPurchaseResponse> call = apiRequests.makeTransaction(access_token,merchantId,amount,coupon,request_id,category,"payMerchant",service_code);
+
+        call.enqueue(new Callback<WalletPurchaseResponse>() {
+            @Override
+            public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
+                if(response.code()== 200){
+                    dialogLoader.hideProgressDialog();
+                    if(response.body().getStatus().equals("0")){
+
+                        try {
+                            Toasty.error(context, ""+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Log.e("Error", e.getMessage());
+                        }
+                    }else {
+
+                        //got to step 4
+
+                        ScanAndPayStep3 scanMerchantCode = new ScanAndPayStep3();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("amount", binding.amount.getText().toString());
+                        bundle.putString("merchant_name", binding.textMerchantName.getText().toString());
+                        bundle.putString("merchant_id", merchant_id);
+                        bundle.putString("trans_id", response.body().getData().getTransactionId());
+                        bundle.putString("Date", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+                        bundle.putString("wallet_balance", Balance+"");
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        scanMerchantCode.setArguments(bundle);
+                        transaction.replace(R.id.wallet_home_container, scanMerchantCode);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+
+
+                }else{
+//                    errorTextView.setText(response.errorBody().toString());
+//                    error_message_layout.setVisibility(View.VISIBLE);
+//                    errorTextView.setVisibility(View.VISIBLE);
+                    if(response.errorBody() != null){
+                        Log.e("BACKUP RESPONSE 1A"+response.code(),response.errorBody().toString());
+                    }
+
+                    dialogLoader.hideProgressDialog();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
+
+                Log.e("info 1A: ", t.getMessage());
+                Log.e("info 1A: ", "Something got very very wrong");
+
+//                errorTextView.setText("Error occured! Try again later");
+//                error_message_layout.setVisibility(View.VISIBLE);
+//                errorTextView.setVisibility(View.VISIBLE);
+                dialogLoader.hideProgressDialog();
+
+            }
+
+        });
     }
 }
