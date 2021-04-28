@@ -126,6 +126,11 @@
         <action
             android:id="@+id/action_walletTransactionsListFragment_to_acceptPaymentFragment"
             app:destination="@id/acceptPaymentFragment" />
+        <action
+            android:id="@+id/action_walletTransactionsListFragment_to_transferMoney"
+            app:destination="@id/transferMoney"
+            app:enterAnim="@anim/slideup_dialog"
+            app:exitAnim="@anim/slide_down" />
 
     </fragment>
     <fragment
@@ -145,6 +150,9 @@
         <action
             android:id="@+id/action_transferMoney_to_walletHomeFragment2"
             app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_transferMoney_to_walletTransactionsListFragment"
+            app:destination="@id/walletTransactionsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/contactDetailsFragment"
