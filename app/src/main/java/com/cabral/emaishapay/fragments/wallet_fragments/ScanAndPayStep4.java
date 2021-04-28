@@ -38,7 +38,7 @@ public class ScanAndPayStep4 extends Fragment {
             binding.textMerchantId.setText(getArguments().getString("merchant_id"));
             binding.textDateTime.setText(getArguments().getString("Date"));
             binding.textTxnId.setText(getArguments().getString("trans_id"));
-            binding.textUpdatedWalletBalanceAmount.setText(getArguments().getString("wallet_balance"));
+            binding.textUpdatedWalletBalanceAmount.setText(getArguments().getString("balance"));
             binding.textMerchantName2.setText(getArguments().getString("merchant_name"));
 
         }

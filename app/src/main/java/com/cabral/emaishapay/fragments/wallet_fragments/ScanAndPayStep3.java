@@ -75,6 +75,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
             binding.amount.setText("UGX "+getArguments().getString("amount"));
             merchant_id = getArguments().getString("merchant_id");
             Amount = Double.parseDouble(getArguments().getString("amount"));
+            Balance = Double.parseDouble(getArguments().getString("balance"));
 
         }
         setKeyValues();
@@ -371,7 +372,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                         bundle.putString("merchant_id", merchant_id);
                         bundle.putString("trans_id", response.body().getData().getReferenceNumber());
                         bundle.putString("Date", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
-                        bundle.putString("wallet_balance", Balance+"");
+                        bundle.putString("balance", Balance+"");
                         WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep3_to_scanAndPayStep4,bundle);
 
                     }

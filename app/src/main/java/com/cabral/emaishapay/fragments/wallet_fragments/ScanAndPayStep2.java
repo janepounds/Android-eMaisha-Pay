@@ -177,10 +177,12 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
             dialogLoader.showProgressDialog();
             balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
             if(balance >= Double.parseDouble(binding.txtBillTotal.getText().toString())){
+                double Balance = balance - Double.parseDouble(binding.txtBillTotal.getText().toString());
                 Bundle bundle = new Bundle();
                 bundle.putString("amount", binding.txtBillTotal.getText().toString());
                 bundle.putString("merchant_name",merchant_name);
                 bundle.putString("merchant_id",merchantId);
+                bundle.putString("balance",Balance+"");
                 WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
 
             }else{
