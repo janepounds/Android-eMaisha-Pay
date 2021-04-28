@@ -726,6 +726,9 @@ public class User_Cart_BuyInputsDB {
     //*********** Clear all User Cart ********//
     
     public void clearCart() {
+        if(BuyInputsDB_Manager.getInstance()==null){
+            return;
+        }
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
         db = BuyInputsDB_Manager.getInstance().openDatabase();
         

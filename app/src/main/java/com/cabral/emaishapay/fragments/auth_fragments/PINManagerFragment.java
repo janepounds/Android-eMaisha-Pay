@@ -624,7 +624,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 //call resend otp
-                resendOtp(password,phonenumber);
+                resendOtp(phonenumber);
 
                 layoutResendCode.setVisibility(View.GONE);
 //                processLogin(password,ConfirmActivity.phonenumber);
@@ -703,13 +703,13 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     }
 
-    public void resendOtp(String password, String phonenumber) {
+    public void resendOtp( String phonenumber) {
         String request_id = WalletHomeActivity.generateRequestId();
         Log.d(TAG, "processLogin: request_id"+request_id);
 
         //call the otp end point
         dialogLoader.showProgressDialog();
-        Call<WalletAuthenticationResponse>call = apiRequests.resendOtp(phonenumber,password,request_id,"ResendOTP");
+        Call<WalletAuthenticationResponse>call = apiRequests.resendOtp(phonenumber,request_id,"ResendOTP");
         call.enqueue(new Callback<WalletAuthenticationResponse>() {
             @Override
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
