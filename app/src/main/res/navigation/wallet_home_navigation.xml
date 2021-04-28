@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_walletHomeFragment2_to_loanUserDetailsFragment"
             app:destination="@id/loanUserDetailsFragment" />
+        <action
+            android:id="@+id/action_walletHomeFragment2_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
     </fragment>
 
     <fragment
@@ -395,5 +398,41 @@
                 app:destination="@id/depositMoneyVoucher" />
         </fragment>
     </navigation>
+    <dialog
+        android:id="@+id/scanAndPayDialog"
+        android:name="com.cabral.emaishapay.DailogFragments.ScanAndPayDialog"
+        android:label="ScanAndPayDialog" >
+        <action
+            android:id="@+id/action_scanAndPayDialog_to_scanAndPayStep1"
+            app:destination="@id/scanAndPayStep1" />
+    </dialog>
+    <fragment
+        android:id="@+id/scanAndPayStep1"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep1"
+        android:label="ScanAndPayStep1" >
+        <action
+            android:id="@+id/action_scanAndPayStep1_to_scanAndPayStep2"
+            app:destination="@id/scanAndPayStep2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep2"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep2"
+        android:label="ScanAndPayStep2" >
+        <action
+            android:id="@+id/action_scanAndPayStep2_to_scanAndPayStep3"
+            app:destination="@id/scanAndPayStep3" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep3"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep3"
+        android:label="ScanAndPayStep3" >
+        <action
+            android:id="@+id/action_scanAndPayStep3_to_scanAndPayStep4"
+            app:destination="@id/scanAndPayStep4" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep4"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep4"
+        android:label="ScanAndPayStep4" />
 
 </navigation>
