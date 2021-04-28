@@ -73,6 +73,17 @@ public class WalletTransactionsListFragment extends Fragment {
         walletCashOut = view.findViewById(R.id.wallet_cash_out);
         fabAddSettle = view.findViewById(R.id.btn_add_settlement);
 
+        fabAddSettle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //To TransferMoney
+                Bundle args=new Bundle();
+                args.putString("KEY_ACTION", getString(R.string.settlements) );
+
+                WalletHomeActivity.navController.navigate(R.id.action_walletTransactionsListFragment_to_transferMoney,args);
+            }
+        });
+
         if(appTitle.equalsIgnoreCase("settlements")){
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
             toolbar.setTitle(this.appTitle);

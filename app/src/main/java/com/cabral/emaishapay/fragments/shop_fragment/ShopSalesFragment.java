@@ -105,7 +105,7 @@ public class ShopSalesFragment extends Fragment {
                 binding.imageNoProduct.setVisibility(View.GONE);
                 binding.txtNoProducts.setVisibility(View.GONE);
             } else {
-                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_cuate);
+                binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_bike);
                 binding.imageNoProduct.setVisibility(View.VISIBLE);
                 binding.txtNoProducts.setVisibility(View.VISIBLE);
                 binding.recyclerSales.setVisibility(View.GONE);

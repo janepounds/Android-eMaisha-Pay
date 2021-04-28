@@ -2,26 +2,29 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep1;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import eu.livotov.labs.android.camview.ScannerLiveView;
 
 public class ScanAndPayDialog extends DialogFragment {
+   private ScannerLiveView camera;
+   private TextView text_merchant_id;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -40,6 +43,20 @@ public class ScanAndPayDialog extends DialogFragment {
 
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.new_scan_pay_floating_button, null);
+        FloatingActionButton scan = view.findViewById(R.id.fab_scan);
+
+        scan.setOnClickListener(v -> {
+            ScanAndPayDialog.this.dismiss();
+
+
+             //call scan merchant code fragment
+            ScanAndPayStep1 scanMerchantCode = new ScanAndPayStep1();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.wallet_home_container, scanMerchantCode);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+        });
 
 
         ImageView cancel = view.findViewById(R.id.img_scan_cancel);
