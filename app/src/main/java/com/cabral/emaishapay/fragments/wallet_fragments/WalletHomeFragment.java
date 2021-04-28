@@ -364,7 +364,7 @@ public class WalletHomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     if(response.body().getStatus()==1){
-                        if(response.body().getData().getLastCredit()!=null){
+                        if(response.body().getData().getLastCredit()!=null && response.body().getData().getLastDebit()!=null){
                             String receiver_name = response.body().getData().getLastCredit().getReceiver();
                             double amount = response.body().getData().getLastCredit().getAmount();
                             String date_completed =response.body().getData().getLastCredit().getDateCompleted();
