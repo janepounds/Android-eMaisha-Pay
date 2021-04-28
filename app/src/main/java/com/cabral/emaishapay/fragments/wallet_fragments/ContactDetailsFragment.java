@@ -17,11 +17,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cabral.emaishapay.R;
@@ -75,7 +77,8 @@ public class ContactDetailsFragment extends Fragment {
         final SignUpModelView viewModel = new ViewModelProvider(this).get(SignUpModelView.class);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_contact_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
 
         Button next = view.findViewById(R.id.txt_next_three);
 
@@ -102,6 +105,7 @@ public class ContactDetailsFragment extends Fragment {
         ArrayList<SpinnerItem> districtList = new ArrayList<>();
 
         subscribeDistrictList(viewModel.getDistricts(),districtList);
+
 
         act_districts.addTextChangedListener(new TextWatcher() {
             @Override
@@ -168,7 +172,23 @@ public class ContactDetailsFragment extends Fragment {
 
             }
         });
+        sp_next_of_kin_relationship.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                } catch (Exception e) {
 
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         Button previous = view.findViewById(R.id.previous_button);
         previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());

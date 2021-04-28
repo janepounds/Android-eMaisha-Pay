@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/dialog_background"
     android:layout_margin="2dp"
     tools:context=".DailogFragments.AgentCustomerConfirmDetails">
@@ -42,7 +43,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,7 +81,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,7 +117,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,7 +155,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -188,7 +193,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -224,7 +230,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -261,7 +268,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -298,7 +306,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -331,7 +340,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:id="@+id/change_pin_buttons">
 
@@ -339,16 +348,16 @@
                     android:id="@+id/cancel"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_red"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="@string/cancel"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:drawableEnd="@drawable/ic_right_chevron" />
+                    android:textColor="@color/white"/>
 
 
                 <Button
@@ -357,14 +366,14 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:layout_marginTop="15dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="15dp"
                     android:paddingEnd="10dp"
-                    android:background="@drawable/round_button_dark_green"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:text="@string/label_confirm"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:drawableEnd="@drawable/ic_right_chevron"/>
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 

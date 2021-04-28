@@ -50,7 +50,8 @@ public class PersonalDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_personal_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
+        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
 
         EditText first_name = view.findViewById(R.id.etxt_fullname);
         EditText middle_name = view.findViewById(R.id.etxt_middlename);
