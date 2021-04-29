@@ -17,6 +17,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
@@ -24,15 +28,23 @@ import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.services.SmsBroadcastReceiver;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public abstract class OtpDialogLoader {
     private  Context context;
-    private Activity activity;
+    private  Fragment fragment;
     private Dialog otpDialog;
     private  String otp_code;
     SmsBroadcastReceiver  smsBroadcastReceiver;
@@ -40,13 +52,14 @@ public abstract class OtpDialogLoader {
     CountDownTimer timer;
     private static final int REQ_USER_CONSENT = 200;
 
-    public OtpDialogLoader(Activity activity) {
-        this.context=activity.getApplicationContext();
-        this.activity=activity;
-        otpDialog  = new Dialog(activity, R.style.myFullscreenAlertDialogStyle);
+    public OtpDialogLoader( Fragment fragment) {
+        this.fragment=fragment;
+        this.context=fragment.getContext();
+        otpDialog  = new Dialog(context, R.style.myFullscreenAlertDialogStyle);
         otpDialog.setContentView(R.layout.login_dialog_otp);
         otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         otpDialog.setCancelable(false);
+        startSmsUserConsent();
     }
 
 
@@ -164,7 +177,7 @@ public abstract class OtpDialogLoader {
             public void afterTextChanged(Editable s) {
                 otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
                 otp_code = otp_code.replaceAll("\\s+", "");
-                if(otp_code.length()>=6){
+                if(otp_code.length()==6){
                     onConfirmOtp(otp_code,otpDialog);
                 }
 
@@ -232,7 +245,7 @@ public abstract class OtpDialogLoader {
                 new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
                     @Override
                     public void onSuccess(Intent intent) {
-                        activity.startActivityForResult(intent, REQ_USER_CONSENT);
+                        fragment.startActivityForResult(intent, REQ_USER_CONSENT);
                     }
                     @Override
                     public void onFailure() {
@@ -269,11 +282,71 @@ public abstract class OtpDialogLoader {
 
             @Override
             public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
-                Snackbar.make(snackerView,activity.getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(snackerView,context.getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
                 dialogLoader.hideProgressDialog();
             }
         });
 
+    }
+
+
+    private void getOtpFromMessage(String message) {
+        // This will match any 6 digit number in the message
+        Pattern pattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = pattern.matcher(message);
+        if (matcher.find()) {
+            String retrievedCode=matcher.group(0);
+            Log.w("retrievedCode", retrievedCode);
+            if(retrievedCode.length()==6){
+                code1.setText(retrievedCode.charAt(0)+"");
+                code2.setText(retrievedCode.charAt(1)+"");
+                code3.setText(retrievedCode.charAt(2)+"");
+                code4.setText(retrievedCode.charAt(3)+"");
+                code5.setText(retrievedCode.charAt(4)+"");
+                code6.setText(retrievedCode.charAt(5)+"");
+
+//                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
+//
+//                otp_code = otp_code.replaceAll("\\s+", "");
+//                if(otp_code.length()>=6){
+//
+//                    onConfirmOtp(otp_code,otpDialog);
+//                }
+            }
+
+        }
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == REQ_USER_CONSENT) {
+            if ((resultCode == RESULT_OK) && (data != null)) {
+                //That gives all message to us.
+                // We need to get the code from inside with regex
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+
+                getOtpFromMessage(message);
+            }
+        }
+    }
+
+
+    private void startSmsUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(context);
+        //We can add sender phone number or leave it blank
+        // I'm adding null here
+        client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Toast.makeText(context, "On Success", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(context, "On OnFailure", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 

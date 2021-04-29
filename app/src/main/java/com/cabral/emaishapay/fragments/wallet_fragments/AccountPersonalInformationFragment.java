@@ -56,9 +56,7 @@ public class AccountPersonalInformationFragment extends Fragment {
     String encodedImageID = "N/A";
     private String selectedGender,displayGender;
 
-    public AccountPersonalInformationFragment() {
-
-    }
+    public AccountPersonalInformationFragment() {}
 
 
     @Override
@@ -102,8 +100,6 @@ public class AccountPersonalInformationFragment extends Fragment {
                     .error(R.drawable.user)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
-
-
 
             //set edit textviews
             binding.dob.setText(dob);

@@ -330,7 +330,6 @@ public class AddBeneficiaryFragment extends DialogFragment {
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if (response.isSuccessful() && response.body().getStatus()==1) {
-                    AddBeneficiaryFragment.this.dismiss();
 
                     //success message
                     final Dialog dialog = new Dialog(getContext());
@@ -345,7 +344,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
-
+                            AddBeneficiaryFragment.this.dismiss();
                             //To BeneficiariesListFragment();
                             WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
                             WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
@@ -424,7 +423,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                     Log.w("PhoneNumberError",customer_phone_number);
 
-                    otpDialogLoader=new OtpDialogLoader( getActivity()) {
+                    otpDialogLoader=new OtpDialogLoader( AddBeneficiaryFragment.this) {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
                             otpDialog.dismiss();
@@ -504,4 +503,12 @@ public class AddBeneficiaryFragment extends DialogFragment {
         return check;
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        otpDialogLoader.onActivityResult(requestCode, resultCode, data);
+    }
+
 }
