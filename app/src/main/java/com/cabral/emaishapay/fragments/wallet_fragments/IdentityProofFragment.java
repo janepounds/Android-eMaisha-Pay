@@ -20,9 +20,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class IdentityProofFragment extends Fragment {
     TextView etxt_national_id, etxt_customer_photo, etxt_photo_with_id,etxt_nin_expiry_date;
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact;
     EditText etxt_nin;
+    Spinner id_type;
 
     @Nullable
     @Override
@@ -90,6 +93,7 @@ public class IdentityProofFragment extends Fragment {
         etxt_national_id = view.findViewById(R.id.etxt_national_id);
         etxt_customer_photo = view.findViewById(R.id.etxt_customer_photo);
         etxt_photo_with_id = view.findViewById(R.id.etxt_photo_with_id);
+        id_type = view.findViewById(R.id.id_type);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar_account_opening);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -174,7 +178,25 @@ public class IdentityProofFragment extends Fragment {
 
             }
         });
+        id_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextSize(14);
 
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         Button previous = view.findViewById(R.id.previous_button_two);
         previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
@@ -185,6 +207,7 @@ public class IdentityProofFragment extends Fragment {
                 if(validateEntries()) {
                     String nin = etxt_nin.getText().toString().trim();
                     String valid_upto = etxt_nin_expiry_date.getText().toString().trim();
+                    String idtype = id_type.getSelectedItem().toString().trim();
 
                     Log.d("Kin Name", next_of_kin_name);
                     Log.d("Kin Second Name", next_of_kin_second_name);
@@ -208,6 +231,7 @@ public class IdentityProofFragment extends Fragment {
                     bundle.putString("next_of_kin_second_name", next_of_kin_second_name);
                     bundle.putString("next_of_kin_relationship", next_of_kin_relationship);
                     bundle.putString("next_of_kin_contact", next_of_kin_contact);
+                    bundle.putString("idtype",idtype);
                     bundle.putString("nin", nin);
                     bundle.putString("national_id_valid_upto", valid_upto);
                     bundle.putString("national_id_photo", encodedImageID);
@@ -306,8 +330,15 @@ public class IdentityProofFragment extends Fragment {
     public boolean validateEntries(){
         boolean check = true;
 
+        if (id_type.getSelectedItem().toString().trim().equalsIgnoreCase("Select")) {
 
-        if (etxt_nin.getText().toString().trim() == null || etxt_nin.getText().toString().trim().isEmpty()) {
+            Toasty.error(requireContext(), "Please select ID type", Toast.LENGTH_LONG).show();
+            id_type.requestFocus();
+            check = false;
+
+        }
+
+        else if (etxt_nin.getText().toString().trim() == null || etxt_nin.getText().toString().trim().isEmpty() || etxt_nin.getText().toString().length() < 14 ) {
 
             etxt_nin.setError("Please enter valid NIN");
             etxt_nin.requestFocus();
