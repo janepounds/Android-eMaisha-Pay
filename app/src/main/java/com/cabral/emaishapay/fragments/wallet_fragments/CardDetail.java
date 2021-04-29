@@ -54,7 +54,7 @@ public class CardDetail extends Fragment {
     private static final String TAG = "CardDetail";
 
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact,
-    nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
+    idtype,nin,valid_upto,encodedImageID,encodedImageCustomerPhoto,encodedImagePhotoWithID,new_gender,account_number,expiry_Date,cvvv,card_number, account_name;
     EditText account_no,card_no,cvv,card_enter_pin,card_confirm_pin,expiry;
 
     Button next;
@@ -87,6 +87,7 @@ public class CardDetail extends Fragment {
         next_of_kin_second_name = getArguments().getString("next_of_kin_second_name");
         next_of_kin_relationship = getArguments().getString("next_of_kin_relationship");
         next_of_kin_contact = getArguments().getString("next_of_kin_contact");
+        idtype = getArguments().getString("idtype");
         nin = getArguments().getString("nin");
         valid_upto = getArguments().getString("national_id_valid_upto");
         encodedImageID = getArguments().getString("national_id_photo");
@@ -117,6 +118,7 @@ public class CardDetail extends Fragment {
         accountCreation.setPhone_number(phone_number);
         accountCreation.setEmail(email );
         accountCreation.setNext_of_kin_relationship(next_of_kin_relationship );
+        accountCreation.setIdtype(idtype);
         accountCreation.setNin(nin );
         accountCreation.setNational_id_valid_upto(valid_upto );
         accountCreation.setNational_id_photo(encodedImageID );

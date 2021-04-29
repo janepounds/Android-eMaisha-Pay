@@ -178,6 +178,8 @@ public class ContactDetailsFragment extends Fragment {
                 try {
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextSize(14);
+
                 } catch (Exception e) {
 
                 }

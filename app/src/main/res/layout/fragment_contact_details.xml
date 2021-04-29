@@ -55,7 +55,7 @@
         app:spb_maxStateNumber="four"
         app:spb_animationDuration="500"
         app:spb_maxDescriptionLines="2"
-        app:spb_stateDescriptionSize="16sp"
+        app:spb_stateDescriptionSize="14sp"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
         app:spb_stateForegroundColor="@color/colorPrimary"
@@ -102,7 +102,8 @@
                         android:layout_height="45dp"
                         android:background="@drawable/outline_primary"
                         android:drawableRight="@drawable/ic_chevron_down"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,7 +126,8 @@
                         android:layout_height="45dp"
                         android:background="@drawable/outline_primary"
                         android:drawableRight="@drawable/ic_chevron_down"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -154,7 +156,8 @@
                         android:layout_height="45dp"
                         android:padding="10dp"
                         android:background="@drawable/outline_primary"
-                        android:drawableRight="@drawable/ic_chevron_down"/>
+                        android:drawableRight="@drawable/ic_chevron_down"
+                        android:textSize="14sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,7 +181,8 @@
                         android:paddingEnd="10dp"
                         android:background="@drawable/outline_primary"
                         android:inputType="text"
-                        android:textColor="#000"/>
+                        android:textColor="#000"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -232,7 +236,8 @@
                             android:paddingEnd="10dp"
                             android:tag="+256 "
                             android:textColor="@android:color/black"
-                            android:textColorHint="@android:color/black" />
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -257,7 +262,8 @@
                         android:paddingEnd="10dp"
                         android:background="@drawable/outline_primary"
                         android:inputType="textEmailAddress"
-                        android:textColor="#000"/>
+                        android:textColor="#000"
+                        android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
             <TextView
@@ -293,7 +299,8 @@
                         android:paddingEnd="10dp"
                         android:background="@drawable/outline_primary"
                         android:inputType="text"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -319,7 +326,8 @@
                         android:paddingEnd="10dp"
                         android:background="@drawable/outline_primary"
                         android:inputType="text"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -413,7 +421,8 @@
                         android:paddingEnd="@dimen/dimen_10dp"
                         android:tag="+256 "
                         android:textColor="@android:color/black"
-                        android:textColorHint="@android:color/black" />
+                        android:textColorHint="@android:color/black"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -440,7 +449,7 @@
                         android:background="@color/transparent"
                         android:text="@string/previous"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:drawableLeft="@drawable/ic_chevron_left_white" />
 
@@ -464,7 +473,7 @@
                         android:background="@color/transparent"
                         android:text="@string/next"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:drawableEnd="@drawable/ic_right_chevron_arrow_white" />
 
