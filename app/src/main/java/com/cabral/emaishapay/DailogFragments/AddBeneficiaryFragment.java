@@ -115,13 +115,21 @@ public class AddBeneficiaryFragment extends DialogFragment {
             }else{
                 mobileMoneyLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.GONE);
-                beneficiary_name_mm.setText(beneficiary_name_);
-                beneficiary_no.setText(beneficiary_number_.substring(1));
+
+                if(beneficiary_name_!=null && beneficiary_number_!=null){
+                    beneficiary_name_mm.setText(beneficiary_name_);
+                    beneficiary_no.setText(beneficiary_number_.substring(1));
+                }
+
 
             }
             WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,beneficiary_type);
             transactionTypeSp.setEnabled(false);
             transactionTypeSp.setClickable(false);
+            beneficiary_name_mm.setEnabled(false);
+            beneficiary_no.setEnabled(false);
+            account_name.setEnabled(false);
+            account_number.setEnabled(false);
             title.setText("VIEW BENEFICIARY");
             submit.setVisibility(View.GONE);
 
@@ -330,7 +338,6 @@ public class AddBeneficiaryFragment extends DialogFragment {
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if (response.isSuccessful() && response.body().getStatus()==1) {
-                    AddBeneficiaryFragment.this.dismiss();
 
                     //success message
                     final Dialog dialog = new Dialog(getContext());
@@ -345,7 +352,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
-
+                            AddBeneficiaryFragment.this.dismiss();
                             //To BeneficiariesListFragment();
                             WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
                             WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
@@ -424,7 +431,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                     Log.w("PhoneNumberError",customer_phone_number);
 
-                    otpDialogLoader=new OtpDialogLoader( getActivity()) {
+                    otpDialogLoader=new OtpDialogLoader( AddBeneficiaryFragment.this) {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
                             otpDialog.dismiss();
@@ -504,4 +511,12 @@ public class AddBeneficiaryFragment extends DialogFragment {
         return check;
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        otpDialogLoader.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

@@ -89,7 +89,8 @@
                 android:background="@drawable/outline_primary"
                 android:inputType="number"
                 android:padding="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="14sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,7 +108,8 @@
                 android:inputType="number"
                 android:maxLength="19"
                 android:padding="10dp"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,7 +141,8 @@
                         android:inputType="date"
                         android:padding="10dp"
                         android:textColor="#000"
-                        android:maxLength="5"/>
+                        android:maxLength="5"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -168,7 +171,8 @@
                         android:inputType="number"
                         android:maxLength="3"
                         android:padding="10dp"
-                        android:textColor="#000"/>
+                        android:textColor="#000"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -191,7 +195,8 @@
                 android:inputType="numberPassword"
                 android:maxLength="4"
                 android:padding="10dp"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="14sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -209,7 +214,8 @@
                 android:inputType="numberPassword"
                 android:maxLength="4"
                 android:padding="10dp"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="14sp"/>
             <LinearLayout
                 android:id="@+id/layout_button"
                 android:layout_width="match_parent"

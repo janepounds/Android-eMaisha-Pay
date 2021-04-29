@@ -188,7 +188,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/buy_sell_value"
-                            android:text="@{productData.product_buy_price}"
+                            android:text="@{productData.product_sell_price}"
                             android:textColor="#9A9999"
                             android:textSize="14sp"/>
                         <TextView

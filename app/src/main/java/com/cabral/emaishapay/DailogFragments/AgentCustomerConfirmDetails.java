@@ -122,7 +122,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textAmount.setText("UGX "+getArguments().getString("amount"));
                 textTotalAmount.setText("UGX "+getArguments().getString("amount"));
 
-            }else if(key.equalsIgnoreCase("deposit")){
+            }
+            else if(key.equalsIgnoreCase("deposit")){
                 /*****************DEPOSIT*************/
                 this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textName.setText(getArguments().getString("customer_name"));
@@ -131,7 +132,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textTotalAmount.setText("UGX "+this.transferAmount);
 
 
-            }else if(key.equalsIgnoreCase("transfer")){
+            }
+            else if(key.equalsIgnoreCase("transfer")){
                 /*****************TRANSFER*************/
                 this.transferAmount=Double.parseDouble(getArguments().getString("amount"));
                 textTitleLabel.setText(getArguments().getString("title"));
@@ -151,7 +153,8 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 textSenderMobile.setText(getString(R.string.phone_number_code)+getArguments().getString("customer_no"));
 
 
-            }else{
+            }
+            else{
                 /*****************BALANCE INQUIRY*************/
                 textTitleLabel.setText(getArguments().getString("title"));
                 textName.setText(getArguments().getString("customer_name"));
@@ -160,8 +163,6 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                 charge.setVisibility(View.GONE);
                 depositAmount.setVisibility(View.GONE);
             }
-
-
 
         }
 

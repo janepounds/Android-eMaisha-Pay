@@ -726,17 +726,18 @@ public class User_Cart_BuyInputsDB {
     //*********** Clear all User Cart ********//
     
     public void clearCart() {
-        if(BuyInputsDB_Manager.getInstance()==null){
+        BuyInputsDB_Manager db_manager=BuyInputsDB_Manager.getInstance();
+        if(db_manager==null){
             return;
         }
         // get and open SQLiteDatabase Instance from static method of DB_Manager class
-        db = BuyInputsDB_Manager.getInstance().openDatabase();
+        db = db_manager.openDatabase();
         
         db.delete(TABLE_CART, null, null);
         db.delete(TABLE_CART_ATTRIBUTES, null, null);
         
         // close the Database
-        BuyInputsDB_Manager.getInstance().closeDatabase();
+        db_manager.closeDatabase();
     }
 
     //Cart Product Exists

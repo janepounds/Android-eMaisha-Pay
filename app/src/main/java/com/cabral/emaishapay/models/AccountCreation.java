@@ -51,6 +51,9 @@ public class AccountCreation  implements Serializable {
             @SerializedName("next_of_kin_relationship")
             @Expose
             private String next_of_kin_relationship;
+            @SerializedName("idtype")
+            @Expose
+            private String idtype;
             @SerializedName("nin")
             @Expose
             private String nin;
@@ -101,6 +104,7 @@ public class AccountCreation  implements Serializable {
         setPhone_number(accountObject.getString("phone_number")  );
         setEmail(accountObject.getString("email")  );
         setNext_of_kin_relationship(accountObject.getString("next_of_kin_relationship")  );
+        setNin(accountObject.getString("idtype")  );
         setNin(accountObject.getString("nin")  );
         setNational_id_valid_upto(accountObject.getString("national_id_valid_upto")  );
         setNational_id_photo(accountObject.getString("national_id_photo")  );
@@ -228,6 +232,13 @@ public class AccountCreation  implements Serializable {
         this.next_of_kin_relationship = next_of_kin_relationship;
     }
 
+    public String getIdtype() {
+        return idtype;
+    }
+
+    public void setIdtype(String idtype) {
+        this.idtype = idtype;
+    }
     public String getNin() {
         return nin;
     }
