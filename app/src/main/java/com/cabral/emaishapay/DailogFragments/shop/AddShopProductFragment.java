@@ -87,15 +87,14 @@ public class AddShopProductFragment extends DialogFragment {
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer,tvAddProduct;
     String mediaPath, encodedImage = null;
     Spinner quantityUnit;
-    LinearLayout measurement_layout,spn_measurements_layout;
+    LinearLayout measurement_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
     List<HashMap<String, String>> productCategory=new ArrayList<>(), productSupplier =new ArrayList<>(), weightUnit=new ArrayList<>();
-    private String selected_measure_id;
     Integer selectedProductID;
     Integer selectedManufacturersID;
     Integer selectedCategoryID;
-    String selectedSupplierID,productImage;
+    String selectedSupplierID,productImage,selected_measure_id;
     double selected_weight;
 
     String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units,product_description;
@@ -158,8 +157,6 @@ public class AddShopProductFragment extends DialogFragment {
         etxtproductMeasurement = view.findViewById(R.id.etxt_product_measurement);
         measurement_layout= view.findViewById(R.id.measurement_layout);
         tvAddProduct = view.findViewById(R.id.add_product_tv);
-//        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
-//        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
         txtAddProdcut = view.findViewById(R.id.tx_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
@@ -733,19 +730,14 @@ public class AddShopProductFragment extends DialogFragment {
                                     selected_weight_units = products.get(i).getProducts_weight_unit();
                                     productImage =products.get(i).getImageUrl();
 
-                                    Log.d(TAG, "onItemClick: image"+ConstantValues.WALLET_DOMAIN +productImage);
+
+                                    String image_url = ConstantValues.ECOMMERCE_WEB +productImage;
+                                    Log.d(TAG, "onItemClick: image"+image_url);
 
                                     //set image using Glide
-                                     Glide.with(context).load(ConstantValues.ECOMMERCE_URL +productImage).into(produce_image);
+                                     Glide.with(context).load(image_url).into(produce_image);
 
                                      //encode image
-
-//                                    produce_image.buildDrawingCache();
-
-
-//                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
-//                                    byte[] b = baos.toByteArray();
 
                                     Thread thread = new Thread(new Runnable() {
 
@@ -753,7 +745,7 @@ public class AddShopProductFragment extends DialogFragment {
                                         public void run() {
                                             try  {
                                                 //Your code goes here
-                                                String imagePath = ConstantValues.ECOMMERCE_URL +productImage;
+                                                String imagePath = ConstantValues.ECOMMERCE_WEB +productImage;
                                                 URL url = new URL(imagePath);
                                                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                                                 connection.setDoInput(true);
@@ -771,9 +763,6 @@ public class AddShopProductFragment extends DialogFragment {
 
                                     Log.d(TAG, "onItemClick: encodedImage"+encodedImage);
 
-
-                                    //measurement_layout.setVisibility(View.GONE);
-                                    //spn_measurements_layout.setVisibility(View.VISIBLE);
                                     etxtproductMeasurement.setText(products.get(i).getProducts_weight()+"");
                                     etxtProductCode.setText(selectedProductName);
                                     etxtProductSellPrice.setText(products.get(i).getProducts_price()+"");
@@ -906,16 +895,9 @@ public class AddShopProductFragment extends DialogFragment {
                     return;
                 }
                 else {
-//                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
-//                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
-//                    etxtProductSupplier.requestFocus();
-//                } else {
+
 
                     if (key.equalsIgnoreCase("update")) {
-
-//                        viewModel.updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier_name,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name,product_code, encodedImage,
-//                                selected_weight_units,
-//                                selected_weight + "");
 
 
                         Call<ResponseBody> call = BuyInputsAPIClient
