@@ -115,13 +115,21 @@ public class AddBeneficiaryFragment extends DialogFragment {
             }else{
                 mobileMoneyLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.GONE);
-                beneficiary_name_mm.setText(beneficiary_name_);
-                beneficiary_no.setText(beneficiary_number_.substring(1));
+
+                if(beneficiary_name_!=null && beneficiary_number_!=null){
+                    beneficiary_name_mm.setText(beneficiary_name_);
+                    beneficiary_no.setText(beneficiary_number_.substring(1));
+                }
+
 
             }
             WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,beneficiary_type);
             transactionTypeSp.setEnabled(false);
             transactionTypeSp.setClickable(false);
+            beneficiary_name_mm.setEnabled(false);
+            beneficiary_no.setEnabled(false);
+            account_name.setEnabled(false);
+            account_number.setEnabled(false);
             title.setText("VIEW BENEFICIARY");
             submit.setVisibility(View.GONE);
 
