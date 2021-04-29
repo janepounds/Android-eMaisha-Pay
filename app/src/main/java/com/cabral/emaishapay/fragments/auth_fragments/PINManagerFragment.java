@@ -578,6 +578,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
                             Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
                             Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+                            Log.d(TAG, "onResponse: BUSINESSID= " + userDetails.getBusiness_id());
                             otpDialog.dismiss();
                             WalletHomeActivity.savePreferences(PREFERENCES_WALLET_BUSINESS_ID, userDetails.getBusiness_id(), context);
                             loginUser(userDetails, rawpassword);
