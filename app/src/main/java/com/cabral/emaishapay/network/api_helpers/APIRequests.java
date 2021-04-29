@@ -873,7 +873,9 @@ public interface APIRequests {
     Call<CardResponse>deleteBeneficiary(
             @Header("Authorization") String token,
             @Field("id") String id,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     @FormUrlEncoded
