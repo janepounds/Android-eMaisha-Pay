@@ -46,6 +46,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
@@ -97,15 +98,13 @@ public class ShopPayments extends Fragment implements
     SupportedCardTypesView brainTreeSupportedCards;
     private Toolbar toolbar;
     private DialogLoader dialogLoader;
-    String txRef,otp_code;
+    String txRef;
     double chargeAmount;
     private CardPaymentManager cardPayManager;
-    private RelativeLayout layoutResendCode;
-
+    private OtpDialogLoader otpDialogLoader;
 
     private RaveVerificationUtils verificationUtils;
-    private Dialog otpDialog,dialog;
-    private EditText code1,code2,code3,code4,code5,code6;
+    private Dialog dialog;
 
 
     @Override
@@ -268,7 +267,11 @@ public class ShopPayments extends Fragment implements
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
                 selectedPaymentMethod = "eMaisha Wallet";
-                initiateAcceptPayment(getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),chargeAmount);
+
+                preparecomfirmAcceptPayment(
+                        getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),
+                        chargeAmount);
+
 //              GenerateBrainTreeToken();
             } else if (eMaishaCard.isChecked()) {
                 selectedPaymentMethod = "eMaisha Card";
@@ -510,13 +513,13 @@ public class ShopPayments extends Fragment implements
         } else {
             Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
+            otpDialogLoader.onActivityResult(requestCode, resultCode, data);
         }
 
 
     }
-    void fetchUserSavedCards(){
-        cardPayManager.fetchSavedCards(true);
-    }
+
+
     @Override
     public void onSavedCardsLookupSuccessful(List<SavedCard> cards, String phoneNumber) {
         // Check that the list is not empty, show the user to select which they'd like to charge, then proceed to chargeSavedCard()
@@ -628,17 +631,16 @@ public class ShopPayments extends Fragment implements
 
     }
 
-    public void initiateAcceptPayment(final String phoneNumber, final double amount) {
+    public void initiateAcceptPayment(final String phoneNumber, final double amount,String service_code) {
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
-        String service_code = "121518";
+
 
         String type="Agent Transfer";
 
-        /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,type,request_id,category,"customerTransactionOTP",service_code);
         call.enqueue(new Callback<InitiateTransferResponse>() {
@@ -646,7 +648,31 @@ public class ShopPayments extends Fragment implements
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
                 if(response.code() ==200){
                     dialogLoader.hideProgressDialog();
-                    getOTPFromUser(phoneNumber,amount);
+
+                   otpDialogLoader=new OtpDialogLoader(ShopPayments.this) {
+                       @Override
+                       protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
+                           otpDialog.dismiss();
+                           comfirmAcceptPayment(
+                                   otp_code,
+                                   phoneNumber,
+                                   amount,
+                                   service_code);
+                       }
+
+                       @Override
+                       protected void onResendOtp() {
+                           otpDialogLoader.resendOtp(
+                                   phoneNumber,
+                                   dialogLoader,
+                                   continuePayment
+
+                           );
+                       }
+                   };
+
+                    otpDialogLoader.showOTPDialog();
+
 
                 }
                 else if(response.code() == 401) {
@@ -681,7 +707,7 @@ public class ShopPayments extends Fragment implements
 
     }
 
-    public void preparecomfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
+    public void preparecomfirmAcceptPayment(final String customerNumber, final double amount) {
 
         //Inner Dialog to enter PIN
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
@@ -700,8 +726,12 @@ public class ShopPayments extends Fragment implements
             public void onClick(View v) {
                 if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
                     String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
+                    initiateAcceptPayment(
+                            getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),
+                            chargeAmount,
+                            service_code
+                            );
 
-                    comfirmAcceptPayment(OTPCode,customerNumber,amount,service_code);
 
                 }else {
                     pinEdittext.setError("Invalid Pin Entered");
@@ -759,159 +789,6 @@ public class ShopPayments extends Fragment implements
             }
         });
 
-    }
-    private void getOTPFromUser(final String customerNumber, final double amount) {
-        otpDialog  = new Dialog(context);
-        otpDialog.setContentView(R.layout.login_dialog_otp);
-        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        otpDialog.setCancelable(false);
-
-        code1= otpDialog.findViewById(R.id.otp_code1_et);
-        code2= otpDialog.findViewById(R.id.otp_code2_et);
-        code3= otpDialog.findViewById(R.id.otp_code3_et);
-        code4= otpDialog.findViewById(R.id.otp_code4_et);
-        code5=otpDialog.findViewById(R.id.otp_code5_et);
-        code6= otpDialog.findViewById(R.id.otp_code6_et);
-        resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
-        tvTimer= otpDialog.findViewById(R.id.tv_timer);
-        layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
-
-        CountDownTimer timer = new CountDownTimer(90000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
-            }
-
-            public void onFinish() {
-                layoutResendCode.setVisibility(View.VISIBLE);
-            }
-        };
-        timer.start();
-
-        code1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code2.requestFocus();
-            }
-        });
-
-        code2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code3.requestFocus();
-            }
-        });
-
-        code3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code4.requestFocus();
-            }
-        });
-
-        code4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code5.requestFocus();
-            }
-        });
-
-        code5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code6.requestFocus();
-            }
-        });
-
-        code6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
-                otp_code = otp_code.replaceAll("\\s+", "");
-                if(otp_code.length()>=6){
-                    preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
-                }
-
-            }
-        });
-
-        otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // processLogin(password,ConfirmActivity.phonenumber);
-                layoutResendCode.setVisibility(View.GONE);
-            }
-        });
-        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-                preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
-            }
-        });
-
-         otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-            }
-        });
-
-        otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
-
-        params.x = 100; // Here is the param to set your dialog position. Same with params.x
-        otpDialog.getWindow().setAttributes(params);
-        otpDialog.show();
     }
 
 }

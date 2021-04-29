@@ -437,10 +437,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         }
 
         else if(v.getId() == R.id.token_auth_close){
-
             AuthActivity.navController.popBackStack();
         }
-
         else {
             String value = keyValues.get(v.getId()).toString();
             inputConnection.commitText(value, 1);
