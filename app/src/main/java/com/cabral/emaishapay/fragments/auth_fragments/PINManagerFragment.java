@@ -43,6 +43,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.database.User_Info_DB;
 import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -84,7 +85,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     private static final String TAG = "TokenAuthFragment";
     private static Context context;
     private  String pin="", pin1="",phonenumber,otp_code,smsResults;
-    EditText code1, code2, code3, code4, code5, code6;
     static FragmentTokenAuthBinding binding;
 
     private static SharedPreferences sharedPreferences;
@@ -92,7 +92,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     User_Info_DB userInfoDB;
     DialogLoader dialogLoader;
     APIRequests apiRequests;
-    private Dialog otpDialog;
+    private OtpDialogLoader otpDialogLoader;
     private List<SecurityQnsResponse.SecurityQns> securityQnsList = new ArrayList();
     ArrayList<String> securityQns = new ArrayList<>();
     ArrayList<String> securityQnsSubList1 = new ArrayList<>();
@@ -104,10 +104,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     public static int ACTION;
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
-    SmsBroadcastReceiver  smsBroadcastReceiver;
-    private static final int REQ_USER_CONSENT = 200;
-    private String userFirstname, userLastname, village, subCounty, district,idType,idNo,phone_number,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
-    CountDownTimer timer;
+    private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -119,7 +117,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
-        startSmsUserConsent();
         setKeyValues();
 
         sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
@@ -492,182 +489,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         inputConnection = ic;
     }
 
-    private void showOTPDialog(String password) {
-        otpDialog  = new Dialog(context,R.style.myFullscreenAlertDialogStyle);
-        otpDialog.setContentView(R.layout.login_dialog_otp);
-        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        otpDialog.setCancelable(false);
-
-
-        code1= otpDialog.findViewById(R.id.otp_code1_et);
-        code2= otpDialog.findViewById(R.id.otp_code2_et);
-        code3= otpDialog.findViewById(R.id.otp_code3_et);
-        code4= otpDialog.findViewById(R.id.otp_code4_et);
-        code5=otpDialog.findViewById(R.id.otp_code5_et);
-        code6= otpDialog.findViewById(R.id.otp_code6_et);
-        TextView resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
-        TextView tvTimer= otpDialog.findViewById(R.id.tv_timer);
-        RelativeLayout layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
-        TextView tvChangeNumber = otpDialog.findViewById(R.id.text_view_change_number);
-
-
-
-        timer = new CountDownTimer(90000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
-            }
-
-            public void onFinish() {
-                layoutResendCode.setVisibility(View.VISIBLE);
-            }
-        };
-        timer.start();
-
-        code1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code2.requestFocus();
-            }
-        });
-
-        code2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code3.requestFocus();
-            }
-        });
-
-        code3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code4.requestFocus();
-            }
-        });
-
-        code4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code5.requestFocus();
-            }
-        });
-
-        code5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code6.requestFocus();
-            }
-        });
-
-        code6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
-                otp_code = otp_code.replaceAll("\\s+", "");
-                if(otp_code.length()>=6){
-                    confirmLogin(password, phonenumber,otp_code,otpDialog);
-                }
-
-            }
-        });
-
-        otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //call resend otp
-                resendOtp(phonenumber);
-
-                layoutResendCode.setVisibility(View.GONE);
-//                processLogin(password,ConfirmActivity.phonenumber);
-            }
-        });
-
-        otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-            }
-        });
-//        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                otpDialog.dismiss();
-//                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-//                confirmLogin(password,ConfirmActivity.phonenumber,otp_code,otpDialog);
-//            }
-//        });
-
-
-
-        registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
-        otpDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                context.unregisterReceiver(smsBroadcastReceiver);
-            }
-        });
-        otpDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                context.unregisterReceiver(smsBroadcastReceiver);
-            }
-        });
-
-        otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
-
-        params.x = 100; // Here is the param to set your dialog position. Same with params.x
-        otpDialog.getWindow().setAttributes(params);
-        otpDialog.show();
-    }
 
     public void initiateLoginProcess(String password, String phonenumber) {
         String request_id = WalletHomeActivity.generateRequestId();
@@ -683,7 +504,25 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                 if(response.isSuccessful() && response.body().getStatus()==1 ){
                     smsResults =response.body().getData().getSms_results();
                     //Call the OTP Dialog
-                    showOTPDialog(password);
+                    otpDialogLoader=new OtpDialogLoader(PINManagerFragment.this) {
+                        @Override
+                        protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
+                            otpDialog.dismiss();
+                            confirmLogin(password, phonenumber, otp_code, otpDialog);
+                        }
+
+                        @Override
+                        protected void onResendOtp() {
+                            otpDialogLoader.resendOtp(
+                                    phonenumber,
+                                    dialogLoader,
+                                    binding.textForgotPin
+
+                            );
+                        }
+                    };
+                    otpDialogLoader.showOTPDialog();
+
                 }else{
                     clearPin(binding);
                     Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
@@ -702,36 +541,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     }
 
-    public void resendOtp( String phonenumber) {
-        String request_id = WalletHomeActivity.generateRequestId();
-        Log.d(TAG, "processLogin: request_id"+request_id);
-
-        //call the otp end point
-        dialogLoader.showProgressDialog();
-        Call<WalletAuthenticationResponse>call = apiRequests.resendOtp(phonenumber,request_id,"ResendOTP");
-        call.enqueue(new Callback<WalletAuthenticationResponse>() {
-            @Override
-            public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
-                if(response.isSuccessful() && response.body().getStatus()==1 ) {
-                    smsResults = response.body().getData().getSms_results();
-                    timer.start();
-                    registerBroadcastReceiver();//register receiver to service to listen to incoming otp messages
-                }
-                else{
-                    Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
-                }
-                dialogLoader.hideProgressDialog();
-
-            }
-
-            @Override
-            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
-                Snackbar.make(binding.textForgotPin,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
-                dialogLoader.hideProgressDialog();
-            }
-        });
-
-    }
 
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {
         String request_id = WalletHomeActivity.generateRequestId();
@@ -988,77 +797,11 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
     }
 
-
-    private void startSmsUserConsent() {
-        SmsRetrieverClient client = SmsRetriever.getClient(context);
-        //We can add sender phone number or leave it blank
-        // I'm adding null here
-        client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-               // Toast.makeText(context, "On Success", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(context, "On OnFailure", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void getOtpFromMessage(String message) {
-        // This will match any 6 digit number in the message
-        Pattern pattern = Pattern.compile("(|^)\\d{6}");
-        Matcher matcher = pattern.matcher(message);
-        if (matcher.find()) {
-            String retrievedCode=matcher.group(0);
-            if(retrievedCode.length()==6){
-                code1.setText(retrievedCode.charAt(0)+"");
-                code2.setText(retrievedCode.charAt(1)+"");
-                code3.setText(retrievedCode.charAt(2)+"");
-                code4.setText(retrievedCode.charAt(3)+"");
-                code5.setText(retrievedCode.charAt(4)+"");
-                code6.setText(retrievedCode.charAt(5)+"");
-
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
-                otp_code = otp_code.replaceAll("\\s+", "");
-                if(otp_code.length()>=6){
-                    String password = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION + pin;
-                    confirmLogin(password, phonenumber,otp_code,otpDialog);
-                }
-            }
-
-        }
-    }
-
-    private void registerBroadcastReceiver() {
-        smsBroadcastReceiver = new SmsBroadcastReceiver();
-        smsBroadcastReceiver.smsBroadcastReceiverListener =
-                new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
-                    @Override
-                    public void onSuccess(Intent intent) {
-                        startActivityForResult(intent, REQ_USER_CONSENT);
-                    }
-                    @Override
-                    public void onFailure() {
-                    }
-                };
-        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-        context.registerReceiver(smsBroadcastReceiver, intentFilter);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_USER_CONSENT) {
-            if ((resultCode == RESULT_OK) && (data != null)) {
-                //That gives all message to us.
-                // We need to get the code from inside with regex
-                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
 
-                getOtpFromMessage(message);
-            }
-        }
+        otpDialogLoader.onActivityResult(requestCode, resultCode, data);
     }
 
 }
