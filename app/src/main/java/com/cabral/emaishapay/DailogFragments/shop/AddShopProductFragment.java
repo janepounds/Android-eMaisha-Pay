@@ -745,14 +745,9 @@ public class AddShopProductFragment extends DialogFragment {
                                         public void run() {
                                             try  {
                                                 //Your code goes here
-                                                String imagePath = ConstantValues.ECOMMERCE_WEB +productImage;
-                                                URL url = new URL(imagePath);
-                                                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                                connection.setDoInput(true);
-                                                connection.connect();
-                                                InputStream input = connection.getInputStream();
-                                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                                                encodedImage = encodeImage(myBitmap);
+                                                URL url = new URL(image_url);
+                                                Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                encodedImage = encodeImage(image);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
