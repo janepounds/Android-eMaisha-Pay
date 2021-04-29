@@ -17,11 +17,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -43,6 +46,7 @@ import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 import com.cabral.emaishapay.databinding.NewBusinessAccountDialogBinding;
 import com.cabral.emaishapay.databinding.NewFragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
+import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 
 import org.jetbrains.annotations.NotNull;
@@ -58,6 +62,8 @@ public class WalletAccountFragment extends Fragment {
     private NewFragmentWalletAccountBinding binding;
     private Context context;
     private String label_details;
+    private Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
+    private EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer,phone_number;
 
 
     @Override
@@ -158,6 +164,11 @@ public class WalletAccountFragment extends Fragment {
                 binding.chevronEmploymentBusinessInfo.setRotation(0);
                 binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
             }
+            if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                binding.chevronSecurity.setRotation(0);
+                binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+            }
             if (binding.layoutIdInfoDetails.getVisibility() == View.VISIBLE) {
                 binding.chevronIdInformation.setRotation(0);
                 binding.layoutIdInfoDetails.setVisibility(View.GONE);
@@ -189,6 +200,11 @@ public class WalletAccountFragment extends Fragment {
                 binding.chevronIdInformation.setRotation(0);
                 binding.layoutIdInfoDetails.setVisibility(View.GONE);
 
+
+            }
+            if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                binding.chevronSecurity.setRotation(0);
+                binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
 
             }
             if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
@@ -374,6 +390,11 @@ public class WalletAccountFragment extends Fragment {
                 binding.layoutIdInfoDetails.setVisibility(View.GONE);
 
             }
+            if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                binding.chevronSecurity.setRotation(0);
+                binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+            }
 
 
 
@@ -469,14 +490,61 @@ public class WalletAccountFragment extends Fragment {
 
 
                 }
+                if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                    binding.chevronSecurity.setRotation(0);
+                    binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+                }else {
+
+
+                    binding.chevronSecurity.setRotation(90);
+                    binding.layoutSecurityInfoDetails.setVisibility(View.VISIBLE);
+
+                }
 
 
 
-                // Create and show the dialog.
-                DialogFragment depositDialog = new ChangePassword();
-                depositDialog.show(getFragmentManager(), "dialog");
 
             }
+        });
+
+        binding.layoutChangePassword.setOnClickListener(view13 -> {
+            // Create and show the dialog.
+            DialogFragment depositDialog = new ChangePassword();
+            depositDialog.show(getFragmentManager(), "dialog");
+
+        });
+
+        binding.layoutUpdateSecurityQns.setOnClickListener(view13 ->{
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context, R.style.DialogFullscreen);
+            View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+//            RequestUserQns(user_id);
+            //display security qns and
+            Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // validateSecurityQns();
+                }
+            });
+
+            //calling security qns form
+            phone_number =dialogView.findViewById(R.id.phone_no);
+            firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
+            secondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
+            thirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
+            firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
+            secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
+            thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+            //RequestSecurityQns();
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
+
+
         });
 
 
@@ -503,6 +571,11 @@ public class WalletAccountFragment extends Fragment {
                     binding.chevronIdInformation.setRotation(0);
                     binding.layoutIdInfoDetails.setVisibility(View.GONE);
 
+
+                }
+                if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                    binding.chevronSecurity.setRotation(0);
+                    binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
 
                 }
 
@@ -539,6 +612,11 @@ public class WalletAccountFragment extends Fragment {
 
 
                 }
+                if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                    binding.chevronSecurity.setRotation(0);
+                    binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+                }
                 //rate app
                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
             });
@@ -571,6 +649,11 @@ public class WalletAccountFragment extends Fragment {
 
 
                     }
+                    if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                        binding.chevronSecurity.setRotation(0);
+                        binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+                    }
 
                     logoutUser();
                 }
@@ -599,6 +682,11 @@ public class WalletAccountFragment extends Fragment {
                     binding.chevronIdInformation.setRotation(0);
                     binding.layoutIdInfoDetails.setVisibility(View.GONE);
 
+
+                }
+                if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                    binding.chevronSecurity.setRotation(0);
+                    binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
 
                 }
 
@@ -747,4 +835,5 @@ public class WalletAccountFragment extends Fragment {
         User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
         user_cart_BuyInputs_db.clearCart();
     }
+
 }
