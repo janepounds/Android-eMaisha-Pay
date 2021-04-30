@@ -511,6 +511,18 @@ public interface APIRequestsForBuyInputs {
             @Field("new_product_name") String new_product_name
 
     );
+    @FormUrlEncoded
+    @POST("restockMerchantProductStock")
+    Call<ProductResponse> restockProduct(
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("wallet_id") String wallet_id,
+            @Field("product_id") String product_id,
+            @Field("product_stock") int product_stock
+
+
+    );
+
 
 
 }
