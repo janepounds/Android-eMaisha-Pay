@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Receiver Number"
+                    android:text="Mobile Number"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -275,7 +275,7 @@
                     android:text="@string/deposit"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
 

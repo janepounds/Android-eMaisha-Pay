@@ -58,7 +58,7 @@ import retrofit2.Response;
 
 public class TransferMoney extends Fragment {
     private static final String TAG = "TransferMoney";
-    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layout_beneficiary_name,layoutBeneficiary,layoutAmount;
+    LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layoutBeneficiary,layoutAmount,layoutMobileMoneyBeneficiaries;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
     Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
@@ -136,10 +136,10 @@ public class TransferMoney extends Fragment {
         layoutMobileNumber=view.findViewById(R.id.layout_mobile_number);
         layoutEmaishaCard=view.findViewById(R.id.layout_emaisha_card);
         layoutBank=view.findViewById(R.id.layout_bank);
-        layout_beneficiary_name=view.findViewById(R.id.layout_beneficiary_name);
         layoutBeneficiary=view.findViewById(R.id.layout_beneficiary);
         spBeneficiary = view.findViewById(R.id.sp_beneficiary);
         layoutAmount = view.findViewById(R.id.transfer_amount);
+        layoutMobileMoneyBeneficiaries = view.findViewById(R.id.layout_mobile_money);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -177,48 +177,49 @@ public class TransferMoney extends Fragment {
                 } catch (Exception e) {
 
                 }
-                if(position==0){
+                if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("select")){
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
-                    layout_beneficiary_name.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                 }
-                else if(position==1){
+                else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account")){
                     layoutMobileNumber.setVisibility(View.VISIBLE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
-                    layout_beneficiary_name.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.VISIBLE);
 
                 }
-                else if(position==2){
-                    layoutMobileNumber.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.VISIBLE);
-                    layoutBank.setVisibility(View.GONE);
-                    layoutBeneficiary.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                }
-                else if(position==3){
-                    layoutMobileNumber.setVisibility(View.GONE);
-                    layout_beneficiary_name.setVisibility(View.GONE);
-                    layoutEmaishaCard.setVisibility(View.GONE);
-                    layoutBank.setVisibility(View.GONE);
-                    layoutBeneficiary.setVisibility(View.VISIBLE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                    requestFilteredBeneficiaries();
-                }
-                else if(position==4){
-                   // loadTransferBanks();
+                else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("bank")){
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
                     layoutBank.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
-                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.GONE);
+                }
+                else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("mobile money")){
+                    layoutMobileNumber.setVisibility(View.GONE);
+                    layoutEmaishaCard.setVisibility(View.GONE);
+                    layoutBank.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
+                    layoutBeneficiary.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.GONE);
                     requestFilteredBeneficiaries();
                 }
+//                else if(position==4){
+//                   // loadTransferBanks();
+//                    layoutMobileNumber.setVisibility(View.GONE);
+//                    layoutEmaishaCard.setVisibility(View.GONE);
+//                    layoutBank.setVisibility(View.GONE);
+//                    layoutBeneficiary.setVisibility(View.VISIBLE);
+//                    layoutAmount.setVisibility(View.VISIBLE);
+//                    requestFilteredBeneficiaries();
+//                }
 
             }
 

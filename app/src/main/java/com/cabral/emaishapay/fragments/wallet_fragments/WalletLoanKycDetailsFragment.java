@@ -343,6 +343,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                             final Dialog dialog1 = new Dialog(context);
                             dialog1.setContentView(R.layout.dialog_successful_message);
                             TextView message = dialog1.findViewById(R.id.pop_up_content_account_name);
+                            message.setVisibility(View.VISIBLE);
                             message.setText("Loan "+loan_no);
                             Button button = dialog1.findViewById(R.id.btn_ok);
                             button.setOnClickListener(new View.OnClickListener() {
