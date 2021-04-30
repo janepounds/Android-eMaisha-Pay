@@ -28,6 +28,7 @@ import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
@@ -160,7 +161,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                         String product_buy_price = productData.getProduct_buy_price();
                         String product_sell_price = productData.getProduct_sell_price();
-                        int product_stock = Integer.parseInt(qty.getText().toString()) + Integer.parseInt(productData.getProduct_stock());
+                        int product_stock = Integer.parseInt(qty.getText().toString());
                         String manufacturer_name = productData.getManufacturer();
                         String product_category_name = productData.getProduct_category();
                         String product_name = productData.getProduct_name();
@@ -171,53 +172,75 @@ public class ShopProductPreviewDialog extends DialogFragment {
                         String encodedImage = productData.getProduct_image();
                         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                         String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
-                        Call<ResponseBody> call = BuyInputsAPIClient
+                        Call<ProductResponse> call = BuyInputsAPIClient
                                 .getInstance()
-                                .updateProduct(access_token,unique_id,"",userId,product_id,product_buy_price,product_sell_price,product_supplier,product_stock,manufacturer_name,product_category_name,product_name);
-                        call.enqueue(new Callback<ResponseBody>() {
+                                .restockProduct(access_token,unique_id,userId,product_id,product_stock);
+                        call.enqueue(new Callback<ProductResponse>() {
                             @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                                 if (response.isSuccessful()) {
-                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            long update_product =   viewModel.updateProductStock(
-                                                    product_id,
-                                                    product_buy_price,
-                                                    product_sell_price,
-                                                    product_supplier,
-                                                    product_stock,
-                                                    manufacturer_name,
-                                                    product_category_name,
-                                                    product_name,
-                                                    product_code,
+                                    if(response.body().getStatus().equalsIgnoreCase("1")){
+                                        Log.d(TAG, "onResponse: " +
+                                                "product_id:" +product_id+
+                                                "product_buy_price:" +product_buy_price+
+                                                "product_sell_price:" +product_sell_price+
+                                                "product_supplier:" +product_supplier+
+                                                "product_stock:" +product_stock+
+                                                "manufacturer_name:"+manufacturer_name+
+                                                "product_category_name:"+product_category_name+
+                                                "product_name:"+product_name+
+                                                "product_code:"+product_code+
+                                                "encodedImage:"+encodedImage+
+                                                "selected_weight_units:"+selected_weight_units+
+                                                "selected_weight:"+selected_weight
+                                        );
 
-                                                    encodedImage,
+                                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                long update_product =   viewModel.updateProductStock(
+                                                        product_id,
+                                                        product_buy_price,
+                                                        product_sell_price,
+                                                        product_supplier,
+                                                        product_stock,
+                                                        manufacturer_name,
+                                                        product_category_name,
+                                                        product_name,
+                                                        product_code,
+                                                        encodedImage,
+                                                        selected_weight_units,
+                                                        selected_weight+""
+                                                );
 
-                                                    selected_weight_units,
-                                                    selected_weight+""
-                                            );
+                                                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        if (update_product>0) {
+                                                            progressDialog.dismiss();
+                                                            ShopProductPreviewDialog.this.dismiss();
+                                                            dialog.dismiss();
+                                                            Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
-                                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    if (update_product>0) {
-                                                        progressDialog.dismiss();
-                                                        ShopProductPreviewDialog.this.dismiss();
-                                                        dialog.dismiss();
-                                                        Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            progressDialog.dismiss();
+                                                            dialog.dismiss();
+                                                            ShopProductPreviewDialog.this.dismiss();
+                                                            Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
 
-                                                    } else {
-                                                        progressDialog.dismiss();
-                                                        dialog.dismiss();
-                                                        ShopProductPreviewDialog.this.dismiss();
-                                                        Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
-
+                                                        }
                                                     }
-                                                }
-                                            });
-                                        }
-                                    });
+                                                });
+                                            }
+                                        });
+
+                                    }else {
+
+
+                                        Toasty.error(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+
                                     //Log.d("Categories", String.valueOf(categories));
 
                                 } else {
@@ -228,7 +251,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                             }
 
                             @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            public void onFailure(Call<ProductResponse> call, Throwable t) {
                                 t.printStackTrace();
 
                             }

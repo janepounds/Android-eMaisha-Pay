@@ -875,6 +875,7 @@ public class AddShopProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
                 String manufacturer_name = etxtProductManufucturer.getText().toString().trim();
+                int product_id = selectedProductID;
                 String units = etxtproductMeasurement.getText().toString().trim() + quantityUnit.getSelectedItem().toString().trim();
                 String sync_status = "0";
                 if (quantityUnit.getSelectedItem().toString().equalsIgnoreCase("Select") || etxtproductMeasurement.getText().toString().equalsIgnoreCase("")) {
@@ -897,7 +898,7 @@ public class AddShopProductFragment extends DialogFragment {
 
                         Call<ResponseBody> call = BuyInputsAPIClient
                                 .getInstance()
-                                .updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
+                                .updateProduct(access_token,unique_id,measure_id,userId,product_id+"",product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -906,7 +907,7 @@ public class AddShopProductFragment extends DialogFragment {
                                         @Override
                                         public void run() {
                                             long update_product =   viewModel.updateProductStock(
-                                                    product_id,
+                                                    product_id+"",
                                                     product_buy_price,
                                                     product_sell_price,
                                                     product_supplier,
@@ -973,14 +974,14 @@ public class AddShopProductFragment extends DialogFragment {
                           public void run() {
 
                               long checkAddedProduct=viewModel.addProduct(new EcProduct(
-                                      unique_id,
+                                      product_id+"",
                                       product_name,
                                       product_code,
                                       product_category_name,
                                        "",
                                       product_buy_price,
                                       product_sell_price,
-                                      product_stock,
+                                      product_supplier,
                                       encodedImage,
                                       product_stock,
                                       selected_weight_units,
