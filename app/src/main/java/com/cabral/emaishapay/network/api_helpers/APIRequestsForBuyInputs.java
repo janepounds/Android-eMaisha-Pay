@@ -251,7 +251,6 @@ public interface APIRequestsForBuyInputs {
     Call<ResponseBody> postProduct(
             @Header("Authorization") String token,
             @Field("id") String id,
-            @Field("measure_id") String measure_id,
             @Field("wallet_id") String wallet_id,
             @Field("product_id") String product_id,
             @Field("product_buy_price") String product_buy_price,

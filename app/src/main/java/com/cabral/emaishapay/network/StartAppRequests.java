@@ -55,7 +55,6 @@ public class StartAppRequests {
     private List<Regions> dataList = new ArrayList<>();
     private static BuyInputsDB_Handler db_handler;
     private Context context;
-    private List<HashMap<String, String>> productList;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
@@ -117,44 +116,45 @@ public class StartAppRequests {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
+
             for (int i = 0; i < productsList.size(); i++) {
-                Log.e("WAlletIDError",productList.get(i).get("user_id")+"");
+                Log.e("WAlletIDError",productsList.get(i).getId()+"");
+                String unique_product_id=System.currentTimeMillis()+productsList.get(i).getId()+"";
+                String wallet_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+                Log.w("WALLET_ID", wallet_id);
+
                 saveProductList(
-                        productList.get(i).get("product_id"),
-                        productList.get(i).get("unique_id"),
-                        productList.get(i).get("measure_id"),
-                        productList.get(i).get("user_id"),
-                        productList.get(i).get("selected_product_id"),
-                        productList.get(i).get("product_manufacturer"),
-                        productList.get(i).get("product_name"),
-                        productList.get(i).get("product_code"),
-                        productList.get(i).get("selected_category_id"),
-                        productList.get(i).get("product_category"),
-                        productList.get(i).get("product_buy_price"),
-                        productList.get(i).get("product_sell_price"),
-                        productList.get(i).get("product_supplier"),
-                        productList.get(i).get("product_image"),
-                        productList.get(i).get("product_stock"),
-                        productList.get(i).get("product_unit"),
-                        productList.get(i).get("sync_status")
+                        productsList.get(i).getProduct_id(),
+                        unique_product_id,
+                        wallet_id,
+                        productsList.get(i).getManufacturer(),
+                        productsList.get(i).getProduct_name(),
+                        productsList.get(i).getProduct_code(),
+                        productsList.get(i).getProduct_category(),
+                        productsList.get(i).getProduct_buy_price(),
+                        productsList.get(i).getProduct_sell_price(),
+                        productsList.get(i).getProduct_supplier(),
+                        productsList.get(i).getProduct_image(),
+                        productsList.get(i).getProduct_stock(),
+                        productsList.get(i).getProduct_weight()+" "+productsList.get(i).getProduct_weight_unit(),
+                        productsList.get(i).getSync_status()
 
                 );
-
-
             }
+
         }
 
     }
 
-    public void saveProductList(String product_id,String unique_product_id,String measure_id,String user_id,String selected_product_id,String product_manufacturer,
-                                String product_name,String product_code,String selected_category_id,String  product_category,String product_buy_price, String product_sell_price,
+    public void saveProductList(String product_id,String unique_product_id,String user_id,String product_manufacturer,
+                                String product_name,String product_code,String  product_category,String product_buy_price, String product_sell_price,
                                 String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ResponseBody> call = BuyInputsAPIClient
                 .getInstance()
-                .postProduct(access_token,unique_product_id,measure_id,user_id,selected_product_id,product_buy_price,product_sell_price,
+                .postProduct(access_token,unique_product_id,user_id,product_id,product_buy_price,product_sell_price,
                         product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name
                 );
         call.enqueue(new Callback<ResponseBody>() {
