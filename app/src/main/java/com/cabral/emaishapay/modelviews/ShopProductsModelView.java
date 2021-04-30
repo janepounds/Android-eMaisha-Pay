@@ -181,10 +181,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
     public long addProduct(EcProduct product) {
-        return mRepository.addProduct(product);
-    }
-
-    public long addProductName(EcProduct product) {
+        product.setSync_status("0");
         return mRepository.addProduct(product);
     }
 

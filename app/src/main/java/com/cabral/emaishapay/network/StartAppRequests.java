@@ -116,7 +116,7 @@ public class StartAppRequests {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
-
+            Log.w("unsyncedProducts",productsList.size()+" products");
             for (int i = 0; i < productsList.size(); i++) {
                 Log.e("WAlletIDError",productsList.get(i).getId()+"");
                 String unique_product_id=System.currentTimeMillis()+productsList.get(i).getId()+"";
@@ -171,10 +171,10 @@ public class StartAppRequests {
                                 @Override
                                 public void run() {
                                     if (updateStatus>0) {
-                                        Log.d("Sync Status", "Product Synced");
+                                        Log.d("SyncStatus", "Product Synced");
                                     } else {
 
-                                        Log.d("Sync Status", "Sync Failed");
+                                        Log.d("SyncStatus", "Sync Failed");
 
                                     }
                                 }
