@@ -151,8 +151,20 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     }
 
+                currentFragment= navController.getCurrentDestination().getId();
 
-                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_scanAndPayDialog);
+                    if(currentFragment == R.id.walletHomeFragment2){
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_scanAndPayDialog);
+                }
+                else if (currentFragment  == R.id.walletAccountFragment2) {
+                   WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_scanAndPayDialog);
+                } else if (currentFragment == R.id.walletRewardsFragment2)  {
+                    WalletHomeActivity.navController.navigate(R.id.action_walletRewardsFragment2_to_scanAndPayDialog);
+                }
+
+
+
+
 
 
             }

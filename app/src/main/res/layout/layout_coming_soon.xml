@@ -105,92 +105,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text"
-            app:layout_constraintBottom_toTopOf="@id/coming_soon_notification"/>
-        <ImageView
-            android:id="@+id/coming_soon_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="40dp"
-            android:layout_weight=".9"
-            android:src="@drawable/ic_notification_bell"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_coming_soon" />
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            android:text="Be the first to know"
-            android:textColor="@color/colorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:maxLines="3"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coming_soon_notification" />
+            app:layout_constraintBottom_toTopOf="@id/layout_coming_soon_submit"/>
 
-        <LinearLayout
-            android:id="@+id/layout_mobile_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:padding="0dp"
-            app:layout_constraintBottom_toTopOf="@id/layout_coming_soon_submit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text2">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/outline_primary"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.15"
-                    android:background="@drawable/edittext_left_corners_green"
-                    android:gravity="center"
-                    android:text="+256"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/txt_coming_soon_mobile"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="phone"
-                    android:hint="Enter Mobile Number"
-                    android:maxLength="9"
-                    android:paddingStart="@dimen/dimen_10dp"
-                    android:paddingLeft="@dimen/dimen_10dp"
-                    android:tag="+256 "
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/layout_coming_soon_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="15dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:layout_gravity="center"
-            android:background="@drawable/outline_primary"
+            android:background="@drawable/rectangular_blue_solid"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_mobile_number">
+            app:layout_constraintTop_toBottomOf="@+id/text_coming_soon">
 
             <Button
                 android:id="@+id/button_submit"
@@ -200,10 +130,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="@string/submit"
+                android:text="@string/ok"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
 
