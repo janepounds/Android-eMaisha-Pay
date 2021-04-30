@@ -43,7 +43,6 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private LayoutScanAndPayProcessStep2Binding binding;
-    private double balance;
     DialogLoader dialogLoader;
 
     @Override
@@ -129,15 +128,19 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     }
 
     private void getMerchantName() {
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+
         Call<ConfirmationDataResponse> call = apiRequests.
                 getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                dialogLoader.hideProgressDialog();
                 if(response.code()==200){
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
                         merchant_name = response.body().getData().getBusinessName();
@@ -165,7 +168,7 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
+                dialogLoader.hideProgressDialog();
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");
 
@@ -179,23 +182,12 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
         binding.btnSavePayMerchant.setOnClickListener(v -> {
             //navigate to pay merchant step 3
-            dialogLoader.showProgressDialog();
-            balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
-            if(balance >= Double.parseDouble(binding.txtBillTotal.getText().toString())){
-                double Balance = balance - Double.parseDouble(binding.txtBillTotal.getText().toString());
-                Bundle bundle = new Bundle();
-                bundle.putString("amount", binding.txtBillTotal.getText().toString());
-                bundle.putString("merchant_name",merchant_name);
-                bundle.putString("merchant_id",merchantId);
-                bundle.putString("balance",Balance+"");
-                WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
+            Bundle bundle = new Bundle();
+            bundle.putString("amount", binding.txtBillTotal.getText().toString());
+            bundle.putString("merchant_name",merchant_name);
+            bundle.putString("merchant_id",merchantId);
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
 
-            }else{
-                Toast.makeText(context,"Insufficient funds",Toast.LENGTH_LONG).show();
-
-            }
-
-        dialogLoader.hideProgressDialog();
         });
     }
 
@@ -234,20 +226,11 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
 
         }else if( v.getId()==R.id.tv_key_enter  ){
            //check if balance is enough and navigate to pay merchant step 3
-            dialogLoader.showProgressDialog();
-             balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
-            if(balance >= Double.parseDouble(binding.txtBillTotal.getText().toString())){
-                Bundle bundle = new Bundle();
-                bundle.putString("amount", binding.txtBillTotal.getText().toString());
-                bundle.putString("merchant_name",merchant_name);
-                bundle.putString("merchant_id",merchantId);
-                WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
-
-            }else{
-                Toast.makeText(context,"Insufficient funds",Toast.LENGTH_LONG).show();
-
-            }
-            dialogLoader.hideProgressDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("amount", binding.txtBillTotal.getText().toString());
+            bundle.putString("merchant_name",merchant_name);
+            bundle.putString("merchant_id",merchantId);
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
 
         }else{
             String value = keyValues.get(v.getId()).toString();
