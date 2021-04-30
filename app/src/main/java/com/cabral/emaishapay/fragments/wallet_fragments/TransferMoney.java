@@ -66,7 +66,7 @@ public class TransferMoney extends Fragment {
 
     FragmentManager fm;
     EditText etMobileMoneyNumber;
-    AutoCompleteTextView etBeneficiaryName;
+    EditText etBeneficiaryName;
     private Context context;
     private Toolbar toolbar;
     DialogLoader dialogLoader;

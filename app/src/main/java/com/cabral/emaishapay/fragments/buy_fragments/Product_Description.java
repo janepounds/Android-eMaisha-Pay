@@ -817,7 +817,7 @@ public class Product_Description extends Fragment  {
 
         // Put Image's Name and URL to the HashMap slider_covers
         if (itemThumbnail.equalsIgnoreCase("")) {
-            slider_covers.put("a", "" + R.drawable.placeholder);
+            slider_covers.put("a", "" + R.drawable.new_product);
 
         } else if (images.length == 0) {
             slider_covers.put("a", ConstantValues.ECOMMERCE_URL + itemThumbnail);

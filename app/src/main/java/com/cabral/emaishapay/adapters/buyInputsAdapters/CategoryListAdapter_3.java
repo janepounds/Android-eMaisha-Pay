@@ -73,8 +73,8 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.new_product)
+                .error(R.drawable.new_product)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         // Set OrderProductCategory Image on ImageView with Glide Library

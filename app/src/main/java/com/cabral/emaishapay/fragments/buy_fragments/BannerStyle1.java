@@ -88,8 +88,8 @@ public class BannerStyle1 extends Fragment implements BaseSliderView.OnSliderCli
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.centerCrop()
                     //.diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder);
+                    .placeholder(R.drawable.new_product)
+                    .error(R.drawable.new_product);
 
             // Set Attributes(Name, Image, Type etc) to DefaultSliderView
             defaultSliderView

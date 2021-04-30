@@ -107,8 +107,8 @@ public class ProductAdapterRemovable extends RecyclerView.Adapter<ProductAdapter
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.new_product)
+                .error(R.drawable.new_product)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
 
