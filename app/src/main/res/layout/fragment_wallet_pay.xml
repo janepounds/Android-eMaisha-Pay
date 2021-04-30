@@ -154,7 +154,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:layout_marginBottom="10dp"
+                                android:layout_margin="10dp"
                                 android:src="@drawable/ic_right_chevron_arrow_white"
                                 android:rotation="90"/>
 
@@ -293,7 +293,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:layout_marginBottom="10dp"
+                                android:layout_margin="10dp"
                                 android:src="@drawable/ic_right_chevron_arrow_white"
                                 android:rotation="90"/>
 

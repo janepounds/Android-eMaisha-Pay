@@ -97,8 +97,8 @@ public class WalletHomeFragment extends Fragment {
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
 
         if(role.equalsIgnoreCase("merchant")){
-            binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
-            binding.labelTransact.setVisibility(View.VISIBLE);
+            binding.layoutTransactWithCustomers.setVisibility(View.GONE);
+            binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
@@ -269,6 +269,7 @@ public class WalletHomeFragment extends Fragment {
                 Bundle args=new Bundle();
                 args.putString("KEY_TITLE", getString(R.string.transactions) );
 
+
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
         });
@@ -282,6 +283,7 @@ public class WalletHomeFragment extends Fragment {
                 dialog.setCancelable(true);
 
                 ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+                Button ok = dialogView.findViewById(R.id.button_submit);
 
 
 
@@ -289,6 +291,13 @@ public class WalletHomeFragment extends Fragment {
                 final AlertDialog alertDialog = dialog.create();
 
                 close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();

@@ -6,7 +6,13 @@
     android:background="@drawable/dialog_background"
     android:orientation="vertical"
     tools:context=".DailogFragments.AddBeneficiaryFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/layout_add_money"
         android:layout_width="match_parent"
@@ -201,6 +207,98 @@
 
                     </RelativeLayout>
 
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Street Address 1"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_street_address_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Street Address 2"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_street_address_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -461,5 +559,6 @@
                 android:text="0" />
         </LinearLayout>
     </LinearLayout>
-
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -449,7 +449,7 @@ public class WalletAccountFragment extends Fragment {
         if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
             binding.textAccountType.setText("Agent");
             binding.textChangeAccountType.setVisibility(View.GONE);
-            binding.cardViewQrCode.setVisibility(View.VISIBLE);
+            binding.cardViewQrCode.setVisibility(View.GONE);
         }
 
         else if(role.equalsIgnoreCase("merchant")){

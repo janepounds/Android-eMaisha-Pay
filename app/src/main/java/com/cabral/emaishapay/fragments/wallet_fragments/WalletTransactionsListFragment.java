@@ -60,6 +60,9 @@ public class WalletTransactionsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.transaction_list, container, false);
         WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+
         if( getArguments()!=null)
             appTitle=getArguments().getString(key_title);
 
