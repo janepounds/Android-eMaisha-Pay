@@ -327,62 +327,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Beneficiary Mobile"
-                        android:textSize="@dimen/margin_16"
-                        android:layout_marginBottom="5dp"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="0dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/outline_primary"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.1"
-                                android:background="@drawable/edittext_left_corners_green"
-                                android:gravity="center"
-                                android:text="+256"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:textSize="14sp" />
-
-                            <EditText
-                                android:id="@+id/et_beneficiary_mobile"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/transparent"
-                                android:gravity="center_vertical"
-                                android:inputType="phone"
-                                android:maxLength="9"
-                                android:paddingStart="@dimen/dimen_10dp"
-                                android:paddingLeft="@dimen/dimen_10dp"
-                                android:tag="+256 "
-                                android:textColor="@android:color/black" />
-                        </LinearLayout>
-
-
-
-                    </LinearLayout>
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -394,12 +339,6 @@
                 android:visibility="gone">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="0dp"
-                    android:visibility="visible">
 
 
                     <TextView
@@ -444,7 +383,6 @@
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/dimen_10dp" />
                     </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
