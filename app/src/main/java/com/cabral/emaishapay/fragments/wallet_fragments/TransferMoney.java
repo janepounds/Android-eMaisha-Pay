@@ -35,6 +35,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
+import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
@@ -230,6 +231,42 @@ public class TransferMoney extends Fragment {
         });
 
 
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
+
+                if (spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
+                    //show bank beneficiary
+                    layoutBank.setVisibility(View.VISIBLE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
+
+                }
+                else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
+                    //show mobile money beneficiary
+                    layoutBank.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.VISIBLE);
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        spBeneficiary.setOnItemSelectedListener(onItemSelectedListener);
+
+
 
         if(this.action.equalsIgnoreCase(getString(R.string.settlements))){
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.settle_to));
@@ -304,6 +341,7 @@ public class TransferMoney extends Fragment {
                 etAmount.setError("Invalid Amount");
                 return;
             }
+
            // double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
 
             String phoneNumber = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
@@ -501,6 +539,10 @@ public class TransferMoney extends Fragment {
 
                         }
 
+
+                        beneficiaries.add("Add New");
+
+
                         //set list in beneficiary spinner
 
                         ArrayAdapter<String> beneficiariesAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, beneficiaries);
@@ -532,6 +574,7 @@ public class TransferMoney extends Fragment {
 
 
     }
+
 
 
 
