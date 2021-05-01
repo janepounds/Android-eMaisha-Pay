@@ -79,7 +79,7 @@ public class TransferMoney extends Fragment {
     String selected_bank_code,selected_branch_code;
     String action, beneficiary_name;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
-    ArrayList<String> beneficiaries = new ArrayList<>();
+
     OtpDialogLoader otpDialogLoader;
     float amount;
     String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number;
@@ -210,6 +210,7 @@ public class TransferMoney extends Fragment {
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
                     layoutAmount.setVisibility(View.VISIBLE);
+                    requestFilteredBeneficiaries();
                 }
                 else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("mobile money")){
 
@@ -239,10 +240,10 @@ public class TransferMoney extends Fragment {
         });
 
 
-        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+
+        spBeneficiary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 try {
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
@@ -250,14 +251,12 @@ public class TransferMoney extends Fragment {
                 } catch (Exception e) {
 
                 }
-
                 if (spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
                     //show bank beneficiary
                     layoutBank.setVisibility(View.VISIBLE);
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
 
-                }
-                else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
+                }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
                     //show mobile money beneficiary
                     layoutBank.setVisibility(View.GONE);
                     layoutMobileMoneyBeneficiaries.setVisibility(View.VISIBLE);
@@ -265,16 +264,13 @@ public class TransferMoney extends Fragment {
                     mobile_numberTxt.setText("Beneficiary Mobile");
 
                 }
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        };
-        spBeneficiary.setOnItemSelectedListener(onItemSelectedListener);
+        });
 
 
 
@@ -558,7 +554,7 @@ public class TransferMoney extends Fragment {
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
-
+                      final   ArrayList<String> beneficiaries = new ArrayList<>();
                         try {
 
                             beneficiariesList = response.body().getBeneficiariesList();
@@ -569,7 +565,7 @@ public class TransferMoney extends Fragment {
 
                                 //decript
                                 CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                                beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
+                             final String   beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
                                 beneficiaries.add(beneficiary_name);
 
                             }

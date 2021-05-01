@@ -1005,4 +1005,30 @@ public interface APIRequests {
     );
 
 
+    @FormUrlEncoded
+    @POST("wallet/agent/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
 }
