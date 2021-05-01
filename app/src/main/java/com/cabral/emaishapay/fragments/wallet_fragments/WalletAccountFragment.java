@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,15 +43,20 @@ import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.databinding.FragmentWalletAccountBinding;
 import com.cabral.emaishapay.databinding.NewBusinessAccountDialogBinding;
 import com.cabral.emaishapay.databinding.NewFragmentWalletAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
+import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +71,7 @@ public class WalletAccountFragment extends Fragment {
     private String label_details;
     private Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
     private EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer,phone_number;
+    DialogLoader dialogLoader;
 
 
     @Override
@@ -123,6 +131,8 @@ public class WalletAccountFragment extends Fragment {
             alertDialog.show();
 
         });
+        //initializing the view model
+        final SignUpModelView viewModel = new ViewModelProvider(this).get(SignUpModelView.class);
 
         //show Qr code dialog
         binding.imgQrCode.setOnClickListener(v -> {
@@ -516,21 +526,11 @@ public class WalletAccountFragment extends Fragment {
         });
 
         binding.layoutUpdateSecurityQns.setOnClickListener(view13 ->{
+            dialogLoader = new DialogLoader(context);
             android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context, R.style.DialogFullscreen);
             View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
-
-//            RequestUserQns(user_id);
-            //display security qns and
-            Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   // validateSecurityQns();
-                }
-            });
-
             //calling security qns form
             phone_number =dialogView.findViewById(R.id.phone_no);
             firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
@@ -539,7 +539,67 @@ public class WalletAccountFragment extends Fragment {
             firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
             secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
             thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
-            //RequestSecurityQns();
+
+            subscribeToSecurityQns(viewModel.getSecurityQuestions());
+            //display security qns and
+            Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogLoader.hideProgressDialog();
+                   // update security questions based on user_id
+                    String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                    String request_id = WalletHomeActivity.generateRequestId();
+
+                    //load answered security Qns(locally or from an endpoint)
+                    /******************RETROFIT IMPLEMENTATION***********************/
+//                    Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).
+//                            updateSecurityQns(access_token,
+//                                    getString(R.string.phone_number_code)+phone_number.getText().toString(),
+//                                    firstSecurityQn.getSelectedItem().toString(),
+//                                    secondSecurityQn.getSelectedItem().toString(),
+//                                    thirdSecurityQn.getSelectedItem().toString(),
+//                                    firstQnAnswer.getText().toString(),
+//                                    secondQnAnswer.getText().toString(),
+//                                    thirdQnAnswer.getText().toString(),
+//                                    request_id,
+//                                    "updateSecurityQns");
+//                    call.enqueue(new Callback<SecurityQnsResponse>() {
+//                        @Override
+//                        public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
+//                            if(response.isSuccessful()){
+//                                String status = response.body().getStatus();
+//                                if(status.equalsIgnoreCase("1")){
+//                                    //call change password dialog
+//
+//                                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+//
+//
+//                                }else{
+//                                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+//
+//                                }
+//                                dialogLoader.hideProgressDialog();
+//
+//
+//                            }else if (response.code() == 401) {
+//                                Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+//                                dialogLoader.hideProgressDialog();
+//
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+//                            dialogLoader.hideProgressDialog();
+//                        }
+//                    });
+
+                }
+            });
+
+
 
             final android.app.AlertDialog alertDialog = dialog.create();
             alertDialog.show();
@@ -699,6 +759,22 @@ public class WalletAccountFragment extends Fragment {
             binding.textAppVersion.setText(versionCode);
 
         return binding.getRoot();
+    }
+
+    private void subscribeToSecurityQns(LiveData<List<ArrayList<String>>> securityQuestions) {
+            securityQuestions.observe(getViewLifecycleOwner(), myQns->{
+                //set list in beneficiary spinner
+                if(myQns!=null){
+                    ArrayAdapter<String> beneficiariesAdapter1 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(0));
+                    ArrayAdapter<String> beneficiariesAdapter2 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(1));
+                    ArrayAdapter<String> beneficiariesAdapter3 = new ArrayAdapter(context, android.R.layout.simple_spinner_item, myQns.get(2));
+                    firstSecurityQn.setAdapter(beneficiariesAdapter1);
+                    secondSecurityQn.setAdapter(beneficiariesAdapter2);
+                    thirdSecurityQn.setAdapter(beneficiariesAdapter3);
+                }
+
+            });
+
     }
 
     @Override
