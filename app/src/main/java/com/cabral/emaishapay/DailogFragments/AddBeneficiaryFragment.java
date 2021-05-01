@@ -51,7 +51,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Context context;
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etStreetAdd1,etStreetAdd2,etCity;
     Spinner bank,bank_branch,spCountry;
-    String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2;
+    String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code,bankk,branch,id,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
     TextView title;
@@ -121,6 +121,10 @@ public class AddBeneficiaryFragment extends DialogFragment {
                 bankLayout.setVisibility(View.VISIBLE);
                 account_name.setText(beneficiary_name_);
                 account_number.setText(beneficiary_number_);
+                etCity.setText(sEtCity);
+                etStreetAdd2.setText(sEtStreetAdd2);
+                etStreetAdd1.setText(sEtStreetAdd1);
+                WalletHomeActivity.selectSpinnerItemByValue(spCountry,sSpCountry);
                 WalletHomeActivity.selectSpinnerItemByValue(bank,bankk);
                 WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
 
@@ -272,6 +276,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         country = "";
                         street_address_1 = "";
                         street_address_2 = "";
+                        beneficiary_bank_phone_number = getString(R.string.phone_number_code)+beneficiary_no.getText().toString();
 
 
                     }else{
@@ -285,6 +290,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         country = spCountry.getSelectedItem().toString();
                         street_address_1 = etStreetAdd1.getText().toString();
                         street_address_2 = etStreetAdd2.getText().toString();
+                        beneficiary_bank_phone_number =getString(R.string.phone_number_code)+beneficiary_no.getText().toString();
 
 
                     }
@@ -297,7 +303,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         dialogLoader.showProgressDialog();
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id,city,country,street_address_1,street_address_2);
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -375,6 +381,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                 request_id,
                 category,
                 "saveBeneficiary",
+                beneficiary_bank_phone_number,
                 city,
                 country,
                 street_address_1,

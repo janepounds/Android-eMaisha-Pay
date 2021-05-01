@@ -82,7 +82,7 @@ public class TransferMoney extends Fragment {
 
     OtpDialogLoader otpDialogLoader;
     float amount;
-    String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number;
+    String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number,beneficiary_bank_phone_number;
 
     public TransferMoney() {
     }
@@ -406,6 +406,11 @@ public class TransferMoney extends Fragment {
                 beneficiary_number = encrypter.encrypt(account_number);
                 bankk = spSelectBank.getSelectedItem().toString();
                 branch = spSelectBankBranch.getSelectedItem().toString();
+                sEtCity =etCity.getText().toString();
+                sSpCountry = spCountry.getSelectedItem().toString();
+                sEtStreetAdd1 = etStreetAdd1.getText().toString();
+                sEtStreetAdd2 = etStreetAdd2.getText().toString();
+                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
                 requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
 
@@ -417,6 +422,11 @@ public class TransferMoney extends Fragment {
                 beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
                 bankk = "Mobile Money Bank";
                 branch = "";
+                sEtCity ="";
+                sSpCountry = "";
+                sEtStreetAdd1 = "";
+                sEtStreetAdd2 = "";
+                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
                 requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
             }else {
@@ -740,7 +750,13 @@ public class TransferMoney extends Fragment {
                 beneficiary_number,
                 request_id,
                 category,
-                "saveBeneficiary");
+                "saveBeneficiary",
+                beneficiary_bank_phone_number,
+                sEtCity,
+                sSpCountry,
+                sEtStreetAdd1,
+                sEtStreetAdd2
+                );
 
         call.enqueue(new Callback<CardResponse>() {
             @Override

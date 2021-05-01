@@ -850,6 +850,7 @@ public interface APIRequests {
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id,
+            @Field("beneficiary_phone") String beneficiary_phone,
             @Field("city") String city,
             @Field("country") String country,
             @Field("street_address_1") String street_address_1,
@@ -896,7 +897,8 @@ public interface APIRequests {
             @Field("city") String city,
             @Field("country") String country,
             @Field("street_address_1") String street_address_1,
-            @Field("street_address_2") String street_address_2
+            @Field("street_address_2") String street_address_2,
+            @Field("beneficiary_phone") String beneficiary_phone
 
 
     );
