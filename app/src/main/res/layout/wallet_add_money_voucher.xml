@@ -156,7 +156,7 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textSize="16sp" />
 
 
             </FrameLayout>

@@ -105,8 +105,8 @@ public class SubCategoryListAdapter extends BaseAdapter {
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.new_product)
+                .error(R.drawable.new_product)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         Glide.with(context)

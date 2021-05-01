@@ -67,8 +67,8 @@ public class ProductDealsAdapter extends RecyclerView.Adapter<ProductDealsAdapte
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.new_product)
+                    .error(R.drawable.new_product)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             // Set Product Image on ImageView with Glide Library

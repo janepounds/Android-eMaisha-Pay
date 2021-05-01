@@ -33,6 +33,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep3Binding;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -333,6 +334,17 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
 
     }
 
+    private static void  clearPin(LayoutScanAndPayProcessStep3Binding binding){
+        binding.pinCode1Edt.setText("");
+        binding.pinCode2Edt.setText("");
+        binding.pinCode3Edt.setText("");
+        binding.pinCode4Edt.setText("");
+
+
+        InputConnection ic = binding.pinCode1Edt.onCreateInputConnection(new EditorInfo());
+        inputConnection = ic;
+    }
+
     public void setInputConnection(EditText editText) {
         InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
@@ -362,6 +374,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                             Log.e("Error", e.getMessage());
                         }
                     }else {
+                        clearPin(binding);
 
                         //got to step 4
                         Bundle bundle = new Bundle();

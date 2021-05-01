@@ -46,8 +46,8 @@ public class ScanAndPayStep4 extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarScanPayProcess2);
         binding.toolbarScanPayProcess2.setTitle("Scan and Pay");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
         return binding.getRoot();
     }
 
@@ -57,7 +57,7 @@ public class ScanAndPayStep4 extends Fragment {
         binding.rateMerchant.setOnClickListener(v -> {
             rateMerchant();
         });
-        binding.textSkip.setOnClickListener(v -> {
+        binding.btnFinish.setOnClickListener(v -> {
           //navigate to wallet home fragment
             WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep4_to_walletHomeFragment2);
 

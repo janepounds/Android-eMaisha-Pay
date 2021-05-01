@@ -118,13 +118,219 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginBottom="10dp"
-                        android:src="@drawable/ic_right_chevron_arrow_white"
-                        android:rotation="90" />
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_down_chevron" />
 
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Select Beneficiary Bank"
+                        android:textSize="16sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/rectangular_blue_solid"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/banks_list"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_down_chevron" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiary Bank Branch"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/rectangular_blue_solid"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_bank_branch"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/banks_list"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_down_chevron" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiary Account Name"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_account_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Beneficiary Account Number"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="number"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_mobile_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Beneficiary Name"
+                        android:textSize="@dimen/margin_16"
+                        android:layout_marginBottom="5dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/outline_primary"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/et_beneficiary_name"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@android:color/transparent"
+                                android:gravity="center_vertical"
+                                android:inputType="text"
+                                android:paddingStart="@dimen/dimen_10dp"
+                                android:paddingLeft="@dimen/dimen_10dp"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_mobile_number"
                 android:layout_width="match_parent"
@@ -133,12 +339,6 @@
                 android:visibility="gone">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="0dp"
-                    android:visibility="visible">
 
 
                     <TextView
@@ -183,36 +383,6 @@
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/dimen_10dp" />
                     </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_beneficiary_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Beneficiary Name"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textColor" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/et_beneficiary_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/outline_primary"
-                        android:inputType="text"
-                        android:textColor="@color/textColor"/>
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -332,189 +502,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_bank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/layout_bank_beneficiary_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Beneficiary Name"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textColor" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/et_bank_beneficiary_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/outline_primary"
-                        android:inputType="text" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="Select Bank"
-                        android:textSize="16sp"
-                        android:textColor="@color/textColor"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_weight="1"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/rectangular_blue_solid"
-                        android:orientation="horizontal">
-
-                        <Spinner
-                            android:id="@+id/sp_bank"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center"
-                            android:background="@android:color/transparent"
-                            android:gravity="center"
-                            android:entries="@array/banks_list"
-                            android:spinnerMode="dropdown"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_right_chevron_arrow_white"
-                            android:rotation="90" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bank Branch"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textColor" />
-
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_weight="1"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/rectangular_blue_solid"
-                        android:orientation="horizontal">
-
-                        <Spinner
-                            android:id="@+id/sp_bank_branch"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center"
-                            android:background="@android:color/transparent"
-                            android:gravity="center"
-                            android:entries="@array/banks_list"
-                            android:spinnerMode="dropdown"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_right_chevron_arrow_white"
-                            android:rotation="90"/>
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Account Name"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textColor" />
-
-                    <EditText
-                        android:id="@+id/et_account_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/outline_primary"
-                        android:inputType="text"
-                        android:textColor="@color/textColor"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Account Number"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textColor" />
-
-                    <EditText
-                        android:id="@+id/et_account_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:paddingStart="@dimen/dimen_10dp"
-                        android:background="@drawable/outline_primary"
-                        android:inputType="number"
-                        android:textColor="@color/textColor"/>
-
-                </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/transfer_amount"
@@ -625,7 +612,7 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textSize="16sp" />
 
 
             </FrameLayout>

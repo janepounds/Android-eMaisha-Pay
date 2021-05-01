@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/dimen_10dp"
-                android:src="@drawable/placeholder" />
+                android:src="@drawable/new_product" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmerFrame"
@@ -40,7 +40,7 @@
                     android:layout_height="@dimen/lg_card_cover_height"
                     android:clickable="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder" />
+                    android:src="@drawable/new_product" />
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 

@@ -289,7 +289,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static void setUpMasterAgentNav() {
         bottomNavigationView.setVisibility(View.GONE);
-        scanCoordinatorLayout.setVisibility(View.GONE);
+        scanCoordinatorLayout.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
         bottom_navigation_shop.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -26,7 +26,7 @@
             android:src="@drawable/logo_vector"
             android:layout_width="138.88pt"
             android:paddingBottom="@dimen/dimen_20dp"
-            android:layout_height="140dp"
+            android:layout_height="120dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"/>
@@ -80,7 +80,7 @@
             android:id="@+id/title3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="An Easy app to manage all your payment, Shopping and finance related needs"
+            android:text="An Easy app to manage all your payment, shopping and finance related needs"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             android:layout_below="@id/title2"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:background="@drawable/round_button_dark_green"
-            android:text="Get Started"
+            android:text="Sign Up"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textAllCaps="false"
@@ -103,7 +103,9 @@
             android:id="@+id/layout_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/get_started_btn">
+            android:layout_below="@id/get_started_btn"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal">
             <TextView
                 android:id="@+id/signin1"
                 android:layout_width="wrap_content"
@@ -111,8 +113,7 @@
                 android:text="Already have account? "
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"/>
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/signin2"
                 android:layout_width="wrap_content"
