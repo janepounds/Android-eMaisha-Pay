@@ -383,6 +383,12 @@ public class TransferMoney extends Fragment {
              account_name = etAccountName.getText().toString();//required for Bank
              account_number = etAccountNumber.getText().toString();//required for Bank
 
+            String beneficary_type = spTransferTo.getSelectedItem().toString().trim();
+            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+            String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+            String request_id = WalletHomeActivity.generateRequestId();
+            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
             if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getText().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
                 CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                 beneficiary_nname = encrypter.encrypt(account_name);
@@ -395,7 +401,45 @@ public class TransferMoney extends Fragment {
                 sEtStreetAdd2 = etStreetAdd2.getText().toString();
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
 
-                //navigate to the next fragment
+                if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+
+
+                }else{
+
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
+
+
+                }
+
+            }
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account") &&  validateMobileMoneyTransFerForm()){
 
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev = fm.findFragmentByTag("dialog");
@@ -423,12 +467,8 @@ public class TransferMoney extends Fragment {
                 transferPreviewDailog.setArguments(args);
                 transferPreviewDailog.show(ft, "dialog");
 
-
-            }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account") &&  validateMobileMoneyTransFerForm()){
-
-
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
+
                 WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
 
             }
@@ -445,55 +485,47 @@ public class TransferMoney extends Fragment {
                 sEtStreetAdd2 = "";
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
 
+                if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+
+
+                }else{
+
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
+
+
+
+                }
+
             }else{
                 Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
             }
-
-            String beneficary_type = spTransferTo.getSelectedItem().toString().trim();
-            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-            String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-            String request_id = WalletHomeActivity.generateRequestId();
-            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-            //save beneficiary if its add new
-            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") || spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") ) {
-                //save bank beneficiary
-                requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
-            }else{
-
-
-
-                // if (balance >= amount ) {
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-
-                // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                Bundle args = new Bundle();
-                args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                args.putString("phoneNumber", phoneNumber);
-                args.putDouble("amount", amount);
-
-                args.putString("beneficiary_name", beneficiary_name);
-                args.putString("account_name", account_name);
-                args.putString("account_number", account_number);
-
-                args.putString("bankCode", selected_bank_code);
-                args.putString("bankBranch", selected_branch_code);
-
-                transferPreviewDailog.setArguments(args);
-                transferPreviewDailog.show(ft, "dialog");
-//            } else {
-//                Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
-//                Log.e("Error", "Insufficient Account balance!");
-//            }
-            }
-
 
         });
 
