@@ -52,7 +52,7 @@ import retrofit2.Response;
 public class DepositMoneyMobile extends DialogFragment {
     LinearLayout layoutAddMoney;
     Button addMoneyImg;
-    TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt;
+    TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt,title;
     TextView balanceTextView,dialog_title;;
     double balance;
     private String txRef,role,phoneNumber;
@@ -105,6 +105,8 @@ public class DepositMoneyMobile extends DialogFragment {
         addMoneyTxt = view.findViewById(R.id.crop_add_money_amount);
         balanceTextView = view.findViewById(R.id.crop_add_money_balance);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
+        title = view.findViewById(R.id.digital_wallet_title_label);
+        title.setText("Mobile Money");
         addMoneyImg.setText("Top Up");
         balanceTextView.setText(NumberFormat.getInstance().format(balance));
         this.txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
