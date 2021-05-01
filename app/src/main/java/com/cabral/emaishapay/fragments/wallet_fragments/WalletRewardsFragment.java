@@ -26,7 +26,7 @@ public class WalletRewardsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_wallet_rewards, container, false);
+        View view = inflater.inflate(R.layout.layout_coming_soon_rewards, container, false);
         Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_rewards);
 
 

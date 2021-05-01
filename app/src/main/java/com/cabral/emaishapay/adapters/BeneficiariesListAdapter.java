@@ -155,6 +155,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                             String  bank = data.getBank();
                             String bank_branch  = data.getBank_branch();
                             String id = data.getId();
