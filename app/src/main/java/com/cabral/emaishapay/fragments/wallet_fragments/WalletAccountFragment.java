@@ -93,6 +93,9 @@ public class WalletAccountFragment extends Fragment {
         Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +user_pic).apply(options).into(binding.userImage);
 
 
+        binding.qrCodeTitle.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID, requireContext())));
+
+
         //view user profile details for view more
         binding.layoutViewMoreUserProfile.setOnClickListener(view12->{
 
