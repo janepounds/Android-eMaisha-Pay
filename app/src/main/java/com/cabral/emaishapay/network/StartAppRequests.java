@@ -113,6 +113,9 @@ public class StartAppRequests {
     }
 
     public static  void SyncProductData() {
+        if(context==null){
+            return;
+        }
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);

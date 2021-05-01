@@ -70,10 +70,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private final int REQUEST_CHECK_SETTINGS = 100;
     String TAG = "MapActivity";
 
-
-
-    AutoCompleteTextView autoCompleteTextView;
-    AutoCompleteAdapter adapter;
    // TextView responseView;
     PlacesClient placesClient;
     String cityName;

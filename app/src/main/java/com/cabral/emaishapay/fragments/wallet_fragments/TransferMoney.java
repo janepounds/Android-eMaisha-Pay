@@ -37,7 +37,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
-import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
@@ -76,7 +76,7 @@ public class TransferMoney extends Fragment {
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
-    String action, beneficiary_name,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
+    String action, beneficiary_name,street_address_1,street_address_2,city,country;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
 
     OtpDialogLoader otpDialogLoader;
@@ -395,10 +395,10 @@ public class TransferMoney extends Fragment {
                 beneficiary_number = encrypter.encrypt(account_number);
                 bankk = spSelectBank.getText().toString();
                 branch = spSelectBankBranch.getSelectedItem().toString();
-                sEtCity =etCity.getText().toString();
-                sSpCountry = spCountry.getSelectedItem().toString();
-                sEtStreetAdd1 = etStreetAdd1.getText().toString();
-                sEtStreetAdd2 = etStreetAdd2.getText().toString();
+                city =etCity.getText().toString();
+                country = spCountry.getSelectedItem().toString();
+                street_address_1 = etStreetAdd1.getText().toString();
+                street_address_2 = etStreetAdd2.getText().toString();
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
@@ -479,10 +479,10 @@ public class TransferMoney extends Fragment {
                 beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
                 bankk = "Mobile Money Bank";
                 branch = "";
-                sEtCity ="";
-                sSpCountry = "";
-                sEtStreetAdd1 = "";
-                sEtStreetAdd2 = "";
+                city ="";
+                country = "";
+                street_address_1 = "";
+                street_address_2 = "";
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
@@ -555,7 +555,7 @@ public class TransferMoney extends Fragment {
                         List<String> Banknames = new ArrayList<>();
                         Banknames.add("Select");
                         for (Bank bank: BankList) {
-                            if( bank.getMobileVerified()==null && !bank.getName().equals("MTN") && !bank.getName().equals("Bank of Uganda"))
+                            if( bank.getMobileVerified()==null && !bank.getName().equals("MTN") )
                             Banknames.add(bank.getName());
                         }
 
@@ -735,7 +735,7 @@ public class TransferMoney extends Fragment {
         String customer_phone_number=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,getActivity());
         dialogLoader.showProgressDialog();
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance(getContext())
+        Call<GeneralWalletResponse> call = APIClient.getWalletInstance(getContext())
                 .requestSaveBeneficiary(
                         access_token,
                         user_id,
@@ -747,11 +747,11 @@ public class TransferMoney extends Fragment {
                         "customerAddBeneficiaryTransactionOTP");
 
         String finalType = type;
-        call.enqueue(new Callback<CardResponse>() {
+        call.enqueue(new Callback<GeneralWalletResponse>() {
             @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
                 dialogLoader.hideProgressDialog();
-                if (response.isSuccessful() && response.body().getStatus()==1) {
+                if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
 
                     Log.w("PhoneNumberError",customer_phone_number);
@@ -760,7 +760,7 @@ public class TransferMoney extends Fragment {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
                             otpDialog.dismiss();
-                            saveBeneficiary(access_token,user_id, category,otp_code, finalType);
+                            saveBeneficiary(access_token,user_id, category,otp_code, finalType,beneficary_type);
                         }
 
                         @Override
@@ -791,42 +791,39 @@ public class TransferMoney extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
+            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
 
             }
         });
     }
 
-    private void saveBeneficiary(String access_token, String user_id, String category, String otp_code, String type) {
+    private void saveBeneficiary(String access_token, String user_id, String category, String otp_code, String type, String beneficary_type) {
         dialogLoader.showProgressDialog();
 
         String request_id = WalletHomeActivity.generateRequestId();
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
-                access_token,
-                otp_code,
-                user_id,
-                type,
-                bankk,
-                branch,
-                beneficiary_nname,
-                beneficiary_number,
-                request_id,
-                category,
-                "saveBeneficiary",
-                beneficiary_bank_phone_number,
-                sEtCity,
-                sSpCountry,
-                sEtStreetAdd1,
-                sEtStreetAdd2
-                );
+        Call<GeneralWalletResponse> call =null;
 
-        call.enqueue(new Callback<CardResponse>() {
+        if (beneficary_type.equalsIgnoreCase("Bank")) {
+            call = APIClient.getWalletInstance(getContext()).saveBankBeneficiary(
+                    access_token, otp_code,  user_id, type,
+                    bankk, branch,  beneficiary_name,  beneficiary_number,
+                    request_id,  category,  "saveBeneficiary",
+                    beneficiary_bank_phone_number,   city,   country,  street_address_1, street_address_2);
+        } else {
+            call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
+                    access_token,  otp_code,
+                    user_id,  type,  bankk, branch,   beneficiary_name,  beneficiary_number,
+                    request_id,  category,   "registerBankBeneficiary",
+                    beneficiary_bank_phone_number, city,  country,  street_address_1,   street_address_2);
+        }
+
+        call.enqueue(new Callback<GeneralWalletResponse>() {
             @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
                 dialogLoader.hideProgressDialog();
-                if (response.isSuccessful() && response.body().getStatus()==1) {
+                if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
                     //go to confirm transfer
 
@@ -873,7 +870,7 @@ public class TransferMoney extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
+            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
 
             }

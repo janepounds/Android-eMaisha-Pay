@@ -702,6 +702,8 @@
     <string name="role_master_agent">Agent</string>
     <string name="phone_number_code">0</string>
     <string name="confirm_customer_details">Confirm Customer Details</string>
+    <string name="street_address_1">Nsibambi rd</string>
+    <string name="street_address_2">Namirembe</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
