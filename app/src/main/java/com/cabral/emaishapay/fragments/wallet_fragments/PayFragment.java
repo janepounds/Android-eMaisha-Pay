@@ -59,11 +59,11 @@ public class PayFragment extends Fragment {
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
     String card_number,decripted_expiryDate;
 
-    private String cardNo,cvv,expiry,mobileNo,methodOfPayment;
+    private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key;
 
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
-    LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID;
+    LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID,layoutPaymentMethod;
     Spinner spPaymentMethod;
     Button saveBtn;
     FragmentManager fm;
@@ -112,6 +112,7 @@ public class PayFragment extends Fragment {
             layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
             layoutBankCards = view.findViewById(R.id.layout_bank_cards);
             spPaymentMethod = view.findViewById(R.id.sp_payment_method);
+            layoutPaymentMethod = view.findViewById(R.id.payment_method_layout);
 
         spinner_select_card = view.findViewById(R.id.spinner_select_card_wallet_pay);
         card_details_layout = view.findViewById(R.id.card_details_layout);
@@ -125,7 +126,10 @@ public class PayFragment extends Fragment {
             //from scan and pay
             if(getArguments().getString("scan_pay").equalsIgnoreCase("scan_pay")) {
                 spPaymentMethod.setEnabled(false);
-                WalletHomeActivity.selectSpinnerItemByValue(spPaymentMethod, "Wallet");
+                layoutPaymentMethod.setVisibility(View.GONE);
+                layoutAmount.setVisibility(View.VISIBLE);
+                key = getArguments().getString("scan_pay");
+//                WalletHomeActivity.selectSpinnerItemByValue(spPaymentMethod, "Wallet");
                 layoutMerchantID.setVisibility(View.VISIBLE);
             }
 
@@ -270,8 +274,11 @@ public class PayFragment extends Fragment {
     }
 
     public void processPayment(){
-
-        methodOfPayment= spPaymentMethod.getSelectedItem().toString();
+        if(key.equalsIgnoreCase("scan_pay")){
+            methodOfPayment = "Wallet";
+        }else {
+            methodOfPayment = spPaymentMethod.getSelectedItem().toString();
+        }
         if(methodOfPayment.equalsIgnoreCase("Wallet"))
             if(!validateWalletPurchase()) return;
         else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )

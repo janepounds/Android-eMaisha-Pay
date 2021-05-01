@@ -375,22 +375,6 @@ public class TransferMoney extends Fragment {
             }
         });
         addMoneyImg.setOnClickListener(v -> {
-//            if(TextUtils.isEmpty(etMobileMoneyNumber.getText())){
-//                etMobileMoneyNumber.setError("Phone Number Required");
-//                return;
-//            }else if(etMobileMoneyNumber.getText().length()!=9){
-//                etMobileMoneyNumber.setError("Invalid Phone Number");
-//                return;
-//            }
-//            if(TextUtils.isEmpty(etAmount.getText())){
-//                etAmount.setError("Amount required");
-//                return;
-//            }else if( Integer.parseInt(etAmount.getText().toString())<0 ){
-//                etAmount.setError("Invalid Amount");
-//                return;
-//            }
-
-           // double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE),context));
 
             phoneNumber = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
             String amountEntered = etAmount.getText().toString();
@@ -399,27 +383,13 @@ public class TransferMoney extends Fragment {
              account_name = etAccountName.getText().toString();//required for Bank
              account_number = etAccountNumber.getText().toString();//required for Bank
 
-            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getText().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
-
-            }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account") &&  validateMobileMoneyTransFerForm()){
-            }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
-                WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
-            }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") &&  validateMobileMoneyTransFerForm()){
-
-
-            }else{
-                Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
-            }
             String beneficary_type = spTransferTo.getSelectedItem().toString().trim();
             String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
             String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
             String request_id = WalletHomeActivity.generateRequestId();
             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-            //save beneficiary if its add new
-            if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
-                //save bank beneficiary
+
+            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getText().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
                 CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                 beneficiary_nname = encrypter.encrypt(account_name);
                 beneficiary_number = encrypter.encrypt(account_number);
@@ -430,27 +400,47 @@ public class TransferMoney extends Fragment {
                 sEtStreetAdd1 = etStreetAdd1.getText().toString();
                 sEtStreetAdd2 = etStreetAdd2.getText().toString();
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
-                requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
+
+                if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
 
 
+                }else{
 
-            }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
-                //save mobile money beneficiary
-                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                beneficiary_nname = encrypter.encrypt(beneficiary_name);
-                beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
-                bankk = "Mobile Money Bank";
-                branch = "";
-                sEtCity ="";
-                sSpCountry = "";
-                sEtStreetAdd1 = "";
-                sEtStreetAdd2 = "";
-                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
-                requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
-            }else {
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
 
-                // if (balance >= amount ) {
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
+
+
+                }
+
+            }
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account") &&  validateMobileMoneyTransFerForm()){
+
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment prev = fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -476,12 +466,66 @@ public class TransferMoney extends Fragment {
 
                 transferPreviewDailog.setArguments(args);
                 transferPreviewDailog.show(ft, "dialog");
-//            } else {
-//                Toast.makeText(getActivity(), "Insufficient Account balance!", Toast.LENGTH_LONG).show();
-//                Log.e("Error", "Insufficient Account balance!");
-//            }
-            }
 
+            }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
+
+                WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
+
+            }
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") &&  validateMobileMoneyTransFerForm()){
+
+                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                beneficiary_nname = encrypter.encrypt(beneficiary_name);
+                beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
+                bankk = "Mobile Money Bank";
+                branch = "";
+                sEtCity ="";
+                sSpCountry = "";
+                sEtStreetAdd1 = "";
+                sEtStreetAdd2 = "";
+                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
+
+                if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+
+                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+
+
+                }else{
+
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
+
+
+
+                }
+
+            }else{
+                Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
+            }
 
         });
 
