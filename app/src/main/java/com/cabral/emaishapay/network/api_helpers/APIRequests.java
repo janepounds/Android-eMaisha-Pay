@@ -849,7 +849,11 @@ public interface APIRequests {
             @Field("beneficiary_account_number") String account_number,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2
 
     );
 
@@ -888,7 +892,11 @@ public interface APIRequests {
             @Field("bank_branch") String bank_branch,
             @Field("account_name") String account_name,
             @Field("account_number") String account_number,
-            @Field("request_id")String request_id
+            @Field("request_id")String request_id,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2
 
 
     );

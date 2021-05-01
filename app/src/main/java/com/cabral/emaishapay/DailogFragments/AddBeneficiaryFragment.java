@@ -51,7 +51,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Context context;
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etStreetAdd1,etStreetAdd2,etCity;
     Spinner bank,bank_branch,spCountry;
-    String beneficiary_name,beneficiary_number;
+    String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code,bankk,branch,id,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
     TextView title;
@@ -268,6 +268,11 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+beneficiary_no.getText().toString());
                         bankk = "Mobile Money Bank";
                         branch = "";
+                        city ="";
+                        country = "";
+                        street_address_1 = "";
+                        street_address_2 = "";
+
 
                     }else{
                         //encript account_name and number
@@ -276,6 +281,11 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         beneficiary_number = encrypter.encrypt(account_number.getText().toString());
                         bankk = bank.getSelectedItem().toString();
                         branch = bank_branch.getSelectedItem().toString();
+                        city =etCity.getText().toString();
+                        country = spCountry.getSelectedItem().toString();
+                        street_address_1 = etStreetAdd1.getText().toString();
+                        street_address_2 = etStreetAdd2.getText().toString();
+
 
                     }
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -287,7 +297,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         dialogLoader.showProgressDialog();
 
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id);
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id,city,country,street_address_1,street_address_2);
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -364,7 +374,11 @@ public class AddBeneficiaryFragment extends DialogFragment {
                 beneficiary_number,
                 request_id,
                 category,
-                "saveBeneficiary");
+                "saveBeneficiary",
+                city,
+                country,
+                street_address_1,
+                street_address_2);
 
         call.enqueue(new Callback<CardResponse>() {
             @Override
@@ -523,6 +537,27 @@ public class AddBeneficiaryFragment extends DialogFragment {
         } else   if (transactionTypeSp.getSelectedItem().toString().trim().equalsIgnoreCase("bank") && account_name.getText().toString().trim().isEmpty()) {
             check = false;
             account_name.setError("Please enter account name");
+
+
+        }else   if (transactionTypeSp.getSelectedItem().toString().trim().equalsIgnoreCase("bank") && etCity.getText().toString().trim().isEmpty()) {
+            check = false;
+            etCity.setError("Please enter city");
+
+
+        }else   if (transactionTypeSp.getSelectedItem().toString().trim().equalsIgnoreCase("bank") && spCountry.getSelectedItem().toString().trim().equalsIgnoreCase("select")) {
+            check = false;
+            Toast.makeText(context,"Please select country",Toast.LENGTH_LONG).show();
+
+
+
+        }else   if (transactionTypeSp.getSelectedItem().toString().trim().equalsIgnoreCase("bank") && etStreetAdd1.getText().toString().trim().isEmpty()) {
+            check = false;
+            etStreetAdd1.setError("Please enter street address 1");
+
+
+        }else   if (transactionTypeSp.getSelectedItem().toString().trim().equalsIgnoreCase("bank") && etStreetAdd2.getText().toString().trim().isEmpty()) {
+            check = false;
+            etStreetAdd2.setError("Please enter street address 2");
 
 
         }
