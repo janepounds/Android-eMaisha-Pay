@@ -147,6 +147,9 @@
         <action
             android:id="@+id/action_payFragment_to_walletHomeFragment2"
             app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_payFragment_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
     </fragment>
     <fragment
         android:id="@+id/transferMoney"
@@ -414,6 +417,9 @@
         <action
             android:id="@+id/action_scanAndPayDialog_to_scanAndPayStep1"
             app:destination="@id/scanAndPayStep1" />
+        <action
+            android:id="@+id/action_scanAndPayDialog_to_payFragment"
+            app:destination="@id/payFragment" />
     </dialog>
     <fragment
         android:id="@+id/scanAndPayStep1"
