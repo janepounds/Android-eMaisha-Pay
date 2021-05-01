@@ -120,6 +120,18 @@ public class PayFragment extends Fragment {
         layoutMerchantID = view.findViewById(R.id.layout_pay_merchant_id);
         layoutAmount = view.findViewById(R.id.layout_pay_merchant_amount);
 
+
+        if(getArguments()!=null){
+            //from scan and pay
+            if(getArguments().getString("scan_pay").equalsIgnoreCase("scan_pay")) {
+                spPaymentMethod.setEnabled(false);
+                WalletHomeActivity.selectSpinnerItemByValue(spPaymentMethod, "Wallet");
+                layoutMerchantID.setVisibility(View.VISIBLE);
+            }
+
+
+
+        }
             
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
             @Override

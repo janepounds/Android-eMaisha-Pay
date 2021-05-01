@@ -160,7 +160,9 @@ public class WalletHomeActivity extends AppCompatActivity{
                    WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_scanAndPayDialog);
                 } else if (currentFragment == R.id.walletRewardsFragment2)  {
                     WalletHomeActivity.navController.navigate(R.id.action_walletRewardsFragment2_to_scanAndPayDialog);
-                }
+                }else if (currentFragment == R.id.acceptPaymentFragment)  {
+                        WalletHomeActivity.navController.navigate(R.id.action_acceptPaymentFragment_to_scanAndPayDialog);
+                    }
 
 
 

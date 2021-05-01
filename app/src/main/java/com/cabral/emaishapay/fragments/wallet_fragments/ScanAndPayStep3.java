@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,6 +89,10 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
+        binding.pinCode1Edt.setTransformationMethod(new MyPasswordTransformationMethod());
+        binding.pinCode2Edt.setTransformationMethod(new MyPasswordTransformationMethod());
+        binding.pinCode3Edt.setTransformationMethod(new MyPasswordTransformationMethod());
+        binding.pinCode4Edt.setTransformationMethod(new MyPasswordTransformationMethod());
 
         return binding.getRoot();
     }
@@ -417,4 +424,29 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
 
         });
     }
+    public static class MyPasswordTransformationMethod extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return new PasswordCharSequence(source);
+        }
+
+        private static class PasswordCharSequence implements CharSequence {
+            private final CharSequence mSource;
+            public PasswordCharSequence(CharSequence source) {
+                mSource = source; // Store char sequence
+            }
+            public char charAt(int index) {
+                return '⚫'; // This is the important part
+            }
+            public int length() {
+                return mSource.length(); // Return default
+            }
+            @NotNull
+            public CharSequence subSequence(int start, int end) {
+                return mSource.subSequence(start, end); // Return default
+            }
+        }
+    };
+
+
 }

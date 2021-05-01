@@ -73,9 +73,8 @@
                             android:id="@+id/arrow_cash_in"
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
-                            android:src="@drawable/ic_cashin"
-                            android:visibility="visible"
-                            android:rotation="180"/>
+                            android:src="@drawable/ic_diagonal_arrow"
+                            android:visibility="visible"/>
                         <ImageView
                             android:id="@+id/img_mobile_money"
                             android:layout_width="37.82dp"
@@ -159,9 +158,8 @@
                             android:id="@+id/arrow_cash_out"
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
-                            android:src="@drawable/ic_diagonal_arrow"
-                            android:visibility="visible"
-                            android:rotation="180"/>
+                            android:src="@drawable/ic_cashin"
+                            android:visibility="visible"/>
                         <ImageView
                             android:id="@+id/img_bank"
                             android:layout_width="37.82dp"

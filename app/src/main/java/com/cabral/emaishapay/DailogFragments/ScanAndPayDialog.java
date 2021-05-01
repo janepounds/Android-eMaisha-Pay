@@ -47,6 +47,7 @@ public class ScanAndPayDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.new_scan_pay_floating_button, null);
         FloatingActionButton scan = view.findViewById(R.id.fab_scan);
+        FloatingActionButton epay = view.findViewById(R.id.fab_emaisha_pay);
 
         scan.setOnClickListener(v -> {
             ScanAndPayDialog.this.dismiss();
@@ -56,6 +57,19 @@ public class ScanAndPayDialog extends DialogFragment {
 
 
             WalletHomeActivity.navController.navigate(R.id.action_scanAndPayDialog_to_scanAndPayStep1);
+
+        });
+
+        epay.setOnClickListener(v -> {
+            ScanAndPayDialog.this.dismiss();
+
+
+            //call pay fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("scan_pay","scan_pay");
+
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayDialog_to_payFragment,bundle);
+
 
         });
 

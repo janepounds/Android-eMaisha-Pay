@@ -30,7 +30,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
 
@@ -39,7 +38,6 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
-import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
@@ -66,23 +64,24 @@ public class TransferMoney extends Fragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layoutBeneficiary,layoutAmount,layoutMobileMoneyBeneficiaries;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
-    Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
+    AutoCompleteTextView spSelectBank;
+    Spinner spTransferTo, spSelectBankBranch,spBeneficiary,spCountry;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
 
     FragmentManager fm;
     EditText etMobileMoneyNumber;
-    EditText etBeneficiaryName;
+    EditText etBeneficiaryName,etStreetAdd1,etStreetAdd2,etCity;
     private Context context;
     private Toolbar toolbar;
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
-    String action, beneficiary_name;
+    String action, beneficiary_name,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
-    ArrayList<String> beneficiaries = new ArrayList<>();
+
     OtpDialogLoader otpDialogLoader;
     float amount;
-    String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number;
+    String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number,beneficiary_bank_phone_number;
 
     public TransferMoney() {
     }
@@ -148,6 +147,10 @@ public class TransferMoney extends Fragment {
         spBeneficiary = view.findViewById(R.id.sp_beneficiary);
         layoutAmount = view.findViewById(R.id.transfer_amount);
         layoutMobileMoneyBeneficiaries = view.findViewById(R.id.layout_mobile_money);
+        etCity = view.findViewById(R.id.et_city);
+        etStreetAdd1 = view.findViewById(R.id.et_street_address_1);
+        etStreetAdd2 = view.findViewById(R.id.et_street_address_2);
+        spCountry = view.findViewById(R.id.sp_country);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -210,6 +213,8 @@ public class TransferMoney extends Fragment {
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
                     layoutAmount.setVisibility(View.VISIBLE);
+                    loadTransferBanks();
+                    requestFilteredBeneficiaries();
                 }
                 else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("mobile money")){
 
@@ -239,10 +244,10 @@ public class TransferMoney extends Fragment {
         });
 
 
-        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+
+        spBeneficiary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 try {
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
@@ -250,14 +255,14 @@ public class TransferMoney extends Fragment {
                 } catch (Exception e) {
 
                 }
-
                 if (spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
                     //show bank beneficiary
                     layoutBank.setVisibility(View.VISIBLE);
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
+                    layoutMobileNumber.setVisibility(View.VISIBLE);
+                    mobile_numberTxt.setText("Beneficiary Mobile");
 
-                }
-                else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
+                }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
                     //show mobile money beneficiary
                     layoutBank.setVisibility(View.GONE);
                     layoutMobileMoneyBeneficiaries.setVisibility(View.VISIBLE);
@@ -265,16 +270,13 @@ public class TransferMoney extends Fragment {
                     mobile_numberTxt.setText("Beneficiary Mobile");
 
                 }
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        };
-        spBeneficiary.setOnItemSelectedListener(onItemSelectedListener);
+        });
 
 
 
@@ -300,7 +302,7 @@ public class TransferMoney extends Fragment {
                         }
 
 
-                       if(bank.getName().equalsIgnoreCase(spSelectBank.getSelectedItem().toString())){
+                       if(bank.getName().equalsIgnoreCase(spSelectBank.getText().toString())){
                            selected_bank_code=bank.getCode();
                            getTransferBankBranches(bank.getId());
                        }
@@ -309,6 +311,25 @@ public class TransferMoney extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spSelectBank.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                spSelectBank.showDropDown();
+
 
             }
         });
@@ -329,6 +350,23 @@ public class TransferMoney extends Fragment {
                             selected_branch_code=branch.getBranchCode();
                         }
                     }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+                }
+
             }
 
             @Override
@@ -361,7 +399,7 @@ public class TransferMoney extends Fragment {
              account_name = etAccountName.getText().toString();//required for Bank
              account_number = etAccountNumber.getText().toString();//required for Bank
 
-            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getSelectedItem().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
+            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getText().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
 
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account") &&  validateMobileMoneyTransFerForm()){
@@ -385,8 +423,13 @@ public class TransferMoney extends Fragment {
                 CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                 beneficiary_nname = encrypter.encrypt(account_name);
                 beneficiary_number = encrypter.encrypt(account_number);
-                bankk = spSelectBank.getSelectedItem().toString();
+                bankk = spSelectBank.getText().toString();
                 branch = spSelectBankBranch.getSelectedItem().toString();
+                sEtCity =etCity.getText().toString();
+                sSpCountry = spCountry.getSelectedItem().toString();
+                sEtStreetAdd1 = etStreetAdd1.getText().toString();
+                sEtStreetAdd2 = etStreetAdd2.getText().toString();
+                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
                 requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
 
@@ -398,6 +441,11 @@ public class TransferMoney extends Fragment {
                 beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
                 bankk = "Mobile Money Bank";
                 branch = "";
+                sEtCity ="";
+                sSpCountry = "";
+                sEtStreetAdd1 = "";
+                sEtStreetAdd2 = "";
+                beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
                 requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
             }else {
@@ -468,6 +516,7 @@ public class TransferMoney extends Fragment {
                         }
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, Banknames);
+                        spSelectBank.setThreshold(1);
                         spSelectBank.setAdapter(adapter);
 
 
@@ -558,7 +607,7 @@ public class TransferMoney extends Fragment {
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
-
+                      final   ArrayList<String> beneficiaries = new ArrayList<>();
                         try {
 
                             beneficiariesList = response.body().getBeneficiariesList();
@@ -569,7 +618,7 @@ public class TransferMoney extends Fragment {
 
                                 //decript
                                 CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                                beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
+                             final String   beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
                                 beneficiaries.add(beneficiary_name);
 
                             }
@@ -721,7 +770,13 @@ public class TransferMoney extends Fragment {
                 beneficiary_number,
                 request_id,
                 category,
-                "saveBeneficiary");
+                "saveBeneficiary",
+                beneficiary_bank_phone_number,
+                sEtCity,
+                sSpCountry,
+                sEtStreetAdd1,
+                sEtStreetAdd2
+                );
 
         call.enqueue(new Callback<CardResponse>() {
             @Override

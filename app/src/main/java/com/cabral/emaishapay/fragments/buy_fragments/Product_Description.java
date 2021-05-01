@@ -581,8 +581,8 @@ public class Product_Description extends Fragment  {
         }
 
         String description = productDetails.getProductsDescription();
-        String styleSheet = "<style> " + "@font-face {font-family: 'JosefinSans-Regular'; src: url('file:///android_asset/fonts/JosefinSans-Regular.ttf');} " +
-                "body{background:#FFFFFF; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
+        String styleSheet = "<style> " + "@font-face {font-family: 'nunito'; src: url('file:///android_asset/font/nunito.ttf');} " +
+                "body{background:#FFFFFF; margin:0; padding:0;font-family: 'nunito';} " +
                 "p{color:#757575;} " +
                 "img{display:inline; height:auto; max-width:100%;}" +
                 "</style>";

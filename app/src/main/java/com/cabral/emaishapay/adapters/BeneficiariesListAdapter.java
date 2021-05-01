@@ -155,10 +155,15 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                             String  bank = data.getBank();
                             String bank_branch  = data.getBank_branch();
                             String id = data.getId();
-                            updateBeneficiary(data.getTransaction_type(), finalDecripted_name, finalDecripted_number,bank,bank_branch,id);
+                            String city = data.getCity();
+                            String country = data.getCountry();
+                            String address1 = data.getStreet_address_1();
+                            String address2 = data.getStreet_address_2();
+                            updateBeneficiary(data.getTransaction_type(), finalDecripted_name, finalDecripted_number,bank,bank_branch,id,city,country,address1,address2);
 
 
                     }
@@ -234,7 +239,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     }
 
-    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String beneficiary_no,String bank,String branch,String id){
+    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String beneficiary_no,String bank,String branch,String id,String city,String country,String address1,String address2){
         //call add beneficiary fragment
         //nvigate to add beneficiaries fragment
         FragmentTransaction ft = fm.beginTransaction();
@@ -252,7 +257,10 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         bundle.putString("beneficiary_no",beneficiary_no);
         bundle.putString("bank",bank);
         bundle.putString("branch",branch);
-        bundle.putString("id",id);
+        bundle.putString("city",city);
+        bundle.putString("country",country);
+        bundle.putString("address1",address1);
+        bundle.putString("address2",address2);
         addCardDialog.setArguments(bundle);
         addCardDialog.show( ft, "dialog");
 

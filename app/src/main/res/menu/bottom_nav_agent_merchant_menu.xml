@@ -9,24 +9,25 @@
         android:titleCondensed="Home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/walletShopFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_bn_store"
-        android:title="SHOP"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/walletAcceptPaymentFragment"
         android:enabled="true"
         android:icon="@drawable/ic_payments_black_24dp"
         android:title="ACCEPT PAYMENT"
         app:showAsAction="ifRoom" />
 
-<!--    <item-->
-<!--        android:id="@+id/walletSettlementFragment"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_pay24"-->
-<!--        android:title="SETTLEMENT"-->
-<!--        app:showAsAction="ifRoom"/>-->
+
+        <item
+            android:enabled="true"
+            android:title=""
+            app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/walletShopFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_bn_store"
+        android:title="SHOP"
+        app:showAsAction="ifRoom"/>
+
 
     <item
         android:id="@+id/walletAccountFragment_agent"

@@ -849,7 +849,12 @@ public interface APIRequests {
             @Field("beneficiary_account_number") String account_number,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("beneficiary_phone") String beneficiary_phone,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2
 
     );
 
@@ -888,7 +893,12 @@ public interface APIRequests {
             @Field("bank_branch") String bank_branch,
             @Field("account_name") String account_name,
             @Field("account_number") String account_number,
-            @Field("request_id")String request_id
+            @Field("request_id")String request_id,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2,
+            @Field("beneficiary_phone") String beneficiary_phone
 
 
     );
@@ -1003,6 +1013,48 @@ public interface APIRequests {
             @Field("service_code") String service_code
 
     );
+
+
+    @FormUrlEncoded
+    @POST("wallet/agent/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
+    //get beneficiaries info
+    @FormUrlEncoded
+    @POST("wallet/security-qns/update")
+    Call<SecurityQnsResponse>updateSecurityQns(
+            @Header("Authorization") String token,
+            @Field("phoneNumber") String phoneNumber,
+            @Field("sec_qn_one") String sec_qn_one,
+            @Field("sec_qn_two") String sec_qn_two,
+            @Field("sec_qn_three") String sec_qn_three,
+            @Field("sec_ans_one") String sec_ans_one,
+            @Field("sec_ans_two") String sec_ans_two,
+            @Field("sec_ans_three") String sec_ans_three,
+            @Field("request_id") String request_id,
+            @Field("action_id") String action_id);
 
 
 }
