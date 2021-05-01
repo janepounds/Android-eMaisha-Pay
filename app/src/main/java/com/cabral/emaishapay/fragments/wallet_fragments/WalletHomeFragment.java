@@ -176,7 +176,7 @@ public class WalletHomeFragment extends Fragment {
                   dialog.setCancelable(true);
 
                   ImageView close = dialogView.findViewById(R.id.coming_soon_close);
-
+                  Button ok = dialogView.findViewById(R.id.button_submit);
 
 
 
@@ -188,6 +188,13 @@ public class WalletHomeFragment extends Fragment {
                           alertDialog.dismiss();
                       }
                   });
+                  ok.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          alertDialog.dismiss();
+                      }
+                  });
+
 
                   alertDialog.show();
 
