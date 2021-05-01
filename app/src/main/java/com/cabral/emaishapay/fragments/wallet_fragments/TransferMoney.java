@@ -455,7 +455,7 @@ public class TransferMoney extends Fragment {
             String request_id = WalletHomeActivity.generateRequestId();
             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
             //save beneficiary if its add new
-            if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") ) {
+            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") || spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") ) {
                 //save bank beneficiary
                 requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
             }else{
