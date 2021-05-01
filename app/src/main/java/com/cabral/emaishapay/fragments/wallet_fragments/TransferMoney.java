@@ -212,6 +212,7 @@ public class TransferMoney extends Fragment {
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutBeneficiary.setVisibility(View.VISIBLE);
                     layoutAmount.setVisibility(View.VISIBLE);
+                    loadTransferBanks();
                     requestFilteredBeneficiaries();
                 }
                 else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("mobile money")){
