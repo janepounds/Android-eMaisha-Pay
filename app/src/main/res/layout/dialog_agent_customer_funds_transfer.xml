@@ -318,7 +318,7 @@
                         android:background="@drawable/rectangular_blue_solid"
                         android:orientation="horizontal">
 
-                        <Spinner
+                        <AutoCompleteTextView
                             android:id="@+id/sp_bank"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
