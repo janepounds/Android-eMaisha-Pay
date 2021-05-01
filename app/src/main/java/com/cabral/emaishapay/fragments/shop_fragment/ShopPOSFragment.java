@@ -107,11 +107,18 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
         binding.imgCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if( TextUtils.isEmpty(binding.posCharge.getText()) ){
+                    binding.posCharge.setError("Charge amount required");
+                    return;
+                }else if( binding.posCharge.getText().length()<2 &&  Integer.parseInt( binding.posCharge.getText().toString() )<0 ){
+                    binding.posCharge.setError("Invalid Charge amount");
+                    return;
+                }
+
                 chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
                 Bundle args=new Bundle();
                 args.putDouble("Charge", chargeAmount );
                 ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
-
 
             }
         });
