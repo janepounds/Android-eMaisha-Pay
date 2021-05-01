@@ -903,6 +903,10 @@
         <item>What was your favorite sport in high school?</item>
 
     </string-array>
+    <string-array name="bank_country">
+        <item>Select</item>
+        <item>Uganda</item>
+    </string-array>
 
 
 </resources>

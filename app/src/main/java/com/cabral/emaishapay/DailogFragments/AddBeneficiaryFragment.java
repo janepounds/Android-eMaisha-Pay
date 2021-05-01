@@ -45,15 +45,15 @@ import retrofit2.Response;
 
 public class AddBeneficiaryFragment extends DialogFragment {
     private static final String TAG = "AddBeneficiaryFragment";
-    LinearLayout bankLayout, mobileMoneyLayout;
+    LinearLayout bankLayout, mobileMoneyLayout,beneficiaryNameLayout,beneficiaryMobileLayout;
     Spinner transactionTypeSp;
     Button submit;
     Context context;
-    EditText beneficiary_name_mm,account_name,beneficiary_no,account_number;
-    Spinner bank,bank_branch;
+    EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etStreetAdd1,etStreetAdd2,etCity;
+    Spinner bank,bank_branch,spCountry;
     String beneficiary_name,beneficiary_number;
     Bank[] BankList; BankBranch[] bankBranches;
-    String selected_bank_code,selected_branch_code,bankk,branch,id;
+    String selected_bank_code,selected_branch_code,bankk,branch,id,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
     TextView title;
     OtpDialogLoader otpDialogLoader;
     DialogLoader dialogLoader;
@@ -92,6 +92,12 @@ public class AddBeneficiaryFragment extends DialogFragment {
         bank = view.findViewById(R.id.sp_bank);
         bank_branch = view.findViewById(R.id.sp_bank_branch);
         title = view.findViewById(R.id.agent_bal_inquiry_title_label);
+        etCity = view.findViewById(R.id.et_city);
+        etStreetAdd1 = view.findViewById(R.id.et_street_address_1);
+        etStreetAdd2 = view.findViewById(R.id.et_street_address_2);
+        spCountry = view.findViewById(R.id.sp_country);
+        beneficiaryMobileLayout = view.findViewById(R.id.layout_beneficiary_mobile);
+        beneficiaryNameLayout = view.findViewById(R.id.layout_beneficiary_name);
 
         dialogLoader=new DialogLoader(getContext());
         if(getArguments()!=null){
@@ -102,10 +108,16 @@ public class AddBeneficiaryFragment extends DialogFragment {
              bankk = getArguments().getString("bank");
              branch = getArguments().getString("branch");
              id = getArguments().getString("id");
+            sEtCity = getArguments().getString("sEtCity");
+            sEtStreetAdd1 = getArguments().getString("sEtStreetAdd1");
+            sEtStreetAdd2 = getArguments().getString("sEtStreetAdd2");
+            sSpCountry = getArguments().getString("sSpCountry");
             Log.d(TAG, "onCreateDialog: number"+beneficiary_number_+"name"+beneficiary_name_+"id"+id);
             if(beneficiary_type.equalsIgnoreCase("bank")){
 
-                mobileMoneyLayout.setVisibility(View.GONE);
+
+                beneficiaryNameLayout.setVisibility(View.GONE);
+                beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.VISIBLE);
                 account_name.setText(beneficiary_name_);
                 account_number.setText(beneficiary_number_);
@@ -113,7 +125,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
                 WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
 
             }else{
-                mobileMoneyLayout.setVisibility(View.VISIBLE);
+                beneficiaryNameLayout.setVisibility(View.VISIBLE);
+                beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.GONE);
 
                 if(beneficiary_name_!=null && beneficiary_number_!=null){
@@ -146,15 +159,18 @@ public class AddBeneficiaryFragment extends DialogFragment {
                     } catch (Exception e) {}
 
                     if(position==0){
-                        mobileMoneyLayout.setVisibility(View.GONE);
+                        beneficiaryNameLayout.setVisibility(View.GONE);
+                        beneficiaryMobileLayout.setVisibility(View.GONE);
                         bankLayout.setVisibility(View.GONE);
                     }
                     else if(position==1){
-                        mobileMoneyLayout.setVisibility(View.VISIBLE);
+                        beneficiaryNameLayout.setVisibility(View.VISIBLE);
+                        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                         bankLayout.setVisibility(View.GONE);
                     }
                     else if(position==2){
-                        mobileMoneyLayout.setVisibility(View.GONE);
+                        beneficiaryNameLayout.setVisibility(View.GONE);
+                        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                         bankLayout.setVisibility(View.VISIBLE);
                     }
 
@@ -221,6 +237,23 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                 }
             });
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         submit.setOnClickListener(new View.OnClickListener() {
