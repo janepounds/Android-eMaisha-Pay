@@ -4,7 +4,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="#f8f8ff"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
@@ -26,8 +26,7 @@
 
        <androidx.constraintlayout.widget.ConstraintLayout
            android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_gravity="center_vertical">
+           android:layout_height="0dp">
         <ImageView
             android:id="@+id/logo"
             android:src="@drawable/logo_vector"
@@ -46,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:text="eMaisha Pay"
             android:textColor="@color/colorPrimary"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/text_instant_loans"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="REWARDS"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,8 +100,8 @@
 
         <ImageView
             android:id="@+id/img_referral"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/background_white_with_blue_border"
             android:padding="11dp"
@@ -115,7 +114,7 @@
             android:layout_toEndOf="@id/img_referral"
             android:text="Get Referral Rewards"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -127,7 +126,7 @@
             android:maxLines="2"
             android:text="Refer friends to use eMaisha Pay and earn Points when they use your referral code to signup"
             android:textColor="#77869E"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
 
     </RelativeLayout>
@@ -144,8 +143,8 @@
 
         <ImageView
             android:id="@+id/img_transact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/background_white_with_blue_border"
             android:padding="11dp"
@@ -158,7 +157,7 @@
             android:layout_toEndOf="@id/img_transact"
             android:text="Transact to Earn"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -170,7 +169,7 @@
             android:maxLines="2"
             android:text="Transact using eMaisha Pay online and in-store to earn reward points"
             android:textColor="#77869E"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
 
     </RelativeLayout>
@@ -187,8 +186,8 @@
 
         <ImageView
             android:id="@+id/img_redeem_pts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/background_white_with_blue_border"
             android:padding="11dp"
@@ -201,7 +200,7 @@
             android:layout_toEndOf="@id/img_redeem_pts"
             android:text="Redeem Points"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -213,7 +212,7 @@
             android:maxLines="2"
             android:text="Use your points to purchase goods online and in-store using emaisha Pay"
             android:textColor="#77869E"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
 
     </RelativeLayout>
@@ -238,12 +237,12 @@
             android:layout_marginBottom="30dp"
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"
             android:background="@drawable/outline_primary_thicker"
             android:text="COMING SOON"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:maxLines="3"
             android:textAlignment="center"

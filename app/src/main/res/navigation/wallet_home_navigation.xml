@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_acceptPaymentFragment_to_walletTransactionsListFragment2"
             app:destination="@id/walletTransactionsListFragment" />
+        <action
+            android:id="@+id/action_acceptPaymentFragment_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
 
     </fragment>
 

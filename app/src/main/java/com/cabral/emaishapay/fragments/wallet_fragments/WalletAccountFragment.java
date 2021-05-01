@@ -101,7 +101,8 @@ public class WalletAccountFragment extends Fragment {
             dialog.setView(dialogView);
             dialog.setCancelable(true);
 
-            ImageView editUserDetails = dialogView.findViewById(R.id.edit_personal_info);
+            Button btn_edit = dialogView.findViewById(R.id.btn_edit);
+            Button btn_ok = dialogView.findViewById(R.id.btn_ok);
             TextView textViewDob = dialogView.findViewById(R.id.text_view_dob);
             TextView textViewGender = dialogView.findViewById(R.id.text_view_gender);
             TextView textViewNok = dialogView.findViewById(R.id.text_view_nok);
@@ -115,7 +116,7 @@ public class WalletAccountFragment extends Fragment {
 
 
             final android.app.AlertDialog alertDialog = dialog.create();
-            editUserDetails.setOnClickListener(view1 -> {
+            btn_edit.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
             bundle.putString("dob",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
             bundle.putString("gender",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_GENDER, context));
@@ -128,6 +129,9 @@ public class WalletAccountFragment extends Fragment {
             alertDialog.dismiss();
 
         });
+            btn_ok.setOnClickListener(view13->{
+                alertDialog.dismiss();
+            });
             alertDialog.show();
 
         });
