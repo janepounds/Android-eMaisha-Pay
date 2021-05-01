@@ -54,7 +54,7 @@ public class StartAppRequests {
     private static final String TAG = "StartAppRequests";
     private List<Regions> dataList = new ArrayList<>();
     private static BuyInputsDB_Handler db_handler;
-    private Context context;
+    private static Context context;
 
     private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
 
@@ -112,7 +112,7 @@ public class StartAppRequests {
 
     }
 
-    public void SyncProductData() {
+    public static  void SyncProductData() {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
@@ -146,9 +146,9 @@ public class StartAppRequests {
 
     }
 
-    public void saveProductList(String product_id,String unique_product_id,String user_id,String product_manufacturer,
-                                String product_name,String product_code,String  product_category,String product_buy_price, String product_sell_price,
-                                String product_supplier,String product_image,String product_stock,String product_unit,String sync_status) {
+    public static void saveProductList(String product_id, String unique_product_id, String user_id, String product_manufacturer,
+                                       String product_name, String product_code, String product_category, String product_buy_price, String product_sell_price,
+                                       String product_supplier, String product_image, String product_stock, String product_unit, String sync_status) {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 

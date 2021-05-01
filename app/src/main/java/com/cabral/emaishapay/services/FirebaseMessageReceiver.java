@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.messaging;
+package com.cabral.emaishapay.services;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
