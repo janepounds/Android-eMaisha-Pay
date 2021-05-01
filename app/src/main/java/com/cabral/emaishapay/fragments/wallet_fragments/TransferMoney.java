@@ -66,18 +66,18 @@ public class TransferMoney extends Fragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layoutBeneficiary,layoutAmount,layoutMobileMoneyBeneficiaries;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
-    Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary;
+    Spinner spTransferTo, spSelectBank,spSelectBankBranch,spBeneficiary,spCountry;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
 
     FragmentManager fm;
     EditText etMobileMoneyNumber;
-    EditText etBeneficiaryName;
+    EditText etBeneficiaryName,etStreetAdd1,etStreetAdd2,etCity;
     private Context context;
     private Toolbar toolbar;
     DialogLoader dialogLoader;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code;
-    String action, beneficiary_name;
+    String action, beneficiary_name,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
 
     OtpDialogLoader otpDialogLoader;
@@ -148,6 +148,10 @@ public class TransferMoney extends Fragment {
         spBeneficiary = view.findViewById(R.id.sp_beneficiary);
         layoutAmount = view.findViewById(R.id.transfer_amount);
         layoutMobileMoneyBeneficiaries = view.findViewById(R.id.layout_mobile_money);
+        etCity = view.findViewById(R.id.et_city);
+        etStreetAdd1 = view.findViewById(R.id.et_street_address_1);
+        etStreetAdd2 = view.findViewById(R.id.et_street_address_2);
+        spCountry = view.findViewById(R.id.sp_country);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -255,6 +259,8 @@ public class TransferMoney extends Fragment {
                     //show bank beneficiary
                     layoutBank.setVisibility(View.VISIBLE);
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
+                    layoutMobileNumber.setVisibility(View.VISIBLE);
+                    mobile_numberTxt.setText("Beneficiary Mobile");
 
                 }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
                     //show mobile money beneficiary
@@ -325,6 +331,23 @@ public class TransferMoney extends Fragment {
                             selected_branch_code=branch.getBranchCode();
                         }
                     }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+                }
+
             }
 
             @Override
