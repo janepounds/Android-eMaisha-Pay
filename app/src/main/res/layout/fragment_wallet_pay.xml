@@ -116,6 +116,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/payment_method_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
