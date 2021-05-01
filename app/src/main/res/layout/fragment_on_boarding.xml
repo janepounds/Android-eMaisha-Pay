@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="25dp"
                             android:background="@drawable/round_button_dark_green"
-                            android:text="Get Started"
+                            android:text="Sign Up"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             android:textAllCaps="false"
