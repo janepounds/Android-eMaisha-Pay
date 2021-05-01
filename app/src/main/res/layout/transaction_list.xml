@@ -74,7 +74,8 @@
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
                             android:src="@drawable/ic_cashin"
-                            android:visibility="visible"/>
+                            android:visibility="visible"
+                            android:rotation="180"/>
                         <ImageView
                             android:id="@+id/img_mobile_money"
                             android:layout_width="37.82dp"
@@ -159,7 +160,8 @@
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
                             android:src="@drawable/ic_diagonal_arrow"
-                            android:visibility="visible"/>
+                            android:visibility="visible"
+                            android:rotation="180"/>
                         <ImageView
                             android:id="@+id/img_bank"
                             android:layout_width="37.82dp"

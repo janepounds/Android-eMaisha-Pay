@@ -211,7 +211,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:background="@drawable/rounded_corners_button"
-                                android:text="@string/next"
+                                android:text="Sign In"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/button_text_size"

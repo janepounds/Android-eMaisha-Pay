@@ -449,7 +449,7 @@ public class WalletAccountFragment extends Fragment {
         if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
             binding.textAccountType.setText("Agent");
             binding.textChangeAccountType.setVisibility(View.GONE);
-            binding.cardViewQrCode.setVisibility(View.VISIBLE);
+            binding.cardViewQrCode.setVisibility(View.GONE);
         }
 
         else if(role.equalsIgnoreCase("merchant")){
@@ -814,7 +814,7 @@ public class WalletAccountFragment extends Fragment {
 
             // change the login status to false
             prefsManager.logOutUser();
-            ClearUserCart();
+
             // check if has been changed to false
             if (!prefsManager.isUserLoggedIn()) {
                 Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
@@ -831,9 +831,5 @@ public class WalletAccountFragment extends Fragment {
         alertDialog.show();
     }
 
-    public static void ClearUserCart() {
-        User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-        user_cart_BuyInputs_db.clearCart();
-    }
 
 }

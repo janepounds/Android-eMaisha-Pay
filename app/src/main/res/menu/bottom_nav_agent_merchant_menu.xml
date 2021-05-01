@@ -19,7 +19,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_payments_black_24dp"
         android:title="ACCEPT PAYMENT"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 <!--    <item-->
 <!--        android:id="@+id/walletSettlementFragment"-->
