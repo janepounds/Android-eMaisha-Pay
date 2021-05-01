@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.databinding.ActivityShopBinding;
 
+import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -90,6 +92,15 @@ public class ShopActivity extends AppCompatActivity {
 
             }
         });
+
+        AppExecutors.getInstance().NetworkIO().execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        StartAppRequests.SyncProductData();
+                    }
+                }
+        );
 
 
     }
