@@ -13,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -60,8 +63,9 @@ public class AddBeneficiaryFragment extends DialogFragment {
     Spinner transactionTypeSp;
     Button submit;
     Context context;
+    AutoCompleteTextView bank;
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etStreetAdd1,etStreetAdd2,etCity;
-    Spinner bank,bank_branch,spCountry;
+    Spinner bank_branch,spCountry;
     String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number;
     Bank[] BankList; BankBranch[] bankBranches;
     String selected_bank_code,selected_branch_code,bankk,branch,id,sEtStreetAdd1,sEtStreetAdd2,sEtCity,sSpCountry;
@@ -135,8 +139,8 @@ public class AddBeneficiaryFragment extends DialogFragment {
                 etCity.setText(sEtCity);
                 etStreetAdd2.setText(sEtStreetAdd2);
                 etStreetAdd1.setText(sEtStreetAdd1);
+                bank.setText(bankk);
                 WalletHomeActivity.selectSpinnerItemByValue(spCountry,sSpCountry);
-                WalletHomeActivity.selectSpinnerItemByValue(bank,bankk);
                 WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
 
             }else{
@@ -200,6 +204,25 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
         }
 
+        bank.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                bank.showDropDown();
+
+
+            }
+        });
+
         bank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -215,7 +238,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
 
                 if(BankList!=null)
                     for (Bank bank_: BankList) {
-                        if(bank_.getName().equalsIgnoreCase(bank.getSelectedItem().toString())){
+                        if(bank_.getName().equalsIgnoreCase(bank.getText().toString())){
                             selected_bank_code=bank_.getCode();
                             getTransferBankBranches(bank_.getId());
 
@@ -298,7 +321,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                          beneficiary_name = encrypter.encrypt(account_name.getText().toString());
                         beneficiary_number = encrypter.encrypt(account_number.getText().toString());
-                        bankk = bank.getSelectedItem().toString();
+                        bankk = bank.getText().toString();
                         branch = bank_branch.getSelectedItem().toString();
                         city =etCity.getText().toString();
                         country = spCountry.getSelectedItem().toString();
@@ -564,6 +587,7 @@ public class AddBeneficiaryFragment extends DialogFragment {
                         }
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, Banknames);
+                        bank.setThreshold(1);
                         bank.setAdapter(adapter);
 
 
