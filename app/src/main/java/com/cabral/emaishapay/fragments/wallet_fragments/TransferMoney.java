@@ -30,7 +30,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
 import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
 
@@ -39,7 +38,6 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
-import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;

@@ -108,10 +108,10 @@ public class AddBeneficiaryFragment extends DialogFragment {
              bankk = getArguments().getString("bank");
              branch = getArguments().getString("branch");
              id = getArguments().getString("id");
-            sEtCity = getArguments().getString("sEtCity");
-            sEtStreetAdd1 = getArguments().getString("sEtStreetAdd1");
-            sEtStreetAdd2 = getArguments().getString("sEtStreetAdd2");
-            sSpCountry = getArguments().getString("sSpCountry");
+            sEtCity = getArguments().getString("city");
+            sEtStreetAdd1 = getArguments().getString("address1");
+            sEtStreetAdd2 = getArguments().getString("address2");
+            sSpCountry = getArguments().getString("country");
             Log.d(TAG, "onCreateDialog: number"+beneficiary_number_+"name"+beneficiary_name_+"id"+id);
             if(beneficiary_type.equalsIgnoreCase("bank")){
 

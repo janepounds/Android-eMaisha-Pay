@@ -65,8 +65,10 @@ public class ScanAndPayDialog extends DialogFragment {
 
 
             //call pay fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("scan_pay","scan_pay");
 
-            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayDialog_to_payFragment);
+            WalletHomeActivity.navController.navigate(R.id.action_scanAndPayDialog_to_payFragment,bundle);
 
 
         });
