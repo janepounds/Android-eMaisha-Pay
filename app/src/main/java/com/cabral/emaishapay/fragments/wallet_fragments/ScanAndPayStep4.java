@@ -3,6 +3,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ScanAndPayStep4 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding= DataBindingUtil.inflate(inflater, R.layout.layout_scan_and_pay_process_step_4,container,false);
+
 
 
         if(getArguments()!=null){
@@ -66,4 +68,5 @@ public class ScanAndPayStep4 extends Fragment {
 
     private void rateMerchant() {
     }
+
 }
