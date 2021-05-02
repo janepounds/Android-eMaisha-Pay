@@ -5,6 +5,7 @@ import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
+import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -835,10 +836,10 @@ public interface APIRequests {
     );
 
 
-    // //update card info
+    // save Mobile Money Beneficiary
     @FormUrlEncoded
     @POST("wallet/add_beneficiary")
-    Call<CardResponse>saveBeneficiary(
+    Call<GeneralWalletResponse>saveBeneficiary(
             @Header("Authorization")String token,
             @Field("otp") String user_id,
             @Field("identifier") String otp,
@@ -857,11 +858,34 @@ public interface APIRequests {
             @Field("street_address_2") String street_address_2
 
     );
+    //save Bank beneficiary
+    @FormUrlEncoded
+    @POST("wallet/add/bank-beneficiary")
+    Call<GeneralWalletResponse>saveBankBeneficiary(
+            @Header("Authorization")String token,
+            @Field("otp") String user_id,
+            @Field("identifier") String otp,
+            @Field("beneficiaryType") String beneficary_type,
+            @Field("bankName") String bank,
+            @Field("bankBranch") String bank_branch,
+            @Field("accountName") String account_name,
+            @Field("accountNumber") String account_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("mobileNumber") String beneficiary_phone,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("streetAddressLine1") String street_address_1,
+            @Field("streetAddressLine2") String street_address_2
+
+    );
+
 
     // request save Beneficiary Otp
     @FormUrlEncoded
     @POST("wallet/customer-request/add-beneficiary")
-    Call<CardResponse>requestSaveBeneficiary(
+    Call<GeneralWalletResponse>requestSaveBeneficiary(
             @Header("Authorization")String token,
             @Field("amount") String amount,
             @Field("type") String type,
@@ -885,7 +909,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/update_beneficiary")
-    Call<CardResponse>updateBeneficiary(
+    Call<GeneralWalletResponse>updateBeneficiary(
             @Header("Authorization")String token,
             @Field("id") String beneficiary_id,
             @Field("transaction_type") String transaction_type,

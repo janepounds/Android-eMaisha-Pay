@@ -19,7 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
+import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -83,7 +83,7 @@ public class BeneficiariesListFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-            DialogFragment addCardDialog =new AddBeneficiaryFragment();
+            DialogFragment addCardDialog =new AddBeneficiary();
             addCardDialog.show( ft, "dialog");
 
         });

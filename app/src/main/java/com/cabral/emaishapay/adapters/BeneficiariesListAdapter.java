@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
+import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
 
 
@@ -250,7 +250,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         ft.addToBackStack(null);
         Log.d(TAG, "updateBeneficiary: no"+beneficiary_no);
         // Create and show the dialog.
-        DialogFragment addCardDialog =new AddBeneficiaryFragment();
+        DialogFragment addCardDialog =new AddBeneficiary();
         Bundle bundle = new Bundle();
         bundle.putString("beneficiary_type",beneficiary_type);
         bundle.putString("beneficiary_name",beneficary_name);
