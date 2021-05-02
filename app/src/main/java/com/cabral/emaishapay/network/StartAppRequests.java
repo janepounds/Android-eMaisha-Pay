@@ -12,12 +12,14 @@ import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
+import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.pages_model.PagesDetails;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 import com.cabral.emaishapay.modelviews.SignUpModelView;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
@@ -72,11 +74,35 @@ public class StartAppRequests {
     //*********** Contains all methods to Execute on Startup ********//
 
     public void StartRequests(){
-        //RequestBanners();
+        RequestBanners();
         RequestAllRegions();
         RequestStaticPagesData();
         SyncProductData();
         
+    }
+
+    private void RequestBanners() {
+        String request_id = WalletHomeActivity.generateRequestId();
+
+        Call<BannerData> call = APIClient.getWalletInstance(context)
+                .getWalletBannerAd("Cabral",request_id,"getProductListing");
+        try {
+            Response<BannerData> response = call.execute();
+
+            if (response.isSuccessful() && response.body().getSuccess().equalsIgnoreCase("1")) {
+
+
+                WalletHomeActivity.Banners = response.body().getData();
+
+            }
+            else {
+                Log.e(TAG, "RequestBanners: Response is not successful");
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void RequestAllRegions() {

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class BannerData {
 
-    @SerializedName("success")
+    @SerializedName("status")
     @Expose
     private String success;
     @SerializedName("data")
