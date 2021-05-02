@@ -146,6 +146,8 @@ public class ShopProductPreviewDialog extends DialogFragment {
                 product_units.setText(productData.getProduct_weight_unit());
                 EditText qty = dialog.findViewById(R.id.produce_quantity);
                 Button save = dialog.findViewById(R.id.button_submit);
+                Button cancel = dialog.findViewById(R.id.cancel_btn);
+                cancel.setOnClickListener(v1 -> {dialog.dismiss();});
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
