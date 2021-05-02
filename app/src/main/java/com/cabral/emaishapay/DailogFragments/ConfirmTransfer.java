@@ -273,6 +273,7 @@ public class ConfirmTransfer extends DialogFragment {
             });
 
         }else  if(category.equalsIgnoreCase("agent")){
+            Log.d(TAG, "transferToBank: beneficiary_id"+beneficiary_id);
             APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
             Call<ConfirmationDataResponse> call = apiRequests.agentTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "agentTransferToBank", service_code, currency_code);
             call.enqueue(new Callback<ConfirmationDataResponse>() {
