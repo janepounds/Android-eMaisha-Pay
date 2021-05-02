@@ -12,6 +12,10 @@ public class GeneralWalletResponse {
     @Expose
     private String message;
 
+    @SerializedName("data")
+    @Expose
+    private BeneficiaryResponse.Beneficiaries data;
+
     public String getStatus() {
         return status;
     }
@@ -26,5 +30,13 @@ public class GeneralWalletResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public BeneficiaryResponse.Beneficiaries getData() {
+        return data;
+    }
+
+    public void setData(BeneficiaryResponse.Beneficiaries data) {
+        this.data = data;
     }
 }
