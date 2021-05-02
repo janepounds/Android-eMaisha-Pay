@@ -996,6 +996,8 @@ public class ShopPayments extends Fragment implements
 
 
         EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+        TextView dialog_title = pinDialog.findViewById(R.id.dialog_title);
+        dialog_title.setText("ENTER MERCHANT PIN");
 
         pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
             @Override
