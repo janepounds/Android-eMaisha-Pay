@@ -1,13 +1,8 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Main button -->
-    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
-        <shape android:shape="rectangle">
-            <corners android:radius="3dp" />
-            <solid android:color="#FF5353" />
-        </shape>
-    </item>
-
-
-
-</layer-list>
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<solid android:color="#dc4436" />
+<corners android:topLeftRadius="5dp"
+    android:topRightRadius="5dp"
+    android:bottomLeftRadius="5dp"
+    android:bottomRightRadius="5dp"/>
+</shape>

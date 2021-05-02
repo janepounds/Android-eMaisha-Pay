@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -12,13 +13,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.cabral.emaishapay.R;
@@ -80,22 +85,80 @@ public class GetStartedSignUpFragment extends Fragment {
         decorView.setSystemUiVisibility(uiOptions);
         startSmsUserConsent();
 
-        binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
+
+        binding.checkboxTcs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (binding.checkboxTcs.isChecked()){
+                    binding.getStartedBtn.setEnabled(true);
+                    binding.getStartedBtn.setClickable(true);
+                   // binding.getStartedBtn.setAlpha(1);
+                    binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Validate Login Form Inputs
+                            boolean isValidData = validateForm();
+                            if (isValidData) {
+                                //authenticate phone
+                                phone_no = "256" + binding.userMobile.getText().toString().trim();
+                                authenticatePhoneNo(phone_no);
+
+                            }
+                            //navigate to Sign Up Fragment
+
+
+                        }
+                    });
+                }else{
+                    binding.getStartedBtn.setEnabled(false);
+                    binding.getStartedBtn.setClickable(false);
+
+                    binding.getStartedBtn.setOnClickListener(v->{
+                        Toast.makeText(context, "Please agree to the Terms of Service and Privacy Policy", Toast.LENGTH_SHORT).show();
+
+                    });
+                   // binding.getStartedBtn.setAlpha((float) 0.4);
+                }
+            }
+        });
+        binding.textTcsDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Validate Login Form Inputs
-                boolean isValidData = validateForm();
-                if (isValidData) {
-                    //authenticate phone
-                    phone_no = "256" + binding.userMobile.getText().toString().trim();
-                    authenticatePhoneNo(phone_no);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                View dialogView = getLayoutInflater().inflate(R.layout.layout_terms_and_conditions, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
 
-                }
-                //navigate to Sign Up Fragment
+                Button btn_agree = dialogView.findViewById(R.id.btn_agree);
 
+                Button btn_cancel = dialogView.findViewById(R.id.btn_cancel);
+
+                TextView full_app_terms_services =dialogView.findViewById(R.id.full_app_terms_services);
+
+
+
+
+
+
+                final AlertDialog alertDialog = dialog.create();
+
+                btn_cancel.setOnClickListener(view13->{
+                    alertDialog.dismiss();
+                });
+                full_app_terms_services.setOnClickListener(view13->{
+                    Uri uri = Uri.parse("https://forms.zohopublic.com/virtualoffice20750/form/PrivacyPolicy/formperma/cMB0eFNpmuo5BfUYcYjm-56lXcYWvOL55IodE5BtBpI"); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                });
+                btn_agree.setOnClickListener(vv->{
+                    binding.checkboxTcs.setChecked(true);
+                    alertDialog.dismiss();
+                });
+                alertDialog.show();
 
             }
         });
+
 
         binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
             @Override

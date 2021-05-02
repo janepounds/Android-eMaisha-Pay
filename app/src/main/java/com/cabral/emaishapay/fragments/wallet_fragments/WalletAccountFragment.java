@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -88,7 +89,7 @@ public class WalletAccountFragment extends Fragment {
 
         //view user profile details for view more
         binding.layoutViewMoreUserProfile.setOnClickListener(view12->{
-            dialogLoader = new DialogLoader(context);
+           // dialogLoader = new DialogLoader(context);
            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             View dialogView = getLayoutInflater().inflate(R.layout.user_summary_details, null);
             dialog.setView(dialogView);
@@ -134,6 +135,28 @@ public class WalletAccountFragment extends Fragment {
         //show Qr code dialog
         binding.imgQrCode.setOnClickListener(v -> {
 
+            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+            }
+            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronBusinessInformation.setRotation(0);
+                binding.layoutBusinessInfo.setVisibility(View.GONE);
+            }
+
+            if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+            }
+            if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                binding.chevronSecurity.setRotation(0);
+                binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+            }
+            if (binding.layoutIdInfoDetails.getVisibility() == View.VISIBLE) {
+                binding.chevronIdInformation.setRotation(0);
+                binding.layoutIdInfoDetails.setVisibility(View.GONE);
+            }
 
             Bundle bundle = new Bundle();
             bundle.putString("merchant_id",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID,context));
@@ -151,6 +174,68 @@ public class WalletAccountFragment extends Fragment {
             qrDialog.show(ft, "dialog");
             Log.d(TAG, "onCreateView: merchant_id"+WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID,context));
 
+        });
+
+        //navigate to register emaisha card
+        binding.layoutEmaishaCards.setOnClickListener(view12->{
+
+
+            if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentDetails.setRotation(0);
+                binding.layoutEmploymentInfo.setVisibility(View.GONE);
+            }
+            if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
+                binding.chevronBusinessInformation.setRotation(0);
+                binding.layoutBusinessInfo.setVisibility(View.GONE);
+            }
+
+            if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
+                binding.chevronEmploymentBusinessInfo.setRotation(0);
+                binding.layoutEmploymentBusinessInfoDetails.setVisibility(View.GONE);
+            }
+            if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
+                binding.chevronSecurity.setRotation(0);
+                binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
+
+            }
+            if (binding.layoutIdInfoDetails.getVisibility() == View.VISIBLE) {
+                binding.chevronIdInformation.setRotation(0);
+                binding.layoutIdInfoDetails.setVisibility(View.GONE);
+            }
+
+            //Go to coming soon
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+            Button ok = dialogView.findViewById(R.id.button_submit);
+            TextView text = dialogView.findViewById(R.id.text);
+            TextView textTitle = dialogView.findViewById(R.id.text_instant_loans);
+
+            textTitle.setText("PRE-PAID CARD");
+            text.setText("Buy smart with eMaisha Card to enjoy discounts, rewards and security free loans");
+
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+            alertDialog.show();
         });
 
 
@@ -750,6 +835,35 @@ public class WalletAccountFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:0800399399"));
                 startActivity(intent);
+            });
+
+            binding.cardViewTermsConditions.setOnClickListener(v->{
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                View dialogView = getLayoutInflater().inflate(R.layout.user_summary_details, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
+
+                Button btn_edit = dialogView.findViewById(R.id.btn_edit);
+                btn_edit.setVisibility(View.GONE);
+
+                Button btn_ok = dialogView.findViewById(R.id.btn_ok);
+                LinearLayout layout_summary = dialogView.findViewById(R.id.layout_user_profile_details);
+               layout_summary.setVisibility(View.GONE);
+
+               TextView title = dialogView.findViewById(R.id.produce_title);
+               title.setText("T&C's and Privacy Policy");
+
+
+
+                final AlertDialog alertDialog = dialog.create();
+
+                btn_ok.setOnClickListener(view13->{
+                    alertDialog.dismiss();
+                });
+                alertDialog.show();
+
+
             });
 
             String versionCode =  String.valueOf(BuildConfig.VERSION_CODE);
