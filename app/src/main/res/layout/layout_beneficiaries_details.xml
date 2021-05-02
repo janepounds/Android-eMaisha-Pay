@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/dialog_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@drawable/dialog_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/layout_add_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/top_rounded_blue">
+
+                <TextView
+                    android:id="@+id/ben_details_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:gravity="center"
+                    android:text="Title"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"/>
+                <ImageView
+                    android:id="@+id/ben_details_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".9"
+                    android:layout_gravity="end|center"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_close_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp">
+
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Name :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Mobile :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_mobile"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Bank :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_bank"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Bank Branch :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_branch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="City :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_city"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Country :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_ben_country"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Account Name :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_account_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:text="Account Number :"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/text_account_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/dimen_10dp"
+                        android:layout_weight="1"
+                        android:text="None"
+                        android:alpha="1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="#31244A"
+                    android:alpha=".05"
+                    android:visibility="visible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/filter_dialog_footer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="5dp">
+
+
+
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:text="OK"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"/>
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_weight="0.33"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_delete"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
