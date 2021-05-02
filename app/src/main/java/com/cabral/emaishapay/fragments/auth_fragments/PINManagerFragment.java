@@ -647,7 +647,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         editor.putString(WalletHomeActivity.PREFERENCES_LAST_NAME, userDetails.getLastname());
         editor.putString(WalletHomeActivity.PREFERENCES_PHONE_NUMBER, userDetails.getPhoneNumber());
         editor.putString(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, userDetails.getPictrure());
-        editor.putString(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, userDetails.getPictrure());
+        editor.putString(WalletHomeActivity.PREFERENCES_USER_PASSWORD, password);
 
         editor.putString("addressStreet", userDetails.getAddressStreet());
         editor.putString("addressCityOrTown", userDetails.getAddressCityOrTown());

@@ -59,7 +59,7 @@ public class PayFragment extends Fragment {
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
     String card_number,decripted_expiryDate;
 
-    private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key;
+    private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key=null;
 
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
@@ -274,10 +274,12 @@ public class PayFragment extends Fragment {
     }
 
     public void processPayment(){
-        if(key.equalsIgnoreCase("scan_pay")){
-            methodOfPayment = "Wallet";
-        }else {
+        if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
             methodOfPayment = spPaymentMethod.getSelectedItem().toString();
+
+        }else{
+            methodOfPayment = "Wallet";
+
         }
         if(methodOfPayment.equalsIgnoreCase("Wallet"))
             if(!validateWalletPurchase()) return;
@@ -375,9 +377,15 @@ public class PayFragment extends Fragment {
     }
 
     public boolean validateForm(){
-        if(spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")){
-            Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
-            return false;
+        if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
+            if (spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")) {
+                Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
+                return false;
+
+            } else {
+
+                return true;
+            }
         }else{
 
             return  true;

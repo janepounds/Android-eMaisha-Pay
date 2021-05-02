@@ -19,6 +19,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,6 +61,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
     private WeakReference<ShopPOSFragment> fragmentReference;
     private ShopProductsModelView viewModel;
     FragmentShopPosBinding binding;
+    private int items=0;
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
     List<CartProduct> cartItemsList = new ArrayList<>();
@@ -92,13 +94,21 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
         binding.layoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String[] splited = binding.totalItems.getText().toString().split("\\s+");
+                if(Integer.parseInt(splited[0]) > 0){
+                    //naviagete to payments
 
-                Bundle args=new Bundle();
+                    Bundle args=new Bundle();
 
 
-                args.putDouble("Charge", chargeAmount );
+                    args.putDouble("Charge", chargeAmount );
 
-                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+                    ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+
+                }else{
+                    Toast.makeText(context,"First add Items to cart",Toast.LENGTH_LONG).show();
+                }
+
 
 
             }
@@ -274,12 +284,12 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
-        refreshCartProducts();
+        ClearCart();
         super.onResume();
     }
 
     public void refreshCartProducts() {
-        ClearCart();
+
         int itemsCounter=0; double priceCounter=0;
         cartItemsList = user_cart_BuyInputs_db.getCartItems();
 
@@ -290,6 +300,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
             Log.e("CartProduct",product.getProductsName()+" "+product.getCustomersBasketQuantity()+" "+Double.parseDouble(product.getProductsPrice()));
         }
         String currency =context.getString(R.string.currency);
+        items = itemsCounter;
 
         binding.totalItems.setText(itemsCounter+" Items");
         binding.tvTotalPrice.setText(currency+" "+priceCounter);

@@ -999,8 +999,6 @@ public interface APIRequests {
             @Field("action_id") String action_id,
             @Field("service_code") String service_code
 
-
-
     );
 
     @FormUrlEncoded
@@ -1081,4 +1079,38 @@ public interface APIRequests {
             @Field("action_id") String action_id);
 
 
+    @FormUrlEncoded
+    @POST("wallet/customer/transfer-to-bank")
+    Call<ConfirmationDataResponse> customerTransferToBank(@Header("Authorization") String token,
+                                                       @Field("amount") double amount,
+                                                       @Field("beneficiary_id") String beneficiary_id,
+                                                       @Field("category") String category,
+                                                       @Field("request_id")String request_id,
+                                                       @Field("action_id")String action_id,
+                                                       @Field("service_code")String service_code,
+                                                       @Field("currency_code")String currency_code
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/transfer-to-bank")
+    Call<ConfirmationDataResponse> merchantTransferToBank(@Header("Authorization") String token,
+                                                          @Field("amount") double amount,
+                                                          @Field("beneficiary_id") String beneficiary_id,
+                                                          @Field("category") String category,
+                                                          @Field("request_id")String request_id,
+                                                          @Field("action_id")String action_id,
+                                                          @Field("service_code")String service_code,
+                                                          @Field("currency_code")String currency_code
+    );
+    @FormUrlEncoded
+    @POST("wallet/agent/transfer-to-bank")
+    Call<ConfirmationDataResponse> agentTransferToBank(@Header("Authorization") String token,
+                                                          @Field("amount") double amount,
+                                                          @Field("beneficiary_id") String beneficiary_id,
+                                                          @Field("category") String category,
+                                                          @Field("request_id")String request_id,
+                                                          @Field("action_id")String action_id,
+                                                          @Field("service_code")String service_code,
+                                                          @Field("currency_code")String currency_code
+    );
 }
