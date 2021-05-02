@@ -853,7 +853,7 @@ public class TransferMoney extends Fragment {
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
                     //go to confirm transfer
-//                    beneficiary_id = response.body().
+                    beneficiary_id = response.body().getData().getId();
 
                     // if (balance >= amount ) {
                     FragmentTransaction ft = fm.beginTransaction();
