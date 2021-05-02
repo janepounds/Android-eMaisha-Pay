@@ -49,7 +49,7 @@ public interface EcProductsDao {
     List<EcProduct> getProductImage(String product_id);
 
     //add product name
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     long addProduct(EcProduct product);
 
     //get offline product names
