@@ -63,7 +63,7 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
         final CartProduct cartProduct = checkoutItemsList.get(position);
 
         // Set Product Image on ImageView with Glide Library
-        Glide.with(context).load(ConstantValues.ECOMMERCE_URL+ cartProduct.getCustomersBasketProduct().getProductsImage()).into(holder.checkout_item_cover);
+        Glide.with(context).load(ConstantValues.ECOMMERCE_WEB+ cartProduct.getCustomersBasketProduct().getProductsImage()).into(holder.checkout_item_cover);
 
         holder.checkout_item_title.setText(cartProduct.getCustomersBasketProduct().getProductsName());
         holder.checkout_item_quantity.setText(String.valueOf(cartProduct.getCustomersBasketProduct().getCustomersBasketQuantity()));

@@ -820,13 +820,13 @@ public class Product_Description extends Fragment  {
             slider_covers.put("a", "" + R.drawable.new_product);
 
         } else if (images.length == 0) {
-            slider_covers.put("a", ConstantValues.ECOMMERCE_URL + itemThumbnail);
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
 
         } else {
-            slider_covers.put("a", ConstantValues.ECOMMERCE_URL + itemThumbnail);
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
 
             for (int i = 0; i < images.length; i++) {
-                slider_covers.put("b" + i, ConstantValues.ECOMMERCE_URL + images[i]);
+                slider_covers.put("b" + i, ConstantValues.ECOMMERCE_WEB + images[i]);
             }
         }
 
