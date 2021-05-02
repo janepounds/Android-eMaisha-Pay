@@ -115,6 +115,12 @@ public class StartAppRequests {
     public static  void SyncProductData() {
         if(context==null){
             return;
+        }else{
+
+            String category=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, context);
+            if(category.equalsIgnoreCase("Default")){
+                return;
+            }
         }
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
@@ -124,6 +130,7 @@ public class StartAppRequests {
                 Log.e("WAlletIDError",productsList.get(i).getId()+"");
                 String unique_product_id=System.currentTimeMillis()+productsList.get(i).getId()+"";
                 String wallet_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+
                 Log.w("WALLET_ID", wallet_id);
 
                 saveProductList(
