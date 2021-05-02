@@ -128,6 +128,7 @@ public class ConfirmTransfer extends DialogFragment {
         String branch=getArguments().getString("bankBranch");
         String bankCode=getArguments().getString("bankCode");
         String beneficiary_id = getArguments().getString("beneficiary_id");
+        String beneficiary_bank_phone_number = getArguments().getString("beneficiary_bank_phone_number");
 
         totalTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(amount));
 
@@ -207,8 +208,9 @@ public class ConfirmTransfer extends DialogFragment {
             discount_layount.setVisibility(View.GONE);
         }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
             getFlutterwaveTransferFee(""+amount,"account");
-            receiverNameTextView.setText(account_name);
-            receiverPhoneNumber.setVisibility(View.GONE);
+            receiverNameTextView.setText(beneficiary_name);
+            receiverPhoneNumber.setText(beneficiary_bank_phone_number);
+//            receiverPhoneNumber.setVisibility(View.GONE);
             charges_layount.setVisibility(View.VISIBLE);
             discount_layount.setVisibility(View.GONE);
         }
@@ -223,9 +225,86 @@ public class ConfirmTransfer extends DialogFragment {
         String currency_code = getString(R.string.currency);
         String service_code = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+toString;
         if(category.equalsIgnoreCase("merchant")){
+            APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+            Call<ConfirmationDataResponse> call = apiRequests.merchantTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "merchantTransferToBank", service_code, currency_code);
+            call.enqueue(new Callback<ConfirmationDataResponse>() {
+                @Override
+                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //redirect to home
+                        Intent intent = new Intent(getActivity(),WalletHomeActivity.class);
+                        startActivity(intent);
 
+                    } else if (response.code() == 412) {
+
+                    } else if (response.code() == 401) {
+                        TokenAuthFragment.startAuth(true);
+
+                    }
+                    if (response.errorBody() != null) {
+                        Log.e("info", String.valueOf(response.errorBody()));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
+
+                    Log.e("info : ", t.getMessage());
+                    Log.e("info : ", "Something got very very wrong");
+
+                    receiverNameTextView.setText("Unknown Merchant");
+
+                    errorTextView.setText("Error while checking for merchant occured");
+                    errorTextView.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
+                }
+            });
 
         }else  if(category.equalsIgnoreCase("agent")){
+            APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+            Call<ConfirmationDataResponse> call = apiRequests.agentTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "agentTransferToBank", service_code, currency_code);
+            call.enqueue(new Callback<ConfirmationDataResponse>() {
+                @Override
+                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //redirect to home
+                        Intent intent = new Intent(getActivity(),WalletHomeActivity.class);
+                        startActivity(intent);
+
+                    } else if (response.code() == 412) {
+
+                    } else if (response.code() == 401) {
+                        TokenAuthFragment.startAuth(true);
+
+                    }
+                    if (response.errorBody() != null) {
+                        Log.e("info", String.valueOf(response.errorBody()));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
+
+                    Log.e("info : ", t.getMessage());
+                    Log.e("info : ", "Something got very very wrong");
+
+                    receiverNameTextView.setText("Unknown Merchant");
+
+                    errorTextView.setText("Error while checking for merchant occured");
+                    errorTextView.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
+                }
+            });
 
 
         }else {

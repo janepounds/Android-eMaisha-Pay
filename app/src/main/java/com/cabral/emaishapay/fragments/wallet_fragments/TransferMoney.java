@@ -270,7 +270,7 @@ public class TransferMoney extends Fragment {
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutMobileNumber.setVisibility(View.GONE);
                     for(int i = 0; i<beneficiariesList.size();i++){
-                        if(beneficiariesList.get(i).getAccount_name().toString().equalsIgnoreCase(spBeneficiary.getSelectedItem().toString())){
+                        if(beneficiariesList.get(i).getAccount_name().equalsIgnoreCase(spBeneficiary.getSelectedItem().toString())){
                             beneficiary_id =  beneficiariesList.get(i).getId();
                             beneficiary_name =  beneficiariesList.get(i).getAccount_name();
                             account_number =beneficiariesList.get(i).getAccount_number();
@@ -281,6 +281,7 @@ public class TransferMoney extends Fragment {
                             street_address_1 =beneficiariesList.get(i).getStreet_address_1();
                             street_address_2 =beneficiariesList.get(i).getStreet_address_2();
                             beneficiary_bank_phone_number =beneficiariesList.get(i).getBeneficiary_phone();
+
 
 
 
@@ -422,6 +423,8 @@ public class TransferMoney extends Fragment {
 
                 }else{
 
+                    Log.d(TAG, "initializeForm: "+beneficiary_name+"beneciary_number"+account_number);
+
 
                     FragmentTransaction ft = fm.beginTransaction();
                     Fragment prev = fm.findFragmentByTag("dialog");
@@ -446,6 +449,7 @@ public class TransferMoney extends Fragment {
                     args.putString("bankCode", selected_bank_code);
                     args.putString("bankBranch", selected_branch_code);
                     args.putString("beneficiary_id", beneficiary_id);
+                    args.putString(" beneficiary_bank_phone_number",  beneficiary_bank_phone_number);
 
                     transferPreviewDailog.setArguments(args);
                     transferPreviewDailog.show(ft, "dialog");
@@ -479,6 +483,7 @@ public class TransferMoney extends Fragment {
 
                     args.putString("bankCode", selected_bank_code);
                     args.putString("bankBranch", selected_branch_code);
+                    args.putString("beneficiary_id", beneficiary_id);
 
                     transferPreviewDailog.setArguments(args);
                     transferPreviewDailog.show(ft, "dialog");
@@ -533,6 +538,7 @@ public class TransferMoney extends Fragment {
 
                     args.putString("bankCode", selected_bank_code);
                     args.putString("bankBranch", selected_branch_code);
+                    args.putString("beneficiary_id", beneficiary_id);
 
                     transferPreviewDailog.setArguments(args);
                     transferPreviewDailog.show(ft, "dialog");
