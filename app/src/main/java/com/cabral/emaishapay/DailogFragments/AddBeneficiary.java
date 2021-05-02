@@ -167,7 +167,8 @@ public class AddBeneficiary extends DialogFragment {
             title.setText("VIEW BENEFICIARY");
             submit.setVisibility(View.GONE);
 
-        }else {
+        }
+        else {
 
             transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -196,7 +197,7 @@ public class AddBeneficiary extends DialogFragment {
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
             });
-
+            branch=bank_branch.getSelectedItem().toString();
         }
 
 

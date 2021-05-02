@@ -52,9 +52,11 @@ import retrofit2.Response;
 public class ShopProductPreviewDialog extends DialogFragment {
     private static final String TAG = "ProductPreviewDialog";
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
+    TextView product_units;
     private Context context;
     private EcProduct  productData;
     Button delete_button,update_button,re_stock;
+    EditText qty;
     ShopProductsModelView viewModel;
     private List<EcManufacturer> manufacturers=new ArrayList<>();
 
@@ -142,9 +144,9 @@ public class ShopProductPreviewDialog extends DialogFragment {
                 LinearLayout restock = dialog.findViewById(R.id.layout_product_restock);
                 enter_pin.setVisibility(View.GONE);
                 restock.setVisibility(View.VISIBLE);
-                TextView product_units = dialog.findViewById(R.id.product_units);
-                product_units.setText(productData.getProduct_weight_unit());
-                EditText qty = dialog.findViewById(R.id.produce_quantity);
+                product_units = dialog.findViewById(R.id.product_units);
+                product_units.setText("items");
+                qty = dialog.findViewById(R.id.produce_quantity);
                 Button save = dialog.findViewById(R.id.button_submit);
                 Button cancel = dialog.findViewById(R.id.cancel_btn);
                 cancel.setOnClickListener(v1 -> {dialog.dismiss();});
@@ -157,109 +159,8 @@ public class ShopProductPreviewDialog extends DialogFragment {
                         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         progressDialog.show();
 
-                        //call update endpoint
-                        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                        String product_id = productData.getProduct_id();
-                        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                        String product_buy_price = productData.getProduct_buy_price();
-                        String product_sell_price = productData.getProduct_sell_price();
-                        int product_stock = Integer.parseInt(qty.getText().toString());
-                        String manufacturer_name = productData.getManufacturer();
-                        String product_category_name = productData.getProduct_category();
-                        String product_name = productData.getProduct_name();
-                        String product_supplier = productData.getProduct_supplier();
-                        String product_code = productData.getProduct_code();
-                        String selected_weight_units = product_units.getText().toString();
-                        String selected_weight = productData.getProduct_weight();
-                        String encodedImage = productData.getProduct_image();
-                        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                        String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
-                        Call<ProductResponse> call = BuyInputsAPIClient
-                                .getInstance()
-                                .restockProduct(access_token,unique_id,userId,product_id,product_stock);
-                        call.enqueue(new Callback<ProductResponse>() {
-                            @Override
-                            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                                if (response.isSuccessful()) {
-                                    progressDialog.dismiss();
-                                    if(response.body().getStatus().equalsIgnoreCase("1")){
-                                        Log.d(TAG, "onResponse: " +
-                                                "product_id:" +product_id+
-                                                "product_buy_price:" +product_buy_price+
-                                                "product_sell_price:" +product_sell_price+
-                                                "product_supplier:" +product_supplier+
-                                                "product_stock:" +product_stock+
-                                                "manufacturer_name:"+manufacturer_name+
-                                                "product_category_name:"+product_category_name+
-                                                "product_name:"+product_name+
-                                                "product_code:"+product_code+
-                                                "encodedImage:"+encodedImage+
-                                                "selected_weight_units:"+selected_weight_units+
-                                                "selected_weight:"+selected_weight
-                                        );
+                        restockProductStock(progressDialog,dialog);
 
-                                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                long update_product =   viewModel.updateProductStock(
-                                                        product_id,
-                                                        product_buy_price,
-                                                        product_sell_price,
-                                                        product_supplier,
-                                                        product_stock,
-                                                        manufacturer_name,
-                                                        product_category_name,
-                                                        product_name,
-                                                        product_code,
-                                                        encodedImage,
-                                                        selected_weight_units,
-                                                        selected_weight+""
-                                                );
-
-                                                AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        if (update_product>0) {
-                                                            progressDialog.dismiss();
-                                                            ShopProductPreviewDialog.this.dismiss();
-                                                            dialog.dismiss();
-                                                            Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
-
-                                                        } else {
-                                                            progressDialog.dismiss();
-                                                            dialog.dismiss();
-                                                            ShopProductPreviewDialog.this.dismiss();
-                                                            Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
-
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        });
-
-                                    }else {
-
-
-                                        Toasty.error(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressDialog.dismiss();
-                                    }
-
-                                    //Log.d("Categories", String.valueOf(categories));
-
-                                } else {
-                                    Log.d("Failed", "Manufacturers Fetch failed");
-
-                                }
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                                t.printStackTrace();
-                                progressDialog.dismiss();
-
-                            }
-                        });
                     }
                 });
 
@@ -296,6 +197,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                 bundle.putString("weight_unit",productData.getProduct_weight_unit());
                 bundle.putString("image",productData.getProduct_image());
                 bundle.putString("product_id",productData.getProduct_id());
+                bundle.putString("id",productData.getId());
                 addProductDialog.setArguments(bundle);
                 addProductDialog.show(ft, "dialog");
 
@@ -313,6 +215,78 @@ public class ShopProductPreviewDialog extends DialogFragment {
         product_sell_price_txt.setText(this.productData.getProduct_sell_price());
         product_purchase_price_txt.setText(  this.productData.getProduct_buy_price());//NumberFormat.getInstance().format()
         product_stock_txt.setText(this.productData.getProduct_stock());
+
+    }
+
+    private void restockProductStock(ProgressDialog progressDialog, Dialog dialog) {
+        //call update endpoint
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String product_id = productData.getProduct_id();
+        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
+        int product_stock = Integer.parseInt(qty.getText().toString());
+
+        Call<ProductResponse> call = BuyInputsAPIClient
+                .getInstance()
+                .restockProduct(access_token,productData.getId(),userId,product_id,product_stock);
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+                    if(response.body().getStatus().equalsIgnoreCase("1")){
+
+
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                long update_product =   viewModel.restockProductStock(
+                                        productData.getId(),
+                                        product_stock
+                                );
+
+                                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (update_product>0) {
+                                            progressDialog.dismiss();
+                                            ShopProductPreviewDialog.this.dismiss();
+                                            dialog.dismiss();
+                                            Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
+
+                                        } else {
+                                            progressDialog.dismiss();
+                                            dialog.dismiss();
+                                            ShopProductPreviewDialog.this.dismiss();
+                                            Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                    }else {
+
+
+                        Toasty.error(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    //Log.d("Categories", String.valueOf(categories));
+
+                } else {
+                    Log.d("Failed", "Manufacturers Fetch failed");
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
 
     }
 
