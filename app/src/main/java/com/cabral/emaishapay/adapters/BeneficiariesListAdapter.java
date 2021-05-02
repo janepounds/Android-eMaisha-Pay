@@ -163,7 +163,8 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                             String country = data.getCountry();
                             String address1 = data.getStreet_address_1();
                             String address2 = data.getStreet_address_2();
-                            updateBeneficiary(data.getTransaction_type(), finalDecripted_name, finalDecripted_number,bank,bank_branch,id,city,country,address1,address2);
+                            String beneficiary_phone = data.getBeneficiary_phone();
+                            updateBeneficiary(data.getTransaction_type(), finalDecripted_name, finalDecripted_number,bank,bank_branch,id,city,country,address1,address2,beneficiary_phone);
 
 
                     }
@@ -239,7 +240,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     }
 
-    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String beneficiary_no,String bank,String branch,String id,String city,String country,String address1,String address2){
+    public void updateBeneficiary(String beneficiary_type, String beneficary_name, String beneficiary_no, String bank, String branch, String id, String city, String country, String address1, String address2, String beneficiary_phone){
         //call add beneficiary fragment
         //nvigate to add beneficiaries fragment
         FragmentTransaction ft = fm.beginTransaction();
@@ -255,6 +256,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         bundle.putString("beneficiary_type",beneficiary_type);
         bundle.putString("beneficiary_name",beneficary_name);
         bundle.putString("beneficiary_no",beneficiary_no);
+        bundle.putString("beneficiary_phone",beneficiary_phone);
         bundle.putString("bank",bank);
         bundle.putString("branch",branch);
         bundle.putString("city",city);

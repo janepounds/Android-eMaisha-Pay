@@ -422,6 +422,7 @@ public class DataRepository {
         return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
             @Override
             protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
+
                 for (ShopOrder shopOrder : orderList) {
 
                     ShopOrderWithProducts orderData = new ShopOrderWithProducts();
