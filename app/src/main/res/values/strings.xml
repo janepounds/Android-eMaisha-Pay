@@ -784,10 +784,9 @@
     </string-array>
     <string-array name="payment_method">
         <item>Select</item>
-        <item>Wallet</item>
+        <item>eMaisha Pay</item>
         <!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
-        <item>Bank Cards</item>
     </string-array>
     <string-array name="crop_quantity_unit">
         <item> Select</item>
