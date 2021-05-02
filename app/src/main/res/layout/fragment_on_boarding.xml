@@ -116,7 +116,10 @@
                             android:id="@+id/layout_signin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/get_started_btn">
+                            android:layout_below="@id/get_started_btn"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:layout_marginBottom="15dp">
                             <TextView
                                 android:id="@+id/signin1"
                                 android:layout_width="wrap_content"
@@ -124,8 +127,7 @@
                                 android:text="Already have account? "
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:layout_centerHorizontal="true"/>
+                                android:textStyle="bold"/>
                             <TextView
                                 android:id="@+id/signin2"
                                 android:layout_width="wrap_content"
