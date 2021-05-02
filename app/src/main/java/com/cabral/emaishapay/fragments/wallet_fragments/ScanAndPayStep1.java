@@ -63,13 +63,13 @@ public class ScanAndPayStep1 extends Fragment {
             @Override
             public void onScannerStarted(ScannerLiveView scanner) {
                 // method is called when scanner is started
-                Toast.makeText(context, "Scanner Started", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Scanner Started", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onScannerStopped(ScannerLiveView scanner) {
                 // method is called when scanner is stoped.
-                Toast.makeText(context, "Scanner Stopped", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Scanner Stopped", Toast.LENGTH_SHORT).show();
             }
 
             @Override
