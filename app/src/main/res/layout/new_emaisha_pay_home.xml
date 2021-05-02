@@ -960,10 +960,13 @@
             android:orientation="vertical"
             android:background="@color/white"
             android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingBottom="20dp"
             android:layout_below="@id/text_popular_products"
             android:layout_alignParentBottom="true">
 
-            <com.glide.slider.library.SliderLayout
+            <ImageView
                 android:id="@+id/product_cover_slider"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -972,8 +975,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/background_round_white"
-                custom:auto_cycle="true"
-                custom:indicator_visibility="visible" />
+                android:src="@drawable/slider_image"
+                android:scaleType="fitXY"/>
 
         </LinearLayout>
         <LinearLayout
@@ -985,7 +988,8 @@
             android:orientation="horizontal"
             android:padding="20dp"
             app:elevation="10dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

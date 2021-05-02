@@ -67,7 +67,7 @@ public class DepositPayments extends DialogFragment {
             TextView text = dialogView.findViewById(R.id.text);
             TextView textTitle = dialogView.findViewById(R.id.text_instant_loans);
 
-            textTitle.setText("VISA TOP-UP");
+            textTitle.setText("VISA TOPUP");
 
             text.setText("Top up your eMaisha Account using your Visa Card.");
 

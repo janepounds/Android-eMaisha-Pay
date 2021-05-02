@@ -129,7 +129,7 @@ public class PayFragment extends Fragment {
                 layoutPaymentMethod.setVisibility(View.GONE);
                 layoutAmount.setVisibility(View.VISIBLE);
                 key = getArguments().getString("scan_pay");
-//                WalletHomeActivity.selectSpinnerItemByValue(spPaymentMethod, "Wallet");
+//                WalletHomeActivity.selectSpinnerItemByValue(spPaymentMethod, "eMaisha Pay");
                 layoutMerchantID.setVisibility(View.VISIBLE);
             }
 
@@ -180,7 +180,7 @@ public class PayFragment extends Fragment {
                     layoutMerchantID.setVisibility(View.GONE);
                 }
 
-                else if(selectedItem.equalsIgnoreCase("wallet")){
+                else if(selectedItem.equalsIgnoreCase("eMaisha Pay")){
                     layoutMobileMoney.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.VISIBLE);
@@ -192,12 +192,12 @@ public class PayFragment extends Fragment {
                     layoutAmount.setVisibility(View.VISIBLE);
                     layoutMerchantID.setVisibility(View.VISIBLE);
                 }
-                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
-                    layoutMobileMoney.setVisibility(View.GONE);
-                    layoutBankCards.setVisibility(View.VISIBLE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                    layoutMerchantID.setVisibility(View.VISIBLE);
-                }
+//                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
+//                    layoutMobileMoney.setVisibility(View.GONE);
+//                    layoutBankCards.setVisibility(View.VISIBLE);
+//                    layoutAmount.setVisibility(View.VISIBLE);
+//                    layoutMerchantID.setVisibility(View.VISIBLE);
+//                }
 
             }
 
@@ -278,27 +278,28 @@ public class PayFragment extends Fragment {
             methodOfPayment = spPaymentMethod.getSelectedItem().toString();
 
         }else{
-            methodOfPayment = "Wallet";
+            methodOfPayment = "eMaisha Pay";
 
         }
-        if(methodOfPayment.equalsIgnoreCase("Wallet"))
+        if(methodOfPayment.equalsIgnoreCase("eMaisha Pay"))
             if(!validateWalletPurchase()) return;
-        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
-            if(!validateBankCardPurchase())  return;
+//        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
+//            if(!validateBankCardPurchase())  return;
         else if(methodOfPayment.equals("Mobile Money"))
             if(!validateMobileMoneyPurchase()) return;
 
         float amount = Float.parseFloat(totalAmountEdt.getText().toString());
-        if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
-            Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-            return ;
-        }else if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
-
-            cardNo = cardNumberEdt.getText().toString();
-            cvv = cvvEdt.getText().toString();
-            expiry = expiryEdt.getText().toString();
-            mobileNo = mobileNumberEdt.getText().toString();
-        }
+//        if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+//            Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
+//            return ;
+  //      }
+//       if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+//
+//            cardNo = cardNumberEdt.getText().toString();
+//            cvv = cvvEdt.getText().toString();
+//            expiry = expiryEdt.getText().toString();
+//            mobileNo = mobileNumberEdt.getText().toString();
+//        }
 
 
 

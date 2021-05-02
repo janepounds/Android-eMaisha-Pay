@@ -92,6 +92,8 @@ public class GetStartedSignUpFragment extends Fragment {
                 if (binding.checkboxTcs.isChecked()){
                     binding.getStartedBtn.setEnabled(true);
                     binding.getStartedBtn.setClickable(true);
+                    binding.textBtn.setEnabled(false);
+                    binding.textBtn.setClickable(false);
                    // binding.getStartedBtn.setAlpha(1);
                     binding.getStartedBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -113,9 +115,17 @@ public class GetStartedSignUpFragment extends Fragment {
                     binding.getStartedBtn.setEnabled(false);
                     binding.getStartedBtn.setClickable(false);
 
+                    binding.textBtn.setEnabled(true);
+                    binding.textBtn.setClickable(true);
+                    binding.textBtn.setOnClickListener(v->{
+                        Toast.makeText(context, "Please agree to the Terms of Service and Privacy Policy", Toast.LENGTH_LONG).show();
+
+                    });
+
 
                    // binding.getStartedBtn.setAlpha((float) 0.4);
                 }
+
             }
         });
         binding.textTcsDialog.setOnClickListener(new View.OnClickListener() {
