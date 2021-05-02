@@ -107,7 +107,7 @@ public class AddShopProductFragment extends DialogFragment {
     private List<String> offlinemanufacturersNames;
     private List<String> offlineCategoryNames;
     private List<String> offlineProductsName;
-    private String measure_id,key,product_id;
+    private String measure_id,key,product_id,updateId;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
@@ -174,6 +174,7 @@ public class AddShopProductFragment extends DialogFragment {
             etxtProductStock.setText(getArguments().getString("stock"));
             etxtproductMeasurement.setText(getArguments().getString("weight"));
             product_id = getArguments().getString("product_id");
+            updateId = getArguments().getString("id");
             WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
 
 
@@ -901,7 +902,7 @@ public class AddShopProductFragment extends DialogFragment {
 
                         Call<ResponseBody> call = BuyInputsAPIClient
                                 .getInstance()
-                                .updateProduct(access_token,unique_id,measure_id,userId,product_id+"",product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
+                                .updateProduct(access_token,updateId,measure_id,userId,product_id+"",product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

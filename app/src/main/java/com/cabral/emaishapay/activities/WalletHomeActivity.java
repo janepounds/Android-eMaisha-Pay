@@ -139,7 +139,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                 //check runtime permission
                     if (checkPermission()) {
                         // if permission is already granted display a toast message
-                        Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                        Log.w("PermissionGrant", "Permission Granted..");
                         //permission granted
 
                     } else {
