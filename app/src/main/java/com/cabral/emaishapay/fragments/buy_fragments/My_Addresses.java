@@ -73,6 +73,9 @@ public class My_Addresses extends Fragment {
         this.my_cart = my_cart;
     }
 
+    public My_Addresses( ){
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

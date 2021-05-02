@@ -121,7 +121,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
             final CartProduct cartProduct = cartItemsList.get(position);
     
             // Set Product Image on ImageView with Glide Library
-            Glide.with(context).load(ConstantValues.ECOMMERCE_URL+ cartProduct.getCustomersBasketProduct().getProductsImage()).into(holder.cart_item_cover);
+            Glide.with(context).load(ConstantValues.ECOMMERCE_WEB+ cartProduct.getCustomersBasketProduct().getProductsImage()).into(holder.cart_item_cover);
 
             String cart_title = cartProduct.getCustomersBasketProduct().getProductsName();
             holder.cart_item_title.setText(cart_title.substring(0, 1).toUpperCase() + cart_title.substring(1).toLowerCase());
@@ -312,7 +312,10 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
 
         for (int i=0;  i<cartItemsList.size();  i++) {
             // Update the Cart's Total Price
-            finalPrice += Double.parseDouble(cartItemsList.get(i).getCustomersBasketProduct().getTotalPrice());
+            if(cartItemsList.get(i).getCustomersBasketProduct().getTotalPrice()!=null)
+                 finalPrice += Double.parseDouble(cartItemsList.get(i).getCustomersBasketProduct().getTotalPrice());
+            else
+                finalPrice +=0;
         }
 
         cartFragment.cart_item_total_price.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(finalPrice));
