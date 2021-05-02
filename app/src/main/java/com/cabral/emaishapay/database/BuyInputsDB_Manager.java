@@ -47,7 +47,7 @@ public class BuyInputsDB_Manager {
     public synchronized SQLiteDatabase openDatabase() {
         mOpenCounter += 1;
 
-        if (mOpenCounter == 1) {
+        if (mOpenCounter == 1 && mDatabaseHelper!=null) {
             db = mDatabaseHelper.getWritableDatabase();
         }
 

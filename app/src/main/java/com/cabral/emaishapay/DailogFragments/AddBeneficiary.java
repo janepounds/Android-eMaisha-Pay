@@ -12,15 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,7 +41,6 @@ import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
 import com.cabral.emaishapay.network.api_helpers.RaveV2APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,18 +55,18 @@ import retrofit2.Response;
 public class AddBeneficiary extends DialogFragment {
     private static final String TAG = "AddBeneficiaryFragment";
     LinearLayout bankLayout, mobileMoneyLayout,beneficiaryNameLayout,beneficiaryMobileLayout;
-    Spinner transactionTypeSp;
+    Spinner transactionTypeSp, bankSp,bank_branch,spCountry;
     Button submit;
     Context context;
-    AutoCompleteTextView bank;
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etCity;
-    Spinner bank_branch,spCountry;
     String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number;
     Bank[] BankList; BankBranch[] bankBranches;
-    String selected_bank_code,selected_branch_code,bankk,branch,id,sEtCity,sSpCountry;
+    String selected_bank_code,selected_branch_code,bankk,branch,id,sSpCountry;
     TextView title;
     OtpDialogLoader otpDialogLoader;
     DialogLoader dialogLoader;
+    List<String> Banknames = new ArrayList<>();
+
     public AddBeneficiary() {
         // Required empty public constructor
     }
@@ -103,7 +99,7 @@ public class AddBeneficiary extends DialogFragment {
         bankLayout = view.findViewById(R.id.layout_bank);
         mobileMoneyLayout = view.findViewById(R.id.layout_mobile_money);
         transactionTypeSp = view.findViewById(R.id.sp_transaction_type);
-        bank = view.findViewById(R.id.sp_bank);
+        bankSp = view.findViewById(R.id.sp_bank);
         bank_branch = view.findViewById(R.id.sp_bank_branch);
         title = view.findViewById(R.id.agent_bal_inquiry_title_label);
         etCity = view.findViewById(R.id.et_city);
@@ -114,27 +110,38 @@ public class AddBeneficiary extends DialogFragment {
         beneficiaryNameLayout = view.findViewById(R.id.layout_beneficiary_name);
 
         dialogLoader=new DialogLoader(getContext());
+        loadTransferBanks();
+
         if(getArguments()!=null){
             //fill views and call update beneficiary
             String beneficiary_type = getArguments().getString("beneficiary_type");
             String beneficiary_name_ = getArguments().getString("beneficiary_name");
             String beneficiary_number_ = getArguments().getString("beneficiary_no");
+            String beneficiary_phone = getArguments().getString("beneficiary_phone");
              bankk = getArguments().getString("bank");
              branch = getArguments().getString("branch");
              id = getArguments().getString("id");
-            sEtCity = getArguments().getString("city");
+             city = getArguments().getString("city");
             street_address_1 = getArguments().getString("address1");
             street_address_2 = getArguments().getString("address2");
             sSpCountry = getArguments().getString("country");
-            Log.d(TAG, "onCreateDialog: number"+beneficiary_number_+"name"+beneficiary_name_+"id"+id);
+            Log.w(TAG, "onCreateDialog: number"+city+"name"+branch+"id"+id);
+
             if(beneficiary_type.equalsIgnoreCase("bank")){
                 beneficiaryNameLayout.setVisibility(View.GONE);
                 beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                 bankLayout.setVisibility(View.VISIBLE);
                 account_name.setText(beneficiary_name_);
                 account_number.setText(beneficiary_number_);
-                etCity.setText(sEtCity);
-                bank.setText(bankk);
+                beneficiary_no.setText(beneficiary_phone);
+                etCity.setText(city);
+                try {
+                    bankSp.setSelection(Banknames.indexOf(bankk));
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.e("IndexError",e.getMessage());
+                }
+
                 WalletHomeActivity.selectSpinnerItemByValue(spCountry,sSpCountry);
                 WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
 
@@ -180,7 +187,6 @@ public class AddBeneficiary extends DialogFragment {
                         beneficiaryNameLayout.setVisibility(View.GONE);
                         beneficiaryMobileLayout.setVisibility(View.VISIBLE);
                         bankLayout.setVisibility(View.VISIBLE);
-                        loadTransferBanks();
                     }
 
 
@@ -193,41 +199,15 @@ public class AddBeneficiary extends DialogFragment {
 
         }
 
-        bank.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                bank.showDropDown();
 
 
-            }
-        });
-
-        bank.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        bankSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                try {
-                    //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                } catch (Exception e) {
-
-                }
-
-
                 if(BankList!=null)
                     for (Bank bank_: BankList) {
-                        if(bank_.getName().equalsIgnoreCase(bank.getText().toString())){
+                        if(bank_.getName().equalsIgnoreCase(bankSp.getSelectedItem().toString())){
                             selected_bank_code=bank_.getCode();
                             getTransferBankBranches(bank_.getId());
 
@@ -295,9 +275,9 @@ public class AddBeneficiary extends DialogFragment {
 
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
-                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                        beneficiary_name = encrypter.encrypt(beneficiary_name_mm.getText().toString());
-                        beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+beneficiary_no.getText().toString());
+                        //  encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                        beneficiary_name = beneficiary_name_mm.getText().toString();
+                        beneficiary_number = getString(R.string.phone_number_code)+beneficiary_no.getText().toString();
                         bankk = "Mobile Money Bank";
                         branch = "";
                         city ="";
@@ -307,10 +287,10 @@ public class AddBeneficiary extends DialogFragment {
 
                     }else{
                         //encript account_name and number
-                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                         beneficiary_name = encrypter.encrypt(account_name.getText().toString());
-                        beneficiary_number = encrypter.encrypt(account_number.getText().toString());
-                        bankk = bank.getText().toString();
+                        //CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
+                         beneficiary_name = account_name.getText().toString();
+                        beneficiary_number = account_number.getText().toString();
+                        bankk = bankSp.getSelectedItem().toString();
                         branch = bank_branch.getSelectedItem().toString();
                         city =etCity.getText().toString();
                         country = spCountry.getSelectedItem().toString();
@@ -389,7 +369,7 @@ public class AddBeneficiary extends DialogFragment {
 
     }
 
-    private void saveBeneficiary(String access_token, String user_id, String category, String otp_code, String type, String beneficary_type) {
+    private void saveBeneficiary(String access_token, String user_id, String category, String otp_code, String type, String beneficary_type, Dialog otpDialog, OtpDialogLoader otpDialogLoader) {
         Log.d(TAG, "saveBeneficiary: " + beneficiary_name);
         dialogLoader.showProgressDialog();
 
@@ -399,16 +379,17 @@ public class AddBeneficiary extends DialogFragment {
 
         if (beneficary_type.equalsIgnoreCase("Bank")) {
             call = APIClient.getWalletInstance(getContext()).saveBankBeneficiary(
-                    access_token, otp_code,  user_id, type,
-                    bankk, branch,  beneficiary_name,  beneficiary_number,
-                    request_id,  category,  "saveBeneficiary",
-                    beneficiary_bank_phone_number,   city,   country,  street_address_1, street_address_2);
-        } else {
-            call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
                     access_token,  otp_code,
                     user_id,  type,  bankk, branch,   beneficiary_name,  beneficiary_number,
                     request_id,  category,   "registerBankBeneficiary",
                     beneficiary_bank_phone_number, city,  country,  street_address_1,   street_address_2);
+        } else {
+
+            call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
+                    access_token, otp_code,  user_id, type,
+                    bankk, branch,  beneficiary_name,  beneficiary_number,
+                    request_id,  category,  "saveBeneficiary",
+                    beneficiary_bank_phone_number,   city,   country,  street_address_1, street_address_2);
         }
 
 
@@ -420,7 +401,7 @@ public class AddBeneficiary extends DialogFragment {
             public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
-
+                    otpDialog.dismiss();
                     //success message
                     final Dialog dialog = new Dialog(getContext());
                     dialog.setContentView(R.layout.dialog_successful_message);
@@ -446,7 +427,7 @@ public class AddBeneficiary extends DialogFragment {
 
 
                 }else if( response.isSuccessful() ){
-
+                    otpDialogLoader.clearOTPDialog();
                     String message = response.body().getMessage();
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
@@ -517,8 +498,8 @@ public class AddBeneficiary extends DialogFragment {
                     otpDialogLoader=new OtpDialogLoader( AddBeneficiary.this) {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
-                            otpDialog.dismiss();
-                            saveBeneficiary(access_token,user_id, category,otp_code, finalType,beneficary_type);
+                           // otpDialog.dismiss();
+                            saveBeneficiary(access_token,user_id, category,otp_code, finalType,beneficary_type,otpDialog,otpDialogLoader);
                         }
 
                         @Override
@@ -566,7 +547,6 @@ public class AddBeneficiary extends DialogFragment {
             @Override
             public void onResponse(@NotNull Call<BanksInfoResponse> call, @NotNull Response<BanksInfoResponse> response) {
                 if (response.code() == 200) {
-                    List<String> Banknames = new ArrayList<>();
                     Banknames.add("Select");
 
                     try {
@@ -579,14 +559,30 @@ public class AddBeneficiary extends DialogFragment {
                                 Banknames.add(bank.getName());
                         }
 
+                        ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, Banknames);
+                        bankSp.setAdapter(adapter);
 
                     } catch (Exception e) {
                         Log.e("response", response.toString());
                         e.printStackTrace();
                     } finally {
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, Banknames);
-                        bank.setAdapter(adapter);
+                        if(getArguments()!=null) {
+                            //fill views and call update beneficiary
+                            String beneficiary_type = getArguments().getString("beneficiary_type");
+                            if(beneficiary_type.equalsIgnoreCase("bank")){
+                                bankSp.setSelection(Banknames.indexOf(bankk));
+
+                                for (Bank bank_: BankList) {
+                                    if(bank_.getName().equalsIgnoreCase(bankSp.getSelectedItem().toString())){
+                                        selected_bank_code=bank_.getCode();
+                                        getTransferBankBranches(bank_.getId());
+
+                                    }
+                                }
+
+                            }
+                        }
                         dialogLoader.hideProgressDialog();
                     }
                 } else {
@@ -611,8 +607,9 @@ public class AddBeneficiary extends DialogFragment {
     private void  getTransferBankBranches(String bank_id){
         ExternalAPIRequests apiRequests = RaveV2APIClient.getRavePayV2Instance();
         Call<BankBranchInfoResponse> call = apiRequests.getTransferBankBranches(bank_id, BuildConfig.PUBLIC_KEY);
-
+        List<String> BankBranchnames = new ArrayList<>();
         dialogLoader.showProgressDialog();
+
         call.enqueue(new Callback<BankBranchInfoResponse>() {
             @Override
             public void onResponse(@NotNull Call<BankBranchInfoResponse> call, @NotNull Response<BankBranchInfoResponse> response) {
@@ -621,25 +618,40 @@ public class AddBeneficiary extends DialogFragment {
                         bankBranches = response.body().getData().getBankBranches();
 
                         Log.w("Banks_NumberFetched",bankBranches.length+"****************");
-                        List<String> BankBranchnames = new ArrayList<>();
+
                         BankBranchnames.add("Select");
                         for (BankBranch bank: bankBranches) {
                             BankBranchnames.add(bank.getBranchName());
+
                         }
                         BankBranchnames.add("Other");
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, BankBranchnames);
+                        ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, BankBranchnames);
                         bank_branch.setAdapter(adapter);
                     } catch (Exception e) {
                         Log.e("response", response.toString());
                         e.printStackTrace();
                     } finally {
+
+                        int i=1;//sets Bank brank for preview/Update
+                        for (BankBranch bank: bankBranches) {
+                            BankBranchnames.add(bank.getBranchName());
+                            if( branch.equalsIgnoreCase(bank.getBranchName() )) {
+                                bank_branch.setSelection(i);
+                            }
+                            i++;
+
+                        }
+
                         dialogLoader.hideProgressDialog();
                     }
                 } else {
                     dialogLoader.hideProgressDialog();
                     //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    String message = response.body().getMessage();
-                    Snackbar.make(bankLayout, message, Snackbar.LENGTH_SHORT).show();
+                    if(response.body()!=null){
+                        String message = response.body().getMessage();
+                        Snackbar.make(bankLayout, message, Snackbar.LENGTH_SHORT).show();
+                    }
+
                 }
 
 

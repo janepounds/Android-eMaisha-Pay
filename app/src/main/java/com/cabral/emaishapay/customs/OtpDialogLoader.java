@@ -234,6 +234,16 @@ public abstract class OtpDialogLoader {
         otpDialog.show();
     }
 
+
+    public void clearOTPDialog() {
+        code1.setText("");
+        code2.setText("");
+        code3.setText("");
+        code4.setText("");
+        code5.setText("");
+        code6.setText("");
+    }
+
     protected abstract void onConfirmOtp(String otp_code, Dialog otpDialog);
 
     protected abstract void onResendOtp();
