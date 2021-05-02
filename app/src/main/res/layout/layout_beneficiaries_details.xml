@@ -54,10 +54,15 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layout_name"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -76,19 +81,27 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_mobile"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
-
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -107,19 +120,28 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_bank"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -138,19 +160,28 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_bank_branch"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -169,19 +200,29 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_city"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -201,19 +242,29 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
 
                 <LinearLayout
+                    android:id="@+id/layout_country"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,20 +284,29 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view6"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_account_name"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -265,20 +325,29 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view7"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
                 <LinearLayout
+                    android:id="@+id/layout_account_number"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -297,15 +366,19 @@
                         android:alpha="1.0"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view8"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#31244A"
+                        android:alpha=".05"
+                        android:visibility="visible"/>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="5dp"
-                    android:background="#31244A"
-                    android:alpha=".05"
-                    android:visibility="visible"/>
+
             </LinearLayout>
 
             <LinearLayout

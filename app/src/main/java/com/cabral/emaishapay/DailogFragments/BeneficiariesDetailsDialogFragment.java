@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ import retrofit2.Response;
 
 public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     TextView text_title,text_ben_name,text_ben_mobile,text_ben_bank,text_ben_branch,text_ben_city,text_ben_country,text_account_name,text_account_number;
+    LinearLayout layout_name,layout_mobile,layout_bank,layout_bank_branch,layout_city,layout_country,layout_account_name,layout_account_number;
+
     private Context context;
     private List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
 
@@ -83,6 +86,18 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
         text_account_name = view.findViewById(R.id.text_account_name);
         text_account_number = view.findViewById(R.id.text_account_number);
 
+        //layouts
+
+        layout_name = view.findViewById(R.id.layout_name);
+        layout_mobile = view.findViewById(R.id.layout_mobile);
+        layout_bank = view.findViewById(R.id.layout_bank);
+        layout_bank_branch = view.findViewById(R.id.layout_bank_branch);
+        layout_city = view.findViewById(R.id.layout_city);
+        layout_country = view.findViewById(R.id.layout_country);
+        layout_account_name = view.findViewById(R.id.layout_account_name);
+        layout_account_number = view.findViewById(R.id.layout_account_number);
+
+
 
         ImageView close = view.findViewById(R.id.ben_details_close);
         Button ok = view.findViewById(R.id.btn_ok);
@@ -102,12 +117,14 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
             if (beneficiary_type.equalsIgnoreCase("mobile money")) {
                 //HIDE BANK DETAILS
-                text_account_name.setVisibility(View.GONE);
-                text_account_number.setVisibility(View.GONE);
-                text_ben_bank.setVisibility(View.GONE);
-                text_ben_branch.setVisibility(View.GONE);
-                text_ben_city.setVisibility(View.GONE);
-                text_ben_country.setVisibility(View.GONE);
+                layout_account_name.setVisibility(View.GONE);
+                layout_account_number.setVisibility(View.GONE);
+                layout_bank.setVisibility(View.GONE);
+                layout_bank_branch.setVisibility(View.GONE);
+                layout_city.setVisibility(View.GONE);
+                layout_country.setVisibility(View.GONE);
+                layout_name.setVisibility(View.VISIBLE);
+                layout_mobile.setVisibility(View.VISIBLE);
 
                 //SET MM TEXT VIEWS
                 text_title.setText(beneficiary_type + " BENEFICIARY");
@@ -121,9 +138,15 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
                 //HIDE MM DETAILS
                 text_ben_name.setVisibility(View.GONE);
+                layout_account_name.setVisibility(View.VISIBLE);
+                layout_account_number.setVisibility(View.VISIBLE);
+                layout_bank.setVisibility(View.VISIBLE);
+                layout_bank_branch.setVisibility(View.VISIBLE);
+                layout_city.setVisibility(View.VISIBLE);
+                layout_country.setVisibility(View.VISIBLE);
 
                 //SET BANK DETAILS
-                text_title.setText(beneficiary_type + "BENEFICIARY");
+                text_title.setText(beneficiary_type + " BENEFICIARY");
                 text_account_name.setText(beneficiary_name);
                 text_account_number.setText(beneficiary_no);
                 text_ben_mobile.setText(beneficiary_phone);
