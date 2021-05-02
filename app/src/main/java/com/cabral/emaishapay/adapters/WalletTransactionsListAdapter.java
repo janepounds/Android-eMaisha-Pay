@@ -91,11 +91,11 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
         WalletTransactionResponse.TransactionData.Transactions data = dataList.get(position);
         // Generate random ARGB colors
-        Random rnd = new Random();
-        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
-        // Set the generated color as the background for name initials
-        holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);
+//        Random rnd = new Random();
+//        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+//
+//        // Set the generated color as the background for name initials
+//        holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);
 
         SimpleDateFormat localFormat1 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         SimpleDateFormat localFormat2 = new SimpleDateFormat("HH:mm a", Locale.ENGLISH);
@@ -123,6 +123,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             if(  !TextUtils.isEmpty(data.getReceiverUserId()) && data.getReceiverUserId().equalsIgnoreCase( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context))) {
                 holder.textAmount.setText("+ UGX "+ NumberFormat.getInstance().format(data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#2E84BE"));
+                holder.initials.setBackgroundResource(R.drawable.rectangular_blue_solid);
                 if(data.getSender()!=null && !data.getSender().isEmpty()){
                     holder.initials.setText(getNameInitials(data.getSender()));
                     holder.textPaidTo.setText(data.getSender());
@@ -135,6 +136,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
             else {
                 holder.textAmount.setText("- UGX "+ NumberFormat.getInstance().format(0-data.getAmount())+"");
                 holder.textAmount.setTextColor(Color.parseColor("#dc4436"));
+                holder.initials.setBackgroundResource(R.drawable.rectangular_red_solid);
                 holder.initials.setText(getNameInitials(data.getReceiver()));
                 holder.textPaidTo.setText(data.getReceiver());
             }

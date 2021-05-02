@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:background="@drawable/background_custom_dialog"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+
+        <ImageView
+            android:id="@+id/coming_soon_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:layout_weight=".9"
+            android:src="@drawable/ic_close_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/logo"
+            app:tint="@color/colorPrimary"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/logo_vector"
+            android:layout_width="60dp"
+            android:paddingBottom="10dp"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/coming_soon_close"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/emaisha_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="eMaisha Pay"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/text_instant_loans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+        <TextView
+            android:id="@+id/text_instant_loans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T&amp;C's and Privacy Policy"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emaisha_title1" />
+
+
+        <View
+            android:id="@+id/pin_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_instant_loans" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layout_terms"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/full_app_terms_services"
+            app:layout_constraintTop_toBottomOf="@id/pin_view"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
+        <TextView
+            android:id="@+id/app_terms_services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="eMaisha Pay is a payments platform that enables customers and businesses to securely make and receive payments. It’s composed of a mobile wallet and prepaid visa card. eMaisha Pay also enables customers to purchase products online especially agriculture inputs from hundreds of merchants onboarded on its platform.\n\nThe following terms and conditions apply to all users of eMaisha Pay, including those that use the eMaisha Pay dashboards, eMaisha Portals, eMaisha Pay card, eMaisha Pay Wallet, eMaisha Pay app and any other eMaisha Pay products, innovations, and/or functionalities.
+\n\nBy using eMaisha pay services, you agree to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern eMaisha pay’s relationship with you in relation to this product."
+
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:layout_margin="15dp"/>
+
+        </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/full_app_terms_services"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/click_here_text"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:layout_margin="15dp"
+            android:isScrollContainer="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_dialog_footer"
+            app:layout_constraintTop_toBottomOf="@id/layout_terms"/>
+
+        <LinearLayout
+        android:id="@+id/filter_dialog_footer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/full_app_terms_services">
+
+
+
+
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_weight="0.33"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/rectangular_blue_solid"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+        <Button
+            android:id="@+id/btn_agree"
+            android:layout_weight="0.33"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:text="I AGREE"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/rectangular_blue_solid"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            />
+
+    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
