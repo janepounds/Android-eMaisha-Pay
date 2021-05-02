@@ -248,12 +248,8 @@ public class TransferMoney extends Fragment {
         spBeneficiary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                } catch (Exception e) {
-
+                if(spBeneficiary.getSelectedItem()==null || spTransferTo.getSelectedItem()==null){
+                    return;
                 }
                 if (spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New") && spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
                     //show bank beneficiary
@@ -274,7 +270,7 @@ public class TransferMoney extends Fragment {
                     layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
                     layoutMobileNumber.setVisibility(View.GONE);
                     for(int i = 0; i<beneficiariesList.size();i++){
-                        if(beneficiariesList.get(i).toString().equalsIgnoreCase(spBeneficiary.getSelectedItem().toString())){
+                        if(beneficiariesList.get(i).getAccount_name().toString().equalsIgnoreCase(spBeneficiary.getSelectedItem().toString())){
                             beneficiary_id =  beneficiariesList.get(i).getId();
                             beneficiary_name =  beneficiariesList.get(i).getAccount_name();
                             account_number =beneficiariesList.get(i).getAccount_number();
@@ -411,9 +407,6 @@ public class TransferMoney extends Fragment {
                     beneficiary_name =etBeneficiaryName.getText().toString();//required for Mobile Money
                     account_name = etAccountName.getText().toString();//required for Bank
                     account_number = etAccountNumber.getText().toString();//required for Bank
-                    CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                    beneficiary_nname = encrypter.encrypt(account_name);
-                    beneficiary_number = encrypter.encrypt(account_number);
                     bankk = spSelectBank.getText().toString();
                     branch = spSelectBankBranch.getSelectedItem().toString();
                     city =etCity.getText().toString();
@@ -494,11 +487,8 @@ public class TransferMoney extends Fragment {
                 WalletTransactionInitiation.getInstance().setMethodOfPayment("eMaisha Card");
 
             }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money") &&  validateMobileMoneyTransFerForm()){
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Mobile Money")){
 
-                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                beneficiary_nname = encrypter.encrypt(beneficiary_name);
-                beneficiary_number = encrypter.encrypt(getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString());
                 bankk = "Mobile Money Bank";
                 branch = "";
                 city ="";
@@ -508,8 +498,12 @@ public class TransferMoney extends Fragment {
                 beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+                    if( validateMobileMoneyTransFerForm()) {
 
-                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+                        beneficiary_bank_phone_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
+                        beneficiary_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
+                        requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+                    }
 
 
                 }else{
@@ -685,10 +679,8 @@ public class TransferMoney extends Fragment {
                             for (int i = 0; i < beneficiariesList.size(); i++) {
 
                                 //decript
-                                CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                             final String   beneficiary_name = encrypter.decrypt(beneficiariesList.get(i).getAccount_name());
 
-                                beneficiaries.add(beneficiary_name);
+                                beneficiaries.add(beneficiariesList.get(i).getAccount_name());
 
                             }
 
@@ -767,7 +759,7 @@ public class TransferMoney extends Fragment {
                         access_token,
                         user_id,
                         type,
-                        beneficiary_nname,
+                        beneficiary_name,
                         customer_phone_number,
                         request_id,
                         category,

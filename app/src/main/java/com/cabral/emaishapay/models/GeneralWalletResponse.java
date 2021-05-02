@@ -12,7 +12,7 @@ public class GeneralWalletResponse {
     @Expose
     private String message;
 
-    @SerializedName("message")
+    @SerializedName("data")
     @Expose
     private BeneficiaryResponse.Beneficiaries data;
 
