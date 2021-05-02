@@ -83,13 +83,13 @@ public class WalletAccountFragment extends Fragment {
         Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +user_pic).apply(options).into(binding.userImage);
 
 
-        binding.qrCodeTitle.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID, requireContext())));
+        binding.qrCodeTitle.setText("MERCHANT ID : "+ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID, requireContext())));
 
 
         //view user profile details for view more
         binding.layoutViewMoreUserProfile.setOnClickListener(view12->{
-
-            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            dialogLoader = new DialogLoader(context);
+           AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             View dialogView = getLayoutInflater().inflate(R.layout.user_summary_details, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
@@ -108,7 +108,7 @@ public class WalletAccountFragment extends Fragment {
             textViewNokContact.setText(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_NOK_CONTACT, context));
 
 
-            final android.app.AlertDialog alertDialog = dialog.create();
+            final AlertDialog alertDialog = dialog.create();
             btn_edit.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
             bundle.putString("dob",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));

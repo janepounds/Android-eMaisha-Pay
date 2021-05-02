@@ -9,12 +9,13 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = {"product_id"},
+@Entity(indices = {@Index(value = {"product_name"},
         unique = true)})
 public class EcProduct implements Parcelable {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    private int id;
+    private String id;
+
     @ColumnInfo(name = "product_id")
      private String product_id;
      @ColumnInfo(name = "product_name")
@@ -44,7 +45,8 @@ public class EcProduct implements Parcelable {
     @ColumnInfo(name = "sync_status",defaultValue = "0")
     private String sync_status;
 
-    public EcProduct(String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_supplier, String product_image, String product_stock, String product_weight_unit, String product_weight, String manufacturer) {
+    public EcProduct(String id,String product_id, String product_name, String product_code, String product_category, String product_description, String product_buy_price, String product_sell_price, String product_supplier, String product_image, String product_stock, String product_weight_unit, String product_weight, String manufacturer) {
+        this.id = id;
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_code = product_code;
@@ -61,6 +63,7 @@ public class EcProduct implements Parcelable {
     }
 
     protected EcProduct(Parcel in) {
+        id = in.readString();
         product_id = in.readString();
         product_name = in.readString();
         product_code = in.readString();
@@ -79,6 +82,7 @@ public class EcProduct implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(product_id);
         dest.writeString(product_name);
         dest.writeString(product_code);
@@ -224,11 +228,11 @@ public class EcProduct implements Parcelable {
         this.sync_status = sync_status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

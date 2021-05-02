@@ -52,7 +52,6 @@ import retrofit2.Response;
 
 public class StartAppRequests {
     private static final String TAG = "StartAppRequests";
-    private List<Regions> dataList = new ArrayList<>();
     private static BuyInputsDB_Handler db_handler;
     private static Context context;
 
@@ -125,17 +124,17 @@ public class StartAppRequests {
         if (Connectivity.isConnected(context)) {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
+
             Log.w("unsyncedProducts",productsList.size()+" products");
             for (int i = 0; i < productsList.size(); i++) {
                 Log.e("WAlletIDError",productsList.get(i).getId()+"");
-                String unique_product_id=System.currentTimeMillis()+productsList.get(i).getId()+"";
+
                 String wallet_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
 
-                Log.w("WALLET_ID", wallet_id);
 
                 saveProductList(
                         productsList.get(i).getProduct_id(),
-                        unique_product_id,
+                        productsList.get(i).getId(),
                         wallet_id,
                         productsList.get(i).getManufacturer(),
                         productsList.get(i).getProduct_name(),

@@ -97,7 +97,7 @@ public class AddShopProductFragment extends DialogFragment {
     String selectedSupplierID,productImage,selected_measure_id;
     double selected_weight;
 
-    String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units,product_description;
+    String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units;
     private List<Category> categories;
     private List<Product> products;
     private List<String> catNames;
@@ -640,8 +640,11 @@ public class AddShopProductFragment extends DialogFragment {
                                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                                     @Override
                                     public void run() {
+                                        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                                        String unique_id = userId+"_"+System.currentTimeMillis();
                                         //add manufacturer
                                         long product = viewModel.addProduct(new EcProduct(
+                                                unique_id,
                                                 "",
                                                 add_product.getText().toString(),
                                                 "",
@@ -862,8 +865,8 @@ public class AddShopProductFragment extends DialogFragment {
                 progressDialog.show();
 
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
+
+                String unique_id = userId+"_"+System.currentTimeMillis();
 
                 String product_name = etxtProductName.getText().toString().trim();
                 String product_code = etxtProductCode.getText().toString().trim();
@@ -882,7 +885,7 @@ public class AddShopProductFragment extends DialogFragment {
                     units = null;
                 }
 
-                Log.d(TAG, "onClick: timestamp" + timestamp);
+                Log.d(TAG, "onClick: timestamp" + unique_id);
 
 
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -916,9 +919,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                     product_category_name,
                                                     product_name,
                                                     product_code,
-
                                                     encodedImage,
-
                                                     selected_weight_units,
                                                     selected_weight+""
                                                    );
@@ -965,15 +966,15 @@ public class AddShopProductFragment extends DialogFragment {
 
 
 
-                     }else{
-
-
+                     }
+                    else{
 
                       AppExecutors.getInstance().diskIO().execute(new Runnable() {
                           @Override
                           public void run() {
-
+                              Log.w("savedProduct", product_name);
                               long checkAddedProduct=viewModel.addProduct(new EcProduct(
+                                      unique_id,
                                       product_id+"",
                                       product_name,
                                       product_code,

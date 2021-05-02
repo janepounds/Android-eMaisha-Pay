@@ -88,7 +88,8 @@ public class Categories_3 extends Fragment {
         if (!isHeaderVisible) {
             // Hide the Header of CategoriesList
             headerText.setVisibility(View.GONE);
-        } else {
+        }
+        else {
             headerText.setText(getString(R.string.categories));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 headerText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_categories, 0, 0, 0);
