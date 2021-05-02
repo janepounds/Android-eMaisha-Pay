@@ -337,6 +337,7 @@ public class ConfirmTransfer extends DialogFragment {
                             startActivity(intent);
                         }else {
                             Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            dialogLoader.hideProgressDialog();
                         }
                     } else if (response.code() == 412) {
 
