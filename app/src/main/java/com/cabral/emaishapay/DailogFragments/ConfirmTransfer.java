@@ -231,10 +231,16 @@ public class ConfirmTransfer extends DialogFragment {
                 @Override
                 public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                     if (response.code() == 200) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        //redirect to home
-                        Intent intent = new Intent(getActivity(),WalletHomeActivity.class);
-                        startActivity(intent);
+                        if(response.body().getStatus().equalsIgnoreCase("1")) {
+                            dialog.dismiss();
+                            dialogLoader.hideProgressDialog();
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            //redirect to home
+                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
 
                     } else if (response.code() == 412) {
 
@@ -262,6 +268,7 @@ public class ConfirmTransfer extends DialogFragment {
                     errorTextView.setText("Error while checking for merchant occured");
                     errorTextView.setVisibility(View.VISIBLE);
                     dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
             });
 
@@ -272,10 +279,16 @@ public class ConfirmTransfer extends DialogFragment {
                 @Override
                 public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                     if (response.code() == 200) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        //redirect to home
-                        Intent intent = new Intent(getActivity(),WalletHomeActivity.class);
-                        startActivity(intent);
+                        if(response.body().getStatus().equalsIgnoreCase("1")) {
+                            dialog.dismiss();
+                            dialogLoader.hideProgressDialog();
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            //redirect to home
+                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
 
                     } else if (response.code() == 412) {
 
@@ -315,11 +328,16 @@ public class ConfirmTransfer extends DialogFragment {
                 @Override
                 public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                     if (response.code() == 200) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        //redirect to home
-                        Intent intent = new Intent(getActivity(),WalletHomeActivity.class);
-                        startActivity(intent);
-
+                        if(response.body().getStatus().equalsIgnoreCase("1")) {
+                            dialog.dismiss();
+                            dialogLoader.hideProgressDialog();
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            //redirect to home
+                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     } else if (response.code() == 412) {
 
                     } else if (response.code() == 401) {

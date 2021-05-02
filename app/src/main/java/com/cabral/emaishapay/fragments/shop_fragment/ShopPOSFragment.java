@@ -284,12 +284,12 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
-        refreshCartProducts();
+        ClearCart();
         super.onResume();
     }
 
     public void refreshCartProducts() {
-        ClearCart();
+
         int itemsCounter=0; double priceCounter=0;
         cartItemsList = user_cart_BuyInputs_db.getCartItems();
 
