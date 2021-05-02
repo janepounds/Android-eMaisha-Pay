@@ -42,6 +42,7 @@ import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +54,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Random;
 
 import static android.Manifest.permission.VIBRATE;
@@ -62,6 +64,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
+    public static List<BannerDetails> Banners;
     private static Context context;
     public static FragmentManager fm;
     public  int currentFragment;

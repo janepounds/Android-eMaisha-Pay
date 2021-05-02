@@ -15,6 +15,7 @@ import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.address_model.Zones;
+import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
@@ -1014,6 +1015,14 @@ public interface APIRequests {
 
     );
 
+    @FormUrlEncoded
+    @POST("wallet/product/ads")
+    Call<BannerData>getWalletBannerAd(
+            @Field("company") String company,
+            @Field("request_id") String request_id,
+            @Field("action_id") String action_id
+
+    );
 
     @FormUrlEncoded
     @POST("wallet/transactions/summary")
