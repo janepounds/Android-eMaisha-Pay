@@ -280,7 +280,12 @@ public class TransferMoney extends Fragment {
                             country =beneficiariesList.get(i).getCountry();
                             street_address_1 =beneficiariesList.get(i).getStreet_address_1();
                             street_address_2 =beneficiariesList.get(i).getStreet_address_2();
-                            beneficiary_bank_phone_number =beneficiariesList.get(i).getBeneficiary_phone();
+                            if(beneficiariesList.get(i).getTransaction_type().equalsIgnoreCase("mobile money")){
+                                phoneNumber = beneficiariesList.get(i).getAccount_number();
+
+                            }else{
+                                phoneNumber = beneficiariesList.get(i).getBeneficiary_phone();
+                            }
 
 
 
