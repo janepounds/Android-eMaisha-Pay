@@ -400,22 +400,24 @@ public class TransferMoney extends Fragment {
             String request_id = WalletHomeActivity.generateRequestId();
             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank") && !spSelectBank.getText().toString().equalsIgnoreCase("Select") && validateBankTransFerForm() && selected_bank_code!=null){
+            if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
-                    phoneNumber = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
-                    beneficiary_name =etBeneficiaryName.getText().toString();//required for Mobile Money
-                    account_name = etAccountName.getText().toString();//required for Bank
-                    account_number = etAccountNumber.getText().toString();//required for Bank
-                    bankk = spSelectBank.getText().toString();
-                    branch = spSelectBankBranch.getSelectedItem().toString();
-                    city =etCity.getText().toString();
-                    country = spCountry.getSelectedItem().toString();
-                    street_address_1 = etStreetAdd1.getText().toString();
-                    street_address_2 = etStreetAdd2.getText().toString();
-                    beneficiary_bank_phone_number = getString(R.string.phone_number_code)+etMobileMoneyNumber.getText().toString();
+                    if(validateBankTransFerForm()) {
+                        phoneNumber = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
+                        beneficiary_name = etBeneficiaryName.getText().toString();//required for Mobile Money
+                        account_name = etAccountName.getText().toString();//required for Bank
+                        account_number = etAccountNumber.getText().toString();//required for Bank
+                        bankk = spSelectBank.getText().toString();
+                        branch = spSelectBankBranch.getSelectedItem().toString();
+                        city = etCity.getText().toString();
+                        country = spCountry.getSelectedItem().toString();
+                        street_address_1 = etStreetAdd1.getText().toString();
+                        street_address_2 = etStreetAdd2.getText().toString();
+                        beneficiary_bank_phone_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
 
-                    requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+                        requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
+                    }
 
 
                 }else{
