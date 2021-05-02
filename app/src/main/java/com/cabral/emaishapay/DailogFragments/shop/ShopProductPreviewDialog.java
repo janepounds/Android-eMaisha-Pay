@@ -149,13 +149,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                 qty = dialog.findViewById(R.id.produce_quantity);
                 Button save = dialog.findViewById(R.id.button_submit);
                 Button cancel = dialog.findViewById(R.id.cancel_btn);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
+                cancel.setOnClickListener(v1 -> {dialog.dismiss();});
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

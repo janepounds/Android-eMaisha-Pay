@@ -237,7 +237,7 @@
                             android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:padding="12dp"
-                            android:text="Update"
+                            android:text="Add to Cart"
                             android:textColor="#fff"
                             android:textSize="16dp"
                             android:textStyle="bold" />

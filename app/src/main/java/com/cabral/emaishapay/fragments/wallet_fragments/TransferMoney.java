@@ -269,6 +269,10 @@ public class TransferMoney extends Fragment {
                     layoutMobileNumber.setVisibility(View.VISIBLE);
                     mobile_numberTxt.setText("Beneficiary Mobile");
 
+                }else {
+                    layoutBank.setVisibility(View.GONE);
+                    layoutMobileMoneyBeneficiaries.setVisibility(View.GONE);
+                    layoutMobileNumber.setVisibility(View.GONE);
                 }
             }
 
@@ -439,33 +443,35 @@ public class TransferMoney extends Fragment {
                 }
 
             }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account") &&  validateMobileMoneyTransFerForm()){
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account")){
+                if( validateMobileMoneyTransFerForm()) {
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
                 }
-                ft.addToBackStack(null);
-
-
-                // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                Bundle args = new Bundle();
-                args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                args.putString("phoneNumber", phoneNumber);
-                args.putDouble("amount", amount);
-
-                args.putString("beneficiary_name", beneficiary_name);
-                args.putString("account_name", account_name);
-                args.putString("account_number", account_number);
-
-                args.putString("bankCode", selected_bank_code);
-                args.putString("bankBranch", selected_branch_code);
-
-                transferPreviewDailog.setArguments(args);
-                transferPreviewDailog.show(ft, "dialog");
 
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
 
@@ -636,6 +642,7 @@ public class TransferMoney extends Fragment {
     }
 
     public void requestFilteredBeneficiaries(){
+        dialogLoader.showProgressDialog();
         String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -650,6 +657,7 @@ public class TransferMoney extends Fragment {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
                       final   ArrayList<String> beneficiaries = new ArrayList<>();
                         try {
@@ -686,6 +694,7 @@ public class TransferMoney extends Fragment {
                     }else {
 
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                        dialogLoader.hideProgressDialog();
                     }
                   
                 }else if (response.code() == 401) {
@@ -703,6 +712,7 @@ public class TransferMoney extends Fragment {
 
             @Override
             public void onFailure(Call<BeneficiaryResponse> call, Throwable t){
+                dialogLoader.hideProgressDialog();
             }
         });
 
