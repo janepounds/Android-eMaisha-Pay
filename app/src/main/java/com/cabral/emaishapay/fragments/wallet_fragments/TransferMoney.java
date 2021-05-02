@@ -443,33 +443,35 @@ public class TransferMoney extends Fragment {
                 }
 
             }
-            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account") &&  validateMobileMoneyTransFerForm()){
+            else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account")){
+                if( validateMobileMoneyTransFerForm()) {
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+
+                    // Create and show the dialog.
+                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
+
+                    Bundle args = new Bundle();
+                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+                    args.putString("phoneNumber", phoneNumber);
+                    args.putDouble("amount", amount);
+
+                    args.putString("beneficiary_name", beneficiary_name);
+                    args.putString("account_name", account_name);
+                    args.putString("account_number", account_number);
+
+                    args.putString("bankCode", selected_bank_code);
+                    args.putString("bankBranch", selected_branch_code);
+
+                    transferPreviewDailog.setArguments(args);
+                    transferPreviewDailog.show(ft, "dialog");
                 }
-                ft.addToBackStack(null);
-
-
-                // Create and show the dialog.
-                DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                Bundle args = new Bundle();
-                args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                args.putString("phoneNumber", phoneNumber);
-                args.putDouble("amount", amount);
-
-                args.putString("beneficiary_name", beneficiary_name);
-                args.putString("account_name", account_name);
-                args.putString("account_number", account_number);
-
-                args.putString("bankCode", selected_bank_code);
-                args.putString("bankBranch", selected_branch_code);
-
-                transferPreviewDailog.setArguments(args);
-                transferPreviewDailog.show(ft, "dialog");
 
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
 

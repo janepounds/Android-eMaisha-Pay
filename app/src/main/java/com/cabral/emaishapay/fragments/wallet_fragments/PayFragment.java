@@ -375,7 +375,7 @@ public class PayFragment extends Fragment {
     }
 
     public boolean validateForm(){
-        if(spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")){
+        if(!key.equalsIgnoreCase("scan_pay") && spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")){
             Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
             return false;
         }else{

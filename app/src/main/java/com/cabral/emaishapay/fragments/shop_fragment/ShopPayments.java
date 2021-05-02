@@ -1038,8 +1038,13 @@ public class ShopPayments extends Fragment implements
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if(response.code() ==200){
-                    dialogLoader.hideProgressDialog();
-                    refreshActivity();
+                    if(response.body().getStatus().equalsIgnoreCase("1")) {
+                        dialogLoader.hideProgressDialog();
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                        refreshActivity();
+                    }else{
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    }
 
                 }
                 else if(response.code() == 401) {
