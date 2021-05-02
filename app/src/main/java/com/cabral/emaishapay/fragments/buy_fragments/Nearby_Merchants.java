@@ -71,9 +71,7 @@ public class Nearby_Merchants extends Fragment {
         this.my_cart = my_cart;
     }
 
-    public Nearby_Merchants(MerchantData merchantData, My_Cart my_cart) {
-        this.my_cart = my_cart;
-        this.merchantData=merchantData;
+    public Nearby_Merchants() {
     }
 
 

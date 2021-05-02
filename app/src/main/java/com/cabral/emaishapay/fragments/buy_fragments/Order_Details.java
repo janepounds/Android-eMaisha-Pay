@@ -57,6 +57,8 @@ public class Order_Details extends Fragment {
     public StateProgressBar stateProgressBar;
     Toolbar toolbar;
 
+    public Order_Details() {
+    }
 
     @Nullable
     @Override

@@ -140,6 +140,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         this.orderId = orderId;
         this.chargeAmount=this.total;
     }
+    public PaymentMethodsFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

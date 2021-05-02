@@ -418,6 +418,7 @@ public class AddBeneficiary extends DialogFragment {
                             AddBeneficiary.this.dismiss();
                             //To BeneficiariesListFragment();
                             WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
+                            if(WalletHomeActivity.navController.getCurrentDestination().getId() == R.id.walletHomeFragment2)
                             WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
                         }
                     });
