@@ -214,7 +214,7 @@ public class WalletAccountFragment extends Fragment {
             TextView text = dialogView.findViewById(R.id.text);
             TextView textTitle = dialogView.findViewById(R.id.text_instant_loans);
 
-            textTitle.setText("PRE-PAID CARD");
+            textTitle.setText("PREPAID CARD");
             text.setText("Buy smart with eMaisha Card to enjoy discounts, rewards and security free loans");
 
 
@@ -840,28 +840,35 @@ public class WalletAccountFragment extends Fragment {
             binding.cardViewTermsConditions.setOnClickListener(v->{
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                View dialogView = getLayoutInflater().inflate(R.layout.user_summary_details, null);
+                View dialogView = getLayoutInflater().inflate(R.layout.layout_terms_and_conditions, null);
                 dialog.setView(dialogView);
                 dialog.setCancelable(true);
 
-                Button btn_edit = dialogView.findViewById(R.id.btn_edit);
-                btn_edit.setVisibility(View.GONE);
+                Button btn_agree = dialogView.findViewById(R.id.btn_agree);
 
-                Button btn_ok = dialogView.findViewById(R.id.btn_ok);
-                LinearLayout layout_summary = dialogView.findViewById(R.id.layout_user_profile_details);
-               layout_summary.setVisibility(View.GONE);
+                Button btn_cancel = dialogView.findViewById(R.id.btn_cancel);
 
-               TextView title = dialogView.findViewById(R.id.produce_title);
-               title.setText("T&C's and Privacy Policy");
+                TextView full_app_terms_services =dialogView.findViewById(R.id.full_app_terms_services);
+
+                btn_agree.setVisibility(View.GONE);
+
+
 
 
 
                 final AlertDialog alertDialog = dialog.create();
 
-                btn_ok.setOnClickListener(view13->{
+                btn_cancel.setOnClickListener(view13->{
                     alertDialog.dismiss();
                 });
+                full_app_terms_services.setOnClickListener(view13->{
+                    Uri uri = Uri.parse("https://forms.zohopublic.com/virtualoffice20750/form/PrivacyPolicy/formperma/cMB0eFNpmuo5BfUYcYjm-56lXcYWvOL55IodE5BtBpI"); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                });
+
                 alertDialog.show();
+
 
 
             });

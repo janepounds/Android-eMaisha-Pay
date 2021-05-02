@@ -83,12 +83,14 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/layout_terms"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/full_app_terms_services"
             app:layout_constraintTop_toBottomOf="@id/pin_view"
             android:fadeScrollbars="false"
+            android:scrollbarSize="10dp"
             android:scrollbarAlwaysDrawVerticalTrack="true">
         <TextView
             android:id="@+id/app_terms_services"

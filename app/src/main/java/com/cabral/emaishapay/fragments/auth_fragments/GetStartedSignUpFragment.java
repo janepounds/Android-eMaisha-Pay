@@ -113,10 +113,7 @@ public class GetStartedSignUpFragment extends Fragment {
                     binding.getStartedBtn.setEnabled(false);
                     binding.getStartedBtn.setClickable(false);
 
-                    binding.getStartedBtn.setOnClickListener(v->{
-                        Toast.makeText(context, "Please agree to the Terms of Service and Privacy Policy", Toast.LENGTH_SHORT).show();
 
-                    });
                    // binding.getStartedBtn.setAlpha((float) 0.4);
                 }
             }
