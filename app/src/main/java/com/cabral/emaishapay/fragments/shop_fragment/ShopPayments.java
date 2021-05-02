@@ -911,7 +911,13 @@ public class ShopPayments extends Fragment implements
         dialogLoader.showProgressDialog();
 
 
-        String type="Agent Transfer";
+        String type;
+        if(category.equalsIgnoreCase("merchant")){
+            type="Merchant Accept Payment";
+        }else{
+            type = "Agent Transfer";
+
+        }
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,type,request_id,category,"customerTransactionOTP",service_code);

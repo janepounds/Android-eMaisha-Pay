@@ -181,6 +181,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                             @Override
                             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                                 if (response.isSuccessful()) {
+                                    progressDialog.dismiss();
                                     if(response.body().getStatus().equalsIgnoreCase("1")){
                                         Log.d(TAG, "onResponse: " +
                                                 "product_id:" +product_id+
@@ -240,7 +241,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
 
 
                                         Toasty.error(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        progressDialog.dismiss();
                                     }
 
                                     //Log.d("Categories", String.valueOf(categories));
@@ -255,6 +256,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
                             @Override
                             public void onFailure(Call<ProductResponse> call, Throwable t) {
                                 t.printStackTrace();
+                                progressDialog.dismiss();
 
                             }
                         });
