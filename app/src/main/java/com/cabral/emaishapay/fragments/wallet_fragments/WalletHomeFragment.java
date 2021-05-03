@@ -96,12 +96,8 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
-//
-//        for (BannerDetails banner:WalletHomeActivity.Banners) {
-//            // Setup the ImageSlider of Product Images
-//            ImageSlider(banner.getTitle(), banner.getImage());
-//        }
-        ImageSlider("Ads", WalletHomeActivity.Banners );
+        if(WalletHomeActivity.Banners!=null)
+            ImageSlider("Ads", WalletHomeActivity.Banners );
 
         return binding.getRoot();
     }

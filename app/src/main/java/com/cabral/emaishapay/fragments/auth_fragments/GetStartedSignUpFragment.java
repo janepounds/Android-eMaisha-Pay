@@ -59,7 +59,7 @@ public class GetStartedSignUpFragment extends Fragment {
     private RelativeLayout layoutResendCode;
     private Dialog dialog;
     private DialogLoader dialogLoader;
-    String phone_no;
+    String phone_no,authPhone;
     SmsBroadcastReceiver  smsBroadcastReceiver;
     private static final int REQ_USER_CONSENT = 200;
 
@@ -101,8 +101,9 @@ public class GetStartedSignUpFragment extends Fragment {
                             boolean isValidData = validateForm();
                             if (isValidData) {
                                 //authenticate phone
-                                phone_no = "256" + binding.userMobile.getText().toString().trim();
-                                authenticatePhoneNo(phone_no);
+                                phone_no = getString(R.string.phone_number_code) + binding.userMobile.getText().toString().trim();
+                                authPhone = "256" + binding.userMobile.getText().toString().trim();
+                                authenticatePhoneNo(phone_no,authPhone);
 
                             }
                             //navigate to Sign Up Fragment
@@ -185,13 +186,13 @@ public class GetStartedSignUpFragment extends Fragment {
         }
     }
 
-    public void authenticatePhoneNo(String phoneNumber){
+    public void authenticatePhoneNo(String phoneNumber, String authPhone){
         dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String service_code = "120224";
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<WalletAuthentication> call = APIClient.getWalletInstance(context).initiatePhoneAuth(phoneNumber,request_id,category,service_code,"initiatePhoneAuth");
+        Call<WalletAuthentication> call = APIClient.getWalletInstance(context).initiatePhoneAuth(authPhone,request_id,category,service_code,"initiatePhoneAuth");
         call.enqueue(new Callback<WalletAuthentication>() {
             @Override
             public void onResponse(Call<WalletAuthentication> call, Response<WalletAuthentication> response) {
@@ -202,7 +203,7 @@ public class GetStartedSignUpFragment extends Fragment {
                         if(response.body().getMessage().equalsIgnoreCase("Phone was already Verified")){
                             //navigate to signup
                             Bundle bundle = new Bundle();
-                            bundle.putString("phone",phoneNumber.substring(3));
+                            bundle.putString("phone",phoneNumber);
                             AuthActivity.navController.navigate(R.id.action_getStartedSignUpFragment_to_signUpFragment,bundle);
 
                         }else {

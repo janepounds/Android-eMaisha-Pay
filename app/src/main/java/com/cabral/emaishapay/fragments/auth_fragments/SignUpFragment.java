@@ -288,8 +288,8 @@ public class SignUpFragment  extends Fragment {
                     args.putString("idNo",binding.idNumber.getText().toString());
                     ;
                     args.putString("firstSecurityQn",binding.spFirstSecurityQn.getSelectedItem().toString());
-                    args.putString("secondSecurityQn",binding.idNumber.getText().toString());
-                    args.putString("thirdSecurityQn",binding.idNumber.getText().toString());
+                    args.putString("secondSecurityQn",binding.spSecondSecurityQn.getSelectedItem().toString());
+                    args.putString("thirdSecurityQn",binding.spThirdSecurityQn.getSelectedItem().toString());
 
                     args.putString("firstQnAnswer",binding.etxtFirstSecurityQn.getText().toString());
                     args.putString("secondQnAnswer",binding.etxtSecondSecurityQn.getText().toString());
