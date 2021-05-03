@@ -16,4 +16,4 @@ local.properties
 apikey.properties
 .idea/*.xml
 *.log
-/app/src/main/java/com/cabral/emaishapay/constants/ConstantValues.java
+app/src/main/java/com/cabral/emaishapay/constants/ConstantValues.java
