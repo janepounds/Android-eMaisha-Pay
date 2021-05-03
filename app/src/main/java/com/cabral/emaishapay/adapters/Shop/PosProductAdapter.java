@@ -119,8 +119,14 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
 
+        try{
+            Glide.with(context).load(Base64.decode( productData.get(position).getProduct_image()!=null?productData.get(position).getProduct_image():"", Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
 
-        Glide.with(context).load(Base64.decode( productData.get(position).getProduct_image()!=null?productData.get(position).getProduct_image():"", Base64.DEFAULT)).apply(options).into(holder.binding.productImage);
+        }catch (IllegalArgumentException ex){
+            Log.e(TAG, ex.getMessage());
+            ex.printStackTrace();
+        }
+
 
         holder.binding.executePendingBindings();
         Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
