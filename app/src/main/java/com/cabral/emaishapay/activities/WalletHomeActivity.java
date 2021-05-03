@@ -177,6 +177,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         });
 
 
+
         context = getApplicationContext();
 
         NavHostFragment navHostFragment =

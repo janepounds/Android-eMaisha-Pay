@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
@@ -57,25 +57,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/layout_wallet_add_money"
-                    android:layout_width="150dp"
-                    android:layout_height="90dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="0.3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@color/white"
                     android:onClick="openAddMobileMoney"
-                    android:orientation="vertical"
-                    android:layout_marginRight="20dp">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/crop_img_add_money"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
                         android:onClick="openAddMobileMoney"
-                        android:src="@drawable/mobile_money" />
+                        android:src="@drawable/mobile_money"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/text_mtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:text="MTN Mobile Money"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/edittext_right_corners_green"/>
 
                 </LinearLayout>
 
@@ -87,7 +99,7 @@
                     android:layout_weight=".3"
                     android:background="@color/white"
                     android:onClick="openAddMobileMoney"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/crop_img_transfer"
@@ -95,6 +107,18 @@
                         android:layout_height="match_parent"
                         android:onClick="openAddMobileMoney"
                         android:src="@drawable/airtelmoney" />
+                    <TextView
+                        android:id="@+id/text_airtel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:text="MTN Mobile Money"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/edittext_right_corners_green"/>
 
                 </LinearLayout>
 
@@ -106,7 +130,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/layout_visa"

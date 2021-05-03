@@ -37,6 +37,7 @@ import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
+import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
@@ -70,7 +71,9 @@ public class WalletHomeFragment extends Fragment {
     DialogLoader dialog;
     private static SharedPreferences sharedPreferences;
     NavController navController;
-    
+    List<BannerDetails> Banner = new ArrayList<>();
+    HashMap<String, String> url_maps = new HashMap<String, String>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +96,12 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
+//
+//        for (BannerDetails banner:WalletHomeActivity.Banners) {
+//            // Setup the ImageSlider of Product Images
+//            ImageSlider(banner.getTitle(), banner.getImage());
+//        }
+        ImageSlider("Ads", WalletHomeActivity.Banners );
 
         return binding.getRoot();
     }
@@ -531,6 +540,102 @@ public class WalletHomeFragment extends Fragment {
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
 
+    //*********** Setup the ImageSlider with the given List of Product Images ********//
+
+    private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
+
+        // Initialize new HashMap<ImageName, ImagePath>
+        final HashMap<String, String> slider_covers = new HashMap<>();
+        // Initialize new Array for Image's URL
+        final String[] images = new String[banner.size()];
+
+
+        if (banner.size() > 0) {
+            for (int i = 0; i < banner.size(); i++) {
+                // Get Image's URL at given Position from itemImages List
+                images[i] = banner.get(i).getImage();
+            }
+        }
+
+
+        // Put Image's Name and URL to the HashMap slider_covers
+        if (itemThumbnail.equalsIgnoreCase("")) {
+            slider_covers.put("a", "" + R.drawable.new_product);
+
+        } else if (images.length == 0) {
+            slider_covers.put("a",  itemThumbnail);
+
+        } else {
+            slider_covers.put("a",  itemThumbnail);
+
+            for (int i = 0; i < images.length; i++) {
+                slider_covers.put("b" + i,  images[i]);
+            }
+        }
+
+
+        for (String name : slider_covers.keySet()) {
+
+            // Initialize DefaultSliderView
+            TextSliderView defaultSliderView = new TextSliderView(context);
+
+            RequestOptions requestOptions = new RequestOptions();
+
+            requestOptions.centerInside();
+
+            // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
+            defaultSliderView
+                    //.description(name)
+                    .setRequestOption(requestOptions)
+                    .image(slider_covers.get(name));
+
+            // Add DefaultSliderView to the SliderLayout
+            binding.productCoverSlider.addSlider(defaultSliderView);
+        }
+
+        // Set PresetTransformer type of the SliderLayout
+        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
+        binding.productCoverSlider.setDuration(4000);
+        binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+        // Check if the size of Images in the Slider is less than 2
+//        if (slider_covers.size() < 2) {
+//            // Disable PagerTransformer
+//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
+//                @Override
+//                protected void onTransform(View view, float v) {
+//
+//                }
+//            });
+//
+//            // Hide Slider PagerIndicator
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+//
+//        } else {
+//            // Set custom PagerIndicator to the SliderLayout
+//            sliderLayout.setCustomIndicator(pagerIndicator);
+//            // Make PagerIndicator Visible
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+//        }
+
+    }
 
 
 
@@ -539,5 +644,4 @@ public class WalletHomeFragment extends Fragment {
 
 
 
-  
 }
