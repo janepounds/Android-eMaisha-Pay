@@ -958,20 +958,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white"
+            android:background="@drawable/background_round_white"
             android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:paddingBottom="20dp"
             android:layout_below="@id/text_popular_products"
             android:layout_alignParentBottom="true">
 
             <com.glide.slider.library.SliderLayout
                 android:id="@+id/product_cover_slider"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="145dp"
                 android:layout_gravity="center"
-                app:indicator_visibility="visible"/>
+                app:indicator_visibility="invisible"/>
 
         </LinearLayout>
         <LinearLayout
