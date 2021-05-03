@@ -107,8 +107,8 @@ public class WalletTransactionsListFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-            arrowCashIn.setImageResource(R.drawable.ic_cashin);
-            arrowCashOut.setImageResource(R.drawable.ic_diagonal_arrow);
+            arrowCashIn.setImageResource(R.drawable.ic_diagonal_arrow);
+            arrowCashOut.setImageResource(R.drawable.ic_cashin);
             cashInText.setText("Cash In");
             cashOutText.setText("Cash Out");
             walletCashIn.setTextColor(getResources().getColor(R.color.colorPrimary));

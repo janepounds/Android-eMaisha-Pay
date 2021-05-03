@@ -5,10 +5,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,12 +51,22 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
     public BeneficiariesDetailsDialogFragment(){
     }
+
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
+
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -64,6 +78,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+      //  getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.onViewCreated(view, savedInstanceState);
 
 
@@ -137,13 +152,13 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
             else if(beneficiary_type.equalsIgnoreCase("bank")){
 
                 //HIDE MM DETAILS
-                text_ben_name.setVisibility(View.GONE);
+                layout_name.setVisibility(View.GONE);
                 layout_account_name.setVisibility(View.VISIBLE);
                 layout_account_number.setVisibility(View.VISIBLE);
                 layout_bank.setVisibility(View.VISIBLE);
                 layout_bank_branch.setVisibility(View.VISIBLE);
                 layout_city.setVisibility(View.VISIBLE);
-                layout_country.setVisibility(View.VISIBLE);
+                layout_country.setVisibility(View.GONE);
 
                 //SET BANK DETAILS
                 text_title.setText(beneficiary_type + " BENEFICIARY");
