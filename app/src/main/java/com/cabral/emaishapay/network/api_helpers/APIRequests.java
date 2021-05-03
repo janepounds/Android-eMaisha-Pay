@@ -1148,7 +1148,7 @@ public interface APIRequests {
             @Field("category") String category,
             @Field("action_id")String action_id,
             @Field("service_code")String service_code,
-            @Field("merchant_code")String merchant_code
+            @Field("agent_code")String merchant_code
 
     );
 }
