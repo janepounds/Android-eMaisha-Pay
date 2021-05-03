@@ -12,8 +12,14 @@ import java.util.Enumeration;
 
 public class ConstantValues {
 
-    public static String WALLET_DOMAIN = "http://emaishapayapi.emaisha.com";
+    public static String WALLET_DOMAIN = "http://emaishapro.emaisha.com";
     private static String TAG = "Consumer_IP";
+
+    public static final String ECOMMERCE_URL = "http://emaishashopro.emaisha.com/";
+    public static final String ECOMMERCE_WEB = "https://emaisha.com/";
+
+    public static final String ECOMMERCE_CONSUMER_KEY = "dadb7a7c1557917902724bbbf5";
+    public static final String ECOMMERCE_CONSUMER_SECRET = "3ba77f821557917902b1d57373";
 
     public static final String CODE_VERSION = "4.0.12";
 
@@ -68,12 +74,6 @@ public class ConstantValues {
     public static String SHA1;
 
     public static final String PHONE_PATTERN = "^[987]\\d{9}$";
-
-    public static final String ECOMMERCE_URL = "http://emaishashop.api.emaisha.com/";
-    public static final String ECOMMERCE_WEB = "https://emaisha.com/";
-
-    public static final String ECOMMERCE_CONSUMER_KEY = "dadb7a7c1557917902724bbbf5";
-    public static final String ECOMMERCE_CONSUMER_SECRET = "3ba77f821557917902b1d57373";
 
 
 
