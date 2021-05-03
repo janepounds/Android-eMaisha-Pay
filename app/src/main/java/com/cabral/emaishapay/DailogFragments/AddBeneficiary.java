@@ -173,6 +173,13 @@ public class AddBeneficiary extends DialogFragment {
             transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        //Change selected text color
+                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                    } catch (Exception e) {
+
+                    }
 
                     if(position==0){
                         beneficiaryNameLayout.setVisibility(View.GONE);
@@ -205,6 +212,13 @@ public class AddBeneficiary extends DialogFragment {
         bankSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
+                }
 
                 if(BankList!=null)
                     for (Bank bank_: BankList) {

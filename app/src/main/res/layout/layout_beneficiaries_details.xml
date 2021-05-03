@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/dialog_background">
+    android:layout_gravity="center"
+    android:background="@color/transparent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="@drawable/dialog_background">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/dialog_background">
             <LinearLayout
                 android:id="@+id/layout_add_money"
                 android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                     android:gravity="center"
                     android:text="Title"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAllCaps="true"/>
                 <ImageView

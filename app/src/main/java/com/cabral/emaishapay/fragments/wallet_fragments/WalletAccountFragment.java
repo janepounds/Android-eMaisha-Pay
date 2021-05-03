@@ -2,6 +2,8 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +53,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,6 +96,8 @@ public class WalletAccountFragment extends Fragment {
            // dialogLoader = new DialogLoader(context);
            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             View dialogView = getLayoutInflater().inflate(R.layout.user_summary_details, null);
+
+
             dialog.setView(dialogView);
             dialog.setCancelable(true);
 
@@ -110,6 +116,7 @@ public class WalletAccountFragment extends Fragment {
 
 
             final AlertDialog alertDialog = dialog.create();
+            alertDialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
             btn_edit.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
             bundle.putString("dob",WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_DOB, context));
@@ -681,9 +688,12 @@ public class WalletAccountFragment extends Fragment {
                 }
             });
 
+            Button cancel = dialogView.findViewById(R.id.btn_cancel_security_qn);
+
 
 
             final android.app.AlertDialog alertDialog = dialog.create();
+            cancel.setOnClickListener(v->{alertDialog.dismiss();});
             alertDialog.show();
 
 
