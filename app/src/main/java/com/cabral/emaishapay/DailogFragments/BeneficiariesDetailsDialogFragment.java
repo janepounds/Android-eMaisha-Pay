@@ -48,6 +48,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
     private Context context;
     private List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
+    String benficiary_id;
 
     public BeneficiariesDetailsDialogFragment(){
     }
@@ -127,6 +128,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
             String branch = getArguments().getString("branch") ;
             String city = getArguments().getString("city") ;
             String country = getArguments().getString("country") ;
+            benficiary_id = getArguments().getString("benficiary_id") ;
 
 
 
@@ -194,7 +196,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                             //   deleteBeneficiary(data.getId());
+                                deleteBeneficiary(benficiary_id);
                                 // notifyItemChanged(fragment);
                                 dialogInterface.dismiss();
                             }
@@ -231,6 +233,10 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                     if (response.body().getStatus() == 0) {
                         dialog.dismiss();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        BeneficiariesDetailsDialogFragment.this.dismiss();
+                        //redirect  to beneficiary list
+
+
 
                     } else {
                         String message = response.body().getMessage();
@@ -238,6 +244,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
 
                         dialog.dismiss();
+                        BeneficiariesDetailsDialogFragment.this.dismiss();
                     }
 
                 }else if(response.code()==401){
