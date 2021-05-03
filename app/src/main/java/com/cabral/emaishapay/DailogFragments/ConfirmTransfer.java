@@ -233,13 +233,33 @@ public class ConfirmTransfer extends DialogFragment {
                     if (response.code() == 200) {
                         if(response.body().getStatus().equalsIgnoreCase("1")) {
                             dialog.dismiss();
+                            //success message
                             dialogLoader.hideProgressDialog();
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            //redirect to home
-                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText( response.body().getMessage() );
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            ConfirmTransfer.this.dismiss();
+
                         }
 
                     } else if (response.code() == 412) {
@@ -273,6 +293,7 @@ public class ConfirmTransfer extends DialogFragment {
             });
 
         }else  if(category.equalsIgnoreCase("agent")){
+            Log.d(TAG, "transferToBank: beneficiary_id"+beneficiary_id);
             APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
             Call<ConfirmationDataResponse> call = apiRequests.agentTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "agentTransferToBank", service_code, currency_code);
             call.enqueue(new Callback<ConfirmationDataResponse>() {
@@ -281,13 +302,33 @@ public class ConfirmTransfer extends DialogFragment {
                     if (response.code() == 200) {
                         if(response.body().getStatus().equalsIgnoreCase("1")) {
                             dialog.dismiss();
+                            //success message
                             dialogLoader.hideProgressDialog();
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            //redirect to home
-                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText( response.body().getMessage() );
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            ConfirmTransfer.this.dismiss();
+
                         }
 
                     } else if (response.code() == 412) {
@@ -330,14 +371,33 @@ public class ConfirmTransfer extends DialogFragment {
                     if (response.code() == 200) {
                         if(response.body().getStatus().equalsIgnoreCase("1")) {
                             dialog.dismiss();
+                            //success message
                             dialogLoader.hideProgressDialog();
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            //redirect to home
-                            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            dialogLoader.hideProgressDialog();
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText( response.body().getMessage() );
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            dialog.show();
+
+
+                        } else {
+                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            ConfirmTransfer.this.dismiss();
+
                         }
                     } else if (response.code() == 412) {
 
