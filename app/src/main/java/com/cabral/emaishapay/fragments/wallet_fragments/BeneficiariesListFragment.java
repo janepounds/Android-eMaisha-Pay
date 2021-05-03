@@ -68,7 +68,7 @@ public class BeneficiariesListFragment extends Fragment {
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);
         toolbar = rootView.findViewById(R.id.toolbar_beneficiaries_list);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("My Beneficiaries");
+        toolbar.setTitle("Beneficiaries");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         RequestBeneficiaries();

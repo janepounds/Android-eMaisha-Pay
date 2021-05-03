@@ -182,12 +182,10 @@ public class TransferMoney extends Fragment {
         spTransferTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                try {
+
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                } catch (Exception e) {
 
-                }
                 if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("select")){
                     layoutMobileNumber.setVisibility(View.GONE);
                     layoutEmaishaCard.setVisibility(View.GONE);
@@ -248,6 +246,11 @@ public class TransferMoney extends Fragment {
         spBeneficiary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+
                 if(spBeneficiary.getSelectedItem()==null || spTransferTo.getSelectedItem()==null){
                     return;
                 }
@@ -315,12 +318,10 @@ public class TransferMoney extends Fragment {
 
                 if(BankList!=null)
                     for (Bank bank: BankList) {
-                        try {
-                            //Change selected text color
+
                             ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                             //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                        } catch (Exception e) {
-                        }
+
 
 
                        if(bank.getName().equalsIgnoreCase(spSelectBank.getSelectedItem().toString())){
@@ -340,6 +341,11 @@ public class TransferMoney extends Fragment {
         spSelectBankBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+
                 if(bankBranches!=null)
                     for (BankBranch branch: bankBranches) {
 

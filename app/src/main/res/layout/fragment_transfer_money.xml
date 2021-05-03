@@ -44,8 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:text="Transfer to"
-                    android:textSize="16sp"
-                    android:textColor="@color/textColor"/>
+                    android:textSize="16sp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -93,8 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:text="Beneficiary"
-                    android:textSize="16sp"
-                    android:textColor="@color/textColor"/>
+                    android:textSize="16sp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -484,7 +482,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textColor="@color/textColor"
                         android:text="Mobile Number"
                         android:textSize="16sp"
                         android:layout_marginBottom="5dp"/>
