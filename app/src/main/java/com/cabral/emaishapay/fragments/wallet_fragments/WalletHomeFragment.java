@@ -26,22 +26,31 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
+import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.animations.DescriptionAnimation;
+import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.TextSliderView;
+import com.glide.slider.library.tricks.ViewPagerEx;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -519,7 +528,102 @@ public class WalletHomeFragment extends Fragment {
         });
     }
 
+    //*********** Setup the ImageSlider with the given List of Product Images ********//
 
+    private void ImageSlider(String itemThumbnail, List<Image> itemImages) {
+
+        // Initialize new HashMap<ImageName, ImagePath>
+        final HashMap<String, String> slider_covers = new HashMap<>();
+        // Initialize new Array for Image's URL
+        final String[] images = new String[itemImages.size()];
+
+
+        if (itemImages.size() > 0) {
+            for (int i = 0; i < itemImages.size(); i++) {
+                // Get Image's URL at given Position from itemImages List
+                images[i] = itemImages.get(i).getImage();
+            }
+        }
+
+
+        // Put Image's Name and URL to the HashMap slider_covers
+        if (itemThumbnail.equalsIgnoreCase("")) {
+            slider_covers.put("a", "" + R.drawable.new_product);
+
+        } else if (images.length == 0) {
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
+
+        } else {
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
+
+            for (int i = 0; i < images.length; i++) {
+                slider_covers.put("b" + i, ConstantValues.ECOMMERCE_WEB + images[i]);
+            }
+        }
+
+
+        for (String name : slider_covers.keySet()) {
+
+            // Initialize DefaultSliderView
+            TextSliderView defaultSliderView = new TextSliderView(context);
+
+            RequestOptions requestOptions = new RequestOptions();
+
+            requestOptions.centerInside();
+
+            // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
+            defaultSliderView
+                    //.description(name)
+                    .setRequestOption(requestOptions)
+                    .image(slider_covers.get(name));
+
+            // Add DefaultSliderView to the SliderLayout
+            binding.productCoverSlider.addSlider(defaultSliderView);
+        }
+
+        // Set PresetTransformer type of the SliderLayout
+        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
+        binding.productCoverSlider.setDuration(4000);
+        binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+        // Check if the size of Images in the Slider is less than 2
+//        if (slider_covers.size() < 2) {
+//            // Disable PagerTransformer
+//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
+//                @Override
+//                protected void onTransform(View view, float v) {
+//
+//                }
+//            });
+//
+//            // Hide Slider PagerIndicator
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+//
+//        } else {
+//            // Set custom PagerIndicator to the SliderLayout
+//            sliderLayout.setCustomIndicator(pagerIndicator);
+//            // Make PagerIndicator Visible
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+//        }
+
+    }
 
 
 
