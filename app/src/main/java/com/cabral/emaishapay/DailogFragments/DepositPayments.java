@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,7 +55,7 @@ public class DepositPayments extends DialogFragment {
         builder.setView(view);
 
 
-       LinearLayout layout_visa = view.findViewById(R.id.layout_visa);
+     //  RelativeLayout layout_visa = view.findViewById(R.id.layout_visa);
 //        layout_visa.setOnClickListener(v->{
 //
 //            androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(context);
