@@ -42,6 +42,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.activities.WalletHomeActivity.navController;
+
 public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     TextView text_title,text_ben_name,text_ben_mobile,text_ben_bank,text_ben_branch,text_ben_city,text_ben_country,text_account_name,text_account_number;
     LinearLayout layout_name,layout_mobile,layout_bank,layout_bank_branch,layout_city,layout_country,layout_account_name,layout_account_number;
@@ -49,6 +51,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     private Context context;
     private List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
     String benficiary_id;
+    public  int currentFragment;
 
     public BeneficiariesDetailsDialogFragment(){
     }
@@ -235,8 +238,12 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         BeneficiariesDetailsDialogFragment.this.dismiss();
                         //redirect  to beneficiary list
-                        WalletHomeActivity.navController.navigate(R.id.action_beneficiariesDetailsDialogFragment_to_beneficiariesListFragment);
+                        currentFragment= navController.getCurrentDestination().getId();
+                        if(currentFragment==R.id.beneficiariesDetailsDialogFragment) {
 
+
+                            navController.navigate(R.id.action_beneficiariesDetailsDialogFragment_to_beneficiariesListFragment);
+                        }
 
                     } else {
                         String message = response.body().getMessage();
