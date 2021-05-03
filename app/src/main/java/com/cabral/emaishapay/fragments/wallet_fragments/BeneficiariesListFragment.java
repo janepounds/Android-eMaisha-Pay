@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,6 +43,7 @@ public class BeneficiariesListFragment extends Fragment {
     private RecyclerView recyclerView;
     FloatingActionButton btnAddBeneficiary;
     private BeneficiariesListAdapter beneficiariesListAdapter;
+    private ConstraintLayout layoutPlaceholder;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
 
     Toolbar toolbar;
@@ -72,6 +74,10 @@ public class BeneficiariesListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         RequestBeneficiaries();
+
+        layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
+
+
 
         btnAddBeneficiary.setOnClickListener(v -> {
             //nvigate to add beneficiaries fragment
@@ -115,6 +121,13 @@ public class BeneficiariesListFragment extends Fragment {
 
                         beneficiariesList = response.body().getBeneficiariesList();
                         Log.d(TAG, "onResponse: beneficiaries"+beneficiariesList.size());
+                        if(beneficiariesList.size()!=0){
+                            layoutPlaceholder.setVisibility(View.GONE);
+                        }else {
+                            layoutPlaceholder.setVisibility(View.VISIBLE);
+                        }
+
+
 
 
                     } catch (Exception e) {
