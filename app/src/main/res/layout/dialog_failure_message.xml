@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_20dp"
-        android:src="@drawable/success"
+        android:src="@drawable/ic_failure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_20dp"
         android:gravity="center"
-        android:text="Success"
+        android:text="Failure"
         android:textColor="@color/colorPrimary"
         android:textSize="45sp"
         android:textStyle="bold"
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="have been successfully submitted, awaiting approaval."
+            android:text="Message"
             android:textSize="16sp"
             android:textColor="#222222"
             android:textStyle="bold"/>

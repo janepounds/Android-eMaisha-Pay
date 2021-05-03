@@ -443,7 +443,7 @@ public class TransferMoney extends Fragment {
 
             }
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account")){
-                if( validateMobileMoneyTransFerForm()) {
+                if( validateMaishaTransFerForm()) {
 
                     FragmentTransaction ft = fm.beginTransaction();
                     Fragment prev = fm.findFragmentByTag("dialog");
@@ -538,6 +538,18 @@ public class TransferMoney extends Fragment {
         });
 
 
+    }
+
+    private boolean validateMaishaTransFerForm() {
+       if (!ValidateInputs.isValidPhoneNo(etMobileMoneyNumber.getText().toString().trim())) {
+            etMobileMoneyNumber.setError(getString(R.string.invalid_phone));
+            return false;
+        } else if (Integer.parseInt(etAmount.getText().toString().trim())<0) {
+            etAmount.setError(getString(R.string.invalid_number));
+            return false;
+        }  else {
+            return true;
+        }
     }
 
     private boolean validateForm() {

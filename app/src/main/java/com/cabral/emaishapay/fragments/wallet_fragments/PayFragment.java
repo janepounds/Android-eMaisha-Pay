@@ -38,6 +38,7 @@ import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
+import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -50,7 +51,7 @@ import retrofit2.Response;
 
 public class PayFragment extends Fragment {
     private static final String TAG = "PayFragment";
-    TextView mechantIdEdt, text_coupon;
+    TextView mechantIdEdt, text_coupon,text_pay_to_title;
     EditText totalAmountEdt, couponAmout, cardNumberEdt, expiryEdt, cvvEdt, mobileNumberEdt;
     Spinner spinner_select_card;
 
@@ -61,12 +62,13 @@ public class PayFragment extends Fragment {
 
     private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key=null;
 
-    LinearLayout card_details_layout;
+    LinearLayout card_details_layout,layout_pay_to;
     CheckBox checkbox_save_card;
     LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID,layoutPaymentMethod;
-    Spinner spPaymentMethod;
+    Spinner spPaymentMethod,sp_payment_pay_to;
     Button saveBtn;
     FragmentManager fm;
+    Toolbar toolbar;
     private Context context;
     DialogLoader dialogLoader;
 
@@ -82,11 +84,11 @@ public class PayFragment extends Fragment {
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
         this.context=getActivity();
-        Toolbar toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
+        toolbar=view.findViewById(R.id.toolbar_wallet_pay_merchant);
         dialog = new DialogLoader(getContext());
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Pay Merchant");
+      //  toolbar.setTitle("Pay Merchant");
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -121,6 +123,10 @@ public class PayFragment extends Fragment {
 
         layoutMerchantID = view.findViewById(R.id.layout_pay_merchant_id);
         layoutAmount = view.findViewById(R.id.layout_pay_merchant_amount);
+
+        layout_pay_to = view.findViewById(R.id.layout_pay_to);
+        sp_payment_pay_to = view.findViewById(R.id.sp_payment_pay_to);
+        text_pay_to_title = view.findViewById(R.id.text_pay_to_title);
 
 
         if(getArguments()!=null){
@@ -165,13 +171,10 @@ public class PayFragment extends Fragment {
         spPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    //Change selected text color
+                //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                } catch (Exception e) {
 
-                }
                 String selectedItem=spPaymentMethod.getSelectedItem().toString();
 
                 if(selectedItem.equalsIgnoreCase("select")){
@@ -179,6 +182,7 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.GONE);
                     layoutMerchantID.setVisibility(View.GONE);
+                    layout_pay_to.setVisibility(View.GONE);
                 }
 
                 else if(selectedItem.equalsIgnoreCase("eMaisha Pay")){
@@ -186,12 +190,14 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.VISIBLE);
                     layoutMerchantID.setVisibility(View.VISIBLE);
+                    layout_pay_to.setVisibility(View.GONE);
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
-                    layoutMobileMoney.setVisibility(View.VISIBLE);
+                    layoutMobileMoney.setVisibility(View.GONE);
                     layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                    layoutMerchantID.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.GONE);
+                    layoutMerchantID.setVisibility(View.GONE);
+                    layout_pay_to.setVisibility(View.VISIBLE);
                 }
 //                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
 //                    layoutMobileMoney.setVisibility(View.GONE);
@@ -208,17 +214,57 @@ public class PayFragment extends Fragment {
             }
         });
 
+
+        sp_payment_pay_to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Change selected text color
+                ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+
+                if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Select")){
+                    layoutMobileMoney.setVisibility(View.GONE);
+                    layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.GONE);
+                    layoutMerchantID.setVisibility(View.GONE);
+
+                }else if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Agent")){
+
+                    toolbar.setTitle("Pay Agent");
+                    text_pay_to_title.setText("Agent ID");
+                    layoutMerchantID.setVisibility(View.VISIBLE);
+                    layoutMobileMoney.setVisibility(View.VISIBLE);
+                    layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                }else if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Merchant")){
+                    toolbar.setTitle("Pay Merchant");
+                    text_pay_to_title.setText("Merchant ID");
+                    layoutMerchantID.setVisibility(View.VISIBLE);
+                    layoutMobileMoney.setVisibility(View.VISIBLE);
+                    layoutBankCards.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                try {
+
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                } catch (Exception e) {
 
-                }
 
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     //call add card
@@ -314,6 +360,7 @@ public class PayFragment extends Fragment {
                 WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
                 WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
                 WalletTransactionInitiation.getInstance().setAmount(amount);
+                WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
                 FragmentTransaction ft = this.fm.beginTransaction();
                 Fragment prev =this.fm.findFragmentByTag("dialog");
                 if (prev != null) {

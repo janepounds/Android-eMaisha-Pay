@@ -26,22 +26,31 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
+import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.animations.DescriptionAnimation;
+import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.TextSliderView;
+import com.glide.slider.library.tricks.ViewPagerEx;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -518,6 +527,8 @@ public class WalletHomeFragment extends Fragment {
             }
         });
     }
+
+    //*********** Setup the ImageSlider with the given List of Product Images ********//
 
 
 
