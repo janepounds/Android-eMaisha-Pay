@@ -110,7 +110,11 @@
         android:id="@+id/beneficiariesListFragment"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragment"
         tools:layout="@layout/fragment_beneficiaries_list"
-        android:label="BeneficiariesListFragment" />
+        android:label="BeneficiariesListFragment" >
+        <action
+            android:id="@+id/action_beneficiariesListFragment_to_beneficiariesDetailsDialogFragment"
+            app:destination="@id/beneficiariesDetailsDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tokenAuthFragment"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment"
@@ -472,5 +476,13 @@
             app:destination="@id/scanAndPayDialog" />
 
     </fragment>
+    <dialog
+        android:id="@+id/beneficiariesDetailsDialogFragment"
+        android:name="com.cabral.emaishapay.DailogFragments.BeneficiariesDetailsDialogFragment"
+        android:label="BeneficiariesDetailsDialogFragment" >
+        <action
+            android:id="@+id/action_beneficiariesDetailsDialogFragment_to_beneficiariesListFragment"
+            app:destination="@id/beneficiariesListFragment" />
+    </dialog>
 
 </navigation>

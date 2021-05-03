@@ -54,35 +54,35 @@ public class DepositPayments extends DialogFragment {
         builder.setView(view);
 
 
-        LinearLayout layout_visa = view.findViewById(R.id.layout_visa);
-        layout_visa.setOnClickListener(v->{
-
-            androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(context);
-            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
-            dialog.setView(dialogView);
-            dialog.setCancelable(true);
-
-            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
-            Button ok = dialogView.findViewById(R.id.button_submit);
-            TextView text = dialogView.findViewById(R.id.text);
-            TextView textTitle = dialogView.findViewById(R.id.text_instant_loans);
-
-            textTitle.setText("VISA TOPUP");
-
-            text.setText("Top up your eMaisha Account using your Visa Card.");
-
-
-
-            final androidx.appcompat.app.AlertDialog alertDialog = dialog.create();
-
-            ok.setOnClickListener(view13->{
-                alertDialog.dismiss();
-            });
-            close.setOnClickListener(view13->{
-                alertDialog.dismiss();
-            });
-            alertDialog.show();
-        });
+       LinearLayout layout_visa = view.findViewById(R.id.layout_visa);
+//        layout_visa.setOnClickListener(v->{
+//
+//            androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(context);
+//            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+//            dialog.setView(dialogView);
+//            dialog.setCancelable(true);
+//
+//            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+//            Button ok = dialogView.findViewById(R.id.button_submit);
+//            TextView text = dialogView.findViewById(R.id.text);
+//            TextView textTitle = dialogView.findViewById(R.id.text_instant_loans);
+//
+//            textTitle.setText("VISA TOPUP");
+//
+//            text.setText("Top up your eMaisha Account using your Visa Card.");
+//
+//
+//
+//            final androidx.appcompat.app.AlertDialog alertDialog = dialog.create();
+//
+//            ok.setOnClickListener(view13->{
+//                alertDialog.dismiss();
+//            });
+//            close.setOnClickListener(view13->{
+//                alertDialog.dismiss();
+//            });
+//            alertDialog.show();
+//        });
 
         ImageView close = view.findViewById(R.id.wallet_deposit_close);
         close.setOnClickListener(v -> dismiss());

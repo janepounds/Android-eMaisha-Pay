@@ -1068,8 +1068,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/layout_emaisha_cards"
                 app:cardCornerRadius="5dp"
-                app:cardElevation="0dp"
-                android:visibility="gone">
+                app:cardElevation="0dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
