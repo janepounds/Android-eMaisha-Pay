@@ -117,7 +117,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:onClick="openAddMoneyVisa">
 
                     <ImageView
                         android:layout_width="match_parent"

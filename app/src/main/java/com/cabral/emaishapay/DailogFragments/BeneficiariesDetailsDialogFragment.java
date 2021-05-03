@@ -235,7 +235,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         BeneficiariesDetailsDialogFragment.this.dismiss();
                         //redirect  to beneficiary list
-
+                        WalletHomeActivity.navController.navigate(R.id.action_beneficiariesDetailsDialogFragment_to_beneficiariesListFragment);
 
 
                     } else {
