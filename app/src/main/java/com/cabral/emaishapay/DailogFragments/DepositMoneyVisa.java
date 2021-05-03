@@ -413,16 +413,40 @@ public class DepositMoneyVisa extends DialogFragment  {
         String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        Call<CardResponse> call;
 
-        Call<CardResponse> call = apiRequests.cardTopUp(
-                access_token,
-                amount,
-                card_id,
-                request_id,
-                category,
-                service_code,
-                "customerEmaishaCardTopup"
-        );
+        if(category.equalsIgnoreCase("Merchant")){
+            call = apiRequests.cardTopUpMerchant(
+                    access_token,
+                    amount,
+                    card_id,
+                    request_id,
+                    category,
+                    service_code,
+                    "merchantEmaishaCardTopup"
+            );
+        }else if(category.equalsIgnoreCase("Agent")){
+            call = apiRequests.cardTopUpAgent(
+                    access_token,
+                    amount,
+                    card_id,
+                    request_id,
+                    category,
+                    service_code,
+                    "agentEmaishaCardTopup"
+            );
+        }else{
+            call = apiRequests.cardTopUp(
+                    access_token,
+                    amount,
+                    card_id,
+                    request_id,
+                    category,
+                    service_code,
+                    "customerEmaishaCardTopup"
+            );
+        }
+
 
         call.enqueue(new Callback<CardResponse>() {
             @Override
