@@ -557,6 +557,10 @@ public class TransferMoney extends Fragment {
             Toast.makeText(context,"Select transfer To",Toast.LENGTH_LONG).show();
             return false;
 
+        }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Toast.makeText(context,"Select Beneficiary",Toast.LENGTH_LONG).show();
+            return false;
+
         }else if(etAmount.getText().toString().isEmpty()){
             etAmount.setError("Required");
             return false;

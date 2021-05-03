@@ -430,7 +430,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="Beneficiary Name"
-                        android:textSize="@dimen/margin_16"
+                        android:textSize="16sp"
                         android:layout_marginBottom="5dp"/>
 
                     <LinearLayout
@@ -649,7 +649,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
                     android:layout_marginBottom="5dp"
                     android:text="Amount"
                     android:textSize="16sp" />
