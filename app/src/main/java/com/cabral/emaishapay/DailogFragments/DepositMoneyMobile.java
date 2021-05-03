@@ -221,7 +221,23 @@ public class DepositMoneyMobile extends DialogFragment {
                         dialog.show();
 
                     } else {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        final Dialog dialog = new Dialog(activity);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.show();
 
                     }
 

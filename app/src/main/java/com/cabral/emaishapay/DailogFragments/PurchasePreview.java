@@ -324,9 +324,27 @@ public class PurchasePreview extends DialogFragment implements
                             dialog.show();
 
                         } else {
-
-                            Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+
+
                         }
 
                     } else if (response.code() == 401) {
@@ -383,8 +401,26 @@ public class PurchasePreview extends DialogFragment implements
 
                         } else {
 
-                            Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
                             dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
                         }
 
                     } else if (response.code() == 401) {
@@ -537,7 +573,25 @@ public class PurchasePreview extends DialogFragment implements
                     if(response.body().getStatus().equals("0")){
 
                         try {
-                            Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
                         }catch (Exception e){
                             e.printStackTrace();
                             Log.e("Error", e.getMessage());
