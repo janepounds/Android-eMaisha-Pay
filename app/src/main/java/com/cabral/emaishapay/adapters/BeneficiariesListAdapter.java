@@ -34,7 +34,6 @@ import com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragmen
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 
 import java.util.List;
@@ -105,14 +104,9 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
         holder.beneficiary_type.setText(data.getTransaction_type());
             //decript name and account no
-            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-            decripted_name = encrypter.decrypt(data.getAccount_name());
-            if(decripted_name==null)
-                decripted_name=data.getAccount_name();
+            decripted_name = data.getAccount_name();
 
-            decripted_number = encrypter.decrypt(data.getAccount_number());
-            if(decripted_number==null)
-                decripted_number=data.getAccount_number();
+            decripted_number = data.getAccount_number();
 
             //Log.w("AccountName",decripted_name+" : "+data.getAccount_name());
             holder.initials.setText(getNameInitials(decripted_name));
@@ -203,7 +197,8 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                         dialog.dismiss();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                    } else {
+                    }
+                    else {
                         String message = response.body().getMessage();
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 

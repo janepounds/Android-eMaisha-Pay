@@ -12,7 +12,6 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.AccountCreation;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -203,19 +202,12 @@ public class CardDetail extends Fragment {
                     cvvv = cvv.getText().toString();
 
 
-                    /**********ENCRIPT CARD DETAILS************/
-                    CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-                    String card_number_encripted = encrypter.encrypt(card_number);
-                    String expiry_encripted = encrypter.encrypt(expiry_Date);
-                    String account_name_encripted = encrypter.encrypt(account_name);
-                    String cvv_encripted = encrypter.encrypt(cvvv);
-
                     //submit registration details to server
                     /***************RETROFIT IMPLEMENTATION FOR TRANSFER FUNDS************************/
-                    accountCreation.setCard_number(card_number_encripted);
-                    accountCreation.setCvv(cvv_encripted);
-                    accountCreation.setExpiry(expiry_encripted);
-                    accountCreation.setAccount_name(account_name_encripted);
+                    accountCreation.setCard_number(card_number);
+                    accountCreation.setCvv(cvvv);
+                    accountCreation.setExpiry(expiry_Date);
+                    accountCreation.setAccount_name(account_name);
                     accountCreation.setPin(WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+card_enter_pin.getText().toString());
 
                     /***************RETROFIT IMPLEMENTATION FOR ACCOUNT CREATION************************/
