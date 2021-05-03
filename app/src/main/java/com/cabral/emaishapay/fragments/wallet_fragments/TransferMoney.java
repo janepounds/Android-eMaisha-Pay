@@ -377,6 +377,7 @@ public class TransferMoney extends Fragment {
             }
         });
         addMoneyImg.setOnClickListener(v -> {
+            if(validateForm()){
             String amountEntered = etAmount.getText().toString();
             amount = Float.parseFloat(amountEntered);
             String beneficary_type = spTransferTo.getSelectedItem().toString().trim();
@@ -489,7 +490,7 @@ public class TransferMoney extends Fragment {
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     if( validateMobileMoneyTransFerForm()) {
-
+                        beneficiary_name = etBeneficiaryName.getText().toString();
                         beneficiary_bank_phone_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
                         beneficiary_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
                         requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
@@ -533,9 +534,23 @@ public class TransferMoney extends Fragment {
             }else{
                 Toast.makeText(context,"Select Transfer To",Toast.LENGTH_LONG).show();
             }
-
+            }
         });
 
+
+    }
+
+    private boolean validateForm() {
+        if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Toast.makeText(context,"Select transfer To",Toast.LENGTH_LONG).show();
+            return false;
+
+        }else if(etAmount.getText().toString().isEmpty()){
+            etAmount.setError("Required");
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

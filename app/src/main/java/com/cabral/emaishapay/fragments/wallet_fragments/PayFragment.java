@@ -34,8 +34,10 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
+import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -66,6 +68,7 @@ public class PayFragment extends Fragment {
     Button saveBtn;
     FragmentManager fm;
     private Context context;
+    DialogLoader dialogLoader;
 
 
     public PayFragment() {
@@ -272,6 +275,7 @@ public class PayFragment extends Fragment {
     }
 
     public void processPayment(){
+        float amount = Float.parseFloat(totalAmountEdt.getText().toString());
         if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
             methodOfPayment = spPaymentMethod.getSelectedItem().toString();
 
@@ -279,14 +283,52 @@ public class PayFragment extends Fragment {
             methodOfPayment = "eMaisha Pay";
 
         }
-        if(methodOfPayment.equalsIgnoreCase("eMaisha Pay"))
-            if(!validateWalletPurchase()) return;
-//        else if(methodOfPayment.equals("Bank Cards") || methodOfPayment.equals("eMaisha Card") )
-//            if(!validateBankCardPurchase())  return;
-        else if(methodOfPayment.equals("Mobile Money"))
-            if(!validateMobileMoneyPurchase()) return;
+        if(methodOfPayment.equalsIgnoreCase("eMaisha Pay")){
 
-        float amount = Float.parseFloat(totalAmountEdt.getText().toString());
+            if(validateWalletPurchase()){
+                //go to preview
+                WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
+                WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
+                WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
+                WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+                WalletTransactionInitiation.getInstance().setAmount(amount);
+                FragmentTransaction ft = this.fm.beginTransaction();
+                Fragment prev =this.fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                // Create and show the dialog.
+                DialogFragment PreviewDailog =new PurchasePreview(context);
+                PreviewDailog.show( ft, "dialog");
+
+            }
+
+
+        }
+        else if(methodOfPayment.equals("Mobile Money")) {
+            if (validateMobileMoneyPurchase()) {
+                //redirect to preview dialog
+                WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
+                WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
+                WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
+                WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+                WalletTransactionInitiation.getInstance().setAmount(amount);
+                FragmentTransaction ft = this.fm.beginTransaction();
+                Fragment prev =this.fm.findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                // Create and show the dialog.
+                DialogFragment PreviewDailog =new PurchasePreview(context);
+                PreviewDailog.show( ft, "dialog");
+
+
+            }
+        }
+
+
 //        if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
 //            Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
 //            return ;
@@ -300,32 +342,40 @@ public class PayFragment extends Fragment {
 //        }
 
 
-
-        if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
-            WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
-            WalletTransactionInitiation.getInstance().setAmount(amount);
-            WalletTransactionInitiation.getInstance().setCardNumber(cardNo);
-            WalletTransactionInitiation.getInstance().setCardExpiry(expiry);
-            WalletTransactionInitiation.getInstance().setCvv(cvv);
-            WalletTransactionInitiation.getInstance().setMobileNumber(mobileNo);
-            WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
-            WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
-
-            
-            FragmentTransaction ft = this.fm.beginTransaction();
-            Fragment prev =this.fm.findFragmentByTag("dialog");
-            if (prev != null) {
-                ft.remove(prev);
-            }
-            ft.addToBackStack(null);
-            // Create and show the dialog.
-            DialogFragment PreviewDailog =new PurchasePreview(context);
-            PreviewDailog.show( ft, "dialog");
-        }
-        else{
-            Log.d("ITEMS ", "NO ITEMS");
-        }
+//
+//        if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
+//            WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
+//            WalletTransactionInitiation.getInstance().setAmount(amount);
+//            WalletTransactionInitiation.getInstance().setCardNumber(cardNo);
+//            WalletTransactionInitiation.getInstance().setCardExpiry(expiry);
+//            WalletTransactionInitiation.getInstance().setCvv(cvv);
+//            WalletTransactionInitiation.getInstance().setMobileNumber(mobileNo);
+//            WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
+//            WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+//
+//
+//            FragmentTransaction ft = this.fm.beginTransaction();
+//            Fragment prev =this.fm.findFragmentByTag("dialog");
+//            if (prev != null) {
+//                ft.remove(prev);
+//            }
+//            ft.addToBackStack(null);
+//            // Create and show the dialog.
+//            Bundle bundle = new Bundle();
+//            bundle.putString("merchant_id",mechantIdEdt.getText().toString());
+//            DialogFragment PreviewDailog =new PurchasePreview(context);
+//            PreviewDailog.setArguments(bundle);
+//            PreviewDailog.show( ft, "dialog");
+//        }
+//        else{
+//            Log.d("ITEMS ", "NO ITEMS");
+//        }
     }
+
+
+
+
+
 
     private boolean validateBankCardPurchase() {
         if (!ValidateInputs.isValidAccountNo(cardNumberEdt.getText().toString().trim())) {
@@ -364,8 +414,8 @@ public class PayFragment extends Fragment {
         if (!ValidateInputs.isValidPhoneNo(mobileNumberEdt.getText().toString().trim())) {
             mobileNumberEdt.setError(getString(R.string.invalid_phone));
             return false;
-        } else if (Integer.parseInt(mechantIdEdt.getText().toString().trim())<0) {
-            totalAmountEdt.setError(getString(R.string.invalid_number));
+        } else if (mechantIdEdt.getText().toString().trim().isEmpty()) {
+            mechantIdEdt.setError("Required!");
             return false;
         }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
             totalAmountEdt.setError(getString(R.string.invalid_number));
@@ -403,6 +453,7 @@ public class PayFragment extends Fragment {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if(response.isSuccessful()){
+                    dialog.hideProgressDialog();
 
                     try {
 

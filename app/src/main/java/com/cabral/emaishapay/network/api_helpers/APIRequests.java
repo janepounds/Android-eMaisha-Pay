@@ -1123,4 +1123,18 @@ public interface APIRequests {
                                                           @Field("service_code")String service_code,
                                                           @Field("currency_code")String currency_code
     );
+
+    @FormUrlEncoded
+    @POST("wallet/customer/pay-merchant-momo")
+    Call<WalletPurchaseResponse>customerPayMerchantMobile(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("senderPhoneNumber") String senderPhoneNumber,
+            @Field("request_id")String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code,
+            @Field("merchant_code")String merchant_code
+
+    );
 }
