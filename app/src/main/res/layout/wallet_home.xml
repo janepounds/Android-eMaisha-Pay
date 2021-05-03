@@ -93,8 +93,8 @@
             android:src="@drawable/group_24"
             app:layout_anchor="@id/bottomAppBar"
             app:layout_anchorGravity="top|center"
-            app:backgroundTint="@color/white"
-            app:tint="@color/colorPrimary"/>
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/white"/>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
