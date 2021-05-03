@@ -293,6 +293,7 @@ public class PayFragment extends Fragment {
                 WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
                 WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
                 WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+                WalletTransactionInitiation.getInstance().setAmount(amount);
                 FragmentTransaction ft = this.fm.beginTransaction();
                 Fragment prev =this.fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -314,6 +315,7 @@ public class PayFragment extends Fragment {
                 WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
                 WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
                 WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+                WalletTransactionInitiation.getInstance().setAmount(amount);
                 FragmentTransaction ft = this.fm.beginTransaction();
                 Fragment prev =this.fm.findFragmentByTag("dialog");
                 if (prev != null) {
@@ -414,8 +416,8 @@ public class PayFragment extends Fragment {
         if (!ValidateInputs.isValidPhoneNo(mobileNumberEdt.getText().toString().trim())) {
             mobileNumberEdt.setError(getString(R.string.invalid_phone));
             return false;
-        } else if (Integer.parseInt(mechantIdEdt.getText().toString().trim())<0) {
-            totalAmountEdt.setError(getString(R.string.invalid_number));
+        } else if (mechantIdEdt.getText().toString().trim().isEmpty()) {
+            mechantIdEdt.setError("Required!");
             return false;
         }  else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
             totalAmountEdt.setError(getString(R.string.invalid_number));
