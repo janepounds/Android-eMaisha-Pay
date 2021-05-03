@@ -265,6 +265,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         bundle.putString("country",country);
         bundle.putString("address1",address1);
         bundle.putString("address2",address2);
+        bundle.putString("benficiary_id",id);
         addCardDialog.setArguments(bundle);
         addCardDialog.show( ft, "dialog");
 
