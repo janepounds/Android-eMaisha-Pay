@@ -1026,6 +1026,11 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         cardlists = response.body().getCardsList();
                         cardItems.add(new CardSpinnerItem() {
                             @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
                             public String getCardNumber() {
                                 return null;
                             }
@@ -1051,12 +1056,18 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                                 final  String card_number = cardlists.get(i).getCard_number();
                                 final  String  decripted_expiryDate = cardlists.get(i).getExpiry();
                                 final  String cvv  = cardlists.get(i).getCvv();
+                                final  String id  = cardlists.get(i).getId();
 
                                 String first_four_digits = (card_number.substring(0,  4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));
                                 final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
                                 //  Log.w("CardNumber","**********>>>>"+decripted_card_number);
                                 cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getId() {
+                                        return id;
+                                    }
+
                                     @Override
                                     public String getCardNumber() {
                                         return card_number;
@@ -1082,6 +1093,11 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                         }
 
                         cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getId() {
+                                return null;
+                            }
+
                             @Override
                             public String getCardNumber() {
                                 return null;

@@ -67,7 +67,7 @@ public class DepositMoneyVisa extends DialogFragment  {
     private String txRef;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
-    private String expiryDate,cvv,card_no;
+    private String expiryDate,cvv,card_no,card_id;
 
     double balance;
     DialogLoader dialog;
@@ -160,7 +160,7 @@ public class DepositMoneyVisa extends DialogFragment  {
                 }
                 else{
                     if(!addMoneyTxt.getText().toString().isEmpty() )
-                        initiateDepositWithExistingCard(spinner_select_card.getSelectedItem().toString());
+                        initiateDepositWithExistingCard(card_id);
 
                 }
 
@@ -180,11 +180,11 @@ public class DepositMoneyVisa extends DialogFragment  {
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     //call add card
                     card_details_layout.setVisibility(View.VISIBLE);
-
-            }
+                }
                 else {
                     for(int i = 0; i<cardItems.size();i++){
                         if(cardItems.get(i).toString().equalsIgnoreCase(spinner_select_card.getSelectedItem().toString())){
+                            card_id=cardItems.get(i).getId();
                             expiryDate =  cardItems.get(i).getExpiryDate();
                             card_no = cardItems.get(i).getCardNumber();
                             cvv = cardItems.get(i).getCvv();
@@ -270,6 +270,11 @@ public class DepositMoneyVisa extends DialogFragment  {
                         cardlists = response.body().getCardsList();
                         cardItems.add(new CardSpinnerItem() {
                             @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
                             public String getCardNumber() {
                                 return null;
                             }
@@ -297,12 +302,18 @@ public class DepositMoneyVisa extends DialogFragment  {
                                 final  String card_number = cardlists.get(i).getCard_number();
                                 final  String  decripted_expiryDate = cardlists.get(i).getExpiry();
                                 final  String cvv  = cardlists.get(i).getCvv();
+                                final  String id  = cardlists.get(i).getId();
 
                                 String first_four_digits = (card_number.substring(0,  4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));
                                 final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
                                 //  Log.w("CardNumber","**********>>>>"+decripted_card_number);
                                 cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getId() {
+                                        return id;
+                                    }
+
                                     @Override
                                     public String getCardNumber() {
                                         return card_number;
@@ -330,6 +341,11 @@ public class DepositMoneyVisa extends DialogFragment  {
 
                         cardItems.add(new CardSpinnerItem() {
                             @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
                             public String getCardNumber() {
                                 return null;
                             }
@@ -354,7 +370,7 @@ public class DepositMoneyVisa extends DialogFragment  {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
                         spinner_select_card.setAdapter(cardListAdapter);
                         dialog.hideProgressDialog();

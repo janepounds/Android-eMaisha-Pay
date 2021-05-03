@@ -430,6 +430,11 @@ public class ShopPayments extends Fragment implements
                         cardlists = response.body().getCardsList();
                         cardItems.add(new CardSpinnerItem() {
                             @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
                             public String getCardNumber() {
                                 return null;
                             }
@@ -453,6 +458,7 @@ public class ShopPayments extends Fragment implements
                             card_number = cardlists.get(i).getCard_number();
                             decripted_expiryDate = cardlists.get(i).getExpiry();
                             String cvv = cardlists.get(i).getCvv();
+                            String id = cardlists.get(i).getId();
                             Log.d(TAG, "onResponse: decripter_card_no" + card_number);
 
                             if (card_number.length() > 4) {
@@ -463,6 +469,11 @@ public class ShopPayments extends Fragment implements
 
                                 Log.d(TAG, "onResponse: masked " + decripted_card_number);
                                 cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getId() {
+                                        return id;
+                                    }
+
                                     @Override
                                     public String getCardNumber() {
                                         return card_number;
@@ -489,6 +500,11 @@ public class ShopPayments extends Fragment implements
                             }
                         }
                         cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getId() {
+                                return null;
+                            }
+
                             @Override
                             public String getCardNumber() {
                                 return null;
