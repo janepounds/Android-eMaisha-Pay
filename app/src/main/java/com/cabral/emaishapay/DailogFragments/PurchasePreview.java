@@ -30,6 +30,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
+import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -254,7 +255,7 @@ public class PurchasePreview extends DialogFragment implements
                     }
                     else if(methodOfPayment.equalsIgnoreCase("Mobile Money")){
 
-                        processMobileMoneyPayment(service_code);
+                        payMerchantMobileMoney(service_code);
                     }
 
                 }else {
@@ -270,6 +271,74 @@ public class PurchasePreview extends DialogFragment implements
 
 
     }
+
+    private void payMerchantMobileMoney(String service_code) {
+
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
+        String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
+        String merchant_id= WalletTransactionInitiation.getInstance().getMobileNumber();
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+
+
+
+            /******************RETROFIT IMPLEMENTATION***********************/
+            Call<WalletPurchaseResponse> call = APIClient.getWalletInstance(activity).customerPayMerchantMobile(
+                    access_token,amount,mobileNumber,
+                    request_id,
+                    category,"customerPayMerchantViaMobileMoney",service_code,merchant_id);
+            call.enqueue(new Callback<WalletPurchaseResponse>() {
+                @Override
+                public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
+                    if (response.isSuccessful()) {
+                        dialogLoader.hideProgressDialog();
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+                            //call success dialog
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+
+                        } else {
+
+                            Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            dialogLoader.hideProgressDialog();
+                        }
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                        if (response.errorBody() != null) {
+                            Log.e("info", new String(String.valueOf(response.errorBody())));
+                        } else {
+                            Log.e("info", "Something got very very wrong");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+        }
+
 
     private void processMobileMoneyPayment(String service_code) {
         String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();

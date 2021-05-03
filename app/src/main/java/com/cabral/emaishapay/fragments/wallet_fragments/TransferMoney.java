@@ -484,7 +484,7 @@ public class TransferMoney extends Fragment {
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     if( validateMobileMoneyTransFerForm()) {
-
+                        beneficiary_name = etBeneficiaryName.getText().toString();
                         beneficiary_bank_phone_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
                         beneficiary_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
                         requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
