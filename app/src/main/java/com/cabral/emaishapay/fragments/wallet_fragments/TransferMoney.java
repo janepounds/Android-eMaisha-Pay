@@ -64,13 +64,13 @@ public class TransferMoney extends Fragment {
     LinearLayout layoutMobileNumber, layoutEmaishaCard,layoutBank,layoutBeneficiary,layoutAmount,layoutMobileMoneyBeneficiaries;
     Button addMoneyImg;
     TextView mobile_numberTxt, addMoneyTxt,transferTotxt;
-    AutoCompleteTextView spSelectBank;
-    Spinner spTransferTo, spSelectBankBranch,spBeneficiary,spCountry;
+
+    Spinner spTransferTo, spSelectBankBranch,spSelectBank,spBeneficiary,spCountry;
     EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt, etAccountName, etAccountNumber,etAmount;
 
     FragmentManager fm;
     EditText etMobileMoneyNumber;
-    EditText etBeneficiaryName,etStreetAdd1,etStreetAdd2,etCity;
+    EditText etBeneficiaryName,etCity;
     private Context context;
     private Toolbar toolbar;
     DialogLoader dialogLoader;
@@ -81,7 +81,7 @@ public class TransferMoney extends Fragment {
 
     OtpDialogLoader otpDialogLoader;
     float amount;
-    String beneficiary_nname,beneficiary_number,bankk,branch,phoneNumber,account_name,account_number,beneficiary_bank_phone_number,beneficiary_id;
+    String beneficiary_number,bankk,branch,phoneNumber,account_name,account_number,beneficiary_bank_phone_number,beneficiary_id;
 
     public TransferMoney() {
     }
@@ -148,9 +148,9 @@ public class TransferMoney extends Fragment {
         layoutAmount = view.findViewById(R.id.transfer_amount);
         layoutMobileMoneyBeneficiaries = view.findViewById(R.id.layout_mobile_money);
         etCity = view.findViewById(R.id.et_city);
-        etStreetAdd1 = view.findViewById(R.id.et_street_address_1);
-        etStreetAdd2 = view.findViewById(R.id.et_street_address_2);
         spCountry = view.findViewById(R.id.sp_country);
+        spCountry.setSelection(1);
+        spCountry.setEnabled(false);
 
         this.fm=getActivity().getSupportFragmentManager();
 
@@ -288,8 +288,6 @@ public class TransferMoney extends Fragment {
                             }
 
 
-
-
                         }
                     }
                 }
@@ -325,7 +323,7 @@ public class TransferMoney extends Fragment {
                         }
 
 
-                       if(bank.getName().equalsIgnoreCase(spSelectBank.getText().toString())){
+                       if(bank.getName().equalsIgnoreCase(spSelectBank.getSelectedItem().toString())){
                            selected_bank_code=bank.getCode();
                            getTransferBankBranches(bank.getId());
                        }
@@ -338,36 +336,12 @@ public class TransferMoney extends Fragment {
             }
         });
 
-        spSelectBank.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                spSelectBank.showDropDown();
-
-
-            }
-        });
         spSelectBankBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(BankList!=null)
+                if(bankBranches!=null)
                     for (BankBranch branch: bankBranches) {
-
-                        try {
-                            //Change selected text color
-                            ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                            //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                        } catch (Exception e) {
-                        }
 
                         if(branch.getBranchName().equalsIgnoreCase(spSelectBankBranch.getSelectedItem().toString())){
                             selected_branch_code=branch.getBranchCode();
@@ -414,12 +388,12 @@ public class TransferMoney extends Fragment {
                         beneficiary_name = etBeneficiaryName.getText().toString();//required for Mobile Money
                         account_name = etAccountName.getText().toString();//required for Bank
                         account_number = etAccountNumber.getText().toString();//required for Bank
-                        bankk = spSelectBank.getText().toString();
+                        bankk = spSelectBank.getSelectedItem().toString();
                         branch = spSelectBankBranch.getSelectedItem().toString();
                         city = etCity.getText().toString();
                         country = spCountry.getSelectedItem().toString();
-                        street_address_1 = etStreetAdd1.getText().toString();
-                        street_address_2 = etStreetAdd2.getText().toString();
+                        street_address_1 = getString(R.string.street_address_1);
+                        street_address_2 = getString(R.string.street_address_2);
                         beneficiary_bank_phone_number = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
 
                         requestsaveBeneficiary(access_token, user_id, category, beneficary_type);
@@ -429,7 +403,6 @@ public class TransferMoney extends Fragment {
                 }else{
 
                     Log.d(TAG, "initializeForm: "+beneficiary_name+"beneciary_number"+account_number);
-
 
                     FragmentTransaction ft = fm.beginTransaction();
                     Fragment prev = fm.findFragmentByTag("dialog");
@@ -589,7 +562,6 @@ public class TransferMoney extends Fragment {
                         }
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, Banknames);
-                        spSelectBank.setThreshold(1);
                         spSelectBank.setAdapter(adapter);
 
 
@@ -743,7 +715,7 @@ public class TransferMoney extends Fragment {
     }
 
     private void requestsaveBeneficiary(String access_token, String user_id,  String category, String beneficary_type) {
-
+        dialogLoader.showProgressDialog();
         String request_id = WalletHomeActivity.generateRequestId();
         String type="";
 
@@ -756,16 +728,19 @@ public class TransferMoney extends Fragment {
             type="merchantAddBeneficiaryMobileMoney";
         }else if(category.equalsIgnoreCase("default") && beneficary_type.equalsIgnoreCase("Bank") ){
             type="defaultAddBeneficiaryBank";
+            beneficiary_name=account_name;
         }
         else if(category.equalsIgnoreCase("agent") && beneficary_type.equalsIgnoreCase("Bank") ){
             type="agentAddBeneficiaryBank";
+            beneficiary_name=account_name;
         } else if(category.equalsIgnoreCase("merchant") && beneficary_type.equalsIgnoreCase("Bank") ){
             type="merchantAddBeneficiaryBank";
+            beneficiary_name=account_name;
         }
 
 
         String customer_phone_number=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_PHONE_NUMBER,getActivity());
-        dialogLoader.showProgressDialog();
+
         /*************RETROFIT IMPLEMENTATION**************/
         Call<GeneralWalletResponse> call = APIClient.getWalletInstance(getContext())
                 .requestSaveBeneficiary(
@@ -840,14 +815,14 @@ public class TransferMoney extends Fragment {
         if (beneficary_type.equalsIgnoreCase("Bank")) {
             call = APIClient.getWalletInstance(getContext()).saveBankBeneficiary(
                     access_token, otp_code,  user_id, type,
-                    bankk, branch,  beneficiary_name,  beneficiary_number,
-                    request_id,  category,  "saveBeneficiary",
+                    bankk, branch,  account_name,  account_number,
+                    request_id,  category,  "registerBankBeneficiary",
                     beneficiary_bank_phone_number,   city,   country,  street_address_1, street_address_2);
         } else {
             call = APIClient.getWalletInstance(getContext()).saveBeneficiary(
                     access_token,  otp_code,
                     user_id,  type,  bankk, branch,   beneficiary_name,  beneficiary_number,
-                    request_id,  category,   "registerBankBeneficiary",
+                    request_id,  category,   "saveBeneficiary",
                     beneficiary_bank_phone_number, city,  country,  street_address_1,   street_address_2);
         }
 

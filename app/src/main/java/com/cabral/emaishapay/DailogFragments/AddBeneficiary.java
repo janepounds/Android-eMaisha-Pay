@@ -450,7 +450,7 @@ public class AddBeneficiary extends DialogFragment {
         });
     }
 
-    private void requestsaveBeneficiary(String access_token, String user_id,  String category, String beneficary_type) {
+    public void requestsaveBeneficiary(String access_token, String user_id,  String category, String beneficary_type) {
 
         String request_id = WalletHomeActivity.generateRequestId();
         String type="";
