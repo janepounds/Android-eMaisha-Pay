@@ -7,8 +7,9 @@ public class WalletTransactionInitiation {
 
     String cardNumber, account_name, cardExpiry, cvv;
 
-    String methodOfPayment;
+    String methodOfPayment,payTo;
     String bankCode, bankBranch;
+
 
     public static WalletTransactionInitiation getInstance(){
         return purchase;
@@ -46,6 +47,14 @@ public class WalletTransactionInitiation {
     }
 
     public String getCoupon() { return coupon; }
+
+    public String getPayTo() {
+        return payTo;
+    }
+
+    public void setPayTo(String payTo) {
+        this.payTo = payTo;
+    }
 
     public static WalletTransactionInitiation getPurchase() {
         return purchase;

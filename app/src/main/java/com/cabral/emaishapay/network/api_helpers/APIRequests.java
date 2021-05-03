@@ -1137,4 +1137,18 @@ public interface APIRequests {
             @Field("merchant_code")String merchant_code
 
     );
+
+    @FormUrlEncoded
+    @POST("wallet/customer/pay-agent-momo")
+    Call<WalletPurchaseResponse>customerPayAgentMobile(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("senderPhoneNumber") String senderPhoneNumber,
+            @Field("request_id")String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code,
+            @Field("agent_code")String merchant_code
+
+    );
 }

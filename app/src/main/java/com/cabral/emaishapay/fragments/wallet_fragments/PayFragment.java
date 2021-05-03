@@ -38,6 +38,7 @@ import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
+import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -359,6 +360,7 @@ public class PayFragment extends Fragment {
                 WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
                 WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
                 WalletTransactionInitiation.getInstance().setAmount(amount);
+                WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
                 FragmentTransaction ft = this.fm.beginTransaction();
                 Fragment prev =this.fm.findFragmentByTag("dialog");
                 if (prev != null) {
