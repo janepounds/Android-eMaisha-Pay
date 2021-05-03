@@ -277,8 +277,8 @@ public class PurchasePreview extends DialogFragment implements
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
-        String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
-        String merchant_id= WalletTransactionInitiation.getInstance().getMobileNumber();
+        String mobileNumber=getString(R.string.phone_number_code)+ WalletTransactionInitiation.getInstance().getMobileNumber();
+        String merchant_id= WalletTransactionInitiation.getInstance().getMechantId();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
 
 

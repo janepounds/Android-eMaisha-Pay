@@ -455,6 +455,7 @@ public class PayFragment extends Fragment {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if(response.isSuccessful()){
+                    dialog.hideProgressDialog();
 
                     try {
 
