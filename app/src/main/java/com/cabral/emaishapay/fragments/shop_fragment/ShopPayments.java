@@ -1058,10 +1058,40 @@ public class ShopPayments extends Fragment implements
                 if(response.code() ==200){
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
                         dialogLoader.hideProgressDialog();
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
-                        refreshActivity();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
                     }else{
-                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                Intent goToWallet = new Intent(context, WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.show();
                     }
 
                 }

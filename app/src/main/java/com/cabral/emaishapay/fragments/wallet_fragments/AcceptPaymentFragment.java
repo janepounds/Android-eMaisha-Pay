@@ -290,8 +290,44 @@ public class AcceptPaymentFragment extends Fragment {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if(response.code() ==200){
-                    dialogLoader.hideProgressDialog();
-                    refreshActivity();
+                    if(response.body().getStatus().equalsIgnoreCase("1")) {
+
+                        dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
+                    }else {
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
+
+                    }
 
                 }
                 else if(response.code() == 401) {

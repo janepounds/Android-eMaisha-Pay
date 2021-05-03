@@ -130,8 +130,23 @@ public class EnterPin extends DialogFragment {
                                             public void onClick(View v) {
                                                 dialog.dismiss();
 
-                                                Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
-                                                startActivity(goToWallet);
+                                                final Dialog dialog = new Dialog(getContext());
+                                                dialog.setContentView(R.layout.dialog_failure_message);
+                                                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                dialog.setCancelable(false);
+                                                TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                                                text.setText(response.body().getMessage());
+
+
+                                                dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog.dismiss();
+                                                        Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                                        startActivity(goToWallet);
+                                                    }
+                                                });
+                                                dialog.show();
                                             }
                                         });
                                         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
