@@ -25,7 +25,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.models.CardResponse;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 import java.util.List;
 
@@ -80,13 +79,12 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
         CardResponse.Cards data = dataList.get(position);
 
         //decript values
-        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
-        account_name = encrypter.decrypt(data.getAccount_name());
-        cvv = encrypter.decrypt(data.getCvv());
-        expiry_date = encrypter.decrypt(data.getExpiry());
+        account_name = data.getAccount_name();
+        cvv =  data.getCvv();
+        expiry_date = data.getExpiry();
         holder.accountNme.setText(account_name);
         holder.expiry.setText("Exp. Date: "+expiry_date);
-        card_number = encrypter.decrypt(data.getCard_number());
+        card_number =  data.getCard_number();
         id= data.getId();
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -140,13 +138,11 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyVi
     public void editPaymentCard(CardResponse.Cards data){
         //call card dialog
         //nvigate to add card fragment
-        CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,context.getString(R.string.iv));
-
         Bundle bundle = new Bundle();
-        bundle.putString("account_name", encrypter.decrypt(data.getAccount_name()));
-        bundle.putString("account_number",encrypter.decrypt(data.getCard_number()));
-        bundle.putString("cvv",encrypter.decrypt(data.getCvv()));
-        bundle.putString("expiry",encrypter.decrypt(data.getExpiry()));
+        bundle.putString("account_name", data.getAccount_name());
+        bundle.putString("account_number", data.getCard_number());
+        bundle.putString("cvv", data.getCvv());
+        bundle.putString("expiry", data.getExpiry());
 
         bundle.putString("id",data.getId());
         FragmentManager fm = ((WalletHomeActivity) context).getSupportFragmentManager();

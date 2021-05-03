@@ -556,6 +556,7 @@ public interface APIRequests {
             @Field("cvv") String cvv,
             @Field("expiry") String expiry,
             @Field("account_name") String account_name,
+            @Field("currency") String currency,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id

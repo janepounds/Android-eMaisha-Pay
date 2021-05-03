@@ -60,7 +60,6 @@ import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -372,17 +371,22 @@ public class ShopPayments extends Fragment implements
 
     private void saveCard(String cardNumber, String cvv_, String expiry, String account_name) {
         dialogLoader.showProgressDialog();
-        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getString(R.string.iv));
-        String hash_card_number = encrypter.encrypt(cardNumber);
-        String hash_cvv = encrypter.encrypt(cvv_);
-        String hash_expiry = encrypter.encrypt(expiry);
+
         String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        String hash_account_name = encrypter.encrypt(account_name);
+
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
             /*************RETROFIT IMPLEMENTATION**************/
-            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
+            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).
+                    saveCardInfo(access_token,
+                            identifier,
+                            card_number,
+                            cvv_,
+                            expiry,
+                            account_name,
+                            getString(R.string.currency),
+                    request_id,category,"saveCard");
             call.enqueue(new Callback<CardResponse>() {
                 @Override
                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -446,13 +450,9 @@ public class ShopPayments extends Fragment implements
                             }
                         });
                         for(int i =0; i<cardlists.size();i++) {
-                            //decript card number
-                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getContext().getString(R.string.iv));
-
-
-                            card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                            decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String cvv = encrypter.decrypt(cardlists.get(i).getCvv());
+                            card_number = cardlists.get(i).getCard_number();
+                            decripted_expiryDate = cardlists.get(i).getExpiry();
+                            String cvv = cardlists.get(i).getCvv();
                             Log.d(TAG, "onResponse: decripter_card_no" + card_number);
 
                             if (card_number.length() > 4) {

@@ -46,7 +46,6 @@ import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
 import com.cabral.emaishapay.network.api_helpers.RaveV2APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
 

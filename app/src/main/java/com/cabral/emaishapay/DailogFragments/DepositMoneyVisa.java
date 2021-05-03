@@ -33,7 +33,6 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -177,17 +176,23 @@ public class DepositMoneyVisa extends DialogFragment implements
                         String account_name = cardHolderNameTxt.getText().toString();
                         String card_number = cardNumberTxt.getText().toString();
 
-                        /**********ENCRPT CARD DETAILS****************/
-                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getString(R.string.iv));
-                        String hash_card_number = encrypter.encrypt(card_number);
-                        String hash_cvv = encrypter.encrypt(cvv);
-                        String hash_expiry = encrypter.encrypt(expiry);
-                        String hash_account_name = encrypter.encrypt(account_name);
+
                         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                         String request_id = WalletHomeActivity.generateRequestId();
                         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
+                            Call<CardResponse> call = APIClient.getWalletInstance(getContext())
+                                    .saveCardInfo(access_token,
+                                            identifier,
+                                            card_number,
+                                            cvv,
+                                            expiry,
+                                            account_name,
+                                            getString(R.string.currency),
+                                            request_id,
+                                            category,
+                                            "saveCard");
+
                             call.enqueue(new Callback<CardResponse>() {
                                 @Override
                                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -301,11 +306,10 @@ public class DepositMoneyVisa extends DialogFragment implements
                         for(int i =0; i<cardlists.size();i++){
 
                             //decript card number
-                            CryptoUtil encrypter =new CryptoUtil(BuildConfig.ENCRYPTION_KEY,getContext().getString(R.string.iv));
-                            if(encrypter.decrypt(cardlists.get(i).getCard_number()).length()>4){
-                                final  String card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                                final  String  decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                                final  String cvv  = encrypter.decrypt(cardlists.get(i).getCvv());
+                            if( cardlists.get(i).getCard_number().length()>4){
+                                final  String card_number = cardlists.get(i).getCard_number();
+                                final  String  decripted_expiryDate = cardlists.get(i).getExpiry();
+                                final  String cvv  = cardlists.get(i).getCvv();
 
                                 String first_four_digits = (card_number.substring(0,  4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));

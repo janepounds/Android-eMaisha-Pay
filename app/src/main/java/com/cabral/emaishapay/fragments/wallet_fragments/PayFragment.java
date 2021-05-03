@@ -38,9 +38,7 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 import com.cabral.emaishapay.utils.ValidateInputs;
-import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -431,13 +429,9 @@ public class PayFragment extends Fragment {
                             }
                         });
                         for(int i =0; i<cardlists.size();i++) {
-                            //decript card number
-                            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getContext().getString(R.string.iv));
-
-
-                             card_number = encrypter.decrypt(cardlists.get(i).getCard_number());
-                             decripted_expiryDate = encrypter.decrypt(cardlists.get(i).getExpiry());
-                            String cvv = encrypter.decrypt(cardlists.get(i).getCvv());
+                             card_number =  cardlists.get(i).getCard_number();
+                             decripted_expiryDate =  cardlists.get(i).getExpiry();
+                            String cvv =  cardlists.get(i).getCvv();
                             Log.d(TAG, "onResponse: decripter_card_no" + card_number);
 
                             if (card_number.length() > 4) {
