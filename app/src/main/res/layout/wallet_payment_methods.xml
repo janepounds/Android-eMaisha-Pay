@@ -59,7 +59,7 @@
                 android:layout_marginRight="5dp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/layout_wallet_add_money"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,29 +71,31 @@
 
                     <ImageView
                         android:id="@+id/crop_img_add_money"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
                         android:onClick="openAddMobileMoney"
-                        android:src="@drawable/mtn_new"
-                        android:layout_gravity="center"/>
+                        android:src="@drawable/mtn"
+                        android:layout_alignParentStart="true"
+                        />
                     <TextView
                         android:id="@+id/text_mtn"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_height="wrap_content"
                         android:text="MTN Mobile Money"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:onClick="openAddMobileMoney"
-                        android:background="@drawable/edittext_right_corners_green"/>
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/crop_img_add_money"
+                        android:layout_alignBottom="@id/crop_img_add_money"
+                        android:layout_toEndOf="@id/crop_img_add_money"
+                        android:background="@drawable/right_rounded_drawable_blue"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/layout_wallet_transfer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,15 +106,16 @@
 
                     <ImageView
                         android:id="@+id/crop_img_transfer"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
+                        android:layout_alignParentStart="true"
                         android:onClick="openAddMobileMoney"
                         android:src="@drawable/airtel_uganda_logo_wine" />
                     <TextView
                         android:id="@+id/text_airtel"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight=".3"
                         android:text="Airtel Mobile Money"
                         android:textSize="16sp"
@@ -121,9 +124,14 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:onClick="openAddMobileMoney"
-                        android:background="@drawable/edittext_right_corners_green"/>
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/crop_img_transfer"
+                        android:layout_alignBottom="@id/crop_img_transfer"
+                        android:layout_toEndOf="@id/crop_img_transfer"
 
-                </LinearLayout>
+                        android:background="@drawable/right_rounded_drawable_blue"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -133,7 +141,7 @@
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/layout_visa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -146,17 +154,20 @@
                     android:onClick="openAddMoneyVisa">
 
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="47dp"
-                        android:gravity="center"
+                        android:id="@+id/img_visa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="openAddMoneyVisa"
-                        android:src="@drawable/credit_cards_new"
-                        android:layout_weight=".7"/>
+                        android:src="@drawable/credit_card_new"
+                        android:layout_alignParentStart="true"/>
                     <TextView
                         android:id="@+id/text_visa"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/img_visa"
+                        android:layout_alignBottom="@id/img_visa"
+                        android:layout_toEndOf="@id/img_visa"
                         android:text="Cards (Visa, Master …)"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -164,33 +175,31 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:onClick="openAddMoneyVisa"
-                        android:background="@drawable/edittext_right_corners_green"/>
+                        android:background="@drawable/right_rounded_drawable_blue"/>
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
-                    android:layout_weight="0.3"
+                    android:padding="5dp"
                     android:background="@color/white"
                     android:onClick="openAddMoneyVoucher"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:id="@+id/gift_img"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_weight=".7"
+                        android:layout_alignParentStart="true"
                         android:onClick="openAddMoneyVoucher"
-                        android:src="@drawable/gift_card" />
+                        android:src="@drawable/gift_voucher" />
                     <TextView
                         android:id="@+id/text_voucher"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_height="wrap_content"
                         android:text="Gift Vouchers"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -198,11 +207,15 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:onClick="openAddMoneyVoucher"
-                        android:background="@drawable/edittext_right_corners_green"/>
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/gift_img"
+                        android:layout_alignBottom="@id/gift_img"
+                        android:layout_toEndOf="@id/gift_img"
+                        android:background="@drawable/right_rounded_drawable_blue"/>
 
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 

@@ -971,9 +971,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 app:indicator_visibility="visible"/>
 
         </LinearLayout>
