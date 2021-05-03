@@ -788,6 +788,11 @@
         <!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
     </string-array>
+    <string-array name="pay_to">
+        <item>Select</item>
+        <item>Agent</item>
+        <item>Merchant</item>
+    </string-array>
     <string-array name="crop_quantity_unit">
         <item> Select</item>
         <item>Kg</item>

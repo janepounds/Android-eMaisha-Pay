@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:screenOrientation="sensorPortrait"
         tools:replace="android:usesCleartextTraffic,android:theme">
 
         <meta-data
@@ -47,8 +48,7 @@
         <activity
             android:name=".activities.AuthActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MySplashScreen"
-            tools:ignore="LockedOrientationActivity">
+            android:theme="@style/MySplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
