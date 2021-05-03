@@ -70,7 +70,7 @@ public class PurchasePreview extends DialogFragment implements
     Button confirmBtn;
     LinearLayout error_message_layout, discount_layout;
     TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView,
-            mechantNameTextView,errorTextView, discountTextView;
+            mechantNameTextView,errorTextView, discountTextView,merchant_label;
 
     String businessName ="", cardNumber;
     Context activity;
@@ -121,6 +121,7 @@ public class PurchasePreview extends DialogFragment implements
         mechantNameTextView = view.findViewById(R.id.text_view_purchase_preview_name);
         mechantIdTextView = view.findViewById(R.id.text_view_purchase_preview_mechant_id);
         confirmBtn = view.findViewById(R.id.btn_purchase_preview_confirm);
+        merchant_label = view.findViewById(R.id.txt_wallet_purchase_mechant_label);
 
         totalTextView.setText( NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount()));
 
@@ -134,6 +135,12 @@ public class PurchasePreview extends DialogFragment implements
         purchase_date_label_TextView.setText(getString(R.string.purchase_date));
         datetimeTextView.setText(currentDateandTime);
 
+
+        String key = WalletTransactionInitiation.getInstance().getPayTo();
+        if(key.equalsIgnoreCase("agent")){
+            merchant_label.setText("AgentID");
+
+        }
         mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
 
         dialogLoader = new DialogLoader(activity);
@@ -239,12 +246,8 @@ public class PurchasePreview extends DialogFragment implements
         builder.setCancelable(false);
 
         EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
-        TextView dialog_title = pinDialog.findViewById(R.id.dialog_title);
-        String key = WalletTransactionInitiation.getInstance().getPayTo();
-        if(key.equalsIgnoreCase("agent")){
-            dialog_title.setText("ENTER AGENT PIN");
 
-        }
+
 
         pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
             @Override

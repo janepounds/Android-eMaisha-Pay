@@ -360,7 +360,7 @@ public class PayFragment extends Fragment {
                 WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
                 WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
                 WalletTransactionInitiation.getInstance().setAmount(amount);
-//                WalletTransactionInitiation.getInstance().setPayTo();
+                WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
                 FragmentTransaction ft = this.fm.beginTransaction();
                 Fragment prev =this.fm.findFragmentByTag("dialog");
                 if (prev != null) {

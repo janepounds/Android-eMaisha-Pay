@@ -172,7 +172,7 @@
                         android:visibility="gone">
 
                         <TextView
-                            android:id="@+id/text_pay_to_title"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -221,6 +221,7 @@
                         android:visibility="gone">
 
                         <TextView
+                            android:id="@+id/text_pay_to_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Merchant ID"
