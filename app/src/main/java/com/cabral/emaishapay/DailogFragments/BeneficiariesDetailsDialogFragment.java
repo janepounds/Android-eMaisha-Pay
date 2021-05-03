@@ -234,8 +234,9 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                         dialog.dismiss();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         BeneficiariesDetailsDialogFragment.this.dismiss();
+                        //redirect  to beneficiary list
 
-                       WalletHomeActivity.navController.popBackStack();
+
 
                     } else {
                         String message = response.body().getMessage();
