@@ -543,7 +543,7 @@ public class WalletHomeFragment extends Fragment {
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
     private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
-
+        Log.w(TAG, banner.size()+" ads");
         // Initialize new HashMap<ImageName, ImagePath>
         final HashMap<String, String> slider_covers = new HashMap<>();
         // Initialize new Array for Image's URL

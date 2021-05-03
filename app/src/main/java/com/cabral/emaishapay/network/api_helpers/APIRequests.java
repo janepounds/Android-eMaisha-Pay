@@ -605,6 +605,29 @@ public interface APIRequests {
             @Field("action_id")String action_id
     );
 
+    @FormUrlEncoded
+    @POST("wallet/merchant/card/topup")
+    Call<CardResponse>cardTopUpMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/agent/card/topup")
+    Call<CardResponse>cardTopUpAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
 
     //get card info
     @GET("wallet/cards/list")
