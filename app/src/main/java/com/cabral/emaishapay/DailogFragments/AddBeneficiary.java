@@ -248,7 +248,7 @@ public class AddBeneficiary extends DialogFragment {
 
                     }
 
-                    if(BankList!=null)
+                    if(bankBranches!=null)
                         for (BankBranch branch: bankBranches) {
                             if(branch.getBranchName().equalsIgnoreCase(bank_branch.getSelectedItem().toString())){
                                 selected_branch_code=branch.getBranchCode();

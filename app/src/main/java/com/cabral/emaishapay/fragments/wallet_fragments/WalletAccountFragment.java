@@ -547,7 +547,8 @@ public class WalletAccountFragment extends Fragment {
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
             binding.textAccountType.setText("Agent");
-            binding.textChangeAccountType.setVisibility(View.GONE);
+            binding.textChangeAccountType.setText(ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID, requireContext())));
+            binding.textChangeAccountType.setClickable(false);
             binding.cardViewQrCode.setVisibility(View.GONE);
         }
 

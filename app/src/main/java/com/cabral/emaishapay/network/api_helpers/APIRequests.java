@@ -593,7 +593,17 @@ public interface APIRequests {
     );
 
 
-
+    @FormUrlEncoded
+    @POST("wallet/customer/card/topup")
+    Call<CardResponse>cardTopUp(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
 
 
     //get card info
