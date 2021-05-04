@@ -386,7 +386,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         }else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
+                 //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
                 binding.shopLocation.setText(place.getName());
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -447,7 +447,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             @Override
             public void onCameraMove() {
                 cameraPosition= mGoogleMap.getCameraPosition();
-                Log.w("Camera postion change" + "", cameraPosition + "");
+                 //Log.w("Camera postion change" + "", cameraPosition + "");
                 mCenterLatLong = cameraPosition.target;
 
                 //mGoogleMap.clear();

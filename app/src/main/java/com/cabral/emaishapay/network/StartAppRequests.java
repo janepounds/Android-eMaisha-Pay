@@ -151,7 +151,7 @@ public class StartAppRequests {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
 
-            Log.w("unsyncedProducts",productsList.size()+" products");
+             //Log.w("unsyncedProducts",productsList.size()+" products");
             for (int i = 0; i < productsList.size(); i++) {
                 Log.e("WAlletIDError",productsList.get(i).getId()+"");
 

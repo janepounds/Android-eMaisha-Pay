@@ -69,13 +69,14 @@ public class SignUpFragment  extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         this.context=context;
-        phoneNumber=getArguments().getString("phone");
         super.onAttach(context);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(getArguments()!=null)
+        phoneNumber=getArguments().getString("phone");
 
         binding = DataBindingUtil.inflate(inflater, R.layout.signup_fragment,container,false);
 
@@ -288,8 +289,8 @@ public class SignUpFragment  extends Fragment {
                     args.putString("idNo",binding.idNumber.getText().toString());
                     ;
                     args.putString("firstSecurityQn",binding.spFirstSecurityQn.getSelectedItem().toString());
-                    args.putString("secondSecurityQn",binding.idNumber.getText().toString());
-                    args.putString("thirdSecurityQn",binding.idNumber.getText().toString());
+                    args.putString("secondSecurityQn",binding.spSecondSecurityQn.getSelectedItem().toString());
+                    args.putString("thirdSecurityQn",binding.spThirdSecurityQn.getSelectedItem().toString());
 
                     args.putString("firstQnAnswer",binding.etxtFirstSecurityQn.getText().toString());
                     args.putString("secondQnAnswer",binding.etxtSecondSecurityQn.getText().toString());
@@ -310,6 +311,15 @@ public class SignUpFragment  extends Fragment {
             binding.textUserInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
             binding.layoutSignUp.setVisibility(View.VISIBLE);
             binding.layoutSecurityQns.setVisibility(View.GONE);
+        });
+
+
+        binding.textBackSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthActivity.navController.navigate(R.id.action_signUpFragment_to_getStartedSignUpFragment);
+
+            }
         });
     }
 

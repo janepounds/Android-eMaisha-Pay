@@ -96,12 +96,17 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
+<<<<<<< HEAD
 //
 //        for (BannerDetails banner:WalletHomeActivity.Banners) {
 //            // Setup the ImageSlider of Product Images
 //            ImageSlider(banner.getTitle(), banner.getImage());
 //        }
         ImageSlider("Ads", WalletHomeActivity.Banners );
+=======
+        if(WalletHomeActivity.Banners!=null)
+            ImageSlider("Ads", WalletHomeActivity.Banners );
+>>>>>>> 2f2116fe175abb33469c23f02741bafb6b428bd0
 
         return binding.getRoot();
     }
@@ -543,7 +548,7 @@ public class WalletHomeFragment extends Fragment {
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
     private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
-        Log.w(TAG, banner.size()+" ads");
+         //Log.w(TAG, banner.size()+" ads");
         // Initialize new HashMap<ImageName, ImagePath>
         final HashMap<String, String> slider_covers = new HashMap<>();
         // Initialize new Array for Image's URL

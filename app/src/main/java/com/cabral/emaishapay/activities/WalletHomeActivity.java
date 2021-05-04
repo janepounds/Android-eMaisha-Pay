@@ -143,7 +143,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                     if (checkPermission()) {
                         // if permission is already granted display a toast message
                         //Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
-                        Log.w("PermissionGrant", "Permission Granted..");
+                         //Log.w("PermissionGrant", "Permission Granted..");
                         //permission granted
 
                     } else {
@@ -434,7 +434,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance, fm);
+        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance);
         depositDialog.show(ft, "dialog");
     }
 
@@ -554,7 +554,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            // Log.w(TAG, "getInstanceId failed", task.getException());
+                            //  //Log.w(TAG, "getInstanceId failed", task.getException());
                             return;
                         }
 

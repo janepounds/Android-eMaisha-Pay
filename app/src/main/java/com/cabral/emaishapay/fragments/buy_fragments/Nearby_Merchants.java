@@ -139,10 +139,10 @@ public class Nearby_Merchants extends Fragment {
             product_names.add(product.getCustomersBasketProduct().getProductsId()+"::"+product.getCustomersBasketProduct().getProductsName()+"//"+product.getCustomersBasketProduct().getSelectedProductsWeight()+"//"+product.getCustomersBasketProduct().getSelectedProductsWeightUnit()+"::"+product.getCustomersBasketProduct().getCustomersBasketQuantity());
         }
         dialogLoader.showProgressDialog();
-        Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
+         //Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String product_names_str = new Gson().toJson(product_names);
-        Log.w( "CartData",product_names_str);
+         //Log.w( "CartData",product_names_str);
         Call<MerchantData> call = BuyInputsAPIClient.getInstance()
                 .getNearbyMerchants
                         (       access_token,
@@ -156,7 +156,7 @@ public class Nearby_Merchants extends Fragment {
 
                 String str = new Gson().toJson(response.body());
 
-                Log.w("Response",str+"");
+                 //Log.w("Response",str+"");
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
@@ -181,7 +181,7 @@ public class Nearby_Merchants extends Fragment {
                 }
                 else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                    Log.w("Response",response.message()+"");
+                     //Log.w("Response",response.message()+"");
                 }
                 dialogLoader.hideProgressDialog();
             }
@@ -189,7 +189,7 @@ public class Nearby_Merchants extends Fragment {
             @Override
             public void onFailure(Call<MerchantData> call, Throwable t) {
                 Toast.makeText(getContext(), "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
-                Log.w("Response",t.toString()+"");
+                 //Log.w("Response",t.toString()+"");
                 dialogLoader.hideProgressDialog();
             }
         });

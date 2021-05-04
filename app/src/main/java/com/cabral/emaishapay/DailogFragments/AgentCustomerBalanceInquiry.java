@@ -300,7 +300,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                         //EnterPin.this.dismiss();
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                        Log.w("BalanceError",response.body().getMessage());
+                         //Log.w("BalanceError",response.body().getMessage());
                     }
                 }
 

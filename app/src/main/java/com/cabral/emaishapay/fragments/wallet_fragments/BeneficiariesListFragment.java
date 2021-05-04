@@ -20,9 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
@@ -83,6 +81,10 @@ public class BeneficiariesListFragment extends Fragment {
 
         layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f2116fe175abb33469c23f02741bafb6b428bd0
         aboutBeneficiaries.setOnClickListener(v->{
 
             //Go to coming soon

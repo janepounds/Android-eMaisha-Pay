@@ -246,7 +246,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
-                Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
+                 //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(selectedLocation.latitude,
@@ -426,7 +426,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             @Override
             public void onCameraMove() {
                 cameraPosition= mGoogleMap.getCameraPosition();
-                Log.w("Camera postion change" + "", cameraPosition + "");
+                 //Log.w("Camera postion change" + "", cameraPosition + "");
                 mCenterLatLong = cameraPosition.target;
 
                 //mGoogleMap.clear();

@@ -20,6 +20,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.cabral.emaishapay.constants.ConstantValues.WALLET_API_DOMAIN;
+import static com.cabral.emaishapay.constants.ConstantValues.WALLET_DOMAIN;
+
 
 /**
  * APIClient handles all the Network API Requests using Retrofit Library
@@ -27,12 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
 
-    public final static String LOCAL_URL = "http://10.0.2.2:8000";
-    private static final String BASE_URL_WALLET ="http://emaishapayapi.emaisha.com/api/";
-
     private static APIRequests apiRequests;
     private  final String TAG="Retrofit2 Errors";
-    private Context context;
 
     // Singleton Instance of APIRequests
     public static APIRequests getWalletInstance(Context context) {
@@ -81,13 +80,13 @@ public class APIClient {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL_WALLET)
+                    .baseUrl(WALLET_API_DOMAIN)
                     .client(okHttpClient)
                     .callFactory(new Call.Factory() {
                         @Override
                         public Call newCall(Request request) {
                             Set<String> paramList=request.url().queryParameterNames();
-                            //Log.w("RequestLogged", request.url().toString());
+                            // //Log.w("RequestLogged", request.url().toString());
                             //Request encryptRequest = EncryptCallHelper.encryptRequest(request);
                             return okHttpClient.newCall(request);
                         }

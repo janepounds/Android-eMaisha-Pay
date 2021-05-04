@@ -115,7 +115,7 @@ public class PopularProductsFragment extends Fragment {
 //                                response.body().getProductData());
 
                         popularProductsList.addAll(response.body().getProductData());
-                        Log.w("PopularProductzSIZE", ""+popularProductsList.size());
+                         //Log.w("PopularProductzSIZE", ""+popularProductsList.size());
 
 
 

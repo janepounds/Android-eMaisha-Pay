@@ -321,7 +321,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             requestObject.put("loanParams", loanApplication);
 
         }catch (Exception e){
-            Log.w("Error", e.getMessage());
+             //Log.w("Error", e.getMessage());
         }
 
 
