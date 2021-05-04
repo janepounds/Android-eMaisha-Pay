@@ -17,8 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
@@ -45,6 +49,7 @@ public class BeneficiariesListFragment extends Fragment {
     private BeneficiariesListAdapter beneficiariesListAdapter;
     private ConstraintLayout layoutPlaceholder;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
+    ImageView aboutBeneficiaries;
 
     Toolbar toolbar;
     public BeneficiariesListFragment() {
@@ -69,6 +74,7 @@ public class BeneficiariesListFragment extends Fragment {
         btnAddBeneficiary = rootView.findViewById(R.id.btn_add_beneficiary);
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);
         toolbar = rootView.findViewById(R.id.toolbar_beneficiaries_list);
+        aboutBeneficiaries = rootView.findViewById(R.id.about_beneficiary);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Beneficiaries");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,6 +83,34 @@ public class BeneficiariesListFragment extends Fragment {
 
         layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
 
+        aboutBeneficiaries.setOnClickListener(v->{
+
+            //Go to coming soon
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+
+            alertDialog.show();
+
+
+        });
 
 
         btnAddBeneficiary.setOnClickListener(v -> {
@@ -166,4 +200,6 @@ public class BeneficiariesListFragment extends Fragment {
 
 
     }
+
+
 }
