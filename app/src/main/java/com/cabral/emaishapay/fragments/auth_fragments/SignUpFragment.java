@@ -312,6 +312,15 @@ public class SignUpFragment  extends Fragment {
             binding.layoutSignUp.setVisibility(View.VISIBLE);
             binding.layoutSecurityQns.setVisibility(View.GONE);
         });
+
+
+        binding.textBackSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthActivity.navController.navigate(R.id.action_signUpFragment_to_getStartedSignUpFragment);
+
+            }
+        });
     }
 
 

@@ -33,21 +33,14 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
-import com.flutterwave.raveandroid.rave_presentation.data.AddressDetails;
-import com.flutterwave.raveutils.verification.AVSVBVFragment;
-import com.flutterwave.raveutils.verification.OTPFragment;
-import com.flutterwave.raveutils.verification.PinFragment;
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,8 +56,7 @@ public class DepositMoneyVisa extends DialogFragment  {
     Spinner spinner_select_card;
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
-    private final FragmentManager fm;
-    private String txRef;
+
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
     private String expiryDate,cvv,card_no,card_id;
@@ -72,10 +64,9 @@ public class DepositMoneyVisa extends DialogFragment  {
     double balance;
     DialogLoader dialog;
     Context activity;
-    public DepositMoneyVisa(Context context, double balance, FragmentManager fm){
+    public DepositMoneyVisa(Context context, double balance){
         this.activity=context;
         this.balance=balance;
-        this.fm = fm;
     }
 
 
@@ -370,7 +361,7 @@ public class DepositMoneyVisa extends DialogFragment  {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(activity,  android.R.layout.simple_dropdown_item_1line, cardItems);
 //                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
                         spinner_select_card.setAdapter(cardListAdapter);
                         dialog.hideProgressDialog();

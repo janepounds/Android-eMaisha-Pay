@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_PINManagerFragment"
             app:destination="@id/PINManagerFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_getStartedSignUpFragment"
+            app:destination="@id/getStartedSignUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/PINManagerFragment"

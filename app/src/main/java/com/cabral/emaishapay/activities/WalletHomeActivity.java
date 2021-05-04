@@ -434,7 +434,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance, fm);
+        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance);
         depositDialog.show(ft, "dialog");
     }
 

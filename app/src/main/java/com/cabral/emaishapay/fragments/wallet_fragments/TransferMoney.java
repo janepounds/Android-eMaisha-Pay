@@ -554,7 +554,11 @@ public class TransferMoney extends Fragment {
 
     private boolean validateForm() {
         if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Select")){
-            Toast.makeText(context,"Select transfer To",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Select transfer to",Toast.LENGTH_LONG).show();
+            return false;
+
+        }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Toast.makeText(context,"Select beneficiary",Toast.LENGTH_LONG).show();
             return false;
 
         }else if(etAmount.getText().toString().isEmpty()){
