@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -290,9 +291,23 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
         //**************RETROFIT IMPLEMENTATION******************//
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
-                .applyForBusiness(access_token,role,user_Id,business_name,registration_no,
-                        encodedIdreg_cert,encodedIdtradelicense,proprietor_name,
-                        proprietor_nin,encodedIdFront,encodedIdBack,mCenterLatLong.latitude,mCenterLatLong.longitude,request_id,category,"applyForBusinessAccount");
+                .applyForBusiness(access_token,
+                        role,
+                        user_Id,
+                        business_name,
+                        registration_no,
+                        encodedIdreg_cert,
+                        encodedIdtradelicense,
+                        proprietor_name,
+                        proprietor_nin,
+                        encodedIdFront,
+                        encodedIdBack,
+                        mCenterLatLong.latitude,
+                        mCenterLatLong.longitude,
+                        request_id,
+                        category,
+                        "applyForBusinessAccount");
+
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
@@ -390,6 +405,35 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public boolean validateEntries(){
+
+        if(TextUtils.isEmpty(binding.businessName.getText())){
+            binding.businessName.setError("Business name required");
+            return false;
+        }else if(binding.businessName.getText().length()<3){
+            binding.businessName.setError("Business name invalid");
+            return false;
+        }else if(TextUtils.isEmpty(binding.registrationNumber.getText())){
+            binding.registrationNumber.setError("Registration Number required");
+            return false;
+        }else if(TextUtils.isEmpty(binding.proprietorName.getText())){
+            binding.proprietorName.setError("Proprietor Name required");
+            return false;
+        }else if(TextUtils.isEmpty(binding.proprietorNin.getText())){
+            binding.proprietorNin.setError("Proprietor Name required");
+            return false;
+        }
+        else if(TextUtils.isEmpty(binding.proprietorNin.getText())){
+            binding.proprietorNin.setError("Proprietor Name required");
+            return false;
+        }
+        else if(TextUtils.isEmpty(encodedIdreg_cert)){
+            Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+//        else if(TextUtils.isEmpty(encodedIdFront)){
+//            Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
+//            return false;
+//        }
 
         return true;
     }

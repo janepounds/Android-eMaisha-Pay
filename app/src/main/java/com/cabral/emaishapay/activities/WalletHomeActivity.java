@@ -1,16 +1,19 @@
 package com.cabral.emaishapay.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,13 +36,13 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
-import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.DailogFragments.ScanAndPayDialog;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,12 +54,17 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Random;
+
+import static android.Manifest.permission.VIBRATE;
+import static android.Manifest.permission_group.CAMERA;
 
 public class WalletHomeActivity extends AppCompatActivity{
 
     public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
+    public static List<BannerDetails> Banners;
     private static Context context;
     public static FragmentManager fm;
     public  int currentFragment;
@@ -109,6 +119,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
     public  static CoordinatorLayout scanCoordinatorLayout;
     public static FloatingActionButton scanFAB;
+    private static final int PERMISSION_CODE = 1;
 
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -127,20 +138,44 @@ public class WalletHomeActivity extends AppCompatActivity{
         scanFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
+                //request permissions
+                //check runtime permission
+                    if (checkPermission()) {
+                        // if permission is already granted display a toast message
+                        //Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                        Log.w("PermissionGrant", "Permission Granted..");
+                        //permission granted
+
+                    } else {
+                        String[] permissions = {Manifest.permission.CAMERA, VIBRATE};
+                        //show popup to request runtime permission
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(permissions, PERMISSION_CODE);
+                        }
+
+                    }
+
+                currentFragment= navController.getCurrentDestination().getId();
+
+                    if(currentFragment == R.id.walletHomeFragment2){
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_scanAndPayDialog);
                 }
-                ft.addToBackStack(null);
+                else if (currentFragment  == R.id.walletAccountFragment2) {
+                   WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_scanAndPayDialog);
+                } else if (currentFragment == R.id.walletRewardsFragment2)  {
+                    WalletHomeActivity.navController.navigate(R.id.action_walletRewardsFragment2_to_scanAndPayDialog);
+                }else if (currentFragment == R.id.acceptPaymentFragment)  {
+                        WalletHomeActivity.navController.navigate(R.id.action_acceptPaymentFragment_to_scanAndPayDialog);
+                    }
 
 
 
-                // Create and show the dialog.
-                DialogFragment scanAndPayDialog = new ScanAndPayDialog();
-                scanAndPayDialog.show(ft, "dialog");
+
+
+
             }
         });
+
 
 
         context = getApplicationContext();
@@ -202,18 +237,18 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 switch (item.getItemId()){
 
-//                    case R.id.walletCardsFragment:
-//                        currentDestination = navController.getCurrentDestination().getId();
-//
-//                        if (currentDestination  == R.id.walletHomeFragment2) {
-//                            navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-//                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
-//                             navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-//                        } else if (currentDestination == R.id.cardListFragment )  {
-//
-//                        }
-//
-//                        return true;
+                    case R.id.walletRewardsFragment:
+                        currentDestination = navController.getCurrentDestination().getId();
+
+                        if (currentDestination  == R.id.walletHomeFragment2) {
+                            navController.navigate(R.id.action_walletHomeFragment2_to_walletRewardsFragment2);
+                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
+                             navController.navigate(R.id.action_walletAccountFragment2_to_walletRewardsFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
+
+                        }
+
+                        return true;
 
                     case R.id.walletAccountFragment :
 
@@ -223,8 +258,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                             navController.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2);
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                             // navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-                        } else if (currentDestination == R.id.cardListFragment )  {
-                             navController.navigate(R.id.action_cardListFragment_to_walletAccountFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
+                             navController.navigate(R.id.action_walletRewardsFragment2_to_navigation);
                         }
 
                         return true;
@@ -236,8 +271,8 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         } else if (currentDestination == R.id.walletAccountFragment2 )  {
                              navController.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2);
-                        } else if (currentDestination == R.id.cardListFragment )  {
-                            navController.navigate(R.id.action_cardListFragment_to_walletHomeFragment2);
+                        } else if (currentDestination == R.id.walletRewardsFragment2 )  {
+                            navController.navigate(R.id.action_walletRewardsFragment2_to_walletHomeFragment2);
                         }
                         return true;
 
@@ -261,7 +296,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static void setUpMasterAgentNav() {
         bottomNavigationView.setVisibility(View.GONE);
-        scanCoordinatorLayout.setVisibility(View.GONE);
+        scanCoordinatorLayout.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setVisibility(View.VISIBLE);
         bottom_navigation_shop.setItemIconTintList(null);
         bottom_navigation_shop.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -271,23 +306,23 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 switch (item.getItemId()){
 
-                    case R.id.walletSettlementFragment:
-                         Bundle args=new Bundle();
-                         args.putString("KEY_TITLE", context.getString(R.string.settlements) );
-
-
-                        currentDestination = navController.getCurrentDestination().getId();
-
-                        if (currentDestination  == R.id.walletHomeFragment2) {
-                            navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
-                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
-                            navController.navigate(R.id.action_walletAccountFragment2_to_walletTransactionsListFragment2,args);
-                        }else if (currentDestination == R.id.walletTransactionsListFragment )  {
-
-                        }else if (currentDestination == R.id.acceptPaymentFragment )  {
-                            navController.navigate(R.id.action_acceptPaymentFragment_to_walletTransactionsListFragment2,args);
-                        }
-                        return true;
+//                    case R.id.walletSettlementFragment:
+//                         Bundle args=new Bundle();
+//                         args.putString("KEY_TITLE", context.getString(R.string.settlements) );
+//
+//
+//                        currentDestination = navController.getCurrentDestination().getId();
+//
+//                        if (currentDestination  == R.id.walletHomeFragment2) {
+//                            navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+//                        } else if (currentDestination == R.id.walletAccountFragment2 )  {
+//                            navController.navigate(R.id.action_walletAccountFragment2_to_walletTransactionsListFragment2,args);
+//                        }else if (currentDestination == R.id.walletTransactionsListFragment )  {
+//
+//                        }else if (currentDestination == R.id.acceptPaymentFragment )  {
+//                            navController.navigate(R.id.action_acceptPaymentFragment_to_walletTransactionsListFragment2,args);
+//                        }
+//                        return true;
 
                     case R.id.walletAccountFragment_agent :
                         currentDestination = navController.getCurrentDestination().getId();
@@ -472,7 +507,9 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     public void openAgentCustomerLoanApplication(View view) {
-        navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
+     //   navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
+
+
 
     }
 
@@ -580,4 +617,41 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
 
+    private boolean checkPermission() {
+        // here we are checking two permission that is vibrate
+        // and camera which is granted by user and not.
+        // if permission is granted then we are returning
+        // true otherwise false.
+        int camera_permission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+        int vibrate_permission = ContextCompat.checkSelfPermission(getApplicationContext(), VIBRATE);
+        return camera_permission == PackageManager.PERMISSION_GRANTED && vibrate_permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    private void requestPermission() {
+        // this method is to request
+        // the runtime permission.
+        int PERMISSION_REQUEST_CODE = 200;
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA, VIBRATE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        // this method is called when user
+        // allows the permission to use camera.
+        try {
+            if (grantResults.length > 0) {
+                boolean cameraaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean vibrateaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                if (cameraaccepted && vibrateaccepted) {
+//                    Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+
+    }
 }

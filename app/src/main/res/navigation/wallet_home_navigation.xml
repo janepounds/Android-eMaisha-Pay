@@ -48,6 +48,12 @@
         <action
             android:id="@+id/action_walletHomeFragment2_to_loanUserDetailsFragment"
             app:destination="@id/loanUserDetailsFragment" />
+        <action
+            android:id="@+id/action_walletHomeFragment2_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
+        <action
+            android:id="@+id/action_walletHomeFragment2_to_walletRewardsFragment2"
+            app:destination="@id/walletRewardsFragment2" />
     </fragment>
 
     <fragment
@@ -85,6 +91,9 @@
         <action
             android:id="@+id/action_acceptPaymentFragment_to_walletTransactionsListFragment2"
             app:destination="@id/walletTransactionsListFragment" />
+        <action
+            android:id="@+id/action_acceptPaymentFragment_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
 
     </fragment>
 
@@ -101,7 +110,11 @@
         android:id="@+id/beneficiariesListFragment"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragment"
         tools:layout="@layout/fragment_beneficiaries_list"
-        android:label="BeneficiariesListFragment" />
+        android:label="BeneficiariesListFragment" >
+        <action
+            android:id="@+id/action_beneficiariesListFragment_to_beneficiariesDetailsDialogFragment"
+            app:destination="@id/beneficiariesDetailsDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tokenAuthFragment"
         android:name="com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment"
@@ -126,6 +139,11 @@
         <action
             android:id="@+id/action_walletTransactionsListFragment_to_acceptPaymentFragment"
             app:destination="@id/acceptPaymentFragment" />
+        <action
+            android:id="@+id/action_walletTransactionsListFragment_to_transferMoney"
+            app:destination="@id/transferMoney"
+            app:enterAnim="@anim/slideup_dialog"
+            app:exitAnim="@anim/slide_down" />
 
     </fragment>
     <fragment
@@ -136,6 +154,9 @@
         <action
             android:id="@+id/action_payFragment_to_walletHomeFragment2"
             app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_payFragment_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
     </fragment>
     <fragment
         android:id="@+id/transferMoney"
@@ -145,6 +166,9 @@
         <action
             android:id="@+id/action_transferMoney_to_walletHomeFragment2"
             app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_transferMoney_to_walletTransactionsListFragment"
+            app:destination="@id/walletTransactionsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/contactDetailsFragment"
@@ -232,6 +256,12 @@
             <action
                 android:id="@+id/action_walletAccountFragment2_to_personalInformationFragment"
                 app:destination="@id/personalInformationFragment" />
+            <action
+                android:id="@+id/action_walletAccountFragment2_to_walletRewardsFragment2"
+                app:destination="@id/walletRewardsFragment2" />
+            <action
+                android:id="@+id/action_walletAccountFragment2_to_scanAndPayDialog"
+                app:destination="@id/scanAndPayDialog" />
 
         </fragment>
         <fragment
@@ -387,5 +417,72 @@
                 app:destination="@id/depositMoneyVoucher" />
         </fragment>
     </navigation>
+    <dialog
+        android:id="@+id/scanAndPayDialog"
+        android:name="com.cabral.emaishapay.DailogFragments.ScanAndPayDialog"
+        android:label="ScanAndPayDialog" >
+        <action
+            android:id="@+id/action_scanAndPayDialog_to_scanAndPayStep1"
+            app:destination="@id/scanAndPayStep1" />
+        <action
+            android:id="@+id/action_scanAndPayDialog_to_payFragment"
+            app:destination="@id/payFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/scanAndPayStep1"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep1"
+        android:label="ScanAndPayStep1" >
+        <action
+            android:id="@+id/action_scanAndPayStep1_to_scanAndPayStep2"
+            app:destination="@id/scanAndPayStep2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep2"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep2"
+        android:label="ScanAndPayStep2" >
+        <action
+            android:id="@+id/action_scanAndPayStep2_to_scanAndPayStep3"
+            app:destination="@id/scanAndPayStep3" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep3"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep3"
+        android:label="ScanAndPayStep3" >
+        <action
+            android:id="@+id/action_scanAndPayStep3_to_scanAndPayStep4"
+            app:destination="@id/scanAndPayStep4" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanAndPayStep4"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.ScanAndPayStep4"
+        android:label="ScanAndPayStep4" >
+        <action
+            android:id="@+id/action_scanAndPayStep4_to_walletHomeFragment2"
+            app:destination="@id/walletHomeFragment2" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/walletRewardsFragment2"
+        android:name="com.cabral.emaishapay.fragments.wallet_fragments.WalletRewardsFragment"
+        android:label="WalletRewardsFragment" >
+        <action
+            android:id="@+id/action_walletRewardsFragment2_to_walletHomeFragment2"
+            app:destination="@id/walletHomeFragment2" />
+        <action
+            android:id="@+id/action_walletRewardsFragment2_to_navigation"
+            app:destination="@id/navigation" />
+        <action
+            android:id="@+id/action_walletRewardsFragment2_to_scanAndPayDialog"
+            app:destination="@id/scanAndPayDialog" />
+
+    </fragment>
+    <dialog
+        android:id="@+id/beneficiariesDetailsDialogFragment"
+        android:name="com.cabral.emaishapay.DailogFragments.BeneficiariesDetailsDialogFragment"
+        android:label="BeneficiariesDetailsDialogFragment" >
+        <action
+            android:id="@+id/action_beneficiariesDetailsDialogFragment_to_beneficiariesListFragment"
+            app:destination="@id/beneficiariesListFragment" />
+    </dialog>
 
 </navigation>

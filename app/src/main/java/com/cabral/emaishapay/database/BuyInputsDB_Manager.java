@@ -16,7 +16,7 @@ public class BuyInputsDB_Manager {
 
     private SQLiteDatabase db;
 
-    private static com.cabral.emaishapay.database.BuyInputsDB_Manager instance;
+    private static BuyInputsDB_Manager instance;
     private static SQLiteOpenHelper mDatabaseHelper;
 
     //*********** Initialize DB_Manager and SQLiteOpenHelper Instances ********//
@@ -24,18 +24,18 @@ public class BuyInputsDB_Manager {
     public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
 
         if (instance == null) {
-            instance = new com.cabral.emaishapay.database.BuyInputsDB_Manager();
+            instance = new  BuyInputsDB_Manager();
             mDatabaseHelper = helper;
         }
     }
 
     //*********** Returns DB_Manager Instance ********//
 
-    public static synchronized com.cabral.emaishapay.database.BuyInputsDB_Manager getInstance() {
+    public static synchronized  BuyInputsDB_Manager getInstance() {
         initializeInstance(mDatabaseHelper);
 
         if (instance == null) {
-            throw new IllegalStateException(com.cabral.emaishapay.database.BuyInputsDB_Manager.class.getSimpleName() + " is not initialized, call initializeInstance(..) method first.");
+            throw new IllegalStateException( BuyInputsDB_Manager.class.getSimpleName() + " is not initialized, call initializeInstance(..) method first.");
         }
 
         return instance;
@@ -47,7 +47,7 @@ public class BuyInputsDB_Manager {
     public synchronized SQLiteDatabase openDatabase() {
         mOpenCounter += 1;
 
-        if (mOpenCounter == 1) {
+        if (mOpenCounter == 1 && mDatabaseHelper!=null) {
             db = mDatabaseHelper.getWritableDatabase();
         }
 

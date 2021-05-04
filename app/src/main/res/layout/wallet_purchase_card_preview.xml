@@ -48,7 +48,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Status :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/text_view_id_type"
@@ -58,7 +58,7 @@
                         android:layout_weight="1"
                         android:text="Successful"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <View
@@ -79,7 +79,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Reference ID :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                      <TextView
                         android:id="@+id/text_view_id_number"
@@ -89,7 +89,7 @@
                         android:layout_weight="1"
                         android:text="123456789025"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <View
@@ -110,7 +110,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Receipt ID :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/text_view_expiry_date"
@@ -120,7 +120,7 @@
                         android:layout_weight="1"
                         android:text="001230"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <View
@@ -141,7 +141,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Service :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/text_view_purchase_service"
@@ -151,7 +151,7 @@
                         android:layout_weight="1"
                         android:text="Purchase"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <View
@@ -172,7 +172,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Paid To :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/text_view_purchase_preview_name"
@@ -182,7 +182,7 @@
                         android:layout_weight="1"
                         android:text="Kalin Farms"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <View
@@ -203,7 +203,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Transaction Amount :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/txt_view_bill_preview_total"
@@ -213,7 +213,7 @@
                         android:layout_weight="1"
                         android:text="UGX 0"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <View
@@ -234,7 +234,7 @@
                         android:paddingLeft="@dimen/dimen_10dp"
                         android:text="Purchase Date :"
                         android:textColor="@color/textColor"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/text_view_purchase_date_time"
@@ -244,7 +244,7 @@
                         android:layout_weight="1"
                         android:text="2019/01/01  23:00pm"
                         android:alpha="1.0"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <View
@@ -269,10 +269,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ok"
                     android:textAllCaps="true"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:background="@drawable/rectangular_red_solid"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center"
                     android:layout_marginEnd="5dp"/>
 
@@ -282,12 +282,12 @@
                     android:layout_weight="0.33"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:text="Print Receipt"
+                    android:text="Print "
                     android:textAllCaps="true"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:background="@drawable/rectangular_purple_solid"
+                    android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center" />
 
             </LinearLayout>
@@ -299,7 +299,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_corners_button"
+                android:background="@drawable/rectangular_blue_solid"
                 android:gravity="right"
                 android:visibility="gone">
 
@@ -307,7 +307,7 @@
 
                     style="@style/Button_DW"
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
+                    android:layout_height="50dip"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@color/transparent"
@@ -315,18 +315,8 @@
                     android:text="Print Receipt"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
-
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_chevron">
-
-                </ImageView>
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
             </FrameLayout>
 

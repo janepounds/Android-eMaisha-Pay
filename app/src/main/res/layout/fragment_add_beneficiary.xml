@@ -5,8 +5,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_background"
     android:orientation="vertical"
-    tools:context=".DailogFragments.AddBeneficiaryFragment">
-
+    tools:context=".DailogFragments.AddBeneficiary">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/layout_add_money"
         android:layout_width="match_parent"
@@ -203,6 +209,85 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <EditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="@dimen/dimen_10dp"
+                        android:background="@drawable/outline_primary"
+                        android:inputType="text"
+                        android:textColor="@color/textColor"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="5dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/rectangular_blue_solid"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/sp_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:entries="@array/bank_country"
+                            android:spinnerMode="dropdown"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_down_chevron" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,19 +335,21 @@
                         android:textColor="@color/textColor"/>
 
                 </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/layout_mobile_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
             <LinearLayout
-
+                android:id="@+id/layout_beneficiary_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -302,11 +389,12 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-
+                android:id="@+id/layout_beneficiary_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -461,5 +549,6 @@
                 android:text="0" />
         </LinearLayout>
     </LinearLayout>
-
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -159,7 +159,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
     public long updateProductStock( String product_id, String product_buy_price, String product_sell_price, String product_supplier, int product_stock, String new_manufacturer_name, String new_category_name, String new_product_name,String product_code,String product_image,String product_weight_unit,String product_weight) {
-        return mRepository.updateProductStock(product_id,new_product_name,product_code,new_category_name,"",product_buy_price,product_sell_price,product_supplier,product_image,product_stock+"",product_weight_unit,product_weight,new_manufacturer_name);
+        return mRepository.updateProductStock(product_id,product_code,new_category_name,"",product_buy_price,product_sell_price,product_supplier,product_image,product_stock+"",product_weight_unit,product_weight,new_manufacturer_name);
     }
 
     public long addManufacturer(EcManufacturer manufacturer) {
@@ -181,10 +181,7 @@ public class ShopProductsModelView extends AndroidViewModel {
     }
 
     public long addProduct(EcProduct product) {
-        return mRepository.addProduct(product);
-    }
-
-    public long addProductName(EcProduct product) {
+        product.setSync_status("0");
         return mRepository.addProduct(product);
     }
 
@@ -205,4 +202,7 @@ public class ShopProductsModelView extends AndroidViewModel {
         return mRepository.updateProductSyncStatus(product_id,status);
     }
 
+    public long restockProductStock(String product_id, int product_stock ) {
+        return mRepository.restockProductStock(product_id,product_stock);
+    }
 }

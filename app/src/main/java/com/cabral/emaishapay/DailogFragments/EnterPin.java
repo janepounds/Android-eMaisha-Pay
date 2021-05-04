@@ -114,10 +114,44 @@ public class EnterPin extends DialogFragment {
                                 if (response.isSuccessful()) {
                                     dialogLoader.hideProgressDialog();
                                     if (response.body().getStatus().equalsIgnoreCase("1")) {
-                                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
                                         //success message
-                                        Intent intent = new Intent(getContext(), WalletHomeActivity.class);
-                                        startActivity(intent);
+                                        dialogLoader.hideProgressDialog();
+                                        final Dialog dialog = new Dialog(getContext());
+                                        dialog.setContentView(R.layout.dialog_successful_message);
+                                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                        dialog.setCancelable(false);
+                                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                                        text.setText( response.body().getMessage() );
+
+
+                                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+
+                                                final Dialog dialog = new Dialog(getContext());
+                                                dialog.setContentView(R.layout.dialog_failure_message);
+                                                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                dialog.setCancelable(false);
+                                                TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                                                text.setText(response.body().getMessage());
+
+
+                                                dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog.dismiss();
+                                                        Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                                        startActivity(goToWallet);
+                                                    }
+                                                });
+                                                dialog.show();
+                                            }
+                                        });
+                                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                        dialog.show();
+
 
                                     } else {
                                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();

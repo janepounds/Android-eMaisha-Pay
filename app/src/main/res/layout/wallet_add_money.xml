@@ -58,7 +58,6 @@
                 android:id="@+id/text_view_error_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="center"
                 android:text="Insufficient Funds!"
                 android:textColor="@color/device_problem"
@@ -76,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Receiver Number"
+                    android:text="Mobile Number"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -106,7 +105,6 @@
                             android:id="@+id/crop_add_money_mobile_no"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="phone"
                             android:paddingStart="@dimen/dimen_10dp"
                             android:tag="+256 "
@@ -204,8 +202,8 @@
                         android:inputType="number"
                         android:background="@android:color/transparent"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/textColor"
-                        android:textColorHint="@color/textColorPrimaryDark"/>
+                        android:textColor="@color/black"
+                        />
 
 
 
@@ -275,7 +273,7 @@
                     android:text="@string/deposit"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
 

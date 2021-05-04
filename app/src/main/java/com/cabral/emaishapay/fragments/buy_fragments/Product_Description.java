@@ -581,8 +581,8 @@ public class Product_Description extends Fragment  {
         }
 
         String description = productDetails.getProductsDescription();
-        String styleSheet = "<style> " + "@font-face {font-family: 'JosefinSans-Regular'; src: url('file:///android_asset/fonts/JosefinSans-Regular.ttf');} " +
-                "body{background:#FFFFFF; margin:0; padding:0;font-family: 'JosefinSans-Regular';} " +
+        String styleSheet = "<style> " + "@font-face {font-family: 'nunito'; src: url('file:///android_asset/font/nunito.ttf');} " +
+                "body{background:#FFFFFF; margin:0; padding:0;font-family: 'nunito';} " +
                 "p{color:#757575;} " +
                 "img{display:inline; height:auto; max-width:100%;}" +
                 "</style>";
@@ -817,16 +817,16 @@ public class Product_Description extends Fragment  {
 
         // Put Image's Name and URL to the HashMap slider_covers
         if (itemThumbnail.equalsIgnoreCase("")) {
-            slider_covers.put("a", "" + R.drawable.placeholder);
+            slider_covers.put("a", "" + R.drawable.new_product);
 
         } else if (images.length == 0) {
-            slider_covers.put("a", ConstantValues.ECOMMERCE_URL + itemThumbnail);
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
 
         } else {
-            slider_covers.put("a", ConstantValues.ECOMMERCE_URL + itemThumbnail);
+            slider_covers.put("a", ConstantValues.ECOMMERCE_WEB + itemThumbnail);
 
             for (int i = 0; i < images.length; i++) {
-                slider_covers.put("b" + i, ConstantValues.ECOMMERCE_URL + images[i]);
+                slider_covers.put("b" + i, ConstantValues.ECOMMERCE_WEB + images[i]);
             }
         }
 

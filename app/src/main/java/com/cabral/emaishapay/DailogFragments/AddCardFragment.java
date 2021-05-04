@@ -33,7 +33,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -207,8 +206,6 @@ public class AddCardFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-
-
                        if (validateEntries()) {
 
                         ProgressDialog dialog;
@@ -224,12 +221,6 @@ public class AddCardFragment extends DialogFragment {
                         String expiry = etExpiryDate.getText().toString();
                         String account_name = etName.getText().toString();
 
-                        /**********ENCRPT CARD DETAILS****************/
-                        CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, getString(R.string.iv));
-                        String hash_card_number = encrypter.encrypt(card_number);
-                        String hash_cvv = encrypter.encrypt(cvv);
-                        String hash_expiry = encrypter.encrypt(expiry);
-                        String hash_account_name = encrypter.encrypt(account_name);
 
                         //check if the button text is save card
                         if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
@@ -237,7 +228,8 @@ public class AddCardFragment extends DialogFragment {
                             String request_id = WalletHomeActivity.generateRequestId();
                             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                         /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).saveCardInfo(access_token,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"saveCard");
+                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).
+                                saveCardInfo(access_token,identifier, card_number, cvv, expiry, account_name, getString(R.string.currency), request_id,category,"saveCard");
                         call.enqueue(new Callback<CardResponse>() {
                             @Override
                             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -266,7 +258,7 @@ public class AddCardFragment extends DialogFragment {
                             String request_id = WalletHomeActivity.generateRequestId();
                             String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                             /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateCardInfo(access_token,id,identifier, hash_card_number, hash_cvv, hash_expiry, hash_account_name,request_id,category,"updateCard");
+                            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateCardInfo(access_token,id,identifier, card_number, cvv, expiry, account_name,request_id,category,"updateCard");
                             call.enqueue(new Callback<CardResponse>() {
                                 @Override
                                 public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {

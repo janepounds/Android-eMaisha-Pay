@@ -24,7 +24,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
+import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
+import com.cabral.emaishapay.DailogFragments.BeneficiariesDetailsDialogFragment;
 import com.cabral.emaishapay.R;
 
 
@@ -33,7 +34,6 @@ import com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragmen
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
-import com.cabral.emaishapay.utils.CryptoUtil;
 
 
 import java.util.List;
@@ -47,7 +47,6 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     private List<BeneficiaryResponse.Beneficiaries> dataList;
     private FragmentManager fm;
     Context context;
-    String decripted_name,decripted_number;
     private String beneficary_name, initials,cvv,expiry_date,id;
 
 
@@ -101,16 +100,18 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         holder.close.setVisibility(View.VISIBLE);
         holder.beneficiary_type.setVisibility(View.VISIBLE);
         holder.beneficiary_number.setVisibility(View.VISIBLE);
+        String decripted_name,decripted_number;
 
         holder.beneficiary_type.setText(data.getTransaction_type());
             //decript name and account no
-            CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
-            decripted_name = encrypter.decrypt(data.getAccount_name());
-            decripted_number = encrypter.decrypt(data.getAccount_number());
+            decripted_name = data.getAccount_name();
+
+            decripted_number = data.getAccount_number();
+
+            //Log.w("AccountName",decripted_name+" : "+data.getAccount_name());
             holder.initials.setText(getNameInitials(decripted_name));
             holder.benefaciary_name.setText(decripted_name);
             holder.beneficiary_number.setText(decripted_number);
-            holder.initials.setText(getNameInitials(data.getAccount_name()));
 
 
 
@@ -143,14 +144,22 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
             }
         });
 
+        final String finalDecripted_number = decripted_number;
+        final String finalDecripted_name = decripted_name;
         holder.card.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                             String  bank = data.getBank();
                             String bank_branch  = data.getBank_branch();
                             String id = data.getId();
-                            updateBeneficiary(data.getTransaction_type(), decripted_name, decripted_number,bank,bank_branch,id);
+                            String city = data.getCity();
+                            String country = data.getCountry();
+                            String address1 = data.getStreet_address_1();
+                            String address2 = data.getStreet_address_2();
+                            String beneficiary_phone = data.getBeneficiary_phone();
+                            updateBeneficiary(data.getTransaction_type(), finalDecripted_name, finalDecripted_number,bank,bank_branch,id,city,country,address1,address2,beneficiary_phone);
 
 
                     }
@@ -167,8 +176,6 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
 
     public void deleteBeneficiary(String id){
-
-
         //call endpoint for deleting beneficiary
         ProgressDialog dialog;
         dialog = new ProgressDialog(context);
@@ -179,8 +186,9 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance(context).deleteBeneficiary(access_token,id,request_id);
+        Call<CardResponse> call = APIClient.getWalletInstance(context).deleteBeneficiary(access_token,id,request_id,category,"deleteBeneficiary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ");
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
@@ -189,7 +197,8 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                         dialog.dismiss();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                    } else {
+                    }
+                    else {
                         String message = response.body().getMessage();
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
@@ -227,7 +236,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     }
 
-    public void updateBeneficiary(String beneficiary_type,String beneficary_name,String beneficiary_no,String bank,String branch,String id){
+    public void updateBeneficiary(String beneficiary_type, String beneficary_name, String beneficiary_no, String bank, String branch, String id, String city, String country, String address1, String address2, String beneficiary_phone){
         //call add beneficiary fragment
         //nvigate to add beneficiaries fragment
         FragmentTransaction ft = fm.beginTransaction();
@@ -238,14 +247,20 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         ft.addToBackStack(null);
         Log.d(TAG, "updateBeneficiary: no"+beneficiary_no);
         // Create and show the dialog.
-        DialogFragment addCardDialog =new AddBeneficiaryFragment();
+
+        DialogFragment addCardDialog =new BeneficiariesDetailsDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString("beneficiary_type",beneficiary_type);
         bundle.putString("beneficiary_name",beneficary_name);
         bundle.putString("beneficiary_no",beneficiary_no);
+        bundle.putString("beneficiary_phone",beneficiary_phone);
         bundle.putString("bank",bank);
         bundle.putString("branch",branch);
-        bundle.putString("id",id);
+        bundle.putString("city",city);
+        bundle.putString("country",country);
+        bundle.putString("address1",address1);
+        bundle.putString("address2",address2);
+        bundle.putString("benficiary_id",id);
         addCardDialog.setArguments(bundle);
         addCardDialog.show( ft, "dialog");
 

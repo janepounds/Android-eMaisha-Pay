@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,10 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.cabral.emaishapay.DailogFragments.AddBeneficiaryFragment;
+import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -42,7 +47,9 @@ public class BeneficiariesListFragment extends Fragment {
     private RecyclerView recyclerView;
     FloatingActionButton btnAddBeneficiary;
     private BeneficiariesListAdapter beneficiariesListAdapter;
+    private ConstraintLayout layoutPlaceholder;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
+    ImageView aboutBeneficiaries;
 
     Toolbar toolbar;
     public BeneficiariesListFragment() {
@@ -67,11 +74,44 @@ public class BeneficiariesListFragment extends Fragment {
         btnAddBeneficiary = rootView.findViewById(R.id.btn_add_beneficiary);
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);
         toolbar = rootView.findViewById(R.id.toolbar_beneficiaries_list);
+        aboutBeneficiaries = rootView.findViewById(R.id.about_beneficiary);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("My Beneficiaries");
+        toolbar.setTitle("Beneficiaries");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         RequestBeneficiaries();
+
+        layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
+
+        aboutBeneficiaries.setOnClickListener(v->{
+
+            //Go to coming soon
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+
+            alertDialog.show();
+
+
+        });
+
 
         btnAddBeneficiary.setOnClickListener(v -> {
             //nvigate to add beneficiaries fragment
@@ -83,7 +123,7 @@ public class BeneficiariesListFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-            DialogFragment addCardDialog =new AddBeneficiaryFragment();
+            DialogFragment addCardDialog =new AddBeneficiary();
             addCardDialog.show( ft, "dialog");
 
         });
@@ -101,7 +141,11 @@ public class BeneficiariesListFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         /******************RETROFIT IMPLEMENTATION***********************/
-        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(getContext()).getBeneficiaries(access_token,"",request_id);
+        Call<BeneficiaryResponse> call = APIClient.getWalletInstance(getContext()).getBeneficiaries(
+                access_token,
+                "",
+                request_id,
+                "getBeneficiaries");
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
@@ -111,6 +155,13 @@ public class BeneficiariesListFragment extends Fragment {
 
                         beneficiariesList = response.body().getBeneficiariesList();
                         Log.d(TAG, "onResponse: beneficiaries"+beneficiariesList.size());
+                        if(beneficiariesList.size()!=0){
+                            layoutPlaceholder.setVisibility(View.GONE);
+                        }else {
+                            layoutPlaceholder.setVisibility(View.VISIBLE);
+                        }
+
+
 
 
                     } catch (Exception e) {
@@ -149,4 +200,6 @@ public class BeneficiariesListFragment extends Fragment {
 
 
     }
+
+
 }

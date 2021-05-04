@@ -79,6 +79,8 @@ public class My_Cart extends Fragment {
     private Context context;
     DefaultAddressModelView viewModel;
 
+    public  My_Cart(){  }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

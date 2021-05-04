@@ -18,7 +18,7 @@ import com.cabral.emaishapay.R;
 
 public class AuthActivity extends AppCompatActivity {
     public static NavController navController;
-
+    public static NavHostFragment navHostFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class AuthActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        NavHostFragment navHostFragment =
+        navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_auth_container);
 
         navController = navHostFragment.getNavController();
@@ -48,5 +48,12 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
+    public static NavController getNavController() {
+        if(navController==null){
 
+            navController = navHostFragment.getNavController();
+        }
+
+        return navController;
+    }
 }

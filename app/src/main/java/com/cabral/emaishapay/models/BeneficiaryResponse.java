@@ -62,6 +62,22 @@ public class BeneficiaryResponse {
         @SerializedName("account_number")
         @Expose
         private String account_number;
+        @SerializedName("beneficiary_phone")
+        @Expose
+        private String beneficiary_phone;
+        @SerializedName("city")
+        @Expose
+        private String city;
+        @SerializedName("country")
+        @Expose
+        private String country;
+        @SerializedName("street_address_1")
+        @Expose
+        private String street_address_1;
+
+        @SerializedName("street_address_2")
+        @Expose
+        private String street_address_2;
 
         public String getId() {
             return id;
@@ -109,6 +125,46 @@ public class BeneficiaryResponse {
 
         public void setAccount_number(String account_number) {
             this.account_number = account_number;
+        }
+
+        public String getBeneficiary_phone() {
+            return beneficiary_phone;
+        }
+
+        public void setBeneficiary_phone(String beneficiary_phone) {
+            this.beneficiary_phone = beneficiary_phone;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
+        public String getStreet_address_1() {
+            return street_address_1;
+        }
+
+        public void setStreet_address_1(String street_address_1) {
+            this.street_address_1 = street_address_1;
+        }
+
+        public String getStreet_address_2() {
+            return street_address_2;
+        }
+
+        public void setStreet_address_2(String street_address_2) {
+            this.street_address_2 = street_address_2;
         }
     }
 }

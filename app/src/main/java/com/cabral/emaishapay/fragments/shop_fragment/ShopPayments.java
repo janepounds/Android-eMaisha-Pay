@@ -26,13 +26,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +44,17 @@ import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.SupportedCardTypesView;
 import com.cabral.emaishapay.BuildConfig;
+import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
+import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -66,8 +74,10 @@ import com.flutterwave.raveutils.verification.AVSVBVFragment;
 import com.flutterwave.raveutils.verification.OTPFragment;
 import com.flutterwave.raveutils.verification.PinFragment;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,32 +90,36 @@ import retrofit2.Response;
 public class ShopPayments extends Fragment implements
 
         SavedCardsListener, CardPaymentCallback {
+    private static final String TAG = "ShopPayments";
 
     private Context context;
     ConstraintLayout layoutCod;
 
     private RadioButton eMaishaWallet, eMaishaCard, Visa, MobileMoney;
-    private LinearLayout merchantCard, VisaCard, MobileM,eMaishaPayLayout;
-    private EditText cardNumber, cardExpiry, cvv, monileMoneyPhoneEdtx,emaishapay_phone_number;
-    Button continuePayment;
+    private LinearLayout merchantCard, VisaCard, MobileM,eMaishaPayLayout,cardDetails;
+    private EditText cardNumber, cardExpiry, cvv, monileMoneyPhoneEdtx,emaishapay_phone_number,account_name;
+    Button continuePayment,cancel;
     TextView  resendtxtview, tvTimer;
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
    // private BraintreeFragment braintreeFragment;
-    private String selectedPaymentMethod;
+    private String selectedPaymentMethod,cardNo,cvv_,expiry,mobileNo;
     SupportedCardTypesView brainTreeSupportedCards;
     private Toolbar toolbar;
     private DialogLoader dialogLoader;
-    String txRef,otp_code;
+    String txRef;
     double chargeAmount;
     private CardPaymentManager cardPayManager;
-    private RelativeLayout layoutResendCode;
-
+    private OtpDialogLoader otpDialogLoader;
 
     private RaveVerificationUtils verificationUtils;
-    private Dialog otpDialog,dialog;
-    private EditText code1,code2,code3,code4,code5,code6;
+    private Dialog dialog;
+    private Spinner spinner_select_card;
+    private List<CardResponse.Cards> cardlists = new ArrayList();
+    String card_number,decripted_expiryDate,acc_name;
+    ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+    private CheckBox checkbox_save_card;
 
 
     @Override
@@ -145,8 +159,14 @@ public class ShopPayments extends Fragment implements
         cardExpiry = rootView.findViewById(R.id.visa_card_expiry);
         cardNumber = rootView.findViewById(R.id.visa_card_number);
         cvv = rootView.findViewById(R.id.visa_card_cvv);
-        brainTreeSupportedCards = rootView.findViewById(R.id.supported_card_types);
+        spinner_select_card = rootView.findViewById(R.id.spinner_select_card);
+        cancel = rootView.findViewById(R.id.payments_cancel_btn);
+        cardDetails = rootView.findViewById(R.id.card_details_layout);
+        checkbox_save_card = rootView.findViewById(R.id.checkbox_save_card);
+        account_name = rootView.findViewById(R.id.visa_holder_name);
 
+        brainTreeSupportedCards = rootView.findViewById(R.id.supported_card_types);
+        dialogLoader = new DialogLoader(context);
 
         eMaishaWallet.setOnClickListener(v -> {
 
@@ -177,6 +197,7 @@ public class ShopPayments extends Fragment implements
             MobileM.setVisibility(v.GONE);
             merchantCard.setVisibility(v.GONE);
             eMaishaPayLayout.setVisibility(v.GONE);
+            getCards();
         });
 
         MobileMoney.setOnClickListener(v -> {
@@ -188,7 +209,38 @@ public class ShopPayments extends Fragment implements
             merchantCard.setVisibility(v.GONE);
             eMaishaPayLayout.setVisibility(v.GONE);
         });
+        cancel.setOnClickListener(v -> {
+            ShopActivity.navController.popBackStack();});
 
+
+        spinner_select_card.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
+                    //call add card
+                    cardDetails.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    for(int i = 0; i<cardItems.size();i++){
+                        if(cardItems.get(i).toString().equalsIgnoreCase(spinner_select_card.getSelectedItem().toString())){
+                            expiry =  cardItems.get(i).getExpiryDate();
+                            cardNo = cardItems.get(i).getCardNumber();
+                            cvv_ = cardItems.get(i).getCvv();
+
+                        }
+                    }
+                    // Log.d(TAG, "onItemSelected: expiry"+expiryDate+"card_no"+card_no+"cvv"+cvv);
+                    cardDetails.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         brainTreeSupportedCards.setSupportedCardTypes(SUPPORTED_CARD_TYPES);
 
         cardExpiry.setKeyListener(null);
@@ -268,30 +320,268 @@ public class ShopPayments extends Fragment implements
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
                 selectedPaymentMethod = "eMaisha Wallet";
-                initiateAcceptPayment(getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),chargeAmount);
+                if(validateEmaishaPay()) {
+
+                    preparecomfirmAcceptPayment(
+                            getString(R.string.phone_number_code) + emaishapay_phone_number.getText().toString(),
+                            chargeAmount);
+                }
+
 //              GenerateBrainTreeToken();
             } else if (eMaishaCard.isChecked()) {
                 selectedPaymentMethod = "eMaisha Card";
                 //proceedOrder();
                 // validateSelectedPaymentMethod();
             } else if (Visa.isChecked()) {
-                //save card info
                 selectedPaymentMethod = "Visa";
-                if(validateEntries())
-                initiateCardCharge(this.chargeAmount);
+                if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+                    Snackbar.make(continuePayment, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
+                    return ;
+                }else if( spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")) {
+                    if (validateEntries()) {
+                        //save card info
+                        cardNo = cardNumber.getText().toString();
+                        cvv_ = cvv.getText().toString();
+                        expiry = cardExpiry.getText().toString();
+                        acc_name = account_name.getText().toString();
+                        if(checkbox_save_card.isChecked()){
+                            saveCard(cardNo,cvv_,expiry,acc_name);
+                        }
+//                        mobileNo = m.getText().toString();
+                        initiateCardCharge(this.chargeAmount,expiry);
+                    }
+                }else {
+
+                        initiateCardCharge(this.chargeAmount,expiry);
+                }
 
 
             } else if (MobileMoney.isChecked()) {
-                selectedPaymentMethod = "Mobile Money";
-                Log.w("eMaishaMM",chargeAmount+" "+getString(R.string.phone_number_code)+monileMoneyPhoneEdtx.getText().toString());
-                initiateMobileMoneyCharge( getString(R.string.phone_number_code)+monileMoneyPhoneEdtx.getText().toString(),chargeAmount);
-                //proceedOrder();
+                if(validateMobileMoney()) {
+                    selectedPaymentMethod = "Mobile Money";
+                    Log.w("eMaishaMM", chargeAmount + " " + getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString());
+                    initiateMobileMoneyCharge(getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString(), chargeAmount);
+                    //proceedOrder();
+                }
             }
         });
 
         return rootView;
     }
 
+    private void saveCard(String cardNumber, String cvv_, String expiry, String account_name) {
+        dialogLoader.showProgressDialog();
+
+        String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+            /*************RETROFIT IMPLEMENTATION**************/
+            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).
+                    saveCardInfo(access_token,
+                            identifier,
+                            card_number,
+                            cvv_,
+                            expiry,
+                            account_name,
+                            getString(R.string.currency),
+                    request_id,category,"saveCard");
+            call.enqueue(new Callback<CardResponse>() {
+                @Override
+                public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                    if (response.isSuccessful()) {
+                        dialogLoader.hideProgressDialog();
+                        if(response.body().getStatus()==1) {
+                            String message = response.body().getMessage();
+                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CardResponse> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+
+                }
+            });
+
+
+    }
+
+    public void getCards(){
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        /******************RETROFIT IMPLEMENTATION***********************/
+        dialogLoader.showProgressDialog();
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).getCards(access_token,request_id,category,"getCards");
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                if(response.isSuccessful()){
+
+                    try {
+
+                        cardlists = response.body().getCardsList();
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Select Card";
+                            }
+                        });
+                        for(int i =0; i<cardlists.size();i++) {
+                            card_number = cardlists.get(i).getCard_number();
+                            decripted_expiryDate = cardlists.get(i).getExpiry();
+                            String cvv = cardlists.get(i).getCvv();
+                            String id = cardlists.get(i).getId();
+                            Log.d(TAG, "onResponse: decripter_card_no" + card_number);
+
+                            if (card_number.length() > 4) {
+
+                                String first_four_digits = (card_number.substring(0, 4));
+                                String last_four_digits = (card_number.substring(card_number.length() - 4));
+                                final String decripted_card_number = first_four_digits + "*******" + last_four_digits;
+
+                                Log.d(TAG, "onResponse: masked " + decripted_card_number);
+                                cardItems.add(new CardSpinnerItem() {
+                                    @Override
+                                    public String getId() {
+                                        return id;
+                                    }
+
+                                    @Override
+                                    public String getCardNumber() {
+                                        return card_number;
+                                    }
+
+                                    @Override
+                                    public String getExpiryDate() {
+                                        return decripted_expiryDate;
+                                    }
+
+                                    @Override
+                                    public String getCvv() {
+                                        return cvv;
+                                    }
+
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return decripted_card_number;
+                                    }
+                                });
+
+
+                            }
+                        }
+                        cardItems.add(new CardSpinnerItem() {
+                            @Override
+                            public String getId() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCardNumber() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getExpiryDate() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getCvv() {
+                                return null;
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "Add New";
+                            }
+                        });
+                        Log.d(TAG, "onResponse: cards"+cardItems);
+
+                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter<CardSpinnerItem>(getContext(),  android.R.layout.simple_dropdown_item_1line, cardItems);
+//                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
+                        spinner_select_card.setAdapter(cardListAdapter);
+                        dialogLoader.hideProgressDialog();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+
+
+
+                }else if (response.code() == 401) {
+
+                    TokenAuthFragment.startAuth( true);
+
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                    dialogLoader.hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    private boolean validateMobileMoney() {
+        if(monileMoneyPhoneEdtx.getText().toString().isEmpty()){
+            monileMoneyPhoneEdtx.setText("Required!");
+            return false;
+
+        }else {
+            return true;
+        }
+
+    }
+
+    private boolean validateEmaishaPay() {
+        if(emaishapay_phone_number.getText().toString().isEmpty()){
+            emaishapay_phone_number.setText("Required!");
+            return false;
+
+        }else {
+            return true;
+        }
+
+
+    }
 
 
     public void initiateMobileMoneyCharge(String phoneNumber,double amount) {
@@ -356,12 +646,13 @@ public class ShopPayments extends Fragment implements
         mobilePayManager.charge();
     }
 
-    public void initiateCardCharge(double amount){
+    public void initiateCardCharge(double amount, String expiryDate){
 
-        String expiryDate=cardExpiry.getText().toString();
+//        String expiryDate=cardExpiry.getText().toString();
+        Log.d(TAG, "initiateCardCharge: expiry"+expiryDate);
 
         txRef= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID,this.context)+(new Date().getTime());
-        Log.e("PUBK : ", BuildConfig.PUBLIC_KEY+" : "+expiryDate.substring(0,2)+" : "+expiryDate.substring(3,5));
+
 
 
         String eMaishaPayServiceMail="info@cabraltech.com";
@@ -510,13 +801,13 @@ public class ShopPayments extends Fragment implements
         } else {
             Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
+            otpDialogLoader.onActivityResult(requestCode, resultCode, data);
         }
 
 
     }
-    void fetchUserSavedCards(){
-        cardPayManager.fetchSavedCards(true);
-    }
+
+
     @Override
     public void onSavedCardsLookupSuccessful(List<SavedCard> cards, String phoneNumber) {
         // Check that the list is not empty, show the user to select which they'd like to charge, then proceed to chargeSavedCard()
@@ -628,17 +919,22 @@ public class ShopPayments extends Fragment implements
 
     }
 
-    public void initiateAcceptPayment(final String phoneNumber, final double amount) {
+    public void initiateAcceptPayment(final String phoneNumber, final double amount,String service_code) {
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         dialogLoader.showProgressDialog();
-        String service_code = "121518";
 
-        String type="Agent Transfer";
 
-        /*****RETROFIT IMPLEMENTATION*****/
+        String type;
+        if(category.equalsIgnoreCase("merchant")){
+            type="Merchant Accept Payment";
+        }else{
+            type = "Agent Transfer";
+
+        }
+
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateTransferResponse> call = apiRequests.initiateAgentTransaction(access_token, amount,phoneNumber,type,request_id,category,"customerTransactionOTP",service_code);
         call.enqueue(new Callback<InitiateTransferResponse>() {
@@ -646,7 +942,31 @@ public class ShopPayments extends Fragment implements
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
                 if(response.code() ==200){
                     dialogLoader.hideProgressDialog();
-                    getOTPFromUser(phoneNumber,amount);
+
+                   otpDialogLoader=new OtpDialogLoader(ShopPayments.this) {
+                       @Override
+                       protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
+                           otpDialog.dismiss();
+                           comfirmAcceptPayment(
+                                   otp_code,
+                                   phoneNumber,
+                                   amount,
+                                   service_code);
+                       }
+
+                       @Override
+                       protected void onResendOtp() {
+                           otpDialogLoader.resendOtp(
+                                   phoneNumber,
+                                   dialogLoader,
+                                   continuePayment
+
+                           );
+                       }
+                   };
+
+                    otpDialogLoader.showOTPDialog();
+
 
                 }
                 else if(response.code() == 401) {
@@ -681,7 +1001,7 @@ public class ShopPayments extends Fragment implements
 
     }
 
-    public void preparecomfirmAcceptPayment(final String OTPCode,final String customerNumber, final double amount) {
+    public void preparecomfirmAcceptPayment(final String customerNumber, final double amount) {
 
         //Inner Dialog to enter PIN
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
@@ -689,19 +1009,23 @@ public class ShopPayments extends Fragment implements
         View pinDialog = View.inflate(context,R.layout.dialog_enter_pin,null);
 
 
-        builder.setView(pinDialog);
-        dialog = builder.create();
-        builder.setCancelable(false);
+
 
         EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
+        TextView dialog_title = pinDialog.findViewById(R.id.dialog_title);
+        dialog_title.setText("ENTER MERCHANT PIN");
 
         pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
                     String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
+                    initiateAcceptPayment(
+                            getString(R.string.phone_number_code)+emaishapay_phone_number.getText().toString(),
+                            chargeAmount,
+                            service_code
+                            );
 
-                    comfirmAcceptPayment(OTPCode,customerNumber,amount,service_code);
 
                 }else {
                     pinEdittext.setError("Invalid Pin Entered");
@@ -709,7 +1033,9 @@ public class ShopPayments extends Fragment implements
 
             }
         });
-
+        builder.setView(pinDialog);
+        Dialog dialog = builder.create();
+        builder.setCancelable(false);
         dialog.show();
 
 
@@ -730,8 +1056,43 @@ public class ShopPayments extends Fragment implements
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if(response.code() ==200){
-                    dialogLoader.hideProgressDialog();
-                    refreshActivity();
+                    if(response.body().getStatus().equalsIgnoreCase("1")) {
+                        dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
+                    }else{
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                Intent goToWallet = new Intent(context, WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.show();
+                    }
 
                 }
                 else if(response.code() == 401) {
@@ -759,159 +1120,6 @@ public class ShopPayments extends Fragment implements
             }
         });
 
-    }
-    private void getOTPFromUser(final String customerNumber, final double amount) {
-        otpDialog  = new Dialog(context);
-        otpDialog.setContentView(R.layout.login_dialog_otp);
-        otpDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        otpDialog.setCancelable(false);
-
-        code1= otpDialog.findViewById(R.id.otp_code1_et);
-        code2= otpDialog.findViewById(R.id.otp_code2_et);
-        code3= otpDialog.findViewById(R.id.otp_code3_et);
-        code4= otpDialog.findViewById(R.id.otp_code4_et);
-        code5=otpDialog.findViewById(R.id.otp_code5_et);
-        code6= otpDialog.findViewById(R.id.otp_code6_et);
-        resendtxtview= otpDialog.findViewById(R.id.login_otp_resend_code);
-        tvTimer= otpDialog.findViewById(R.id.tv_timer);
-        layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
-
-        CountDownTimer timer = new CountDownTimer(90000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );
-            }
-
-            public void onFinish() {
-                layoutResendCode.setVisibility(View.VISIBLE);
-            }
-        };
-        timer.start();
-
-        code1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code2.requestFocus();
-            }
-        });
-
-        code2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code3.requestFocus();
-            }
-        });
-
-        code3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code4.requestFocus();
-            }
-        });
-
-        code4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code5.requestFocus();
-            }
-        });
-
-        code5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                code6.requestFocus();
-            }
-        });
-
-        code6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString().trim();
-                otp_code = otp_code.replaceAll("\\s+", "");
-                if(otp_code.length()>=6){
-                    preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
-                }
-
-            }
-        });
-
-        otpDialog.findViewById(R.id.login_otp_resend_code).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // processLogin(password,ConfirmActivity.phonenumber);
-                layoutResendCode.setVisibility(View.GONE);
-            }
-        });
-        otpDialog.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-                otp_code = code1.getText().toString() + code2.getText().toString()+code3.getText().toString()+code4.getText().toString()+code5.getText().toString()+code6.getText().toString();
-                preparecomfirmAcceptPayment(otp_code,customerNumber,amount);
-            }
-        });
-
-         otpDialog.findViewById(R.id.text_view_change_number).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpDialog.dismiss();
-            }
-        });
-
-        otpDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        WindowManager.LayoutParams params = otpDialog.getWindow().getAttributes(); // change this to your otpDialog.
-
-        params.x = 100; // Here is the param to set your dialog position. Same with params.x
-        otpDialog.getWindow().setAttributes(params);
-        otpDialog.show();
     }
 
 }

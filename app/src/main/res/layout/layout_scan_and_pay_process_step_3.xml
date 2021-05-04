@@ -8,21 +8,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/windowBackgroundDark">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_scan_pay_process_2"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@color/white"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
 
 
 
@@ -31,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:orientation="horizontal"
-            android:layout_below="@id/appbar"
+            android:layout_below="@id/toolbar_scan_pay_process_2"
             android:background="@color/colorPrimary"
             android:layout_marginBottom="20dp"/>
 
@@ -114,7 +110,7 @@
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
@@ -130,7 +126,7 @@
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
@@ -146,7 +142,7 @@
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
@@ -162,16 +158,27 @@
             android:gravity="center"
             android:inputType="numberPassword"
             android:maxLength="1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/error_message_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Error"
+        android:textSize="16sp"
+        android:textColor="@color/textRed"
+        android:layout_below="@id/pin_layout"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/pin_layout">
+        android:layout_below="@id/error_message_txt">
         <LinearLayout
             android:id="@+id/layout_signin"
             android:layout_width="match_parent"
@@ -225,21 +232,21 @@
                     style="@style/keyboard_number_button"
                     android:text="@string/number_one"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp"/>
+                    android:textSize="30sp"/>
 
                 <TextView
                     android:id="@+id/tv_key_2"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_two"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp"/>
+                    android:textSize="30sp"/>
 
                 <TextView
                     android:id="@+id/tv_key_3"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_three"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp"/>
+                    android:textSize="30sp"/>
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -260,21 +267,21 @@
                     style="@style/keyboard_number_button"
                     android:text="@string/number_four"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tv_key_5"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_five"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tv_key_6"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_six"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -295,21 +302,21 @@
                     style="@style/keyboard_number_button"
                     android:text="@string/number_seven"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tv_key_8"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_eight"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tv_key_9"
                     style="@style/keyboard_number_button"
                     android:text="@string/number_nine"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -336,7 +343,7 @@
                     style="@style/keyboard_number_button"
                     android:text="@string/number_zero"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="34sp" />
+                    android:textSize="30sp" />
 
 
                 <ImageView

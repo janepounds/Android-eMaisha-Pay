@@ -35,8 +35,7 @@
         android:background="#f8f8ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_shop">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
@@ -64,6 +63,23 @@
                 app:itemTextAppearanceInactive="@style/BottomNavigationView"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_navigation_menu" />
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#f4fafe"
+                app:labelVisibilityMode="labeled"
+                app:itemRippleColor="#2D84B72B"
+                app:itemIconTint="@android:color/transparent"
+                app:itemTextAppearanceInactive="@style/BottomNavigationView"
+                app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_agent_merchant_menu"
+                android:visibility="gone"/>
+
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,30 +90,14 @@
             app:fabCustomSize="75dp"
             android:padding="0dp"
             app:maxImageSize="45dp"
-            android:src="@drawable/scan_white_bg"
+            android:src="@drawable/group_24"
             app:layout_anchor="@id/bottomAppBar"
             app:layout_anchorGravity="top|center"
-            app:backgroundTint="@color/white"
-            app:tint="@color/colorPrimary"/>
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/white"/>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_shop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#f4fafe"
-        app:labelVisibilityMode="labeled"
-        app:itemRippleColor="#2D84B72B"
-        app:itemIconTint="@android:color/transparent"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_agent_merchant_menu"
-        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

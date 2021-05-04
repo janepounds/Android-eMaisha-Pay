@@ -52,6 +52,10 @@ public class WalletPurchaseResponse {
         @Expose
         private String level;
 
+        @SerializedName("referenceNumber")
+        @Expose
+        private String referenceNumber;
+
 
         @SerializedName("amount")
         @Expose
@@ -88,7 +92,17 @@ public class WalletPurchaseResponse {
         public String getAmount() {
             return amount;
         }
+
+        public String getReferenceNumber() {
+            return referenceNumber;
+        }
+
+        public void setReferenceNumber(String referenceNumber) {
+            this.referenceNumber = referenceNumber;
+        }
     }
+
+
 
     public String getStatus() {
         return status;
@@ -97,6 +111,8 @@ public class WalletPurchaseResponse {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }
 
 

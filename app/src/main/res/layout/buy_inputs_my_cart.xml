@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="8dp"
-                        android:text="Add items worth UGX 550.00 \n \n more for FREE delivery"
+                        android:text="Add items worth UGX 200,000 \n \n more for FREE delivery"
                         android:textColor="@color/white"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -249,10 +249,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_margin="15dp"
+                        android:layout_marginStart="62dp"
+                        android:src="@drawable/ic_shipping_car"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/ic_shipping_car" />
+                        app:layout_constraintStart_toEndOf="@+id/promo_text"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

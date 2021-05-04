@@ -44,6 +44,8 @@ public class PopularProductsFragment extends Fragment {
         this.fragmentManager=fragmentManager;
     }
 
+    public PopularProductsFragment() {
+    }
 
 
     @Override

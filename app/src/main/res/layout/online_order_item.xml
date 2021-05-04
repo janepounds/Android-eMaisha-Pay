@@ -31,10 +31,10 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="27dp"
                     android:layout_weight="1.2"
                     android:src="@drawable/ic_profile"
-                    app:tint="#31244A"/>
+                    android:layout_gravity="center_vertical"/>
 
                 <TextView
                     android:id="@+id/txt_order_customer_name"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7.5"
                     android:text="Zimula John"
-                    android:textColor="#31244A"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"/>
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_right_arrow_green"
-                    app:tint="#000" />
+                    app:tint="@color/colorPrimaryDark" />
 
             </LinearLayout>
 
@@ -65,7 +65,7 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="27dp"
                     android:layout_weight="1.2"
                     android:src="@drawable/ic_office_building" />
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8.5"
                     android:text="Nansana, Wakiso"
-                    android:textColor="#B9B9B9"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"/>
 
@@ -91,7 +91,7 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="27dp"
                     android:layout_weight="1.2"
                     android:src="@drawable/ic_pending__1_" />
 
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8.5"
                     android:text="Pending"
-                    android:textColor="#B9B9B9"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"/>
 

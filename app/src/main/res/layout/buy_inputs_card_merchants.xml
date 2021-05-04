@@ -120,7 +120,6 @@
                 android:id="@+id/order_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="center|start"
                 android:text="UGX - 51,000"
                 android:textColor="@color/colorPrimary"

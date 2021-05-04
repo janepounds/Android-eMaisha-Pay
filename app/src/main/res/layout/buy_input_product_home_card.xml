@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/placeholder" />
+                android:src="@drawable/new_product" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmerFrame"
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder" />
+                    android:src="@drawable/new_product" />
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -62,7 +62,7 @@
                 android:textStyle="bold"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

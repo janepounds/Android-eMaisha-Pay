@@ -178,6 +178,8 @@ public class ContactDetailsFragment extends Fragment {
                 try {
                     //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextSize(14);
+
                 } catch (Exception e) {
 
                 }
@@ -287,7 +289,7 @@ public class ContactDetailsFragment extends Fragment {
                 bundle.putString("next_of_kin_contact", next_of_kin_contact);
 
                 //To IdentityProofFragment
-                WalletHomeActivity.navController.navigate(R.id.action_personalDetailsFragment_to_contactDetailsFragment,bundle);
+                WalletHomeActivity.navController.navigate(R.id.action_contactDetailsFragment_to_identityProofFragment,bundle);
             }
         });
 

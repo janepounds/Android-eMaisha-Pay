@@ -191,14 +191,16 @@
             android:layout_marginTop="15dp"
             android:background="#31244A"
             android:alpha=".1"
-            app:layout_constraintTop_toBottomOf="@id/layout_emaisha_pay" />
+            app:layout_constraintTop_toBottomOf="@id/layout_emaisha_pay"
+            android:visibility="gone"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_merchant_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/view_emaisha_wallet">
+            app:layout_constraintTop_toBottomOf="@id/view_emaisha_wallet"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/image_merchant_card"
@@ -375,7 +377,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/view_merchant_card">
+            app:layout_constraintTop_toBottomOf="@id/view_merchant_card"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/image_visa_card"
@@ -613,7 +616,8 @@
             android:layout_marginTop="15dp"
             android:background="#31244A"
             android:alpha=".1"
-            app:layout_constraintTop_toBottomOf="@id/layout_bank_card" />
+            app:layout_constraintTop_toBottomOf="@id/layout_bank_card"
+            android:visibility="gone"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -734,10 +738,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight=".5"
-                android:background="@drawable/round_corners_button_darkgray"
-                android:drawableStart="@drawable/ic_left_chevron"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:background="@drawable/rectangular_blue_solid"
                 android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -750,9 +751,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight=".5"
-                android:background="@drawable/rounded_corners_button"
-                android:drawableEnd="@drawable/ic_right_chevron"
-                android:paddingEnd="10dp"
+                android:background="@drawable/rectangular_blue_solid"
                 android:text="@string/btn_continue"
                 android:textAlignment="center"
                 android:textAllCaps="true"

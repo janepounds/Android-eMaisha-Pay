@@ -35,6 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_USER_PASSWORD;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID;
 
@@ -235,7 +236,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                         Log.d(TAG, accessToken);
                         WalletHomeActivity.WALLET_ACCESS_TOKEN = accessToken;
                         WalletHomeActivity.savePreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, accountRole, context);
-                        WalletHomeActivity.savePreferences(PREFERENCES_WALLET_BUSINESS_ID, accountRole, context);
+                        WalletHomeActivity.savePreferences(PREFERENCES_USER_PASSWORD, password, context);
+
                         if (dialogLoader != null)
                             dialogLoader.hideProgressDialog();
                         WalletHomeActivity.navController.navigate(R.id.action_tokenAuthFragment_to_walletHomeFragment2);

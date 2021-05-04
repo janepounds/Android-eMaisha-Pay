@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Hello John,"
+                android:text="Hello Username,"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -63,11 +63,11 @@
                 android:id="@+id/down_arrow"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+
                 android:layout_toEndOf="@id/username_details"
                 android:layout_below="@id/username"
                 android:src="@drawable/ic_right_arrow_green"
                 android:rotation="90"
-                android:layout_marginTop="-2dp"
                 android:alpha="0.6"/>
 
         </RelativeLayout>
@@ -640,7 +640,7 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="UGX 0.0"
+                android:text="UGX 0"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -827,7 +827,7 @@
                     android:id="@+id/text_credit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="John Kiwanuka"
+                    android:text="Name"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
                     android:gravity="center"
@@ -837,7 +837,7 @@
                     android:id="@+id/text_amount_credit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="+ UGX 10,200"
+                    android:text="+ UGX 0"
                     android:textColor="#30DB51"
                     android:textSize="15sp"
                     android:layout_margin="2dp"
@@ -847,7 +847,7 @@
                     android:id="@+id/date_credit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="24 Feb 2021 14:23 PM"
+                    android:text=" "
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:layout_margin="2dp"
@@ -902,7 +902,7 @@
                     android:id="@+id/text_debit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="John Kiwanuka"
+                    android:text="Name"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
                     android:gravity="center"
@@ -912,7 +912,7 @@
                     android:id="@+id/text_amount_debit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="- UGX 10,200"
+                    android:text="- UGX 0"
                     android:textColor="#FF5353"
                     android:textSize="15sp"
                     android:layout_margin="2dp"
@@ -922,7 +922,7 @@
                     android:id="@+id/date_debit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="24 Feb 2021 14:23 PM"
+                    android:text=" "
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:layout_margin="2dp"
@@ -958,22 +958,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white"
+            android:background="#DBF2FF"
             android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_below="@id/text_popular_products"
             android:layout_alignParentBottom="true">
 
             <com.glide.slider.library.SliderLayout
                 android:id="@+id/product_cover_slider"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="145dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/background_round_white"
-                custom:auto_cycle="true"
-                custom:indicator_visibility="visible" />
+                android:paddingTop="-5dp"
+                android:paddingBottom="-5dp"
+                app:indicator_visibility="invisible"/>
 
         </LinearLayout>
         <LinearLayout
@@ -985,7 +984,8 @@
             android:orientation="horizontal"
             android:padding="20dp"
             app:elevation="10dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

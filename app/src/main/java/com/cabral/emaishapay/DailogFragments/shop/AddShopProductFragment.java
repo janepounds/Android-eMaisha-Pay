@@ -87,18 +87,17 @@ public class AddShopProductFragment extends DialogFragment {
     TextView  etxtProductName, etxtProductCategory,etxtProductManufucturer,tvAddProduct;
     String mediaPath, encodedImage = null;
     Spinner quantityUnit;
-    LinearLayout measurement_layout,spn_measurements_layout;
+    LinearLayout measurement_layout;
     ArrayAdapter<String> categoryAdapter, supplierAdapter, productAdapter, manufacturersAdapter;
     List<String> categoryNames, supplierNames, weightUnitNames;
     List<HashMap<String, String>> productCategory=new ArrayList<>(), productSupplier =new ArrayList<>(), weightUnit=new ArrayList<>();
-    private String selected_measure_id;
     Integer selectedProductID;
     Integer selectedManufacturersID;
     Integer selectedCategoryID;
-    String selectedSupplierID,productImage;
+    String selectedSupplierID,productImage,selected_measure_id;
     double selected_weight;
 
-    String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units,product_description;
+    String selectectedCategoryName, selectedProductName, selectedManufacturerName,selected_weight_units;
     private List<Category> categories;
     private List<Product> products;
     private List<String> catNames;
@@ -108,7 +107,7 @@ public class AddShopProductFragment extends DialogFragment {
     private List<String> offlinemanufacturersNames;
     private List<String> offlineCategoryNames;
     private List<String> offlineProductsName;
-    private String measure_id,key,product_id;
+    private String measure_id,key,product_id,updateId;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
@@ -158,8 +157,6 @@ public class AddShopProductFragment extends DialogFragment {
         etxtproductMeasurement = view.findViewById(R.id.etxt_product_measurement);
         measurement_layout= view.findViewById(R.id.measurement_layout);
         tvAddProduct = view.findViewById(R.id.add_product_tv);
-//        TextView quantitySellUnit = view.findViewById(R.id.txt_selling_units);
-//        TextView quantityPurchaseUnit = view.findViewById(R.id.txt_purchase_units);
         produce_image = view.findViewById(R.id.product_image);
         txtAddProdcut = view.findViewById(R.id.tx_add_product);
         ImageView close = view.findViewById(R.id.add_product_close);
@@ -177,6 +174,7 @@ public class AddShopProductFragment extends DialogFragment {
             etxtProductStock.setText(getArguments().getString("stock"));
             etxtproductMeasurement.setText(getArguments().getString("weight"));
             product_id = getArguments().getString("product_id");
+            updateId = getArguments().getString("id");
             WalletHomeActivity.selectSpinnerItemByValue(quantityUnit,getArguments().getString("weight_unit"));
 
 
@@ -643,8 +641,11 @@ public class AddShopProductFragment extends DialogFragment {
                                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                                     @Override
                                     public void run() {
+                                        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+                                        String unique_id = userId+"_"+System.currentTimeMillis();
                                         //add manufacturer
                                         long product = viewModel.addProduct(new EcProduct(
+                                                unique_id,
                                                 "",
                                                 add_product.getText().toString(),
                                                 "",
@@ -733,19 +734,14 @@ public class AddShopProductFragment extends DialogFragment {
                                     selected_weight_units = products.get(i).getProducts_weight_unit();
                                     productImage =products.get(i).getImageUrl();
 
-                                    Log.d(TAG, "onItemClick: image"+ConstantValues.WALLET_DOMAIN +productImage);
+
+                                    String image_url = ConstantValues.ECOMMERCE_WEB +productImage;
+                                    Log.d(TAG, "onItemClick: image"+image_url);
 
                                     //set image using Glide
-                                     Glide.with(context).load(ConstantValues.ECOMMERCE_URL +productImage).into(produce_image);
+                                     Glide.with(context).load(image_url).into(produce_image);
 
                                      //encode image
-
-//                                    produce_image.buildDrawingCache();
-
-
-//                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
-//                                    byte[] b = baos.toByteArray();
 
                                     Thread thread = new Thread(new Runnable() {
 
@@ -753,14 +749,9 @@ public class AddShopProductFragment extends DialogFragment {
                                         public void run() {
                                             try  {
                                                 //Your code goes here
-                                                String imagePath = ConstantValues.ECOMMERCE_URL +productImage;
-                                                URL url = new URL(imagePath);
-                                                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                                connection.setDoInput(true);
-                                                connection.connect();
-                                                InputStream input = connection.getInputStream();
-                                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                                                encodedImage = encodeImage(myBitmap);
+                                                URL url = new URL(image_url);
+                                                Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                encodedImage = encodeImage(image);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -771,9 +762,6 @@ public class AddShopProductFragment extends DialogFragment {
 
                                     Log.d(TAG, "onItemClick: encodedImage"+encodedImage);
 
-
-                                    //measurement_layout.setVisibility(View.GONE);
-                                    //spn_measurements_layout.setVisibility(View.VISIBLE);
                                     etxtproductMeasurement.setText(products.get(i).getProducts_weight()+"");
                                     etxtProductCode.setText(selectedProductName);
                                     etxtProductSellPrice.setText(products.get(i).getProducts_price()+"");
@@ -878,8 +866,8 @@ public class AddShopProductFragment extends DialogFragment {
                 progressDialog.show();
 
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                String unique_id = userId.replaceAll(" ", "") + "PDT" + timestamp.toString().replaceAll(" ", "");
+
+                String unique_id = userId+"_"+System.currentTimeMillis();
 
                 String product_name = etxtProductName.getText().toString().trim();
                 String product_code = etxtProductCode.getText().toString().trim();
@@ -891,13 +879,14 @@ public class AddShopProductFragment extends DialogFragment {
                 String product_supplier_name = etxtProductSupplier.getText().toString().trim();
                 String product_supplier = selectedSupplierID;
                 String manufacturer_name = etxtProductManufucturer.getText().toString().trim();
+                int product_id = selectedProductID;
                 String units = etxtproductMeasurement.getText().toString().trim() + quantityUnit.getSelectedItem().toString().trim();
                 String sync_status = "0";
                 if (quantityUnit.getSelectedItem().toString().equalsIgnoreCase("Select") || etxtproductMeasurement.getText().toString().equalsIgnoreCase("")) {
                     units = null;
                 }
 
-                Log.d(TAG, "onClick: timestamp" + timestamp);
+                Log.d(TAG, "onClick: timestamp" + unique_id);
 
 
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -906,21 +895,14 @@ public class AddShopProductFragment extends DialogFragment {
                     return;
                 }
                 else {
-//                } else if (product_supplier_name == null || product_supplier == null || product_supplier_name.isEmpty() || product_supplier.isEmpty()) {
-//                    etxtProductSupplier.setError(getString(R.string.product_supplier_cannot_be_empty));
-//                    etxtProductSupplier.requestFocus();
-//                } else {
+
 
                     if (key.equalsIgnoreCase("update")) {
-
-//                        viewModel.updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier_name,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name,product_code, encodedImage,
-//                                selected_weight_units,
-//                                selected_weight + "");
 
 
                         Call<ResponseBody> call = BuyInputsAPIClient
                                 .getInstance()
-                                .updateProduct(access_token,unique_id,measure_id,userId,product_id,product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
+                                .updateProduct(access_token,updateId,measure_id,userId,product_id+"",product_buy_price,product_sell_price,product_supplier,Integer.parseInt(product_stock),manufacturer_name,product_category_name,product_name);
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -929,7 +911,7 @@ public class AddShopProductFragment extends DialogFragment {
                                         @Override
                                         public void run() {
                                             long update_product =   viewModel.updateProductStock(
-                                                    product_id,
+                                                    product_id+"",
                                                     product_buy_price,
                                                     product_sell_price,
                                                     product_supplier,
@@ -938,9 +920,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                     product_category_name,
                                                     product_name,
                                                     product_code,
-
                                                     encodedImage,
-
                                                     selected_weight_units,
                                                     selected_weight+""
                                                    );
@@ -987,23 +967,23 @@ public class AddShopProductFragment extends DialogFragment {
 
 
 
-                     }else{
-
-
+                     }
+                    else{
 
                       AppExecutors.getInstance().diskIO().execute(new Runnable() {
                           @Override
                           public void run() {
-
+                              Log.w("savedProduct", product_name);
                               long checkAddedProduct=viewModel.addProduct(new EcProduct(
                                       unique_id,
+                                      product_id+"",
                                       product_name,
                                       product_code,
                                       product_category_name,
                                        "",
                                       product_buy_price,
                                       product_sell_price,
-                                      product_stock,
+                                      product_supplier,
                                       encodedImage,
                                       product_stock,
                                       selected_weight_units,

@@ -702,6 +702,8 @@
     <string name="role_master_agent">Agent</string>
     <string name="phone_number_code">0</string>
     <string name="confirm_customer_details">Confirm Customer Details</string>
+    <string name="street_address_1">Nsibambi rd</string>
+    <string name="street_address_2">Namirembe</string>
     <string-array name="spinner_gender">
         <item>Gender</item>
         <item>Male</item>
@@ -763,7 +765,7 @@
     <string-array name="transfer_to">
         <item>Select</item>
         <item>eMaisha Account</item>
-<!--        <item>eMaisha Card</item>-->
+        <!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
         <item>Bank</item>
     </string-array>
@@ -775,17 +777,21 @@
     <string-array name="deposit_to">
         <item>Select</item>
         <item>Wallet</item>
-<!--        <item>eMaisha Card</item>-->
+        <!--        <item>eMaisha Card</item>-->
     </string-array>
     <string-array name="banks_list">
         <item>Select</item>
     </string-array>
     <string-array name="payment_method">
         <item>Select</item>
-        <item>Wallet</item>
-<!--        <item>eMaisha Card</item>-->
+        <item>eMaisha Pay</item>
+        <!--        <item>eMaisha Card</item>-->
         <item>Mobile Money</item>
-        <item>Bank Cards</item>
+    </string-array>
+    <string-array name="pay_to">
+        <item>Select</item>
+        <item>Agent</item>
+        <item>Merchant</item>
     </string-array>
     <string-array name="crop_quantity_unit">
         <item> Select</item>
@@ -903,6 +909,17 @@
         <item>What was your favorite sport in high school?</item>
 
     </string-array>
+    <string-array name="bank_country">
+        <item>Select</item>
+        <item>Uganda</item>
+    </string-array>
+
+    <string name="termsandconditions">Welcome to eMaisha Pay, a product that provides a platform where payments for various goods and services especially in the agricultural value chain can be made, and Credit for businesses can be accessed.\rThese include but are not limited to payments for product purchases, bill and insurance payments, airtime for mobile networks, internet and television subscriptions, credit access among others.
+This User Agreement is effective upon acceptance for all users. Nothing in this Agreement shall be deemed to confer any third-party rights or benefits.
+Before you use eMaisha Pay’s web/app payment and credit service, you must read and accept all of the terms in, and linked to, this User Agreement and the eMaisha pay Privacy Policy.
+</string>
+    <string name="checkbox_text">I agree to the <b>Terms of Service</b> and <b>Privacy Policy</b></string>
+    <string name="click_here_text">Click <b>here</b> to view the complete Terms of Service and Privacy Policy</string>
 
 
 </resources>

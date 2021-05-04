@@ -118,7 +118,6 @@ public class CheckoutFinal extends Fragment {
     double checkoutSubtotal, checkoutTax, packingCharges, checkoutShipping, checkoutShippingCost, checkoutDiscount, checkoutTotal = 0;
 
     ProgressDialog progressDialog;
-    NestedScrollView scroll_container;
     RecyclerView checkout_items_recycler;
     RecyclerView checkout_coupons_recycler;
     Button checkout_coupon_btn, checkout_order_btn, checkout_cancel_btn;

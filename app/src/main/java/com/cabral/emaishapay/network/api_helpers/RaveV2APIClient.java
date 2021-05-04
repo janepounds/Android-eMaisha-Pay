@@ -24,12 +24,12 @@ public class RaveV2APIClient {
         if (apiRequests == null) {
 
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new
-                                                                                               HttpLoggingInterceptor.Logger() {
-                                                                                                   @Override
-                                                                                                   public void log(String message) {
-                                                                                                       Log.e("Retrofit2 Errors", "message: "+message);
-                                                                                                   }
-                                                                                               });
+                                                                                   HttpLoggingInterceptor.Logger() {
+                                                                                       @Override
+                                                                                       public void log(String message) {
+                                                                                           Log.e("Retrofit2 Errors", "message: "+message);
+                                                                                       }
+                                                                                   });
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 

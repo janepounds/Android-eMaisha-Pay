@@ -17,7 +17,8 @@
             android:id="@+id/toolbar_wallet_transactions_list"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -72,7 +73,7 @@
                             android:id="@+id/arrow_cash_in"
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
-                            android:src="@drawable/ic_cashin"
+                            android:src="@drawable/ic_diagonal_arrow"
                             android:visibility="visible"/>
                         <ImageView
                             android:id="@+id/img_mobile_money"
@@ -157,7 +158,7 @@
                             android:id="@+id/arrow_cash_out"
                             android:layout_width="37.82dp"
                             android:layout_height="37.82dp"
-                            android:src="@drawable/ic_diagonal_arrow"
+                            android:src="@drawable/ic_cashin"
                             android:visibility="visible"/>
                         <ImageView
                             android:id="@+id/img_bank"
@@ -235,6 +236,23 @@
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add_settlement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.923"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.961"
+            app:srcCompat="@drawable/ic_add_white_24dp"
+            tools:ignore="VectorDrawableCompat"
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/white"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

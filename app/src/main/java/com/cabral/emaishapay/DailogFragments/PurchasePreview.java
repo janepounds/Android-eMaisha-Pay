@@ -30,6 +30,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
+import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
@@ -69,7 +70,7 @@ public class PurchasePreview extends DialogFragment implements
     Button confirmBtn;
     LinearLayout error_message_layout, discount_layout;
     TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView,
-            mechantNameTextView,errorTextView, discountTextView;
+            mechantNameTextView,errorTextView, discountTextView,merchant_label;
 
     String businessName ="", cardNumber;
     Context activity;
@@ -120,6 +121,7 @@ public class PurchasePreview extends DialogFragment implements
         mechantNameTextView = view.findViewById(R.id.text_view_purchase_preview_name);
         mechantIdTextView = view.findViewById(R.id.text_view_purchase_preview_mechant_id);
         confirmBtn = view.findViewById(R.id.btn_purchase_preview_confirm);
+        merchant_label = view.findViewById(R.id.txt_wallet_purchase_mechant_label);
 
         totalTextView.setText( NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount()));
 
@@ -133,6 +135,12 @@ public class PurchasePreview extends DialogFragment implements
         purchase_date_label_TextView.setText(getString(R.string.purchase_date));
         datetimeTextView.setText(currentDateandTime);
 
+
+        String key = WalletTransactionInitiation.getInstance().getPayTo();
+        if(key.equalsIgnoreCase("agent")){
+            merchant_label.setText("AgentID");
+
+        }
         mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
 
         dialogLoader = new DialogLoader(activity);
@@ -239,6 +247,8 @@ public class PurchasePreview extends DialogFragment implements
 
         EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
 
+
+
         pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +264,7 @@ public class PurchasePreview extends DialogFragment implements
                     }
                     else if(methodOfPayment.equalsIgnoreCase("Mobile Money")){
 
-                        processMobileMoneyPayment(service_code);
+                        payMerchantMobileMoney(service_code);
                     }
 
                 }else {
@@ -270,6 +280,171 @@ public class PurchasePreview extends DialogFragment implements
 
 
     }
+
+    private void payMerchantMobileMoney(String service_code) {
+
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, requireContext());
+        String mobileNumber=getString(R.string.phone_number_code)+ WalletTransactionInitiation.getInstance().getMobileNumber();
+        String merchant_id= WalletTransactionInitiation.getInstance().getMechantId();
+        double amount = WalletTransactionInitiation.getInstance().getAmount();
+        String key = WalletTransactionInitiation.getInstance().getPayTo();
+
+        if(key.equalsIgnoreCase("agent")){
+            //call agent endpoint
+            /******************RETROFIT IMPLEMENTATION***********************/
+            Call<WalletPurchaseResponse> call = APIClient.getWalletInstance(activity).customerPayAgentMobile(
+                    access_token, amount, mobileNumber,
+                    request_id,
+                    category, "customerPayAgentViaMobileMoney", service_code, merchant_id);
+            call.enqueue(new Callback<WalletPurchaseResponse>() {
+                @Override
+                public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
+                    if (response.isSuccessful()) {
+                        dialogLoader.hideProgressDialog();
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+                            //call success dialog
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+
+                        } else {
+                            dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+
+
+                        }
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                        if (response.errorBody() != null) {
+                            Log.e("info", new String(String.valueOf(response.errorBody())));
+                        } else {
+                            Log.e("info", "Something got very very wrong");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+        }else {
+
+
+            /******************RETROFIT IMPLEMENTATION***********************/
+            Call<WalletPurchaseResponse> call = APIClient.getWalletInstance(activity).customerPayMerchantMobile(
+                    access_token, amount, mobileNumber,
+                    request_id,
+                    category, "customerPayMerchantViaMobileMoney", service_code, merchant_id);
+            call.enqueue(new Callback<WalletPurchaseResponse>() {
+                @Override
+                public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
+                    if (response.isSuccessful()) {
+                        dialogLoader.hideProgressDialog();
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+                            //call success dialog
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_successful_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+
+                        } else {
+
+
+                            dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
+                        }
+
+                    } else if (response.code() == 401) {
+
+                        TokenAuthFragment.startAuth(true);
+
+                        if (response.errorBody() != null) {
+                            Log.e("info", new String(String.valueOf(response.errorBody())));
+                        } else {
+                            Log.e("info", "Something got very very wrong");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
+                    dialogLoader.hideProgressDialog();
+                }
+            });
+
+        }
+        }
+
 
     private void processMobileMoneyPayment(String service_code) {
         String mobileNumber= WalletTransactionInitiation.getInstance().getMobileNumber();
@@ -398,7 +573,25 @@ public class PurchasePreview extends DialogFragment implements
                     if(response.body().getStatus().equals("0")){
 
                         try {
-                            Toasty.error(activity, ""+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            dialogLoader.hideProgressDialog();
+
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_failure_message);
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                            text.setText(response.body().getMessage());
+
+
+                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    startActivity(goToWallet);
+                                }
+                            });
+                            dialog.show();
                         }catch (Exception e){
                             e.printStackTrace();
                             Log.e("Error", e.getMessage());

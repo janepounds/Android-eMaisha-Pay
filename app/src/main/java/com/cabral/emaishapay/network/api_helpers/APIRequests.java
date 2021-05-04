@@ -5,6 +5,7 @@ import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
+import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -14,6 +15,7 @@ import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.Countries;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.address_model.Zones;
+import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
@@ -84,7 +86,6 @@ public interface APIRequests {
     @FormUrlEncoded
     @POST("user/resend/otp")
     Call<WalletAuthenticationResponse>resendOtp(@Field("phoneNumber")String phoneNumber,
-                                                   @Field("password")String password,
                                                    @Field("request_id") String request_id,
                                                    @Field("action_id") String action_id
 
@@ -555,6 +556,7 @@ public interface APIRequests {
             @Field("cvv") String cvv,
             @Field("expiry") String expiry,
             @Field("account_name") String account_name,
+            @Field("currency") String currency,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id
@@ -591,8 +593,41 @@ public interface APIRequests {
     );
 
 
+    @FormUrlEncoded
+    @POST("wallet/customer/card/topup")
+    Call<CardResponse>cardTopUp(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
 
+    @FormUrlEncoded
+    @POST("wallet/merchant/card/topup")
+    Call<CardResponse>cardTopUpMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
 
+    @FormUrlEncoded
+    @POST("wallet/agent/card/topup")
+    Call<CardResponse>cardTopUpAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("card_id") String id,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("service_code")String service_code,
+            @Field("action_id")String action_id
+    );
 
     //get card info
     @GET("wallet/cards/list")
@@ -836,21 +871,64 @@ public interface APIRequests {
     );
 
 
-    // //update card info
+    // save Mobile Money Beneficiary
     @FormUrlEncoded
     @POST("wallet/add_beneficiary")
-    Call<CardResponse>saveBeneficiary(
+    Call<GeneralWalletResponse>saveBeneficiary(
             @Header("Authorization")String token,
-            @Field("identifier") String user_id,
-            @Field("transaction_type") String beneficary_type,
+            @Field("otp") String user_id,
+            @Field("identifier") String otp,
+            @Field("beneficiary_type") String beneficary_type,
             @Field("bank") String bank,
             @Field("bank_branch") String bank_branch,
-            @Field("account_name") String account_name,
-            @Field("account_number") String account_number,
+            @Field("beneficiary_name") String account_name,
+            @Field("beneficiary_account_number") String account_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("beneficiary_phone") String beneficiary_phone,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2
+
+    );
+    //save Bank beneficiary
+    @FormUrlEncoded
+    @POST("wallet/add/bank-beneficiary")
+    Call<GeneralWalletResponse>saveBankBeneficiary(
+            @Header("Authorization")String token,
+            @Field("otp") String user_id,
+            @Field("identifier") String otp,
+            @Field("beneficiaryType") String beneficary_type,
+            @Field("bankName") String bank,
+            @Field("bankBranch") String bank_branch,
+            @Field("accountName") String account_name,
+            @Field("accountNumber") String account_number,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("mobileNumber") String beneficiary_phone,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("streetAddressLine1") String street_address_1,
+            @Field("streetAddressLine2") String street_address_2
+
+    );
+
+
+    // request save Beneficiary Otp
+    @FormUrlEncoded
+    @POST("wallet/customer-request/add-beneficiary")
+    Call<GeneralWalletResponse>requestSaveBeneficiary(
+            @Header("Authorization")String token,
+            @Field("amount") String amount,
+            @Field("type") String type,
+            @Field("beneficiaryName") String beneficiaryName,
+            @Field("customerPhoneNumber") String customerPhoneNumber,
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id")String action_id
-
     );
 
     // //delete card
@@ -859,12 +937,14 @@ public interface APIRequests {
     Call<CardResponse>deleteBeneficiary(
             @Header("Authorization") String token,
             @Field("id") String id,
-            @Field("request_id") String request_id
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
 
     @FormUrlEncoded
     @POST("wallet/update_beneficiary")
-    Call<CardResponse>updateBeneficiary(
+    Call<GeneralWalletResponse>updateBeneficiary(
             @Header("Authorization")String token,
             @Field("id") String beneficiary_id,
             @Field("transaction_type") String transaction_type,
@@ -872,15 +952,22 @@ public interface APIRequests {
             @Field("bank_branch") String bank_branch,
             @Field("account_name") String account_name,
             @Field("account_number") String account_number,
-            @Field("request_id")String request_id
+            @Field("request_id")String request_id,
+            @Field("city") String city,
+            @Field("country") String country,
+            @Field("street_address_1") String street_address_1,
+            @Field("street_address_2") String street_address_2,
+            @Field("beneficiary_phone") String beneficiary_phone
 
 
     );
 
     //get beneficiaries info
     @GET("wallet/beneficiaries/list")
-    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token, @Query("transaction_type") String transaction_type,
-                                              @Query("request_id") String request_id);
+    Call<BeneficiaryResponse>getBeneficiaries(@Header("Authorization") String token,
+                                              @Query("transaction_type") String transaction_type,
+                                              @Query("request_id") String request_id,
+                                              @Query("action_id") String action_id);
 
 
 
@@ -947,8 +1034,6 @@ public interface APIRequests {
             @Field("action_id") String action_id,
             @Field("service_code") String service_code
 
-
-
     );
 
     @FormUrlEncoded
@@ -964,6 +1049,14 @@ public interface APIRequests {
 
     );
 
+    @FormUrlEncoded
+    @POST("wallet/product/ads")
+    Call<BannerData>getWalletBannerAd(
+            @Field("company") String company,
+            @Field("request_id") String request_id,
+            @Field("action_id") String action_id
+
+    );
 
     @FormUrlEncoded
     @POST("wallet/transactions/summary")
@@ -973,5 +1066,122 @@ public interface APIRequests {
             @Field("action_id") String action_id
     );
 
+    @FormUrlEncoded
+    @POST("wallet/customer/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyCustomer(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
 
+    );
+
+
+    @FormUrlEncoded
+    @POST("wallet/agent/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyAgent(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/settlement/momo-withdraw")
+    Call<WalletTransaction>withdrawMobileMoneyMerchant(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("receiverPhoneNumber") String receiverPhoneNumber,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id") String action_id,
+            @Field("service_code") String service_code
+
+    );
+
+    //get beneficiaries info
+    @FormUrlEncoded
+    @POST("wallet/security-qns/update")
+    Call<SecurityQnsResponse>updateSecurityQns(
+            @Header("Authorization") String token,
+            @Field("phoneNumber") String phoneNumber,
+            @Field("sec_qn_one") String sec_qn_one,
+            @Field("sec_qn_two") String sec_qn_two,
+            @Field("sec_qn_three") String sec_qn_three,
+            @Field("sec_ans_one") String sec_ans_one,
+            @Field("sec_ans_two") String sec_ans_two,
+            @Field("sec_ans_three") String sec_ans_three,
+            @Field("request_id") String request_id,
+            @Field("action_id") String action_id);
+
+
+    @FormUrlEncoded
+    @POST("wallet/customer/transfer-to-bank")
+    Call<ConfirmationDataResponse> customerTransferToBank(@Header("Authorization") String token,
+                                                       @Field("amount") double amount,
+                                                       @Field("beneficiary_id") String beneficiary_id,
+                                                       @Field("category") String category,
+                                                       @Field("request_id")String request_id,
+                                                       @Field("action_id")String action_id,
+                                                       @Field("service_code")String service_code,
+                                                       @Field("currency_code")String currency_code
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/transfer-to-bank")
+    Call<ConfirmationDataResponse> merchantTransferToBank(@Header("Authorization") String token,
+                                                          @Field("amount") double amount,
+                                                          @Field("beneficiary_id") String beneficiary_id,
+                                                          @Field("category") String category,
+                                                          @Field("request_id")String request_id,
+                                                          @Field("action_id")String action_id,
+                                                          @Field("service_code")String service_code,
+                                                          @Field("currency_code")String currency_code
+    );
+    @FormUrlEncoded
+    @POST("wallet/agent/transfer-to-bank")
+    Call<ConfirmationDataResponse> agentTransferToBank(@Header("Authorization") String token,
+                                                          @Field("amount") double amount,
+                                                          @Field("beneficiary_id") String beneficiary_id,
+                                                          @Field("category") String category,
+                                                          @Field("request_id")String request_id,
+                                                          @Field("action_id")String action_id,
+                                                          @Field("service_code")String service_code,
+                                                          @Field("currency_code")String currency_code
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/customer/pay-merchant-momo")
+    Call<WalletPurchaseResponse>customerPayMerchantMobile(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("senderPhoneNumber") String senderPhoneNumber,
+            @Field("request_id")String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code,
+            @Field("merchant_code")String merchant_code
+
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/customer/pay-agent-momo")
+    Call<WalletPurchaseResponse>customerPayAgentMobile(
+            @Header("Authorization") String token,
+            @Field("amount") double amount,
+            @Field("senderPhoneNumber") String senderPhoneNumber,
+            @Field("request_id")String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id,
+            @Field("service_code")String service_code,
+            @Field("agent_code")String merchant_code
+
+    );
 }

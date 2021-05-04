@@ -69,7 +69,7 @@
                             android:layout_height="45dp"
                             android:layout_weight="1"
                             android:layout_alignParentTop="true"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/rectangular_blue_solid"
                             android:orientation="horizontal">
 
                             <Spinner
@@ -81,6 +81,7 @@
                                 android:background="@android:color/transparent"
                                 android:gravity="center"
                                 android:spinnerMode="dropdown"
+                                android:paddingStart="5dp"
                                 android:entries="@array/spinner_accept_payments_methods"/>
 
                             <ImageView
@@ -92,7 +93,7 @@
                                 android:layout_marginRight="10dp"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_chevron_down" />
+                                android:src="@drawable/ic_down_chevron" />
 
                         </RelativeLayout>
 
@@ -113,7 +114,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="Mobile Number"
                             android:textSize="16sp"
                             android:layout_marginBottom="5dp"/>
@@ -128,7 +128,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_alignParentTop="true"
-                                android:background="@drawable/edittext_corner"
+                                android:background="@drawable/outline_primary"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="0dp"
@@ -144,7 +144,6 @@
                                     android:id="@+id/pay_mobile_no"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:fontFamily="@font/josefin_sans"
                                     android:inputType="phone"
                                     android:paddingStart="@dimen/dimen_10dp"
                                     android:tag="+256 "
@@ -163,22 +162,23 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="0dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="Amount"
                             android:textSize="16sp" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_corner"
+                            android:background="@drawable/outline_primary"
                             android:orientation="horizontal">
                             <TextView
 
@@ -216,22 +216,21 @@
                 </LinearLayout>
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_corners_button"
-                    android:gravity="right"
-                    android:paddingRight="@dimen/dimen_10dp">
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:layout_gravity="center">
 
                     <Button
                         android:id="@+id/btn_save"
                         style="@style/Button_DW"
                         android:layout_width="match_parent"
-                        android:layout_height="40dip"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:backgroundTint="@color/textColor"
@@ -239,18 +238,8 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="16sp" />
 
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_margin="10dip"
-                        android:src="@drawable/ic_right_chevron">
-
-                    </ImageView>
 
                 </FrameLayout>
             </LinearLayout>

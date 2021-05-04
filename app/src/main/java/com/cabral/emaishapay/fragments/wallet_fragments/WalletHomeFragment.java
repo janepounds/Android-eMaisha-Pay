@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,22 +26,32 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
+import com.cabral.emaishapay.models.banner_model.BannerDetails;
+import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.animations.DescriptionAnimation;
+import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.TextSliderView;
+import com.glide.slider.library.tricks.ViewPagerEx;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,7 +71,9 @@ public class WalletHomeFragment extends Fragment {
     DialogLoader dialog;
     private static SharedPreferences sharedPreferences;
     NavController navController;
-    
+    List<BannerDetails> Banner = new ArrayList<>();
+    HashMap<String, String> url_maps = new HashMap<String, String>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,9 +96,12 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
-
-
-
+//
+//        for (BannerDetails banner:WalletHomeActivity.Banners) {
+//            // Setup the ImageSlider of Product Images
+//            ImageSlider(banner.getTitle(), banner.getImage());
+//        }
+        ImageSlider("Ads", WalletHomeActivity.Banners );
 
         return binding.getRoot();
     }
@@ -99,8 +115,8 @@ public class WalletHomeFragment extends Fragment {
         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
 
         if(role.equalsIgnoreCase("merchant")){
-            binding.layoutTransactWithCustomers.setVisibility(View.VISIBLE);
-            binding.labelTransact.setVisibility(View.VISIBLE);
+            binding.layoutTransactWithCustomers.setVisibility(View.GONE);
+            binding.labelTransact.setVisibility(View.GONE);
             binding.layoutTransfer.setVisibility(View.INVISIBLE);
             binding.layoutSettle.setVisibility(View.VISIBLE);
             binding.cardBalanceLabel.setText("Commission");
@@ -141,12 +157,12 @@ public class WalletHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //To TransferMoney
+                //To List and not form
                 Bundle args=new Bundle();
-                args.putString("KEY_ACTION", getString(R.string.settlements) );
+                args.putString("KEY_TITLE", getString(R.string.settlements) );
 
-                navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
-
+                //navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
+                navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
         });
         binding.layoutTopUp.setOnClickListener(new View.OnClickListener() {
@@ -171,14 +187,33 @@ public class WalletHomeFragment extends Fragment {
               public void onClick(View v) {
 
 
-                  //Go to security qns
+                  //Go to coming soon
                   AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                   View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
                   dialog.setView(dialogView);
                   dialog.setCancelable(true);
 
+                  ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+                  Button ok = dialogView.findViewById(R.id.button_submit);
+
+
 
                   final AlertDialog alertDialog = dialog.create();
+
+                  close.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          alertDialog.dismiss();
+                      }
+                  });
+                  ok.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          alertDialog.dismiss();
+                      }
+                  });
+
+
                   alertDialog.show();
 
 
@@ -259,7 +294,42 @@ public class WalletHomeFragment extends Fragment {
                 Bundle args=new Bundle();
                 args.putString("KEY_TITLE", getString(R.string.transactions) );
 
+
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
+            }
+        });
+        binding.layoutLoanApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Go to coming soon
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
+
+                ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+                Button ok = dialogView.findViewById(R.id.button_submit);
+
+
+
+
+                final AlertDialog alertDialog = dialog.create();
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
@@ -364,7 +434,7 @@ public class WalletHomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     if(response.body().getStatus()==1){
-                        if(response.body().getData().getLastCredit()!=null){
+                        if(response.body().getData().getLastCredit()!=null && response.body().getData().getLastDebit()!=null){
                             String receiver_name = response.body().getData().getLastCredit().getReceiver();
                             double amount = response.body().getData().getLastCredit().getAmount();
                             String date_completed =response.body().getData().getLastCredit().getDateCompleted();
@@ -467,6 +537,105 @@ public class WalletHomeFragment extends Fragment {
         });
     }
 
+    //*********** Setup the ImageSlider with the given List of Product Images ********//
+
+
+    //*********** Setup the ImageSlider with the given List of Product Images ********//
+
+    private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
+        Log.w(TAG, banner.size()+" ads");
+        // Initialize new HashMap<ImageName, ImagePath>
+        final HashMap<String, String> slider_covers = new HashMap<>();
+        // Initialize new Array for Image's URL
+        final String[] images = new String[banner.size()];
+
+
+        if (banner.size() > 0) {
+            for (int i = 0; i < banner.size(); i++) {
+                // Get Image's URL at given Position from itemImages List
+                images[i] = banner.get(i).getImage();
+            }
+        }
+
+
+        // Put Image's Name and URL to the HashMap slider_covers
+        if (itemThumbnail.equalsIgnoreCase("")) {
+            slider_covers.put("a", "" + R.drawable.new_product);
+
+        } else if (images.length == 0) {
+            slider_covers.put("a",  itemThumbnail);
+
+        } else {
+            slider_covers.put("a",  itemThumbnail);
+
+            for (int i = 0; i < images.length; i++) {
+                slider_covers.put("b" + i,  images[i]);
+            }
+        }
+
+
+        for (String name : slider_covers.keySet()) {
+
+            // Initialize DefaultSliderView
+            TextSliderView defaultSliderView = new TextSliderView(context);
+
+            RequestOptions requestOptions = new RequestOptions();
+
+            requestOptions.centerInside();
+
+            // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
+            defaultSliderView
+                    //.description(name)
+                    .setRequestOption(requestOptions)
+                    .image(slider_covers.get(name));
+
+            // Add DefaultSliderView to the SliderLayout
+            binding.productCoverSlider.addSlider(defaultSliderView);
+        }
+
+        // Set PresetTransformer type of the SliderLayout
+        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
+        binding.productCoverSlider.setDuration(4000);
+        binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+        // Check if the size of Images in the Slider is less than 2
+//        if (slider_covers.size() < 2) {
+//            // Disable PagerTransformer
+//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
+//                @Override
+//                protected void onTransform(View view, float v) {
+//
+//                }
+//            });
+//
+//            // Hide Slider PagerIndicator
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+//
+//        } else {
+//            // Set custom PagerIndicator to the SliderLayout
+//            sliderLayout.setCustomIndicator(pagerIndicator);
+//            // Make PagerIndicator Visible
+//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+//        }
+
+    }
 
 
 
@@ -475,6 +644,4 @@ public class WalletHomeFragment extends Fragment {
 
 
 
-
-  
 }

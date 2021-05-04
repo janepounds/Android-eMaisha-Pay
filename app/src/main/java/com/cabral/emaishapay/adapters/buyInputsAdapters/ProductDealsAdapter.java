@@ -67,14 +67,14 @@ public class ProductDealsAdapter extends RecyclerView.Adapter<ProductDealsAdapte
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.new_product)
+                    .error(R.drawable.new_product)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             // Set Product Image on ImageView with Glide Library
             Glide.with(context)
                     .setDefaultRequestOptions(options)
-                    .load(ConstantValues.ECOMMERCE_URL + product.getProductsImage())
+                    .load(ConstantValues.ECOMMERCE_WEB + product.getProductsImage())
                     .addListener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

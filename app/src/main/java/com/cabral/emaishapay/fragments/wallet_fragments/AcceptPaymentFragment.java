@@ -59,7 +59,7 @@ public class AcceptPaymentFragment extends Fragment {
     RelativeLayout layoutResendCode;
 
     private DialogLoader dialogLoader;
-    LinearLayout layoutMobileMoney;
+    LinearLayout layoutMobileMoney,layoutAmount;
     Spinner spPaymentMethod;
     Button saveBtn;
     EditText mobileMoneyNo, amountEdt;
@@ -103,13 +103,14 @@ public class AcceptPaymentFragment extends Fragment {
         saveBtn=view.findViewById(R.id.btn_save);
         mobileMoneyNo=view.findViewById(R.id.pay_mobile_no);
         amountEdt=view.findViewById(R.id.total_amount);
+        layoutAmount=view.findViewById(R.id.layout_amount);
 
         spPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
@@ -118,13 +119,16 @@ public class AcceptPaymentFragment extends Fragment {
                 if(selectedItem.equalsIgnoreCase("emaisha pay")){
                     layoutMobileMoney.setVisibility(View.VISIBLE);
                     txtPaymentMethod.setText("eMaisha Account");
+                    layoutAmount.setVisibility(View.VISIBLE);
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
                     layoutMobileMoney.setVisibility(View.VISIBLE);
                     txtPaymentMethod.setText("Mobile Number");
+                    layoutAmount.setVisibility(View.VISIBLE);
                 }
                 else {
                     layoutMobileMoney.setVisibility(View.GONE);
+                    layoutAmount.setVisibility(View.GONE);
 
                 }
 
@@ -286,8 +290,44 @@ public class AcceptPaymentFragment extends Fragment {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
                 if(response.code() ==200){
-                    dialogLoader.hideProgressDialog();
-                    refreshActivity();
+                    if(response.body().getStatus().equalsIgnoreCase("1")) {
+
+                        dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
+                    }else {
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                               refreshActivity();
+                            }
+                        });
+                        dialog.show();
+
+                    }
 
                 }
                 else if(response.code() == 401) {

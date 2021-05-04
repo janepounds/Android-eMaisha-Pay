@@ -47,6 +47,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
@@ -115,14 +116,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.new_product)
+                    .error(R.drawable.new_product)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
             // Set Product Image on ImageView with Glide Library
             Glide.with(context)
                     .setDefaultRequestOptions(options)
-                    .load(ConstantValues.ECOMMERCE_URL + product.getProductsImage())
+                    .load(ConstantValues.ECOMMERCE_WEB + product.getProductsImage())
                     .addListener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -170,25 +171,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             final String discount = Utilities.checkDiscount(product.getProductsMeasure().get(0).getProducts_price(), product.getDiscountPrice());
 
             NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
-            if (discount != null) {
+
+            if (discount != null && product.getDiscountPrice()!=null && product.getProductsPrice()!=null) {
                 // Set Product's Price
                 holder.product_price_old.setVisibility(View.VISIBLE);
-                holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " +  nf.format(product.getProductsPrice()));
-                holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(product.getDiscountPrice()));
+                try {
+                    holder.product_price_old.setText(ConstantValues.CURRENCY_SYMBOL + " " +  nf.format( nf.parse(product.getProductsPrice()) ));
+                    holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " +  nf.format( nf.parse(product.getDiscountPrice()) ));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
 
-            } else {
+            } else if( product.getProductsMeasure()!=null && product.getProductsMeasure().size()!=0) {
 
                 // Hide Discount Text and Set Product's Price
                 holder.product_price_old.setVisibility(View.GONE);
-/*
-                NumberFormat nf = NumberFormat.getInstance(LocaleHelper.getSystemLocale( context.getResources().getConfiguration())); //or "nb","No" - for Norway
-                String thisprice = nf.format(Double.parseDouble());
-*/
+
 
                 double thisprice = Double.parseDouble(product.getProductsMeasure().get(0).getProducts_price().replace(",", ""));
                 Log.e("NumberFormat: ", thisprice + "");
                 holder.product_price_new.setText(ConstantValues.CURRENCY_SYMBOL + " " + nf.format(thisprice));
+            }else{
+                holder.product_price_old.setVisibility(View.VISIBLE);
+                holder.product_price_new.setVisibility(View.VISIBLE);
             }
 
 //

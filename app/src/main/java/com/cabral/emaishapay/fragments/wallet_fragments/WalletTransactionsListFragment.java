@@ -24,6 +24,7 @@ import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,6 +49,7 @@ public class WalletTransactionsListFragment extends Fragment {
     ImageView arrowCashIn,arrowCashOut;
     TextView cashInText,cashOutText,walletCashIn,walletCashOut;
     String key_title="KEY_TITLE";
+    FloatingActionButton fabAddSettle;
 
     public WalletTransactionsListFragment(){
 
@@ -58,6 +60,9 @@ public class WalletTransactionsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.transaction_list, container, false);
         WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
+        WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+
         if( getArguments()!=null)
             appTitle=getArguments().getString(key_title);
 
@@ -69,12 +74,24 @@ public class WalletTransactionsListFragment extends Fragment {
         cashOutText = view.findViewById(R.id.text_cash_out);
         walletCashIn = view.findViewById(R.id.wallet_cash_in);
         walletCashOut = view.findViewById(R.id.wallet_cash_out);
+        fabAddSettle = view.findViewById(R.id.btn_add_settlement);
+
+        fabAddSettle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //To TransferMoney
+                Bundle args=new Bundle();
+                args.putString("KEY_ACTION", getString(R.string.settlements) );
+
+                WalletHomeActivity.navController.navigate(R.id.action_walletTransactionsListFragment_to_transferMoney,args);
+            }
+        });
 
         if(appTitle.equalsIgnoreCase("settlements")){
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
             toolbar.setTitle(this.appTitle);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
             arrowCashIn.setImageResource(R.drawable.bank);
             arrowCashOut.setImageResource(R.drawable.ic_account_opening);
@@ -82,6 +99,7 @@ public class WalletTransactionsListFragment extends Fragment {
             cashOutText.setText("Bank");
             walletCashIn.setTextColor(getResources().getColor(R.color.textRed));
             walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
+            fabAddSettle.setVisibility(View.VISIBLE);
             getSettlements();
         }else{
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -89,12 +107,13 @@ public class WalletTransactionsListFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-            arrowCashIn.setImageResource(R.drawable.ic_cashin);
-            arrowCashOut.setImageResource(R.drawable.ic_diagonal_arrow);
+            arrowCashIn.setImageResource(R.drawable.ic_diagonal_arrow);
+            arrowCashOut.setImageResource(R.drawable.ic_cashin);
             cashInText.setText("Cash In");
             cashOutText.setText("Cash Out");
             walletCashIn.setTextColor(getResources().getColor(R.color.colorPrimary));
             walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
+            fabAddSettle.setVisibility(View.GONE);
             actualStatementData();
         }
 
