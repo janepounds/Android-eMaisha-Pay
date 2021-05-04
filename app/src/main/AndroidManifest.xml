@@ -23,9 +23,8 @@
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
         android:screenOrientation="portrait"
-        tools:replace="android:usesCleartextTraffic,android:theme">
+        tools:replace="android:theme">
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

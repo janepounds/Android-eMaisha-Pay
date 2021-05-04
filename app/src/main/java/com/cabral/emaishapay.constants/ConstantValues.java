@@ -13,12 +13,12 @@ import java.util.Enumeration;
 public class ConstantValues {
 
     private static String TAG = "Consumer_IP";
-    public static final String WALLET_DOMAIN = "http://emaishapro.emaisha.com";
-    public static final String WALLET_API_DOMAIN = "http://emaishapro.emaisha.com/api/";
-    public static final String ECOMMERCE_URL = "http://emaishashop.api.emaisha.com/";
+    public static final String WALLET_DOMAIN = "https://emaishapro.emaisha.com";
+    public static final String WALLET_API_DOMAIN = "https://emaishapro.emaisha.com/api/";
+    public static final String ECOMMERCE_URL = "https://emaishashop.api.emaisha.com/";
 
-    public static final String WALLET_DOMAIN_STAGING = "http://emaishapayapi.emaisha.com";
-    public static final String ECOMMERCE_URL_STAGING = "http://emaishashop.api.emaisha.com/";
+    public static final String WALLET_DOMAIN_STAGING = "https://emaishapayapi.emaisha.com";
+    public static final String ECOMMERCE_URL_STAGING = "https://emaishashop.api.emaisha.com/";
 
     public static final String ECOMMERCE_WEB = "https://emaisha.com/";
 
