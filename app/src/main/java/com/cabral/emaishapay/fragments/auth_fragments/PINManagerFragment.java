@@ -501,7 +501,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful() && response.body().getStatus()==1 ){
                     smsResults =response.body().getData().getSms_results();
-                    //Call the OTP Dialog
                     otpDialogLoader=new OtpDialogLoader(PINManagerFragment.this) {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
@@ -519,7 +518,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             );
                         }
                     };
-                    otpDialogLoader.showOTPDialog();
+                    otpDialogLoader.showOTPDialog();        //Call the OTP Dialog
+
 
                 }else{
                     clearPin(binding);

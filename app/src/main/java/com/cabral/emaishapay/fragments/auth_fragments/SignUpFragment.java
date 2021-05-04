@@ -69,13 +69,14 @@ public class SignUpFragment  extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         this.context=context;
-        phoneNumber=getArguments().getString("phone");
         super.onAttach(context);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(getArguments()!=null)
+        phoneNumber=getArguments().getString("phone");
 
         binding = DataBindingUtil.inflate(inflater, R.layout.signup_fragment,container,false);
 

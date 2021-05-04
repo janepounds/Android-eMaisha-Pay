@@ -331,7 +331,7 @@ public abstract class OtpDialogLoader {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == REQ_USER_CONSENT) {
-            if ((resultCode == RESULT_OK) && (data != null)) {
+            if ((resultCode == RESULT_OK) && (data != null) ) {
                 //That gives all message to us.
                 // We need to get the code from inside with regex
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
