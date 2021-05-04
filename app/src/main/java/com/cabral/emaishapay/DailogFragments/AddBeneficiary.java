@@ -125,7 +125,7 @@ public class AddBeneficiary extends DialogFragment {
             street_address_1 = getArguments().getString("address1");
             street_address_2 = getArguments().getString("address2");
             sSpCountry = getArguments().getString("country");
-            Log.w(TAG, "onCreateDialog: number"+city+"name"+branch+"id"+id);
+             //Log.w(TAG, "onCreateDialog: number"+city+"name"+branch+"id"+id);
 
             if(beneficiary_type.equalsIgnoreCase("bank")){
                 beneficiaryNameLayout.setVisibility(View.GONE);
@@ -509,7 +509,7 @@ public class AddBeneficiary extends DialogFragment {
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
 
-                    Log.w("PhoneNumberError",customer_phone_number);
+                     //Log.w("PhoneNumberError",customer_phone_number);
 
                     otpDialogLoader=new OtpDialogLoader( AddBeneficiary.this) {
                         @Override
@@ -568,7 +568,7 @@ public class AddBeneficiary extends DialogFragment {
                     try {
                         BanksInfoResponse.InfoData bankInfo = response.body().getData();
                         BankList=bankInfo.getBanks();
-                        Log.w("Banks_NumberFetched",BankList.length+" #############");
+                         //Log.w("Banks_NumberFetched",BankList.length+" #############");
 
                         for (Bank bank: BankList) {
                             if( bank.getMobileVerified()==null && !bank.getName().equals("MTN") )
@@ -633,7 +633,7 @@ public class AddBeneficiary extends DialogFragment {
                     try {
                         bankBranches = response.body().getData().getBankBranches();
 
-                        Log.w("Banks_NumberFetched",bankBranches.length+"****************");
+                         //Log.w("Banks_NumberFetched",bankBranches.length+"****************");
 
                         BankBranchnames.add("Select");
                         for (BankBranch bank: bankBranches) {

@@ -180,7 +180,7 @@ public class BusinessInformationFragment extends Fragment {
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
-                Log.w(TAG, "onFailure: failed" + t.getMessage());
+                 //Log.w(TAG, "onFailure: failed" + t.getMessage());
                 Toast.makeText(getContext(),"Error Please Try again!",Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }

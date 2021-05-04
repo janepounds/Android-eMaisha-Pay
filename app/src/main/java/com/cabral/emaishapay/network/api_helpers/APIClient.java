@@ -86,7 +86,7 @@ public class APIClient {
                         @Override
                         public Call newCall(Request request) {
                             Set<String> paramList=request.url().queryParameterNames();
-                            //Log.w("RequestLogged", request.url().toString());
+                            // //Log.w("RequestLogged", request.url().toString());
                             //Request encryptRequest = EncryptCallHelper.encryptRequest(request);
                             return okHttpClient.newCall(request);
                         }

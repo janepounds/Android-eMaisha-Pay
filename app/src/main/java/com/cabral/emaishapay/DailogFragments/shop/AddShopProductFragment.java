@@ -973,7 +973,7 @@ public class AddShopProductFragment extends DialogFragment {
                       AppExecutors.getInstance().diskIO().execute(new Runnable() {
                           @Override
                           public void run() {
-                              Log.w("savedProduct", product_name);
+                               //Log.w("savedProduct", product_name);
                               long checkAddedProduct=viewModel.addProduct(new EcProduct(
                                       unique_id,
                                       product_id+"",

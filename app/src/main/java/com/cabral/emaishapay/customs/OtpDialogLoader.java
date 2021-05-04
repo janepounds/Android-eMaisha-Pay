@@ -306,7 +306,7 @@ public abstract class OtpDialogLoader {
         Matcher matcher = pattern.matcher(message);
         if (matcher.find()) {
             String retrievedCode=matcher.group(0);
-            Log.w("retrievedCode", retrievedCode);
+             //Log.w("retrievedCode", retrievedCode);
             if(retrievedCode.length()==6){
                 code1.setText(retrievedCode.charAt(0)+"");
                 code2.setText(retrievedCode.charAt(1)+"");

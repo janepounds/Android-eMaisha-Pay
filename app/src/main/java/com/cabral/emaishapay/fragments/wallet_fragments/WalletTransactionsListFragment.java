@@ -161,7 +161,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        Log.w("TamsactionsList",dataList.size()+"**********");
+                         //Log.w("TamsactionsList",dataList.size()+"**********");
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());
@@ -218,7 +218,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                        Log.w("Settlements",dataList.size()+"**********");
+                         //Log.w("Settlements",dataList.size()+"**********");
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());

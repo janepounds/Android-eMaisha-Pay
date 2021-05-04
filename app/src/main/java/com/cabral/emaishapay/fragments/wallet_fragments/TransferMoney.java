@@ -589,7 +589,7 @@ public class TransferMoney extends Fragment {
                     try {
                         BanksInfoResponse.InfoData bankInfo = response.body().getData();
                         BankList=bankInfo.getBanks();
-                        Log.w("Banks_NumberFetched",BankList.length+" #############");
+                         //Log.w("Banks_NumberFetched",BankList.length+" #############");
                         List<String> Banknames = new ArrayList<>();
                         Banknames.add("Select");
                         for (Bank bank: BankList) {
@@ -638,7 +638,7 @@ public class TransferMoney extends Fragment {
                     try {
                         bankBranches = response.body().getData().getBankBranches();
 
-                        Log.w("Banks_NumberFetched",bankBranches.length+"****************");
+                         //Log.w("Banks_NumberFetched",bankBranches.length+"****************");
                         List<String> BankBranchnames = new ArrayList<>();
                         BankBranchnames.add("Select");
                         for (BankBranch bank: bankBranches) {
@@ -797,7 +797,7 @@ public class TransferMoney extends Fragment {
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
 
-                    Log.w("PhoneNumberError",customer_phone_number);
+                     //Log.w("PhoneNumberError",customer_phone_number);
 
                     otpDialogLoader=new OtpDialogLoader( TransferMoney.this) {
                         @Override

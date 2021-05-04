@@ -231,7 +231,7 @@ public class CheckoutFinal extends Fragment {
         checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
 
-        Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
+         //Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
         //ProductsName Array intialize
         productsName = new ArrayList<>();
 

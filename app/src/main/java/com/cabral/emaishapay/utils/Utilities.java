@@ -444,13 +444,13 @@ public class Utilities {
                     strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                 }
                 strAdd = strReturnedAddress.toString();
-                Log.w("Current loction address", strReturnedAddress.toString());
+                 //Log.w("Current loction address", strReturnedAddress.toString());
             } else {
-                Log.w("Current loction address", "No Address returned!");
+                 //Log.w("Current loction address", "No Address returned!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.w("Current loction address", "Canont get Address!");
+             //Log.w("Current loction address", "Canont get Address!");
         }
         return strAdd;
     }
@@ -468,13 +468,13 @@ public class Utilities {
                 strReturnedAddress.append(returnedAddress.getCountryName()).append("");
 
                 strAdd = strReturnedAddress.toString();
-                Log.w("Current loction address", strReturnedAddress.toString());
+                 //Log.w("Current loction address", strReturnedAddress.toString());
             } else {
-                Log.w("Current loction address", "No Address returned!");
+                 //Log.w("Current loction address", "No Address returned!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.w("Current loction address", "Canont get Address!");
+             //Log.w("Current loction address", "Canont get Address!");
         }
         return strAdd;
     }

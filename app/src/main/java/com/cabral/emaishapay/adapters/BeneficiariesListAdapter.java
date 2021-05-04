@@ -108,7 +108,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
             decripted_number = data.getAccount_number();
 
-            //Log.w("AccountName",decripted_name+" : "+data.getAccount_name());
+            // //Log.w("AccountName",decripted_name+" : "+data.getAccount_name());
             holder.initials.setText(getNameInitials(decripted_name));
             holder.benefaciary_name.setText(decripted_name);
             holder.beneficiary_number.setText(decripted_number);

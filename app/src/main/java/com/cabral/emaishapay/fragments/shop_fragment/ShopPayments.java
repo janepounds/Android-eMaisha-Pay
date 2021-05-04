@@ -359,7 +359,7 @@ public class ShopPayments extends Fragment implements
             } else if (MobileMoney.isChecked()) {
                 if(validateMobileMoney()) {
                     selectedPaymentMethod = "Mobile Money";
-                    Log.w("eMaishaMM", chargeAmount + " " + getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString());
+                     //Log.w("eMaishaMM", chargeAmount + " " + getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString());
                     initiateMobileMoneyCharge(getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString(), chargeAmount);
                     //proceedOrder();
                 }
@@ -789,7 +789,7 @@ public class ShopPayments extends Fragment implements
                 case RaveConstants.WEB_VERIFICATION_REQUEST_CODE:
                     // Web authentication complete, proceed
 
-                    Log.w("UnkownResult",".......Web authentication complete ");
+                     //Log.w("UnkownResult",".......Web authentication complete ");
                     cardPayManager.onWebpageAuthenticationComplete();
                     break;
                 case RaveConstants.OTP_REQUEST_CODE:
@@ -799,7 +799,7 @@ public class ShopPayments extends Fragment implements
                     break;
             }
         } else {
-            Log.w("UnkownResult",".......Unkown Result ");
+             //Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
             otpDialogLoader.onActivityResult(requestCode, resultCode, data);
         }
@@ -893,7 +893,7 @@ public class ShopPayments extends Fragment implements
 
     @Override
     public void showAuthenticationWebPage(String authenticationUrl) {
-        Log.w("Loading auth web page: ",authenticationUrl);
+         //Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 
