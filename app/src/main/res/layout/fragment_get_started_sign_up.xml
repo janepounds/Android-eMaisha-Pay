@@ -188,7 +188,7 @@
                     android:textStyle="bold"
                     android:textAllCaps="false"
                     android:enabled="false"
-                    android:clickable="true"
+                    android:clickable="false"
                     android:focusable="true"
                     app:layout_constraintTop_toBottomOf="@id/layout_checkbox"
                     app:layout_constraintStart_toStartOf="parent"

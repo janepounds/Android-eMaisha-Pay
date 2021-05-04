@@ -9,9 +9,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -134,6 +137,8 @@ public class WalletHomeActivity extends AppCompatActivity{
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
         scanFAB = findViewById(R.id.fab);
+
+
 
         scanFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -654,4 +659,52 @@ public class WalletHomeActivity extends AppCompatActivity{
         }
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.about_beneficiaries_menu, menu);
+//        MenuItem about = menu.findItem(R.id.aboutBeneficiary);
+//        about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//
+//
+//
+//                return false;
+//            }
+//        });
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        //Go to coming soon
+        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getApplicationContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+
+        ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
+
+        final android.app.AlertDialog alertDialog = dialog.create();
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+
+
+        alertDialog.show();
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

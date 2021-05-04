@@ -108,13 +108,7 @@ public class GetStartedSignUpFragment extends Fragment {
                 }else{
                     binding.getStartedBtn.setEnabled(false);
                     binding.getStartedBtn.setClickable(false);
-
-
-                    Toast.makeText(context, "Please agree to the Terms of Service and Privacy Policy", Toast.LENGTH_LONG).show();
-
-
-
-
+                        Toast.makeText(context, "Please agree to the Terms of Service and Privacy Policy", Toast.LENGTH_LONG).show();
                    // binding.getStartedBtn.setAlpha((float) 0.4);
                 }
 
@@ -203,9 +197,11 @@ public class GetStartedSignUpFragment extends Fragment {
                             otpDialogLoader=new OtpDialogLoader(GetStartedSignUpFragment.this) {
                                 @Override
                                 protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
-                                    otpDialog.dismiss();
 
+                                    otpDialog.dismiss();
                                     verifyVerificationCode(phoneNumber,authPhone,otp_code,otpDialog,otpDialogLoader);
+
+
                                 }
 
                                 @Override
