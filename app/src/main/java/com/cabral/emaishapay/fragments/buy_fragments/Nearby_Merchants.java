@@ -166,8 +166,8 @@ public class Nearby_Merchants extends Fragment {
 
                         // merchants have been returned. Add merchants to the merchantsList
                         if(response.body().getData().size()>0){
-                            no_nearby_merchant.setVisibility(View.GONE);
-                            addMerchantsToList(response.body());}
+                            addMerchantsToList(response.body());
+                        }
                         else {
 
                             no_nearby_merchant.setVisibility(View.VISIBLE);
@@ -217,6 +217,10 @@ public class Nearby_Merchants extends Fragment {
             if(this.merchantList.get(position).getTotalOrderPrice()<=0){
                 this.merchantList.remove(position);
             }
+        }
+
+        if(this.merchantList.size()>0){
+            no_nearby_merchant.setVisibility(View.GONE);
         }
 
         // Initialize the merchantsListAdapter for RecyclerView
