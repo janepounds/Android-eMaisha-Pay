@@ -514,8 +514,6 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void openAgentCustomerLoanApplication(View view) {
      //   navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
 
-
-
     }
 
 
@@ -680,29 +678,28 @@ public class WalletHomeActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         //Go to coming soon
-        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getApplicationContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
+        if (item.getItemId() == R.id.aboutBeneficiary) {
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.beneficiaries_placeholder, null);
+            //dialogView.setLayoutParams(new ActionBar.LayoutParams());
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
 
-        ImageView close = dialogView.findViewById(R.id.coming_soon_close);
-
-
-
-
-        final android.app.AlertDialog alertDialog = dialog.create();
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
 
 
+            final android.app.AlertDialog alertDialog = dialog.create();
 
-        alertDialog.show();
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
 
+
+            alertDialog.show();
+        }
 
         return super.onOptionsItemSelected(item);
     }
