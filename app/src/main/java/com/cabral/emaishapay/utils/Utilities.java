@@ -98,7 +98,7 @@ public class Utilities {
 
         if (isNetworkAvailable(context)) {
             try {
-                HttpURLConnection connection = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                HttpURLConnection connection = (HttpURLConnection) (new URL("https://www.google.com").openConnection());
                 connection.setRequestProperty("User-Agent", "Test");
                 connection.setRequestProperty("Connection", "close");
                 connection.setConnectTimeout(10000);

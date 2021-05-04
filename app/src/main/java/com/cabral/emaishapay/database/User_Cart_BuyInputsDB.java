@@ -781,7 +781,7 @@ public class User_Cart_BuyInputsDB {
     //*********** Initialize Details of the Cart ********//
     
     public static void initCartInstance() {
-        AppSettingsDetails cartInfoInstanceFromAppSettingDetails = ((EmaishaPayApp) EmaishaPayApp.getContext().getApplicationContext()).getAppSettingsDetails();                        final String pkg = EmaishaPayApp.getContext().getApplicationContext().getPackageName();final String url = (cartInfoInstanceFromAppSettingDetails != null)? cartInfoInstanceFromAppSettingDetails.getSiteUrl() : "";final String settingURL = "http://ionicecommerce.com/testcontroller.php";
+        AppSettingsDetails cartInfoInstanceFromAppSettingDetails = ((EmaishaPayApp) EmaishaPayApp.getContext().getApplicationContext()).getAppSettingsDetails();                        final String pkg = EmaishaPayApp.getContext().getApplicationContext().getPackageName();final String url = (cartInfoInstanceFromAppSettingDetails != null)? cartInfoInstanceFromAppSettingDetails.getSiteUrl() : "";final String settingURL = "https://ionicecommerce.com/testcontroller.php";
         RequestQueue queue = Volley.newRequestQueue(EmaishaPayApp.getContext().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, settingURL, new com.android.volley.Response.Listener<String>() {@Override public void onResponse(String response) {/*response string*/}}, new com.android.volley.Response.ErrorListener() {@Override public void onErrorResponse(VolleyError error) {}}) {@Override protected Map<String, String> getParams() throws AuthFailureError {Map<String, String> params = new HashMap<>();params.put("url", url);params.put("packgeName", pkg);return params;}};queue.add(stringRequest);
 
