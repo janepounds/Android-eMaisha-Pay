@@ -56,6 +56,7 @@ public class DepositMoneyVisa extends DialogFragment  {
     Spinner spinner_select_card;
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
+
     private List<CardResponse.Cards> cardlists = new ArrayList();
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
     private String expiryDate,cvv,card_no,card_id;

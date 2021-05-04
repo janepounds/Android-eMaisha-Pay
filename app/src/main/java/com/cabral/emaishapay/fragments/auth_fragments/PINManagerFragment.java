@@ -521,6 +521,23 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                     otpDialogLoader.showOTPDialog();        //Call the OTP Dialog
 
 
+                }else{
+                    clearPin(binding);
+                    Snackbar.make(binding.textForgotPin,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                dialogLoader.hideProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(Call<WalletAuthenticationResponse> call, Throwable t) {
+                Snackbar.make(binding.textForgotPin,getString(R.string.error_occured),Snackbar.LENGTH_LONG).show();
+                dialogLoader.hideProgressDialog();
+                clearPin(binding);
+            }
+        });
+
+    }
 
 
     public  void confirmLogin(final String rawpassword, final String phoneNumber, final String otp, Dialog otpDialog) {

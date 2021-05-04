@@ -155,26 +155,6 @@ public class GetStartedSignUpFragment extends Fragment {
                 });
                 alertDialog.show();
 
-
-
-
-
-                final AlertDialog alertDialog = dialog.create();
-
-                btn_cancel.setOnClickListener(view13->{
-                    alertDialog.dismiss();
-                });
-                full_app_terms_services.setOnClickListener(view13->{
-                    Uri uri = Uri.parse("https://forms.zohopublic.com/virtualoffice20750/form/PrivacyPolicy/formperma/cMB0eFNpmuo5BfUYcYjm-56lXcYWvOL55IodE5BtBpI"); // missing 'http://' will cause crashed
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                });
-                btn_agree.setOnClickListener(vv->{
-                    binding.checkboxTcs.setChecked(true);
-                    alertDialog.dismiss();
-                });
-                alertDialog.show();
-
             }
         });
 
