@@ -46,8 +46,6 @@ import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.modelviews.DefaultAddressModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.utils.Resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -583,40 +581,7 @@ public class My_Cart extends Fragment {
         }
     }
 
-    public class pairingTask extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialogLoader.showProgressDialog();
-            stocks.clear();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            for (int i = 0; i < cartItemsList.size(); i++) {
-                requestProductStock2(cartItemsList.get(i).getCustomersBasketProduct().getProductsId(), getSelectedAttributesIds(cartItemsList.get(i).getCustomersBasketProductAttributes()), i);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialogLoader.hideProgressDialog();
-
-            if (isAllStockValid(stocks)) {
-                Fragment fragment = new My_Addresses(My_Cart.this);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(getString(R.string.actionAddresses)).commit();
-
-            } else {
-                Toast.makeText(getContext(), "Your Product in the cart is out of stock.", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
 

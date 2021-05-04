@@ -18,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
@@ -80,41 +81,17 @@ public class Utilities {
 
     //*********** Checks if the Device is Connected to any Network ********//
 
-    public static boolean isNetworkAvailable(Context activity) {
-
-        ConnectivityManager connectivity = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            Network[] networks = connectivity.getAllNetworks();
-            NetworkInfo networkInfo;
-
-            for (Network mNetwork : networks) {
-
-                networkInfo = connectivity.getNetworkInfo(mNetwork);
-
-                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    return true;
-                }
-            }
-
+    private static boolean isNetworkAvailable(Context activity) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Network nw = connectivityManager.getActiveNetwork();
+            if (nw == null) return false;
+            NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
+            return actNw != null && (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH));
+        } else {
+            NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+            return nwInfo != null && nwInfo.isConnected();
         }
-        else {
-            if (connectivity != null) {
-
-                NetworkInfo[] info = connectivity.getAllNetworkInfo();
-
-                if (info != null) {
-                    for (int i = 0; i < info.length; i++) {
-                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     public static boolean hasActiveInternetConnection(Context context) {
