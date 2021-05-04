@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -61,6 +62,7 @@ public class Nearby_Merchants extends Fragment {
     MerchantsListAdapter merchantsListAdapter;
 
     List<MerchantDetails> merchantList = new ArrayList<>();
+    TextView no_nearby_merchant;
     
     // To keep track of Checked Radio Button
     private RadioButton lastChecked_RB = null;
@@ -84,6 +86,7 @@ public class Nearby_Merchants extends Fragment {
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         setHasOptionsMenu(true);
         merchants_recycler=rootView.findViewById(R.id.merchants_list);
+        no_nearby_merchant = rootView.findViewById(R.id.no_nearby_merchant);
 
         dialogLoader = new DialogLoader(getContext());
         user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -162,20 +165,26 @@ public class Nearby_Merchants extends Fragment {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
 
                         // merchants have been returned. Add merchants to the merchantsList
-                        if(response.body().getData().size()>0)
-                            addMerchantsToList(response.body());
-                        else
+                        if(response.body().getData().size()>0){
+                            no_nearby_merchant.setVisibility(View.GONE);
+                            addMerchantsToList(response.body());}
+                        else {
+
+                            no_nearby_merchant.setVisibility(View.VISIBLE);
                             Snackbar.make(rootView, "Couldn't find Nearby Merchants!", Snackbar.LENGTH_LONG).show();
+                        }
 
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         //emptyRecord.setVisibility(View.VISIBLE);
+                        no_nearby_merchant.setVisibility(View.VISIBLE);
                         Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     }
                     else {
                         // Unable to get Success status
                         //emptyRecord.setVisibility(View.VISIBLE);
+                        no_nearby_merchant.setVisibility(View.VISIBLE);
                         Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 }
