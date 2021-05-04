@@ -72,7 +72,7 @@ public class BuyInputsAPIClient {
                             return chain.proceed(request);
                         }
                     })
-                    .addInterceptor(BASE_URL.startsWith("http://")?  apiInterceptor : basicOAuthWoocommerce)
+                    .addInterceptor(BASE_URL.startsWith("https://")?  apiInterceptor : basicOAuthWoocommerce)
                     .build();
 
 

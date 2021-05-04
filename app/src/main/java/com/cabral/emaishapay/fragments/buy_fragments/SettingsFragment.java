@@ -244,8 +244,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String web_url = ((EmaishaPayApp) getActivity().getApplicationContext()).getAppSettingsDetails().getSiteUrl();
-                if (!web_url.startsWith("https://") && !web_url.startsWith("http://"))
-                    web_url = "http://" + web_url;
+                if (!web_url.startsWith("https://") && !web_url.startsWith("https://"))
+                    web_url = "https://" + web_url;
 
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(web_url)));
             }
