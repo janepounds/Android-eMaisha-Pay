@@ -423,6 +423,7 @@ public class WalletHomeFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransactionSummary> call = apiRequests.getSummary(access_token,request_id,"getTransactionsSummary");
+
         call.enqueue(new Callback<WalletTransactionSummary>() {
             @Override
             public void onResponse(@NotNull Call<WalletTransactionSummary> call, @NotNull Response<WalletTransactionSummary> response) {
@@ -430,12 +431,12 @@ public class WalletHomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     if(response.body().getStatus()==1){
-                        if(response.body().getData().getLastCredit()!=null && response.body().getData().getLastDebit()!=null){
+                        if(response.body().getData().getLastCredit()!=null ){
                             String receiver_name = response.body().getData().getLastCredit().getReceiver();
                             double amount = response.body().getData().getLastCredit().getAmount();
                             String date_completed =response.body().getData().getLastCredit().getDateCompleted();
                             binding.textCreditName.setText(receiver_name);
-                            binding.textAmountCredit.setText(response.body().getData().getLastDebit().getTrans_currency()+amount);
+                            binding.textAmountCredit.setText(response.body().getData().getLastCredit().getTrans_currency()+amount);
                             binding.dateCredit.setText(date_completed);
 
                         } else{
@@ -444,6 +445,7 @@ public class WalletHomeFragment extends Fragment {
                             binding.textAmountCredit.setText("No Data");
                             binding.dateCredit.setText("");
                         }
+
                         if(response.body().getData().getLastDebit()!=null){
                             String sender_name = response.body().getData().getLastDebit().getReceiver();
                             double amount = response.body().getData().getLastDebit().getAmount();
@@ -466,7 +468,8 @@ public class WalletHomeFragment extends Fragment {
                     }
 
 
-                } else if (response.code() == 401) {
+                }
+                else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
                     TokenAuthFragment.startAuth(true);
