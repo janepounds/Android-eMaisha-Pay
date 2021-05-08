@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,12 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -127,7 +122,7 @@ public class BeneficiariesListFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-            DialogFragment addCardDialog =new AddBeneficiary();
+            DialogFragment addCardDialog =new AddBeneficiary(null);
             addCardDialog.show( ft, "dialog");
 
         });
