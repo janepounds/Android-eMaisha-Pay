@@ -14,8 +14,8 @@ android {
         applicationId "com.cabral.emaishapay"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.1"
+        versionCode 4
+        versionName "1.0.0"
 
         buildConfigField("String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY'])
         buildConfigField("String", "ENCRYPTION_KEY", apikeyProperties['ENCRYPTION_KEY'])
@@ -31,6 +31,12 @@ android {
 
 
 
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError true
     }
 
     buildTypes {

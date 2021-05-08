@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.adapters;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -23,13 +22,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.DailogFragments.BeneficiariesDetailsDialogFragment;
 import com.cabral.emaishapay.R;
 
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragment;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
@@ -47,7 +45,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     private List<BeneficiaryResponse.Beneficiaries> dataList;
     private FragmentManager fm;
     Context context;
-    private String beneficary_name, initials,cvv,expiry_date,id;
+    private DialogLoader dialogLoader;
 
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -79,7 +77,6 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
     public BeneficiariesListAdapter(List<BeneficiaryResponse.Beneficiaries> dataList, FragmentManager supportFragmentManager) {
         this.dataList = dataList;
         fm=supportFragmentManager;
-
     }
 
     @Override
@@ -88,6 +85,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wallet_transaction_card,parent,false);
         context=parent.getContext();
         BeneficiariesListAdapter.MyViewHolder holder = new BeneficiariesListAdapter.MyViewHolder(view,fm);
+        dialogLoader=new DialogLoader(context);
         return holder;
     }
 
@@ -177,12 +175,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
 
     public void deleteBeneficiary(String id){
         //call endpoint for deleting beneficiary
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
@@ -194,7 +187,6 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus() == 0) {
-                        dialog.dismiss();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                     }
@@ -210,23 +202,22 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                                 .replace(R.id.wallet_home_container, fragment)
                                 .addToBackStack(null).commit();
 
-                        dialog.dismiss();
                     }
 
                 }else if(response.code()==401){
-                    dialog.dismiss();
-                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
 
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
                     //redirect to auth
 //                    TokenAuthActivity.startAuth(, true);
 //                    fm..finishAffinity();
                 }
+                dialogLoader.hideProgressDialog();
             }
 
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
         });

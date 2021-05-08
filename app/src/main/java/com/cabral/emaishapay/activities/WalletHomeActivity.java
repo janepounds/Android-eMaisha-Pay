@@ -52,7 +52,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.math.BigInteger;
@@ -552,24 +551,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public void getAppToken() {
         FirebaseApp.initializeApp(WalletHomeActivity.this);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            //  //Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-                        Log.d(TAG, "onComplete-token: "+token);
-                        StartAppRequests.RegisterDeviceForFCM(getApplicationContext());
-//                        sendFirebaseToken(token, WalletHomeActivity.this);
-
-
-                    }
-                });
 
     }
 
@@ -583,7 +564,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     //generate unique request id
     public static String generateRequestId(){
-//        String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         String request_id = "";
         Random rand = new Random();
 

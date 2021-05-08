@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -117,7 +116,6 @@ public class CheckoutFinal extends Fragment {
     String paymentNonceToken = "";
     double checkoutSubtotal, checkoutTax, packingCharges, checkoutShipping, checkoutShippingCost, checkoutDiscount, checkoutTotal = 0;
 
-    ProgressDialog progressDialog;
     RecyclerView checkout_items_recycler;
     RecyclerView checkout_coupons_recycler;
     Button checkout_coupon_btn, checkout_order_btn, checkout_cancel_btn;
@@ -133,7 +131,6 @@ public class CheckoutFinal extends Fragment {
     List<PaymentMethodsInfo> paymentMethodsList;
 
     UserDetails userInfo;
-    DialogLoader dialogLoader;
 
     AddressDetails shippingAddress;
     CouponsAdapter couponsAdapter;
@@ -157,6 +154,7 @@ public class CheckoutFinal extends Fragment {
     String orderID, shop_id,merchant_wallet_id;
     My_Cart my_cart;
     PostOrder PaymentOrderDetails;
+    DialogLoader dialogLoader;
 
 
     public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId, String merchantWalletId) {
@@ -288,12 +286,6 @@ public class CheckoutFinal extends Fragment {
         // Set CheckoutFinal Total
         setCheckoutTotal();
 
-        // Initialize ProgressDialog
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle(getString(R.string.processing));
-        progressDialog.setMessage(getString(R.string.please_wait));
-        progressDialog.setCancelable(false);
-
         payment_method.setOnClickListener(v -> {
             Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
                     checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
@@ -312,7 +304,7 @@ public class CheckoutFinal extends Fragment {
             args.putBoolean("isUpdate", true);
             fragment.setArguments(args);
 
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
                     .addToBackStack(null).commit();
         });
@@ -357,12 +349,10 @@ public class CheckoutFinal extends Fragment {
                 if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Mobile Money") ){
                     //check whether payment is made
                     if(PaymentOrderDetails.getPaymentMade()){
-                        progressDialog.show();
                         proceedOrder();
                     }
                 }else{
                     //No payment Needed
-                    progressDialog.show();
                     proceedOrder();
                 }
 
@@ -654,6 +644,7 @@ public class CheckoutFinal extends Fragment {
     //*********** Set Order Details to proceed CheckoutFinal ********//
 
     private void proceedOrder() {
+        dialogLoader.showProgressDialog();
         PostOrder orderDetails = new PostOrder();
 
         // Set Customer Info
@@ -715,48 +706,6 @@ public class CheckoutFinal extends Fragment {
         PlaceOrderNow(orderDetails);
     }
 
-
-    private void GenerateBrainTreeToken() {
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        Call<GetBrainTreeToken> call = BuyInputsAPIClient.getInstance()
-                .generateBraintreeToken(access_token);
-
-
-        call.enqueue(new Callback<GetBrainTreeToken>() {
-            @Override
-            public void onResponse(Call<GetBrainTreeToken> call, retrofit2.Response<GetBrainTreeToken> response) {
-
-                dialogLoader.hideProgressDialog();
-
-                // Check if the Response is successful
-                if (response.isSuccessful()) {
-                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
-
-                        braintreeToken = response.body().getToken();
-
-                        // Initialize BraintreeFragment with BraintreeToken
-                        try {
-                            braintreeFragment = BraintreeFragment.newInstance(getActivity(), braintreeToken);
-                        } catch (InvalidArgumentException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        Snackbar.make(rootView, getString(R.string.cannot_initialize_braintree), Snackbar.LENGTH_LONG).show();
-                    }
-                } else {
-                    Log.d("BRAINTREE TOKEN CALL", "onFailure: \"NetworkCallFailure : \"" + R.string.cannot_initialize_braintree);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetBrainTreeToken> call, Throwable t) {
-                dialogLoader.hideProgressDialog();
-                Log.d("BRAINTREE TOKEN CALL", "onFailure: \"NetworkCallFailure : \"+t");
-            }
-        });
-    }
 
     //*********** Request the Server to Generate BrainTreeToken ********//
 
@@ -861,7 +810,7 @@ public class CheckoutFinal extends Fragment {
         call.enqueue(new Callback<OrderData>() {
             @Override
             public void onResponse(Call<OrderData> call, retrofit2.Response<OrderData> response) {
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
@@ -907,7 +856,7 @@ public class CheckoutFinal extends Fragment {
 
             @Override
             public void onFailure(Call<OrderData> call, Throwable t) {
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Toast.makeText(getContext(), "NetworkCallFailure : " + t, Toast.LENGTH_LONG).show();
             }
         });

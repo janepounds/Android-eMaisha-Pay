@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import android.text.Editable;
@@ -19,17 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.WalletAddMoneyVisaBinding;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -46,14 +42,10 @@ import retrofit2.Response;
 
 public class AddCardFragment extends DialogFragment {
 
-    EditText etName, etCardNumber, etCvv, etExpiryDate;
-    TextView txtTitle;
-    LinearLayout amountLayout, purporseLayout;
-
-    Button btnSaveCard,delete_card;
     private Context context;
-
     private String id;
+    DialogLoader dialogLoader;
+    WalletAddMoneyVisaBinding binding;
 
     public AddCardFragment() {
         // Required empty public constructor
@@ -79,21 +71,12 @@ public class AddCardFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.wallet_add_money_visa, null);
-        etName = view.findViewById(R.id.add_money_holder_name);
-        etCardNumber = view.findViewById(R.id.add_money_creditCardNumber);
-        etCvv = view.findViewById(R.id.add_money_card_cvv);
-        etExpiryDate = view.findViewById(R.id.add_money_card_expiry);
-        btnSaveCard = view.findViewById(R.id.button_add_money);
-        amountLayout = view.findViewById(R.id.add_money_amount_layout);
-        purporseLayout = view.findViewById(R.id.layout_purpose);
-        txtTitle = view.findViewById(R.id.add_money_title);
-        delete_card = view.findViewById(R.id.delete_card);
+        binding= DataBindingUtil.inflate(inflater,R.layout.wallet_add_money_visa,null,false);
 
-        amountLayout.setVisibility(View.GONE);
-        purporseLayout.setVisibility(View.GONE);
+        binding.addMoneyAmountLayout .setVisibility(View.GONE);
+        binding.layoutPurpose .setVisibility(View.GONE);
+
+        dialogLoader=new DialogLoader(context);
 
 
 
@@ -104,75 +87,14 @@ public class AddCardFragment extends DialogFragment {
             String expiry_date = getArguments().getString("expiry");
              id = getArguments().getString("id");
 
-            //set corresponsding edit texts;
-            etCardNumber.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            etCvv.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            setDataToUpdate(account_name,card_number,cvv,expiry_date);
 
-            etName.setText(account_name);
-            etCardNumber.setText(card_number);
-            etCvv.setText(cvv);
-            etExpiryDate.setText(expiry_date);
-            txtTitle.setText("EDIT CARD");
-            btnSaveCard.setText("UPDATE");
-            delete_card.setVisibility(View.VISIBLE);
-
-            delete_card.setOnClickListener(v -> {
-                ProgressDialog dialog;
-                dialog = new ProgressDialog(context);
-                dialog.setIndeterminate(true);
-                dialog.setMessage("Please Wait..");
-                dialog.setCancelable(false);
-                dialog.show();
-
-                //call retrofit method for deleting card
-                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                String request_id = WalletHomeActivity.generateRequestId();
-                String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-                /*************RETROFIT IMPLEMENTATION**************/
-                Call<CardResponse> call = APIClient.getWalletInstance(getContext()).deleteCard(id,access_token,request_id,category,"deleteCard");
-                call.enqueue(new Callback<CardResponse>() {
-                    @Override
-                    public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body().getStatus() == 0) {
-                                dialog.dismiss();
-                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-
-                            } else {
-                                String message = response.body().getMessage();
-                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                                AddCardFragment.this.dismiss();
-
-
-                                //To CardListFragment
-                                WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
-                                WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-
-                                dialog.dismiss();
-                            }
-
-                        }else if(response.code()==401){
-                            dialog.dismiss();
-                            Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
-
-                            //redirect to auth
-                            TokenAuthFragment.startAuth( true);
-
-                        }
-                    }
-
-
-                    @Override
-                    public void onFailure(Call<CardResponse> call, Throwable t) {
-                        dialog.dismiss();
-
-                    }
-                });
+            binding.deleteCard.setOnClickListener(v -> {
+              deleteCardRetrofitCall();
             });
         }else {
-            txtTitle.setText("ADD CARD");
-            btnSaveCard.setText("SAVE CARD");
+            binding.addMoneyTitle.setText("ADD CARD");
+            binding.buttonAddMoney.setText("SAVE CARD");
         }
 
 
@@ -187,124 +109,156 @@ public class AddCardFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (filterLongEnough() && !etExpiryDate.getText().toString().contains("/")) {
-                    etExpiryDate.setText(etExpiryDate.getText().toString()+"/");
-                    int pos = etExpiryDate.getText().length();
-                    etExpiryDate.setSelection(pos);
+                if (filterLongEnough() && !binding.addMoneyCardExpiry.getText().toString().contains("/")) {
+                    binding.addMoneyCardExpiry.setText(binding.addMoneyCardExpiry.getText().toString()+"/");
+                    int pos = binding.addMoneyCardExpiry.getText().length();
+                    binding.addMoneyCardExpiry.setSelection(pos);
                 }
             }
 
             private boolean filterLongEnough() {
-                return etExpiryDate.getText().toString().length() == 2;
+                return binding.addMoneyCardExpiry.getText().toString().length() == 2;
             }
         };
-        etExpiryDate.addTextChangedListener(fieldValidatorTextWatcher);
 
+        binding.addMoneyCardExpiry.addTextChangedListener(fieldValidatorTextWatcher);
 
-
-        btnSaveCard.setOnClickListener(new View.OnClickListener() {
+        binding.buttonAddMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                       if (validateEntries()) {
-
-                        ProgressDialog dialog;
-                        dialog = new ProgressDialog(context);
-                        dialog.setIndeterminate(true);
-                        dialog.setMessage("Please Wait..");
-                        dialog.setCancelable(false);
-                        dialog.show();
-
-                        String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-                        String card_number = etCardNumber.getText().toString().trim();
-                        String cvv = etCvv.getText().toString().trim();
-                        String expiry = etExpiryDate.getText().toString();
-                        String account_name = etName.getText().toString();
-
-
-                        //check if the button text is save card
-                        if(btnSaveCard.getText().toString().equalsIgnoreCase("SAVE CARD")) {
-                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                            String request_id = WalletHomeActivity.generateRequestId();
-                            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-                        /*************RETROFIT IMPLEMENTATION**************/
-                        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).
-                                saveCardInfo(access_token,identifier, card_number, cvv, expiry, account_name, getString(R.string.currency), request_id,category,"saveCard");
-                        call.enqueue(new Callback<CardResponse>() {
-                            @Override
-                            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                                if (response.isSuccessful()) {
-                                    String message = response.body().getMessage();
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-                                    dialog.dismiss();
-                                    AddCardFragment.this.dismiss();
-                                    //To CardListFragment
-                                    WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
-                                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<CardResponse> call, Throwable t) {
-                                dialog.dismiss();
-
-                            }
-                        });
-
-                    }else{
-                            //call update card endpoint
-                            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                            String request_id = WalletHomeActivity.generateRequestId();
-                            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-                            /*************RETROFIT IMPLEMENTATION**************/
-                            Call<CardResponse> call = APIClient.getWalletInstance(getContext()).updateCardInfo(access_token,id,identifier, card_number, cvv, expiry, account_name,request_id,category,"updateCard");
-                            call.enqueue(new Callback<CardResponse>() {
-                                @Override
-                                public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        String message = response.body().getMessage();
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-                                        dialog.dismiss();
-                                        //To CardListFragment
-                                        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
-                                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
-                                    } else if (response.code() == 401) {
-                                        dialog.dismiss();
-//                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                                        //redirect to auth
-
-                                        TokenAuthFragment.startAuth(true);
-//                                        getActivity().getSupportFragmentManager().popBackStack();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<CardResponse> call, Throwable t) {
-                                    dialog.dismiss();
-
-                                }
-                            });
-
-
-                        }
-                }
+                saveCard();
             }
         });
 
 
-        builder.setView(view);
+        builder.setView(binding.getRoot());
         Dialog dialog = builder.create();
-//        dialog.setCanceledOnTouchOutside(false);
-//        setCancelable(false);
 
-        ImageView close = view.findViewById(R.id.wallet_deposit_close);
+        ImageView close = binding.getRoot().findViewById(R.id.wallet_deposit_close);
         close.setOnClickListener(v -> dismiss());
 
         return dialog;
 
+    }
+
+    private void setDataToUpdate(String account_name, String card_number, String cvv, String expiry_date) {
+        binding.addMoneyCreditCardNumber.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        binding.addMoneyCardCvv.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        binding.addMoneyHolderName.setText(account_name);
+        binding.addMoneyCreditCardNumber.setText(card_number);
+        binding.addMoneyCardCvv.setText(cvv);
+        binding.addMoneyCardExpiry.setText(expiry_date);
+        binding.addMoneyTitle.setText("EDIT CARD");
+        binding.buttonAddMoney.setText("UPDATE");
+        binding.deleteCard.setVisibility(View.VISIBLE);
+    }
+
+    private void saveCard() {
+        if (validateEntries()) {
+            dialogLoader.showProgressDialog();
+
+            String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
+            String card_number =  binding.addMoneyCreditCardNumber.getText().toString().trim();
+            String cvv = binding.addMoneyCardCvv.getText().toString().trim();
+            String expiry = binding.addMoneyCardExpiry.getText().toString();
+            String account_name = binding.addMoneyHolderName.getText().toString();
+            Call<CardResponse> call;
+
+
+            //check if the button text is save card
+            if(binding.buttonAddMoney.getText().toString().equalsIgnoreCase("SAVE CARD")) {
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                String request_id = WalletHomeActivity.generateRequestId();
+                String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
+                call = APIClient.getWalletInstance(getContext()).
+                        saveCardInfo(access_token,identifier, card_number, cvv, expiry, account_name, getString(R.string.currency), request_id,category,"saveCard");
+
+
+            }else{
+                //call update card endpoint
+                String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+                String request_id = WalletHomeActivity.generateRequestId();
+                String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+                call = APIClient.getWalletInstance(getContext()).updateCardInfo(access_token,id,identifier, card_number, cvv, expiry, account_name,request_id,category,"updateCard");
+            }
+
+           getSaveCardRetrofitResponse(call);
+
+        }
+    }
+
+    private void getSaveCardRetrofitResponse(Call<CardResponse> call) {
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+
+                if (response.isSuccessful()) {
+                    AddCardFragment.this.dismiss();
+                    String message = response.body().getMessage();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
+                    //To CardListFragment
+                    WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                    WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
+                } else if (response.code() == 401) {
+                    TokenAuthFragment.startAuth(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+    }
+
+    private void deleteCardRetrofitCall() {
+        dialogLoader.showProgressDialog();
+
+        //call retrofit method for deleting card
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        /*************RETROFIT IMPLEMENTATION**************/
+
+        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).deleteCard(id,access_token,request_id,category,"deleteCard");
+
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+                if (response.isSuccessful()) {
+
+                    if (response.body().getStatus() == 0) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        String message = response.body().getMessage();
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        AddCardFragment.this.dismiss();
+                        //To CardListFragment
+                        WalletHomeActivity.navController.popBackStack(R.id.walletHomeFragment2,false);
+                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_cardListFragment);
+                    }
+
+                }else if(response.code()==401){
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+                    //redirect to auth
+                    TokenAuthFragment.startAuth( true);
+
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
     }
 
     public boolean validateEntries(){
@@ -315,49 +269,49 @@ public class AddCardFragment extends DialogFragment {
 
         int mm = Integer.parseInt(dateFormat.format(date));
         int yy = Integer.parseInt(yearDateFormat.format(date));
-        String expMonth = etExpiryDate.getText().toString().substring(0,2);
-        String expYear = etExpiryDate.getText().toString().substring(etExpiryDate.getText().toString().length() - 2);
+        String expMonth = binding.addMoneyCardExpiry.getText().toString().substring(0,2);
+        String expYear = binding.addMoneyCardExpiry.getText().toString().substring(binding.addMoneyCardExpiry.getText().toString().length() - 2);
 
 
         boolean check = true;
 
 
-        if (etName.getText().toString().trim() == null || etName.getText().toString().trim().isEmpty()) {
+        if (binding.addMoneyHolderName.getText().toString().trim() == null || binding.addMoneyHolderName.getText().toString().trim().isEmpty()) {
             check = false;
-            etName.setError("Please enter valid value");
+            binding.addMoneyHolderName.setError("Please enter valid value");
 
 
-        } else if (etCardNumber.getText().toString().trim() == null || etCardNumber.getText().toString().trim().isEmpty()
-                || etCardNumber.getText().toString().trim().length()<13 ){
+        } else if (binding.addMoneyCreditCardNumber.getText().toString().trim() == null || binding.addMoneyCreditCardNumber.getText().toString().trim().isEmpty()
+                || binding.addMoneyCreditCardNumber.getText().toString().trim().length()<13 ){
             check = false;
-            etCardNumber.setError("Please enter valid value");
+            binding.addMoneyCreditCardNumber.setError("Please enter valid value");
 
         }
 
-        else if (etExpiryDate.getText().toString().trim() == null || etExpiryDate.getText().toString().trim().isEmpty() ||
-                etExpiryDate.getText().toString().length()<5){
+        else if (binding.addMoneyCardExpiry.getText().toString().trim() == null || binding.addMoneyCardExpiry.getText().toString().trim().isEmpty() ||
+                binding.addMoneyCardExpiry.getText().toString().length()<5){
             check = false;
-            etExpiryDate.setError("Please enter valid value");
+            binding.addMoneyCardExpiry.setError("Please enter valid value");
 
         }
 
-        else if (etCvv.getText().toString().trim() == null || etCvv.getText().toString().trim().isEmpty()
-                || etCvv.getText().toString().trim().length()<3 ) {
+        else if (binding.addMoneyCardCvv.getText().toString().trim() == null || binding.addMoneyCardCvv.getText().toString().trim().isEmpty()
+                || binding.addMoneyCardCvv.getText().toString().trim().length()<3 ) {
             check = false;
-            etCardNumber.setError("Please enter valid value");
+            binding.addMoneyCreditCardNumber.setError("Please enter valid value");
 
-        } else if(etExpiryDate.getText().toString().length()>4 && Integer.parseInt(expYear) < yy) {
+        } else if(binding.addMoneyCardExpiry.getText().toString().length()>4 && Integer.parseInt(expYear) < yy) {
 
                 check = false;
-                 etExpiryDate.setError("Card is expired");
+                 binding.addMoneyCardExpiry.setError("Card is expired");
                 Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
                 Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
 
         }
 
-        else if(etExpiryDate.getText().toString().length()>4 && (Integer.parseInt(expYear) == yy && Integer.parseInt(expMonth) <= mm )){
+        else if(binding.addMoneyCardExpiry.getText().toString().length()>4 && (Integer.parseInt(expYear) == yy && Integer.parseInt(expMonth) <= mm )){
                 check = false;
-                etExpiryDate.setError("Card is expired");
+                binding.addMoneyCardExpiry.setError("Card is expired");
                 Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
                 Log.d("CARD IS EXPIRED","DATE *"+Integer.parseInt(expMonth)+"/"+Integer.parseInt(expYear)+"* IS SAME OR GREATER THAN *"+mm+"*/*"+yy+"*");
 
@@ -367,33 +321,5 @@ public class AddCardFragment extends DialogFragment {
 
     }
 
-    public void validateExpiryDate(){
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("MM");
-        DateFormat yearDateFormat = new SimpleDateFormat("yy");
-
-        int mm = Integer.parseInt(dateFormat.format(date));
-        int yy = Integer.parseInt(yearDateFormat.format(date));
-        String expMonth = etExpiryDate.getText().toString().substring(0,2);
-        String expYear = etExpiryDate.getText().toString().substring(etExpiryDate.getText().toString().length() - 2);
-
-        int intExpMonth = Integer.parseInt(expMonth);
-        int intExpYear = Integer.parseInt(expYear);
-        if(etExpiryDate.getText().toString().length()>4) {
-
-            if( intExpYear < yy ){
-               //check = false;
-                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
-                Log.d("CARD IS EXPIRED","DATE *"+intExpMonth+"/"+intExpYear+"* IS SAME OR LESS THAN *"+mm+"*/*"+yy+"*");
-            }
-            else if(intExpYear == yy && intExpMonth <= mm ){
-               // check = false;
-                Toasty.error(context, "Card is expired", Toast.LENGTH_LONG).show();
-                Log.d("CARD IS EXPIRED","DATE *"+intExpMonth+"/"+intExpYear+"* IS SAME OR LESS THAN *"+mm+"*/*"+yy+"*");
-            }
-
-
-        }
-    }
 
 }

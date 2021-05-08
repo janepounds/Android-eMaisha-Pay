@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -51,7 +51,6 @@ public class ViewAllPopularProducts extends Fragment {
     private Context context;
     private ProductAdapter popularProductsAdapter;
     Toolbar toolbar;
-    LoadMoreTask loadMoreTask;
     PostFilterData filters = null;
     ProgressBar progressBar,mainProgress;
     Call<ProductData> productsCall;
@@ -98,12 +97,8 @@ public class ViewAllPopularProducts extends Fragment {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                    // Initialize LoadMoreTask to Load More Products from Server without Filters
-                    loadMoreTask = new ViewAllPopularProducts.LoadMoreTask(current_page, filters);
-
-
-                // Execute AsyncTask LoadMoreTask to Load More Products from Server
-                loadMoreTask.execute();
+                // Load More Products from Server without Filters
+                loadMoreTask(current_page, filters);
             }
         });
 
@@ -175,53 +170,25 @@ public class ViewAllPopularProducts extends Fragment {
 
     /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
 
-    private class LoadMoreTask extends AsyncTask<String, Void, String> {
+    private void loadMoreTask(int page_number, PostFilterData postFilterData) {
 
-        int page_number;
-        PostFilterData postFilters;
+        AppExecutors.getInstance().NetworkIO().
+                execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Request for Products of given OrderProductCategory, based on PageNo.
+                        if(Connectivity.isConnected(context)){
+                            RequestTopSellers(page_number);
 
-
-        private LoadMoreTask(int page_number, PostFilterData postFilterData) {
-            this.page_number = page_number;
-            this.postFilters = postFilterData;
-        }
-
-
-        //*********** Runs on the UI thread before #doInBackground() ********//
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+                        }else {
+                            Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_LONG).show();
 
 
-        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
+                        }
 
-        @Override
-        protected String doInBackground(String... params) {
+                    }
+         });
 
-
-                // Request for Products of given OrderProductCategory, based on PageNo.
-                //check internet connection
-                if(Connectivity.isConnected(context)){
-                    RequestTopSellers(page_number);
-
-                }else {
-                    Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_LONG).show();
-
-
-            }
-
-            return "All Done!";
-        }
-
-
-        //*********** Runs on the UI thread after #doInBackground() ********//
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
     }
 
     @Override

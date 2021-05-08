@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -101,7 +100,7 @@ public class MyProduceFragment extends Fragment {
     }
 
     public void getAllProduce() {
-        new getAllProduceTask(MyProduceFragment.this).execute();
+        getAllProduceTask( new WeakReference<>(MyProduceFragment.this));
     }
 
     @Override
@@ -201,7 +200,7 @@ public class MyProduceFragment extends Fragment {
                 );
 
                 // create worker thread to insert data into database
-                new InsertProduceTask(MyProduceFragment.this, myProduce).execute();
+                insertProduceTask(new WeakReference<>(MyProduceFragment.this), myProduce);
             }
 
         });
@@ -258,95 +257,36 @@ public class MyProduceFragment extends Fragment {
 
     }
 
-    private static class getAllProduceTask extends AsyncTask<Void, Void, Boolean> {
+    private void  getAllProduceTask(WeakReference<MyProduceFragment>  fragmentReference)  {
 
-        private WeakReference<MyProduceFragment> fragmentReference;
-        private Context context;
+            fragmentReference.get().requireActivity().runOnUiThread(() -> {
+                fragmentReference.get().recyclerView.setHasFixedSize(true);
+                fragmentReference.get().layoutManager = new LinearLayoutManager(context);
+                fragmentReference.get().adapter = new MyProduceListAdapter(context, fragmentReference);
 
-        // only retain a weak reference to the activity
-        getAllProduceTask(MyProduceFragment context) {
-            fragmentReference = new WeakReference<>(context);
-            this.context = context.context;
-        }
+                fragmentReference.get().recyclerView.setLayoutManager(fragmentReference.get().layoutManager);
+                fragmentReference.get().recyclerView.setAdapter(fragmentReference.get().adapter);
 
-        @Override
-        protected void onPreExecute() {
-            Log.d(TAG, "onPreExecute: " + "Getting produce.");
-        }
+                if (fragmentReference.get().produceList.size() == 0) {
+                    fragmentReference.get().layoutEmptyProduceList.setVisibility(View.VISIBLE);
+                } else {
+                    fragmentReference.get().layoutEmptyProduceList.setVisibility(View.GONE);
+                }
+            });
 
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-//            ArrayList<MyProduce> produce = fragmentReference.get().dbHandler.getAllProduce();
-//            fragmentReference.get().produceList = produce;
-
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean) {
-                fragmentReference.get().requireActivity().runOnUiThread(() -> {
-                    fragmentReference.get().recyclerView.setHasFixedSize(true);
-                    fragmentReference.get().layoutManager = new LinearLayoutManager(context);
-                    fragmentReference.get().adapter = new MyProduceListAdapter(context, fragmentReference);
-
-                    fragmentReference.get().recyclerView.setLayoutManager(fragmentReference.get().layoutManager);
-                    fragmentReference.get().recyclerView.setAdapter(fragmentReference.get().adapter);
-
-                    if (fragmentReference.get().produceList.size() == 0) {
-                        fragmentReference.get().layoutEmptyProduceList.setVisibility(View.VISIBLE);
-                    } else {
-                        fragmentReference.get().layoutEmptyProduceList.setVisibility(View.GONE);
-                    }
-                });
-                Log.d(TAG, "onPostExecute: Complete");
-            }
-        }
     }
 
-    private static class InsertProduceTask extends AsyncTask<Void, Void, Boolean> {
+    private void insertProduceTask(WeakReference<MyProduceFragment>  fragmentReference, MyProduce myProduce) {
 
-        private WeakReference<MyProduceFragment> fragmentReference;
-        private MyProduce myProduce;
-        private ProgressDialog dialog;
-        private Context context;
+         fragmentReference.get().requireActivity().runOnUiThread(() -> {
+            Toast.makeText(context, "Produce Added", Toast.LENGTH_SHORT).show();
 
-        // only retain a weak reference to the activity
-        InsertProduceTask(MyProduceFragment context, MyProduce myProduce) {
-            fragmentReference = new WeakReference<>(context);
-            this.myProduce = myProduce;
-            dialog = new ProgressDialog(context.context);
-            this.context = context.context;
-        }
+            fragmentReference.get().getAllProduce();
+        });
 
-        @Override
-        protected void onPreExecute() {
-            dialog.setIndeterminate(true);
-            dialog.setMessage("Please Wait..");
-            dialog.setCancelable(false);
-            fragmentReference.get().requireActivity().runOnUiThread(() -> dialog.show());
-        }
+        Log.d(TAG, "onPostExecute: Complete");
 
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            Log.d(TAG, "doInBackground: Executing"+myProduce.getUnits());
-//            fragmentReference.get().dbHandler.insertProduce(myProduce);
-            return true;
-        }
 
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean) {
-                fragmentReference.get().requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(context, "Produce Added", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                    fragmentReference.get().dialog.dismiss();
-                    fragmentReference.get().getAllProduce();
-                });
-                Log.d(TAG, "onPostExecute: Complete");
-            }
-        }
     }
 
 }
