@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -26,6 +25,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +47,7 @@ public class BeneficiariesListFragment extends Fragment {
     private ConstraintLayout layoutPlaceholder;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
     ImageView aboutBeneficiaries;
+    DialogLoader dialogLoader;
 
     Toolbar toolbar;
     public BeneficiariesListFragment() {
@@ -81,7 +82,7 @@ public class BeneficiariesListFragment extends Fragment {
 
         layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
 
-
+        dialogLoader = new DialogLoader(context);
         aboutBeneficiaries.setOnClickListener(v->{
 
             //Go to coming soon
@@ -130,12 +131,7 @@ public class BeneficiariesListFragment extends Fragment {
     }
 
     public void RequestBeneficiaries(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -173,7 +169,7 @@ public class BeneficiariesListFragment extends Fragment {
                         beneficiariesListAdapter.notifyDataSetChanged();
 
                     }
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
@@ -183,14 +179,14 @@ public class BeneficiariesListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
 
             }
 
             @Override
             public void onFailure(Call<BeneficiaryResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 

@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentEmploymentInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -32,7 +32,7 @@ import retrofit2.Response;
 public class EmploymentInformationFragment extends Fragment {
     private static final String TAG = "EmploymentInformation";
     private FragmentEmploymentInformationBinding binding;
-    private ProgressDialog progressDialog;
+    DialogLoader dialogLoader;
 
     public EmploymentInformationFragment() {
     }
@@ -50,6 +50,7 @@ public class EmploymentInformationFragment extends Fragment {
         binding.toolbar.setTitle("Employment Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        dialogLoader = new DialogLoader(getContext());
 
         if(getArguments()!=null){
             String employer = getArguments().getString("employer");
@@ -77,11 +78,7 @@ public class EmploymentInformationFragment extends Fragment {
         binding.submitButton.setOnClickListener(v -> {
             boolean isValid = validateForm();
             if(isValid) {
-                progressDialog = new ProgressDialog(getContext());
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage("Please Wait..");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
+                dialogLoader.showProgressDialog();
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                 String request_id = WalletHomeActivity.generateRequestId();
@@ -101,7 +98,7 @@ public class EmploymentInformationFragment extends Fragment {
                             Log.d(TAG, "onResponse: failed" + response.errorBody());
                             Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
                         }
-                        progressDialog.dismiss();
+                        dialogLoader.hideProgressDialog();
                     }
 
                     @Override

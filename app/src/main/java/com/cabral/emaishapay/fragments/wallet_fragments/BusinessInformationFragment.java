@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +28,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -49,7 +49,7 @@ public class BusinessInformationFragment extends Fragment {
     private String encodedRegistrationCertificate;
     private String encodedTradeLicence;
     private ImageView imageView;
-    private ProgressDialog progressDialog;
+    DialogLoader dialogLoader;
 
     public BusinessInformationFragment(){}
 
@@ -65,6 +65,7 @@ public class BusinessInformationFragment extends Fragment {
         binding.toolbar.setTitle("Business Information");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        dialogLoader = new DialogLoader(getContext());
 
         return binding.getRoot();
     }
@@ -118,10 +119,6 @@ public class BusinessInformationFragment extends Fragment {
 
         binding.cancelButton.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
     }
 
     private void chooseImage() {
@@ -155,7 +152,7 @@ public class BusinessInformationFragment extends Fragment {
     }
 
     public void saveInfo() {
-        progressDialog.show();
+        dialogLoader.showProgressDialog();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -175,14 +172,14 @@ public class BusinessInformationFragment extends Fragment {
                 } else {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
                  //Log.w(TAG, "onFailure: failed" + t.getMessage());
                 Toast.makeText(getContext(),"Error Please Try again!",Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
     }
