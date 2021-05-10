@@ -238,7 +238,6 @@ public class AddBeneficiary extends DialogFragment {
 
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
-                        //  encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                         beneficiary_name = beneficiary_name_mm.getText().toString();
                         beneficiary_number = getString(R.string.phone_number_code)+beneficiary_no.getText().toString();
                         bankk = "Mobile Money Bank";
@@ -250,7 +249,6 @@ public class AddBeneficiary extends DialogFragment {
 
                     }else{
                         //encript account_name and number
-                        //CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                          beneficiary_name = account_name.getText().toString();
                         beneficiary_number = account_number.getText().toString();
                         bankk = bankSp.getSelectedItem().toString();
@@ -266,52 +264,7 @@ public class AddBeneficiary extends DialogFragment {
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-                    if(submit.getText().toString().equalsIgnoreCase("update")){
-                        dialogLoader.showProgressDialog();
-
-                        /*************RETROFIT IMPLEMENTATION**************/
-                        Call<GeneralWalletResponse> call = APIClient.getWalletInstance(getContext())
-                                .updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number);
-                        call.enqueue(new Callback<GeneralWalletResponse>() {
-                            @Override
-                            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
-                                if (response.isSuccessful()) {
-                                    dialogLoader.hideProgressDialog();
-                                    if (response.body().getStatus().equalsIgnoreCase("0")) {
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                                    } else {
-                                        String message = response.body().getMessage();
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-
-                                        //To BeneficiariesListFragment();
-                                        WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
-                                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
-
-                                    }
-
-                                } else if (response.code() == 401) {
-                                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
-
-                                    //redirect to auth
-                                    TokenAuthFragment.startAuth( true);
-
-                                }
-                            }
-
-
-                            @Override
-                            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
-                                dialogLoader.hideProgressDialog();
-
-                            }
-                        });
-                    }
-                    else {
-                        requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
-
-                    }
+                    requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
 
                 }

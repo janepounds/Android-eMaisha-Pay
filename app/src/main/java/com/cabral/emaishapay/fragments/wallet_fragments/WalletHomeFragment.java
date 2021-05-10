@@ -64,15 +64,12 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private NewEmaishaPayHomeBinding binding;
     private Context context;
-    private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
     private static SharedPreferences sharedPreferences;
     NavController navController;
-    List<BannerDetails> Banner = new ArrayList<>();
-    HashMap<String, String> url_maps = new HashMap<String, String>();
 
 
     @Override
@@ -95,7 +92,7 @@ public class WalletHomeFragment extends Fragment {
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
-
+        Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
         if(WalletHomeActivity.Banners!=null)
             ImageSlider("Ads", WalletHomeActivity.Banners );
 
@@ -587,7 +584,7 @@ public class WalletHomeFragment extends Fragment {
                     //.description(name)
                     .setRequestOption(requestOptions)
                     .image(slider_covers.get(name));
-
+            Log.w("BannerWarnings",slider_covers.get(name));
             // Add DefaultSliderView to the SliderLayout
             binding.productCoverSlider.addSlider(defaultSliderView);
         }
