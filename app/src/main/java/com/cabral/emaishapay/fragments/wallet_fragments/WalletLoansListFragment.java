@@ -1,6 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.LoansListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.LoanListResponse;
 import com.cabral.emaishapay.models.LoanApplication;
@@ -60,7 +61,7 @@ public class WalletLoansListFragment extends Fragment {
     private FrameLayout walletPayLoanLayout;
     private RecyclerView loansListRecyclerView;
     private Button walletApplyLoanBtn, walletPayLoanBtn;
-    ProgressDialog dialog;
+    DialogLoader dialogLoader;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -80,6 +81,7 @@ public class WalletLoansListFragment extends Fragment {
 
         statementAdapter = new LoansListAdapter(getContext(),dataList);
         loansListRecyclerView.setAdapter(statementAdapter);
+        dialogLoader = new DialogLoader(context);
 
         walletApplyLoanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,11 +116,7 @@ public class WalletLoansListFragment extends Fragment {
 
     private void actualStatementData() {
 
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
 
         /*************RETROFIT IMPLEMENTATION********************/
 
@@ -173,7 +171,7 @@ public class WalletLoansListFragment extends Fragment {
                                 walletApplyLoanBtn.setText(possible_action);
                                 walletApplyLoanBtn.setOnClickListener(view2 ->
                                         {
-                                            dialog.show();
+                                            dialogLoader.hideProgressDialog();
                                             cancelLoan() ;
                                         });
                             }else if(possible_action.equalsIgnoreCase("Pay Loan")){
@@ -200,7 +198,7 @@ public class WalletLoansListFragment extends Fragment {
                     }
                 }
 
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
             @Override
@@ -209,7 +207,7 @@ public class WalletLoansListFragment extends Fragment {
                 Log.e("info : ", new String(String.valueOf(t.getMessage())));
                 Log.e("info : ", "Something got very wrong");
 
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 TokenAuthFragment.startAuth( true);
 
             }
@@ -247,7 +245,7 @@ public class WalletLoansListFragment extends Fragment {
                 }else{
                     Log.d(TAG, "onResponse: failed");
                 }
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
 
@@ -257,7 +255,7 @@ public class WalletLoansListFragment extends Fragment {
 
             }
         });
-        dialog.dismiss();
+        dialogLoader.hideProgressDialog();
 
     }
 

@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -31,6 +30,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.LoanApplication;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -54,6 +54,7 @@ public class LoanUserDetailsFragment extends Fragment {
     TextView resendtxtview,tvTimer;
     private  String code, sms_code;
     RelativeLayout parentLayout,layoutResendCode;
+    DialogLoader dialogLoader;
 
     private float interest;
 
@@ -84,7 +85,7 @@ public class LoanUserDetailsFragment extends Fragment {
         etxteMaishaAcc = view.findViewById(R.id.etxt_emaisha_account);
         parentLayout = view.findViewById(R.id.parent_layout);
 
-
+        dialogLoader = new DialogLoader(context);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Apply for Loan");
@@ -129,12 +130,7 @@ public class LoanUserDetailsFragment extends Fragment {
 
     public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/
-        ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -321,7 +317,7 @@ public class LoanUserDetailsFragment extends Fragment {
 
 
 
-                    progressDialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }else if(response.code()==412) {
                      //Toast.makeText(context,"account does not exist",Toast.LENGTH_LONG).show();
                     final Snackbar snackBar = Snackbar.make(parentLayout, "Account does not exist!", Snackbar.LENGTH_LONG);
@@ -348,7 +344,7 @@ public class LoanUserDetailsFragment extends Fragment {
                     Log.e("info", "Something got very very wrong");
                 }
 
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
             @Override
@@ -357,7 +353,7 @@ public class LoanUserDetailsFragment extends Fragment {
                 Log.e("info : ", t.getMessage());
                 Log.e("info : ", "Something got very very wrong");
 
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 
