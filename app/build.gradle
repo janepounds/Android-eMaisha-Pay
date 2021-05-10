@@ -14,7 +14,7 @@ android {
         applicationId "com.cabral.emaishapay"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
+        versionCode 5
         versionName "1.0.0"
 
         buildConfigField("String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY'])
