@@ -117,7 +117,7 @@ public class ConfirmTransfer extends DialogFragment {
         charges_layount= view.findViewById(R.id.charges_layount);
         discount_layount= view.findViewById(R.id.discount_layount);
 
-        dialogLoader = new DialogLoader(activity);
+        dialogLoader = new DialogLoader(getContext());
 
         String phoneNumber= getArguments().getString("phoneNumber");
         String methodOfTransfer=getArguments().getString("methodOfPayment");
@@ -326,12 +326,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -343,12 +338,12 @@ public class ConfirmTransfer extends DialogFragment {
             call.enqueue(new Callback<ConfirmationDataResponse>() {
                 @Override
                 public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                    dialogLoader.hideProgressDialog();
                     if (response.code() == 200) {
                         businessName = response.body().getData().getBusinessName();
                         receiverNameTextView.setText(businessName);
                         confirmBtn.setVisibility(View.VISIBLE);
 
-                        dialog.dismiss();
                     } else if (response.code() == 412) {
                         String businessName = null;
                         businessName = response.body().getMessage();
@@ -366,12 +361,11 @@ public class ConfirmTransfer extends DialogFragment {
                         Log.e("info", "Something got very very wrong");
                     }
 
-                    dialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
+                    dialogLoader.hideProgressDialog();
                     Log.e("info : ", t.getMessage());
                     Log.e("info : ", "Something got very very wrong");
 
@@ -379,7 +373,6 @@ public class ConfirmTransfer extends DialogFragment {
 
                     errorTextView.setText("Error while checking for merchant occured");
                     errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
                 }
             });
 

@@ -315,12 +315,12 @@ public class TransferMoney extends Fragment {
             if(validateForm()){
             String amountEntered = etAmount.getText().toString();
             amount = Float.parseFloat(amountEntered);
+            phoneNumber = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
 
             if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("Bank")){
 
                 if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     if(validateBankTransFerForm()) {
-                        phoneNumber = getString(R.string.phone_number_code) + etMobileMoneyNumber.getText().toString();
                         beneficiary_name = etBeneficiaryName.getText().toString();//required for Mobile Money
                         account_name = etAccountName.getText().toString();//required for Bank
                         account_number = etAccountNumber.getText().toString();//required for Bank
@@ -493,13 +493,13 @@ public class TransferMoney extends Fragment {
             Toast.makeText(context,"Select transfer to",Toast.LENGTH_LONG).show();
             return false;
 
-        }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
-            Toast.makeText(context,"Select beneficiary",Toast.LENGTH_LONG).show();
-            return false;
-
         }else if(etAmount.getText().toString().isEmpty()){
             etAmount.setError("Required");
             return false;
+        }else if( !spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Account") && spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Toast.makeText(context,"Select beneficiary",Toast.LENGTH_LONG).show();
+            return false;
+
         }else{
             return true;
         }
