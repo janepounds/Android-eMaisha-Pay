@@ -1,6 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +21,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.WalletTransactionsListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
@@ -39,6 +40,7 @@ import retrofit2.Response;
 public class WalletTransactionsListFragment extends Fragment {
     private static final String TAG = "WalletTransactionsList";
     private Context context;
+    DialogLoader dialogLoader;
 
 
     RecyclerView.Adapter statementAdapter;
@@ -62,6 +64,7 @@ public class WalletTransactionsListFragment extends Fragment {
         WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
+        dialogLoader = new DialogLoader(context);
 
         if( getArguments()!=null)
             appTitle=getArguments().getString(key_title);
@@ -131,12 +134,8 @@ public class WalletTransactionsListFragment extends Fragment {
     }
 
     private void actualStatementData() {
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -170,7 +169,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     }
 
 
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 } else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
@@ -180,13 +179,13 @@ public class WalletTransactionsListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 
@@ -194,12 +193,7 @@ public class WalletTransactionsListFragment extends Fragment {
     }
 
     private void getSettlements(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -227,7 +221,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     }
 
 
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 } else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
@@ -237,13 +231,13 @@ public class WalletTransactionsListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<WalletTransactionResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
     }
