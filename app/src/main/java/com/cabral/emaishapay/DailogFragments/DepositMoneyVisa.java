@@ -27,7 +27,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
@@ -52,7 +54,6 @@ public class DepositMoneyVisa extends DialogFragment  {
 
     Button addMoneyImg;
     TextView addMoneyTxt ,errorMsgTxt;
-    EditText cardNumberTxt,  cardexpiryTxt,  cardccvTxt, cardHolderNameTxt;
     Spinner spinner_select_card;
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
@@ -95,39 +96,12 @@ public class DepositMoneyVisa extends DialogFragment  {
         dialog = new DialogLoader(getContext());
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.wallet_add_money_amount);
-        cardNumberTxt=view.findViewById(R.id.add_money_creditCardNumber);
-        cardHolderNameTxt=view.findViewById(R.id.add_money_holder_name);
-        cardexpiryTxt=view.findViewById(R.id.add_money_card_expiry);
-        cardccvTxt=view.findViewById(R.id.add_money_card_cvv);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
         spinner_select_card = view.findViewById(R.id.spinner_select_card);
         card_details_layout = view.findViewById(R.id.card_details_layout);
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
         addMoneyImg.setText("Top Up");
 
-        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (filterLongEnough() && !cardexpiryTxt.getText().toString().contains("/")) {
-                    cardexpiryTxt.setText(cardexpiryTxt.getText().toString()+"/");
-                    int pos = cardexpiryTxt.getText().length();
-                    cardexpiryTxt.setSelection(pos);
-                }
-            }
-
-            private boolean filterLongEnough() {
-                return cardexpiryTxt.getText().toString().length() == 2;
-            }
-        };
-        cardexpiryTxt.addTextChangedListener(fieldValidatorTextWatcher);
 
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,18 +110,10 @@ public class DepositMoneyVisa extends DialogFragment  {
                     Snackbar.make(addMoneyImg, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
-                else if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
-
-                    card_no = cardNumberTxt.getText().toString();
-                    cvv = cardccvTxt.getText().toString();
-                    expiryDate = cardexpiryTxt.getText().toString();
-                }
 
                 if( spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New") ){
-                        //save card
-                        if (validateEntries()) {
-                            saveNewCard();
-                        }
+
+
                 }
                 else{
                     if(!addMoneyTxt.getText().toString().isEmpty() )
@@ -170,7 +136,17 @@ public class DepositMoneyVisa extends DialogFragment  {
 
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
                     //call add card
-                    card_details_layout.setVisibility(View.VISIBLE);
+                    //nvigate to add card fragment
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev =fm.findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    // Create and show the dialog.
+                    DialogFragment addCardDialog =new AddCardFragment();
+                    addCardDialog.show( ft, "dialog");
                 }
                 else {
                     for(int i = 0; i<cardItems.size();i++){
@@ -197,51 +173,6 @@ public class DepositMoneyVisa extends DialogFragment  {
         spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
 
         getCards();
-
-    }
-
-    private void saveNewCard() {
-
-        String identifier = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        String cvv = cardccvTxt.getText().toString().trim();
-        String expiry = cardexpiryTxt.getText().toString();
-        String account_name = cardHolderNameTxt.getText().toString();
-        String card_number = cardNumberTxt.getText().toString();
-
-
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        /*************RETROFIT IMPLEMENTATION**************/
-        Call<CardResponse> call = APIClient.getWalletInstance(getContext())
-                .saveCardInfo(access_token,
-                        identifier,
-                        card_number,
-                        cvv,
-                        expiry,
-                        account_name,
-                        getString(R.string.currency),
-                        request_id,
-                        category,
-                        "saveCard");
-
-        call.enqueue(new Callback<CardResponse>() {
-            @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                if (response.isSuccessful()) {
-                    String message = response.body().getMessage();
-                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-
-            }
-        });
 
     }
 
@@ -501,38 +432,6 @@ public class DepositMoneyVisa extends DialogFragment  {
     }
 
 
-
-    public boolean validateEntries(){
-
-        if (cardHolderNameTxt.getText().toString().trim() == null || cardHolderNameTxt.getText().toString().trim().isEmpty()) {
-            cardHolderNameTxt.setError("Please enter valid value");
-            return false;
-
-        } else if (cardNumberTxt.getText().toString().trim() == null || cardNumberTxt.getText().toString().trim().isEmpty()
-                || cardNumberTxt.getText().toString().trim().length()<13 ){
-            cardNumberTxt.setError("Please enter valid value");
-            return false;
-        }
-
-        else if (cardexpiryTxt.getText().toString().trim() == null || cardexpiryTxt.getText().toString().trim().isEmpty()){
-            cardexpiryTxt.setError("Please select valid value");
-            return false;
-        }
-
-        else if (cardccvTxt.getText().toString().trim() == null || cardccvTxt.getText().toString().trim().isEmpty()
-                || cardccvTxt.getText().toString().trim().length()<3 ){
-            cardccvTxt.setError("Please enter valid value");
-            return false;
-        }else {
-
-            return true;
-        }
-
-
-
-
-
-    }
 
 }
 
