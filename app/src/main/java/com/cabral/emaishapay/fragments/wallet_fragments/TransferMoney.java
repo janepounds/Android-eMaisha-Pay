@@ -233,6 +233,9 @@ public class TransferMoney extends Fragment {
                             account_number =beneficiariesList.get(i).getAccount_number();
                             bankk =beneficiariesList.get(i).getBank();
                             branch =beneficiariesList.get(i).getBank_branch();
+                            beneficiary_name=beneficiariesList.get(i).getAccount_name();
+                            account_name=beneficiariesList.get(i).getAccount_name();
+
                             if(beneficiariesList.get(i).getTransaction_type().equalsIgnoreCase("mobile money")){
                                 phoneNumber = beneficiariesList.get(i).getAccount_number();
 
@@ -613,12 +616,14 @@ public class TransferMoney extends Fragment {
         dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
-        /******************RETROFIT IMPLEMENTATION***********************/
+
+
         Call<BeneficiaryResponse> call = APIClient.getWalletInstance(context).getBeneficiaries(
                 access_token,
                 spTransferTo.getSelectedItem().toString(),
                 request_id,
                 "getBeneficiaries");
+
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {

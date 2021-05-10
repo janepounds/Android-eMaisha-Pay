@@ -204,6 +204,7 @@ public class ConfirmTransfer extends DialogFragment {
             getReceiverName(phoneNumber);
         }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")) {
             receiverNameTextView.setText(beneficiary_name);
+            receiverPhoneNumber.setText(account_number);
         }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
             receiverNameTextView.setText(beneficiary_name);
             receiverPhoneNumber.setText(beneficiary_bank_phone_number);
