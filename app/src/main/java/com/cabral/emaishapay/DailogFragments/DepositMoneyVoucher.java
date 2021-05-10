@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -42,7 +42,7 @@ public class DepositMoneyVoucher extends DialogFragment {
     EditText voucherTxt;
 
     double balance;
-    ProgressDialog dialog;
+    DialogLoader dialogLoader;
     Context activity;
     public DepositMoneyVoucher(Context context, double balance){
         this.activity=context;   this.balance=balance;
@@ -70,6 +70,7 @@ public class DepositMoneyVoucher extends DialogFragment {
         close.setOnClickListener(v -> dismiss());
 
         builder.setView(view);
+        dialogLoader = new DialogLoader(getContext());
 
         initializeForm( view);
 
@@ -91,14 +92,11 @@ public class DepositMoneyVoucher extends DialogFragment {
             }
         });
 
-        dialog = new ProgressDialog(this.activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Processing the transaction..");
-        dialog.setCancelable(false);
+
     }
 
     public void initiateDeposit(){
-        dialog.show();
+        dialogLoader.showProgressDialog();
         /************RETROFIT IMPLEMENTATION*************/
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -132,7 +130,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
                     Log.e("info 500", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }else if(response.code() ==406){
                     if (response.errorBody() != null) {
 
@@ -144,7 +142,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
                     Log.e("info 406", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                 }
                 else{
                     errorMsgTxt.setText("Error Occurred Try again later");
@@ -156,7 +154,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
                 }
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 }
 
 
@@ -172,7 +170,7 @@ public class DepositMoneyVoucher extends DialogFragment {
 
                 errorMsgTxt.setText("Error Occurred Try again later");
                 errorMsgTxt.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 

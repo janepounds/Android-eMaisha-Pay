@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -25,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.BeneficiariesListFragment;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
@@ -52,6 +52,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     private List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
     String benficiary_id;
     public  int currentFragment;
+    DialogLoader dialogLoader;
 
     public BeneficiariesDetailsDialogFragment(){
     }
@@ -77,6 +78,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.layout_beneficiaries_details, null);
         builder.setView(view);
 
+
         initializeView(view);
         return builder.create();
     }
@@ -84,6 +86,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       //  getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.onViewCreated(view, savedInstanceState);
+        dialogLoader = new DialogLoader(context);
 
 
     }
@@ -217,12 +220,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
     public void deleteBeneficiary(String id){
         //call endpoint for deleting beneficiary
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
@@ -234,7 +232,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus() == 0) {
-                        dialog.dismiss();
+                        dialogLoader.hideProgressDialog();
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         BeneficiariesDetailsDialogFragment.this.dismiss();
                         //redirect  to beneficiary list
@@ -250,12 +248,12 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
 
-                        dialog.dismiss();
+                        dialogLoader.hideProgressDialog();
                         BeneficiariesDetailsDialogFragment.this.dismiss();
                     }
 
                 }else if(response.code()==401){
-                    dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                     Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
 
                     //redirect to auth
@@ -267,7 +265,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
         });

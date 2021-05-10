@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletLoansListFragment;
 import com.cabral.emaishapay.models.LoanPayResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -43,6 +43,7 @@ public class PayLoan extends DialogFragment {
     Button saveBtn;
     Context activity;
     FragmentManager fm;
+    DialogLoader dialogLoader;
 
     public PayLoan(Context context, FragmentManager supportFragmentManager){
         this.activity=context;
@@ -68,6 +69,7 @@ public class PayLoan extends DialogFragment {
         View view =inflater.inflate(R.layout.wallet_pay_loan, null);
 
         builder.setView(view);
+        dialogLoader = new DialogLoader(getContext());
 
         initializeForm( view);
 
@@ -93,12 +95,7 @@ public class PayLoan extends DialogFragment {
     }
 
     public void processPayment(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
 
             float amount = Float.parseFloat(totalAmountTxt.getText().toString());
 
@@ -116,7 +113,7 @@ public class PayLoan extends DialogFragment {
                 @Override
                 public void onResponse(Call<LoanPayResponse> call, Response<LoanPayResponse> response) {
                     if(response.code()== 200){
-                        dialog.dismiss();
+                        dialogLoader.hideProgressDialog();
                         FragmentManager fragmentManager = getParentFragmentManager();
                         Fragment fragment = new WalletLoansListFragment();
 
@@ -131,7 +128,7 @@ public class PayLoan extends DialogFragment {
                         else{
                             errorTextView.setText(response.body().getMessage());}
                             errorTextView.setVisibility(View.VISIBLE);
-                             dialog.dismiss();
+                    dialogLoader.hideProgressDialog();
 
 
                 }

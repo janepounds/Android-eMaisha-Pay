@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -744,15 +743,10 @@ public class ConfirmTransfer extends DialogFragment {
     }
 
     public void initiateWalletTransfer(final String phoneNumber, final double amount, String user_pin) {
-        ProgressDialog dialog;
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         /*****RETROFIT IMPLEMENTATION*****/
         String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
 
