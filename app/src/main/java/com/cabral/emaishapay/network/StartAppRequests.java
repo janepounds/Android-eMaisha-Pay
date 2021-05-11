@@ -340,63 +340,59 @@ public class StartAppRequests {
 
 
         //deviceID = FirebaseInstanceId.getInstance().getToken();
-        if(user_id!=null)
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+        if(user_id!=null){
+            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+            String request_id = WalletHomeActivity.generateRequestId();
+            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
+            Call<UserData> call = APIClient.getWalletInstance(context)
+                    .registerDeviceToFCM
+                            (       access_token,
+                                    deviceID,
+                                    device.getDeviceType(),
+                                    user_id,
+                                    device.getDeviceRAM(),
+                                    device.getDeviceProcessors(),
+                                    device.getDeviceAndroidOS(),
+                                    device.getDeviceLocation(),
+                                    device.getDeviceModel(),
+                                    device.getDeviceManufacturer(),
+                                    device.getDeviceSystemOS(),
+                                    request_id,
+                                    category,
+                                    "registerdevices"
+
+                            );
+
+
+            call.enqueue(new Callback<UserData>() {
                 @Override
-                public void onSuccess(InstanceIdResult instanceIdResult) {
-                    String deviceID =instanceIdResult.getToken();
-                    String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                    String request_id = WalletHomeActivity.generateRequestId();
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+                public void onResponse(Call<UserData> call, Response<UserData> response) {
 
-                    Call<UserData> call = APIClient.getWalletInstance(context)
-                            .registerDeviceToFCM
-                                    (       access_token,
-                                            deviceID,
-                                            device.getDeviceType(),
-                                            user_id,
-                                            device.getDeviceRAM(),
-                                            device.getDeviceProcessors(),
-                                            device.getDeviceAndroidOS(),
-                                            device.getDeviceLocation(),
-                                            device.getDeviceModel(),
-                                            device.getDeviceManufacturer(),
-                                            device.getDeviceSystemOS(),
-                                            request_id,
-                                            category,
-                                            "registerdevices"
+                    if (response.isSuccessful()) {
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
 
-                                    );
+                            Log.i("notification", response.body().getMessage());
 
-
-                    call.enqueue(new Callback<UserData>() {
-                        @Override
-                        public void onResponse(Call<UserData> call, Response<UserData> response) {
-
-                            if (response.isSuccessful()) {
-                                if (response.body().getStatus().equalsIgnoreCase("1")) {
-
-                                    Log.i("notification", response.body().getMessage());
-
-                                }
-                                else {
-
-                                    Log.i("notification", response.body().getMessage());
-
-                                }
-                            }
-                            else {
-                                Log.i("notification", response.errorBody().toString());
-                            }
                         }
+                        else {
 
-                        @Override
-                        public void onFailure(Call<UserData> call, Throwable t) {
+                            Log.i("notification", response.body().getMessage());
+
+                        }
+                    }
+                    else {
+                        Log.i("notification", response.errorBody().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserData> call, Throwable t) {
 //                Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
-                        }
-                    });
                 }
             });
+        }
+
     }
 
 

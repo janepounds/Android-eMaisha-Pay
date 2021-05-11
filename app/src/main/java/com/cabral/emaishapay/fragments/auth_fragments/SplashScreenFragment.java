@@ -191,6 +191,8 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
                     new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("SplashScreenMJ", "Has active internet" + Utilities.hasActiveInternetConnection(context));
+
                             if (Utilities.hasActiveInternetConnection(context)) {
                                 startAppRequests.StartRequests();
                                 AppExecutors.getInstance().mainThread().execute(
@@ -203,8 +205,6 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
                                                 Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
                                                 if (!prefsManager.isUserLoggedIn()) {
-                                                    //if(AuthActivity.navController.getCurrentDestination().getId() != R.id.splashScreenFragment)
-
 
                                                     if (prefsManager.isFirstTimeLaunch()) {
                                                         AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
