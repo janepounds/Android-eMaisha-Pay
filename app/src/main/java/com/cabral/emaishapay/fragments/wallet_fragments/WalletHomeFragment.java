@@ -92,9 +92,11 @@ public class WalletHomeFragment extends Fragment {
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
-        Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
-        if(WalletHomeActivity.Banners!=null)
+
+        if(WalletHomeActivity.Banners!=null){
+            Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
             ImageSlider("Ads", WalletHomeActivity.Banners );
+        }
 
         return binding.getRoot();
     }
