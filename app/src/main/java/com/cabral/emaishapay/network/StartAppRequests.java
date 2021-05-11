@@ -143,7 +143,7 @@ public class StartAppRequests {
         }else{
 
             String category=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, context);
-            if(category.equalsIgnoreCase("Default")){
+            if(category.equalsIgnoreCase("Default") || TextUtils.isEmpty(category)){
                 return;
             }
         }
