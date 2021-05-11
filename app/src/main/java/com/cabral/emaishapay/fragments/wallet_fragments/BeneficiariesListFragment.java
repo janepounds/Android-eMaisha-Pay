@@ -131,6 +131,7 @@ public class BeneficiariesListFragment extends Fragment {
     }
 
     public void RequestBeneficiaries(){
+        dialogLoader = new DialogLoader(context);
         dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();

@@ -80,10 +80,8 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
 
         Boolean goToFlash=requireActivity().getIntent().getBooleanExtra("flash",true);
         if(goToFlash){
-            // Start MyTask after 3 seconds
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                handleAppRequests();
-            }, 3000);
+            handleAppRequests();
+
         }else {
             setAppConfig();
         }
