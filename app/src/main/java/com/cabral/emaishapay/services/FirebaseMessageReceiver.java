@@ -28,7 +28,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         Log.e("NEW_TOKEN", s);
         if (ConstantValues.DEFAULT_NOTIFICATION.equalsIgnoreCase("fcm")) {
 
-            StartAppRequests.RegisterDeviceForFCM(getApplicationContext());
+            StartAppRequests.RegisterDeviceForFCM(getApplicationContext(),s);
 
         }
 

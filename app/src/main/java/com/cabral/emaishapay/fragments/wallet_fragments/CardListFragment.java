@@ -100,7 +100,7 @@ public class CardListFragment extends Fragment {
 
 
     public void RequestCards(){
-        dialogLoader.hideProgressDialog();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -109,6 +109,8 @@ public class CardListFragment extends Fragment {
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+
                 if(response.isSuccessful()){
 
                     try {
@@ -127,7 +129,6 @@ public class CardListFragment extends Fragment {
                         cardListAdapter.notifyDataSetChanged();
                         updateCardView(cardlists.size());
                     }
-                    dialogLoader.hideProgressDialog();
                 }else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
@@ -137,7 +138,6 @@ public class CardListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialogLoader.hideProgressDialog();
                 }
 
             }
