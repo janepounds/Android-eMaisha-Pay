@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -155,7 +155,7 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         // Binding Layout View
 
         if (allCategoriesList.isEmpty()) {
-            new MyTask().execute();
+            loadCategories();
 
         }
 
@@ -165,6 +165,36 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         return view;
     }
 
+    private void loadCategories() {
+        DialogLoader dialogLoader = new DialogLoader(getContext());
+        dialogLoader.showProgressDialog();
+        imgCategoriesPlaceholder.startAnimation(animRotate);
+
+                AppExecutors.getInstance().NetworkIO().execute(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Utilities.hasActiveInternetConnection(getContext())) {
+                                    // Call the method of StartAppRequests class to process App Startup Requests
+                                    startAppRequests.RequestAllCategories();
+
+                                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                                continueSetup();
+                                                dialogLoader.hideProgressDialog();
+
+                                        }
+                                    });
+
+                                }
+
+                            }
+
+                        }
+                );
+
+    }
 
 
     @Override
@@ -194,39 +224,6 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
 
 
-    private class MyTask extends AsyncTask<String, Void, String> {
-
-        DialogLoader dialogLoader = new DialogLoader(getContext());
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialogLoader.showProgressDialog();
-            imgCategoriesPlaceholder.startAnimation(animRotate);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            // Check for Internet Connection from the static method of Helper class
-            if (Utilities.hasActiveInternetConnection(getContext())) {
-                // Call the method of StartAppRequests class to process App Startup Requests
-                startAppRequests.RequestAllCategories();
-
-                return "1";
-            } else {
-                return "0";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if (result.equalsIgnoreCase("1")) {
-                continueSetup();
-                dialogLoader.hideProgressDialog();
-            }
-        }
-    }
 
 
 
