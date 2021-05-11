@@ -333,7 +333,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
         }
         else {
-            Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
         }
     }
