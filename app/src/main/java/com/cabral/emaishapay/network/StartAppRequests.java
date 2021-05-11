@@ -330,7 +330,7 @@ public class StartAppRequests {
 
     //*********** Register Device to Admin Panel with the Device's Info ********//
 
-    public static void RegisterDeviceForFCM(final Context context) {
+    public static void RegisterDeviceForFCM(final Context context, String deviceID) {
 
 
 
@@ -348,6 +348,7 @@ public class StartAppRequests {
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
                     Call<UserData> call = APIClient.getWalletInstance(context)
                             .registerDeviceToFCM
                                     (       access_token,
@@ -366,6 +367,7 @@ public class StartAppRequests {
                                             "registerdevices"
 
                                     );
+
 
                     call.enqueue(new Callback<UserData>() {
                         @Override
