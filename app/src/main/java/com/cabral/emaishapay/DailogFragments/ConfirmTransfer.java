@@ -782,7 +782,26 @@ public class ConfirmTransfer extends DialogFragment {
 
                 } else if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("0")){
                     dialog.dismiss();
-                    Snackbar.make(serviceTextView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
+                    final Dialog dialog = new Dialog(activity);
+                    dialog.setContentView(R.layout.dialog_failure_message);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                    text.setText(response.body().getMessage());
+
+
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+
+                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                            startActivity(goToWallet);
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    dialog.show();
+
                 }
                 else if(response.code() == 401) {
                     TokenAuthFragment.startAuth( true);
