@@ -173,7 +173,7 @@ public class BeneficiariesListFragment extends Fragment {
                     }
 
                 }else if (response.code() == 401) {
-
+                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
@@ -181,7 +181,7 @@ public class BeneficiariesListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialogLoader.hideProgressDialog();
+
                 }
 
             }
