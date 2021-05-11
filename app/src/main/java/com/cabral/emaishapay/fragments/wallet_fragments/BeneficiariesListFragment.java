@@ -131,6 +131,7 @@ public class BeneficiariesListFragment extends Fragment {
     }
 
     public void RequestBeneficiaries(){
+        dialogLoader = new DialogLoader(context);
         dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -145,6 +146,7 @@ public class BeneficiariesListFragment extends Fragment {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
 
                     try {
 
@@ -169,9 +171,9 @@ public class BeneficiariesListFragment extends Fragment {
                         beneficiariesListAdapter.notifyDataSetChanged();
 
                     }
-                    dialogLoader.hideProgressDialog();
-                }else if (response.code() == 401) {
 
+                }else if (response.code() == 401) {
+                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
@@ -179,7 +181,7 @@ public class BeneficiariesListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialogLoader.hideProgressDialog();
+
                 }
 
             }

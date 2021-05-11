@@ -78,7 +78,8 @@ public class StartAppRequests {
         RequestAllRegions();
         RequestStaticPagesData();
         SyncProductData();
-        
+
+        Log.d("SplashScreenV", "end StartRequests" );
     }
 
     private void RequestBanners() {
