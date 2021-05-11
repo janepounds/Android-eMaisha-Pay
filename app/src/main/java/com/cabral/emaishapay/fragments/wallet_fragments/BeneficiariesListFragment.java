@@ -146,6 +146,7 @@ public class BeneficiariesListFragment extends Fragment {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
 
                     try {
 
@@ -170,7 +171,7 @@ public class BeneficiariesListFragment extends Fragment {
                         beneficiariesListAdapter.notifyDataSetChanged();
 
                     }
-                    dialogLoader.hideProgressDialog();
+
                 }else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
