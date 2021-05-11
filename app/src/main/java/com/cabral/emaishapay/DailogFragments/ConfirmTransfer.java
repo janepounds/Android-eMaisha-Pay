@@ -758,6 +758,7 @@ public class ConfirmTransfer extends DialogFragment {
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
+                dialogLoader.hideProgressDialog();
                 if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("1")){
                     dialog.dismiss();
                     final Dialog dialog = new Dialog(activity);
@@ -812,6 +813,7 @@ public class ConfirmTransfer extends DialogFragment {
                 errorTextView.setText("Error Occurred Try again later");
                 errorTextView.setVisibility(View.VISIBLE);
                 dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 
