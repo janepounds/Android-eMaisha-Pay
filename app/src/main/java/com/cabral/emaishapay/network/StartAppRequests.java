@@ -193,6 +193,7 @@ public class StartAppRequests {
                 .postProduct(access_token,unique_product_id,user_id,product_id,product_buy_price,product_sell_price,
                         product_supplier,Integer.parseInt(product_stock),product_manufacturer,product_category,product_name
                 );
+
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -332,14 +333,9 @@ public class StartAppRequests {
 
     public static void RegisterDeviceForFCM(final Context context, String deviceID) {
 
-
-
         final DeviceInfo device = Utilities.getDeviceInfo(context);
         final String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
 
-
-
-        //deviceID = FirebaseInstanceId.getInstance().getToken();
         if(user_id!=null){
             String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
             String request_id = WalletHomeActivity.generateRequestId();
