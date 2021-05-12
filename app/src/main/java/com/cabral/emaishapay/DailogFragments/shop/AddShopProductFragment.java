@@ -3,7 +3,6 @@ package com.cabral.emaishapay.DailogFragments.shop;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -859,11 +858,7 @@ public class AddShopProductFragment extends DialogFragment {
         txtAddProdcut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgressDialog progressDialog = new ProgressDialog(getContext());
-                progressDialog.setMessage("Loading...");
-                progressDialog.setTitle("Please Wait");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
+                dialogLoader.showProgressDialog();
 
                 String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
@@ -891,7 +886,7 @@ public class AddShopProductFragment extends DialogFragment {
 
                 String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                 if(!is_validAddProductForm()){
-                    progressDialog.dismiss();
+                    dialogLoader.hideProgressDialog();
                     return;
                 }
                 else {
@@ -929,7 +924,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                 @Override
                                                 public void run() {
                                                     if (update_product>0) {
-                                                        progressDialog.dismiss();
+                                                        dialogLoader.hideProgressDialog();
                                                         AddShopProductFragment.this.dismiss();
                                                         Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
@@ -937,7 +932,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                         //startActivity(intent);
                                                         // finish();
                                                     } else {
-                                                        progressDialog.dismiss();
+                                                        dialogLoader.hideProgressDialog();
                                                         AddShopProductFragment.this.dismiss();
                                                         Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
 
@@ -973,7 +968,7 @@ public class AddShopProductFragment extends DialogFragment {
                       AppExecutors.getInstance().diskIO().execute(new Runnable() {
                           @Override
                           public void run() {
-                              Log.w("savedProduct", product_name);
+                               //Log.w("savedProduct", product_name);
                               long checkAddedProduct=viewModel.addProduct(new EcProduct(
                                       unique_id,
                                       product_id+"",
@@ -995,12 +990,12 @@ public class AddShopProductFragment extends DialogFragment {
                                   @Override
                                   public void run() {
                                       if (checkAddedProduct>0) {
-                                          progressDialog.dismiss();
+                                          dialogLoader.hideProgressDialog();
                                           Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
 
                                           AddShopProductFragment.this.dismiss();
                                       } else {
-                                          progressDialog.dismiss();
+                                          dialogLoader.hideProgressDialog();
                                           Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();
 
                                       }

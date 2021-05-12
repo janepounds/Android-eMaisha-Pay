@@ -20,6 +20,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.cabral.emaishapay.constants.ConstantValues.WALLET_API_DOMAIN;
 import static com.cabral.emaishapay.constants.ConstantValues.WALLET_DOMAIN;
 
 
@@ -79,13 +80,13 @@ public class APIClient {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(WALLET_DOMAIN)
+                    .baseUrl(WALLET_API_DOMAIN)
                     .client(okHttpClient)
                     .callFactory(new Call.Factory() {
                         @Override
                         public Call newCall(Request request) {
                             Set<String> paramList=request.url().queryParameterNames();
-                            //Log.w("RequestLogged", request.url().toString());
+                            // //Log.w("RequestLogged", request.url().toString());
                             //Request encryptRequest = EncryptCallHelper.encryptRequest(request);
                             return okHttpClient.newCall(request);
                         }

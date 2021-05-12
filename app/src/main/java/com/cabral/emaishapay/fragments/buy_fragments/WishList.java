@@ -1,8 +1,9 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +22,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapterRemovable;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
@@ -33,6 +37,7 @@ import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -137,8 +142,10 @@ public class WishList extends Fragment {
             public void onLoadMore(int current_page) {
                 progressBar.setVisibility(View.VISIBLE);
 
+
                 // Execute LoadMoreTask
-                new LoadMoreTask(current_page).execute();
+                loadMore(current_page);
+
             }
 
         });
@@ -147,6 +154,28 @@ public class WishList extends Fragment {
         return rootView;
     }
 
+    private String loadMore(int current_page) {
+        try{
+            AppExecutors.getInstance().NetworkIO().execute(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestWishList(current_page);
+
+
+                        }
+                    }
+            );
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return "Failed";
+
+        }finally {
+            return "All Done";
+        }
+
+
+    }
 
 
     //*********** Adds Products returned from the Server to the FavouriteProductsList ********//
@@ -248,41 +277,6 @@ public class WishList extends Fragment {
 
     /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
 
-    private class LoadMoreTask extends AsyncTask<String, Void, String> {
-
-        int page_number;
-
-        private LoadMoreTask(int page_number) {
-            this.page_number = page_number;
-        }
 
 
-        //*********** Runs on the UI thread before #doInBackground() ********//
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-
-        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            // Request for User's Favourite Products
-            RequestWishList(page_number);
-
-            return "All Done!";
-        }
-
-
-        //*********** Runs on the UI thread after #doInBackground() ********//
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
-    }
 }

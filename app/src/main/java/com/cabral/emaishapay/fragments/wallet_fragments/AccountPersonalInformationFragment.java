@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +32,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentPersonalInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -52,7 +52,7 @@ import retrofit2.Response;
 public class AccountPersonalInformationFragment extends Fragment {
     private static final String TAG = "PersonalInformation";
     private FragmentPersonalInformationBinding binding;
-    private ProgressDialog progressDialog;
+    DialogLoader dialogLoader;
     String encodedImageID = "N/A";
     private String selectedGender,displayGender;
 
@@ -163,14 +163,11 @@ public class AccountPersonalInformationFragment extends Fragment {
 
         binding.cancelButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
+       dialogLoader = new DialogLoader(getContext());
     }
 
     public void saveInfo() {
-        progressDialog.show();
+        dialogLoader.showProgressDialog();
         String gender = binding.gender.getSelectedItem().toString();
         if(gender.equalsIgnoreCase("Male")){
             selectedGender = "M";
@@ -199,13 +196,13 @@ public class AccountPersonalInformationFragment extends Fragment {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                     Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
                 }
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
             @Override
             public void onFailure(@NotNull Call<AccountResponse> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: failed" + t.getMessage());
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
                 Toast.makeText(getContext(), "Network Failure!", Toast.LENGTH_LONG).show();
             }
         });

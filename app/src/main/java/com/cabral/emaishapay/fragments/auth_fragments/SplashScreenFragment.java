@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.auth_fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -35,8 +34,6 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
 
     private static final String TAG = "SplashScreen";
 
-    ProgressBar progressBar;
-    SplashScreenFragment.MyTask myTask;
     StartAppRequests startAppRequests;
     MyAppPrefsManager myAppPrefsManager;
     Animation animFade;
@@ -83,11 +80,8 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
 
         Boolean goToFlash=requireActivity().getIntent().getBooleanExtra("flash",true);
         if(goToFlash){
-            // Start MyTask after 3 seconds
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                myTask = new MyTask();
-                myTask.execute();
-            }, 3000);
+            handleAppRequests();
+
         }else {
             setAppConfig();
         }
@@ -190,56 +184,48 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
         }
     }
 
-    /************* MyTask is Inner Class, that handles StartAppRequests on Background Thread *************/
+    private void handleAppRequests() {
 
-    public class MyTask extends AsyncTask<String, Void, String> {
+            // Call the method of StartAppRequests class to process App Startup Requests
+            AppExecutors.getInstance().NetworkIO().execute(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("SplashScreenMJ", "Has active internet" + Utilities.hasActiveInternetConnection(context));
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+                            if (Utilities.hasActiveInternetConnection(context)) {
+                                startAppRequests.StartRequests();
+                                AppExecutors.getInstance().mainThread().execute(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                setAppConfig();
 
-        @Override
-        protected String doInBackground(String... params) {
+                                                MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
+                                                Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
-            // Check for Internet Connection from the static method of Helper class
-            if (Utilities.hasActiveInternetConnection(context)) {
-                // Call the method of StartAppRequests class to process App Startup Requests
-                startAppRequests.StartRequests();
-                return "1";
-            } else {
-                return "0";
-            }
-        }
+                                                if (!prefsManager.isUserLoggedIn()) {
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+                                                    if (prefsManager.isFirstTimeLaunch()) {
+                                                        AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
+                                                    } else {
 
-            setAppConfig();
-
-            MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
-            Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
-
-            if (!prefsManager.isUserLoggedIn()) {
-                //if(AuthActivity.navController.getCurrentDestination().getId() != R.id.splashScreenFragment)
-
-
-                if(prefsManager.isFirstTimeLaunch()){
-                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
-                }else{
-
-                    AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
-                }
-            } else {
-                //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
-                startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));
-                getActivity().finish();
-            }
+                                                        AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
+                                                    }
+                                                } else {
+                                                    //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
+                                                    startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));
+                                                    getActivity().finish();
+                                                }
+                                            }
+                                        }
+                                );
+                            }
+                        }
+                    }
+            );
 
 
-        }
     }
-
 
 }

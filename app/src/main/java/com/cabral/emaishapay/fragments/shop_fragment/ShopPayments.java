@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments.shop_fragment;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.os.CountDownTimer;
+
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -359,7 +358,7 @@ public class ShopPayments extends Fragment implements
             } else if (MobileMoney.isChecked()) {
                 if(validateMobileMoney()) {
                     selectedPaymentMethod = "Mobile Money";
-                    Log.w("eMaishaMM", chargeAmount + " " + getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString());
+                     //Log.w("eMaishaMM", chargeAmount + " " + getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString());
                     initiateMobileMoneyCharge(getString(R.string.phone_number_code) + monileMoneyPhoneEdtx.getText().toString(), chargeAmount);
                     //proceedOrder();
                 }
@@ -789,7 +788,7 @@ public class ShopPayments extends Fragment implements
                 case RaveConstants.WEB_VERIFICATION_REQUEST_CODE:
                     // Web authentication complete, proceed
 
-                    Log.w("UnkownResult",".......Web authentication complete ");
+                     //Log.w("UnkownResult",".......Web authentication complete ");
                     cardPayManager.onWebpageAuthenticationComplete();
                     break;
                 case RaveConstants.OTP_REQUEST_CODE:
@@ -799,7 +798,7 @@ public class ShopPayments extends Fragment implements
                     break;
             }
         } else {
-            Log.w("UnkownResult",".......Unkown Result ");
+             //Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
             otpDialogLoader.onActivityResult(requestCode, resultCode, data);
         }
@@ -893,7 +892,7 @@ public class ShopPayments extends Fragment implements
 
     @Override
     public void showAuthenticationWebPage(String authenticationUrl) {
-        Log.w("Loading auth web page: ",authenticationUrl);
+         //Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 

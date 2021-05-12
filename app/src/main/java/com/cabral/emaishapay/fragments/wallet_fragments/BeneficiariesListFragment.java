@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,12 +18,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.BeneficiariesListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,6 +46,8 @@ public class BeneficiariesListFragment extends Fragment {
     private BeneficiariesListAdapter beneficiariesListAdapter;
     private ConstraintLayout layoutPlaceholder;
     private List<BeneficiaryResponse.Beneficiaries> beneficiariesList = new ArrayList();
+    ImageView aboutBeneficiaries;
+    DialogLoader dialogLoader;
 
     Toolbar toolbar;
     public BeneficiariesListFragment() {
@@ -60,6 +63,7 @@ public class BeneficiariesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         View rootView =inflater.inflate(R.layout.fragment_beneficiaries_list, container, false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
@@ -69,6 +73,7 @@ public class BeneficiariesListFragment extends Fragment {
         btnAddBeneficiary = rootView.findViewById(R.id.btn_add_beneficiary);
         recyclerView   =rootView.findViewById(R.id.recyclerView_beneficiaries_fragment);
         toolbar = rootView.findViewById(R.id.toolbar_beneficiaries_list);
+        aboutBeneficiaries = rootView.findViewById(R.id.about_beneficiary);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Beneficiaries");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,6 +82,35 @@ public class BeneficiariesListFragment extends Fragment {
 
         layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
 
+        dialogLoader = new DialogLoader(context);
+        aboutBeneficiaries.setOnClickListener(v->{
+
+            //Go to coming soon
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            View dialogView = getLayoutInflater().inflate(R.layout.layout_coming_soon, null);
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+
+            alertDialog.show();
+
+
+        });
 
 
         btnAddBeneficiary.setOnClickListener(v -> {
@@ -89,7 +123,7 @@ public class BeneficiariesListFragment extends Fragment {
             }
             ft.addToBackStack(null);
             // Create and show the dialog.
-            DialogFragment addCardDialog =new AddBeneficiary();
+            DialogFragment addCardDialog =new AddBeneficiary(null);
             addCardDialog.show( ft, "dialog");
 
         });
@@ -97,12 +131,8 @@ public class BeneficiariesListFragment extends Fragment {
     }
 
     public void RequestBeneficiaries(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader = new DialogLoader(context);
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -116,6 +146,7 @@ public class BeneficiariesListFragment extends Fragment {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
 
                     try {
 
@@ -140,9 +171,9 @@ public class BeneficiariesListFragment extends Fragment {
                         beneficiariesListAdapter.notifyDataSetChanged();
 
                     }
-                    dialog.dismiss();
-                }else if (response.code() == 401) {
 
+                }else if (response.code() == 401) {
+                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
@@ -150,14 +181,14 @@ public class BeneficiariesListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
+
                 }
 
             }
 
             @Override
             public void onFailure(Call<BeneficiaryResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
         });
 
@@ -166,4 +197,10 @@ public class BeneficiariesListFragment extends Fragment {
 
 
     }
+
+
+
+
+
+
 }

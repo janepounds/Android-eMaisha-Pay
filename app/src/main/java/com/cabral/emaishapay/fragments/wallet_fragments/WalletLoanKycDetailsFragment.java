@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +28,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.cabral.emaishapay.R;
 
@@ -55,7 +55,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     private static final int GALLERY_REQUESTED_SELFIE = 3;
     private static final int GALLERY_REQUESTED_FARM_PHOTO = 5;
 
-    ProgressDialog dialog;
+    DialogLoader dialogLoader;
     String[] descriptionData = {"Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String[] descriptionData2 = {"User\nDetails","Loan\nDetails", "Farming\nDetails", "Preview", "KYC\nDetails"};
     String filePath, encodedFrontIdImageID,encodedBackIdImageID,encodedSelfieIdImageID,encodedlfarmImage;
@@ -123,6 +123,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
 
         }
+        dialogLoader = new DialogLoader(context);
 
         //Second hidden progress bar for loan application with 5 states
 
@@ -156,10 +157,6 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     }
 
     public void initializeActivity() {
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(true);
 
         loanProgressBarId.setStateDescriptionData(descriptionData);
 
@@ -289,7 +286,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         JSONObject requestObject = new JSONObject();
         try {
-            dialog.show();
+            dialogLoader.showProgressDialog();
 
             if (!encodedBackIdImageID.isEmpty()) {
                 loanApplication.setNationalIDBackPic(encodedBackIdImageID);
@@ -321,7 +318,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             requestObject.put("loanParams", loanApplication);
 
         }catch (Exception e){
-            Log.w("Error", e.getMessage());
+             //Log.w("Error", e.getMessage());
         }
 
 
@@ -388,7 +385,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                     }
                 }
                 textViewErrorMessage.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
 
@@ -399,7 +396,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
                 textViewErrorMessage.setText("Error Occurred Try again later");
                 textViewErrorMessage.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
         });

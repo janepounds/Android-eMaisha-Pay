@@ -2,10 +2,8 @@ package com.cabral.emaishapay.DailogFragments.shop;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +26,7 @@ import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.modelviews.ShopProductsModelView;
 
@@ -55,6 +54,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
     TextView product_units;
     private Context context;
     private EcProduct  productData;
+    DialogLoader dialogLoader;
     Button delete_button,update_button,re_stock;
     EditText qty;
     ShopProductsModelView viewModel;
@@ -83,6 +83,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dialogLoader = new DialogLoader(context);
 
 
     }
@@ -153,13 +154,9 @@ public class ShopProductPreviewDialog extends DialogFragment {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ProgressDialog progressDialog = new ProgressDialog(getContext());
-                        progressDialog.setMessage("Loading...");
-                        progressDialog.setTitle("Please Wait");
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.show();
+                        dialogLoader.showProgressDialog();
 
-                        restockProductStock(progressDialog,dialog);
+                        restockProductStock(dialogLoader,dialog);
 
                     }
                 });
@@ -218,7 +215,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
 
     }
 
-    private void restockProductStock(ProgressDialog progressDialog, Dialog dialog) {
+    private void restockProductStock(DialogLoader dialogLoader, Dialog dialog) {
         //call update endpoint
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String product_id = productData.getProduct_id();
@@ -248,13 +245,13 @@ public class ShopProductPreviewDialog extends DialogFragment {
                                     @Override
                                     public void run() {
                                         if (update_product>0) {
-                                            progressDialog.dismiss();
+                                            dialogLoader.hideProgressDialog();
                                             ShopProductPreviewDialog.this.dismiss();
                                             dialog.dismiss();
                                             Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
                                         } else {
-                                            progressDialog.dismiss();
+                                            dialogLoader.hideProgressDialog();
                                             dialog.dismiss();
                                             ShopProductPreviewDialog.this.dismiss();
                                             Toasty.error(getContext(), R.string.failed, Toast.LENGTH_SHORT).show();

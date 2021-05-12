@@ -333,7 +333,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
         }
         else {
-            Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Enter PIN!", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -501,7 +501,6 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onResponse(Call<WalletAuthenticationResponse> call, Response<WalletAuthenticationResponse> response) {
                 if(response.isSuccessful() && response.body().getStatus()==1 ){
                     smsResults =response.body().getData().getSms_results();
-                    //Call the OTP Dialog
                     otpDialogLoader=new OtpDialogLoader(PINManagerFragment.this) {
                         @Override
                         protected void onConfirmOtp(String otp_code, Dialog otpDialog) {
@@ -519,7 +518,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             );
                         }
                     };
-                    otpDialogLoader.showOTPDialog();
+                    otpDialogLoader.showOTPDialog();        //Call the OTP Dialog
+
 
                 }else{
                     clearPin(binding);
@@ -583,7 +583,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
                             WalletHomeActivity.savePreferences(PREFERENCES_WALLET_BUSINESS_ID, userDetails.getBusiness_id(), context);
                             loginUser(userDetails, rawpassword);
 
-                            Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
+                             //Log.w("WALLET_ID", WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context));
 
                             String accessToken = response.body().getAccess_token();
                             String accountRole = userDetails.getAccountRole();

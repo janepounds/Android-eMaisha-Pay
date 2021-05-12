@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -25,6 +24,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.CardsListAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +47,7 @@ public class CardListFragment extends Fragment {
     private CardsListAdapter cardListAdapter;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     Toolbar toolbar;
+    DialogLoader dialogLoader;
     public CardListFragment() {
         // Required empty public constructor
     }
@@ -78,7 +79,7 @@ public class CardListFragment extends Fragment {
 
         RequestCards();
 
-
+        dialogLoader = new DialogLoader(context);
 
         btnAddCard.setOnClickListener(v -> {
         //nvigate to add card fragment
@@ -99,12 +100,7 @@ public class CardListFragment extends Fragment {
 
 
     public void RequestCards(){
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(context);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -113,6 +109,8 @@ public class CardListFragment extends Fragment {
         call.enqueue(new Callback<CardResponse>() {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+                dialogLoader.hideProgressDialog();
+
                 if(response.isSuccessful()){
 
                     try {
@@ -131,7 +129,6 @@ public class CardListFragment extends Fragment {
                         cardListAdapter.notifyDataSetChanged();
                         updateCardView(cardlists.size());
                     }
-                    dialog.dismiss();
                 }else if (response.code() == 401) {
 
                     TokenAuthFragment.startAuth( true);
@@ -141,14 +138,13 @@ public class CardListFragment extends Fragment {
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
-                    dialog.dismiss();
                 }
 
             }
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialog.dismiss();
+                dialogLoader.hideProgressDialog();;
             }
         });
 

@@ -28,7 +28,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         Log.e("NEW_TOKEN", s);
         if (ConstantValues.DEFAULT_NOTIFICATION.equalsIgnoreCase("fcm")) {
 
-            StartAppRequests.RegisterDeviceForFCM(getApplicationContext());
+            StartAppRequests.RegisterDeviceForFCM(getApplicationContext(),s);
 
         }
 
@@ -46,7 +46,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             notification_title = remoteMessage.getData().get("title");
             notification_message = remoteMessage.getData().get("body");
-            Log.w("MessageReceiption", "Message: " + notification_message);
+             //Log.w("MessageReceiption", "Message: " + notification_message);
 
             //notification_image = remoteMessage.getData().get("image");
         } else {

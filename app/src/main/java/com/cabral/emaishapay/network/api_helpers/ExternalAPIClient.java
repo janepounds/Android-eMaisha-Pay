@@ -23,7 +23,7 @@ public class ExternalAPIClient {
 
     public final static String LOCAL_URL = "http://10.0.2.2:8000";
     // Base URL for API Requests
-    private static final String BASE_URL ="http://emaishashop.api.emaisha.com/api/";
+    private static final String BASE_URL ="https://emaishashop.api.emaisha.com/api/";
     private static ExternalAPIRequests apiRequests;
     private  final String TAG="Retrofit2 Errors";
 

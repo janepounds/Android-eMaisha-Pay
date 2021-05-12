@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -61,6 +62,7 @@ public class Nearby_Merchants extends Fragment {
     MerchantsListAdapter merchantsListAdapter;
 
     List<MerchantDetails> merchantList = new ArrayList<>();
+    TextView no_nearby_merchant;
     
     // To keep track of Checked Radio Button
     private RadioButton lastChecked_RB = null;
@@ -84,6 +86,7 @@ public class Nearby_Merchants extends Fragment {
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         setHasOptionsMenu(true);
         merchants_recycler=rootView.findViewById(R.id.merchants_list);
+        no_nearby_merchant = rootView.findViewById(R.id.no_nearby_merchant);
 
         dialogLoader = new DialogLoader(getContext());
         user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -139,10 +142,10 @@ public class Nearby_Merchants extends Fragment {
             product_names.add(product.getCustomersBasketProduct().getProductsId()+"::"+product.getCustomersBasketProduct().getProductsName()+"//"+product.getCustomersBasketProduct().getSelectedProductsWeight()+"//"+product.getCustomersBasketProduct().getSelectedProductsWeightUnit()+"::"+product.getCustomersBasketProduct().getCustomersBasketQuantity());
         }
         dialogLoader.showProgressDialog();
-        Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
+         //Log.w( "Coordinates",shippingAddress.getLatitude()+" "+shippingAddress.getLongitude());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String product_names_str = new Gson().toJson(product_names);
-        Log.w( "CartData",product_names_str);
+         //Log.w( "CartData",product_names_str);
         Call<MerchantData> call = BuyInputsAPIClient.getInstance()
                 .getNearbyMerchants
                         (       access_token,
@@ -156,32 +159,38 @@ public class Nearby_Merchants extends Fragment {
 
                 String str = new Gson().toJson(response.body());
 
-                Log.w("Response",str+"");
+                 //Log.w("Response",str+"");
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
 
                         // merchants have been returned. Add merchants to the merchantsList
-                        if(response.body().getData().size()>0)
+                        if(response.body().getData().size()>0){
                             addMerchantsToList(response.body());
-                        else
+                        }
+                        else {
+
+                            no_nearby_merchant.setVisibility(View.VISIBLE);
                             Snackbar.make(rootView, "Couldn't find Nearby Merchants!", Snackbar.LENGTH_LONG).show();
+                        }
 
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         //emptyRecord.setVisibility(View.VISIBLE);
+                        no_nearby_merchant.setVisibility(View.VISIBLE);
                         Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     }
                     else {
                         // Unable to get Success status
                         //emptyRecord.setVisibility(View.VISIBLE);
+                        no_nearby_merchant.setVisibility(View.VISIBLE);
                         Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                    Log.w("Response",response.message()+"");
+                     //Log.w("Response",response.message()+"");
                 }
                 dialogLoader.hideProgressDialog();
             }
@@ -189,7 +198,7 @@ public class Nearby_Merchants extends Fragment {
             @Override
             public void onFailure(Call<MerchantData> call, Throwable t) {
                 Toast.makeText(getContext(), "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
-                Log.w("Response",t.toString()+"");
+                 //Log.w("Response",t.toString()+"");
                 dialogLoader.hideProgressDialog();
             }
         });
@@ -208,6 +217,10 @@ public class Nearby_Merchants extends Fragment {
             if(this.merchantList.get(position).getTotalOrderPrice()<=0){
                 this.merchantList.remove(position);
             }
+        }
+
+        if(this.merchantList.size()>0){
+            no_nearby_merchant.setVisibility(View.GONE);
         }
 
         // Initialize the merchantsListAdapter for RecyclerView

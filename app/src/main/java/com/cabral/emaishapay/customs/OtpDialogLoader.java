@@ -306,7 +306,7 @@ public abstract class OtpDialogLoader {
         Matcher matcher = pattern.matcher(message);
         if (matcher.find()) {
             String retrievedCode=matcher.group(0);
-            Log.w("retrievedCode", retrievedCode);
+             //Log.w("retrievedCode", retrievedCode);
             if(retrievedCode.length()==6){
                 code1.setText(retrievedCode.charAt(0)+"");
                 code2.setText(retrievedCode.charAt(1)+"");
@@ -331,7 +331,7 @@ public abstract class OtpDialogLoader {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == REQ_USER_CONSENT) {
-            if ((resultCode == RESULT_OK) && (data != null)) {
+            if ((resultCode == RESULT_OK) && (data != null) ) {
                 //That gives all message to us.
                 // We need to get the code from inside with regex
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);

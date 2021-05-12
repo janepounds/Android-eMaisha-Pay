@@ -3,7 +3,6 @@ package com.cabral.emaishapay.fragments.buy_fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -1093,39 +1092,6 @@ public class Product_Description extends Fragment  {
 
 
 
-
-    public class CheckStockTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialogLoader.showProgressDialog();
-            stocks.clear();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            for (int i = 0; i < cartItemsList.size(); i++) {
-                requestProductStock2(cartItemsList.get(i).getCustomersBasketProduct().getProductsId(), getSelectedAttributesIds(cartItemsList.get(i).getCustomersBasketProductAttributes()), i);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialogLoader.hideProgressDialog();
-            if (isAllStockValid(stocks)) {
-                Fragment fragment = new My_Addresses(new My_Cart());
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(getString(R.string.actionAddresses)).commit();
-
-            } else {
-                Toast.makeText(getContext(), "Your Product in the cart is out of stock.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private boolean isAllStockValid(List<String> stocks) {
         for (int i = 0; i < stocks.size(); i++) {

@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -34,6 +33,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -74,7 +74,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private ImageView imageView;
     private String encodedIdreg_cert;
     private String encodedIdtradelicense;
-    private ProgressDialog progressDialog;
+    DialogLoader dialogLoader;
 
 
     private static final String TAG ="Maps Error";
@@ -134,6 +134,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 //        mAdapter = new PlaceAutocompleteAdapter(getContext(), placesClient,autocompleteSessionToken);
 //        autoCompleteTextView=binding.shopLocation;
 
+        dialogLoader = new DialogLoader(getContext());
         binding.shopLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,11 +276,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public void saveInfo(){
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        dialogLoader.showProgressDialog();
         String user_Id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String business_name = binding.businessName.getText().toString();
         String registration_no = binding.registrationNumber.getText().toString();
@@ -337,7 +334,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
                 }else{
                     Toast.makeText(getContext(),response.message(),Toast.LENGTH_LONG);
                 }
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
 
             }
 
@@ -386,7 +383,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         }else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
+                 //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
                 binding.shopLocation.setText(place.getName());
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -447,7 +444,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             @Override
             public void onCameraMove() {
                 cameraPosition= mGoogleMap.getCameraPosition();
-                Log.w("Camera postion change" + "", cameraPosition + "");
+                 //Log.w("Camera postion change" + "", cameraPosition + "");
                 mCenterLatLong = cameraPosition.target;
 
                 //mGoogleMap.clear();

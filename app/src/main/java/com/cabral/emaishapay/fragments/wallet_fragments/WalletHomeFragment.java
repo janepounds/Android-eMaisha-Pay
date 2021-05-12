@@ -64,15 +64,12 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private NewEmaishaPayHomeBinding binding;
     private Context context;
-    private final int transactions_limit=4;
     private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
     private static SharedPreferences sharedPreferences;
     NavController navController;
-    List<BannerDetails> Banner = new ArrayList<>();
-    HashMap<String, String> url_maps = new HashMap<String, String>();
 
 
     @Override
@@ -96,12 +93,10 @@ public class WalletHomeFragment extends Fragment {
 
         binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
 
-//
-//        for (BannerDetails banner:WalletHomeActivity.Banners) {
-//            // Setup the ImageSlider of Product Images
-//            ImageSlider(banner.getTitle(), banner.getImage());
-//        }
-        ImageSlider("Ads", WalletHomeActivity.Banners );
+        if(WalletHomeActivity.Banners!=null){
+            Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
+            ImageSlider("Ads", WalletHomeActivity.Banners );
+        }
 
         return binding.getRoot();
     }
@@ -427,6 +422,7 @@ public class WalletHomeFragment extends Fragment {
         String request_id = WalletHomeActivity.generateRequestId();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<WalletTransactionSummary> call = apiRequests.getSummary(access_token,request_id,"getTransactionsSummary");
+
         call.enqueue(new Callback<WalletTransactionSummary>() {
             @Override
             public void onResponse(@NotNull Call<WalletTransactionSummary> call, @NotNull Response<WalletTransactionSummary> response) {
@@ -434,12 +430,12 @@ public class WalletHomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     if(response.body().getStatus()==1){
-                        if(response.body().getData().getLastCredit()!=null && response.body().getData().getLastDebit()!=null){
+                        if(response.body().getData().getLastCredit()!=null ){
                             String receiver_name = response.body().getData().getLastCredit().getReceiver();
                             double amount = response.body().getData().getLastCredit().getAmount();
                             String date_completed =response.body().getData().getLastCredit().getDateCompleted();
                             binding.textCreditName.setText(receiver_name);
-                            binding.textAmountCredit.setText(response.body().getData().getLastDebit().getTrans_currency()+amount);
+                            binding.textAmountCredit.setText(response.body().getData().getLastCredit().getTrans_currency()+amount);
                             binding.dateCredit.setText(date_completed);
 
                         } else{
@@ -448,6 +444,7 @@ public class WalletHomeFragment extends Fragment {
                             binding.textAmountCredit.setText("No Data");
                             binding.dateCredit.setText("");
                         }
+
                         if(response.body().getData().getLastDebit()!=null){
                             String sender_name = response.body().getData().getLastDebit().getReceiver();
                             double amount = response.body().getData().getLastDebit().getAmount();
@@ -470,7 +467,8 @@ public class WalletHomeFragment extends Fragment {
                     }
 
 
-                } else if (response.code() == 401) {
+                }
+                else if (response.code() == 401) {
                     Toast.makeText(context, "Session Expired", Toast.LENGTH_LONG).show();
                     //Omitted to avoid current Destination conflicts
                     TokenAuthFragment.startAuth(true);
@@ -543,7 +541,7 @@ public class WalletHomeFragment extends Fragment {
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
     private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
-        Log.w(TAG, banner.size()+" ads");
+         //Log.w(TAG, banner.size()+" ads");
         // Initialize new HashMap<ImageName, ImagePath>
         final HashMap<String, String> slider_covers = new HashMap<>();
         // Initialize new Array for Image's URL
@@ -588,7 +586,7 @@ public class WalletHomeFragment extends Fragment {
                     //.description(name)
                     .setRequestOption(requestOptions)
                     .image(slider_covers.get(name));
-
+            Log.w("BannerWarnings",slider_covers.get(name));
             // Add DefaultSliderView to the SliderLayout
             binding.productCoverSlider.addSlider(defaultSliderView);
         }

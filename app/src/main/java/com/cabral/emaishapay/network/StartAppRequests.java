@@ -78,7 +78,8 @@ public class StartAppRequests {
         RequestAllRegions();
         RequestStaticPagesData();
         SyncProductData();
-        
+
+        Log.d("SplashScreenV", "end StartRequests" );
     }
 
     private void RequestBanners() {
@@ -143,7 +144,7 @@ public class StartAppRequests {
         }else{
 
             String category=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, context);
-            if(category.equalsIgnoreCase("Default")){
+            if(category.equalsIgnoreCase("Default") || TextUtils.isEmpty(category)){
                 return;
             }
         }
@@ -151,7 +152,7 @@ public class StartAppRequests {
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
 
-            Log.w("unsyncedProducts",productsList.size()+" products");
+             //Log.w("unsyncedProducts",productsList.size()+" products");
             for (int i = 0; i < productsList.size(); i++) {
                 Log.e("WAlletIDError",productsList.get(i).getId()+"");
 
@@ -329,7 +330,7 @@ public class StartAppRequests {
 
     //*********** Register Device to Admin Panel with the Device's Info ********//
 
-    public static void RegisterDeviceForFCM(final Context context) {
+    public static void RegisterDeviceForFCM(final Context context, String deviceID) {
 
 
 
@@ -339,61 +340,59 @@ public class StartAppRequests {
 
 
         //deviceID = FirebaseInstanceId.getInstance().getToken();
-        if(user_id!=null)
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+        if(user_id!=null){
+            String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+            String request_id = WalletHomeActivity.generateRequestId();
+            String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+
+            Call<UserData> call = APIClient.getWalletInstance(context)
+                    .registerDeviceToFCM
+                            (       access_token,
+                                    deviceID,
+                                    device.getDeviceType(),
+                                    user_id,
+                                    device.getDeviceRAM(),
+                                    device.getDeviceProcessors(),
+                                    device.getDeviceAndroidOS(),
+                                    device.getDeviceLocation(),
+                                    device.getDeviceModel(),
+                                    device.getDeviceManufacturer(),
+                                    device.getDeviceSystemOS(),
+                                    request_id,
+                                    category,
+                                    "registerdevices"
+
+                            );
+
+
+            call.enqueue(new Callback<UserData>() {
                 @Override
-                public void onSuccess(InstanceIdResult instanceIdResult) {
-                    String deviceID =instanceIdResult.getToken();
-                    String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-                    String request_id = WalletHomeActivity.generateRequestId();
-                    String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-                    Call<UserData> call = APIClient.getWalletInstance(context)
-                            .registerDeviceToFCM
-                                    (       access_token,
-                                            deviceID,
-                                            device.getDeviceType(),
-                                            user_id,
-                                            device.getDeviceRAM(),
-                                            device.getDeviceProcessors(),
-                                            device.getDeviceAndroidOS(),
-                                            device.getDeviceLocation(),
-                                            device.getDeviceModel(),
-                                            device.getDeviceManufacturer(),
-                                            device.getDeviceSystemOS(),
-                                            request_id,
-                                            category,
-                                            "registerdevices"
+                public void onResponse(Call<UserData> call, Response<UserData> response) {
 
-                                    );
+                    if (response.isSuccessful()) {
+                        if (response.body().getStatus().equalsIgnoreCase("1")) {
 
-                    call.enqueue(new Callback<UserData>() {
-                        @Override
-                        public void onResponse(Call<UserData> call, Response<UserData> response) {
+                            Log.i("notification", response.body().getMessage());
 
-                            if (response.isSuccessful()) {
-                                if (response.body().getStatus().equalsIgnoreCase("1")) {
-
-                                    Log.i("notification", response.body().getMessage());
-
-                                }
-                                else {
-
-                                    Log.i("notification", response.body().getMessage());
-
-                                }
-                            }
-                            else {
-                                Log.i("notification", response.errorBody().toString());
-                            }
                         }
+                        else {
 
-                        @Override
-                        public void onFailure(Call<UserData> call, Throwable t) {
+                            Log.i("notification", response.body().getMessage());
+
+                        }
+                    }
+                    else {
+                        Log.i("notification", response.errorBody().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserData> call, Throwable t) {
 //                Toast.makeText(context, "NetworkCallFailure : "+t, Toast.LENGTH_LONG).show();
-                        }
-                    });
                 }
             });
+        }
+
     }
 
 

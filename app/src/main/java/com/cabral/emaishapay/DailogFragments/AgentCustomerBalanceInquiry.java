@@ -2,8 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -300,7 +298,7 @@ public class AgentCustomerBalanceInquiry extends DialogFragment {
                         //EnterPin.this.dismiss();
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                        Log.w("BalanceError",response.body().getMessage());
+                         //Log.w("BalanceError",response.body().getMessage());
                     }
                 }
 

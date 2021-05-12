@@ -9,9 +9,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -49,7 +52,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.math.BigInteger;
@@ -135,6 +137,8 @@ public class WalletHomeActivity extends AppCompatActivity{
         scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
         scanFAB = findViewById(R.id.fab);
 
+
+
         scanFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +147,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                     if (checkPermission()) {
                         // if permission is already granted display a toast message
                         //Toast.makeText(context, "Permission Granted..", Toast.LENGTH_SHORT).show();
-                        Log.w("PermissionGrant", "Permission Granted..");
+                         //Log.w("PermissionGrant", "Permission Granted..");
                         //permission granted
 
                     } else {
@@ -434,7 +438,7 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance, fm);
+        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance);
         depositDialog.show(ft, "dialog");
     }
 
@@ -509,8 +513,6 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void openAgentCustomerLoanApplication(View view) {
      //   navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
 
-
-
     }
 
 
@@ -549,24 +551,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public void getAppToken() {
         FirebaseApp.initializeApp(WalletHomeActivity.this);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            // Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-                        Log.d(TAG, "onComplete-token: "+token);
-                        StartAppRequests.RegisterDeviceForFCM(getApplicationContext());
-//                        sendFirebaseToken(token, WalletHomeActivity.this);
-
-
-                    }
-                });
 
     }
 
@@ -580,7 +564,6 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     //generate unique request id
     public static String generateRequestId(){
-//        String user_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
         String request_id = "";
         Random rand = new Random();
 
@@ -654,4 +637,51 @@ public class WalletHomeActivity extends AppCompatActivity{
         }
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.about_beneficiaries_menu, menu);
+//        MenuItem about = menu.findItem(R.id.aboutBeneficiary);
+//        about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//
+//
+//
+//                return false;
+//            }
+//        });
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        //Go to coming soon
+        if (item.getItemId() == R.id.aboutBeneficiary) {
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.beneficiaries_placeholder, null);
+            //dialogView.setLayoutParams(new ActionBar.LayoutParams());
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+            alertDialog.show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

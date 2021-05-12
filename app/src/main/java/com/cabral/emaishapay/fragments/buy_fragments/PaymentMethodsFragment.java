@@ -717,7 +717,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
     @Override
     public void showAuthenticationWebPage(String authenticationUrl) {
-        Log.w("Loading auth web page: ",authenticationUrl);
+         //Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 
@@ -1061,7 +1061,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
                                 String first_four_digits = (card_number.substring(0,  4));
                                 String last_four_digits = (card_number.substring(card_number.length() - 4));
                                 final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
-                                //  Log.w("CardNumber","**********>>>>"+decripted_card_number);
+                                //   //Log.w("CardNumber","**********>>>>"+decripted_card_number);
                                 cardItems.add(new CardSpinnerItem() {
                                     @Override
                                     public String getId() {

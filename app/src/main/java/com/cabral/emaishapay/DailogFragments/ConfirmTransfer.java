@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -66,7 +65,7 @@ public class ConfirmTransfer extends DialogFragment {
     Context activity;
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
-    Dialog dialog;
+    Dialog dialogPIN;
 
     public ConfirmTransfer(Context context) {
         this.activity = context;
@@ -117,7 +116,7 @@ public class ConfirmTransfer extends DialogFragment {
         charges_layount= view.findViewById(R.id.charges_layount);
         discount_layount= view.findViewById(R.id.discount_layount);
 
-        dialogLoader = new DialogLoader(activity);
+        dialogLoader = new DialogLoader(getContext());
 
         String phoneNumber= getArguments().getString("phoneNumber");
         String methodOfTransfer=getArguments().getString("methodOfPayment");
@@ -154,7 +153,7 @@ public class ConfirmTransfer extends DialogFragment {
 
 
                 builder.setView(pinDialog);
-                dialog = builder.create();
+                dialogPIN = builder.create();
                 builder.setCancelable(false);
 
                 EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
@@ -191,28 +190,24 @@ public class ConfirmTransfer extends DialogFragment {
                     }
                 });
 
-                dialog.show();
+                dialogPIN.show();
 
 
             }
         });
 
+        discount_layount.setVisibility(View.GONE);
+        charges_layount.setVisibility(View.GONE);
+
         if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")) {
             getReceiverName(phoneNumber);
-            charges_layount.setVisibility(View.VISIBLE);
-            discount_layount.setVisibility(View.GONE);
         }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")) {
-            getFlutterwaveTransferFee(""+amount,"mobilemoney");
             receiverNameTextView.setText(beneficiary_name);
-            charges_layount.setVisibility(View.VISIBLE);
-            discount_layount.setVisibility(View.GONE);
+            receiverPhoneNumber.setText(account_number);
         }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
-            getFlutterwaveTransferFee(""+amount,"account");
             receiverNameTextView.setText(beneficiary_name);
             receiverPhoneNumber.setText(beneficiary_bank_phone_number);
 //            receiverPhoneNumber.setVisibility(View.GONE);
-            charges_layount.setVisibility(View.VISIBLE);
-            discount_layount.setVisibility(View.GONE);
         }
 
     }
@@ -224,277 +219,112 @@ public class ConfirmTransfer extends DialogFragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String currency_code = getString(R.string.currency);
         String service_code = WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+toString;
+        Call<ConfirmationDataResponse> call;
+
         if(category.equalsIgnoreCase("merchant")){
             APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-            Call<ConfirmationDataResponse> call = apiRequests.merchantTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "merchantTransferToBank", service_code, currency_code);
-            call.enqueue(new Callback<ConfirmationDataResponse>() {
-                @Override
-                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                    if (response.code() == 200) {
-                        if(response.body().getStatus().equalsIgnoreCase("1")) {
-                            dialog.dismiss();
-                            //success message
-                            dialogLoader.hideProgressDialog();
-                            final Dialog dialog = new Dialog(getContext());
-                            dialog.setContentView(R.layout.dialog_successful_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText( response.body().getMessage() );
+            call = apiRequests.merchantTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "merchantTransferToBank", service_code, currency_code);
 
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-
-                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                            dialog.show();
-
-
-                        } else {
-                            dialogLoader.hideProgressDialog();
-                            ConfirmTransfer.this.dismiss();
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_failure_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText(response.body().getMessage());
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.show();
-
-
-                        }
-
-                    } else if (response.code() == 412) {
-
-                    } else if (response.code() == 401) {
-                        TokenAuthFragment.startAuth(true);
-
-                    }
-                    if (response.errorBody() != null) {
-                        Log.e("info", String.valueOf(response.errorBody()));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
-
-                    dialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
-                    Log.e("info : ", t.getMessage());
-                    Log.e("info : ", "Something got very very wrong");
-
-                    receiverNameTextView.setText("Unknown Merchant");
-
-                    errorTextView.setText("Error while checking for merchant occured");
-                    errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
-                    dialogLoader.hideProgressDialog();
-                }
-            });
 
         }else  if(category.equalsIgnoreCase("agent")){
             Log.d(TAG, "transferToBank: beneficiary_id"+beneficiary_id);
             APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-            Call<ConfirmationDataResponse> call = apiRequests.agentTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "agentTransferToBank", service_code, currency_code);
-            call.enqueue(new Callback<ConfirmationDataResponse>() {
-                @Override
-                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                    if (response.code() == 200) {
-                        if(response.body().getStatus().equalsIgnoreCase("1")) {
-                            dialog.dismiss();
-                            //success message
-                            dialogLoader.hideProgressDialog();
-                            final Dialog dialog = new Dialog(getContext());
-                            dialog.setContentView(R.layout.dialog_successful_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText( response.body().getMessage() );
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-
-                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                            dialog.show();
-
-
-                        } else {
-                            dialogLoader.hideProgressDialog();
-
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_failure_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText(response.body().getMessage());
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.show();
-                            ConfirmTransfer.this.dismiss();
-
-                        }
-
-                    } else if (response.code() == 412) {
-
-                    } else if (response.code() == 401) {
-                        TokenAuthFragment.startAuth(true);
-
-                    }
-                    if (response.errorBody() != null) {
-                        Log.e("info", String.valueOf(response.errorBody()));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
-
-                    dialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
-                    Log.e("info : ", t.getMessage());
-                    Log.e("info : ", "Something got very very wrong");
-
-                    receiverNameTextView.setText("Unknown Merchant");
-
-                    errorTextView.setText("Error while checking for merchant occured");
-                    errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
-                }
-            });
-
+            call = apiRequests.agentTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "agentTransferToBank", service_code, currency_code);
 
         }else {
 
             APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-            Call<ConfirmationDataResponse> call = apiRequests.customerTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "customerTransferToBank", service_code, currency_code);
-            call.enqueue(new Callback<ConfirmationDataResponse>() {
-                @Override
-                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                    if (response.code() == 200) {
-                        if(response.body().getStatus().equalsIgnoreCase("1")) {
-                            dialog.dismiss();
-                            //success message
-                            dialogLoader.hideProgressDialog();
-                            final Dialog dialog = new Dialog(getContext());
-                            dialog.setContentView(R.layout.dialog_successful_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText( response.body().getMessage() );
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-
-                                    Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                            dialog.show();
-
-
-                        } else {
-
-                            ConfirmTransfer.this.dismiss();
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_failure_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText(response.body().getMessage());
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.show();
-
-                        }
-                    } else if (response.code() == 412) {
-
-                    } else if (response.code() == 401) {
-                        TokenAuthFragment.startAuth(true);
-
-                    }
-                    if (response.errorBody() != null) {
-                        Log.e("info", String.valueOf(response.errorBody()));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
-
-                    dialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
-                    Log.e("info : ", t.getMessage());
-                    Log.e("info : ", "Something got very very wrong");
-
-                    receiverNameTextView.setText("Unknown Merchant");
-
-                    errorTextView.setText("Error while checking for merchant occured");
-                    errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
-                }
-            });
-
+            call = apiRequests.customerTransferToBank(access_token, Double.parseDouble(s), beneficiary_id, category, request_id, "customerTransferToBank", service_code, currency_code);
 
         }
 
+
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
+            @Override
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                if (response.code() == 200) {
+                    if(response.body().getStatus().equalsIgnoreCase("1")) {
+                        dialogPIN.dismiss();
+                        //success message
+                        dialogLoader.hideProgressDialog();
+                        final Dialog dialog = new Dialog(getContext());
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText( response.body().getMessage() );
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                                Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        dialog.show();
+
+
+                    } else {
+                        dialogLoader.hideProgressDialog();
+                        ConfirmTransfer.this.dismiss();
+                        final Dialog dialog = new Dialog(activity);
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                        text.setText(response.body().getMessage());
+
+
+                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                startActivity(goToWallet);
+                            }
+                        });
+                        dialog.show();
+
+
+                    }
+
+                } else if (response.code() == 401) {
+                    TokenAuthFragment.startAuth(true);
+
+                }
+                if (response.errorBody() != null) {
+                    Log.e("info", String.valueOf(response.errorBody()));
+                } else {
+                    Log.e("info", "Something got very very wrong");
+                }
+
+                dialogPIN.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
+
+                Log.e("info : ", t.getMessage());
+                Log.e("info : ", "Something got very very wrong");
+
+                receiverNameTextView.setText("Unknown Receiver");
+
+                //errorTextView.setText("Error while checking for merchant occured");
+                //errorTextView.setVisibility(View.VISIBLE);
+                dialogPIN.dismiss();
+                dialogLoader.hideProgressDialog();
+            }
+        });
     }
 
 
     public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/
-        ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -506,12 +336,12 @@ public class ConfirmTransfer extends DialogFragment {
             call.enqueue(new Callback<ConfirmationDataResponse>() {
                 @Override
                 public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                    dialogLoader.hideProgressDialog();
                     if (response.code() == 200) {
                         businessName = response.body().getData().getBusinessName();
                         receiverNameTextView.setText(businessName);
                         confirmBtn.setVisibility(View.VISIBLE);
 
-                        dialog.dismiss();
                     } else if (response.code() == 412) {
                         String businessName = null;
                         businessName = response.body().getMessage();
@@ -529,12 +359,11 @@ public class ConfirmTransfer extends DialogFragment {
                         Log.e("info", "Something got very very wrong");
                     }
 
-                    dialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-
+                    dialogLoader.hideProgressDialog();
                     Log.e("info : ", t.getMessage());
                     Log.e("info : ", "Something got very very wrong");
 
@@ -542,59 +371,10 @@ public class ConfirmTransfer extends DialogFragment {
 
                     errorTextView.setText("Error while checking for merchant occured");
                     errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
                 }
             });
 
 
-
-    }
-
-    private void getFlutterwaveTransferFee( String amount, String type){
-        if(type.equals("mobilemoney") || type.equals("account") ){
-            String currency=getString(R.string.currency);
-            dialogLoader.showProgressDialog();
-            ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
-            Call<TransferFeeResponse> call = apiRequests.getFlutterwaveTransferFee( BuildConfig.SECRET_KEY,
-                    currency,
-                    amount,
-                    type);
-
-            call.enqueue(new Callback<TransferFeeResponse>() {
-                @Override
-                public void onResponse(@NotNull Call<TransferFeeResponse> call, @NotNull Response<TransferFeeResponse> response) {
-
-
-                    if (response.code() == 200 && response.body().getMessage().equals("Transfer fee fetched")) {
-                        try {
-                            double fees = response.body().calculateFees( Double.parseDouble(amount) );
-                            chargesTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(fees));
-                        } catch (Exception e) {
-                            Log.e("response", response.toString());
-                            e.printStackTrace();
-                        }finally {
-                            dialogLoader.hideProgressDialog();
-                        }
-
-                    } else {
-                        dialogLoader.hideProgressDialog();
-                        String message = response.body().getMessage();
-                        Snackbar.make(serviceTextView, message, Snackbar.LENGTH_LONG).show();
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(Call<TransferFeeResponse> call, Throwable t) {
-                    Log.e("info2 : ", t.getMessage());
-                    dialogLoader.hideProgressDialog();
-                }
-            });
-
-        }else {
-            Toast.makeText(getContext(),"Wrong Type Value Supplied!!",Toast.LENGTH_LONG).show();
-        }
 
     }
 
@@ -960,123 +740,11 @@ public class ConfirmTransfer extends DialogFragment {
 
     }
 
-
-    private void mobileMoneyTransfer(String beneficiary_name, String transfer_amount, String account_number, String user_pin) {
-        String account_bank = "MPS";
-        String currency=getString(R.string.currency);
-        String narration="eMaisha Pay Mobile Money Transfer outs";
-        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        String reference= "TrO"+userId+System.currentTimeMillis();
-        ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
-        Call<BankTransferResponse> call = apiRequests.bankTransferOuts( BuildConfig.SECRET_KEY,
-                reference,
-                beneficiary_name,
-                currency,
-                narration,
-                transfer_amount,
-                account_number,
-                null,
-                account_bank);
-
-        dialogLoader.showProgressDialog();
-        call.enqueue(new Callback<BankTransferResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<BankTransferResponse> call, @NotNull Response<BankTransferResponse> response) {
-                if (response.code() == 200 && response.body().getMessage().equals("Transfer Queued Successfully")) {
-                    try {
-                        com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
-                                response.body().getData();
-                        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
-                        recordTransferSettlement("completed","Mobile Money",TransferResponse,dialogLoader);
-
-                    } catch (Exception e) {
-                        Log.e("response", response.toString());
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    dialogLoader.hideProgressDialog();
-                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    String message = response.body().getMessage();
-                    Snackbar.make(serviceTextView, message, Snackbar.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<BankTransferResponse> call, Throwable t) {
-                Log.e("info2 : ", t.getMessage());
-                dialogLoader.hideProgressDialog();
-            }
-        });
-    }
-
-    private void queueBankTransfer(String account_name, String transfer_amount, String account_number, String branch_code, String bank_code, String user_pin){
-
-        String currency=getString(R.string.currency);
-        String narration="eMaisha Pay Bank Transfer outs";
-        String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        String reference= "TrO"+userId+System.currentTimeMillis();
-
-
-        ExternalAPIRequests apiRequests = FlutterwaveV3APIClient.getFlutterwaveV3Instance();
-        Call<BankTransferResponse> call = apiRequests.bankTransferOuts( BuildConfig.SECRET_KEY,
-                reference,
-                account_name,
-                currency,
-                narration,
-                transfer_amount,
-                account_number,
-                branch_code,
-                bank_code);
-
-        dialogLoader.showProgressDialog();
-        call.enqueue(new Callback<BankTransferResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<BankTransferResponse> call, @NotNull Response<BankTransferResponse> response) {
-                if (response.code() == 200 && response.body().getMessage().equals("Transfer Queued Successfully")) {
-                    try {
-                        String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
-                        com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse.InfoData TransferResponse =
-                                response.body().getData();
-                        recordTransferSettlement("pending","Bank",TransferResponse,dialogLoader);
-
-                    } catch (Exception e) {
-                        Log.e("response", response.toString());
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    dialogLoader.hideProgressDialog();
-                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    String message = response.body().getMessage();
-                    Snackbar.make(serviceTextView, message, Snackbar.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<BankTransferResponse> call, Throwable t) {
-                Log.e("info2 : ", t.getMessage());
-                dialogLoader.hideProgressDialog();
-            }
-        });
-
-
-    }
-
     public void initiateWalletTransfer(final String phoneNumber, final double amount, String user_pin) {
-        ProgressDialog dialog;
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
-        dialog = new ProgressDialog(activity);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please Wait..");
-        dialog.setCancelable(false);
-        dialog.show();
+        dialogLoader.showProgressDialog();
         /*****RETROFIT IMPLEMENTATION*****/
         String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
 
@@ -1088,8 +756,9 @@ public class ConfirmTransfer extends DialogFragment {
         call.enqueue(new Callback<InitiateTransferResponse>() {
             @Override
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
+                dialogLoader.hideProgressDialog();
                 if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("1")){
-                    dialog.dismiss();
+                    dialogPIN.dismiss();
                     final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1111,29 +780,48 @@ public class ConfirmTransfer extends DialogFragment {
                     dialog.show();
 
                 } else if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("0")){
-                    dialog.dismiss();
-                    Snackbar.make(serviceTextView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
+
+                    final Dialog dialog = new Dialog(activity);
+                    dialog.setContentView(R.layout.dialog_failure_message);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                    text.setText(response.body().getMessage());
+
+
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+
+                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                            startActivity(goToWallet);
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    dialog.show();
+
                 }
                 else if(response.code() == 401) {
                     TokenAuthFragment.startAuth( true);
 
                 }
-                    else if (response.code() == 500) {
-                        errorTextView.setText("Error Occurred Try again later");
-                        Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                    } else if (response.code() == 400) {
-                        errorTextView.setText("Check your input details");
-                        Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
-                    } else if (response.code() == 406) {
-                        errorTextView.setText(response.body().getMessage());
+                else if (response.code() == 500) {
+                    errorTextView.setText("Error Occurred Try again later");
+                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                } else if (response.code() == 400) {
+                    errorTextView.setText("Check your input details");
+                    Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                } else if (response.code() == 406) {
+                    errorTextView.setText(response.body().getMessage());
 
-                        Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                    } else {
-                        errorTextView.setText("Error Occurred Try again later");
+                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                } else {
+                    errorTextView.setText("Error Occurred Try again later");
 
-                    }
-                    errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
+                }
+
+                dialogPIN.dismiss();
             }
 
             @Override
@@ -1141,78 +829,8 @@ public class ConfirmTransfer extends DialogFragment {
                 Log.e("info : " , new String(String.valueOf(t.getMessage())));
                 errorTextView.setText("Error Occurred Try again later");
                 errorTextView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-        });
-
-    }
-
-
-    private void recordTransferSettlement(String third_party_status,String destination_type, BankTransferResponse.InfoData transferResponse, DialogLoader dialogLoader)
-    {
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        Double amount =Double.parseDouble(transferResponse.getAmount());
-        String thirdparty="flutterwave";
-        Double third_party_fee =Double.parseDouble(transferResponse.getFee());
-        String destination_account_no=transferResponse.getAccount_number();
-        String beneficiary_name=transferResponse.getFull_name();
-        String destination_name=transferResponse.getBank_name();
-        String reference=transferResponse.getReference();
-        String third_party_id=transferResponse.getId();
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-
-        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<SettlementResponse> call = apiRequests.recordSettlementTransfer(
-                access_token,
-                amount,
-                thirdparty,
-                third_party_fee,
-                destination_type,
-                destination_account_no,
-                beneficiary_name,
-                destination_name,
-                reference,
-                third_party_status,
-                third_party_id,request_id,category,"transferOutCallback");
-
-        call.enqueue(new Callback<SettlementResponse>() {
-            @Override
-            public void onResponse(Call<SettlementResponse> call, Response<SettlementResponse> response) {
-                if (response.code() == 200 && response.body().getStatus().equals("1")) {
-                    dialogLoader.hideProgressDialog();
-
-                    final Dialog dialog = new Dialog(activity);
-                    dialog.setContentView(R.layout.dialog_successful_message);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.setCancelable(false);
-                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                    text.setText("Transferred UGX "+ NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount())+" to "+WalletTransactionInitiation.getInstance().getAccount_name());
-
-
-                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                            startActivity(goToWallet);
-                        }
-                    });
-                    dialog.show();
-
-                } else {
-                    dialogLoader.hideProgressDialog();
-                    //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    String message = response.body().getMessage();
-                    Snackbar.make(serviceTextView, message, Snackbar.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SettlementResponse> call, Throwable t) {
-                Log.e("info : " , new String(String.valueOf(t.getMessage())));
+                dialogPIN.dismiss();
                 dialogLoader.hideProgressDialog();
-
             }
         });
 

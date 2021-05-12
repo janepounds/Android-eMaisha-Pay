@@ -339,7 +339,7 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
             ProductDetails product=cartItemsList.get(i).getCustomersBasketProduct();
             itemsCounter=itemsCounter+product.getCustomersBasketQuantity();
             priceCounter=priceCounter+(product.getCustomersBasketQuantity() * Double.parseDouble(product.getProductsPrice() ));
-            Log.w("CartProduct",product.getProductsName()+" "+product.getCustomersBasketQuantity()+" "+Double.parseDouble(product.getProductsPrice()));
+             //Log.w("CartProduct",product.getProductsName()+" "+product.getCustomersBasketQuantity()+" "+Double.parseDouble(product.getProductsPrice()));
 
         }
         fragmentReference.get().totalItems.setText(itemsCounter+" Items");

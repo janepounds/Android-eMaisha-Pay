@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
@@ -47,6 +47,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
     private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
     ShopOrder shopOrderDetails;
     private ShopOrdersModelView viewModel;
+    DialogLoader dialogLoader;
 
 
     @Override
@@ -111,7 +112,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         currency=getString(R.string.currency);
 
-
+        dialogLoader = new DialogLoader(getContext());
         total_price = calculatTotalOrderPrice(shopOrderDetails.getProducts());
 
         Double delivery_cost = Double.parseDouble(binding.txtOnlineDeliveryPrice.getText().toString());
@@ -152,11 +153,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                         input.getText().toString().trim(),
                                         3
                                 );
-                        ProgressDialog progressDialog = new ProgressDialog(getContext());
-                        progressDialog.setMessage("Loading...");
-                        progressDialog.setTitle("Please Wait");
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.show();
+                        dialogLoader.showProgressDialog();
 
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
@@ -172,7 +169,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                         @Override
                                                         public void run() {
                                                             if (updateOrder>0) {
-                                                                progressDialog.dismiss();
+                                                                dialogLoader.hideProgressDialog();
                                                                 binding.txtOnlineOrderStatus.setText("Cancelled");
                                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
                                                                 alertDialog.cancel();
@@ -180,7 +177,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                                 Toasty.success(getContext(), "Order Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                             } else {
 
-                                                                progressDialog.dismiss();
+                                                                dialogLoader.hideProgressDialog();
                                                                 Toasty.error(getContext(), "Order Rejection failed", Toast.LENGTH_SHORT).show();
 
                                                             }
@@ -191,7 +188,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
 
                                 } else {
-                                    progressDialog.dismiss();
+                                    dialogLoader.hideProgressDialog();
                                     Toasty.error(getContext(), "Order Rejection failed", Toast.LENGTH_SHORT).show();
 
                                 }
@@ -199,7 +196,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                progressDialog.dismiss();
+                                dialogLoader.hideProgressDialog();
                                 t.printStackTrace();
                                 Toasty.error(getContext(), "Order Rejection failed", Toast.LENGTH_SHORT).show();
                             }
@@ -220,11 +217,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                 " ",
                                 2
                         );
-                ProgressDialog progressDialog = new ProgressDialog(getContext());
-                progressDialog.setMessage("Loading...");
-                progressDialog.setTitle("Please Wait");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
+                dialogLoader.showProgressDialog();
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -240,16 +233,16 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                         @Override
                                         public void run() {
                                             if (updateOrder>0) {
-                                                progressDialog.dismiss();
+                                                dialogLoader.hideProgressDialog();
                                                 binding.txtOnlineOrderStatus.setText("Approved");
                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
-                                                progressDialog.dismiss();
+                                                dialogLoader.hideProgressDialog();
                                                 ShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                 binding.txtApproveOnline.setVisibility(View.GONE);
                                                 Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
                                             } else {
 
-                                                progressDialog.dismiss();
+                                                dialogLoader.hideProgressDialog();
                                                 Toasty.error(getContext(), "Order Approval failed", Toast.LENGTH_SHORT).show();
 
                                             }
@@ -260,7 +253,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
 
                         } else {
-                            progressDialog.dismiss();
+                            dialogLoader.hideProgressDialog();
                             Toasty.error(getContext(), "Order Approval failed", Toast.LENGTH_SHORT).show();
 
                         }
@@ -268,7 +261,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        progressDialog.dismiss();
+                        dialogLoader.hideProgressDialog();
                         t.printStackTrace();
                         Toasty.error(getContext(), "Order Approval failed", Toast.LENGTH_SHORT).show();
                     }

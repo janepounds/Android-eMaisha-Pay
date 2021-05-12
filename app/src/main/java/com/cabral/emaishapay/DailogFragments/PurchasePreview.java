@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -670,7 +669,7 @@ public class PurchasePreview extends DialogFragment implements
                     break;
                 case RaveConstants.WEB_VERIFICATION_REQUEST_CODE:
                     // Web authentication complete, proceed
-                    Log.w("UnkownResult",".......Web authentication complete ");
+                     //Log.w("UnkownResult",".......Web authentication complete ");
                     //creditAfterDeposit();
                     cardPayManager.onWebpageAuthenticationComplete();
                     break;
@@ -681,7 +680,7 @@ public class PurchasePreview extends DialogFragment implements
                     break;
             }
         } else {
-            Log.w("UnkownResult",".......Unkown Result ");
+             //Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
         }
 
@@ -781,7 +780,7 @@ public class PurchasePreview extends DialogFragment implements
 
     @Override
     public void showAuthenticationWebPage(String authenticationUrl) {
-        Log.w("Loading auth web page: ",authenticationUrl);
+         //Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 

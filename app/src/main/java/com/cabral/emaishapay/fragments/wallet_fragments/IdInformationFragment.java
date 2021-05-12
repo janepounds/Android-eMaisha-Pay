@@ -3,7 +3,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +31,7 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
+import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentIdInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -57,7 +58,7 @@ public class IdInformationFragment extends Fragment {
     private String encodedIdFront;
     private String encodedIdBack;
     private ImageView imageView;
-    private ProgressDialog progressDialog;
+    DialogLoader dialogLoader;
 
     public IdInformationFragment() {
     }
@@ -157,16 +158,13 @@ public class IdInformationFragment extends Fragment {
 
         binding.cancelButton.setOnClickListener(view1 -> getParentFragmentManager().popBackStack());
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Please Wait..");
-        progressDialog.setCancelable(false);
+        dialogLoader = new DialogLoader(getContext());
 
         return binding.getRoot();
     }
 
     public void saveInfo() {
-        progressDialog.show();
+        dialogLoader.showProgressDialog();
         String userId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -187,7 +185,7 @@ public class IdInformationFragment extends Fragment {
                     Log.d(TAG, "onResponse: failed" + response.errorBody());
                 }
 
-                progressDialog.dismiss();
+                dialogLoader.hideProgressDialog();
             }
 
             @Override

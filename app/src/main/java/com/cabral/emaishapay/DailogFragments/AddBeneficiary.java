@@ -66,9 +66,10 @@ public class AddBeneficiary extends DialogFragment {
     OtpDialogLoader otpDialogLoader;
     DialogLoader dialogLoader;
     List<String> Banknames = new ArrayList<>();
+    private String type;
 
-    public AddBeneficiary() {
-        // Required empty public constructor
+    public AddBeneficiary(String type) {
+        this.type=type;
     }
 
     @Override
@@ -112,100 +113,47 @@ public class AddBeneficiary extends DialogFragment {
         dialogLoader=new DialogLoader(getContext());
         loadTransferBanks();
 
-        if(getArguments()!=null){
-            //fill views and call update beneficiary
-            String beneficiary_type = getArguments().getString("beneficiary_type");
-            String beneficiary_name_ = getArguments().getString("beneficiary_name");
-            String beneficiary_number_ = getArguments().getString("beneficiary_no");
-            String beneficiary_phone = getArguments().getString("beneficiary_phone");
-             bankk = getArguments().getString("bank");
-             branch = getArguments().getString("branch");
-             id = getArguments().getString("id");
-             city = getArguments().getString("city");
-            street_address_1 = getArguments().getString("address1");
-            street_address_2 = getArguments().getString("address2");
-            sSpCountry = getArguments().getString("country");
-            Log.w(TAG, "onCreateDialog: number"+city+"name"+branch+"id"+id);
+        if( this.type!=null && this.type.equalsIgnoreCase("bank")  ){
+            showAddBankBeneficiaryForm();
+        }else if( this.type!=null && this.type.equalsIgnoreCase("mobile money")  ){
+            showAddMobileMoneyBeneficiaryForm();
+        }
 
-            if(beneficiary_type.equalsIgnoreCase("bank")){
-                beneficiaryNameLayout.setVisibility(View.GONE);
-                beneficiaryMobileLayout.setVisibility(View.VISIBLE);
-                bankLayout.setVisibility(View.VISIBLE);
-                account_name.setText(beneficiary_name_);
-                account_number.setText(beneficiary_number_);
-                beneficiary_no.setText(beneficiary_phone);
-                etCity.setText(city);
+        transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    bankSp.setSelection(Banknames.indexOf(bankk));
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Log.e("IndexError",e.getMessage());
+                    //Change selected text color
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
+                } catch (Exception e) {
+
                 }
 
-                WalletHomeActivity.selectSpinnerItemByValue(spCountry,sSpCountry);
-                WalletHomeActivity.selectSpinnerItemByValue(bank_branch,branch);
-
-            }else{
-                beneficiaryNameLayout.setVisibility(View.VISIBLE);
-                beneficiaryMobileLayout.setVisibility(View.VISIBLE);
-                bankLayout.setVisibility(View.GONE);
-
-                if(beneficiary_name_!=null && beneficiary_number_!=null){
-                    beneficiary_name_mm.setText(beneficiary_name_);
-                    beneficiary_no.setText(beneficiary_number_.substring(1));
+                if(position==0){
+                    beneficiaryNameLayout.setVisibility(View.GONE);
+                    beneficiaryMobileLayout.setVisibility(View.GONE);
+                    bankLayout.setVisibility(View.GONE);
+                }
+                else if(position==1){
+                    beneficiaryNameLayout.setVisibility(View.VISIBLE);
+                    beneficiaryMobileLayout.setVisibility(View.VISIBLE);
+                    bankLayout.setVisibility(View.GONE);
+                }
+                else{
+                    beneficiaryNameLayout.setVisibility(View.GONE);
+                    beneficiaryMobileLayout.setVisibility(View.VISIBLE);
+                    bankLayout.setVisibility(View.VISIBLE);
                 }
 
 
             }
-            WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,beneficiary_type);
-            transactionTypeSp.setEnabled(false);
-            transactionTypeSp.setClickable(false);
-            beneficiary_name_mm.setEnabled(false);
-            beneficiary_no.setEnabled(false);
-            account_name.setEnabled(false);
-            account_number.setEnabled(false);
-            title.setText("VIEW BENEFICIARY");
-            submit.setVisibility(View.GONE);
 
-        }
-        else {
-
-            transactionTypeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    try {
-                        //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                        //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                    } catch (Exception e) {
-
-                    }
-
-                    if(position==0){
-                        beneficiaryNameLayout.setVisibility(View.GONE);
-                        beneficiaryMobileLayout.setVisibility(View.GONE);
-                        bankLayout.setVisibility(View.GONE);
-                    }
-                    else if(position==1){
-                        beneficiaryNameLayout.setVisibility(View.VISIBLE);
-                        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
-                        bankLayout.setVisibility(View.GONE);
-                    }
-                    else{
-                        beneficiaryNameLayout.setVisibility(View.GONE);
-                        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
-                        bankLayout.setVisibility(View.VISIBLE);
-                    }
-
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-            branch=bank_branch.getSelectedItem().toString();
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        branch=bank_branch.getSelectedItem().toString();
 
 
 
@@ -290,7 +238,6 @@ public class AddBeneficiary extends DialogFragment {
 
                     String beneficary_type = transactionTypeSp.getSelectedItem().toString().trim();
                     if(beneficary_type.equalsIgnoreCase("mobile money")){
-                        //  encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                         beneficiary_name = beneficiary_name_mm.getText().toString();
                         beneficiary_number = getString(R.string.phone_number_code)+beneficiary_no.getText().toString();
                         bankk = "Mobile Money Bank";
@@ -302,7 +249,6 @@ public class AddBeneficiary extends DialogFragment {
 
                     }else{
                         //encript account_name and number
-                        //CryptoUtil encrypter = new CryptoUtil(BuildConfig.ENCRYPTION_KEY, context.getString(R.string.iv));
                          beneficiary_name = account_name.getText().toString();
                         beneficiary_number = account_number.getText().toString();
                         bankk = bankSp.getSelectedItem().toString();
@@ -318,52 +264,7 @@ public class AddBeneficiary extends DialogFragment {
                     String request_id = WalletHomeActivity.generateRequestId();
                     String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
 
-                    if(submit.getText().toString().equalsIgnoreCase("update")){
-                        dialogLoader.showProgressDialog();
-
-                        /*************RETROFIT IMPLEMENTATION**************/
-                        Call<GeneralWalletResponse> call = APIClient.getWalletInstance(getContext())
-                                .updateBeneficiary(access_token, id, beneficary_type, bankk, branch, beneficiary_name, beneficiary_number, request_id,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number);
-                        call.enqueue(new Callback<GeneralWalletResponse>() {
-                            @Override
-                            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
-                                if (response.isSuccessful()) {
-                                    dialogLoader.hideProgressDialog();
-                                    if (response.body().getStatus().equalsIgnoreCase("0")) {
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                                    } else {
-                                        String message = response.body().getMessage();
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-
-
-                                        //To BeneficiariesListFragment();
-                                        WalletHomeActivity.navController.popBackStack(R.id.beneficiariesListFragment,true);
-                                        WalletHomeActivity.navController.navigate(R.id.action_walletHomeFragment2_to_beneficiariesListFragment);
-
-                                    }
-
-                                } else if (response.code() == 401) {
-                                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
-
-                                    //redirect to auth
-                                    TokenAuthFragment.startAuth( true);
-
-                                }
-                            }
-
-
-                            @Override
-                            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
-                                dialogLoader.hideProgressDialog();
-
-                            }
-                        });
-                    }
-                    else {
-                        requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
-
-                    }
+                    requestsaveBeneficiary(access_token,user_id, category,beneficary_type);
 
 
                 }
@@ -382,6 +283,20 @@ public class AddBeneficiary extends DialogFragment {
 
         return dialog;
 
+    }
+
+    private void showAddMobileMoneyBeneficiaryForm() {
+        beneficiaryNameLayout.setVisibility(View.VISIBLE);
+        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
+        bankLayout.setVisibility(View.GONE);
+        WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,"Mobile Money");
+    }
+
+    private void showAddBankBeneficiaryForm() {
+        beneficiaryNameLayout.setVisibility(View.GONE);
+        beneficiaryMobileLayout.setVisibility(View.VISIBLE);
+        bankLayout.setVisibility(View.VISIBLE);
+        WalletHomeActivity.selectSpinnerItemByValue(transactionTypeSp,"Bank");
     }
 
     private void saveBeneficiary(String access_token, String user_id, String category, String otp_code, String type, String beneficary_type, Dialog otpDialog, OtpDialogLoader otpDialogLoader) {
@@ -509,7 +424,7 @@ public class AddBeneficiary extends DialogFragment {
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
 
-                    Log.w("PhoneNumberError",customer_phone_number);
+                     //Log.w("PhoneNumberError",customer_phone_number);
 
                     otpDialogLoader=new OtpDialogLoader( AddBeneficiary.this) {
                         @Override
@@ -568,7 +483,7 @@ public class AddBeneficiary extends DialogFragment {
                     try {
                         BanksInfoResponse.InfoData bankInfo = response.body().getData();
                         BankList=bankInfo.getBanks();
-                        Log.w("Banks_NumberFetched",BankList.length+" #############");
+                         //Log.w("Banks_NumberFetched",BankList.length+" #############");
 
                         for (Bank bank: BankList) {
                             if( bank.getMobileVerified()==null && !bank.getName().equals("MTN") )
@@ -633,7 +548,7 @@ public class AddBeneficiary extends DialogFragment {
                     try {
                         bankBranches = response.body().getData().getBankBranches();
 
-                        Log.w("Banks_NumberFetched",bankBranches.length+"****************");
+                         //Log.w("Banks_NumberFetched",bankBranches.length+"****************");
 
                         BankBranchnames.add("Select");
                         for (BankBranch bank: bankBranches) {
