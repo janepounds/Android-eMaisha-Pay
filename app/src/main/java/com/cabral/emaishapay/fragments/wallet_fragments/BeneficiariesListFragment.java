@@ -78,11 +78,12 @@ public class BeneficiariesListFragment extends Fragment {
         toolbar.setTitle("Beneficiaries");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        dialogLoader = new DialogLoader(context);
         RequestBeneficiaries();
 
         layoutPlaceholder = rootView.findViewById(R.id.beneficiaries_place_holder);
 
-        dialogLoader = new DialogLoader(context);
+
         aboutBeneficiaries.setOnClickListener(v->{
 
             //Go to coming soon
@@ -131,7 +132,7 @@ public class BeneficiariesListFragment extends Fragment {
     }
 
     public void RequestBeneficiaries(){
-        dialogLoader = new DialogLoader(context);
+
         dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
@@ -145,8 +146,8 @@ public class BeneficiariesListFragment extends Fragment {
         call.enqueue(new Callback<BeneficiaryResponse>() {
             @Override
             public void onResponse(Call<BeneficiaryResponse> call, Response<BeneficiaryResponse> response) {
+                dialogLoader.hideProgressDialog();
                 if(response.isSuccessful()){
-                    dialogLoader.hideProgressDialog();
 
                     try {
 
@@ -157,8 +158,6 @@ public class BeneficiariesListFragment extends Fragment {
                         }else {
                             layoutPlaceholder.setVisibility(View.VISIBLE);
                         }
-
-
 
 
                     } catch (Exception e) {
@@ -173,7 +172,6 @@ public class BeneficiariesListFragment extends Fragment {
                     }
 
                 }else if (response.code() == 401) {
-                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {

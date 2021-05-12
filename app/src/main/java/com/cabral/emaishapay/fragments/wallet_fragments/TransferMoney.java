@@ -2,6 +2,7 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -496,7 +497,7 @@ public class TransferMoney extends Fragment {
             Toast.makeText(context,"Select transfer to",Toast.LENGTH_LONG).show();
             return false;
 
-        }else if(spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
+        }else if( spBeneficiary.getSelectedItem()!=null && spBeneficiary.getSelectedItem().toString().equalsIgnoreCase("Select")){
             Toast.makeText(context,"Select Beneficiary",Toast.LENGTH_LONG).show();
             return false;
 

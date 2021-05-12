@@ -693,36 +693,31 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             public void onResponse(@NotNull Call<WalletAuthentication> call, @NotNull retrofit2.Response<WalletAuthentication> response) {
                 dialogLoader.hideProgressDialog();
                 // Check if the Response is successful
-                if (response.isSuccessful()) {
-                    if (response.body().getStatus()==1) {
 
-                        WalletAuthentication.UserData userDetails = response.body().getData();
-                        Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
-                        Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
-                        Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
-                        Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
-                        Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
-                        Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
-                        //otpDialog.dismiss();
-                        loginUser(userDetails, userPassword);
+                if (response.body().getStatus()==1) {
 
-                    } else if (response.body().getStatus()==0) {
-                        // Get the Error Message from Response
-                        String message = response.body().getMessage();
-                        Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
+                    WalletAuthentication.UserData userDetails = response.body().getData();
+                    Log.d(TAG, "onResponse: Email = " + userDetails.getEmail());
+                    Log.d(TAG, "onResponse: First Name = " + userDetails.getFirstname());
+                    Log.d(TAG, "onResponse: Last Name = " + userDetails.getLastname());
+                    Log.d(TAG, "onResponse: Username = " + userDetails.getEmail());
+                    Log.d(TAG, "onResponse: addressStreet = " + userDetails.getAddressStreet());
+                    Log.d(TAG, "onResponse: addressCityOrTown = " + userDetails.getAddressCityOrTown());
+                    Log.d(TAG, "onResponse: address_district = " + userDetails.getAddressCityOrTown());
+                    //otpDialog.dismiss();
+                    loginUser(userDetails, userPassword);
 
-                    } else {
-                        // Unable to get Success status
-                        Toast.makeText(context, getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
-                    }
+                } else if (response.body().getStatus()==0) {
+                    // Get the Error Message from Response
+                    String message = response.body().getMessage();
+                    Snackbar.make(binding.textForgotPin, message, Snackbar.LENGTH_SHORT).show();
 
+                } else {
+                    // Unable to get Success status
+                    Toast.makeText(context, getString(R.string.unexpected_response), Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    // Show the Error Message
-                    String Str = response.message();
-                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
-                }
+
+
             }
 
             @Override

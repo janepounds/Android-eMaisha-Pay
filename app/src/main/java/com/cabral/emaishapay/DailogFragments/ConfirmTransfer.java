@@ -116,7 +116,8 @@ public class ConfirmTransfer extends DialogFragment {
         charges_layount= view.findViewById(R.id.charges_layount);
         discount_layount= view.findViewById(R.id.discount_layount);
 
-        dialogLoader = new DialogLoader(getContext());
+        dialogLoader = new DialogLoader(activity);
+        dialogLoader.showProgressDialog();
 
         String phoneNumber= getArguments().getString("phoneNumber");
         String methodOfTransfer=getArguments().getString("methodOfPayment");
