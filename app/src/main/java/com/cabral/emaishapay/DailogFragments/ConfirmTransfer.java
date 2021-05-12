@@ -65,7 +65,7 @@ public class ConfirmTransfer extends DialogFragment {
     Context activity;
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
-    Dialog dialog;
+    Dialog dialogPIN;
 
     public ConfirmTransfer(Context context) {
         this.activity = context;
@@ -153,7 +153,7 @@ public class ConfirmTransfer extends DialogFragment {
 
 
                 builder.setView(pinDialog);
-                dialog = builder.create();
+                dialogPIN = builder.create();
                 builder.setCancelable(false);
 
                 EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
@@ -190,7 +190,7 @@ public class ConfirmTransfer extends DialogFragment {
                     }
                 });
 
-                dialog.show();
+                dialogPIN.show();
 
 
             }
@@ -244,7 +244,7 @@ public class ConfirmTransfer extends DialogFragment {
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 if (response.code() == 200) {
                     if(response.body().getStatus().equalsIgnoreCase("1")) {
-                        dialog.dismiss();
+                        dialogPIN.dismiss();
                         //success message
                         dialogLoader.hideProgressDialog();
                         final Dialog dialog = new Dialog(getContext());
@@ -292,8 +292,6 @@ public class ConfirmTransfer extends DialogFragment {
 
                     }
 
-                } else if (response.code() == 412) {
-
                 } else if (response.code() == 401) {
                     TokenAuthFragment.startAuth(true);
 
@@ -304,7 +302,7 @@ public class ConfirmTransfer extends DialogFragment {
                     Log.e("info", "Something got very very wrong");
                 }
 
-                dialog.dismiss();
+                dialogPIN.dismiss();
             }
 
             @Override
@@ -315,9 +313,9 @@ public class ConfirmTransfer extends DialogFragment {
 
                 receiverNameTextView.setText("Unknown Receiver");
 
-                errorTextView.setText("Error while checking for merchant occured");
-                errorTextView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                //errorTextView.setText("Error while checking for merchant occured");
+                //errorTextView.setVisibility(View.VISIBLE);
+                dialogPIN.dismiss();
                 dialogLoader.hideProgressDialog();
             }
         });
@@ -760,7 +758,7 @@ public class ConfirmTransfer extends DialogFragment {
             public void onResponse(Call<InitiateTransferResponse> call, Response<InitiateTransferResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("1")){
-                    dialog.dismiss();
+                    dialogPIN.dismiss();
                     final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -782,7 +780,7 @@ public class ConfirmTransfer extends DialogFragment {
                     dialog.show();
 
                 } else if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("0")){
-                    dialog.dismiss();
+
                     final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_failure_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -808,22 +806,22 @@ public class ConfirmTransfer extends DialogFragment {
                     TokenAuthFragment.startAuth( true);
 
                 }
-                    else if (response.code() == 500) {
-                        errorTextView.setText("Error Occurred Try again later");
-                        Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                    } else if (response.code() == 400) {
-                        errorTextView.setText("Check your input details");
-                        Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
-                    } else if (response.code() == 406) {
-                        errorTextView.setText(response.body().getMessage());
+                else if (response.code() == 500) {
+                    errorTextView.setText("Error Occurred Try again later");
+                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                } else if (response.code() == 400) {
+                    errorTextView.setText("Check your input details");
+                    Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                } else if (response.code() == 406) {
+                    errorTextView.setText(response.body().getMessage());
 
-                        Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                    } else {
-                        errorTextView.setText("Error Occurred Try again later");
+                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                } else {
+                    errorTextView.setText("Error Occurred Try again later");
 
-                    }
-                    errorTextView.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
+                }
+
+                dialogPIN.dismiss();
             }
 
             @Override
@@ -831,7 +829,7 @@ public class ConfirmTransfer extends DialogFragment {
                 Log.e("info : " , new String(String.valueOf(t.getMessage())));
                 errorTextView.setText("Error Occurred Try again later");
                 errorTextView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                dialogPIN.dismiss();
                 dialogLoader.hideProgressDialog();
             }
         });
