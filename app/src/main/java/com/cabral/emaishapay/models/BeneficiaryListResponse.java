@@ -3,7 +3,7 @@ package com.cabral.emaishapay.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GeneralWalletResponse {
+public class BeneficiaryListResponse {
 
     @SerializedName("status")
     @Expose
@@ -12,6 +12,9 @@ public class GeneralWalletResponse {
     @Expose
     private String message;
 
+    @SerializedName("data")
+    @Expose
+    private BeneficiaryResponse.Beneficiaries data;
 
     public String getStatus() {
         return status;
@@ -27,5 +30,13 @@ public class GeneralWalletResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public BeneficiaryResponse.Beneficiaries getData() {
+        return data;
+    }
+
+    public void setData(BeneficiaryResponse.Beneficiaries data) {
+        this.data = data;
     }
 }

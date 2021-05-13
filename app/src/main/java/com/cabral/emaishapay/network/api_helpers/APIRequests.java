@@ -5,7 +5,7 @@ import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
-import com.cabral.emaishapay.models.GeneralWalletResponse;
+import com.cabral.emaishapay.models.BeneficiaryListResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
@@ -874,7 +874,7 @@ public interface APIRequests {
     // save Mobile Money Beneficiary
     @FormUrlEncoded
     @POST("wallet/add_beneficiary")
-    Call<GeneralWalletResponse>saveBeneficiary(
+    Call<BeneficiaryListResponse>saveBeneficiary(
             @Header("Authorization")String token,
             @Field("otp") String user_id,
             @Field("identifier") String otp,
@@ -896,7 +896,7 @@ public interface APIRequests {
     //save Bank beneficiary
     @FormUrlEncoded
     @POST("wallet/add/bank-beneficiary")
-    Call<GeneralWalletResponse>saveBankBeneficiary(
+    Call<BeneficiaryListResponse>saveBankBeneficiary(
             @Header("Authorization")String token,
             @Field("otp") String user_id,
             @Field("identifier") String otp,
@@ -920,7 +920,7 @@ public interface APIRequests {
     // request save Beneficiary Otp
     @FormUrlEncoded
     @POST("wallet/customer-request/add-beneficiary")
-    Call<GeneralWalletResponse>requestSaveBeneficiary(
+    Call<BeneficiaryListResponse>requestSaveBeneficiary(
             @Header("Authorization")String token,
             @Field("amount") String amount,
             @Field("type") String type,
@@ -944,7 +944,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/update_beneficiary")
-    Call<GeneralWalletResponse>updateBeneficiary(
+    Call<BeneficiaryListResponse>updateBeneficiary(
             @Header("Authorization")String token,
             @Field("id") String beneficiary_id,
             @Field("transaction_type") String transaction_type,

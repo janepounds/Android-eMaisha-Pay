@@ -40,6 +40,8 @@ import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.utils.ValidateInputs;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +73,7 @@ public class PayFragment extends Fragment {
     DialogLoader dialogLoader;
 
 
-    public PayFragment() {
-    }
+    public PayFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class PayFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         this.fm=getParentFragmentManager();
+        dialogLoader=new DialogLoader(context);
         initializeForm(view);
         return view;
     }
@@ -141,7 +143,7 @@ public class PayFragment extends Fragment {
 
 
         }
-            
+
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -165,7 +167,7 @@ public class PayFragment extends Fragment {
             }
         };
         expiryEdt.addTextChangedListener(fieldValidatorTextWatcher);
-        
+
         spPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -403,26 +405,27 @@ public class PayFragment extends Fragment {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
+        String merchantId = mechantIdEdt.getText().toString();
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<ConfirmationDataResponse> call = apiRequests.
                 getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
+
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
 
                 dialogLoader.hideProgressDialog();
-                if(response.code()==200){
+                if(response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")){
 
                     navigateToPreviewDialog( amount,response.body().getData().getBusinessName());
 
-                }else  {
-                   Log.e("errror : ", response.body().getMessage());
-                }
+                }else if(response.isSuccessful()){
 
-                if(response.code()==401){
+                    Snackbar.make(saveBtn,response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                }else if(response.code()==401){
                     TokenAuthFragment.startAuth( true);
-
+                }else{
+                    Log.e("info : ", "Something got very wrong");
                 }
 
             }

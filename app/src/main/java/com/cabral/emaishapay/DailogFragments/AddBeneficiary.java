@@ -33,7 +33,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.OtpDialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
-import com.cabral.emaishapay.models.GeneralWalletResponse;
+import com.cabral.emaishapay.models.BeneficiaryListResponse;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
@@ -305,7 +305,7 @@ public class AddBeneficiary extends DialogFragment {
 
         String request_id = WalletHomeActivity.generateRequestId();
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<GeneralWalletResponse> call =null;
+        Call<BeneficiaryListResponse> call =null;
 
         if (beneficary_type.equalsIgnoreCase("Bank")) {
             call = APIClient.getWalletInstance(getContext()).saveBankBeneficiary(
@@ -326,9 +326,9 @@ public class AddBeneficiary extends DialogFragment {
 
 
 
-        call.enqueue(new Callback<GeneralWalletResponse>() {
+        call.enqueue(new Callback<BeneficiaryListResponse>() {
             @Override
-            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
+            public void onResponse(Call<BeneficiaryListResponse> call, Response<BeneficiaryListResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
                     otpDialog.dismiss();
@@ -372,7 +372,7 @@ public class AddBeneficiary extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
+            public void onFailure(Call<BeneficiaryListResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
 
             }
@@ -405,7 +405,7 @@ public class AddBeneficiary extends DialogFragment {
         dialogLoader.showProgressDialog();
 
         /*************RETROFIT IMPLEMENTATION**************/
-        Call<GeneralWalletResponse> call = APIClient.getWalletInstance(getContext())
+        Call<BeneficiaryListResponse> call = APIClient.getWalletInstance(getContext())
                 .requestSaveBeneficiary(
                         access_token,
                         user_id,
@@ -417,9 +417,9 @@ public class AddBeneficiary extends DialogFragment {
                         "customerAddBeneficiaryTransactionOTP");
 
         String finalType = type;
-        call.enqueue(new Callback<GeneralWalletResponse>() {
+        call.enqueue(new Callback<BeneficiaryListResponse>() {
             @Override
-            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
+            public void onResponse(Call<BeneficiaryListResponse> call, Response<BeneficiaryListResponse> response) {
                 dialogLoader.hideProgressDialog();
                 if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")) {
 
@@ -461,7 +461,7 @@ public class AddBeneficiary extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
+            public void onFailure(Call<BeneficiaryListResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
 
             }

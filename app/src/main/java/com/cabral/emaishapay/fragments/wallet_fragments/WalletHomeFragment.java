@@ -142,9 +142,7 @@ public class WalletHomeFragment extends Fragment {
                 //To TransferMoney
                 Bundle args=new Bundle();
                 args.putString("KEY_ACTION", getString(R.string.transactions) );
-
                 navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
-
 
             }
         });
@@ -155,7 +153,6 @@ public class WalletHomeFragment extends Fragment {
                 //To List and not form
                 Bundle args=new Bundle();
                 args.putString("KEY_TITLE", getString(R.string.settlements) );
-
                 //navController.navigate(R.id.action_walletHomeFragment2_to_transferMoney,args);
                 navController.navigate(R.id.action_walletHomeFragment2_to_walletTransactionsListFragment2,args);
             }
@@ -190,8 +187,6 @@ public class WalletHomeFragment extends Fragment {
 
                   ImageView close = dialogView.findViewById(R.id.coming_soon_close);
                   Button ok = dialogView.findViewById(R.id.button_submit);
-
-
 
                   final AlertDialog alertDialog = dialog.create();
 
