@@ -49,14 +49,13 @@ public class PurchasePreview extends DialogFragment  {
     TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView,
             mechantNameTextView,errorTextView, discountTextView,merchant_label;
 
-    String businessName ="";
+    String businessName;
     Context activity;
     Dialog dialog;
     DialogLoader dialogLoader;
 
-    public PurchasePreview(Context context){
-        this.activity=context;
-
+    public PurchasePreview(String businessName){
+        this.businessName=businessName;
     }
 
 
@@ -80,6 +79,13 @@ public class PurchasePreview extends DialogFragment  {
         return builder.create();
 
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity=context;
+    }
+
     public void initializeView(View view){
 
         purchase_date_label_TextView = view.findViewById(R.id.purchase_date_label);
@@ -143,60 +149,10 @@ public class PurchasePreview extends DialogFragment  {
             }
         });
 
-        getMechantName();
 
     }
 
-    public void getMechantName(){
 
-        /***************RETROFIT IMPLEMENTATION***********************/
-        dialogLoader.showProgressDialog();
-
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
-        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<ConfirmationDataResponse> call = apiRequests.
-                getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
-        call.enqueue(new Callback<ConfirmationDataResponse>() {
-            @Override
-            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-
-                dialogLoader.hideProgressDialog();
-                if(response.code()==200){
-                    businessName = response.body().getData().getBusinessName();
-                    mechantNameTextView.setText(businessName);
-                    confirmBtn.setVisibility(View.VISIBLE);
-
-                }else if(response.code()==412) {
-//                    businessName = response.body().getMessage();
-                    mechantNameTextView.setText("Unknown Merchant");
-                    mechantNameTextView.setTextColor( getResources().getColor(R.color.textRed));
-                    errorTextView.setText("Unknown Merchant");
-                    errorTextView.setVisibility(View.VISIBLE);
-                }
-                else if(response.code()==401){
-                    TokenAuthFragment.startAuth( true);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-                Log.e("info : ", t.getMessage());
-                Log.e("info : ", "Something got very very wrong");
-                dialogLoader.hideProgressDialog();
-                mechantNameTextView.setText("Unknown Merchant");
-                errorTextView.setText("Error while checking for mechant occured");
-                errorTextView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-        });
-
-
-    }
 
     public void processPayment(){
         String methodOfPayment= WalletTransactionInitiation.getInstance().getMethodOfPayment();

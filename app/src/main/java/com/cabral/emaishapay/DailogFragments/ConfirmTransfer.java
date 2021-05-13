@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -32,16 +31,8 @@ import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
-import com.cabral.emaishapay.models.external_transfer_model.BankTransferResponse;
-import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
-import com.cabral.emaishapay.models.external_transfer_model.TransferFeeResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
-import com.cabral.emaishapay.network.api_helpers.FlutterwaveV3APIClient;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -53,24 +44,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
-
 public class ConfirmTransfer extends DialogFragment {
     private static final String TAG = "ConfirmTransfer";
 
     Button confirmBtn;
     TextView serviceTextView, datetimeTextView, totalTextView, receiverPhoneNumber,
             receiverNameTextView, errorTextView, transactionLabelTextView, receiverLabel,chargesTextView;
-    String businessName = "";
-    Context activity;
+    String businessName;
+    Context context;
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
     Dialog dialogPIN;
 
-    public ConfirmTransfer(Context context) {
-        this.activity = context;
+    public ConfirmTransfer( String businessName){
+        this.businessName=businessName;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context =context;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,6 +91,7 @@ public class ConfirmTransfer extends DialogFragment {
 
     }
 
+
     public void initializeView(View view) {
         totalTextView = view.findViewById(R.id.txt_view_crop_bill_preview_total);
         errorTextView = view.findViewById(R.id.text_view_purchase_preview_error);
@@ -116,8 +111,6 @@ public class ConfirmTransfer extends DialogFragment {
         charges_layount= view.findViewById(R.id.charges_layount);
         discount_layount= view.findViewById(R.id.discount_layount);
 
-        dialogLoader = new DialogLoader(activity);
-        dialogLoader.showProgressDialog();
 
         String phoneNumber= getArguments().getString("phoneNumber");
         String methodOfTransfer=getArguments().getString("methodOfPayment");
@@ -143,14 +136,15 @@ public class ConfirmTransfer extends DialogFragment {
         datetimeTextView.setText(currentDateandTime);
         receiverPhoneNumber.setText(phoneNumber);
 
+        dialogLoader=new DialogLoader(context);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
                 //Inner Dialog to enter PIN
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity, R.style.CustomAlertDialog);
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.CustomAlertDialog);
                 //LayoutInflater inflater = requireActivity().getLayoutInflater();
-                View pinDialog = View.inflate(activity,R.layout.dialog_enter_pin,null);
+                View pinDialog = View.inflate(context,R.layout.dialog_enter_pin,null);
 
 
                 builder.setView(pinDialog);
@@ -201,7 +195,8 @@ public class ConfirmTransfer extends DialogFragment {
         charges_layount.setVisibility(View.GONE);
 
         if(methodOfTransfer.equalsIgnoreCase("eMaisha Account")) {
-            getReceiverName(phoneNumber);
+            receiverNameTextView.setText(businessName);
+            confirmBtn.setVisibility(View.VISIBLE);
         }else if(methodOfTransfer.equalsIgnoreCase("Mobile Money")) {
             receiverNameTextView.setText(beneficiary_name);
             receiverPhoneNumber.setText(account_number);
@@ -272,7 +267,7 @@ public class ConfirmTransfer extends DialogFragment {
                     } else {
                         dialogLoader.hideProgressDialog();
                         ConfirmTransfer.this.dismiss();
-                        final Dialog dialog = new Dialog(activity);
+                        final Dialog dialog = new Dialog(context);
                         dialog.setContentView(R.layout.dialog_failure_message);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false);
@@ -284,7 +279,7 @@ public class ConfirmTransfer extends DialogFragment {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                                 startActivity(goToWallet);
                             }
                         });
@@ -320,63 +315,6 @@ public class ConfirmTransfer extends DialogFragment {
                 dialogLoader.hideProgressDialog();
             }
         });
-    }
-
-
-    public void getReceiverName(String receiverPhoneNumber){
-        /***************RETROFIT IMPLEMENTATION***********************/
-        dialogLoader.showProgressDialog();
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-
-
-
-            APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
-            Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token, receiverPhoneNumber, "CustomersTransfer", request_id, "getReceiverForUser", category);
-            call.enqueue(new Callback<ConfirmationDataResponse>() {
-                @Override
-                public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                    dialogLoader.hideProgressDialog();
-                    if (response.code() == 200) {
-                        businessName = response.body().getData().getBusinessName();
-                        receiverNameTextView.setText(businessName);
-                        confirmBtn.setVisibility(View.VISIBLE);
-
-                    } else if (response.code() == 412) {
-                        String businessName = null;
-                        businessName = response.body().getMessage();
-                        receiverNameTextView.setText(businessName);
-                        errorTextView.setText(businessName);
-                        errorTextView.setVisibility(View.VISIBLE);
-                        // confirmBtn.setEnabled(true);
-                    } else if (response.code() == 401) {
-                        TokenAuthFragment.startAuth(true);
-
-                    }
-                    if (response.errorBody() != null) {
-                        Log.e("info", String.valueOf(response.errorBody()));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
-                    dialogLoader.hideProgressDialog();
-                    Log.e("info : ", t.getMessage());
-                    Log.e("info : ", "Something got very very wrong");
-
-                    receiverNameTextView.setText("Unknown Merchant");
-
-                    errorTextView.setText("Error while checking for merchant occured");
-                    errorTextView.setVisibility(View.VISIBLE);
-                }
-            });
-
-
-
     }
 
     public void mobileMoneyTransfer(double amount,String phoneNumber, String user_pin){
@@ -430,7 +368,7 @@ public class ConfirmTransfer extends DialogFragment {
                             dialog.show();
 
                         } else {
-                            final Dialog dialog = new Dialog(activity);
+                            final Dialog dialog = new Dialog(context);
                             dialog.setContentView(R.layout.dialog_failure_message);
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.setCancelable(false);
@@ -442,7 +380,7 @@ public class ConfirmTransfer extends DialogFragment {
                                 @Override
                                 public void onClick(View v) {
                                     dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                                     startActivity(goToWallet);
                                 }
                             });
@@ -548,7 +486,7 @@ public class ConfirmTransfer extends DialogFragment {
                             dialog.show();
 
                         } else {
-                            final Dialog dialog = new Dialog(activity);
+                            final Dialog dialog = new Dialog(context);
                             dialog.setContentView(R.layout.dialog_failure_message);
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.setCancelable(false);
@@ -560,7 +498,7 @@ public class ConfirmTransfer extends DialogFragment {
                                 @Override
                                 public void onClick(View v) {
                                     dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                                     startActivity(goToWallet);
                                 }
                             });
@@ -666,7 +604,7 @@ public class ConfirmTransfer extends DialogFragment {
                             dialog.show();
 
                         } else {
-                            final Dialog dialog = new Dialog(activity);
+                            final Dialog dialog = new Dialog(context);
                             dialog.setContentView(R.layout.dialog_failure_message);
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.setCancelable(false);
@@ -678,7 +616,7 @@ public class ConfirmTransfer extends DialogFragment {
                                 @Override
                                 public void onClick(View v) {
                                     dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                                    Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                                     startActivity(goToWallet);
                                 }
                             });
@@ -744,7 +682,7 @@ public class ConfirmTransfer extends DialogFragment {
     public void initiateWalletTransfer(final String phoneNumber, final double amount, String user_pin) {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
-        Toast.makeText(activity, phoneNumber, Toast.LENGTH_LONG).show();
+
         dialogLoader.showProgressDialog();
         /*****RETROFIT IMPLEMENTATION*****/
         String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ user_pin;
@@ -760,7 +698,7 @@ public class ConfirmTransfer extends DialogFragment {
                 dialogLoader.hideProgressDialog();
                 if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("1")){
                     dialogPIN.dismiss();
-                    final Dialog dialog = new Dialog(activity);
+                    final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.dialog_successful_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
@@ -773,7 +711,7 @@ public class ConfirmTransfer extends DialogFragment {
                         public void onClick(View v) {
                             dialog.dismiss();
 
-                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                            Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                             startActivity(goToWallet);
                         }
                     });
@@ -782,7 +720,7 @@ public class ConfirmTransfer extends DialogFragment {
 
                 } else if(response.code() ==200 && response.body().getStatus().equalsIgnoreCase("0")){
 
-                    final Dialog dialog = new Dialog(activity);
+                    final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.dialog_failure_message);
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
@@ -795,7 +733,7 @@ public class ConfirmTransfer extends DialogFragment {
                         public void onClick(View v) {
                             dialog.dismiss();
 
-                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                            Intent goToWallet = new Intent(context, WalletHomeActivity.class);
                             startActivity(goToWallet);
                         }
                     });

@@ -48,9 +48,7 @@ public class CardListFragment extends Fragment {
     private List<CardResponse.Cards> cardlists = new ArrayList();
     Toolbar toolbar;
     DialogLoader dialogLoader;
-    public CardListFragment() {
-        // Required empty public constructor
-    }
+    public CardListFragment() {}
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -77,9 +75,9 @@ public class CardListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
+        dialogLoader = new DialogLoader(context);
         RequestCards();
 
-        dialogLoader = new DialogLoader(context);
 
         btnAddCard.setOnClickListener(v -> {
         //nvigate to add card fragment

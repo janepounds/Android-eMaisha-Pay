@@ -28,19 +28,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.PurchasePreview;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
-import com.cabral.emaishapay.models.BeneficiaryResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
-import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
-import com.cabral.emaishapay.models.WalletTransaction;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import java.util.ArrayList;
 import java.util.List;
@@ -329,50 +327,11 @@ public class PayFragment extends Fragment {
             methodOfPayment = "eMaisha Pay";
 
         }
-        if(methodOfPayment.equalsIgnoreCase("eMaisha Pay")){
-
-            if(validateWalletPurchase()){
-                //go to preview
-                WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
-                WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
-                WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
-                WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
-                WalletTransactionInitiation.getInstance().setAmount(amount);
-                FragmentTransaction ft = this.fm.beginTransaction();
-                Fragment prev =this.fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-                // Create and show the dialog.
-                DialogFragment PreviewDailog =new PurchasePreview(context);
-                PreviewDailog.show( ft, "dialog");
-
-            }
-
-
+        if(methodOfPayment.equalsIgnoreCase("eMaisha Pay") && validateWalletPurchase()){
+            getMechantName(amount);
         }
-        else if(methodOfPayment.equals("Mobile Money")) {
-            if (validateMobileMoneyPurchase()) {
-                //redirect to preview dialog
-                WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
-                WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
-                WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
-                WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
-                WalletTransactionInitiation.getInstance().setAmount(amount);
-                WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
-                FragmentTransaction ft = this.fm.beginTransaction();
-                Fragment prev =this.fm.findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-                // Create and show the dialog.
-                DialogFragment PreviewDailog =new PurchasePreview(context);
-                PreviewDailog.show( ft, "dialog");
-
-
-            }
+        else if(methodOfPayment.equals("Mobile Money") && validateMobileMoneyPurchase()) {
+            getMechantName(amount);
         }
 
 
@@ -419,31 +378,67 @@ public class PayFragment extends Fragment {
 //        }
     }
 
-
-
-
-
-
-    private boolean validateBankCardPurchase() {
-        if (!ValidateInputs.isValidAccountNo(cardNumberEdt.getText().toString().trim())) {
-            cardNumberEdt.setError(getString(R.string.invalid_credit_card));
-            return false;
-        } else if (!ValidateInputs.isValidCvv(cvvEdt.getText().toString().trim())) {
-            cvvEdt.setError(getString(R.string.invalid_card_cvv));
-            return false;
-        } else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
-            totalAmountEdt.setError(getString(R.string.invalid_number));
-            return false;
-        } else if (!ValidateInputs.isValidCardExpiry(expiryEdt.getText().toString().trim())){
-            expiryEdt.setError(getString(R.string.invalid_expiry));
-            return false;
-        } else if (Integer.parseInt(totalAmountEdt.getText().toString().trim())<0) {
-            totalAmountEdt.setError(getString(R.string.invalid_number));
-            return false;
-        }  else {
-            return true;
+    private void navigateToPreviewDialog(float amount, String businessName) {
+        WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
+        WalletTransactionInitiation.getInstance().setMobileNumber( mobileNumberEdt.getText().toString());
+        WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
+        WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
+        WalletTransactionInitiation.getInstance().setAmount(amount);
+        WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
+        FragmentTransaction ft = this.fm.beginTransaction();
+        Fragment prev =this.fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
         }
+        ft.addToBackStack(null);
+        // Create and show the dialog.
+        DialogFragment PreviewDailog =new PurchasePreview(businessName);
+        PreviewDailog.show( ft, "dialog");
     }
+
+    public void getMechantName(float amount){
+
+        dialogLoader.showProgressDialog();
+
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String merchantId = WalletTransactionInitiation.getInstance().getMechantId();
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        Call<ConfirmationDataResponse> call = apiRequests.
+                getMerchant(access_token,merchantId,request_id,category,"getMerchantForUser");
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
+            @Override
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+
+                dialogLoader.hideProgressDialog();
+                if(response.code()==200){
+
+                    navigateToPreviewDialog( amount,response.body().getData().getBusinessName());
+
+                }else  {
+                   Log.e("errror : ", response.body().getMessage());
+                }
+
+                if(response.code()==401){
+                    TokenAuthFragment.startAuth( true);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
+                Log.e("info : ", t.getMessage());
+                Log.e("info : ", "Something got very very wrong");
+                dialogLoader.hideProgressDialog();
+
+            }
+        });
+
+
+    }
+
 
     private boolean validateWalletPurchase() {
         if ( TextUtils.isEmpty(mechantIdEdt.getText()) ) {

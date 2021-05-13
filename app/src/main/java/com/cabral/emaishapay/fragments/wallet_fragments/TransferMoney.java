@@ -33,12 +33,14 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.BeneficiaryResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.models.external_transfer_model.Bank;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranch;
 import com.cabral.emaishapay.models.external_transfer_model.BankBranchInfoResponse;
 import com.cabral.emaishapay.models.external_transfer_model.BanksInfoResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIRequests;
 import com.cabral.emaishapay.network.api_helpers.RaveV2APIClient;
 import com.cabral.emaishapay.utils.ValidateInputs;
@@ -339,34 +341,7 @@ public class TransferMoney extends Fragment {
                 }else{
 
                     Log.d(TAG, "initializeForm: "+beneficiary_name+"beneciary_number"+account_number);
-
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev = fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
-                    ft.addToBackStack(null);
-
-
-                    // Create and show the dialog.
-                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                    Bundle args = new Bundle();
-                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                    args.putString("phoneNumber", phoneNumber);
-                    args.putDouble("amount", amount);
-
-                    args.putString("beneficiary_name", beneficiary_name);
-                    args.putString("account_name", account_name);
-                    args.putString("account_number", account_number);
-
-                    args.putString("bankCode", selected_bank_code);
-                    args.putString("bankBranch", selected_branch_code);
-                    args.putString("beneficiary_id", beneficiary_id);
-                    args.putString(" beneficiary_bank_phone_number",  beneficiary_bank_phone_number);
-
-                    transferPreviewDailog.setArguments(args);
-                    transferPreviewDailog.show(ft, "dialog");
+                    navigateToComfirmDialog(null);
 
 
                 }
@@ -375,32 +350,7 @@ public class TransferMoney extends Fragment {
             else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("emaisha account")){
                 if( validateMaishaTransFerForm()) {
 
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev = fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
-                    ft.addToBackStack(null);
-
-
-                    // Create and show the dialog.
-                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                    Bundle args = new Bundle();
-                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                    args.putString("phoneNumber", phoneNumber);
-                    args.putDouble("amount", amount);
-
-                    args.putString("beneficiary_name", beneficiary_name);
-                    args.putString("account_name", account_name);
-                    args.putString("account_number", account_number);
-
-                    args.putString("bankCode", selected_bank_code);
-                    args.putString("bankBranch", selected_branch_code);
-                    args.putString("beneficiary_id", beneficiary_id);
-
-                    transferPreviewDailog.setArguments(args);
-                    transferPreviewDailog.show(ft, "dialog");
+                    getReceiverName( phoneNumber);
                 }
 
             }else if(spTransferTo.getSelectedItem().toString().equalsIgnoreCase("eMaisha Card")){
@@ -422,38 +372,9 @@ public class TransferMoney extends Fragment {
                         popUpAddBeneficiary("Mobile Money");
                     }
 
-
                 }else{
 
-
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev = fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
-                    ft.addToBackStack(null);
-
-
-                    // Create and show the dialog.
-                    DialogFragment transferPreviewDailog = new ConfirmTransfer(context);
-
-                    Bundle args = new Bundle();
-                    args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
-                    args.putString("phoneNumber", phoneNumber);
-                    args.putDouble("amount", amount);
-
-                    args.putString("beneficiary_name", beneficiary_name);
-                    args.putString("account_name", account_name);
-                    args.putString("account_number", account_number);
-
-                    args.putString("bankCode", selected_bank_code);
-                    args.putString("bankBranch", selected_branch_code);
-                    args.putString("beneficiary_id", beneficiary_id);
-
-                    transferPreviewDailog.setArguments(args);
-                    transferPreviewDailog.show(ft, "dialog");
-
-
+                    navigateToComfirmDialog(null);
 
                 }
 
@@ -465,6 +386,77 @@ public class TransferMoney extends Fragment {
 
 
     }
+    public void getReceiverName(String receiverPhoneNumber){
+        /***************RETROFIT IMPLEMENTATION***********************/
+        dialogLoader.showProgressDialog();
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+
+        APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+        Call<ConfirmationDataResponse> call = apiRequests.getUserBusinessName(access_token, receiverPhoneNumber, "CustomersTransfer", request_id, "getReceiverForUser", category);
+
+        call.enqueue(new Callback<ConfirmationDataResponse>() {
+            @Override
+            public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
+                dialogLoader.hideProgressDialog();
+                if (response.code() == 200) {
+                  navigateToComfirmDialog(response.body().getData().getBusinessName());
+
+                } else {
+                    Snackbar.make(context,addMoneyImg, response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+
+                if (response.errorBody() != null) {
+                    Log.e("info", String.valueOf(response.errorBody()));
+                } else {
+                    Log.e("info", "Something got very very wrong");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ConfirmationDataResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+                Log.e("info : ", t.getMessage());
+                Log.e("info : ", "Something got very very wrong");
+
+            }
+        });
+
+    }
+
+    private void navigateToComfirmDialog(String businessName) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+
+        // Create and show the dialog.
+        DialogFragment transferPreviewDailog = new ConfirmTransfer(businessName);
+
+        Bundle args = new Bundle();
+
+        args.putString("methodOfPayment", spTransferTo.getSelectedItem().toString());
+        args.putString("phoneNumber", phoneNumber);
+        args.putDouble("amount", amount);
+
+        args.putString("beneficiary_name", beneficiary_name);
+        args.putString("account_name", account_name);
+        args.putString("account_number", account_number);
+
+        args.putString("bankCode", selected_bank_code);
+        args.putString("bankBranch", selected_branch_code);
+        args.putString("beneficiary_id", beneficiary_id);
+        args.putString(" beneficiary_bank_phone_number",  beneficiary_bank_phone_number);
+
+        transferPreviewDailog.setArguments(args);
+        transferPreviewDailog.show(ft, "dialog");
+    }
+
 
     private void popUpAddBeneficiary(String type) {
         //nvigate to add beneficiaries fragment
