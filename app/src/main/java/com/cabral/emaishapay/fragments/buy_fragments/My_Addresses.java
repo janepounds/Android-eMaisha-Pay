@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,16 +50,10 @@ import retrofit2.Callback;
 public class My_Addresses extends Fragment {
     private static final String TAG = "My_Addresses";
     public static My_Cart my_cart;
-    View rootView;
     String customerID;
     String defaultAddressID;
-    RecyclerView addresses_recycler;
-    FloatingActionButton add_address_fab;
-    LinearLayout emptyRecordLayout;
-    AppCompatButton addAddressButton;
     DialogLoader dialogLoader;
     static AddressListAdapter addressListAdapter;
-    Toolbar toolbar;
     Boolean enable_back=true;
     DefaultAddressModelView viewModel;
     BuyInputsMyAddressesBinding binding;
@@ -79,14 +74,13 @@ public class My_Addresses extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.buy_inputs_my__addresses, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_my__addresses, container, false);
         setHasOptionsMenu(true);
-        toolbar = rootView.findViewById(R.id.toolbar_addresses);
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle(getString(R.string.actionAddresses));
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarAddresses);
+        binding.toolbarAddresses.setTitle(getString(R.string.actionAddresses));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
@@ -98,18 +92,13 @@ public class My_Addresses extends Fragment {
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         defaultAddressID = this.getContext().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
 
-        // Binding Layout Views
-        addresses_recycler = rootView.findViewById(R.id.addresses_recycler);
-        add_address_fab = rootView.findViewById(R.id.add_address_fab);
-        emptyRecordLayout = rootView.findViewById(R.id.empty_record);
-        addAddressButton = rootView.findViewById(R.id.continue_shopping_btn);
 
         dialogLoader = new DialogLoader(getContext());
 
         // Request for User's Addresses
-        RequestAllAddresses(rootView);
+        RequestAllAddresses();
 
-        addAddressButton.setOnClickListener(v -> {
+        binding.continueShoppingBtn.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
             Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
             Bundle args = new Bundle();
@@ -130,7 +119,7 @@ public class My_Addresses extends Fragment {
         });
 
         // Handle Click event of add_address_fab FAB
-        add_address_fab.setOnClickListener(v -> {
+        binding.addAddressFab.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
             Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
             Bundle args = new Bundle();
@@ -149,7 +138,7 @@ public class My_Addresses extends Fragment {
                         .addToBackStack(null).commit();
         });
 
-        return rootView;
+        return binding.getRoot();
     }
 
     //*********** Adds Addresses returned from the Server to the AddressesList ********//
@@ -160,9 +149,9 @@ public class My_Addresses extends Fragment {
         addressesList = addressData.getData();
 
         if (addressesList.isEmpty()) {
-            emptyRecordLayout.setVisibility(View.VISIBLE);
+            binding.emptyRecord.setVisibility(View.VISIBLE);
         } else {
-            emptyRecordLayout.setVisibility(View.GONE);
+            binding.emptyRecord.setVisibility(View.GONE);
         }
 
         for (int i = 0; i < addressesList.size(); i++) {
@@ -193,22 +182,22 @@ public class My_Addresses extends Fragment {
         }
 
         if (addressesList.size() == 1) {
-            MakeAddressDefault(customerID, String.valueOf(addressesList.get(0).getAddressId()), getContext(), rootView);
+            MakeAddressDefault(customerID, String.valueOf(addressesList.get(0).getAddressId()), getContext());
         }
 
         // Initialize the AddressListAdapter for RecyclerView
         addressListAdapter = new AddressListAdapter(My_Addresses.this, getContext(), customerID, defaultAddressPosition, addressesList, My_Addresses.this);
 
         // Set the Adapter and LayoutManager to the RecyclerView
-        addresses_recycler.setAdapter(addressListAdapter);
-        addresses_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.addressesRecycler.setAdapter(addressListAdapter);
+        binding.addressesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         addressListAdapter.notifyDataSetChanged();
     }
 
     //*********** Request User's all Addresses from the Server ********//
 
-    public void RequestAllAddresses(View rootView) {
+    public void RequestAllAddresses() {
 
         dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
@@ -234,11 +223,11 @@ public class My_Addresses extends Fragment {
 
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         // Addresses haven't been returned. Show the Message to the User
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
 
                     } else {
                         // Unable to get Success status
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -275,7 +264,7 @@ public class My_Addresses extends Fragment {
 
                         // Address has been Deleted. Show the Message to the User
                         Snackbar.make(view, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
-                        RequestAllAddresses(view);
+                        RequestAllAddresses();
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(view, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
@@ -297,7 +286,7 @@ public class My_Addresses extends Fragment {
 
     //*********** Request for Changing the Address to User's Default Address ********//
 
-    public void MakeAddressDefault(final String customerID, final String addressID, final Context context, final View view) {
+    public void MakeAddressDefault(final String customerID, final String addressID, final Context context) {
 
         final DialogLoader dialogLoader = new DialogLoader(context);
         dialogLoader.showProgressDialog();
@@ -329,11 +318,11 @@ public class My_Addresses extends Fragment {
                         editor.apply();
 
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        Snackbar.make(view, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     } else {
                         // Unable to get Success status
-                        Snackbar.make(view, context.getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), context.getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
@@ -363,7 +352,7 @@ public class My_Addresses extends Fragment {
     public void onResume() {
         super.onResume();
         // Request for User's Addresses
-        RequestAllAddresses(rootView);
+        RequestAllAddresses();
     }
 }
 

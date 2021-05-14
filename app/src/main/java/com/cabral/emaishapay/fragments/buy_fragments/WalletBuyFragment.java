@@ -59,6 +59,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
     FragmentManager fragmentManager;
 
     @SuppressLint("StaticFieldLeak")
+    public static EditText searchView;
+    public static ImageView searchIcon;
     PopularProductsFragment popularProducts;
     ViewAllPopularProducts viewAllPopularProducts;
     TopDealsFragment topDeals;
@@ -79,6 +81,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         binding= DataBindingUtil.inflate(inflater,R.layout.new_fragment_buy_home,container,false);
 
         setHasOptionsMenu(true);
+        searchView = binding.buyInputsSearchView;
+        searchIcon = binding.buyInputsSearchIcon;
 
 
         animRotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
