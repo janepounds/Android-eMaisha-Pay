@@ -436,7 +436,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     public void openAddMoneyVisa(View view) {
-        dialogLoader=new DialogLoader(getApplicationContext());
+        dialogLoader=new DialogLoader(this);
         getCards();
     }
     private  void navigateToAddMoneyVisa(ArrayList<CardSpinnerItem> cardItems){
@@ -473,12 +473,9 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                         List<CardResponse.Cards> cardlists = response.body().getCardsList();
                         cardItems=populateCardItemsList(cardlists);
-
+                        navigateToAddMoneyVisa(cardItems);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }finally {
-                        navigateToAddMoneyVisa(cardItems);
-
                     }
 
                 }else if (response.code() == 401) {
