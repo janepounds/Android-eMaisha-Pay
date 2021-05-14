@@ -74,6 +74,10 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         this.fragmentManager=fragmentManager;
     }
 
+    //no args-constructor
+    public WalletBuyFragment() {
+
+    }
 
 
     @Override
@@ -109,15 +113,12 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
         binding.bttmNavigation.setItemIconTintList(null);
 
-        //navigatigate to view all most popular
+        //navigate to view all most popular
         binding.btnViewAllMostPopular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewAllPopularProducts = new ViewAllPopularProducts();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment2, viewAllPopularProducts)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null).commit();
+                //navigate to view all most popular
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_viewAllPopularProducts);
                 WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
@@ -126,10 +127,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         binding.btnViewAllDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewAllTopDeals = new ViewAllTopDeals();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2,viewAllTopDeals)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null).commit();
+                //navigate to top deals
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_viewAllTopDeals);
                 WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
