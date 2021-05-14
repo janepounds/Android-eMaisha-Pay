@@ -101,7 +101,7 @@ public class ChangePassword extends DialogFragment {
                         call = apiRequests.changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
 
                     }else{
-                        call =apiRequests.changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
+                        call =apiRequests.changePassword(access_token,phone_number,"",WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
 
 
                     }
