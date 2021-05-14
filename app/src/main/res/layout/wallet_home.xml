@@ -90,6 +90,7 @@
             app:fabCustomSize="75dp"
             android:padding="0dp"
             app:maxImageSize="45dp"
+            app:elevation="2dp"
             android:src="@drawable/group_24"
             app:layout_anchor="@id/bottomAppBar"
             app:layout_anchorGravity="top|center"

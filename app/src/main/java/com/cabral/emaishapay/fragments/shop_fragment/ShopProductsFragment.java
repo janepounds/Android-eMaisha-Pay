@@ -136,7 +136,6 @@ public class ShopProductsFragment extends Fragment {
 
         });
 
-
     }
 
     private void subscribeToMerchantProducts(LiveData<Resource<List<EcProduct>>> merchantProducts) {

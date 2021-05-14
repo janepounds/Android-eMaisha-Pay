@@ -590,8 +590,8 @@
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginRight="@dimen/margin_10"
                     android:layout_marginBottom="15dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:background="@drawable/rectangular_blue_solid"
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_horizontal">
@@ -609,7 +609,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="16sp" />
 
 
 

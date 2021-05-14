@@ -464,7 +464,7 @@ public class WalletAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment);
+                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessInformationFragment);
             }
         });
 
@@ -610,7 +610,7 @@ public class WalletAccountFragment extends Fragment {
 
         binding.layoutChangePassword.setOnClickListener(view13 -> {
             // Create and show the dialog.
-            DialogFragment depositDialog = new ChangePassword();
+            DialogFragment depositDialog = new ChangePassword(getString(R.string.change_pin));
             depositDialog.show(getFragmentManager(), "dialog");
 
         });

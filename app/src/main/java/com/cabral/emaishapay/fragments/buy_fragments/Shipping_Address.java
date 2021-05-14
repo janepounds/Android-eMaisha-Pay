@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.cabral.emaishapay.R;
@@ -33,6 +34,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.BuyInputsAddressBinding;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
@@ -80,13 +82,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     Boolean isUpdate = false;
     String customerID, defaultAddressID, customerPhone;
     int selectedZoneID, selectedCountryID;
-    TextView proceed_checkout_btn;
-    LinearLayout save_address_layout;
-    EditText input_name,  input_phone;
+
     DialogLoader dialogLoader;
 
-    Toolbar toolbar;
-
+    BuyInputsAddressBinding binding;
     //LocationPicker.
     /*Edited  28-Dec-18*/
     int PLACE_PICKER_REQUEST = 1463;
@@ -130,20 +129,15 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         this.parentFrag = parentFrag;
     }
 
-    public Shipping_Address(My_Addresses parentFrag) {
-        this.parentFrag = parentFrag;
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.buy_inputs_address, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_address, container, false);
 
-        toolbar = rootView.findViewById(R.id.add_address_Toolbar);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Add New Address");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.addAddressToolbar);
+        binding.addAddressToolbar.setTitle("Add New Address");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -173,14 +167,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         defaultAddressID = pref.getString("userDefaultAddressID", "");
         customerPhone = pref.getString("userTelephone", "");
 
-
-        // Binding Layout Views
-        input_name = rootView.findViewById(R.id.name);
-        input_phone = rootView.findViewById(R.id.contact);
-
-        proceed_checkout_btn = rootView.findViewById(R.id.save_address_btn);
-
-        save_address_layout= rootView.findViewById(R.id.save_address_layout);
         // Set the text of Button
         //proceed_checkout_btn.setText(getContext().getString(R.string.next));
 
@@ -201,15 +187,15 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             this.ADDRESS_ID=shippingAddress.getAddressId()+"";
             selectedZoneID = shippingAddress.getZoneId();
             selectedCountryID = shippingAddress.getCountriesId();
-            input_name.setText(shippingAddress.getLastname()!=null? shippingAddress.getFirstname()+" "+shippingAddress.getLastname() : shippingAddress.getFirstname());
-            input_phone.setText(shippingAddress.getPhone());
+            binding.name.setText(shippingAddress.getLastname()!=null? shippingAddress.getFirstname()+" "+shippingAddress.getLastname() : shippingAddress.getFirstname());
+            binding.contact.setText(shippingAddress.getPhone());
 
             mCenterLatLong= new LatLng(shippingAddress.getLatitude(),shippingAddress.getLongitude());
 
         }
         else {
             // Request All Addresses of the User
-            input_phone.setText(customerPhone);
+            binding.contact.setText(customerPhone);
         }
 
         // [START_EXCLUDE silent]
@@ -265,10 +251,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             }
         });
 
-        proceed_checkout_btn.setOnClickListener(v -> {
+        binding.saveAddressBtn.setOnClickListener(v -> {
             processCheckout(v);
         });
-        save_address_layout.setOnClickListener(v -> {
+        binding.saveAddressLayout.setOnClickListener(v -> {
             processCheckout(v);
         });
 
@@ -307,7 +293,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
             // New Instance of AddressDetails
             AddressDetails shippingAddress = new AddressDetails();
-            String[] names = input_name.getText().toString().trim().split(" ");
+            String[] names = binding.name.getText().toString().trim().split(" ");
 
             shippingAddress.setFirstname(names[0]);
             shippingAddress.setLastname(JoinStrings(Arrays.copyOfRange(names, 1, names.length)));
@@ -316,7 +302,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             shippingAddress.setCity(city);
             shippingAddress.setStreet(address);
             shippingAddress.setPostcode(postalCode);
-            shippingAddress.setPhone(input_phone.getText().toString().trim());
+            shippingAddress.setPhone(binding.contact.getText().toString().trim());
             shippingAddress.setZoneId(selectedZoneID);
             shippingAddress.setCountriesId(selectedCountryID);
             shippingAddress.setLatitude(mCenterLatLong.latitude);
@@ -344,11 +330,11 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     //*********** Validate Address Form Inputs ********//
 
     private boolean validateAddressForm() {
-        if (!ValidateInputs.isValidName(input_name.getText().toString().trim())) {
-            input_name.setError(getString(R.string.invalid_first_name));
+        if (!ValidateInputs.isValidName(binding.name.getText().toString().trim())) {
+            binding.name.setError(getString(R.string.invalid_first_name));
             return false;
-        } else if (!ValidateInputs.isValidInput(input_phone.getText().toString().trim())) {
-            input_phone.setError(getString(R.string.contact_format));
+        } else if (!ValidateInputs.isValidInput(binding.contact.getText().toString().trim())) {
+            binding.contact.setError(getString(R.string.contact_format));
             return false;
         }
 
@@ -563,7 +549,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
-        String[] names = input_name.getText().toString().trim().split(" ");
+        String[] names = binding.name.getText().toString().trim().split(" ");
 
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .addUserAddress
@@ -635,7 +621,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
-        String[] names = input_name.getText().toString().trim().split(" ");
+        String[] names = binding.name.getText().toString().trim().split(" ");
         Call<AddressData> call = BuyInputsAPIClient.getInstance()
                 .updateUserAddress
                         (       access_token,

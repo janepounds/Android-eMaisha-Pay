@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,6 +75,10 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         this.fragmentManager=fragmentManager;
     }
 
+    //no args-constructor
+    public WalletBuyFragment() {
+
+    }
 
 
     @Override
@@ -88,7 +93,6 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         animRotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         animRotate.setAnimationListener(this);
 
-
         //text_categories_placeholder
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarOrdersHome);
         binding.toolbarOrdersHome.setVisibility(View.VISIBLE);
@@ -101,23 +105,20 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
         // Add Top_Seller Fragment to specified FrameLayout
         popularProducts = new PopularProductsFragment(fragmentManager);
-        fragmentManager.beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.layout_most_popular, popularProducts).commit();
 
         //Add Deals Fragment to specified FrameLayout
         topDeals = new TopDealsFragment(fragmentManager);
-        fragmentManager.beginTransaction().replace(R.id.layout_deals,topDeals).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.layout_deals,topDeals).commit();
 
         binding.bttmNavigation.setItemIconTintList(null);
 
-        //navigatigate to view all most popular
+        //navigate to view all most popular
         binding.btnViewAllMostPopular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewAllPopularProducts = new ViewAllPopularProducts();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment2, viewAllPopularProducts)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null).commit();
+                //navigate to view all most popular
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_viewAllPopularProducts);
                 WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
@@ -126,10 +127,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         binding.btnViewAllDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewAllTopDeals = new ViewAllTopDeals();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2,viewAllTopDeals)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null).commit();
+                //navigate to top deals
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_viewAllTopDeals);
                 WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
@@ -205,7 +204,7 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         categoryBundle.putBoolean("home_9", true);
         Fragment categories = new Categories_3();
         categories.setArguments(categoryBundle);
-        fragmentManager.beginTransaction().replace(R.id.main_fragment_container, categories).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.main_fragment_container, categories).commit();
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
