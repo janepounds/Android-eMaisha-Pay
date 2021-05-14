@@ -74,8 +74,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -108,8 +108,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -139,8 +139,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -170,8 +170,8 @@
                             android:layout_centerInParent="true"
                             android:background="@android:color/transparent"
                             android:padding="12dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

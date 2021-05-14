@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -196,7 +199,40 @@ public class BeneficiariesListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        inflater.inflate(R.menu.about_beneficiaries_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.aboutBeneficiary) {
+            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getContext());
+            View dialogView = getLayoutInflater().inflate(R.layout.beneficiaries_placeholder, null);
+            //dialogView.setLayoutParams(new ActionBar.LayoutParams());
+            dialog.setView(dialogView);
+            dialog.setCancelable(true);
+
+            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
+
+
+            final android.app.AlertDialog alertDialog = dialog.create();
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+            alertDialog.show();
+        }
+
+        return false;
+    }
 
 
 
