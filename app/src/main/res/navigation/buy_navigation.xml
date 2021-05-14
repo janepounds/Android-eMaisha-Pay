@@ -31,7 +31,11 @@
         android:id="@+id/walletAddressesFragment"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.My_Addresses"
         android:label="MyAddressesFragment"
-        tools:layout="@layout/buy_inputs_my__addresses"/>
+        tools:layout="@layout/buy_inputs_my__addresses">
+        <action
+            android:id="@+id/action_walletAddressesFragment_to_shippingAddress"
+            app:destination="@id/shippingAddress" />
+    </fragment>
 
     <fragment
         android:id="@+id/walletOrdersFragment"
@@ -50,4 +54,10 @@
         android:name="com.cabral.emaishapay.fragments.buy_fragments.ViewAllTopDeals"
         android:label="ViewAllTopDeals"
         tools:layout="@layout/layout_view_all_products"/>
+
+    <fragment
+        android:id="@+id/shippingAddress"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address"
+        android:label="ShippingAdress"
+        tools:layout="@layout/buy_inputs_address"/>
 </navigation>
