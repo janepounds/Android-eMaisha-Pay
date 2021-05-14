@@ -51,7 +51,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -59,9 +59,9 @@
                         android:id="@+id/text_view_purchase_preview_mechant_id"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="123456789025"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
+                        android:text="None"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -92,9 +92,10 @@
                         android:id="@+id/text_view_purchase_preview_name"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
                         android:alpha="1.0"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
                 </LinearLayout>
@@ -115,7 +116,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -123,9 +124,9 @@
                         android:id="@+id/text_view_purchase_service"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="Purchase"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
+                        android:text="None"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
@@ -147,7 +148,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -155,9 +156,9 @@
                         android:id="@+id/txt_view_crop_bill_preview_total"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="UGX 0"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
+                        android:text="None"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
@@ -219,7 +220,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -227,9 +228,9 @@
                         android:id="@+id/txt_view_discount_preview_total"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="UGX 0"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
+                        android:text="None"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
@@ -252,7 +253,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.05"
                         android:text=":"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"  />
@@ -260,9 +261,9 @@
                         android:id="@+id/text_view_purchase_date_time"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dimen_10dp"
-                        android:layout_weight="1"
-                        android:text="2019/01/01  23:00pm"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.05"
+                        android:text="None"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
@@ -289,39 +290,31 @@
 
             </LinearLayout>
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="25dp"
-                android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="15dp"
-                android:background="@drawable/rounded_corners_button"
-                android:gravity="right">
+                android:background="@drawable/rectangular_blue_solid"
+                android:gravity="center"
+                android:layout_gravity="center">
 
                 <Button
                     android:id="@+id/btn_purchase_preview_confirm"
                     style="@style/Button_DW"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dip"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:backgroundTint="@color/textColor"
                     android:text="@string/comfirm_purchase"
                     android:textAllCaps="true"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textSize="16sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"/>
 
-                <ImageView
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="10dip"
-                    android:src="@drawable/ic_right_arrow">
-
-                </ImageView>
 
             </FrameLayout>
 

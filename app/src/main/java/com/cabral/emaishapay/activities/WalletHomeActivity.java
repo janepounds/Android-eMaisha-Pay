@@ -793,51 +793,8 @@ public class WalletHomeActivity extends AppCompatActivity{
         }
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.about_beneficiaries_menu, menu);
-//        MenuItem about = menu.findItem(R.id.aboutBeneficiary);
-//        about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
+
+
 //
-//
-//
-//                return false;
-//            }
-//        });
-
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        //Go to coming soon
-        if (item.getItemId() == R.id.aboutBeneficiary) {
-            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
-            View dialogView = getLayoutInflater().inflate(R.layout.beneficiaries_placeholder, null);
-            //dialogView.setLayoutParams(new ActionBar.LayoutParams());
-            dialog.setView(dialogView);
-            dialog.setCancelable(true);
-
-            ImageView close = dialogView.findViewById(R.id.coming_soon_close);
-
-
-            final android.app.AlertDialog alertDialog = dialog.create();
-
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                }
-            });
-
-
-            alertDialog.show();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }

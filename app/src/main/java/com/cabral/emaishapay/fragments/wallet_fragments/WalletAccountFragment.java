@@ -464,7 +464,7 @@ public class WalletAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment);
+                WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessInformationFragment);
             }
         });
 
