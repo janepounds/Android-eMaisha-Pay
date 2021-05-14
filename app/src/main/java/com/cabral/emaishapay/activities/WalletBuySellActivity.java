@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.customs.NotificationBadger;
+import com.cabral.emaishapay.databinding.ActivityWalletBuySellBinding;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Addresses;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
@@ -24,14 +25,21 @@ import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.drawable.WrappedDrawable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
@@ -43,23 +51,22 @@ public class WalletBuySellActivity extends AppCompatActivity {
     public static BottomNavigationView bottomNavigationView;
     public static Fragment currentFragment;
     public Fragment defaultHomeFragment;
-
+    ActivityWalletBuySellBinding binding;
     public static PostOrder postOrder = new PostOrder();
+    public  static NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet_buy_sell);
+        binding = DataBindingUtil.setContentView(WalletBuySellActivity.this, R.layout.activity_wallet_buy_sell);
 
-
-        toolbar = findViewById(R.id.main_Toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.mainToolbar);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
 
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
-
+        bottomNavigationView = binding.navView;
         // Handle ToolbarNavigationClickListener with OnBackStackChangedListener
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 
@@ -67,7 +74,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() <= 0) {
                 // Set DrawerToggle Indicator and default ToolbarNavigationClickListener
                 actionBar.setDisplayShowTitleEnabled(false);
-                if(currentFragment instanceof Shipping_Address)
+                if (currentFragment instanceof Shipping_Address)
                     WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
                 else
                     WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
@@ -80,60 +87,84 @@ public class WalletBuySellActivity extends AppCompatActivity {
         });
 
 
-        defaultHomeFragment =new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
+        defaultHomeFragment = new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
 
-        bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setItemIconTintList(null);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        binding.navView.setItemIconTintList(null);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment2);
+
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(binding.navView, navController);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         KeyboardVisibilityEvent.setEventListener(
                 this,
                 new KeyboardVisibilityEventListener() {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
-                        Log.d("SHOP ACTIVITY","onVisibilityChanged: Keyboard visibility changed");
-                        if(bottomNavigationView.getVisibility()==View.VISIBLE){
-                            if(isOpen){
+                        Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard visibility changed");
+                        if ( binding.navView.getVisibility() == View.VISIBLE) {
+                            if (isOpen) {
                                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open");
-                                bottomNavigationView.setVisibility(View.INVISIBLE);
+                                binding.navView.setVisibility(View.INVISIBLE);
                                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible");
-                            }else{
+                            } else {
                                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed");
-                                bottomNavigationView.setVisibility(View.VISIBLE);
+                                binding.navView.setVisibility(View.VISIBLE);
                                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible");
                             }
                         }
                     }
                 });
-        setupDefaultHomePage();
+//        setupDefaultHomePage();
+
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(WalletBuySellActivity.bottomNavigationView!=null ){
+
+                    if(destination.getId()==R.id.walletSellFragment ||  destination.getId()==R.id.walletBuyFragment
+                            ||  destination.getId()==R.id.walletOrdersFragment ||  destination.getId()==R.id.walletAddressesFragment ){
+
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    }else{
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+
+                }
+            }
+
+        });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
-        Fragment selectedFragment = null;
-        switch (item.getItemId()) {
-            case R.id.walletBuyFragment:
-                selectedFragment =defaultHomeFragment;
-                break;
-            case R.id.walletSellFragment:
-                selectedFragment = new SellFragment(WalletBuySellActivity.this, getSupportFragmentManager());
-                break;
-            case R.id.walletOrdersFragment:
-                selectedFragment = new My_Orders(false);
-                break;
-            case R.id.walletAddressesFragment:
-                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
-                selectedFragment = new My_Addresses(false);
-                break;
-        }
-        WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, selectedFragment).commit();
-        currentFragment=selectedFragment;
-        return true;
-    };
 
-    private void setupDefaultHomePage() {
-        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment2, defaultHomeFragment).commit();
-        currentFragment = defaultHomeFragment;
-    }
+//    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
+//        Fragment selectedFragment = null;
+//        switch (item.getItemId()) {
+//            case R.id.walletBuyFragment:
+//                selectedFragment =defaultHomeFragment;
+//                break;
+//            case R.id.walletSellFragment:
+//                selectedFragment = new SellFragment(WalletBuySellActivity.this, getSupportFragmentManager());
+//                break;
+//            case R.id.walletOrdersFragment:
+//                selectedFragment = new My_Orders(false);
+//                break;
+//            case R.id.walletAddressesFragment:
+//                WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
+//                selectedFragment = new My_Addresses(false);
+//                break;
+//        }
+//        WalletBuySellActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, selectedFragment).commit();
+//        currentFragment=selectedFragment;
+//        return true;
+//    };
+//
+//    private void setupDefaultHomePage() {
+//        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment2, defaultHomeFragment).commit();
+//        currentFragment = defaultHomeFragment;
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -142,20 +173,13 @@ public class WalletBuySellActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        // Get FragmentManager
-        FragmentManager fm = getSupportFragmentManager();
 
         // Check if BackStack has some Fragments
-        if (fm.getBackStackEntryCount() > 0) {
+        if (navController.getCurrentDestination().getId()!=R.id.walletBuyFragment) {
             // Pop previous Fragment
-            fm.popBackStack();
+            navController.popBackStack();
 
-        } // Check if doubleBackToExitPressed is true
-//        else if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed();
-//            backToast.cancel();
-//            finishAffinity();
-//        }
+        }
         else {
             Intent intent = new Intent(this, WalletHomeActivity.class);
             startActivity(intent);

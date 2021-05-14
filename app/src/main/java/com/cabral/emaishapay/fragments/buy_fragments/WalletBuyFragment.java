@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,6 +33,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.NewFragmentBuyHomeBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
@@ -49,13 +51,13 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
     private Context context;
     private static final String TAG = "WalletBuyFragment";
     StartAppRequests startAppRequests;
+    NewFragmentBuyHomeBinding binding;
 
     List<ProductDetails> specialDealsList = new ArrayList<>();
     List<ProductDetails> popularProductsList = new ArrayList<>();
     List<CategoryDetails> allCategoriesList = new ArrayList<>();
     FragmentManager fragmentManager;
 
-    private Toolbar toolbar;
     @SuppressLint("StaticFieldLeak")
     public static EditText searchView;
     public static ImageView searchIcon;
@@ -65,8 +67,7 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
     ViewAllTopDeals viewAllTopDeals;
     TextView view_all_most_popular,view_all_deals,text_categories_placeholder;
     Animation animRotate;
-    ImageView imgCategoriesPlaceholder;
-    LinearLayout layoutCategoriesPlaceholder;
+
 
     public WalletBuyFragment(Context context, FragmentManager fragmentManager) {
         this.context=context;
@@ -77,28 +78,21 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_fragment_buy_home, container, false);
-
+        binding= DataBindingUtil.inflate(inflater,R.layout.new_fragment_buy_home,container,false);
 
         setHasOptionsMenu(true);
+        searchView = binding.buyInputsSearchView;
+        searchIcon = binding.buyInputsSearchIcon;
 
-        toolbar = view.findViewById(R.id.toolbar_orders_home);
-        searchView = view.findViewById(R.id.buy_inputs_search_view);
-        searchIcon = view.findViewById(R.id.buy_inputs_search_icon);
-        view_all_most_popular = view.findViewById(R.id.btn_view_all_most_popular);
-        view_all_deals = view.findViewById(R.id.btn_view_all_deals);
-        text_categories_placeholder = view.findViewById(R.id.text_categories_placeholder);
-        imgCategoriesPlaceholder = view.findViewById(R.id.img_categories_placeholder);
-        layoutCategoriesPlaceholder = view.findViewById(R.id.layout_categories_placeholder);
 
         animRotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         animRotate.setAnimationListener(this);
 
 
         //text_categories_placeholder
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setVisibility(View.VISIBLE);
-        toolbar.setTitle("Shop");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarOrdersHome);
+        binding.toolbarOrdersHome.setVisibility(View.VISIBLE);
+        binding.toolbarOrdersHome.setTitle("Shop");
 //        ((AppCompatActivity) requireActivity()).getSupportActionBar().setElevation(0.5f);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -113,12 +107,10 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         topDeals = new TopDealsFragment(fragmentManager);
         fragmentManager.beginTransaction().replace(R.id.layout_deals,topDeals).commit();
 
-
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bttm_navigation);
-        bottomNavigationView.setItemIconTintList(null);
+        binding.bttmNavigation.setItemIconTintList(null);
 
         //navigatigate to view all most popular
-        view_all_most_popular.setOnClickListener(new View.OnClickListener() {
+        binding.btnViewAllMostPopular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewAllPopularProducts = new ViewAllPopularProducts();
@@ -131,7 +123,7 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         });
 
         //navigate to view all deals
-        view_all_deals.setOnClickListener(new View.OnClickListener() {
+        binding.btnViewAllDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewAllTopDeals = new ViewAllTopDeals();
@@ -162,13 +154,13 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
         else
             continueSetup();
 
-        return view;
+        return binding.getRoot();
     }
 
     private void loadCategories() {
         DialogLoader dialogLoader = new DialogLoader(getContext());
         dialogLoader.showProgressDialog();
-        imgCategoriesPlaceholder.startAnimation(animRotate);
+        binding.imgCategoriesPlaceholder.startAnimation(animRotate);
 
                 AppExecutors.getInstance().NetworkIO().execute(
                         new Runnable() {
@@ -217,8 +209,8 @@ public class WalletBuyFragment extends Fragment implements Animation.AnimationLi
 
         Bundle bundleInfo = new Bundle();
         bundleInfo.putString("sortBy", "Newest");
-        imgCategoriesPlaceholder.clearAnimation();
-        layoutCategoriesPlaceholder.setVisibility(View.GONE);
+        binding.imgCategoriesPlaceholder.clearAnimation();
+        binding.layoutCategoriesPlaceholder.setVisibility(View.GONE);
     }
 
 

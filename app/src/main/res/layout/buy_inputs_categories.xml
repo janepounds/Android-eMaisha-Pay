@@ -1,6 +1,7 @@
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_container"
     android:layout_width="match_parent"
@@ -56,3 +57,4 @@
 
 
 </RelativeLayout>
+</layout>

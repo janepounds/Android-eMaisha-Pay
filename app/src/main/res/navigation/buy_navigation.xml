@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buy_navigation"
+    app:startDestination="@+id/walletBuyFragment">
+
+
+    <fragment
+        android:id="@+id/walletBuyFragment"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment"
+        android:label="ShopProductsFragment"
+        tools:layout="@layout/new_fragment_buy_home"/>
+
+
+    <fragment
+        android:id="@+id/walletSellFragment"
+        android:name="com.cabral.emaishapay.fragments.sell_fragment.SellFragment"
+        android:label="SellFragment"
+        tools:layout="@layout/fragment_sell"/>
+
+
+    <fragment
+        android:id="@+id/walletAddressesFragment"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.My_Addresses"
+        android:label="MyAddressesFragment"
+        tools:layout="@layout/buy_inputs_my__addresses"/>
+
+    <fragment
+        android:id="@+id/walletOrdersFragment"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.My_Orders"
+        android:label="MyOrdersFragment"
+        tools:layout="@layout/buy_inputs_orders"/>
+</navigation>
