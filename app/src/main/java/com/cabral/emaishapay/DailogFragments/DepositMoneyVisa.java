@@ -58,18 +58,21 @@ public class DepositMoneyVisa extends DialogFragment  {
     LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
 
-    private List<CardResponse.Cards> cardlists = new ArrayList();
-    ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+    ArrayList<CardSpinnerItem> cardItems;
     private String expiryDate,cvv,card_no,card_id;
 
     double balance;
-    DialogLoader dialog;
     Context activity;
-    public DepositMoneyVisa(Context context, double balance){
-        this.activity=context;
+    public DepositMoneyVisa(ArrayList<CardSpinnerItem> cardItems, double balance){
+        this.cardItems=cardItems;
         this.balance=balance;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity=context;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,9 +94,16 @@ public class DepositMoneyVisa extends DialogFragment  {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(activity,  android.R.layout.simple_dropdown_item_1line, cardItems);
+        spinner_select_card.setAdapter(cardListAdapter);
+    }
+
     public void initializeForm(View view) {
 
-        dialog = new DialogLoader(getContext());
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.wallet_add_money_amount);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
@@ -127,26 +137,13 @@ public class DepositMoneyVisa extends DialogFragment  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    //Change selected text color
                     ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                    //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
 
                 if (spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
-                    //call add card
-                    //nvigate to add card fragment
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment prev =fm.findFragmentByTag("dialog");
-                    if (prev != null) {
-                        ft.remove(prev);
-                    }
-                    ft.addToBackStack(null);
-                    // Create and show the dialog.
-                    DialogFragment addCardDialog =new AddCardFragment();
-                    addCardDialog.show( ft, "dialog");
+                    navigateToAddCard();
                 }
                 else {
                     for(int i = 0; i<cardItems.size();i++){
@@ -162,7 +159,6 @@ public class DepositMoneyVisa extends DialogFragment  {
                     card_details_layout.setVisibility(View.GONE);
                 }
 
-
             }
 
             @Override
@@ -170,155 +166,25 @@ public class DepositMoneyVisa extends DialogFragment  {
 
             }
         };
+
         spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
 
-        getCards();
 
     }
 
-    public void getCards(){
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        /******************RETROFIT IMPLEMENTATION***********************/
-        Call<CardResponse> call = APIClient.getWalletInstance(getContext()).getCards(access_token,request_id,category,"getCards");
-        call.enqueue(new Callback<CardResponse>() {
-            @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                if(response.isSuccessful()){
-
-                    try {
-
-                        cardlists = response.body().getCardsList();
-                        cardItems.add(new CardSpinnerItem() {
-                            @Override
-                            public String getId() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getCardNumber() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getExpiryDate() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getCvv() {
-                                return null;
-                            }
-
-                            @Override
-                            public String toString() {
-                                return "Select Card";
-                            }
-                        });
-
-                        for(int i =0; i<cardlists.size();i++){
-
-                            //decript card number
-                            if( cardlists.get(i).getCard_number().length()>4){
-                                final  String card_number = cardlists.get(i).getCard_number();
-                                final  String  decripted_expiryDate = cardlists.get(i).getExpiry();
-                                final  String cvv  = cardlists.get(i).getCvv();
-                                final  String id  = cardlists.get(i).getId();
-
-                                String first_four_digits = (card_number.substring(0,  4));
-                                String last_four_digits = (card_number.substring(card_number.length() - 4));
-                                final String decripted_card_number = first_four_digits + "*******"+last_four_digits;
-                                //   //Log.w("CardNumber","**********>>>>"+decripted_card_number);
-                                cardItems.add(new CardSpinnerItem() {
-                                    @Override
-                                    public String getId() {
-                                        return id;
-                                    }
-
-                                    @Override
-                                    public String getCardNumber() {
-                                        return card_number;
-                                    }
-
-                                    @Override
-                                    public String getExpiryDate() {
-                                        return decripted_expiryDate;
-                                    }
-
-                                    @Override
-                                    public String getCvv() {
-                                        return cvv;
-                                    }
-
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return decripted_card_number;
-                                    }
-                                });
-                            }
-                        }
-
-
-                        cardItems.add(new CardSpinnerItem() {
-                            @Override
-                            public String getId() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getCardNumber() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getExpiryDate() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getCvv() {
-                                return null;
-                            }
-
-                            @Override
-                            public String toString() {
-                                return "Add New";
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }finally {
-                        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(activity,  android.R.layout.simple_dropdown_item_1line, cardItems);
-//                        cardListAdapter = new CardSpinnerAdapter(cardItems, "New", getContext());
-                        spinner_select_card.setAdapter(cardListAdapter);
-                        dialog.hideProgressDialog();
-
-                    }
-
-                }else if (response.code() == 401) {
-
-                    TokenAuthFragment.startAuth( true);
-                    if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
-                    } else {
-                        Log.e("info", "Something got very very wrong");
-                    }
-                    dialog.hideProgressDialog();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialog.hideProgressDialog();
-            }
-        });
-
+    private void navigateToAddCard() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev =fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        // Create and show the dialog.
+        DialogFragment addCardDialog =new AddCardFragment();
+        addCardDialog.show( ft, "dialog");
     }
+
 
 
     public void initiateDepositWithExistingCard(String card_id){

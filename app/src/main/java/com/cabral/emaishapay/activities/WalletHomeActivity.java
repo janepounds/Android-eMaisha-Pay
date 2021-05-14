@@ -40,19 +40,29 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyMobile;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVisa;
 import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
+import com.cabral.emaishapay.models.CardResponse;
+import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
+import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.VIBRATE;
 import static android.Manifest.permission_group.CAMERA;
@@ -66,6 +76,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static FragmentManager fm;
     public  int currentFragment;
     public static ActionBar actionBar;
+    DialogLoader dialogLoader;
 
     public static final String PREFERENCES_WALLET_USER_ID = "walletuserId";
     public static final String PREFERENCES_USER_PIN = "";
@@ -425,6 +436,10 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     public void openAddMoneyVisa(View view) {
+        dialogLoader=new DialogLoader(getApplicationContext());
+        getCards();
+    }
+    private  void navigateToAddMoneyVisa(ArrayList<CardSpinnerItem> cardItems){
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("dialog");
         if (prev != null) {
@@ -433,8 +448,157 @@ public class WalletHomeActivity extends AppCompatActivity{
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment depositDialog = new DepositMoneyVisa(this, WalletHomeFragment.balance);
+        DialogFragment depositDialog = new DepositMoneyVisa(cardItems, WalletHomeFragment.balance);
         depositDialog.show(ft, "dialog");
+    }
+
+    private void getCards(){
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,this);
+
+        dialogLoader.showProgressDialog();
+
+        Call<CardResponse> call = APIClient.getWalletInstance(this)
+                .getCards(access_token, request_id,category,"getCards");
+
+        call.enqueue(new Callback<CardResponse>() {
+            @Override
+            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
+
+                dialogLoader.hideProgressDialog();
+                if(response.isSuccessful()){
+                    ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+                    try {
+
+                        List<CardResponse.Cards> cardlists = response.body().getCardsList();
+                        cardItems=populateCardItemsList(cardlists);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+                        navigateToAddMoneyVisa(cardItems);
+
+                    }
+
+                }else if (response.code() == 401) {
+
+                    TokenAuthFragment.startAuth( true);
+                    if (response.errorBody() != null) {
+                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                    } else {
+                        Log.e("info", "Something got very very wrong");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CardResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+    }
+
+    private ArrayList<CardSpinnerItem> populateCardItemsList(List<CardResponse.Cards> cardlists) {
+        ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
+
+        cardItems.add(new CardSpinnerItem() {
+            @Override
+            public String getId() {
+                return null;
+            }
+
+            @Override
+            public String getCardNumber() {
+                return null;
+            }
+
+            @Override
+            public String getExpiryDate() {
+                return null;
+            }
+
+            @Override
+            public String getCvv() {
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "Select Card";
+            }
+        });
+
+        for(int i =0; i<cardlists.size();i++){
+
+            if( cardlists.get(i).getCard_number().length()>4){
+                final  String card_number = cardlists.get(i).getCard_number();
+                String first_four_digits = (card_number.substring(0,  4));
+                String last_four_digits = (card_number.substring(card_number.length() - 4));
+                final String masked_card_number = first_four_digits + "*******"+last_four_digits;
+                int finalI = i;
+
+                cardItems.add(new CardSpinnerItem() {
+                    @Override
+                    public String getId() {
+                        return cardlists.get(finalI).getId();
+                    }
+
+                    @Override
+                    public String getCardNumber() {
+                        return cardlists.get(finalI).getCard_number();
+                    }
+
+                    @Override
+                    public String getExpiryDate() {
+                        return cardlists.get(finalI).getExpiry();
+                    }
+
+                    @Override
+                    public String getCvv() {
+                        return cardlists.get(finalI).getCvv();
+                    }
+
+                    @NonNull
+                    @Override
+                    public String toString() {
+                        return masked_card_number;
+                    }
+                });
+            }
+        }
+
+
+        cardItems.add(new CardSpinnerItem() {
+            @Override
+            public String getId() {
+                return null;
+            }
+
+            @Override
+            public String getCardNumber() {
+                return null;
+            }
+
+            @Override
+            public String getExpiryDate() {
+                return null;
+            }
+
+            @Override
+            public String getCvv() {
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "Add New";
+            }
+        });
+
+        return cardItems;
     }
 
     public void openAddMoneyVoucher(View view) {
