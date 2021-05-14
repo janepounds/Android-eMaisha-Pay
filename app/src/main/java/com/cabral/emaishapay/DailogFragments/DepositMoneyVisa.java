@@ -98,8 +98,7 @@ public class DepositMoneyVisa extends DialogFragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(activity,  android.R.layout.simple_dropdown_item_1line, cardItems);
-        spinner_select_card.setAdapter(cardListAdapter);
+
     }
 
     public void initializeForm(View view) {
@@ -133,6 +132,8 @@ public class DepositMoneyVisa extends DialogFragment  {
 
             }
         });
+        ArrayAdapter<CardSpinnerItem> cardListAdapter = new ArrayAdapter(activity,  android.R.layout.simple_dropdown_item_1line, cardItems);
+        spinner_select_card.setAdapter(cardListAdapter);
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
