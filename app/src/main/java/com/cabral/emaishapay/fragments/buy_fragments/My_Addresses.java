@@ -29,6 +29,7 @@ import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.BuyInputsMyAddressesBinding;
 import com.cabral.emaishapay.models.address_model.AddressData;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.modelviews.DefaultAddressModelView;
@@ -51,17 +52,16 @@ public class My_Addresses extends Fragment {
     View rootView;
     String customerID;
     String defaultAddressID;
-
     RecyclerView addresses_recycler;
     FloatingActionButton add_address_fab;
     LinearLayout emptyRecordLayout;
     AppCompatButton addAddressButton;
-
     DialogLoader dialogLoader;
     static AddressListAdapter addressListAdapter;
     Toolbar toolbar;
     Boolean enable_back=true;
     DefaultAddressModelView viewModel;
+    BuyInputsMyAddressesBinding binding;
 
     List<AddressDetails> addressesList = new ArrayList<>();
 
