@@ -27,7 +27,9 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.ChangePinResponse;
+import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +41,12 @@ public class ChangePassword extends DialogFragment {
     private Context context;
     private EditText curent_pin,new_pin,confirm_new_pin;
     private Button cancel,update;
+    String key;
 
+
+    public ChangePassword(String key) {
+        this.key = key;
+    }
 
     public ChangePassword() {
         // Required empty public constructor
@@ -70,6 +77,10 @@ public class ChangePassword extends DialogFragment {
         new_pin = view.findViewById(R.id.new_pin);
         confirm_new_pin = view.findViewById(R.id.confirm_new_pin);
         update = view.findViewById(R.id.update);
+        if(key.equalsIgnoreCase("forgot pin")){
+            curent_pin.setVisibility(View.GONE);
+
+        }
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +95,17 @@ public class ChangePassword extends DialogFragment {
                     String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
                     String request_id = WalletHomeActivity.generateRequestId();
                     /******************RETROFIT IMPLEMENTATION***********************/
-                    Call<ChangePinResponse> call = APIClient.getWalletInstance(getContext()).changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
+                    Call<ChangePinResponse> call;
+                    APIRequests apiRequests = APIClient.getWalletInstance(requireContext());
+                    if(key.equalsIgnoreCase("change pin")){
+                        call = apiRequests.changePassword(access_token,phone_number,WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+curent_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
+
+                    }else{
+                        call =apiRequests.changePassword(access_token,phone_number,"",WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+new_pin.getText().toString(),WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+confirm_new_pin.getText().toString(),request_id,"changeCustomerPassword");
+
+
+                    }
+
                     call.enqueue(new Callback<ChangePinResponse>() {
                         @Override
                         public void onResponse(Call<ChangePinResponse> call, Response<ChangePinResponse> response) {

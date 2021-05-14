@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CategoryListAdapter_3;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.databinding.BuyInputsCategoriesBinding;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 
 import java.util.ArrayList;
@@ -33,21 +35,17 @@ public class Categories_3 extends Fragment {
     private Context context;
     Boolean isMenuItem = true;
     Boolean isHeaderVisible = false;
-
-    TextView emptyText, headerText;
-    RecyclerView category_recycler;
-
     CategoryListAdapter_3 categoryListAdapter;
-
     List<CategoryDetails> allCategoriesList;
     List<CategoryDetails> mainCategoriesList;
+    BuyInputsCategoriesBinding binding;
 
     private EditText searchView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.buy_inputs_categories, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_categories, container, false);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
@@ -74,27 +72,24 @@ public class Categories_3 extends Fragment {
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
 
         // Binding Layout Views
-        emptyText = view.findViewById(R.id.empty_record_text);
-        headerText = view.findViewById(R.id.categories_header);
-        category_recycler = view.findViewById(R.id.categories_recycler);
 
 //        scroll_container.setNestedScrollingEnabled(true);
 //        category_recycler.setNestedScrollingEnabled(false);
 
         // Hide some of the Views
-        emptyText.setVisibility(View.GONE);
+        binding.emptyRecordText.setVisibility(View.GONE);
 
         // Check if Header must be Invisible or not
         if (!isHeaderVisible) {
             // Hide the Header of CategoriesList
-            headerText.setVisibility(View.GONE);
+            binding.categoriesHeader.setVisibility(View.GONE);
         }
         else {
-            headerText.setText(getString(R.string.categories));
+            binding.categoriesHeader.setText(getString(R.string.categories));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                headerText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_categories, 0, 0, 0);
+                binding.categoriesHeader.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_categories, 0, 0, 0);
             } else {
-                headerText.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_categories), null, null, null);
+                binding.categoriesHeader.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_categories), null, null, null);
             }
         }
 
@@ -110,8 +105,8 @@ public class Categories_3 extends Fragment {
         categoryListAdapter = new CategoryListAdapter_3(getActivity(), mainCategoriesList, false);
 
         // Set the Adapter and LayoutManager to the RecyclerView
-        category_recycler.setAdapter(categoryListAdapter);
-        category_recycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.categoriesRecycler.setAdapter(categoryListAdapter);
+        binding.categoriesRecycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         categoryListAdapter.notifyDataSetChanged();
 
@@ -150,7 +145,7 @@ public class Categories_3 extends Fragment {
 //            }
 //        });
 
-        return view;
+            return binding.getRoot();
     }
 
     @Override

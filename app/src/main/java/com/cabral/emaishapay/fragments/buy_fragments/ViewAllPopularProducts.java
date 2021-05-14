@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.LayoutViewAllProductsBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.filter_model.post_filters.PostFilterData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -55,6 +57,7 @@ public class ViewAllPopularProducts extends Fragment {
     ProgressBar progressBar,mainProgress;
     Call<ProductData> productsCall;
     int pageNo = 0;
+    LayoutViewAllProductsBinding binding;
 
     public ViewAllPopularProducts() {
     }
@@ -70,32 +73,29 @@ public class ViewAllPopularProducts extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.layout_view_all_products, container, false);
-        recyclerView = rootView.findViewById(R.id.view_all_recycler);
-        toolbar = rootView.findViewById(R.id.toolbar_view_all);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("Popular Products");
+        binding = DataBindingUtil.inflate(inflater,R.layout.layout_view_all_products, container, false);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarViewAll);
+        binding.toolbarViewAll.setTitle("Popular Products");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        progressBar = rootView.findViewById(R.id.loading_bar);
-        mainProgress = rootView.findViewById(R.id.progressBar);
         setHasOptionsMenu(true);
         RequestTopSellers(pageNo);
         // Initialize the CategoryListAdapter for RecyclerView
         popularProductsAdapter = new ProductAdapter(getActivity(),getActivity().getSupportFragmentManager(),popularProductsList,false,false);
         // Set the Adapter and LayoutManager to the RecyclerView
-        recyclerView.setAdapter(popularProductsAdapter);
+        binding.viewAllRecycler.setAdapter(popularProductsAdapter);
 
         // Set the Adapter and LayoutManager to the RecyclerView
-        recyclerView.setAdapter(popularProductsAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.viewAllRecycler.setAdapter(popularProductsAdapter);
+        binding.viewAllRecycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         // Handle the Scroll event of Product's RecyclerView
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScroll() {
+        binding.viewAllRecycler.addOnScrollListener(new EndlessRecyclerViewScroll() {
             @Override
             public void onLoadMore(final int current_page) {
 
-                progressBar.setVisibility(View.VISIBLE);
+                binding.loadingBar.setVisibility(View.VISIBLE);
 
                 // Load More Products from Server without Filters
                 loadMoreTask(current_page, filters);
@@ -108,7 +108,7 @@ public class ViewAllPopularProducts extends Fragment {
 
 
 
-        return  rootView;
+        return  binding.getRoot();
     }
 
     public void RequestTopSellers(int pagenumber) {
@@ -151,8 +151,8 @@ public class ViewAllPopularProducts extends Fragment {
 
                     }
                     // Hide the ProgressBar
-                    progressBar.setVisibility(View.GONE);
-                    mainProgress.setVisibility(View.GONE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.loadingBar.setVisibility(View.GONE);
                 }
 
 

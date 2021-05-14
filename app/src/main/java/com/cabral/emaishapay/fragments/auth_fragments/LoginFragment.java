@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -197,8 +198,7 @@ public class LoginFragment  extends Fragment {
         String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
 
-        //load answered security Qns(locally or from an endpoint)
-        /******************RETROFIT IMPLEMENTATION***********************/
+
         Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).
                 validateSecurityQns(access_token,
                         getString(R.string.phone_number_code)+phone_number.getText().toString(),
@@ -210,12 +210,13 @@ public class LoginFragment  extends Fragment {
                         thirdQnAnswer.getText().toString(),
                         request_id,
                         "validateSecurityQns");
+
         call.enqueue(new Callback<SecurityQnsResponse>() {
             @Override
             public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
                 if(response.isSuccessful()){
-                    String status = response.body().getStatus();
-                    if(status.equalsIgnoreCase("1")){
+
+                    if(response.body().getStatus().equalsIgnoreCase("1")){
                         //call change password dialog
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
@@ -225,7 +226,7 @@ public class LoginFragment  extends Fragment {
                         }
                         ft.addToBackStack(null);
                         // Create and show the dialog.
-                        DialogFragment changePassword =new ChangePassword();
+                        DialogFragment changePassword =new ChangePassword(getString(R.string.forgot_pin));
                         changePassword.show( ft, "dialog");
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
 

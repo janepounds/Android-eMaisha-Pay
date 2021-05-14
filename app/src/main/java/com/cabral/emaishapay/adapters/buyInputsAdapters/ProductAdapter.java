@@ -98,7 +98,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.buy_input_product_home_card, parent, false);
 
-        currentFragment = fragmentManager.getPrimaryNavigationFragment();
+//        currentFragment = fragmentManager.getPrimaryNavigationFragment();
         // Return a new holder instance
         return new MyViewHolder(itemView);
     }

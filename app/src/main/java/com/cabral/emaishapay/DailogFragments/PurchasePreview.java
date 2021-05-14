@@ -118,7 +118,6 @@ public class PurchasePreview extends DialogFragment  {
         String key = WalletTransactionInitiation.getInstance().getPayTo();
         if(key!=null && key.equalsIgnoreCase("agent")){
             merchant_label.setText("AgentID");
-
         }
         mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
 
@@ -128,7 +127,6 @@ public class PurchasePreview extends DialogFragment  {
             @Override
             public void onClick(View v) {
                 processPayment();
-
             }
         });
 

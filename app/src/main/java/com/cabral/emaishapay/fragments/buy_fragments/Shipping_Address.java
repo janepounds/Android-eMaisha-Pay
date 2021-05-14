@@ -601,7 +601,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                             fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
                                     .addToBackStack(null).commit();
                         }else
-                            parentFrag.RequestAllAddresses(v);
+                            parentFrag.RequestAllAddresses();
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(v, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
@@ -662,7 +662,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                         // Address has been Edited
                         // Navigate to Addresses fragment
                         ((WalletBuySellActivity) getContext()).getSupportFragmentManager().popBackStack();
-                        parentFrag.RequestAllAddresses(rootView);
+                        parentFrag.RequestAllAddresses();
 
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
