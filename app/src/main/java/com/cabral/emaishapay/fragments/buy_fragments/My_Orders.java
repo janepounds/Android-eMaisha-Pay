@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,6 +33,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrdersListAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
+import com.cabral.emaishapay.databinding.BuyInputsOrdersBinding;
 import com.cabral.emaishapay.models.order_model.OrderData;
 import com.cabral.emaishapay.models.order_model.OrderDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
@@ -48,20 +50,14 @@ import retrofit2.Callback;
 
 public class My_Orders extends Fragment {
 
-    View rootView;
     String customerID;
 
-    LinearLayout emptyRecord;
     FrameLayout banner_adView;
-    RecyclerView orders_recycler;
-    AppCompatButton continueShoppingButton;
-
     DialogLoader dialogLoader;
     OrdersListAdapter ordersListAdapter;
-    Toolbar toolbar;
     private Context context;
     Boolean enable_back=true;
-
+    BuyInputsOrdersBinding binding;
     FragmentManager fragmentManager;
     List<OrderDetails> ordersList = new ArrayList<>();
 
@@ -88,12 +84,11 @@ public class My_Orders extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.buy_inputs_orders, container, false);
-        toolbar = rootView.findViewById(R.id.toolbar_orders);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_orders, container, false);
         setHasOptionsMenu(true);
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle(getString(R.string.actionOrders));
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbarOrders);
+        binding.toolbarOrders.setTitle(getString(R.string.actionOrders));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
@@ -105,24 +100,18 @@ public class My_Orders extends Fragment {
         
         Log.d("customerID",customerID+" "+ ConstantValues.LANGUAGE_ID+" "+ConstantValues.CURRENCY_CODE);
 
-        // Binding Layout Views
-        emptyRecord = rootView.findViewById(R.id.empty_record);
-        banner_adView = rootView.findViewById(R.id.banner_adView);
-        orders_recycler = rootView.findViewById(R.id.orders_recycler);
-        continueShoppingButton = rootView.findViewById(R.id.continue_shopping_btn);
-
 
         dialogLoader = new DialogLoader(getContext());
 
         // Hide some of the Views
-        emptyRecord.setVisibility(View.GONE);
+        binding.emptyRecord.setVisibility(View.GONE);
 
 
 
         // Request for User's Orders
         RequestMyOrders();
 
-        continueShoppingButton.setOnClickListener(new View.OnClickListener() {
+        binding.continueShoppingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -139,7 +128,7 @@ public class My_Orders extends Fragment {
             }
         });
 
-        return rootView;
+        return binding.getRoot();
     }
 
 
@@ -155,8 +144,8 @@ public class My_Orders extends Fragment {
         // Initialize the OrdersListAdapter for RecyclerView
         ordersListAdapter = new OrdersListAdapter(getContext(), customerID, ordersList,this);
         // Set the Adapter and LayoutManager to the RecyclerView
-        orders_recycler.setAdapter(ordersListAdapter);
-        orders_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.ordersRecycler.setAdapter(ordersListAdapter);
+        binding.ordersRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         
         ordersListAdapter.notifyDataSetChanged();
     }
@@ -191,14 +180,14 @@ public class My_Orders extends Fragment {
                         addOrders(response.body());
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        emptyRecord.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        binding.emptyRecord.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), response.body().getMessage(), Snackbar.LENGTH_LONG).show();
     
                     }
                     else {
                         // Unable to get Success status
-                        emptyRecord.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        binding.emptyRecord.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 else {
@@ -245,14 +234,14 @@ public class My_Orders extends Fragment {
                         
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        emptyRecord.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        binding.emptyRecord.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), response.body().getMessage(), Snackbar.LENGTH_LONG).show();
                         
                     }
                     else {
                         // Unable to get Success status
-                        emptyRecord.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        binding.emptyRecord.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 else {

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -25,6 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.adapters.sell.SellProduceViewPagerAdapter;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.FragmentSellBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.google.android.material.tabs.TabLayout;
 
@@ -44,9 +46,7 @@ public class SellFragment extends Fragment {
 
     private SellProduceViewPagerAdapter sellProduceViewPagerAdapter;
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    Toolbar toolbar;
+    FragmentSellBinding binding;
 
     public SellFragment(WalletBuySellActivity walletBuySellActivity, FragmentManager supportFragmentManager) {
     }
@@ -55,19 +55,17 @@ public class SellFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sell, container, false);
-        toolbar = view.findViewById(R.id.toolbar_sell_home);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_sell,container,false);
         setHasOptionsMenu(true);
-        tabLayout = view.findViewById(R.id.tabLayout_sell_produce_fragment);
-        viewPager = view.findViewById(R.id.viewPager_sell_produce_fragment);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarSellHome);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.actionproducemarket));
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
       //  toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -82,8 +80,8 @@ public class SellFragment extends Fragment {
 
         sellProduceViewPagerAdapter = new SellProduceViewPagerAdapter(requireActivity().getSupportFragmentManager());
 
-        viewPager.setAdapter(sellProduceViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        binding.viewPagerSellProduceFragment.setAdapter(sellProduceViewPagerAdapter);
+        binding.tabLayoutSellProduceFragment.setupWithViewPager(binding.viewPagerSellProduceFragment);
     }
 
     @Override
@@ -91,8 +89,8 @@ public class SellFragment extends Fragment {
         super.onResume();
         sellProduceViewPagerAdapter = new SellProduceViewPagerAdapter(getChildFragmentManager());
 
-        viewPager.setAdapter(sellProduceViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        binding.viewPagerSellProduceFragment.setAdapter(sellProduceViewPagerAdapter);
+        binding.tabLayoutSellProduceFragment.setupWithViewPager(binding.viewPagerSellProduceFragment);
     }
 
 
