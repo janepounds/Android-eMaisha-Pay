@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -421,7 +423,14 @@ public class PayFragment extends Fragment {
 
                 }else if(response.isSuccessful()){
 
-                    Snackbar.make(saveBtn,response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+
+                    Snackbar snack=Snackbar.make(saveBtn,response.body().getMessage(), Snackbar.LENGTH_LONG);
+                    View view = snack.getView();
+                    FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
+                    params.gravity = Gravity.CENTER;
+                    params.topMargin=150;
+                    view.setLayoutParams(params);
+                    snack.show();
                 }else if(response.code()==401){
                     TokenAuthFragment.startAuth( true);
                 }else{

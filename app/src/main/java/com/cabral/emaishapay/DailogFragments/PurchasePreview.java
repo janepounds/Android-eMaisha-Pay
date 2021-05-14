@@ -100,7 +100,8 @@ public class PurchasePreview extends DialogFragment  {
         mechantIdTextView = view.findViewById(R.id.text_view_purchase_preview_mechant_id);
         confirmBtn = view.findViewById(R.id.btn_purchase_preview_confirm);
         merchant_label = view.findViewById(R.id.txt_wallet_purchase_mechant_label);
-
+        if( !TextUtils.isEmpty(businessName))
+            mechantNameTextView.setText(businessName);
         totalTextView.setText( NumberFormat.getInstance().format(WalletTransactionInitiation.getInstance().getAmount()));
 
         SimpleDateFormat localFormat = new SimpleDateFormat(getString(R.string.date_format_preffered), Locale.ENGLISH);
@@ -126,25 +127,7 @@ public class PurchasePreview extends DialogFragment  {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mechantNameTextView.getText().toString().equalsIgnoreCase("unknown merchant")){
-
-                    Snackbar.make(errorTextView,"Unknown Merchant",Snackbar.LENGTH_SHORT).show();
-                    errorTextView.setVisibility(View.VISIBLE);
-
-                }else {
-
-                    double balance = Double.parseDouble(WalletHomeActivity.getPreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), getContext()));
-                    Float PurchaseCharges = 0F;
-                    double amount = WalletTransactionInitiation.getInstance().getAmount() + PurchaseCharges;
-                    if (balance >= amount) {
-                        processPayment();
-
-                    } else {
-
-                        Snackbar.make(errorTextView,"Insufficient Funds",Snackbar.LENGTH_SHORT).show();
-                        errorTextView.setVisibility(View.VISIBLE);
-                    }
-                }
+                processPayment();
 
             }
         });
@@ -176,7 +159,7 @@ public class PurchasePreview extends DialogFragment  {
                 if( !TextUtils.isEmpty(pinEdittext.getText()) && pinEdittext.getText().length()==4){
                     String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
                     dialogLoader.showProgressDialog();
-                    if(methodOfPayment.equalsIgnoreCase("wallet")){
+                    if( methodOfPayment.equalsIgnoreCase("wallet") || methodOfPayment.equalsIgnoreCase("eMaisha Pay") ){
                         processWalletPayment(service_code );
                     }
                     else if(methodOfPayment.equalsIgnoreCase("eMaisha Card") || methodOfPayment.equalsIgnoreCase("Bank Cards") ){
