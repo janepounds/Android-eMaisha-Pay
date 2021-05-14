@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.auth_fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -225,7 +226,7 @@ public class LoginFragment  extends Fragment {
                         }
                         ft.addToBackStack(null);
                         // Create and show the dialog.
-                        DialogFragment changePassword =new ChangePassword();
+                        DialogFragment changePassword =new ChangePassword(getString(R.string.forgot_pin));
                         changePassword.show( ft, "dialog");
                         Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
 

@@ -87,7 +87,7 @@ public class WalletBuySellActivity extends AppCompatActivity {
         });
 
 
-        defaultHomeFragment = new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
+//        defaultHomeFragment = new WalletBuyFragment(WalletBuySellActivity.this, getSupportFragmentManager());
 
         binding.navView.setItemIconTintList(null);
         NavHostFragment navHostFragment =

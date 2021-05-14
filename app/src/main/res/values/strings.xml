@@ -920,6 +920,8 @@ Before you use eMaisha Pay’s web/app payment and credit service, you must read
 </string>
     <string name="checkbox_text">I agree to the <b>Terms of Service</b> and <b>Privacy Policy</b></string>
     <string name="click_here_text">Click <b>here</b> to view the complete Terms of Service and Privacy Policy</string>
+    <string name="forgot_pin">forgot pin</string>
+    <string name="change_pin">change pin</string>
 
 
 </resources>
