@@ -162,6 +162,8 @@ public class DepositMoneyMobile extends DialogFragment {
                         String ref=response.body().getData().getReferenceNumber();
                         checkTransactionStatus( ref );
                     } else {
+                        dialogLoader.hideProgressDialog();
+                        
                         final Dialog dialog = new Dialog(activity);
                         dialog.setContentView(R.layout.dialog_failure_message);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -183,9 +185,10 @@ public class DepositMoneyMobile extends DialogFragment {
 
 
                 } else if (response.code() == 401) {
+                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth(true);
                 }  else {
-
+                    dialogLoader.hideProgressDialog();
                     if (response.errorBody() != null) {
 
                         Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
@@ -196,7 +199,7 @@ public class DepositMoneyMobile extends DialogFragment {
                     }
                 }
 
-                dialogLoader.hideProgressDialog();
+
             }
 
             @Override
@@ -252,21 +255,21 @@ public class DepositMoneyMobile extends DialogFragment {
                     if(responseCheckCounter==4){
                         dialog.setContentView(R.layout.dialog_failure_message);
                         response.body().setMessage("Transaction timeout, please try again later!");
+                    }else{
+                        try {
+                            Thread.sleep(15000);
+                            responseCheckCounter++;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        checkTransactionStatus(transaction_ref);
+                        return;
                     }
-                    try {
-                        Thread.sleep(15000);
-                        responseCheckCounter++;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    checkTransactionStatus(transaction_ref);
-                    return;
-                }
 
-                if( response.body().getCode().equalsIgnoreCase("202") ){
-                    dialog.setContentView(R.layout.dialog_failure_message);
-                }else {
+                }else if( response.body().getCode().equalsIgnoreCase("200") ){
                     dialog.setContentView(R.layout.dialog_successful_message);
+                }else {
+                    dialog.setContentView(R.layout.dialog_failure_message);
                 }
 
             } else {
