@@ -8,7 +8,9 @@ import com.cabral.emaishapay.models.ChangePinResponse;
 import com.cabral.emaishapay.models.BeneficiaryListResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
+import com.cabral.emaishapay.models.MomoTransactionResponse;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
+import com.cabral.emaishapay.models.TransactionStatusResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
 import com.cabral.emaishapay.models.address_model.AddressData;
@@ -1010,7 +1012,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/customer/momo-deposit")
-    Call<WalletTransaction>depositMobileMoney(
+    Call<MomoTransactionResponse>depositMobileMoney(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1025,7 +1027,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/agent/momo-deposit")
-    Call<WalletTransaction>depositMobileMoneyAgent(
+    Call<MomoTransactionResponse>depositMobileMoneyAgent(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1038,7 +1040,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/merchant/momo-deposit")
-    Call<WalletTransaction>depositMobileMoneyMerchant(
+    Call<MomoTransactionResponse>depositMobileMoneyMerchant(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1068,7 +1070,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/customer/momo-withdraw")
-    Call<WalletTransaction>withdrawMobileMoneyCustomer(
+    Call<MomoTransactionResponse>withdrawMobileMoneyCustomer(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1082,7 +1084,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/agent/settlement/momo-withdraw")
-    Call<WalletTransaction>withdrawMobileMoneyAgent(
+    Call<MomoTransactionResponse>withdrawMobileMoneyAgent(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1095,7 +1097,7 @@ public interface APIRequests {
 
     @FormUrlEncoded
     @POST("wallet/merchant/settlement/momo-withdraw")
-    Call<WalletTransaction>withdrawMobileMoneyMerchant(
+    Call<MomoTransactionResponse>withdrawMobileMoneyMerchant(
             @Header("Authorization") String token,
             @Field("amount") double amount,
             @Field("receiverPhoneNumber") String receiverPhoneNumber,
@@ -1184,4 +1186,14 @@ public interface APIRequests {
             @Field("agent_code")String merchant_code
 
     );
+
+    @FormUrlEncoded
+    @POST("wallet/transaction/checkstatus")
+    Call<TransactionStatusResponse>checkTransactionStatus(@Header("Authorization") String token,
+                                                           @Field("transaction_id") String transaction_id,
+                                                           @Field("request_id") String request_id,
+                                                           @Field("action_id") String action_id,
+                                                           @Field("service_code") String service_code,
+                                                           @Field("category") String category);
+
 }

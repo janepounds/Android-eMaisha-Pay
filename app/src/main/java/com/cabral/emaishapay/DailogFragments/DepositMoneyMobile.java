@@ -22,24 +22,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
-import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
-import com.flutterwave.raveutils.verification.RaveVerificationUtils;
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.models.MomoTransactionResponse;
+import com.cabral.emaishapay.models.TransactionStatusResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -61,7 +54,6 @@ public class DepositMoneyMobile extends DialogFragment {
 
     private DialogLoader dialogLoader;;
     Context activity;
-    private RaveVerificationUtils verificationUtils;
 
     public DepositMoneyMobile(Context context, double balance) {
         this.activity = context;
@@ -117,44 +109,13 @@ public class DepositMoneyMobile extends DialogFragment {
             }
         });
 
-//        verificationUtils = new RaveVerificationUtils(this, false, BuildConfig.PUBLIC_KEY);
-
-    }
-
-    public void enterPin(){
-
-        //call inner dialog
-        final Dialog dialog1 = new Dialog(getContext());
-        dialog1.setContentView(R.layout.dialog_enter_pin);
-        confirm_pin = dialog1.findViewById(R.id.etxt_create_agent_pin);
-        dialog_title =dialog1.findViewById(R.id.dialog_title);
-        submit = dialog1.findViewById(R.id.txt_custom_add_agent_submit_pin);
-    if( role.equalsIgnoreCase("merchant")){
-
-        dialog_title.setText("ENTER MERCHANT PIN");
-    }else if(role.equalsIgnoreCase(getString(R.string.role_master_agent) )){
-
-        dialog_title.setText("ENTER AGENT PIN");
-    }
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(confirm_pin.getText().toString()) && confirm_pin.getText().toString().length() == 4) {
-                    initiateDeposit();
-                }
-            }
-        });
-        dialog1.show();
-
-
-
 
     }
 
     public void initiateDeposit(){
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-        //************ PIN NOT REQUIRED TO BE REMOVED FROM BACKEND***********//
+
         String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         phoneNumber =getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
@@ -166,7 +127,7 @@ public class DepositMoneyMobile extends DialogFragment {
         phoneNumber =getString(R.string.phone_number_code)+phoneNumberTxt.getText().toString();
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<WalletTransaction> call;
+        Call<MomoTransactionResponse> call;
 
         if (role.equalsIgnoreCase("merchant")) {
             call = apiRequests.depositMobileMoneyMerchant(access_token, amount_entered, phoneNumber, request_id, category, "merchantMobileMoneyDeposit", service_code);
@@ -191,43 +152,24 @@ public class DepositMoneyMobile extends DialogFragment {
         }
 
 
-        call.enqueue(new Callback<WalletTransaction>() {
+        call.enqueue(new Callback<MomoTransactionResponse>() {
             @Override
-            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
-                dialogLoader.hideProgressDialog();
+            public void onResponse(Call<MomoTransactionResponse> call, Response<MomoTransactionResponse> response) {
+
 
                 if (response.code() == 200) {
-                    if (response.body().getStatus().equalsIgnoreCase("1")) {
-
-                        //call the success dialog
-                        final Dialog dialog = new Dialog(getContext());
-                        dialog.setContentView(R.layout.dialog_successful_message);
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        dialog.setCancelable(false);
-                        TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                        text.setText(response.body().getMessage());
-
-
-                        dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-
-                                Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
-                                startActivity(goToWallet);
-                            }
-                        });
-                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                        dialog.show();
-
+                    if (response.body().getStatus()==1) {
+                        String ref=response.body().getData().getReferenceNumber();
+                        checkTransactionStatus( ref );
                     } else {
+                        dialogLoader.hideProgressDialog();
+                        
                         final Dialog dialog = new Dialog(activity);
                         dialog.setContentView(R.layout.dialog_failure_message);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false);
                         TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
                         text.setText(response.body().getMessage());
-
 
                         dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -243,36 +185,10 @@ public class DepositMoneyMobile extends DialogFragment {
 
 
                 } else if (response.code() == 401) {
-
+                    dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth(true);
-
-                } else if (response.code() == 500) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else if (response.code() == 400) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else if (response.code() == 406) {
-                    if (response.errorBody() != null) {
-
-                        Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else {
-
+                }  else {
+                    dialogLoader.hideProgressDialog();
                     if (response.errorBody() != null) {
 
                         Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
@@ -283,10 +199,11 @@ public class DepositMoneyMobile extends DialogFragment {
                     }
                 }
 
+
             }
 
             @Override
-            public void onFailure(Call<WalletTransaction> call, Throwable t) {
+            public void onFailure(Call<MomoTransactionResponse> call, Throwable t) {
                 dialogLoader.hideProgressDialog();
             }
         });
@@ -295,9 +212,99 @@ public class DepositMoneyMobile extends DialogFragment {
     }
 
 
-    public void refreshActivity() {
-        Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-        startActivity(goToWallet);
+
+    public void checkTransactionStatus(String transaction_ref){
+        String request_id = WalletHomeActivity.generateRequestId();
+        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+
+        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+        Call<TransactionStatusResponse> call = apiRequests.checkTransactionStatus(
+                    access_token,
+                    transaction_ref,
+                    request_id,
+                "initCheckStatus",
+                    service_code,
+                    category
+                    );
+
+        call.enqueue(new Callback<TransactionStatusResponse>() {
+            @Override
+            public void onResponse(Call<TransactionStatusResponse> call, Response<TransactionStatusResponse> response) {
+
+                handleCheckStatusResponse(response,transaction_ref);
+
+            }
+
+            @Override
+            public void onFailure(Call<TransactionStatusResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+
+    }
+    int responseCheckCounter=0;
+    private void handleCheckStatusResponse(Response<TransactionStatusResponse> response, String transaction_ref) {
+        if (response.code() == 200) {
+            final Dialog dialog = new Dialog(getContext());
+
+            if(response.body().getStatus()==1) {
+                if(response.body().getCode().equalsIgnoreCase("201")){
+                    if(responseCheckCounter==4){
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                        response.body().setMessage("Transaction timeout, please try again later!");
+                    }else{
+                        try {
+                            Thread.sleep(15000);
+                            responseCheckCounter++;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        checkTransactionStatus(transaction_ref);
+                        return;
+                    }
+
+                }else if( response.body().getCode().equalsIgnoreCase("200") ){
+                    dialog.setContentView(R.layout.dialog_successful_message);
+                }else {
+                    dialog.setContentView(R.layout.dialog_failure_message);
+                }
+
+            } else {
+                dialog.setContentView(R.layout.dialog_failure_message);
+            }
+            dialogLoader.hideProgressDialog();
+
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.setCancelable(false);
+            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+            text.setText(response.body().getMessage());
+
+            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    Intent goToWallet = new Intent(getContext(), WalletHomeActivity.class);
+                    startActivity(goToWallet);
+                }
+            });
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+
+        } else if (response.code() == 401) {
+            TokenAuthFragment.startAuth(true);
+        }  else {
+
+            if (response.errorBody() != null) {
+                Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+            } else {
+                Log.e("info", "Something got very wrong, code: " + response.code());
+            }
+        }
     }
 
 

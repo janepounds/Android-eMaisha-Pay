@@ -29,6 +29,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
+import com.cabral.emaishapay.models.MomoTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionInitiation;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
@@ -327,7 +328,7 @@ public class ConfirmTransfer extends DialogFragment {
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.withdrawMobileMoneyMerchant(
+            Call<MomoTransactionResponse> call = apiRequests.withdrawMobileMoneyMerchant(
                     access_token,
                     amount,
                     phoneNumber,
@@ -338,14 +339,13 @@ public class ConfirmTransfer extends DialogFragment {
 
             );
 
-            call.enqueue(new Callback<WalletTransaction>() {
+            call.enqueue(new Callback<MomoTransactionResponse>() {
                 @Override
-                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                public void onResponse(Call<MomoTransactionResponse> call, Response<MomoTransactionResponse> response) {
                     dialogLoader.hideProgressDialog();
 
                     if (response.code() == 200) {
-                        if (response.body().getStatus().equalsIgnoreCase("1")) {
-
+                        if (response.body().getStatus()==1) {
                             //call the success dialog
                             final Dialog dialog = new Dialog(getContext());
                             dialog.setContentView(R.layout.dialog_successful_message);
@@ -402,24 +402,7 @@ public class ConfirmTransfer extends DialogFragment {
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
                         Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 400) {
-                        if (response.errorBody() != null) {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 406) {
-                        if (response.errorBody() != null) {
-
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else {
+                    }  else {
 
                         if (response.errorBody() != null) {
 
@@ -434,7 +417,7 @@ public class ConfirmTransfer extends DialogFragment {
                 }
 
                 @Override
-                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                public void onFailure(Call<MomoTransactionResponse> call, Throwable t) {
                     dialogLoader.hideProgressDialog();
                 }
             });
@@ -445,7 +428,7 @@ public class ConfirmTransfer extends DialogFragment {
         }else if(category.equalsIgnoreCase("agent")){
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.withdrawMobileMoneyAgent(
+            Call<MomoTransactionResponse> call = apiRequests.withdrawMobileMoneyAgent(
                     access_token,
                     amount,
                     phoneNumber,
@@ -456,13 +439,13 @@ public class ConfirmTransfer extends DialogFragment {
 
             );
 
-            call.enqueue(new Callback<WalletTransaction>() {
+            call.enqueue(new Callback<MomoTransactionResponse>() {
                 @Override
-                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                public void onResponse(Call<MomoTransactionResponse> call, Response<MomoTransactionResponse> response) {
                     dialogLoader.hideProgressDialog();
 
                     if (response.code() == 200) {
-                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+                        if (response.body().getStatus()==1) {
 
                             //call the success dialog
                             final Dialog dialog = new Dialog(getContext());
@@ -519,23 +502,6 @@ public class ConfirmTransfer extends DialogFragment {
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
                         Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 400) {
-                        if (response.errorBody() != null) {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 406) {
-                        if (response.errorBody() != null) {
-
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
                     } else {
 
                         if (response.errorBody() != null) {
@@ -551,7 +517,7 @@ public class ConfirmTransfer extends DialogFragment {
                 }
 
                 @Override
-                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                public void onFailure(Call<MomoTransactionResponse> call, Throwable t) {
                     dialogLoader.hideProgressDialog();
                 }
             });
@@ -563,7 +529,7 @@ public class ConfirmTransfer extends DialogFragment {
 
             //********************* RETROFIT IMPLEMENTATION ********************************//
             APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-            Call<WalletTransaction> call = apiRequests.withdrawMobileMoneyCustomer(
+            Call<MomoTransactionResponse> call = apiRequests.withdrawMobileMoneyCustomer(
                     access_token,
                     amount,
                     phoneNumber,
@@ -574,13 +540,13 @@ public class ConfirmTransfer extends DialogFragment {
 
             );
 
-            call.enqueue(new Callback<WalletTransaction>() {
+            call.enqueue(new Callback<MomoTransactionResponse>() {
                 @Override
-                public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
+                public void onResponse(Call<MomoTransactionResponse> call, Response<MomoTransactionResponse> response) {
                     dialogLoader.hideProgressDialog();
 
                     if (response.code() == 200) {
-                        if (response.body().getStatus().equalsIgnoreCase("1")) {
+                        if (response.body().getStatus()==1) {
 
                             //call the success dialog
                             final Dialog dialog = new Dialog(getContext());
@@ -637,24 +603,7 @@ public class ConfirmTransfer extends DialogFragment {
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
                         Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 400) {
-                        if (response.errorBody() != null) {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else if (response.code() == 406) {
-                        if (response.errorBody() != null) {
-
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else {
+                    }  else {
 
                         if (response.errorBody() != null) {
 
@@ -669,7 +618,7 @@ public class ConfirmTransfer extends DialogFragment {
                 }
 
                 @Override
-                public void onFailure(Call<WalletTransaction> call, Throwable t) {
+                public void onFailure(Call<MomoTransactionResponse> call, Throwable t) {
                     dialogLoader.hideProgressDialog();
                 }
             });
