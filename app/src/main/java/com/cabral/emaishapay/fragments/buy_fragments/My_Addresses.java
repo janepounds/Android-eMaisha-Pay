@@ -140,7 +140,23 @@ public class My_Addresses extends Fragment {
 //                fragmentManager.beginTransaction()
 //                        .add(R.id.nav_host_fragment2, fragment)
 //                        .addToBackStack(null).commit();
-        });
+        Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
+        Bundle args = new Bundle();
+        args.putBoolean("isUpdate", false);
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
+//                fragmentManager.beginTransaction()
+//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+//                        .add(R.id.nav_host_fragment2, fragment)
+//                        .addToBackStack(null).commit();
+//            else
+        fragmentManager.beginTransaction()
+                .add(R.id.nav_host_fragment2, fragment)
+                .addToBackStack(null).commit();
+    });
+
 
 
         return binding.getRoot();
