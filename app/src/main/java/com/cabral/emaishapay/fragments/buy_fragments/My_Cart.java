@@ -175,73 +175,11 @@ public class My_Cart extends Fragment implements Serializable {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         // Handle Click event of cart_checkout_btn Button
         binding.cartCheckoutBtn.setOnClickListener(view -> {
-//            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
-//
-//            if (ConstantValues.MAINTENANCE_MODE != null) {
-//                if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
-//                    showDialog(ConstantValues.MAINTENANCE_TEXT);
-//                else {
-//                    // Check if cartItemsList isn't empty
-//                    if (cartItemsList.size() != 0) {
-//
-//                        // Check if User is Logged-In
-//                        if (ConstantValues.IS_USER_LOGGED_IN) {
                             Log.e("VC_Shop", "checkout executes  ");
                             checkStockTask();
-//                        } else {
-//                            // Navigate to Login Activity
-//                            Intent i = new Intent(getContext(), Login.class);
-//                            getContext().startActivity(i);
-//                            ((WalletHomeActivity) getContext()).finish();
-//                            ((WalletHomeActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-//                        }
-//                    }
-//
-//                }
-//            }
+
         });
 
-//        cart_pair_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                        Log.e("CheckoutWarning: ", "checkout  "+ConstantValues.MAINTENANCE_MODE);
-//
-//                        if (ConstantValues.MAINTENANCE_MODE != null) {
-//                            if (ConstantValues.MAINTENANCE_MODE.equalsIgnoreCase("Maintenance"))
-//                                showDialog(ConstantValues.MAINTENANCE_TEXT);
-//                            else {
-//                                // Check if cartItemsList isn't empty
-//                                if (cartItemsList.size() != 0) {
-//
-//                                    // Check if User is Logged-In
-//                                    if (ConstantValues.IS_USER_LOGGED_IN) {
-//
-//                                        //Log.e("VC_Shop", "checkout executes  ");
-//                                        //new CheckStockTask().execute();
-//
-//                                        FragmentManager fm = My_Cart.this.getFragmentManager();
-//                                        FragmentTransaction ft = fm.beginTransaction();
-//                                        Fragment prev =fm.findFragmentByTag("dialog");
-//                                        if (prev != null) {
-//                                            ft.remove(prev);
-//                                        }
-//                                        ft.addToBackStack(null);
-//                                        // Create and show the dialog.
-//                                        DialogFragment searchMerchantDailog =new SearchMerchantForPairing(getActivity(),My_Cart.this);
-//                                        searchMerchantDailog.show( ft, "dialog");
-//                                    } else {
-//                                        // Navigate to Login Activity
-//                                        Intent i = new Intent(getContext(), Login.class);
-//                                        getContext().startActivity(i);
-//                                        ((DashboardActivity) getContext()).finish();
-//                                        ((DashboardActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-//                                    }
-//                                }
-//
-//                            }
-//                        }
-//            }
-//        });
 
         return binding.getRoot();
     }
@@ -270,32 +208,6 @@ public class My_Cart extends Fragment implements Serializable {
         });
     }
 
-//    public void getDefaultAddress(){
-//
-//        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-//        String request_id = WalletHomeActivity.generateRequestId();
-//
-//
-//        //get from the database
-//        ArrayList<String> default_address = new ArrayList<>();
-//        default_address= dbHandler.getDefaultAddress(customerID);
-//        if(default_address.size()>0) {
-//            for (int i = 0; i < default_address.size(); i++) {
-//                String street = default_address.get(0);
-//                String city = default_address.get(1);
-//                String country = default_address.get(2);
-//
-//                default_address_.setText(street + " " + city + " " + country);
-//            }
-//        }else{
-//
-//        locationLayout.setVisibility(View.GONE);
-//        }
-//
-//
-//
-//
-//    }
 
     //*********** Change the Layout View of My_Cart Fragment based on Cart Items ********//
 
@@ -420,55 +332,7 @@ public class My_Cart extends Fragment implements Serializable {
         return result;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
-//        // Hide Cart Icon in the Toolbar
-//        MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
-//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
-//        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
-//        profileItem.setVisible(false);
-//        cartItem.setVisible(false);
-////        searchItem.setVisible(false);
-//    }
 
-//    private class MyTask extends AsyncTask<String, Void, String> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            dialogLoader.showProgressDialog();
-//            cartProducts.clear();
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            for (int i = 0; i < cartItemsList.size(); i++) {
-//                try {
-//                    RequestProductDetails(i, cartItemsList.get(i).getCustomersBasketProduct().getProductsId());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//            dialogLoader.hideProgressDialog();
-//            for (int i = 0; i < finalCartItemsList.size(); i++) {
-//                finalCartItemsList.get(i).getCustomersBasketProduct().setProductsName(cartProducts.get(i).getProductsName());
-//                //finalCartItemsList.get(i).getCustomersBasketProduct().setCategoryNames(cartProducts.get(i).getCategoryNames());
-//                //finalCartItemsList.get(i).getCustomersBasketProduct().setCustomersBasketQuantity(cartProducts.get(i).getCustomersBasketQuantity());
-//                finalCartItemsList.get(i).getCustomersBasketProduct().setProductsPrice(cartProducts.get(i).getProductsPrice());
-//                //finalCartItemsList.get(i).getCustomersBasketProduct().setTotalPrice(cartProducts.get(i).getTotalPrice());
-//                finalCartItemsList.get(i).getCustomersBasketProduct().setProductsFinalPrice(cartProducts.get(i).getProductsFinalPrice());
-//                finalCartItemsList.get(i).getCustomersBasketProduct().setProductsQuantity(cartProducts.get(i).getProductsQuantity());
-//
-//            }
-//            cartItemsAdapter.notifyDataSetChanged();
-//        }
-//    }
 
     public void RequestProductDetails(final int position, final int products_id) throws IOException {
 
@@ -538,39 +402,7 @@ public class My_Cart extends Fragment implements Serializable {
         return true;
     }
 
-//    public class CheckStockTask extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            dialogLoader.showProgressDialog();
-//            stocks.clear();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            for (int i = 0; i < cartItemsList.size(); i++) {
-//                requestProductStock2(cartItemsList.get(i).getCustomersBasketProduct().getProductsId(), getSelectedAttributesIds(cartItemsList.get(i).getCustomersBasketProductAttributes()), i);
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//            dialogLoader.hideProgressDialog();
-//            if (isAllStockValid(stocks)) {
-//                Fragment fragment = new My_Addresses(My_Cart.this);
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-//                        .addToBackStack(getString(R.string.actionAddresses)).commit();
-//
-//            } else {
-//                Toast.makeText(getContext(), "Your Product in the cart is out of stock.", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-//
+
     private void checkStockTask() {
         dialogLoader.showProgressDialog();
         stocks.clear();
@@ -624,16 +456,6 @@ public class My_Cart extends Fragment implements Serializable {
         badge.setText(String.valueOf(cartItemsList.size()));
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        cartItemsAdapter = new CartItemsAdapter(getContext(), finalCartItemsList, My_Cart.this);
-//
-//        // Set the Adapter and LayoutManager to the RecyclerView
-//        cart_items_recycler.setAdapter(cartItemsAdapter);
-//        cart_items_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-//
-//
-//    }
+
 }
 

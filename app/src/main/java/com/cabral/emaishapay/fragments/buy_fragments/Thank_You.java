@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import am.appwise.components.ni.NoInternetDialog;
 
 public class Thank_You extends Fragment {
-    //    FrameLayout banner_adView;
     private TextView order_number;
     private Button order_status_btn, continue_shopping_btn;
 
@@ -43,14 +42,8 @@ public class Thank_You extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.buy_inputs_thank_you, container, false);
 
-        // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
-        //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.order_confirmed));
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        // noInternetDialog.show();
 
-        // Binding Layout Views
-//        banner_adView = rootView.findViewById(R.id.banner_adView);
         order_number = rootView.findViewById(R.id.order_number);
         order_status_btn = rootView.findViewById(R.id.order_status_btn);
         continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);

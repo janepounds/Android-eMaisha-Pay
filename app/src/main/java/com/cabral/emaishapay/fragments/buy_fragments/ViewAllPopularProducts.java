@@ -49,12 +49,9 @@ import retrofit2.Callback;
 public class ViewAllPopularProducts extends Fragment {
     View rootView;
     List<ProductDetails> popularProductsList= new ArrayList<>();
-    private RecyclerView recyclerView;
     private Context context;
     private ProductAdapter popularProductsAdapter;
-    Toolbar toolbar;
     PostFilterData filters = null;
-    ProgressBar progressBar,mainProgress;
     Call<ProductData> productsCall;
     int pageNo = 0;
     LayoutViewAllProductsBinding binding;

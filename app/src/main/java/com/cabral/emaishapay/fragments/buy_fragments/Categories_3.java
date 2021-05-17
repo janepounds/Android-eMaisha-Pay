@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CategoryListAdapter_3;
@@ -28,8 +26,6 @@ import com.cabral.emaishapay.models.category_model.CategoryDetails;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import am.appwise.components.ni.NoInternetDialog;
 
 public class Categories_3 extends Fragment {
     private Context context;
@@ -47,8 +43,6 @@ public class Categories_3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_categories, container, false);
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
 
         if (getArguments() != null) {
             if (getArguments().containsKey("isHeaderVisible")) {
@@ -71,10 +65,6 @@ public class Categories_3 extends Fragment {
         // Get CategoriesList from ApplicationContext
         allCategoriesList = ((EmaishaPayApp) requireContext().getApplicationContext()).getCategoriesList();
 
-        // Binding Layout Views
-
-//        scroll_container.setNestedScrollingEnabled(true);
-//        category_recycler.setNestedScrollingEnabled(false);
 
         // Hide some of the Views
         binding.emptyRecordText.setVisibility(View.GONE);
@@ -127,23 +117,6 @@ public class Categories_3 extends Fragment {
             }
         });
 
-//        BuyInputsHomePage.searchView.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                // TODO Filter text
-//                categoryListAdapter.getFilter().filter(s);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
             return binding.getRoot();
     }

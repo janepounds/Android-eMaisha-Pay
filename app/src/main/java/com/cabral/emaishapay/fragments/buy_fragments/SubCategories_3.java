@@ -28,7 +28,6 @@ import am.appwise.components.ni.NoInternetDialog;
 public class SubCategories_3 extends Fragment {
 
     int parentCategoryID;
-    Boolean isHeaderVisible;
 
     TextView emptyText, headerText;
     RecyclerView category_recycler;
@@ -48,9 +47,6 @@ public class SubCategories_3 extends Fragment {
 
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("CategoryName", getString(R.string.actionCategory)));
-
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
 
         // Get CategoriesList from ApplicationContext
         allCategoriesList = new ArrayList<>();

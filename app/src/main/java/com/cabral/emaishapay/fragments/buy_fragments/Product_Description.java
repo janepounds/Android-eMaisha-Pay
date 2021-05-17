@@ -95,10 +95,8 @@ public class Product_Description extends Fragment  {
     double productBasePrice;
     double productFinalPrice;
 
-    ImageView sliderImageView, increaseQty, reduceQty;
-
-    WebView product_description_webView;
-    AppCompatButton addToCart,buy_now;
+    ImageView sliderImageView;
+    AppCompatButton addToCart;
 
     DialogLoader dialogLoader;
     static ProductDetails productDetails;
@@ -736,8 +734,7 @@ public class Product_Description extends Fragment  {
         } else {
             binding.productStock.setText(getString(R.string.in_stock));
             binding.productCartBtn.setText(getString(R.string.addToCart));
-            //  product_stock.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccentBlue));
-            //   productCartBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners_button_accent));
+
         }
 
         // Check if product from flash sale
@@ -834,25 +831,7 @@ public class Product_Description extends Fragment  {
         });
 
         binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-        // Check if the size of Images in the Slider is less than 2
-//        if (slider_covers.size() < 2) {
-//            // Disable PagerTransformer
-//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
-//                @Override
-//                protected void onTransform(View view, float v) {
-//
-//                }
-//            });
-//
-//            // Hide Slider PagerIndicator
-//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-//
-//        } else {
-//            // Set custom PagerIndicator to the SliderLayout
-//            sliderLayout.setCustomIndicator(pagerIndicator);
-//            // Make PagerIndicator Visible
-//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-//        }
+
 
     }
 

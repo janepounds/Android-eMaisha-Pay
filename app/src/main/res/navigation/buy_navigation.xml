@@ -53,13 +53,21 @@
         android:id="@+id/viewAllPopularProducts"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.ViewAllPopularProducts"
         android:label="ViewAllPopularProducts"
-        tools:layout="@layout/layout_view_all_products"/>
+        tools:layout="@layout/layout_view_all_products">
+        <action
+            android:id="@+id/action_viewAllPopularProducts_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
 
     <fragment
         android:id="@+id/viewAllTopDeals"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.ViewAllTopDeals"
         android:label="ViewAllTopDeals"
-        tools:layout="@layout/layout_view_all_products"/>
+        tools:layout="@layout/layout_view_all_products">
+        <action
+            android:id="@+id/action_viewAllTopDeals_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
 
     <fragment
         android:id="@+id/shippingAddress"

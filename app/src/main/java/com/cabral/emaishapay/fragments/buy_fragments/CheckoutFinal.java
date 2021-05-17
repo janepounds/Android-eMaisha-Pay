@@ -205,8 +205,6 @@ public class CheckoutFinal extends Fragment {
         checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
 
-         //Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
-        //ProductsName Array intialize
         productsName = new ArrayList<>();
 
         // Add orders to orderProductList
@@ -215,9 +213,6 @@ public class CheckoutFinal extends Fragment {
         for (int i = 0; i < orderProductList.size(); i++) {
             productsName.add(orderProductList.get(i).getProductsName());
         }
-
-        // Request Payment Methods
-//        RequestPaymentMethods();
 
 
         // Initialize the CheckoutItemsAdapter for RecyclerView
@@ -275,18 +270,12 @@ public class CheckoutFinal extends Fragment {
         binding.checkoutEditShipping.setOnClickListener(view -> {
 
             // Navigate to Shipping_Address Fragment to Edit ShippingAddress
-
-//            Fragment fragment = new Shipping_Address(my_cart, null);
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", true);
             args.putSerializable("my_cart", my_cart);
             args.putSerializable("my_address", null);
             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_shippingAddress,args);
-//            fragment.setArguments(args);
-//
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
-//                    .addToBackStack(null).commit();
+
         });
 
         if (!ConstantValues.IS_CLIENT_ACTIVE) {
@@ -387,9 +376,6 @@ public class CheckoutFinal extends Fragment {
             binding.paymentMethod.setText(PaymentOrderDetails.getPaymentMethod());
         }
         WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
-//        // Disable the bottom navigation from showing when you come back from payment methods fragment
-//        WalletHomeActivity dashboardActivity = new WalletHomeActivity();
-//        dashboardActivity.setupTitle();
     }
 
     //*********** Receives the result from a previous call of startActivityForResult(Intent, int) ********//
@@ -411,9 +397,7 @@ public class CheckoutFinal extends Fragment {
         } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.i("VC_Shop", "[paypal] > The user canceled.");
         }
-//        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-//            Log.i("VC_Shop", "[paypal] > An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
-//        }
+
     }
 
     //*********** Validate Payment method Details according to the selectedPaymentMethod ********//

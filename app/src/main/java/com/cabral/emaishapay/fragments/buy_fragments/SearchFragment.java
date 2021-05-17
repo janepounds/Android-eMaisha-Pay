@@ -123,9 +123,8 @@ public class SearchFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, @NotNull MenuInflater inflater) {
         // Hide Search Icon in the Toolbar
         MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
-//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
         cartItem.setVisible(true);
-//        searchItem.setVisible(false);
+
     }
 
     @Override

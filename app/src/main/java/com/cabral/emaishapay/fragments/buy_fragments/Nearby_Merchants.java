@@ -127,11 +127,6 @@ public class Nearby_Merchants extends Fragment {
         this.merchantList=null;
         super.onPause();
     }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        ((DashboardActivity)getActivity()).clearBackStackInclusive( getString(R.string.select_merchants_fragment)); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
-//    }
 
 
     //*********** Request User's Nearby Merchants from the Server ********//

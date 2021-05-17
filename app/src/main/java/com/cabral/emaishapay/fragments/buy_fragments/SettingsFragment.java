@@ -86,9 +86,6 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_settings, container, false);
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        // noInternetDialog.show();
-
         dialogLoader = new DialogLoader(getContext());
         appPrefs = new MyAppPrefsManager(getContext());
         sharedPreferences = getContext().getSharedPreferences("UserInfo", MODE_PRIVATE);
@@ -535,30 +532,6 @@ public class SettingsFragment extends Fragment {
         }
 
 
-        // Handle DrawerHeader Click Listener
-//        btn_edit_profile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                // Check if the User is Authenticated
-//                if (ConstantValues.IS_USER_LOGGED_IN) {
-//
-//                    // Navigate to Update_Account Fragment
-//                    Fragment fragment = new UpdateAccountFragment();
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    fragmentManager.beginTransaction()
-//                            .add(R.id.main_fragment_container, fragment)
-//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                            .addToBackStack(getString(R.string.actionCart)).commit();
-//
-//                } else {
-//                    // Navigate to Login Activity
-//                    startActivity(new Intent(getContext(), Login.class));
-//                    ((DashboardActivity) getContext()).finish();
-//                    ((DashboardActivity) getContext()).overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left);
-//                }
-//            }
-//        });
     }
 
 

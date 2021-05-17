@@ -199,11 +199,11 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
         cartItem.getActionView().setOnClickListener(v -> {
             // Navigate to My_Cart Fragment
-            if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.walletBuyFragment){
+            if(navController.getCurrentDestination().getId()==R.id.walletBuyFragment){
 
-                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_myCart);
-            }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.productDescription){
-                WalletBuySellActivity.navController.navigate(R.id.action_productDescription_to_myCart);
+                navController.navigate(R.id.action_walletBuyFragment_to_myCart);
+            }else if(navController.getCurrentDestination().getId()==R.id.productDescription){
+                navController.navigate(R.id.action_productDescription_to_myCart);
 
             }
 
