@@ -40,6 +40,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class My_Addresses extends Fragment {
+public class My_Addresses extends Fragment implements Serializable {
     private static final String TAG = "My_Addresses";
     public static My_Cart my_cart;
     String customerID;
@@ -64,9 +65,7 @@ public class My_Addresses extends Fragment {
 
 
     public  My_Addresses(Boolean enable_back){ this.enable_back = enable_back; }
-    public My_Addresses(My_Cart my_cart) {
-        this.my_cart = my_cart;
-    }
+
 
     public My_Addresses( ){
     }
@@ -97,35 +96,45 @@ public class My_Addresses extends Fragment {
 
         // Request for User's Addresses
         RequestAllAddresses();
+        if(getArguments()!=null){
+            my_cart= (My_Cart) getArguments().getSerializable("my_cart");
+
+        }
 
         binding.continueShoppingBtn.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
-            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
+//            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
+//            Bundle args = new Bundle();
+//            args.putBoolean("isUpdate", false);
+//            fragment.setArguments(args);
+//
+//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
+//                fragmentManager.beginTransaction()
+//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+//                        .add(R.id.nav_host_fragment2, fragment)
+//                        .addToBackStack(null).commit();
+//            else
+//                fragmentManager.beginTransaction()
+//                        .add(R.id.nav_host_fragment2, fragment)
+//                        .addToBackStack(null).commit();
+//            WalletBuySellActivity.currentFragment=fragment;
+
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", false);
-            fragment.setArguments(args);
-
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-                fragmentManager.beginTransaction()
-                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-                        .add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction()
-                        .add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(null).commit();
-            WalletBuySellActivity.currentFragment=fragment;
+            args.putSerializable("my_cart",my_cart);
+            args.putSerializable("my_address",My_Addresses.this);
+            WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_shippingAddress, args);
         });
 
         // Handle Click event of add_address_fab FAB
         binding.addAddressFab.setOnClickListener(v -> {
 //            // Navigate to Add_Address Fragment with arguments
-//            Bundle args = new Bundle();
-//            args.putBoolean("isUpdate", false);
-//            args.putSerializable("my_cart",my_cart);
-//            args.putSerializable("my_address",My_Addresses.this);
-//            WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_shippingAddress, args);
+            Bundle args = new Bundle();
+            args.putBoolean("isUpdate", false);
+            args.putSerializable("my_cart",my_cart);
+            args.putSerializable("my_address",My_Addresses.this);
+            WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_shippingAddress, args);
 //            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
 //
 //            fragment.setArguments(args);
@@ -140,21 +149,21 @@ public class My_Addresses extends Fragment {
 //                fragmentManager.beginTransaction()
 //                        .add(R.id.nav_host_fragment2, fragment)
 //                        .addToBackStack(null).commit();
-        Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
-        Bundle args = new Bundle();
-        args.putBoolean("isUpdate", false);
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-//                fragmentManager.beginTransaction()
-//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-//                        .add(R.id.nav_host_fragment2, fragment)
-//                        .addToBackStack(null).commit();
-//            else
-        fragmentManager.beginTransaction()
-                .add(R.id.nav_host_fragment2, fragment)
-                .addToBackStack(null).commit();
+//        Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
+//        Bundle args = new Bundle();
+//        args.putBoolean("isUpdate", false);
+//        fragment.setArguments(args);
+//
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+////            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
+////                fragmentManager.beginTransaction()
+////                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
+////                        .add(R.id.nav_host_fragment2, fragment)
+////                        .addToBackStack(null).commit();
+////            else
+//        fragmentManager.beginTransaction()
+//                .add(R.id.nav_host_fragment2, fragment)
+//                .addToBackStack(null).commit();
     });
 
 

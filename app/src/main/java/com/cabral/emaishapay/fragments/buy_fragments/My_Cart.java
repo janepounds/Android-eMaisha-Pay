@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
@@ -30,12 +31,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CartItemsAdapter;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.BuyInputsMyCartBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
@@ -48,6 +51,7 @@ import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,19 +59,15 @@ import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class My_Cart extends Fragment {
+public class My_Cart extends Fragment implements Serializable {
     private static final String TAG = "My_Cart";
     String customerID;
-    RecyclerView cart_items_recycler;
-    LinearLayout cart_view, cart_view_empty,locationLayout;
-    Button cart_checkout_btn, continue_shopping_btn, clear_cart;
-    TextView default_address_;
     NestedScrollView mainRvLayout;
-    public TextView cart_item_subtotal_price, cart_item_discount_price, cart_item_total_price;
+
 
     CartItemsAdapter cartItemsAdapter;
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
-
+    BuyInputsMyCartBinding binding;
     List<CartProduct> cartItemsList = new ArrayList<>();
     List<CartProduct> finalCartItemsList = new ArrayList<>();
     List<ProductDetails> cartProducts = new ArrayList<>();
@@ -98,7 +98,7 @@ public class My_Cart extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.buy_inputs_my_cart, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_my_cart, container, false);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
@@ -108,8 +108,7 @@ public class My_Cart extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
         // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-        toolbar = rootView.findViewById(R.id.toolbar_product_home);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarProductHome);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("My Cart");
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,38 +117,26 @@ public class My_Cart extends Fragment {
         // Get the List of Cart Items from the Local Databases User_Cart_DB
         finalCartItemsList = cartItemsList = user_cart_BuyInputs_db.getCartItems();
 
-        // Binding Layout Views
-        cart_view = rootView.findViewById(R.id.cart_view);
-        cart_checkout_btn = rootView.findViewById(R.id.cart_checkout_btn);
-        cart_items_recycler = rootView.findViewById(R.id.cart_items_recycler);
-        cart_view_empty = rootView.findViewById(R.id.cart_view_empty);
-        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
-        mainRvLayout = rootView.findViewById(R.id.mainRvLayout);
-//        cart_item_subtotal_price = rootView.findViewById(R.id.cart_item_subtotal_price);
-        cart_item_total_price = rootView.findViewById(R.id.cart_item_total_price);
-        clear_cart = rootView.findViewById(R.id.btn_clear_cart);
-        default_address_ = rootView.findViewById(R.id.default_delivery_location2_tv);
-        locationLayout = rootView.findViewById(R.id.location_layout);
 
 
 //        cart_item_discount_price = rootView.findViewById(R.id.cart_item_discount_price);
 
         // Change the Visibility of cart_view and cart_view_empty LinearLayout based on CartItemsList's Size
         if (cartItemsList.size() != 0) {
-            cart_view.setVisibility(View.VISIBLE);
+            binding.cartView.setVisibility(View.VISIBLE);
 
-            cart_view_empty.setVisibility(View.GONE);
+            binding.cartViewEmpty.setVisibility(View.GONE);
         } else {
-            cart_view.setVisibility(View.GONE);
-            cart_view_empty.setVisibility(View.VISIBLE);
+            binding.cartView.setVisibility(View.GONE);
+            binding.cartViewEmpty.setVisibility(View.VISIBLE);
         }
 
         // Initialize the AddressListAdapter for RecyclerView
         cartItemsAdapter = new CartItemsAdapter(getContext(), finalCartItemsList, My_Cart.this);
 
         // Set the Adapter and LayoutManager to the RecyclerView
-        cart_items_recycler.setAdapter(cartItemsAdapter);
-        cart_items_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.cartItemsRecycler.setAdapter(cartItemsAdapter);
+        binding.cartItemsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         // Show the Cart's Total Price with the help of static method of CartItemsAdapter
         cartItemsAdapter.setCartTotal();
@@ -160,7 +147,7 @@ public class My_Cart extends Fragment {
         subscribeToDefaultAddress(viewModel.getDefaultAddress());
 //        getDefaultAddress();
 
-        clear_cart.setOnClickListener(view -> {
+        binding.btnClearCart.setOnClickListener(view -> {
             // Delete CartItem from Local Database using static method of My_Cart
             ClearCart();
 
@@ -180,13 +167,13 @@ public class My_Cart extends Fragment {
         });
 
         // Handle Click event of continue_shopping_btn Button
-        continue_shopping_btn.setOnClickListener(view -> {
+        binding.continueShoppingBtn.setOnClickListener(view -> {
             // Go back to previous fragment(wallet home)
             requireActivity().onBackPressed();
         });
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         // Handle Click event of cart_checkout_btn Button
-        cart_checkout_btn.setOnClickListener(view -> {
+        binding.cartCheckoutBtn.setOnClickListener(view -> {
 //            Log.e("CheckoutWarning: ", "checkout  " + ConstantValues.MAINTENANCE_MODE);
 //
 //            if (ConstantValues.MAINTENANCE_MODE != null) {
@@ -255,7 +242,7 @@ public class My_Cart extends Fragment {
 //            }
 //        });
 
-        return rootView;
+        return binding.getRoot();
     }
 
 
@@ -272,12 +259,12 @@ public class My_Cart extends Fragment {
                     String country = myAddresses.get(i).getEntry_country_id();
 
 
-                    default_address_.setText(street + " " + city + " " + country);
+                    binding.defaultDeliveryLocation2Tv.setText(street + " " + city + " " + country);
                 }
 
                 //dialogLoader.hideProgressDialog();
             } else {
-                locationLayout.setVisibility(View.GONE);
+                binding.locationLayout.setVisibility(View.GONE);
             }
         });
     }
@@ -314,11 +301,11 @@ public class My_Cart extends Fragment {
     public void updateCartView(int cartListSize) {
         // Check if Cart has some Items
         if (cartListSize != 0) {
-            cart_view.setVisibility(View.VISIBLE);
-            cart_view_empty.setVisibility(View.GONE);
+            binding.cartView.setVisibility(View.VISIBLE);
+            binding.cartViewEmpty.setVisibility(View.GONE);
         } else {
-            cart_view.setVisibility(View.GONE);
-            cart_view_empty.setVisibility(View.VISIBLE);
+            binding.cartView.setVisibility(View.GONE);
+            binding.cartViewEmpty.setVisibility(View.VISIBLE);
         }
     }
 
@@ -599,10 +586,10 @@ public class My_Cart extends Fragment {
                                     public void run() {
                                         dialogLoader.hideProgressDialog();
                                         if (isAllStockValid(stocks)) {
-                                            Fragment fragment = new My_Addresses(My_Cart.this);
-                                            FragmentManager fragmentManager = getFragmentManager();
-                                            fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                                                    .addToBackStack(getString(R.string.actionAddresses)).commit();
+                                            //got to my address
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("my_cart",My_Cart.this);
+                                            WalletBuySellActivity.navController.navigate(R.id.action_myCart_to_walletAddressesFragment,bundle);
 
                                         } else {
                                             Toast.makeText(getContext(), "Your Product in the cart is out of stock.", Toast.LENGTH_SHORT).show();
