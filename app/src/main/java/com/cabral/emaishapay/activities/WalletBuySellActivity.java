@@ -199,7 +199,13 @@ public class WalletBuySellActivity extends AppCompatActivity {
 
         cartItem.getActionView().setOnClickListener(v -> {
             // Navigate to My_Cart Fragment
-            WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_myCart);
+            if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.walletBuyFragment){
+
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_myCart);
+            }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.productDescription){
+                WalletBuySellActivity.navController.navigate(R.id.action_productDescription_to_myCart);
+
+            }
 
             WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
         });

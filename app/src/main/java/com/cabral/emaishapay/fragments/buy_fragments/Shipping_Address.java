@@ -78,7 +78,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
     private My_Addresses parentFrag;
     private String ADDRESS_ID;
-    View rootView;
     Boolean isUpdate = false;
     String customerID, defaultAddressID, customerPhone;
     int selectedZoneID, selectedCountryID;
