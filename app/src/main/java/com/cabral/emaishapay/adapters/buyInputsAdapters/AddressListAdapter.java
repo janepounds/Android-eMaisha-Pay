@@ -98,10 +98,10 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
 
             if (parentFrag.my_cart != null) {
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
-                Fragment fragment = new Nearby_Merchants(parentFrag.my_cart);
-                FragmentManager fragmentManager = parentFrag.getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                        .addToBackStack(context.getString(R.string.select_merchants_fragment)).commit();
+                //got to near by merchant
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("my_cart",parentFrag.my_cart);
+               WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_nearbyMerchants,bundle);
             } else {
                 // Request the Server to Change Default Address
                 //buy_inputs_my__addresses.MakeAddressDefault(customerID, addressID, context, view);

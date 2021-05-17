@@ -102,13 +102,8 @@ public class WishList extends Fragment {
         emptyRecord = rootView.findViewById(R.id.empty_record);
         progressBar = rootView.findViewById(R.id.loading_bar);
         filterLayout = rootView.findViewById(R.id.filter_layout);
-//        toggleLayoutView = rootView.findViewById(R.id.layout_toggleBtn);
         favourites_recycler = rootView.findViewById(R.id.products_recycler);
         mainProgress = rootView.findViewById(R.id.progressBar);
-
-
-        // Hide some of the Views
-//        bottomBar.setVisibility(View.GONE);
         emptyRecord.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         filterLayout.setVisibility(View.GONE);
@@ -263,15 +258,8 @@ public class WishList extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
-//        MenuItem languageItem = menu.findItem(R.id.toolbar_ic_language);
-//        MenuItem currencyItem = menu.findItem(R.id.toolbar_ic_currency);
-//        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
-//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
+
         MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
-//        profileItem.setVisible(false);
-//        languageItem.setVisible(false);
-//        currencyItem.setVisible(false);
-//        searchItem.setVisible(false);
         cartItem.setVisible(false);
     }
 

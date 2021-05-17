@@ -109,16 +109,8 @@ public class PopularProductsFragment extends Fragment {
                 if (response.isSuccessful()) {
 
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
-                        // Products have been returned. Add Products to the dealProductsList
-
-//                        popularDealsProduct.setPopularproductList(
-//                                response.body().getProductData());
 
                         popularProductsList.addAll(response.body().getProductData());
-                         //Log.w("PopularProductzSIZE", ""+popularProductsList.size());
-
-
-
                         popularProductsAdapter.notifyDataSetChanged();
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {

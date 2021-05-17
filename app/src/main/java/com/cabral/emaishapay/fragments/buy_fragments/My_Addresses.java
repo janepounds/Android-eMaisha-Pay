@@ -75,8 +75,6 @@ public class My_Addresses extends Fragment implements Serializable {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_my__addresses, container, false);
         setHasOptionsMenu(true);
-        // Enable Drawer Indicator with static variable actionBarDrawerToggle of MainActivity
-        //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarAddresses);
         binding.toolbarAddresses.setTitle(getString(R.string.actionAddresses));
@@ -103,22 +101,6 @@ public class My_Addresses extends Fragment implements Serializable {
 
         binding.continueShoppingBtn.setOnClickListener(v -> {
             // Navigate to Add_Address Fragment with arguments
-//            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
-//            Bundle args = new Bundle();
-//            args.putBoolean("isUpdate", false);
-//            fragment.setArguments(args);
-//
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-//                fragmentManager.beginTransaction()
-//                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-//                        .add(R.id.nav_host_fragment2, fragment)
-//                        .addToBackStack(null).commit();
-//            else
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.nav_host_fragment2, fragment)
-//                        .addToBackStack(null).commit();
-//            WalletBuySellActivity.currentFragment=fragment;
 
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", false);
@@ -135,35 +117,7 @@ public class My_Addresses extends Fragment implements Serializable {
             args.putSerializable("my_cart",my_cart);
             args.putSerializable("my_address",My_Addresses.this);
             WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_shippingAddress, args);
-//            Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
-//
-//            fragment.setArguments(args);
-//
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-////            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-////                fragmentManager.beginTransaction()
-////                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-////                        .add(R.id.nav_host_fragment2, fragment)
-////                        .addToBackStack(null).commit();
-////            else
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.nav_host_fragment2, fragment)
-//                        .addToBackStack(null).commit();
-//        Fragment fragment = new Shipping_Address(my_cart, My_Addresses.this);
-//        Bundle args = new Bundle();
-//        args.putBoolean("isUpdate", false);
-//        fragment.setArguments(args);
-//
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-////            if (((WalletBuySellActivity) getActivity()).currentFragment != null)
-////                fragmentManager.beginTransaction()
-////                        .hide(((WalletBuySellActivity) getActivity()).currentFragment)
-////                        .add(R.id.nav_host_fragment2, fragment)
-////                        .addToBackStack(null).commit();
-////            else
-//        fragmentManager.beginTransaction()
-//                .add(R.id.nav_host_fragment2, fragment)
-//                .addToBackStack(null).commit();
+
     });
 
 

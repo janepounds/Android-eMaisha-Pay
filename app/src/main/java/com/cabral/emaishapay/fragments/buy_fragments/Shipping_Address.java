@@ -78,7 +78,6 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
     private My_Addresses parentFrag;
     private String ADDRESS_ID;
-    View rootView;
     Boolean isUpdate = false;
     String customerID, defaultAddressID, customerPhone;
     int selectedZoneID, selectedCountryID;
@@ -225,18 +224,12 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
         autocompleteFragment.setCountries("UG");
         autocompleteFragment.setHint(getString(R.string.searchShippingAddress));
-        // ((Button)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_button)).setTextColor(getResources().getColor(R.color.colorWhite));
-//        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextColor(getResources().getColor(R.color.colorWhite));
-//        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextSize(10.5f);
-//       ImageView searchIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(0);
-     //   ImageView cancelIcon = (ImageView)((LinearLayout) autocompleteFragment.getView()).getChildAt(2);
-      //  cancelIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
-      //  searchIcon.setColorFilter(getResources().getColor(R.color.colorWhite));
+
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
-                 //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
+
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(selectedLocation.latitude,
@@ -289,11 +282,9 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
             final String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             final String city = addresses.get(0).getLocality();
-            //String state = addresses.get(0).getAdminArea();
-            //String country = addresses.get(0).getCountryName();
+
             final String postalCode = "UG 102";
             final String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-            //final String streetname = addresses.get(0).getThoroughfare()+", "+addresses.get(0).getSubThoroughfare();
 
             // New Instance of AddressDetails
             AddressDetails shippingAddress = new AddressDetails();
@@ -586,10 +577,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                         if( my_cart!=null){
 
                             // Navigate to Shipping_Methods Fragment
-                            Fragment fragment = new Nearby_Merchants(my_cart);
-                            FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                                    .addToBackStack(null).commit();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("my_cart",my_cart);
+                            WalletBuySellActivity.navController.navigate(R.id.action_shippingAddress_to_nearbyMerchants,bundle);
+
                         }else
                             parentFrag.RequestAllAddresses();
                     }

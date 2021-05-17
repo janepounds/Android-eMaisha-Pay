@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_walletAddressesFragment_to_shippingAddress"
             app:destination="@id/shippingAddress" />
+        <action
+            android:id="@+id/action_walletAddressesFragment_to_nearbyMerchants"
+            app:destination="@id/nearbyMerchants" />
     </fragment>
 
     <fragment
@@ -53,19 +56,31 @@
         android:id="@+id/viewAllPopularProducts"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.ViewAllPopularProducts"
         android:label="ViewAllPopularProducts"
-        tools:layout="@layout/layout_view_all_products"/>
+        tools:layout="@layout/layout_view_all_products">
+        <action
+            android:id="@+id/action_viewAllPopularProducts_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
 
     <fragment
         android:id="@+id/viewAllTopDeals"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.ViewAllTopDeals"
         android:label="ViewAllTopDeals"
-        tools:layout="@layout/layout_view_all_products"/>
+        tools:layout="@layout/layout_view_all_products">
+        <action
+            android:id="@+id/action_viewAllTopDeals_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
 
     <fragment
         android:id="@+id/shippingAddress"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address"
         android:label="ShippingAdress"
-        tools:layout="@layout/buy_inputs_address"/>
+        tools:layout="@layout/buy_inputs_address">
+        <action
+            android:id="@+id/action_shippingAddress_to_nearbyMerchants"
+            app:destination="@id/nearbyMerchants" />
+    </fragment>
 
     <fragment
         android:id="@+id/productDescription"
@@ -98,5 +113,15 @@
         <action
             android:id="@+id/action_myCart_to_walletAddressesFragment"
             app:destination="@id/walletAddressesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nearbyMerchants"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Nearby_Merchants"
+        android:label="NearbyMerchants"
+        tools:layout="@layout/buy_inputs_nearbymerchants">
+        <action
+            android:id="@+id/action_nearbyMerchants_to_checkOutFinal"
+            app:destination="@id/checkOutFinal" />
     </fragment>
 </navigation>

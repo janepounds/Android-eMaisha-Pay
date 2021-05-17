@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.shipping_model.ShippingService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -162,10 +164,16 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingService(shippingService);
 
                 // Navigate to CheckoutFinal Fragment
-              WalletBuySellActivity.postOrder.setPaymentMethod("Payment Method");//Reset Payment
-                Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "",merchantsDetails.getMerchant_wallet_id());
-                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment, context.getString(R.string.checkout))
-                        .addToBackStack(null).commit();
+                WalletBuySellActivity.postOrder.setPaymentMethod("Payment Method");//Reset Payment
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("my_cart",my_cart);
+                bundle.putSerializable("db", (Serializable) user_cart_BuyInputs_db);
+                bundle.putString("merchant_id",merchantsDetails.getMerchantId() + "");
+                bundle.putString("wallet_id",merchantsDetails.getMerchant_wallet_id());
+                WalletBuySellActivity.navController.navigate(R.id.action_nearbyMerchants_to_checkOutFinal,bundle);
+//                Fragment fragment = new CheckoutFinal(my_cart, user_cart_BuyInputs_db, merchantsDetails.getMerchantId() + "",merchantsDetails.getMerchant_wallet_id());
+//                fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment, context.getString(R.string.checkout))
+//                        .addToBackStack(null).commit();
             }
         });
 

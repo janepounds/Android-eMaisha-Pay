@@ -255,7 +255,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 itemInfo.putLong("start",start);
                 itemInfo.putLong("server",server);
                 itemInfo.putBoolean("isFlash",isFlash);
-                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_productDescription,itemInfo);
+                if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.viewAllPopularProducts){
+                    WalletBuySellActivity.navController.navigate(R.id.action_viewAllPopularProducts_to_productDescription,itemInfo);
+
+                }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.viewAllTopDeals){
+
+                    WalletBuySellActivity.navController.navigate(R.id.action_viewAllTopDeals_to_productDescription,itemInfo);
+                }
+
 //                Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
 //                fragment.setArguments(itemInfo);
 //                //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
