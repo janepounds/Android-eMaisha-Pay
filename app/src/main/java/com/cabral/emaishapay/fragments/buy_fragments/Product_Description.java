@@ -144,8 +144,7 @@ public class Product_Description extends Fragment  {
 
         binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_product_description, container, false);
         setHasOptionsMenu(true);
-        toolbar = rootView.findViewById(R.id.toolbar_product_home);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarProductHome);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.product_description));
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -551,9 +550,9 @@ public class Product_Description extends Fragment  {
                 "</style>";
         description = description.replace("\\", "");
 
-        product_description_webView.setHorizontalScrollBarEnabled(false);
-        product_description_webView.getSettings().setJavaScriptEnabled(true);
-        product_description_webView.loadDataWithBaseURL(null, styleSheet + description, "text/html", "utf-8", null);
+        binding.productDescriptionWebView.setHorizontalScrollBarEnabled(false);
+        binding.productDescriptionWebView.getSettings().setJavaScriptEnabled(true);
+        binding.productDescriptionWebView.loadDataWithBaseURL(null, styleSheet + description, "text/html", "utf-8", null);
 
 
         // Set Product's Prices
@@ -674,11 +673,11 @@ public class Product_Description extends Fragment  {
     public void showMeasuresRecyclerView() {
         if(productMeasures.size()>0){
             productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, binding.productPriceNew, this,booleanArrayList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-            recyclerView.setAdapter(productMeasureAdapter);
+            binding.measureRecyclerview.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+            binding.measureRecyclerview.setAdapter(productMeasureAdapter);
 
             if(productMeasures.size()==1 && productMeasureAdapterCalls==1){//listener to refresh Measures Adapter after setting a solo measure checked
-                recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                binding.measureRecyclerview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         productMeasureAdapter.notifyDataSetChanged();
@@ -736,7 +735,7 @@ public class Product_Description extends Fragment  {
 
         } else {
             binding.productStock.setText(getString(R.string.in_stock));
-            addToCart.setText(getString(R.string.addToCart));
+            binding.productCartBtn.setText(getString(R.string.addToCart));
             //  product_stock.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccentBlue));
             //   productCartBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners_button_accent));
         }

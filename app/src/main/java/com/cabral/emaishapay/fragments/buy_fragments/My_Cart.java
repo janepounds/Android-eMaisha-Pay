@@ -75,6 +75,7 @@ public class My_Cart extends Fragment implements Serializable {
     DialogLoader dialogLoader;
     Toolbar toolbar;
     private Context context;
+    public TextView cart_item_total_price;
     DefaultAddressModelView viewModel;
 
     public  My_Cart(){  }
@@ -102,7 +103,7 @@ public class My_Cart extends Fragment implements Serializable {
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
-
+        cart_item_total_price = binding.cartItemTotalPrice;
         setHasOptionsMenu(true);
         dialogLoader = new DialogLoader(getContext());
         viewModel = new ViewModelProvider(requireActivity()).get(DefaultAddressModelView.class);
