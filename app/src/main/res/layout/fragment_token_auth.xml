@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/pin_title"
         app:layout_constraintBottom_toTopOf="@id/pin_view">
 
-        <EditText
+        <TextView
             android:id="@+id/pin_code1_edt"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -65,7 +65,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
-        <EditText
+        <TextView
             android:id="@+id/pin_code2_edt"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -80,7 +80,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
-        <EditText
+        <TextView
             android:id="@+id/pin_code3_edt"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -95,7 +95,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:cursorVisible="false"/>
 
-        <EditText
+        <TextView
             android:id="@+id/pin_code4_edt"
             android:layout_width="20dp"
             android:layout_height="20dp"

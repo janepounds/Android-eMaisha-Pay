@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,8 +95,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         binding.tvKeyClear.setOnClickListener(this);
 
 
-        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode1Edt.setTextIsSelectable(true);
+//        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//        binding.pinCode1Edt.setTextIsSelectable(true);
         setInputConnection(binding.pinCode1Edt);
         binding.pinCode1Edt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -115,8 +116,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         });
 
 
-        binding.pinCode2Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode2Edt.setTextIsSelectable(true);
+        //binding.pinCode2Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        //binding.pinCode2Edt.setTextIsSelectable(true);
         binding.pinCode2Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -134,8 +135,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-        binding.pinCode3Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode3Edt.setTextIsSelectable(true);
+        //binding.pinCode3Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        //binding.pinCode3Edt.setTextIsSelectable(true);
         binding.pinCode3Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -153,8 +154,8 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-        binding.pinCode4Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode4Edt.setTextIsSelectable(true);
+      //  binding.pinCode4Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+      //  binding.pinCode4Edt.setTextIsSelectable(true);
         binding.pinCode4Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -201,7 +202,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
 
 
-    public void setInputConnection(EditText editText) {
+    public void setInputConnection(TextView editText) {
         InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
     }

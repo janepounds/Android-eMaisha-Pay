@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -77,6 +78,8 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
         return binding.getRoot();
     }
 
+
+
     private void setKeyValues() {
         keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
@@ -103,7 +106,7 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
         binding.tvKey9.setOnClickListener(this);
         binding.tvKeyBackspace.setOnClickListener(this);
         binding.tvKeyEnter.setOnClickListener(this);
-        binding.txtBillTotal.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+       // binding.txtBillTotal.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         setInputConnection(binding.txtBillTotal);
         binding.txtBillTotal.addTextChangedListener(new TextWatcher() {
             @Override

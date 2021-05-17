@@ -16,7 +16,7 @@
     <color name="hintColor">#8E9B8C</color>
     <color name="editTextBorderColor">#ffd3d4d9</color>
     <color name="darkBorderColor">#6B6E77</color>
-
+    <color name="glide_slider_background_color">#DBF2FF</color>
 
     <color name="textRed">#C42947</color>
     <color name="white">#ffffff</color>
