@@ -55,7 +55,6 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
         MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
         Log.d(TAG, "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
-        Log.i("VC_Shop", "emaisha_Version = " + ConstantValues.CODE_VERSION);
 
         animFade = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fadein);
         animFade.setAnimationListener(this);
@@ -195,37 +194,43 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
 
                             if (Utilities.hasActiveInternetConnection(context)) {
                                 startAppRequests.StartRequests();
-                                AppExecutors.getInstance().mainThread().execute(
-                                        new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                setAppConfig();
-
-                                                MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
-                                                Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
-
-                                                if (!prefsManager.isUserLoggedIn()) {
-                                                    Log.d("SplashScreenFTL", " First Time Login " + prefsManager.isFirstTimeLaunch() );
-                                                    if (prefsManager.isFirstTimeLaunch()) {
-                                                        AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
-                                                    } else {
-
-                                                        AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
-                                                    }
-                                                } else {
-                                                    //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
-                                                    startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));
-                                                    getActivity().finish();
-                                                }
-                                            }
-                                        }
-                                );
+                                navigateToApproriatePage();
+                            }else{
+                                navigateToApproriatePage();
                             }
                         }
                     }
             );
 
 
+    }
+
+    private void navigateToApproriatePage() {
+        AppExecutors.getInstance().mainThread().execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        setAppConfig();
+
+                        MyAppPrefsManager prefsManager = new MyAppPrefsManager(context);
+                        Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
+
+                        if (!prefsManager.isUserLoggedIn()) {
+                            Log.d("SplashScreenFTL", " First Time Login " + prefsManager.isFirstTimeLaunch() );
+                            if (prefsManager.isFirstTimeLaunch()) {
+                                AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
+                            } else {
+
+                                AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_loginFragment);
+                            }
+                        } else {
+                            //AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_wallet_home_navigation);
+                            startActivity(new Intent(getActivity().getBaseContext(), WalletHomeActivity.class));
+                            getActivity().finish();
+                        }
+                    }
+                }
+        );
     }
 
 }
