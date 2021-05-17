@@ -205,7 +205,7 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
                                                 Log.d("SplashScreen", "onCreate: Login Status = " + prefsManager.isUserLoggedIn());
 
                                                 if (!prefsManager.isUserLoggedIn()) {
-
+                                                    Log.d("SplashScreenFTL", " First Time Login " + prefsManager.isFirstTimeLaunch() );
                                                     if (prefsManager.isFirstTimeLaunch()) {
                                                         AuthActivity.navController.navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
                                                     } else {
