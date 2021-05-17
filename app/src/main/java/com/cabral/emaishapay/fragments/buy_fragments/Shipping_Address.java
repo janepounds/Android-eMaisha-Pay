@@ -262,7 +262,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
             processCheckout(v);
         });
 
-        return rootView;
+        return binding.getRoot();
     }
 
     private void processCheckout(View v) {
