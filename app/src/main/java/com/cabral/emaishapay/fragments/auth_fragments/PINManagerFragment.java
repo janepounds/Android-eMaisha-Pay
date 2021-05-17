@@ -127,6 +127,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         return binding.getRoot();
     }
 
+
     private void setKeyValues() {
         keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
@@ -221,8 +222,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         binding.textForgotPin.setOnClickListener(this);
         binding.tokenAuthClose.setOnClickListener(this);
 
-        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode1Edt.setTextIsSelectable(true);
+//        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//        binding.pinCode1Edt.setTextIsSelectable(true);
         setInputConnection(binding.pinCode1Edt);
         binding.pinCode1Edt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -242,8 +243,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         });
 
 
-        binding.pinCode2Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode2Edt.setTextIsSelectable(true);
+       // binding.pinCode2Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+      //  binding.pinCode2Edt.setTextIsSelectable(true);
         binding.pinCode2Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -261,8 +262,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
         });
 
-        binding.pinCode3Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode3Edt.setTextIsSelectable(true);
+        //binding.pinCode3Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        //binding.pinCode3Edt.setTextIsSelectable(true);
         binding.pinCode3Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -280,8 +281,8 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
         });
 
-        binding.pinCode4Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        binding.pinCode4Edt.setTextIsSelectable(true);
+        //binding.pinCode4Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        //binding.pinCode4Edt.setTextIsSelectable(true);
         binding.pinCode4Edt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -482,7 +483,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         inputConnection = ic;
     }
 
-    public void setInputConnection(EditText editText) {
+    public void setInputConnection(TextView editText) {
         InputConnection ic = editText.onCreateInputConnection(new EditorInfo());
         inputConnection = ic;
     }

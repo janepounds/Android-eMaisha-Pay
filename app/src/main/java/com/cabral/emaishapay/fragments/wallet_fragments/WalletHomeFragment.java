@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -535,6 +536,7 @@ public class WalletHomeFragment extends Fragment {
 
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
+    @SuppressLint("CheckResult")
     private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
          //Log.w(TAG, banner.size()+" ads");
         // Initialize new HashMap<ImageName, ImagePath>
@@ -574,7 +576,7 @@ public class WalletHomeFragment extends Fragment {
 
             RequestOptions requestOptions = new RequestOptions();
 
-            requestOptions.centerInside();
+            requestOptions.centerCrop();
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView
@@ -590,6 +592,7 @@ public class WalletHomeFragment extends Fragment {
         binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
         binding.productCoverSlider.setDuration(4000);
+        //binding.productCoverSlider.setBackgroundColor(getResources().getColor(R.color.glide_slider_background_color));
         binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
