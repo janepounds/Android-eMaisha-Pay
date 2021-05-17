@@ -108,9 +108,6 @@ public class Category_Products extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.buy_inputs_f_products_vertical, container, false);
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
-
         setHasOptionsMenu(true);
         // Get CategoryID from bundle arguments
         categoryID = getArguments().getInt("CategoryID");
@@ -494,9 +491,7 @@ public class Category_Products extends Fragment {
         getAllProducts.setFilters(postFilterData.getFilters());
         getAllProducts.setCurrencyCode(ConstantValues.CURRENCY_CODE);
 
-        String data = new Gson().toJson(getAllProducts);
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
         Call<ProductData> call = BuyInputsAPIClient.getInstance()
                 .getAllProducts
                         (access_token,

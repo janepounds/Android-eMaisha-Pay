@@ -51,14 +51,11 @@ import retrofit2.Callback;
 public class My_Orders extends Fragment {
 
     String customerID;
-
-    FrameLayout banner_adView;
     DialogLoader dialogLoader;
     OrdersListAdapter ordersListAdapter;
     private Context context;
     Boolean enable_back=true;
     BuyInputsOrdersBinding binding;
-    FragmentManager fragmentManager;
     List<OrderDetails> ordersList = new ArrayList<>();
 
     public  My_Orders(Boolean enable_back){
@@ -259,15 +256,8 @@ public class My_Orders extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar
-//        MenuItem languageItem = menu.findItem(R.id.toolbar_ic_language);
-//        MenuItem currencyItem = menu.findItem(R.id.toolbar_ic_currency);
-//        MenuItem profileItem = menu.findItem(R.id.toolbar_edit_profile);
-//        MenuItem searchItem = menu.findItem(R.id.toolbar_ic_search);
         MenuItem cartItem = menu.findItem(R.id.ic_cart_item);
-//        profileItem.setVisible(false);
-//        languageItem.setVisible(false);
-//        currencyItem.setVisible(false);
-//        searchItem.setVisible(false);
+
         cartItem.setVisible(false);
     }
 

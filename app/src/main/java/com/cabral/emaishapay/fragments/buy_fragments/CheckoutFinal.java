@@ -38,6 +38,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
+import com.cabral.emaishapay.databinding.BuyInputsCheckoutBinding;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
@@ -58,6 +59,7 @@ import com.cabral.emaishapay.utils.Utilities;
 import com.cabral.emaishapay.utils.ValidateInputs;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.widget.NestedScrollView;
@@ -115,16 +117,8 @@ public class CheckoutFinal extends Fragment {
     String selectedPaymentMethod;
     String paymentNonceToken = "";
     double checkoutSubtotal, checkoutTax, packingCharges, checkoutShipping, checkoutShippingCost, checkoutDiscount, checkoutTotal = 0;
-
-    RecyclerView checkout_items_recycler;
-    RecyclerView checkout_coupons_recycler;
-    Button checkout_coupon_btn, checkout_order_btn, checkout_cancel_btn;
-    ImageButton edit_shipping_Btn;
-    TextView checkout_subtotal, checkout_tax, checkout_shipping, checkout_discount, checkout_total,
-            checkout_packing_charges, demo_coupons_text;
-    TextView shipping_name, shipping_street, shipping_address, payment_method;
     EditText payment_name, payment_email, payment_phone, checkout_coupon_code, checkout_comments, checkout_card_number, checkout_card_cvv, checkout_card_expiry;
-
+    TextView demo_coupons_text;
 
     List<CouponsInfo> couponsList;
     List<CartProduct> checkoutItemsList;
@@ -145,7 +139,7 @@ public class CheckoutFinal extends Fragment {
     private String PAYMENT_CURRENCY = "USD";
     private Context context;
 
-    LinearLayout shipping_address_cardview;
+
     List<PostProducts> orderProductList;
     //Add order products name to String array
     List<String> productsName;
@@ -155,20 +149,12 @@ public class CheckoutFinal extends Fragment {
     My_Cart my_cart;
     PostOrder PaymentOrderDetails;
     DialogLoader dialogLoader;
+    BuyInputsCheckoutBinding binding;
 
 
-    public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId, String merchantWalletId) {
-        this.my_cart = my_cart;
-        this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
-        this.shop_id = merchantId;
-        this.merchant_wallet_id = merchantWalletId;
-    }
-
-    public CheckoutFinal(My_Cart my_cart, List<CartProduct> checkoutItemsList, String merchantId) {
-        this.my_cart = my_cart;
-        this.checkoutItemsList = checkoutItemsList;
-        this.shop_id = merchantId;
-    }
+   public CheckoutFinal(){
+       //no-args constructor
+   }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -179,13 +165,17 @@ public class CheckoutFinal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.buy_inputs_checkout, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_checkout, container, false);
 
         // Set the Title of Toolbarshipping_address
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.checkout));
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
+        if(getArguments()!=null){
+            my_cart= (My_Cart) getArguments().getSerializable("my_cart");
+            user_cart_BuyInputs_db= (User_Cart_BuyInputsDB) getArguments().getSerializable("db");
+            shop_id = getArguments().getString("merchant_id");
+            merchant_wallet_id = getArguments().getString("wallet_id");
+        }
 
         // Get selectedShippingMethod, billingAddress and shippingAddress from ApplicationContext
         tax = ((EmaishaPayApp) getContext().getApplicationContext()).getTax();
@@ -196,30 +186,11 @@ public class CheckoutFinal extends Fragment {
         // Get userInfo from Local Databases User_Info_DB
         userInfo = user_info_BuyInputs_db.getUserData(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext()));
 
-        // Binding Layout Views
-        shipping_address_cardview = rootView.findViewById(R.id.shipping_address_cardview);
-        checkout_order_btn = rootView.findViewById(R.id.checkout_order_btn);
-        checkout_cancel_btn = rootView.findViewById(R.id.checkout_cancel_btn);
-        checkout_coupon_btn = rootView.findViewById(R.id.checkout_coupon_btn);
-        edit_shipping_Btn = rootView.findViewById(R.id.checkout_edit_shipping);
-        payment_method = rootView.findViewById(R.id.payment_method);
-        checkout_subtotal = rootView.findViewById(R.id.checkout_subtotal);
-        checkout_tax = rootView.findViewById(R.id.checkout_tax);
-        checkout_packing_charges = rootView.findViewById(R.id.checkout_packing_charges);
-        checkout_shipping = rootView.findViewById(R.id.checkout_shipping_charge);
-        checkout_discount = rootView.findViewById(R.id.checkout_discount);
-        checkout_total = rootView.findViewById(R.id.checkout_total);
-        shipping_name = rootView.findViewById(R.id.shipping_name);
-        shipping_street = rootView.findViewById(R.id.shipping_street);
-        shipping_address = rootView.findViewById(R.id.shipping_address);
 
-        checkout_items_recycler = rootView.findViewById(R.id.checkout_items_recycler);
-        checkout_coupons_recycler = rootView.findViewById(R.id.checkout_coupons_recycler);
-
-        Log.d(TAG, "onCreateView: Payment Method = " + payment_method.getText().toString());
+        Log.d(TAG, "onCreateView: Payment Method = " + binding.paymentMethod.getText().toString());
 
         PAYMENT_CURRENCY = ConstantValues.CURRENCY_CODE;
-        checkout_items_recycler.setNestedScrollingEnabled(false);
+        binding.checkoutItemsRecycler.setNestedScrollingEnabled(false);
 
         dialogLoader = new DialogLoader(getContext());
 
@@ -229,8 +200,6 @@ public class CheckoutFinal extends Fragment {
         checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
 
-         //Log.w(TAG, "onCreateView: " + checkoutItemsList.size());
-        //ProductsName Array intialize
         productsName = new ArrayList<>();
 
         // Add orders to orderProductList
@@ -240,24 +209,21 @@ public class CheckoutFinal extends Fragment {
             productsName.add(orderProductList.get(i).getProductsName());
         }
 
-        // Request Payment Methods
-//        RequestPaymentMethods();
-
 
         // Initialize the CheckoutItemsAdapter for RecyclerView
         checkoutItemsAdapter = new CheckoutItemsAdapter(context, checkoutItemsList);
 
         // Set the Adapter, LayoutManager and ItemDecoration to the RecyclerView
-        checkout_items_recycler.setAdapter(checkoutItemsAdapter);
-        checkout_items_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        checkout_items_recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        binding.checkoutItemsRecycler.setAdapter(checkoutItemsAdapter);
+        binding.checkoutItemsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.checkoutItemsRecycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         // Initialize the CouponsAdapter for RecyclerView
         couponsAdapter = new CouponsAdapter(getContext(), couponsList, true, CheckoutFinal.this);
 
         // Set the Adapter, LayoutManager and ItemDecoration to the RecyclerView
-        checkout_coupons_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        checkout_coupons_recycler.setAdapter(couponsAdapter);
+        binding.checkoutCouponsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.checkoutCouponsRecycler.setAdapter(couponsAdapter);
 
         couponsAdapter.notifyDataSetChanged();
 
@@ -268,26 +234,26 @@ public class CheckoutFinal extends Fragment {
             packingCharges=0;
 
         if( (shippingAddress.getLastname()==null || shippingAddress.getLastname().isEmpty() )  ){
-            shipping_name.setText( shippingAddress.getFirstname());
+            binding.shippingName.setText( shippingAddress.getFirstname());
         }else if( (shippingAddress.getFirstname()==null || shippingAddress.getFirstname().equalsIgnoreCase("null") )  ){
-            shipping_name.setText( shippingAddress.getLastname());
+            binding.shippingName.setText( shippingAddress.getLastname());
         }else {
-            shipping_name.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
+            binding.shippingName.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
         }
 
         if( (shippingAddress.getCity()==null || shippingAddress.getCity().equalsIgnoreCase("null") )  ){
-            shipping_address.setText( shippingAddress.getCountryName());
+            binding.shippingAddress.setText( shippingAddress.getCountryName());
         }else{
-            shipping_address.setText( shippingAddress.getCity()+", "+shippingAddress.getCountryName());
+            binding.shippingAddress.setText( shippingAddress.getCity()+", "+shippingAddress.getCountryName());
         }
 
-        shipping_street.setText(shippingAddress.getStreet());
+        binding.shippingStreet.setText(shippingAddress.getStreet());
 
         // Set CheckoutFinal Total
         setCheckoutTotal();
 
-        payment_method.setOnClickListener(v -> {
-            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, checkout_shipping.getText().toString(), checkoutTax, checkoutShipping,
+        binding.paymentMethod.setOnClickListener(v -> {
+            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
                     checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -296,17 +262,15 @@ public class CheckoutFinal extends Fragment {
         });
 
 
-        edit_shipping_Btn.setOnClickListener(view -> {
+        binding.checkoutEditShipping.setOnClickListener(view -> {
 
             // Navigate to Shipping_Address Fragment to Edit ShippingAddress
-            Fragment fragment = new Shipping_Address(my_cart, null);
             Bundle args = new Bundle();
             args.putBoolean("isUpdate", true);
-            fragment.setArguments(args);
+            args.putSerializable("my_cart", my_cart);
+            args.putSerializable("my_address", null);
+            WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_shippingAddress,args);
 
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
-                    .addToBackStack(null).commit();
         });
 
         if (!ConstantValues.IS_CLIENT_ACTIVE) {
@@ -316,35 +280,28 @@ public class CheckoutFinal extends Fragment {
         }
 
         // Handle the Click event of checkout_coupon_btn Button
-        checkout_coupon_btn.setOnClickListener(view -> {
-            if (!TextUtils.isEmpty(checkout_coupon_code.getText().toString())) {
-                GetCouponInfo(checkout_coupon_code.getText().toString());
+        binding.checkoutCouponBtn.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(binding.checkoutCouponCode.getText().toString())) {
+                GetCouponInfo(binding.checkoutCouponCode.getText().toString());
                 dialogLoader.showProgressDialog();
             }
         });
 
         // Handle the Click event of checkout_cancel_btn Button
-        checkout_cancel_btn.setOnClickListener(new View.OnClickListener() {
+        binding.checkoutCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                //got to home fragment
+                WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_walletBuyFragment);
 
-                while(fragmentManager.getBackStackEntryCount()>0)//pop all fragements in back stack till there none
-                    fragmentManager.popBackStackImmediate();
-
-                Fragment fragment =new WalletBuyFragment(getContext(),fragmentManager);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment2, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .addToBackStack(null).commit();
             }
         });
 
         // Handle the Click event of checkout_order_btn Button
-        checkout_order_btn.setOnClickListener(view -> {
+        binding.checkoutOrderBtn.setOnClickListener(view -> {
 
-            if (payment_method.getText().toString().equals("Payment Method")) {
-                payment_method.setError("Required");
+            if (binding.paymentMethod.getText().toString().equals("Payment Method")) {
+                binding.paymentMethod.setError("Required");
             } else {
                 if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Mobile Money") ){
                     //check whether payment is made
@@ -361,7 +318,7 @@ public class CheckoutFinal extends Fragment {
 
         });
 
-        return rootView;
+        return binding.getRoot();
     }
 
     public static String hashCal(String str) {
@@ -411,12 +368,9 @@ public class CheckoutFinal extends Fragment {
         Log.d(TAG, "onResume: Is Payment made "+PaymentOrderDetails.getPaymentMade());
         if (PaymentOrderDetails.getPaymentMethod() != null) {
 
-            payment_method.setText(PaymentOrderDetails.getPaymentMethod());
+            binding.paymentMethod.setText(PaymentOrderDetails.getPaymentMethod());
         }
         WalletBuySellActivity.bottomNavigationView.setVisibility(View.GONE);
-//        // Disable the bottom navigation from showing when you come back from payment methods fragment
-//        WalletHomeActivity dashboardActivity = new WalletHomeActivity();
-//        dashboardActivity.setupTitle();
     }
 
     //*********** Receives the result from a previous call of startActivityForResult(Intent, int) ********//
@@ -438,9 +392,7 @@ public class CheckoutFinal extends Fragment {
         } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.i("VC_Shop", "[paypal] > The user canceled.");
         }
-//        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-//            Log.i("VC_Shop", "[paypal] > An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
-//        }
+
     }
 
     //*********** Validate Payment method Details according to the selectedPaymentMethod ********//
@@ -580,12 +532,12 @@ public class CheckoutFinal extends Fragment {
 
         // Set CheckoutFinal Details
 //        checkout_tax.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutTax));
-        checkout_shipping.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutShippingCost));
-        checkout_discount.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutDiscount));
+        binding.checkoutShippingCharge.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutShippingCost));
+        binding.checkoutDiscount.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutDiscount));
 
-        checkout_packing_charges.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(packingCharges));
-        checkout_subtotal.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutSubtotal));
-        checkout_total.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutTotal));
+        binding.checkoutPackingCharges.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(packingCharges));
+        binding.checkoutSubtotal.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutSubtotal));
+        binding.checkoutTotal.setText(ConstantValues.CURRENCY_SYMBOL + new DecimalFormat("#0.00").format(checkoutTotal));
 
     }
 

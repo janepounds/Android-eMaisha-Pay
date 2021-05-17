@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,7 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.MerchantsListAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.BuyInputsNearbymerchantsBinding;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.merchants_model.MerchantData;
@@ -47,31 +49,21 @@ import retrofit2.Callback;
 
 public class Nearby_Merchants extends Fragment {
 
-    Toolbar toolbar;
     Boolean enable_back=true;
-    View rootView;
-
     DialogLoader dialogLoader;
     User_Cart_BuyInputsDB user_cart_BuyInputs_db;
-    RecyclerView merchants_recycler;
-
     List<CartProduct> checkoutItemsList;
 
     AddressDetails shippingAddress;
 
     MerchantsListAdapter merchantsListAdapter;
-
     List<MerchantDetails> merchantList = new ArrayList<>();
-    TextView no_nearby_merchant;
-    
+    BuyInputsNearbymerchantsBinding binding;
     // To keep track of Checked Radio Button
     private RadioButton lastChecked_RB = null;
     My_Cart my_cart;
     MerchantData merchantData;
     public Nearby_Merchants(Boolean enable_back){ this.enable_back = enable_back; }
-    public Nearby_Merchants(My_Cart my_cart) {
-        this.my_cart = my_cart;
-    }
 
     public Nearby_Merchants() {
     }
@@ -80,13 +72,11 @@ public class Nearby_Merchants extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.buy_inputs_nearbymerchants, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_nearbymerchants, container, false);
 
-        toolbar = rootView.findViewById(R.id.toolbar_nearby_merchants);
+
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         setHasOptionsMenu(true);
-        merchants_recycler=rootView.findViewById(R.id.merchants_list);
-        no_nearby_merchant = rootView.findViewById(R.id.no_nearby_merchant);
 
         dialogLoader = new DialogLoader(getContext());
         user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
@@ -94,7 +84,9 @@ public class Nearby_Merchants extends Fragment {
         checkoutItemsList = user_cart_BuyInputs_db.getCartItems();
 
         shippingAddress=((EmaishaPayApp) getContext().getApplicationContext()).getShippingAddress();
-
+        if(getArguments()!=null){
+            my_cart = (My_Cart) getArguments().getSerializable("my_cart");
+        }
 
         if(shippingAddress!=null && this.merchantData==null )
             RequestMyNearbyMerchants(shippingAddress,checkoutItemsList);
@@ -103,12 +95,12 @@ public class Nearby_Merchants extends Fragment {
 
 
         // Set the Title of Toolbar
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarNearbyMerchants);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby_merchants));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
 
-        return rootView;
+        return binding.getRoot();
     }
 
 
@@ -127,11 +119,6 @@ public class Nearby_Merchants extends Fragment {
         this.merchantList=null;
         super.onPause();
     }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        ((DashboardActivity)getActivity()).clearBackStackInclusive( getString(R.string.select_merchants_fragment)); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
-//    }
 
 
     //*********** Request User's Nearby Merchants from the Server ********//
@@ -157,8 +144,6 @@ public class Nearby_Merchants extends Fragment {
             @Override
             public void onResponse(Call<MerchantData> call, retrofit2.Response<MerchantData> response) {
 
-                String str = new Gson().toJson(response.body());
-
                  //Log.w("Response",str+"");
                 // Check if the Response is successful
                 if (response.isSuccessful()) {
@@ -170,22 +155,22 @@ public class Nearby_Merchants extends Fragment {
                         }
                         else {
 
-                            no_nearby_merchant.setVisibility(View.VISIBLE);
-                            Snackbar.make(rootView, "Couldn't find Nearby Merchants!", Snackbar.LENGTH_LONG).show();
+                            binding.noNearbyMerchant.setVisibility(View.VISIBLE);
+                            Snackbar.make(getView(), "Couldn't find Nearby Merchants!", Snackbar.LENGTH_LONG).show();
                         }
 
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         //emptyRecord.setVisibility(View.VISIBLE);
-                        no_nearby_merchant.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        binding.noNearbyMerchant.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     }
                     else {
                         // Unable to get Success status
                         //emptyRecord.setVisibility(View.VISIBLE);
-                        no_nearby_merchant.setVisibility(View.VISIBLE);
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        binding.noNearbyMerchant.setVisibility(View.VISIBLE);
+                        Snackbar.make(getView(), getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 else {
@@ -220,15 +205,15 @@ public class Nearby_Merchants extends Fragment {
         }
 
         if(this.merchantList.size()>0){
-            no_nearby_merchant.setVisibility(View.GONE);
+            binding.noNearbyMerchant.setVisibility(View.GONE);
         }
 
         // Initialize the merchantsListAdapter for RecyclerView
         this.merchantsListAdapter = new MerchantsListAdapter(getContext(), merchantList,this.my_cart, getFragmentManager());
         // Set the Adapter and LayoutManager to the RecyclerView
-        this.merchants_recycler.setAdapter(merchantsListAdapter);
+        this.binding.merchantsList.setAdapter(merchantsListAdapter);
 
-        this.merchants_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        this.binding.merchantsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         this.merchantsListAdapter.notifyDataSetChanged();
     }

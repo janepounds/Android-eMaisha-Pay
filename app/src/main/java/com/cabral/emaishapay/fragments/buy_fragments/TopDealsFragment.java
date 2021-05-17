@@ -32,7 +32,6 @@ import retrofit2.Callback;
 
 public class TopDealsFragment extends Fragment {
     View rootView;
-    List<ProductDetails> allProductList;
     List<ProductDetails> topDealsList;
     private RecyclerView recyclerView;
     private Context context;

@@ -7,6 +7,14 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+    signingConfigs {
+        upload_keystore {
+            storeFile file('C:\\Users\\hp\\Documents\\upload_keystore.jks')
+            keyAlias 'TETRAGRAMATON'
+            storePassword '#TETRAGRAMATON1900e'
+            keyPassword '#STAR@DAVID1492'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -28,6 +36,7 @@ android {
         }
         resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resConfigs ''
 
 
 
@@ -43,6 +52,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.upload_keystore
         }
     }
 
