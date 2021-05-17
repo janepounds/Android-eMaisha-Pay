@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.NavInflater;
@@ -11,16 +12,18 @@ import android.view.View;
 import android.view.Window;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.databinding.ActivityAuthBinding;
 
 public class AuthActivity extends AppCompatActivity {
     public static NavController navController;
     public static NavHostFragment navHostFragment;
+    ActivityAuthBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding= DataBindingUtil.setContentView(AuthActivity.this, R.layout.activity_auth);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_auth);
 
         View decorView = getWindow().getDecorView();
         // Hide the status bar.
@@ -46,7 +49,6 @@ public class AuthActivity extends AppCompatActivity {
 
     public static NavController getNavController() {
         if(navController==null){
-
             navController = navHostFragment.getNavController();
         }
 
