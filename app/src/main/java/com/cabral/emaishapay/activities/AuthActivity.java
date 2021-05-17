@@ -22,8 +22,8 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(AuthActivity.this, R.layout.activity_auth);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        binding= DataBindingUtil.setContentView(AuthActivity.this, R.layout.activity_auth);
 
         View decorView = getWindow().getDecorView();
         // Hide the status bar.
