@@ -46,11 +46,9 @@ public class DepositMoneyMobile extends DialogFragment {
     LinearLayout layoutAddMoney;
     Button addMoneyImg;
     TextView addMoneyTxt, phoneNumberTxt, errorMsgTxt,title;
-    TextView balanceTextView,dialog_title;;
+    TextView balanceTextView;
     double balance;
-    private String txRef,role,phoneNumber;
-    private Button submit;
-    private EditText confirm_pin;
+    private String role,phoneNumber;
 
     private DialogLoader dialogLoader;;
     Context activity;
@@ -101,7 +99,7 @@ public class DepositMoneyMobile extends DialogFragment {
         title.setText("Mobile Money");
         addMoneyImg.setText("Top Up");
         balanceTextView.setText(NumberFormat.getInstance().format(balance));
-        this.txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.activity) + (new Date().getTime());
+
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

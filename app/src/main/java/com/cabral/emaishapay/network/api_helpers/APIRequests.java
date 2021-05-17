@@ -13,10 +13,6 @@ import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.TransactionStatusResponse;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
-import com.cabral.emaishapay.models.address_model.AddressData;
-import com.cabral.emaishapay.models.address_model.Countries;
-import com.cabral.emaishapay.models.address_model.Regions;
-import com.cabral.emaishapay.models.address_model.Zones;
 import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.BalanceResponse;
@@ -26,16 +22,13 @@ import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.models.RequestLoanresponse;
 import com.cabral.emaishapay.models.TokenResponse;
 import com.cabral.emaishapay.models.WalletAuthentication;
-import com.cabral.emaishapay.models.WalletPurchaseConfirmResponse;
 import com.cabral.emaishapay.models.WalletPurchaseResponse;
 import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
-import com.cabral.emaishapay.models.external_transfer_model.SettlementResponse;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.WalletTransaction;
 
 import org.json.JSONObject;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -53,7 +46,6 @@ import retrofit2.http.Query;
  **/
 
 public interface APIRequests {
-    //******************** News Data ********************//
 
     //Update User
     @POST("update/{id}/{oldPassword}")
@@ -172,24 +164,6 @@ public interface APIRequests {
                                                     @Field("action_id")String action_id
     );
 
-    // //initiate transfer settlement
-    @FormUrlEncoded
-    @POST("wallet/transfer/settlement")
-    Call<SettlementResponse> recordSettlementTransfer(@Header("Authorization") String token,
-                                                      @Field("amount") Double amount,
-                                                      @Field("thirdParty") String thirdParty,
-                                                      @Field("third_party_fee") Double third_party_fee,
-                                                      @Field("destination_type") String destination_type,
-                                                      @Field("destination_account_no") String destination_account_no,
-                                                      @Field("beneficiary_name") String beneficiary_name,
-                                                      @Field("destination_name") String destination_name,
-                                                      @Field("reference") String reference,
-                                                      @Field("third_party_status") String third_party_status,
-                                                      @Field("third_party_id") String third_party_id,
-                                                      @Field("request_id") String request_id,
-                                                      @Field("category") String category,
-                                                      @Field("action_id")String action_id
-                                                      );
 
     // //wallet transaction list
     @FormUrlEncoded
@@ -198,12 +172,6 @@ public interface APIRequests {
                                                     @Field("request_id") String request_id,
                                                     @Field("category") String category,
                                                     @Field("action_id")String action_id);
-
-    // //wallet transaction list2
-    @FormUrlEncoded
-    @POST("wallet/transactions/list")
-    Call<WalletTransactionResponse> transactionList2(@Header("Authorization") String token, @Field("limit") int limit, @Field("request_id") String request_id, @Field("category") String category,
-                                                     @Field("action_id")String action_id);
 
     // //make transaction
     @FormUrlEncoded
@@ -217,16 +185,6 @@ public interface APIRequests {
                                                  @Field("category") String category,
                                                  @Field("action_id")String action_id,
                                                  @Field("service_code") String service_code
-    );
-
-    // /confirm payment
-    @FormUrlEncoded
-    @POST("wallet/payments/comfirm_paymerchant")
-    Call<WalletPurchaseConfirmResponse> confirmPayment(
-            @Field("merchantId") int merchantId,
-            @Field("amount") double amount,
-            @Field("coupon") String coupon,
-            @Field("request_id") String request_id
     );
 
     // //get merchant information
@@ -400,36 +358,7 @@ public interface APIRequests {
             @Field("category") String category,
             @Field("action_id")String action_id);
 
-    @FormUrlEncoded
-    @POST("updatecustomerinfo")
-    Call<UserData> updateCustomerInfo(@Field("customers_id") String customers_id,
-                                      @Field("customers_firstname") String customers_firstname,
-                                      @Field("customers_lastname") String customers_lastname,
-                                      @Field("customers_gender") String customers_gender,
-                                      @Field("customers_telephone") String customers_telephone,
-                                      @Field("customers_dob") String customers_dob,
-                                      @Field("image_id") String image_id,
-                                      @Field("request_id") String request_id);
 
-    //******************** Address Data ********************//
-    @POST("getcountries")
-    Call<Countries> getCountries();
-
-    @FormUrlEncoded
-    @POST("getzones")
-    Call<Zones> getZones(@Field("zone_country_id") String zone_country_id);
-
-    @FormUrlEncoded
-    @POST("getalladdress")
-    Call<AddressData> getAllAddress(@Field("customers_id") String customers_id);
-
-    @FormUrlEncoded
-    @POST("getregions")
-    Call<Regions> getAllRegions(@Field("latest_id") int latest_id);
-
-
-
-    // /store personal info
     @FormUrlEncoded
     @POST("store_personal_info")
     Call<AccountResponse> storePersonalInfo(
