@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_walletAddressesFragment_to_shippingAddress"
             app:destination="@id/shippingAddress" />
+        <action
+            android:id="@+id/action_walletAddressesFragment_to_nearbyMerchants"
+            app:destination="@id/nearbyMerchants" />
     </fragment>
 
     <fragment
@@ -73,7 +76,11 @@
         android:id="@+id/shippingAddress"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address"
         android:label="ShippingAdress"
-        tools:layout="@layout/buy_inputs_address"/>
+        tools:layout="@layout/buy_inputs_address">
+        <action
+            android:id="@+id/action_shippingAddress_to_nearbyMerchants"
+            app:destination="@id/nearbyMerchants" />
+    </fragment>
 
     <fragment
         android:id="@+id/productDescription"
@@ -106,5 +113,15 @@
         <action
             android:id="@+id/action_myCart_to_walletAddressesFragment"
             app:destination="@id/walletAddressesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nearbyMerchants"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Nearby_Merchants"
+        android:label="NearbyMerchants"
+        tools:layout="@layout/buy_inputs_nearbymerchants">
+        <action
+            android:id="@+id/action_nearbyMerchants_to_checkOutFinal"
+            app:destination="@id/checkOutFinal" />
     </fragment>
 </navigation>

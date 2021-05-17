@@ -577,10 +577,10 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                         if( my_cart!=null){
 
                             // Navigate to Shipping_Methods Fragment
-                            Fragment fragment = new Nearby_Merchants(my_cart);
-                            FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().add(R.id.nav_host_fragment2, fragment)
-                                    .addToBackStack(null).commit();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("my_cart",my_cart);
+                            WalletBuySellActivity.navController.navigate(R.id.action_shippingAddress_to_nearbyMerchants,bundle);
+
                         }else
                             parentFrag.RequestAllAddresses();
                     }

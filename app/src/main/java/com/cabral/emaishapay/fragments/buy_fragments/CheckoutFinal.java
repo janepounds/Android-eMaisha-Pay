@@ -152,18 +152,9 @@ public class CheckoutFinal extends Fragment {
     BuyInputsCheckoutBinding binding;
 
 
-    public CheckoutFinal(My_Cart my_cart, User_Cart_BuyInputsDB user_cart_BuyInputs_db, String merchantId, String merchantWalletId) {
-        this.my_cart = my_cart;
-        this.user_cart_BuyInputs_db = user_cart_BuyInputs_db;
-        this.shop_id = merchantId;
-        this.merchant_wallet_id = merchantWalletId;
-    }
-
-    public CheckoutFinal(My_Cart my_cart, List<CartProduct> checkoutItemsList, String merchantId) {
-        this.my_cart = my_cart;
-        this.checkoutItemsList = checkoutItemsList;
-        this.shop_id = merchantId;
-    }
+   public CheckoutFinal(){
+       //no-args constructor
+   }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -179,8 +170,12 @@ public class CheckoutFinal extends Fragment {
         // Set the Title of Toolbarshipping_address
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.checkout));
 
-        NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
-        //noInternetDialog.show();
+        if(getArguments()!=null){
+            my_cart= (My_Cart) getArguments().getSerializable("my_cart");
+            user_cart_BuyInputs_db= (User_Cart_BuyInputsDB) getArguments().getSerializable("db");
+            shop_id = getArguments().getString("merchant_id");
+            merchant_wallet_id = getArguments().getString("wallet_id");
+        }
 
         // Get selectedShippingMethod, billingAddress and shippingAddress from ApplicationContext
         tax = ((EmaishaPayApp) getContext().getApplicationContext()).getTax();
