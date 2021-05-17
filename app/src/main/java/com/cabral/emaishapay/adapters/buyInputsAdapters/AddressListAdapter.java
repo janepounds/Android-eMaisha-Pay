@@ -134,13 +134,19 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
             // Navigate to Add_Address Fragment with arguments to Edit Address
 
             ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
-            Fragment fragment = new Shipping_Address(null, parentFrag);
-            fragment.setArguments(addressInfo);
-            FragmentManager fragmentManager = ((WalletBuySellActivity)context).getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .add(R.id.nav_host_fragment2, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .addToBackStack(null).commit();
+            //navigate to shipping address
+            Bundle args = new Bundle();
+            args.putBoolean("isUpdate", false);
+            args.putSerializable("my_cart", null);
+            args.putSerializable("my_address",parentFrag);
+            WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_shippingAddress, args);
+//            Fragment fragment = new Shipping_Address(null, parentFrag);
+//            fragment.setArguments(addressInfo);
+//            FragmentManager fragmentManager = ((WalletBuySellActivity)context).getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .add(R.id.nav_host_fragment2, fragment)
+//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                    .addToBackStack(null).commit();
         });
     }
 

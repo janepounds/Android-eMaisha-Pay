@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -49,6 +50,7 @@ import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
+import com.cabral.emaishapay.databinding.BuyInputsProductDescriptionBinding;
 import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Attribute;
@@ -94,15 +96,8 @@ public class Product_Description extends Fragment  {
     double productFinalPrice;
 
     ImageView sliderImageView, increaseQty, reduceQty;
-    SliderLayout sliderLayout;
-    PagerIndicator pagerIndicator;
-    ImageButton product_share_btn;
-    ToggleButton product_like_btn;
-    LinearLayout product_attributes;
-    RecyclerView attribute_recycler;
+
     WebView product_description_webView;
-    TextView title, category, price_new, price_old, product_stock, product_likes, product_tag_new, product_tag_discount, product_ratings_count;
-    EditText pdtQty;
     AppCompatButton addToCart,buy_now;
 
     DialogLoader dialogLoader;
@@ -125,26 +120,17 @@ public class Product_Description extends Fragment  {
 
     private Boolean isFlash,isChecked;
     private long start, server;
+    BuyInputsProductDescriptionBinding binding;
 
     List<CartProduct> cartItemsList = new ArrayList<>();
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
     List<String> stocks = new ArrayList<>();
     ArrayList<Boolean>booleanArrayList= new ArrayList<>();
 
-    public Product_Description(ImageView checkedImageView, Boolean isFlash, long start, long server) {
-        this.checkImageView = checkedImageView;
-        this.isFlash = isFlash;
-        this.start = start;
-        this.server = server;
-    }
 
     public Product_Description() {
-        this.checkImageView = null;
+        //no-args constructor
     }
-
-//    public Product_Description(String selcted_measure) {
-//        this.selected_measure = selcted_measure;
-//    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -156,7 +142,7 @@ public class Product_Description extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.buy_inputs_product_description, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_product_description, container, false);
         setHasOptionsMenu(true);
         toolbar = rootView.findViewById(R.id.toolbar_product_home);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -173,9 +159,7 @@ public class Product_Description extends Fragment  {
         // Get the CustomerID from SharedPreferences
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
-        product_rating_bar = rootView.findViewById(R.id.product_rating_bar);
-
-        product_rating_bar.setOnClickListener((View.OnClickListener) v -> {
+        binding.productRatingBar.setOnClickListener((View.OnClickListener) v -> {
             Fragment fragment;
             if(productDetails.getRatingDataLists().size()>0){
                 fragment = new ProductRatingReviewListFragment();
@@ -190,41 +174,27 @@ public class Product_Description extends Fragment  {
         });
 
 
+        if(getArguments()!=null){
+            isFlash = getArguments().getBoolean("isFlash");
+            start = getArguments().getLong("start");
+            server = getArguments().getLong("server");
 
-        title = rootView.findViewById(R.id.product_title);
-        category = rootView.findViewById(R.id.product_category);
-        price_old = rootView.findViewById(R.id.product_price_old);
-        price_new = rootView.findViewById(R.id.product_price_new);
-        product_stock = rootView.findViewById(R.id.product_stock);
-        product_likes = rootView.findViewById(R.id.product_total_likes);
-        product_tag_new = rootView.findViewById(R.id.product_tag_new);
-        product_tag_discount = rootView.findViewById(R.id.product_tag_discount);
-        product_description_webView = rootView.findViewById(R.id.product_description_webView);
-        sliderLayout = rootView.findViewById(R.id.product_cover_slider);
-       // pagerIndicator = rootView.findViewById(R.id.product_slider_indicator);
-        product_like_btn = rootView.findViewById(R.id.product_like_btn);
-        product_share_btn = rootView.findViewById(R.id.product_share_btn);
-        product_attributes = rootView.findViewById(R.id.product_attributes);
-        attribute_recycler = rootView.findViewById(R.id.product_attributes_recycler);
-        buy_now = rootView.findViewById(R.id.buy_now);
+        }
 
-        product_ratings_count = rootView.findViewById(R.id.product_ratings_count);
 
-        price_old.setVisibility(View.GONE);
-        product_tag_new.setVisibility(View.GONE);
-        product_tag_discount.setVisibility(View.GONE);
-        product_attributes.setVisibility(View.VISIBLE);
-        increaseQty = rootView.findViewById(R.id.increase_quantity);
-        reduceQty = rootView.findViewById(R.id.reduce_quantity);
-        pdtQty = rootView.findViewById(R.id.product_quantity);
-        addToCart = rootView.findViewById(R.id.product_cart_btn);
-        recyclerView = rootView.findViewById(R.id.measure_recyclerview);
+
+
+        binding.productPriceOld.setVisibility(View.GONE);
+        binding.productTagNew.setVisibility(View.GONE);
+        binding.productTagDiscount.setVisibility(View.GONE);
+        binding.productAttributes.setVisibility(View.VISIBLE);
+       ;
 //        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
 
-        attribute_recycler.setNestedScrollingEnabled(false);
+        binding.productAttributesRecycler.setNestedScrollingEnabled(false);
 
         // Set Paint flag on price_old TextView that applies a strike-through decoration to price_old Text
-        price_old.setPaintFlags(price_old.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        binding.productPriceOld.setPaintFlags(binding.productPriceOld.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
         dialogLoader = new DialogLoader(getContext());
@@ -252,32 +222,32 @@ public class Product_Description extends Fragment  {
         // Handle Click event of product_reviews_ratings Button
 //        product_reviews_ratings.setOnClickListener(v -> showRatingsAndReviewsOfProduct());
 
-        increaseQty.setOnClickListener(view -> {
+        binding.increaseQuantity.setOnClickListener(view -> {
             // Get the text on the text view and change to an Integer
-            int num = Integer.parseInt(pdtQty.getText().toString());
+            int num = Integer.parseInt(binding.productQuantity.getText().toString());
 
             // increment it by one
             num += 1;
 
             // set back the incremented value
-            pdtQty.setText(String.valueOf(num));
+            binding.productQuantity.setText(String.valueOf(num));
         });
 
         //implement reduce qty
-        reduceQty.setOnClickListener(view -> {
+        binding.reduceQuantity.setOnClickListener(view -> {
             // Get the text on the text view and change to an Integer
-            int num = Integer.parseInt(pdtQty.getText().toString());
+            int num = Integer.parseInt(binding.productQuantity.getText().toString());
 
             if (num > 1) {
                 // Decrement it by one
                 num -= 1;
 
                 // set back the decremented value
-                pdtQty.setText(String.valueOf(num));
+                binding.productQuantity.setText(String.valueOf(num));
             }
         });
 
-        addToCart.setOnClickListener(view -> {
+        binding.productCartBtn.setOnClickListener(view -> {
             if (!My_Cart.checkCartHasProductAndMeasure(productDetails.getProductsId())) {
                 if (isFlash) {
                     if (start > server) {
@@ -310,7 +280,7 @@ public class Product_Description extends Fragment  {
         });
 
 
-        buy_now.setOnClickListener(new View.OnClickListener() {
+        binding.buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!My_Cart.checkCartHasProductAndMeasure(productDetails.getProductsId())) {
@@ -345,7 +315,7 @@ public class Product_Description extends Fragment  {
             }
         });
 
-        return rootView;
+        return binding.getRoot();
     }
     //********** Adds the Product to User's Cart *********//
 
@@ -354,13 +324,7 @@ public class Product_Description extends Fragment  {
 
         Log.d(TAG, "onCreateView: Product Type = " + productDetails.getProductsType());
         // Navigate to My_Cart Fragment
-        Fragment fragment = new My_Cart();
-        FragmentManager fragmentManager = getParentFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.nav_host_fragment2, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .addToBackStack(getString(R.string.actionHome)).commit();
-
+        WalletBuySellActivity.navController.navigate(R.id.action_productDescription_to_myCart);
 
     }
 
@@ -386,7 +350,7 @@ public class Product_Description extends Fragment  {
             product.setIsSaleProduct("0");
             productBasePrice = Double.parseDouble(product.getProductsPrice());
         }
-        products_price = price_new.getText().toString().split("\\s+");
+        products_price = binding.productPriceNew.getText().toString().split("\\s+");
         // Get Default Attributes from AttributesList
         for (int i = 0; i < product.getAttributes().size(); i++) {
 
@@ -427,7 +391,7 @@ public class Product_Description extends Fragment  {
 
 
         // Set Product's Price and Quantity
-        product.setCustomersBasketQuantity(Integer.parseInt(pdtQty.getText().toString()));
+        product.setCustomersBasketQuantity(Integer.parseInt(binding.productQuantity.getText().toString()));
         product.setProductsPrice(String.valueOf(products_price[1]));
         product.setAttributesPrice(String.valueOf(attributesPrice));
         product.setProductsFinalPrice(String.valueOf(productFinalPrice));
@@ -524,7 +488,7 @@ public class Product_Description extends Fragment  {
         ImageSlider(productDetails.getProductsImage(), itemImages);
 
         // Set Product's Information
-        title.setText(productDetails.getProductsName());
+        binding.productTitle.setText(productDetails.getProductsName());
 
 //        product_rating_bar.setRating(productDetails.getRating());
 //        product_ratings_count.setText("" + productDetails.getTotal_user_rated());
@@ -553,13 +517,13 @@ public class Product_Description extends Fragment  {
             productDetails.setCategoryNames("");
         }
 
-        category.setText(productDetails.getCategoryNames());
+        binding.productCategory.setText(productDetails.getCategoryNames());
 
 
         if (productDetails.getProductsLiked() > 0) {
-            product_likes.setText(getString(R.string.likes) + " (" + productDetails.getProductsLiked() + ")");
+            binding.productTotalLikes.setText(getString(R.string.likes) + " (" + productDetails.getProductsLiked() + ")");
         } else {
-            product_likes.setText(getString(R.string.likes) + " (0)");
+            binding.productTotalLikes.setText(getString(R.string.likes) + " (0)");
         }
 
 
@@ -574,9 +538,9 @@ public class Product_Description extends Fragment  {
 
         // Check if the Product is Newly Added with the help of static method of Helper class
         if (Utilities.checkNewProduct(productDetails.getProductsDateAdded())) {
-            product_tag_new.setVisibility(View.VISIBLE);
+            binding.productTagNew.setVisibility(View.VISIBLE);
         } else {
-            product_tag_new.setVisibility(View.GONE);
+            binding.productTagNew.setVisibility(View.GONE);
         }
 
         String description = productDetails.getProductsDescription();
@@ -598,7 +562,7 @@ public class Product_Description extends Fragment  {
 
         if (productDetails.getProductsType() == 1) {
             if (attributesList.size() > 0) {
-                product_attributes.setVisibility(View.VISIBLE);
+                binding.productAttributes.setVisibility(View.VISIBLE);
 
                 for (int i = 0; i < attributesList.size(); i++) {
 
@@ -633,33 +597,33 @@ public class Product_Description extends Fragment  {
                 attributesAdapter = new ProductAttributesAdapter(getContext(), Product_Description.this, attributesList, selectedAttributesList);
 
                 // Set the Adapter and LayoutManager to the RecyclerView
-                attribute_recycler.setAdapter(attributesAdapter);
-                attribute_recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                binding.productAttributesRecycler.setAdapter(attributesAdapter);
+                binding.productAttributesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
                 attributesAdapter.notifyDataSetChanged();
 
 
                 RequestProductStock(productDetails.getProductsId(), attributesAdapter.getAttributeIDs());
 
             } else {
-                product_attributes.setVisibility(View.GONE);
+                binding.productAttributes.setVisibility(View.GONE);
             }
         } else {
-            product_attributes.setVisibility(View.GONE);
+            binding.productAttributes.setVisibility(View.GONE);
         }
 
         NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         productFinalPrice = productBasePrice + attributesPrice;
-        price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
+        binding.productPriceNew.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
 
         // Check if the User has Liked the Product
         if (productDetails.getIsLiked().equalsIgnoreCase("1")) {
-            product_like_btn.setChecked(true);
+            binding.productLikeBtn.setChecked(true);
         } else {
-            product_like_btn.setChecked(false);
+            binding.productLikeBtn.setChecked(false);
         }
 
         // Handle Click event of product_share_btn Button
-        product_share_btn.setOnClickListener(view -> {
+        binding.productShareBtn.setOnClickListener(view -> {
 
             // Share Product with the help of static method of Helper class
             Utilities.shareProduct
@@ -672,22 +636,22 @@ public class Product_Description extends Fragment  {
         });
 
         // Handle Click event of product_like_btn Button
-        product_like_btn.setOnClickListener(view -> {
+        binding.productLikeBtn.setOnClickListener(view -> {
 
             // Check if the User is Authenticated
             if (ConstantValues.IS_USER_LOGGED_IN) {
 
                 // Check if the User has Checked the Like Button
-                if (product_like_btn.isChecked()) {
+                if (binding.productLikeBtn.isChecked()) {
                     productDetails.setIsLiked("1");
-                    product_like_btn.setChecked(true);
+                    binding.productLikeBtn.setChecked(true);
 
                     // Request the Server to Like the Product for the User
                     LikeProduct(productDetails.getProductsId(), customerID, getContext(), view);
 
                 } else {
                     productDetails.setIsLiked("0");
-                    product_like_btn.setChecked(false);
+                    binding.productLikeBtn.setChecked(false);
 
                     // Request the Server to Unlike the Product for the User
                     UnlikeProduct(productDetails.getProductsId(), customerID, getContext(), view);
@@ -695,7 +659,7 @@ public class Product_Description extends Fragment  {
 
             } else {
                 // Keep the Like Button Unchecked
-                product_like_btn.setChecked(false);
+                binding.productLikeBtn.setChecked(false);
 
                 // Navigate to Login Activity
                 Intent i = new Intent(getContext(), AuthActivity.class);
@@ -709,7 +673,7 @@ public class Product_Description extends Fragment  {
 
     public void showMeasuresRecyclerView() {
         if(productMeasures.size()>0){
-            productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, price_new, this,booleanArrayList);
+            productMeasureAdapter = new ProductMeasureAdapter(context, productMeasures, binding.productPriceNew, this,booleanArrayList);
             recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
             recyclerView.setAdapter(productMeasureAdapter);
 
@@ -752,7 +716,7 @@ public class Product_Description extends Fragment  {
         // Calculate and Set Product's total Price
         NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         productFinalPrice = productBasePrice + attributesPrice;
-        price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
+        binding.productPriceNew.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
 
     }
 
@@ -765,13 +729,13 @@ public class Product_Description extends Fragment  {
 
         // Check if the Product is Out of Stock
         if (stock.equalsIgnoreCase("0")) {
-            product_stock.setText(getString(R.string.outOfStock));
+            binding.productStock.setText(getString(R.string.outOfStock));
             addToCart.setText(getString(R.string.outOfStock));
             // product_stock.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccentRed));
             // productCartBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners_button_red));
 
         } else {
-            product_stock.setText(getString(R.string.in_stock));
+            binding.productStock.setText(getString(R.string.in_stock));
             addToCart.setText(getString(R.string.addToCart));
             //  product_stock.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccentBlue));
             //   productCartBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners_button_accent));
@@ -781,7 +745,7 @@ public class Product_Description extends Fragment  {
         NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         if (productDetails.getFlashPrice() != null) {
             if (!productDetails.getFlashPrice().isEmpty()) {
-                price_new.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(Double.parseDouble(productDetails.getFlashPrice())));
+                binding.productPriceNew.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(Double.parseDouble(productDetails.getFlashPrice())));
                 long serverTime = Long.parseLong(productDetails.getServerTime()) * 1000L;
                 long startDate = Long.parseLong(productDetails.getFlashStartDate()) * 1000L;
                 productBasePrice = Double.parseDouble(productDetails.getFlashPrice());
@@ -846,14 +810,14 @@ public class Product_Description extends Fragment  {
                     .image(slider_covers.get(name));
 
             // Add DefaultSliderView to the SliderLayout
-            sliderLayout.addSlider(defaultSliderView);
+            binding.productCoverSlider.addSlider(defaultSliderView);
         }
 
         // Set PresetTransformer type of the SliderLayout
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(4000);
-        sliderLayout.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
+        binding.productCoverSlider.setDuration(4000);
+        binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -870,7 +834,7 @@ public class Product_Description extends Fragment  {
             }
         });
 
-        sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+        binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
         // Check if the size of Images in the Slider is less than 2
 //        if (slider_covers.size() < 2) {
 //            // Disable PagerTransformer
@@ -1084,7 +1048,7 @@ public class Product_Description extends Fragment  {
     @Override
     public void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
-        sliderLayout.stopAutoCycle();
+        binding.productCoverSlider.stopAutoCycle();
         super.onStop();
     }
 

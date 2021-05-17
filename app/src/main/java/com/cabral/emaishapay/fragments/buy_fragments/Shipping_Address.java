@@ -76,7 +76,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class Shipping_Address extends Fragment implements GoogleApiClient.OnConnectionFailedListener , OnMapReadyCallback {
 
-    private final My_Addresses parentFrag;
+    private My_Addresses parentFrag;
     private String ADDRESS_ID;
     View rootView;
     Boolean isUpdate = false;
@@ -124,11 +124,13 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
 
 
-    public Shipping_Address(My_Cart my_cart,My_Addresses parentFrag) {
-        this.my_cart = my_cart;
-        this.parentFrag = parentFrag;
-    }
-
+//    public Shipping_Address(My_Cart my_cart,My_Addresses parentFrag) {
+//        this.my_cart = my_cart;
+//        this.parentFrag = parentFrag;
+//    }
+        public Shipping_Address(){
+            //no args constructor
+        }
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -146,6 +148,8 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         if (getArguments() != null) {
             if (getArguments().containsKey("isUpdate")) {
                 isUpdate = getArguments().getBoolean("isUpdate", false);
+                my_cart = (My_Cart) getArguments().getSerializable("my_cart");
+                parentFrag = (My_Addresses) getArguments().getSerializable("my_address");
             }
         }
 

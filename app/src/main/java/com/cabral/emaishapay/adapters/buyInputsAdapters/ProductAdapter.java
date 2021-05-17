@@ -252,20 +252,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 // Save the AddressDetails
                 ((EmaishaPayApp) context.getApplicationContext()).setProductDetails(product);
                 // Navigate to Product_Description of selected Product
-                Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
-                fragment.setArguments(itemInfo);
-                //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-//                if (((WalletBuySellActivity) context).currentFragment != null)
+                Bundle bundle = new Bundle();
+                bundle.putLong("start",start);
+                bundle.putLong("server",server);
+                bundle.putBoolean("isFlash",isFlash);
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_productDescription,bundle);
+//                Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
+//                fragment.setArguments(itemInfo);
+//                //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+////                if (((WalletBuySellActivity) context).currentFragment != null)
+////                    fragmentManager.beginTransaction()
+////                            .hide(((WalletBuySellActivity) context).currentFragment)
+////                            .add(R.id.nav_host_fragment, fragment)
+////                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+////                            .addToBackStack(null).commit();
+////                else
 //                    fragmentManager.beginTransaction()
-//                            .hide(((WalletBuySellActivity) context).currentFragment)
-//                            .add(R.id.nav_host_fragment, fragment)
+//                            .replace(R.id.nav_host_fragment2, fragment)
 //                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 //                            .addToBackStack(null).commit();
-//                else
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment2, fragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .addToBackStack(null).commit();
 
 
                 // Add the Product to User's Recently Viewed Products
