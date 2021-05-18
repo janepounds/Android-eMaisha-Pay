@@ -55,6 +55,7 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
+import com.cabral.emaishapay.models.coupons_model.CouponsInfo;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
 import com.cabral.emaishapay.models.user_model.UserDetails;
@@ -182,8 +183,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             discount =  getArguments().getDouble("discount");
             subtotal =  getArguments().getDouble("sub_total");
             total =  getArguments().getDouble("total");
-            couponList = getArguments().getParcelableArrayList("coupons");
-            productList =  getArguments().getParcelableArrayList("order_product_list");
+            couponList = (List) getArguments().getSerializable("coupons");
+            productList =  (List)getArguments().getSerializable("order_product_list");
             orderId = getArguments().getString("order_id");
             this.chargeAmount=this.total;
 

@@ -87,9 +87,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 
-
-
-
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -264,8 +262,8 @@ public class CheckoutFinal extends Fragment {
             bundle.putDouble("discount",checkoutDiscount);
             bundle.putDouble("sub_total",checkoutSubtotal);
             bundle.putDouble("total",checkoutTotal);
-            bundle.putParcelableArrayList("coupons", (ArrayList<? extends Parcelable>) couponsList);
-            bundle.putParcelableArrayList("order_product_list", (ArrayList<? extends Parcelable>) orderProductList);
+            bundle.putSerializable("coupons", (CouponsInfo) couponsList);
+            bundle.putSerializable("order_product_list", (PostProducts) orderProductList);
             bundle.putString("order_id",orderID);
             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_paymentMethods,bundle);
 //            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
