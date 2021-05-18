@@ -620,7 +620,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
 //        PlaceOrderNow(orderDetails);
         WalletBuySellActivity.postOrder = orderDetails;
-        requireActivity().getSupportFragmentManager().popBackStack();
+        //pop backstack
+        WalletBuySellActivity.navController.popBackStack();
 
     }
 

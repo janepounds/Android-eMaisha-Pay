@@ -135,7 +135,11 @@
         android:id="@+id/paymentMethods"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.PaymentMethodsFragment"
         android:label="PaymentMethods"
-        tools:layout="@layout/fragment_payment_methods"></fragment>
+        tools:layout="@layout/fragment_payment_methods">
+        <action
+            android:id="@+id/action_paymentMethods_to_thankYou"
+            app:destination="@id/thankYou" />
+    </fragment>
 
     <fragment
         android:id="@+id/thankYou"

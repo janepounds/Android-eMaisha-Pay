@@ -120,7 +120,7 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
         final AddressDetails shippingAddress = ((EmaishaPayApp) context.getApplicationContext()).getShippingAddress();
 
         holder.select_btn.setOnClickListener(v -> {
-            if (holder.order_price.getText().toString().equalsIgnoreCase("N/A")) {
+            if (!holder.order_price.getText().toString().equalsIgnoreCase("N/A")) {
 
                 User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
                 List<CartProduct> checkoutItemsList = user_cart_BuyInputs_db.getCartItems();//get checkout items
