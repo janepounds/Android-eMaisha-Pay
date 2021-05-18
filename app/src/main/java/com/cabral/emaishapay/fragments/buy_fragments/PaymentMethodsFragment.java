@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -54,6 +55,7 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
+import com.cabral.emaishapay.models.coupons_model.CouponsInfo;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
 import com.cabral.emaishapay.models.user_model.UserDetails;
@@ -123,22 +125,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
     private String expiryDate,cvv_,card_no;
 
-    public PaymentMethodsFragment(My_Cart my_cart, String merchantWalletId, String shipping, Double tax, Double shipping_cost,
-                                  Double discount, List couponList, Double subtotal, Double total, List productList, String orderId) {
-        // Required empty public constructor
-        this.my_cart = my_cart;
-        this.merchantWalletId = merchantWalletId;
-        this.shipping = shipping;
-        this.tax = tax;
-        this.shipping_cost = shipping_cost;
-        this.discount = discount;
-        this.couponList = couponList;
-        this.subtotal = subtotal;
-        this.total = total;
-        this.productList = productList;
-        this.orderId = orderId;
-        this.chargeAmount=this.total;
-    }
+
     public PaymentMethodsFragment() {
     }
 
@@ -187,6 +174,22 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         // Handle the Click event of checkout_cancel_btn Button
         cancel.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
 
+        if(getArguments()!=null){
+            my_cart = (My_Cart) getArguments().getSerializable("my_cart");
+            merchantWalletId =  getArguments().getString("wallet_id");
+            shipping = getArguments().getString("shipping");
+            tax =  getArguments().getDouble("tax");
+            shipping_cost =  getArguments().getDouble("shipping_cost");
+            discount =  getArguments().getDouble("discount");
+            subtotal =  getArguments().getDouble("sub_total");
+            total =  getArguments().getDouble("total");
+            couponList = (List) getArguments().getSerializable("coupons");
+            productList =  (List)getArguments().getSerializable("order_product_list");
+            orderId = getArguments().getString("order_id");
+            this.chargeAmount=this.total;
+
+
+        }
         codLayout.setOnClickListener(v -> {
             COD.setChecked(true);
             eMaishaWallet.setChecked(false);
@@ -617,7 +620,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
 //        PlaceOrderNow(orderDetails);
         WalletBuySellActivity.postOrder = orderDetails;
-        requireActivity().getSupportFragmentManager().popBackStack();
+        //pop backstack
+        WalletBuySellActivity.navController.popBackStack();
 
     }
 

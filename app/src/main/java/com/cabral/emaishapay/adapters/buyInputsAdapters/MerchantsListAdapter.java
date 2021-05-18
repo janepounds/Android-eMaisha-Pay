@@ -167,7 +167,7 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
                 WalletBuySellActivity.postOrder.setPaymentMethod("Payment Method");//Reset Payment
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("my_cart",my_cart);
-                bundle.putSerializable("db", (Serializable) user_cart_BuyInputs_db);
+                bundle.putSerializable("db",  user_cart_BuyInputs_db);
                 bundle.putString("merchant_id",merchantsDetails.getMerchantId() + "");
                 bundle.putString("wallet_id",merchantsDetails.getMerchant_wallet_id());
                 WalletBuySellActivity.navController.navigate(R.id.action_nearbyMerchants_to_checkOutFinal,bundle);

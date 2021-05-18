@@ -197,15 +197,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 holder.product_price_new.setVisibility(View.VISIBLE);
             }
 
-//
-//            holder.product_like_layout.setOnCheckedChangeListener(null);
-//
-//            // Check if Product is Liked
-//            if (product.getIsLiked().equalsIgnoreCase("1")) {
-//                holder.product_like_layout.setChecked(true);
-//            } else {
-//                holder.product_like_layout.setChecked(false);
-//            }
 
             // Handle the Click event of product_like_layout ToggleButton
             holder.product_like_layout.setOnClickListener(view -> {
@@ -213,21 +204,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 // Check if the User is Authenticated
                 if (ConstantValues.IS_USER_LOGGED_IN) {
 
-
-//                        if(holder.product_like_layout.isChecked()) {
-//                            product.setIsLiked("1");
-//                            holder.product_like_layout.setChecked(true);
-//
-//                            // Like the Product for the User with the static method of Product_Description
-//                            Product_Description.LikeProduct(product.getProductsId(), customerID, context, view);
-//                        }
-//                        else {
-//                            product.setIsLiked("0");
-//                            holder.product_like_layout.setChecked(false);
-//
-//                            // Unlike the Product for the User with the static method of Product_Description
-//                            Product_Description.UnlikeProduct(product.getProductsId(), customerID, context, view);
-//                        }
 
                 } else {
                     // Keep the Like Button Unchecked
@@ -261,22 +237,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.viewAllTopDeals){
 
                     WalletBuySellActivity.navController.navigate(R.id.action_viewAllTopDeals_to_productDescription,itemInfo);
-                }
+                }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.walletBuyFragment){
+                    WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_productDescription,itemInfo);
 
-//                Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
-//                fragment.setArguments(itemInfo);
-//                //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-////                if (((WalletBuySellActivity) context).currentFragment != null)
-////                    fragmentManager.beginTransaction()
-////                            .hide(((WalletBuySellActivity) context).currentFragment)
-////                            .add(R.id.nav_host_fragment, fragment)
-////                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-////                            .addToBackStack(null).commit();
-////                else
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.nav_host_fragment2, fragment)
-//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                            .addToBackStack(null).commit();
+                }
 
 
                 // Add the Product to User's Recently Viewed Products
@@ -289,18 +253,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             // Check the Button's Visibility
             if (!ConstantValues.IS_PRODUCT_CHECKED) {
 
-//                if (product.getProductsType() != 0) {
-//                    holder.product_add_cart_btn.setText(context.getString(R.string.view_product));
-//                    holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
-//                } else {
-//                    if (product.getProductsDefaultStock() < 1) {
-//                        holder.product_add_cart_btn.setText(context.getString(R.string.outOfStock));
-//                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_red));
-//                    } else {
-//                        holder.product_add_cart_btn.setText(context.getString(R.string.addToCart));
-//                        holder.product_add_cart_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners_button_green));
-//                    }
-//                }
 
                 if (isFlash) {
                     start = Long.parseLong(product.getFlashStartDate()) * 1000L;
@@ -355,15 +307,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         itemInfo.putLong("start",start);
                         itemInfo.putLong("server",server);
                         itemInfo.putBoolean("isFlash",isFlash);
-                         WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_productDescription,itemInfo);
-//                        Fragment fragment = new Product_Description(holder.product_checked, isFlash, start, server);
-//                        fragment.setArguments(itemInfo);
-//                        //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-//                        FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.nav_host_fragment2, fragment)
-////                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                                .addToBackStack(null).commit();
+                    if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.viewAllPopularProducts){
+                        WalletBuySellActivity.navController.navigate(R.id.action_viewAllPopularProducts_to_productDescription,itemInfo);
+
+                    }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.viewAllTopDeals){
+
+                        WalletBuySellActivity.navController.navigate(R.id.action_viewAllTopDeals_to_productDescription,itemInfo);
+                    }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.walletBuyFragment){
+                        WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_productDescription,itemInfo);
+
+                    }
 
                         // Add the Product to User's Recently Viewed Products
                         if (!recents_db.getUserRecents().contains(product.getProductsId())) {
@@ -373,82 +326,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
                 });
 
-//                holder.product_checked.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (product.getProductsType() != 0) {
-//
-//                            // Get Product Info
-//                            Bundle itemInfo = new Bundle();
-//                            itemInfo.putParcelable("productDetails", product);
-//
-//                            // Navigate to Product_Description of selected Product
-//                            Fragment fragment = new Product_Description(holder.product_checked);
-//                            fragment.setArguments(itemInfo);
-//                            //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-//                            FragmentManager fragmentManager = ((DashboardActivity) context).getSupportFragmentManager();
-//                            fragmentManager.beginTransaction()
-//                                    .hide(((DashboardActivity)context).currentFragment)
-//                                    .add(R.id.main_fragment_container, fragment)
-//                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                                    .addToBackStack(null).commit();
-//
-//                            // Add the Product to User's Recently Viewed Products
-//                            if (!recents_db.getUserRecents().contains(product.getProductsId())) {
-//                                recents_db.insertRecentItem(product.getProductsId());
-//                            }
-//                        }
-//                        else {
-//
-//                            if (isFlash) {
-//                                if (start > server) {
-//                                    Snackbar.make(v, context.getString(R.string.cannot_add_upcoming), Snackbar.LENGTH_SHORT).show();
-//                                }
-//                                else {
-//                                    Utilities.animateCartMenuIcon(context, (DashboardActivity) context);
-//                                    // Add Product to User's Cart
-//                                    addProductToCart(product);
-//
-//                                    holder.product_checked.setVisibility(View.VISIBLE);
-//                                    //disable add to cart button
-//                                    holder.product_add_cart_btn.setVisibility(View.GONE);
-//
-//                                    Snackbar.make(v, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-//
-//                                }
-//                            }
-//                            else {
-//
-//                                if(product.getProductsDefaultStock()<1){
-//
-//                                    Snackbar.make(v, context.getString(R.string.outOfStock), Snackbar.LENGTH_SHORT).show();
-//                                }
-//                                else {
-//                                    Utilities.animateCartMenuIcon(context, (DashboardActivity) context);
-//                                    // Add Product to User's Cart
-//                                    addProductToCart(product);
-//
-//                                    holder.product_checked.setVisibility(View.VISIBLE);
-//                                    holder.product_add_cart_btn.setVisibility(View.GONE);
-//
-//                                    Snackbar.make(v, context.getString(R.string.item_added_to_cart), Snackbar.LENGTH_SHORT).show();
-//                                }
-//
-//                            }
-//                        }
-//                    }
-//                });
 
             }
-
-            //check for product type in order to show or hide percentage sale off
-//            if(getAllProducts.getType().equalsIgnoreCase("special")){
-//                holder.percentageOff.setVisibility(View.VISIBLE);
-//            }else {
-//                holder.percentageOff.setVisibility(View.GONE);
-//            }
-
-          //  Log.d(TAG, "onBindViewHolder: PRODUCT TYPE IN ADAPTER: " +getAllProducts.getType());
 
         }
 

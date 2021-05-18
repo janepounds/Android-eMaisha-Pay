@@ -21,6 +21,7 @@ import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.models.product_model.Value;
 import com.cabral.emaishapay.utils.Utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,7 @@ import retrofit2.http.Header;
  **/
 
 
-public class User_Cart_BuyInputsDB {
+public class User_Cart_BuyInputsDB implements Serializable {
     private static final String TAG = "User_Cart_BuyInputsDB";
     SQLiteDatabase db;
     

@@ -103,6 +103,12 @@
         <action
             android:id="@+id/action_checkOutFinal_to_walletBuyFragment"
             app:destination="@id/walletBuyFragment" />
+        <action
+            android:id="@+id/action_checkOutFinal_to_paymentMethods"
+            app:destination="@id/paymentMethods" />
+        <action
+            android:id="@+id/action_checkOutFinal_to_thankYou"
+            app:destination="@id/thankYou" />
     </fragment>
 
     <fragment
@@ -123,5 +129,28 @@
         <action
             android:id="@+id/action_nearbyMerchants_to_checkOutFinal"
             app:destination="@id/checkOutFinal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentMethods"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.PaymentMethodsFragment"
+        android:label="PaymentMethods"
+        tools:layout="@layout/fragment_payment_methods">
+        <action
+            android:id="@+id/action_paymentMethods_to_thankYou"
+            app:destination="@id/thankYou" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/thankYou"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Thank_You"
+        android:label="PaymentMethods"
+        tools:layout="@layout/buy_inputs_thank_you">
+        <action
+            android:id="@+id/action_thankYou_to_walletOrdersFragment"
+            app:destination="@id/walletOrdersFragment" />
+        <action
+            android:id="@+id/action_thankYou_to_walletBuyFragment"
+            app:destination="@id/walletBuyFragment" />
     </fragment>
 </navigation>
