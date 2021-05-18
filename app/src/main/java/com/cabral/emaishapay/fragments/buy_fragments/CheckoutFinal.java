@@ -70,6 +70,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -253,12 +254,26 @@ public class CheckoutFinal extends Fragment {
         setCheckoutTotal();
 
         binding.paymentMethod.setOnClickListener(v -> {
-            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
-                    checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
-
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
-                    .addToBackStack(getString(R.string.checkout)).commit();
+            //go to payment method
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("my_cart",my_cart);
+            bundle.putString("wallet_id",merchant_wallet_id);
+            bundle.putString("shipping",binding.checkoutShippingCharge.getText().toString());
+            bundle.putDouble("tax",checkoutTax);
+            bundle.putDouble("shipping_cost",checkoutShipping);
+            bundle.putDouble("discount",checkoutDiscount);
+            bundle.putDouble("sub_total",checkoutSubtotal);
+            bundle.putDouble("total",checkoutTotal);
+            bundle.putParcelableArrayList("coupons", (ArrayList<? extends Parcelable>) couponsList);
+            bundle.putParcelableArrayList("order_product_list", (ArrayList<? extends Parcelable>) orderProductList);
+            bundle.putString("order_id",orderID);
+            WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_paymentMethods,bundle);
+//            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
+//                    checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
+//
+//            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment2, fragment)
+//                    .addToBackStack(getString(R.string.checkout)).commit();
         });
 
 
@@ -784,14 +799,12 @@ public class CheckoutFinal extends Fragment {
                         ((EmaishaPayApp) requireContext().getApplicationContext()).setBillingAddress(new AddressDetails());
 
                         // Navigate to Thank_You Fragment
+
                         String orderNumber = response.body().getOrder_id();
-                        Fragment fragment = new Thank_You(my_cart,orderNumber);
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        fragmentManager.popBackStack(getString(R.string.actionHome), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        fragmentManager.beginTransaction()
-                                .add(R.id.nav_host_fragment2, fragment)
-                                .addToBackStack(null)
-                                .commit();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("my_cart",my_cart);
+                        bundle.putString("order_number",orderNumber);
+                        WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou,bundle);
 
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
