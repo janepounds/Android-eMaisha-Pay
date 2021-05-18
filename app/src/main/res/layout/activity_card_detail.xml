@@ -72,8 +72,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,6 +83,7 @@
                 android:layout_marginBottom="5dp"
                 android:text="Account Number"
                 android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/etxt_card_account_number"
                 android:layout_width="match_parent"
@@ -90,7 +92,8 @@
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +112,7 @@
                 android:maxLength="19"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,10 +142,10 @@
                         android:layout_marginRight="5dp"
                         android:background="@drawable/outline_primary"
                         android:inputType="date"
+                        android:maxLength="5"
                         android:padding="10dp"
                         android:textColor="#000"
-                        android:maxLength="5"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -155,11 +158,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:text="CVV"
-                        android:textSize="16sp"
-                        android:layout_marginStart="5dp"/>
+                        android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/etxt_card_cvv"
@@ -172,7 +175,7 @@
                         android:maxLength="3"
                         android:padding="10dp"
                         android:textColor="#000"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -187,6 +190,7 @@
                 android:layout_marginBottom="5dp"
                 android:text="Enter Pin"
                 android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/etxt_card_enter_pin"
                 android:layout_width="match_parent"
@@ -196,7 +200,8 @@
                 android:maxLength="4"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -215,7 +220,8 @@
                 android:maxLength="4"
                 android:padding="10dp"
                 android:textColor="#000"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
+
             <LinearLayout
                 android:id="@+id/layout_button"
                 android:layout_width="match_parent"
@@ -223,13 +229,14 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:background="@drawable/rectangular_blue_solid"
-                    android:layout_marginRight="@dimen/dimen_5dp">
+                    android:layout_marginRight="@dimen/dimen_5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangular_blue_solid">
 
                     <Button
                         android:id="@+id/previous_button"
@@ -238,22 +245,22 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@color/transparent"
+                        android:drawableLeft="@drawable/ic_chevron_left_white"
                         android:text="@string/previous"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:drawableLeft="@drawable/ic_chevron_left_white"/>
-
+                        android:textStyle="bold" />
 
 
                 </FrameLayout>
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/dimen_5dp"
-                    android:background="@drawable/rectangular_blue_solid"
-                    android:layout_marginLeft="@dimen/dimen_5dp">
+                    android:layout_marginLeft="@dimen/dimen_5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangular_blue_solid">
 
                     <Button
                         android:id="@+id/txt_card_submit"
@@ -262,17 +269,15 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@color/transparent"
+                        android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
                         android:text="@string/submit"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:drawableEnd="@drawable/ic_right_chevron_arrow_white"/>
+                        android:textStyle="bold" />
 
 
                 </FrameLayout>
             </LinearLayout>
-
-
 
 
         </LinearLayout>
