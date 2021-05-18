@@ -44,7 +44,7 @@ public class StartAppRequests {
     private static BuyInputsDB_Handler db_handler;
     private static Context context;
 
-    private EmaishaPayApp emaishaPayApp = new EmaishaPayApp();
+    private EmaishaPayApp emaishaPayApp;
 
 
 
