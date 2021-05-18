@@ -97,11 +97,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
+
             android:text="eMaisha Pay is a payments platform that enables customers and businesses to securely make and receive payments. It’s composed of a mobile wallet and prepaid visa card. eMaisha Pay also enables customers to purchase products online especially agriculture inputs from hundreds of merchants onboarded on its platform.\n\nThe following terms and conditions apply to all users of eMaisha Pay, including those that use the eMaisha Pay dashboards, eMaisha Portals, eMaisha Pay card, eMaisha Pay Wallet, eMaisha Pay app and any other eMaisha Pay products, innovations, and/or functionalities.
 \n\nBy using eMaisha pay services, you agree to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern eMaisha pay’s relationship with you in relation to this product."
 
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:layout_margin="15dp"/>
