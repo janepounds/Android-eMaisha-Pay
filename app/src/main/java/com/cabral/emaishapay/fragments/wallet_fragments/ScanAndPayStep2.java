@@ -218,13 +218,9 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
             return;
 
         if(  v.getId()==R.id.tv_key_backspace ){
-            binding.txtBillTotal.setText( binding.txtBillTotal.getText().toString());
-            CharSequence selectedText = inputConnection.getSelectedText(0);
-
-            if (TextUtils.isEmpty(selectedText)) {
-                inputConnection.deleteSurroundingText(1, 0);
-            } else {
-                inputConnection.commitText( "", 1);
+            if (!TextUtils.isEmpty(binding.txtBillTotal.getText())) {
+                String totalAmount=binding.txtBillTotal.getText().toString();
+                binding.txtBillTotal.setText( totalAmount.substring(0,totalAmount.length()-1));
             }
 
         }else if( v.getId()==R.id.tv_key_enter  ){
@@ -237,8 +233,11 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
 
         }else{
             String value = keyValues.get(v.getId()).toString();
-            inputConnection.commitText(value, 1);
-            setInputConnection( binding.txtBillTotal);
+//            inputConnection.commitText(value, 1);
+//            setInputConnection( binding.txtBillTotal);
+
+            String totalAmount=binding.txtBillTotal.getText().toString();
+            binding.txtBillTotal.setText( totalAmount+value);
         }
     }
 }

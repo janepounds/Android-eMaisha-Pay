@@ -107,7 +107,8 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
     //*********** Sets App configuration ********//
 
     private void setAppConfig() {
-        AppSettingsDetails appSettingsDetails = ((EmaishaPayApp) getActivity().getApplicationContext()).getAppSettingsDetails();
+
+        AppSettingsDetails appSettingsDetails = ((EmaishaPayApp) context.getApplicationContext()).getAppSettingsDetails();
 
         if (appSettingsDetails != null) {
 

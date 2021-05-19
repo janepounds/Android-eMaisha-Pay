@@ -9,23 +9,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.cabral.emaishapay.R;
@@ -49,14 +43,8 @@ import com.cabral.emaishapay.databinding.FragmentTokenAuthBinding;
 import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.models.WalletAuthentication;
 import com.cabral.emaishapay.models.WalletAuthenticationResponse;
-import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.cabral.emaishapay.services.SmsBroadcastReceiver;
-import com.google.android.gms.auth.api.phone.SmsRetriever;
-import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -65,19 +53,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE;
 import static com.cabral.emaishapay.activities.WalletHomeActivity.PREFERENCES_WALLET_BUSINESS_ID;
-import static com.cabral.emaishapay.activities.WalletHomeActivity.navController;
 
 //This fragment is used for creating or picking a user's PIN and Continue with Login or SignUp processes.
 public class PINManagerFragment  extends  Fragment  implements View.OnClickListener  {
