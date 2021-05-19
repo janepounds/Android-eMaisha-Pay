@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,11 +26,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -52,12 +56,14 @@ import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -127,6 +133,8 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static BottomNavigationView bottomNavigationView,bottom_navigation_shop;
     public  static CoordinatorLayout scanCoordinatorLayout;
     public static FloatingActionButton scanFAB;
+    public static FrameLayout frameLayout;
+    public static FragmentContainerView fragmentContainerView;
     private static final int PERMISSION_CODE = 1;
 
 
@@ -138,11 +146,13 @@ public class WalletHomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_home);
+
         bottom_navigation_shop = findViewById(R.id.bottom_navigation_shop);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         scanCoordinatorLayout = findViewById(R.id.coordinator_layout_for_scanner);
         scanFAB = findViewById(R.id.fab);
-
+        frameLayout = findViewById(R.id.frameLayout);
+        fragmentContainerView = findViewById(R.id.wallet_home_container);
 
 
         scanFAB.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +187,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                 }else if (currentFragment == R.id.acceptPaymentFragment)  {
                         WalletHomeActivity.navController.navigate(R.id.action_acceptPaymentFragment_to_scanAndPayDialog);
                     }
+
 
 
 
@@ -228,6 +239,16 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                 }
 
+                if(Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.tokenAuthFragment) {
+                    fragmentContainerView.setPadding(0,0,0,0);
+                }else if(bottom_navigation_shop.getVisibility()==View.VISIBLE || bottomNavigationView.getVisibility()==View.VISIBLE
+                        || scanCoordinatorLayout.getVisibility()==View.VISIBLE){
+                    fragmentContainerView.setPadding(0,0,0,232);
+                } else{
+                    fragmentContainerView.setPadding(0,0,0,0);
+                }
+
+
         }
         });
 
@@ -235,7 +256,17 @@ public class WalletHomeActivity extends AppCompatActivity{
             getAppToken();
         }
 
+//        if(bottom_navigation_shop.getVisibility()==View.VISIBLE || bottomNavigationView.getVisibility()==View.VISIBLE
+//                || scanCoordinatorLayout.getVisibility()==View.VISIBLE){
+//            fragmentContainerView.setPadding(0,0,0,232);
+//        } else{
+//            fragmentContainerView.setPadding(0,0,0,0);
+//        }
+
+
+
     }
+
 
     public void setUpNavigation() {
         bottomNavigationView.setItemIconTintList(null);
@@ -479,6 +510,8 @@ public class WalletHomeActivity extends AppCompatActivity{
                     }
 
                 }else if (response.code() == 401) {
+
+
 
                     TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {

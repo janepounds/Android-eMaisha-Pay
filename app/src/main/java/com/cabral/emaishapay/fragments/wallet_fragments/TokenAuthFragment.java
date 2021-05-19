@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -62,6 +64,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
 
+
         keyValues.put(R.id.tv_key_0, "0");
         keyValues.put(R.id.tv_key_1, "1");
         keyValues.put(R.id.tv_key_2, "2");
@@ -72,6 +75,20 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
         keyValues.put(R.id.tv_key_7, "7");
         keyValues.put(R.id.tv_key_8, "8");
         keyValues.put(R.id.tv_key_9, "9");
+
+
+        binding.tokenAuthClose.setOnClickListener(v->{
+            new AlertDialog.Builder(getContext())
+                    .setMessage("Are you sure you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            getActivity().finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
 
         return binding.getRoot();
 

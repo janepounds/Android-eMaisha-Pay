@@ -27,6 +27,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
@@ -92,12 +95,23 @@ public class WalletHomeFragment extends Fragment {
 
         String name=ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context));
 
-        binding.username.setText("Hello "+ ucf(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context))+", ");
+        binding.username.setText("Hello "+ name +", ");
 
         if(WalletHomeActivity.Banners!=null){
             Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
             ImageSlider("Ads", WalletHomeActivity.Banners );
         }
+
+
+        String user_pic =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_PERSONAL_PIC, context);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_user_profile_placeholder_home)
+                .error(R.drawable.ic_user_profile_placeholder_home)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH);
+        Glide.with(requireContext()).load(ConstantValues.WALLET_DOMAIN +user_pic).apply(options).into(binding.imgUsername);
+
 
         return binding.getRoot();
     }
@@ -555,7 +569,7 @@ public class WalletHomeFragment extends Fragment {
 
         // Put Image's Name and URL to the HashMap slider_covers
         if (itemThumbnail.equalsIgnoreCase("")) {
-            slider_covers.put("a", "" + R.drawable.new_product);
+            slider_covers.put("a", "" + R.drawable.banner_placeholder);
 
         } else if (images.length == 0) {
             slider_covers.put("a",  itemThumbnail);
@@ -591,9 +605,9 @@ public class WalletHomeFragment extends Fragment {
         }
 
         // Set PresetTransformer type of the SliderLayout
-        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
-        binding.productCoverSlider.setDuration(4000);
+        binding.productCoverSlider.setDuration(2500);
         //binding.productCoverSlider.setBackgroundColor(getResources().getColor(R.color.glide_slider_background_color));
         binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
             @Override
