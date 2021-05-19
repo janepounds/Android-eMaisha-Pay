@@ -40,7 +40,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textDate, textAmount, textPaidTo,textPaidTo_label, textReceivedFrom, initials;
+        TextView textDate, textAmount, textPaidTo, textReceivedFrom, initials;
         ConstraintLayout debitLayout, creditLayout;
         ConstraintLayout transactionCardLayout;
 
@@ -90,34 +90,26 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         WalletTransactionResponse.TransactionData.Transactions data = dataList.get(position);
-        // Generate random ARGB colors
-//        Random rnd = new Random();
-//        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-//
-//        // Set the generated color as the background for name initials
-//        holder.initials.getBackground().setColorFilter(currentColor, PorterDuff.Mode.SRC_OVER);
 
         SimpleDateFormat localFormat1 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         SimpleDateFormat localFormat2 = new SimpleDateFormat("HH:mm a", Locale.ENGLISH);
-        localFormat1.setTimeZone(TimeZone.getDefault());
-        localFormat2.setTimeZone(TimeZone.getDefault());
+        localFormat1.setTimeZone(TimeZone.getTimeZone("UTC+3"));
+        localFormat2.setTimeZone(TimeZone.getTimeZone("UTC+3"));
 
-        String currentDate = null, currentTime = null, prevDate=null;
+        String currentDate , currentTime , prevDate;
         try {
             SimpleDateFormat incomingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            incomingFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            incomingFormat.setTimeZone(TimeZone.getTimeZone("UTC+3"));
             currentDate = localFormat1.format(incomingFormat.parse(data.getDate()));
             currentTime = localFormat2.format(incomingFormat.parse(data.getDate()));
 
             if(position!=0)
-            prevDate = localFormat1.format(incomingFormat.parse(dataList.get(position-1).getDate()));
+                prevDate = localFormat1.format(incomingFormat.parse(dataList.get(position-1).getDate()));
 
             holder.textDate.setText((currentDate) +", "+ (currentTime));
 
 
             holder.textReceivedFrom.setText(data.getReceiver());
-
-            String userName = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, context) + " " + WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, context);
 
              //Log.w("TransactionType",data.getType());
             if(  !TextUtils.isEmpty(data.getReceiverUserId()) && data.getReceiverUserId().equalsIgnoreCase( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context))) {

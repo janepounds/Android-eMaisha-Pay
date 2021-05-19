@@ -400,7 +400,7 @@ public class TransferMoney extends Fragment {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
                 dialogLoader.hideProgressDialog();
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body().getStatus().equalsIgnoreCase("1")) {
                   navigateToComfirmDialog(response.body().getData().getBusinessName());
 
                 } else {

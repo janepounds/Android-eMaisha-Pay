@@ -184,6 +184,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
                 } else if (response.code() == 401) {
                     dialogLoader.hideProgressDialog();
+                    DepositMoneyMobile.this.dismiss();
                     TokenAuthFragment.startAuth(true);
                 }  else {
                     dialogLoader.hideProgressDialog();
@@ -293,6 +294,7 @@ public class DepositMoneyMobile extends DialogFragment {
             dialog.show();
 
         } else if (response.code() == 401) {
+            dialogLoader.hideProgressDialog();
             TokenAuthFragment.startAuth(true);
         }  else {
 

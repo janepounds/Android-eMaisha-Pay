@@ -147,19 +147,12 @@ public class LoanUserDetailsFragment extends Fragment {
 
                     if(businessName.equalsIgnoreCase(account_name)){
 
-
-                        //account exists
-                        //otp verification
-
                         sms_code =response.body().getData().getSmsCode();
-
                         //call otp dialog
                         dialog  = new Dialog(context);
                         dialog.setContentView(R.layout.login_dialog_otp);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                         dialog.setCancelable(false);
-
-
 
                         code1= dialog.findViewById(R.id.otp_code1_et);
                         code2= dialog.findViewById(R.id.otp_code2_et);
