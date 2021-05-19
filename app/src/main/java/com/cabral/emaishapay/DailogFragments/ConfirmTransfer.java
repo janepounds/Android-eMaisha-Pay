@@ -319,6 +319,7 @@ public class ConfirmTransfer extends DialogFragment {
     }
 
     public void mobileMoneyTransfer(double amount,String phoneNumber, String user_pin){
+        dialogLoader.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
@@ -394,14 +395,6 @@ public class ConfirmTransfer extends DialogFragment {
 
                         TokenAuthFragment.startAuth(true);
 
-                    } else if (response.code() == 500) {
-                        if (response.errorBody() != null) {
-                            Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        } else {
-
-                            Log.e("info", "Something got very very wrong, code: " + response.code());
-                        }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                     }  else {
 
                         if (response.errorBody() != null) {
