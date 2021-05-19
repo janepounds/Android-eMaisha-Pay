@@ -495,7 +495,7 @@ public class WalletHomeFragment extends Fragment {
             public void onResponse(@NotNull Call<BalanceResponse> call, @NotNull Response<BalanceResponse> response) {
                 dialog.hideProgressDialog();
 
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body().getData()!=null) {
                   balance =  response.body().getData().getBalance();
                   commisionbalance = response.body().getData().getCommission();
                   totalBalance = response.body().getData().getTotalBalance();
@@ -576,7 +576,9 @@ public class WalletHomeFragment extends Fragment {
 
             RequestOptions requestOptions = new RequestOptions();
 
-            requestOptions.centerCrop();
+            requestOptions.centerCrop()
+                    .error(R.drawable.slider_image)
+                    .placeholder(R.drawable.slider_image);
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView

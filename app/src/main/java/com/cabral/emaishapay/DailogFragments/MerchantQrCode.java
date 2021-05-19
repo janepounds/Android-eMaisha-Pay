@@ -42,6 +42,7 @@ public class MerchantQrCode extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
+
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -88,7 +89,7 @@ public class MerchantQrCode extends DialogFragment {
 
         builder.setView(view);
         Dialog dialog = builder.create();
-
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
 
         return dialog;
     }

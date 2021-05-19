@@ -48,7 +48,23 @@
                     android:layout_marginBottom="?actionBarSize"
                     android:orientation="vertical"
                     android:padding="@dimen/margin_15">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Upload Profile Photo"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
+                    <com.cabral.emaishapay.customs.CircularImageView
+                        android:id="@+id/user_pic"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_user_profile_placeholder_home" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -72,7 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:textColor="@color/textColorPrimaryLight"
+                            android:textColor="@color/colorPrimaryDark"
                             android:background="@android:color/transparent"
                             android:textSize="14sp"
                             android:padding="12dp"
@@ -128,7 +144,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginBottom="10dp"
+                            android:layout_margin="10dp"
                             android:src="@drawable/ic_right_chevron_arrow_white"
                             android:rotation="90"/>
 
@@ -169,7 +185,7 @@
                                 android:inputType="text"
                                 android:padding="10dp"
                                 android:textSize="14sp"
-                                android:textColor="@color/textColorPrimaryLight"/>
+                                android:textColor="@color/colorPrimaryDark"/>
 
                         </LinearLayout>
 
@@ -194,7 +210,7 @@
                                 android:inputType="text"
                                 android:padding="10dp"
                                 android:textSize="14sp"
-                                android:textColor="@color/textColorPrimaryLight"/>
+                                android:textColor="@color/colorPrimaryDark"/>
 
                         </LinearLayout>
 
@@ -239,32 +255,16 @@
                             android:maxLength="9"
                             android:padding="12dp"
                             android:textSize="14sp"
-                            android:textColor="@color/textColorPrimaryLight"/>
+                            android:textColor="@color/colorPrimaryDark"/>
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Upload Profile Photo"
-                        android:textColor="@color/textColor"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
 
-                    <com.cabral.emaishapay.customs.CircularImageView
-                        android:id="@+id/user_pic"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/user" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="25dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
@@ -273,7 +273,6 @@
                             android:id="@+id/cancel_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/rectangular_red_solid"
@@ -286,7 +285,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:background="@drawable/rectangular_blue_solid"
                             android:text="@string/submit"
