@@ -35,6 +35,7 @@ import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -155,7 +156,7 @@ public class AgentCustomerDeposits extends DialogFragment {
         call.enqueue(new Callback<ConfirmationDataResponse>() {
             @Override
             public void onResponse(Call<ConfirmationDataResponse> call, Response<ConfirmationDataResponse> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful()  && response.body().getStatus().equalsIgnoreCase("1")){
                     business_name = response.body().getData().getBusinessName();
 
                     FragmentManager fragmentManager = getChildFragmentManager();
@@ -176,7 +177,10 @@ public class AgentCustomerDeposits extends DialogFragment {
                     depositDialog.setArguments(bundle);
                     depositDialog.show(ft, "dialog");
                     dialogLoader.hideProgressDialog();
-                }else if(response.code()==412) {
+                }else if(response.isSuccessful()){
+                    Snackbar.make(addMoneyBtn,response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                else if(response.code()==412) {
                     Toast.makeText(getContext(),"Unknown Merchant",Toast.LENGTH_LONG).show();
                     //redirect to previous step
                     getActivity().getSupportFragmentManager().popBackStack();
