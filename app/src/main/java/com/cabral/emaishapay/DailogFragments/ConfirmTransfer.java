@@ -51,7 +51,7 @@ public class ConfirmTransfer extends DialogFragment {
     Button confirmBtn;
     TextView serviceTextView, datetimeTextView, totalTextView, receiverPhoneNumber,
             receiverNameTextView, errorTextView, transactionLabelTextView, receiverLabel,chargesTextView;
-    String businessName;
+    String businessName, beneficiary_id;
     Context context;
     LinearLayout charges_layount, discount_layount;
     DialogLoader dialogLoader;
@@ -121,7 +121,7 @@ public class ConfirmTransfer extends DialogFragment {
         String account_number = getArguments().getString("account_number");
         String branch=getArguments().getString("bankBranch");
         String bankCode=getArguments().getString("bankCode");
-        String beneficiary_id = getArguments().getString("beneficiary_id");
+        beneficiary_id = getArguments().getString("beneficiary_id");
         String beneficiary_bank_phone_number = getArguments().getString("beneficiary_bank_phone_number");
 
         totalTextView.setText(getString(R.string.currency)+" "+NumberFormat.getInstance().format(amount));
@@ -337,7 +337,8 @@ public class ConfirmTransfer extends DialogFragment {
                     request_id,
                     category,
                     "merchantMobileMoneyWithdraw",
-                    service_code
+                    service_code,
+                    beneficiary_id
 
             );
 
@@ -429,7 +430,8 @@ public class ConfirmTransfer extends DialogFragment {
                     request_id,
                     category,
                     "agentMobileMoneyWithdraw",
-                    service_code
+                    service_code,
+                    beneficiary_id
 
             );
 
@@ -530,7 +532,8 @@ public class ConfirmTransfer extends DialogFragment {
                     request_id,
                     category,
                     "customerMobileMoneyWithdraw",
-                    service_code
+                    service_code,
+                    beneficiary_id
 
             );
 
