@@ -22,6 +22,14 @@ public class BannerDetails {
     @Expose
     private String type;
 
+    public BannerDetails(int id, String title, String url, String image, String type) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.image = image;
+        this.type = type;
+    }
+
     /**
      * 
      * @return

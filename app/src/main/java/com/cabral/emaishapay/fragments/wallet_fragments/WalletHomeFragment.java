@@ -99,7 +99,10 @@ public class WalletHomeFragment extends Fragment {
 
         if(WalletHomeActivity.Banners!=null){
             Log.w("BannerWarning1",WalletHomeActivity.Banners.size()+" Banners");
-            ImageSlider("Ads", WalletHomeActivity.Banners );
+            if(WalletHomeActivity.Banners.size()==1 && WalletHomeActivity.Banners.get(0).getImage()==null)
+                ImageSlider("", WalletHomeActivity.Banners );
+            else
+                ImageSlider("Ads", WalletHomeActivity.Banners );
         }
 
 
@@ -499,10 +502,12 @@ public class WalletHomeFragment extends Fragment {
     }
 
     public void getBalanceAndCommission() {
+        dialog.showProgressDialog();
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
+
         Call<BalanceResponse> call = apiRequests.requestBalance(access_token,request_id,category,"getBalance");
         call.enqueue(new Callback<BalanceResponse>() {
             @Override
@@ -514,14 +519,8 @@ public class WalletHomeFragment extends Fragment {
                   commisionbalance = response.body().getData().getCommission();
                   totalBalance = response.body().getData().getTotalBalance();
 
-
-
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putString(WalletHomeActivity.PREFERENCES_USER_BALANCE, balance+"");
-//                    editor.apply();
-                    //update wallet balance
                     WalletHomeActivity.savePreferences(String.valueOf(WalletHomeActivity.PREFERENCE_WALLET_BALANCE), balance+"", context);
-                  //set balance and commision
+
                     binding.totalBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(totalBalance));
                     binding.walletBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(balance));
                     binding.cardBalance.setText(getString(R.string.currency)+" "+ NumberFormat.getInstance().format(commisionbalance));
@@ -627,25 +626,6 @@ public class WalletHomeFragment extends Fragment {
         });
 
         binding.productCoverSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-        // Check if the size of Images in the Slider is less than 2
-//        if (slider_covers.size() < 2) {
-//            // Disable PagerTransformer
-//            sliderLayout.setPagerTransformer(false, new BaseTransformer() {
-//                @Override
-//                protected void onTransform(View view, float v) {
-//
-//                }
-//            });
-//
-//            // Hide Slider PagerIndicator
-//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-//
-//        } else {
-//            // Set custom PagerIndicator to the SliderLayout
-//            sliderLayout.setCustomIndicator(pagerIndicator);
-//            // Make PagerIndicator Visible
-//            sliderLayout.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-//        }
 
     }
 

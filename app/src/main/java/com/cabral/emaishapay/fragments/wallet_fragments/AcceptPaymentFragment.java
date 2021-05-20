@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -30,7 +29,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -40,11 +38,6 @@ import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
-import com.flutterwave.raveutils.verification.RaveVerificationUtils;
-
 import java.util.Date;
 
 import retrofit2.Call;
@@ -65,7 +58,6 @@ public class AcceptPaymentFragment extends Fragment {
     Dialog dialog;
     private Context context;
     String txRef;
-    private RaveVerificationUtils verificationUtils;
 
 
     private Dialog otpDialog;
@@ -94,7 +86,6 @@ public class AcceptPaymentFragment extends Fragment {
 
         dialogLoader = new DialogLoader(getContext());
         this.txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, getContext()) + (new Date().getTime());
-        verificationUtils = new RaveVerificationUtils(this, false, BuildConfig.PUBLIC_KEY);
 
         txtPaymentMethod=view.findViewById(R.id.text_mobile_number);
         layoutMobileMoney=view.findViewById(R.id.layout_mobile_number);
@@ -157,15 +148,12 @@ public class AcceptPaymentFragment extends Fragment {
 
 
     public void initiateAcceptPayment(final String phoneNumber, final double amount) {
-
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String service_code = "121518";
         dialogLoader.showProgressDialog();
-
         String type="Agent Transfer";
-
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -182,20 +170,8 @@ public class AcceptPaymentFragment extends Fragment {
                     TokenAuthFragment.startAuth( true);
                     getActivity().finish();
                 }
-                else if(response.code() == 401) {
-                    TokenAuthFragment.startAuth( true);
-
-                }
-                else if (response.code() == 500) {
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
-                } else if (response.code() == 406) {
-
-                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
-                } else {
-                    Log.e("info 406", new String("Error Occurred Try again later"));
-
+                else {
+                    Log.e("info404", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
                 }
                 dialogLoader.hideProgressDialog();
             }

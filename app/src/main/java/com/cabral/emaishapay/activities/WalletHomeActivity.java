@@ -62,6 +62,7 @@ import com.google.firebase.FirebaseApp;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -77,7 +78,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
-    public static List<BannerDetails> Banners;
+    public static List<BannerDetails> Banners= new ArrayList<>();
     private static Context context;
     public static FragmentManager fm;
     public  int currentFragment;

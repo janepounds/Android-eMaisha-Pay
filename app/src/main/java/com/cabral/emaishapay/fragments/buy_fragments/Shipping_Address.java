@@ -277,7 +277,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         }
 
 
-        if (isValidData && addresses!=null ) {
+        if (isValidData && addresses!=null && addresses.size()!=0 ) {
             dialogLoader.showProgressDialog();
 
             final String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
