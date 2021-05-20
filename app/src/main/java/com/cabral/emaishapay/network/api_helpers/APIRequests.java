@@ -1006,7 +1006,8 @@ public interface APIRequests {
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id") String action_id,
-            @Field("service_code") String service_code
+            @Field("service_code") String service_code,
+            @Field("beneficiary_id") String beneficiary_id
 
     );
 
@@ -1020,7 +1021,8 @@ public interface APIRequests {
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id") String action_id,
-            @Field("service_code") String service_code
+            @Field("service_code") String service_code,
+            @Field("beneficiary_id") String beneficiary_id
 
     );
 
@@ -1033,7 +1035,8 @@ public interface APIRequests {
             @Field("request_id") String request_id,
             @Field("category") String category,
             @Field("action_id") String action_id,
-            @Field("service_code") String service_code
+            @Field("service_code") String service_code,
+            @Field("beneficiary_id") String beneficiary_id
 
     );
 
