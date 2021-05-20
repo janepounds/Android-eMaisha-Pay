@@ -291,6 +291,7 @@ public class ConfirmTransfer extends DialogFragment {
 
                 } else if (response.code() == 401) {
                     TokenAuthFragment.startAuth(true);
+                    dialogPIN.dismiss();
 
                 }
                 if (response.errorBody() != null) {

@@ -184,8 +184,8 @@ public class DepositMoneyMobile extends DialogFragment {
 
                 } else if (response.code() == 401) {
                     dialogLoader.hideProgressDialog();
-                    DepositMoneyMobile.this.dismiss();
                     TokenAuthFragment.startAuth(true);
+                    DepositMoneyMobile.this.dismiss();
                 }  else {
                     dialogLoader.hideProgressDialog();
                     if (response.errorBody() != null) {

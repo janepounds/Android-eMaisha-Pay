@@ -248,6 +248,7 @@ public class AddCardFragment extends DialogFragment {
                     Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
                     //redirect to auth
                     TokenAuthFragment.startAuth( true);
+                    AddCardFragment.this.dismiss();
 
                 }
             }
