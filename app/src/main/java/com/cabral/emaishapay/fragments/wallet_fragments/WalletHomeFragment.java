@@ -591,8 +591,8 @@ public class WalletHomeFragment extends Fragment {
             RequestOptions requestOptions = new RequestOptions();
 
             requestOptions.centerCrop()
-                    .error(R.drawable.slider_image)
-                    .placeholder(R.drawable.slider_image);
+                    .error(R.drawable.banner_placeholder)
+                    .placeholder(R.drawable.banner_placeholder);
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView
