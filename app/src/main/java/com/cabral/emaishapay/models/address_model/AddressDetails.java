@@ -3,8 +3,10 @@ package com.cabral.emaishapay.models.address_model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class AddressDetails {
+
+public class AddressDetails  implements Serializable {
 
     @SerializedName("user_id")
     @Expose

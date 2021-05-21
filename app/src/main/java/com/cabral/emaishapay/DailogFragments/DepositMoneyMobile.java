@@ -28,6 +28,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.models.MomoTransactionResponse;
 import com.cabral.emaishapay.models.TransactionStatusResponse;
 import com.cabral.emaishapay.models.WalletTransaction;
@@ -186,6 +187,7 @@ public class DepositMoneyMobile extends DialogFragment {
                     dialogLoader.hideProgressDialog();
                     TokenAuthFragment.startAuth(true);
                     DepositMoneyMobile.this.dismiss();
+                    WalletHomeFragment.depositPaymentsDialog.dismiss();
                 }  else {
                     dialogLoader.hideProgressDialog();
                     if (response.errorBody() != null) {
@@ -296,6 +298,8 @@ public class DepositMoneyMobile extends DialogFragment {
         } else if (response.code() == 401) {
             dialogLoader.hideProgressDialog();
             TokenAuthFragment.startAuth(true);
+            DepositMoneyMobile.this.dismiss();
+            WalletHomeFragment.depositPaymentsDialog.dismiss();
         }  else {
 
             if (response.errorBody() != null) {

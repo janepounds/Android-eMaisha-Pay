@@ -72,6 +72,7 @@ public class WalletHomeFragment extends Fragment {
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
+    public static DialogFragment depositPaymentsDialog;
     private static SharedPreferences sharedPreferences;
     NavController navController;
 
@@ -187,8 +188,8 @@ public class WalletHomeFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment depositDialog = new DepositPayments( WalletHomeFragment.balance);
-                depositDialog.show(ft, "dialog");
+                depositPaymentsDialog = new DepositPayments( WalletHomeFragment.balance);
+                depositPaymentsDialog.show(ft, "dialog");
             }
         });
 
