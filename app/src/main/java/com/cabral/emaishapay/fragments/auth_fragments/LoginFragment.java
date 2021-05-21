@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,6 +114,41 @@ public class LoginFragment  extends Fragment {
             firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
             secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
             thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+
+            firstSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            secondSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            thirdSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             RequestSecurityQns();
 
             final AlertDialog alertDialog = dialog.create();
@@ -141,6 +178,7 @@ public class LoginFragment  extends Fragment {
 
 
         });
+
 
     }
 

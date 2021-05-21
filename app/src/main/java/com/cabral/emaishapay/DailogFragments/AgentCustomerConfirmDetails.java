@@ -347,7 +347,7 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
         layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
         tvChangeNumber = otpDialog.findViewById(R.id.text_view_change_number);
 
-        CountDownTimer timer = new  CountDownTimer(90000, 1000) {
+        CountDownTimer timer = new  CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );

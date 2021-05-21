@@ -286,7 +286,7 @@ public class AcceptPaymentFragment extends Fragment {
         tvTimer= otpDialog.findViewById(R.id.tv_timer);
         layoutResendCode= otpDialog.findViewById(R.id.layout_resend_code);
 
-        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+        CountDownTimer timer = new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText(millisUntilFinished / 1000 + " Seconds" );

@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_margin="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="6dp"
         android:layout_weight=".9"
         android:src="@drawable/ic_new_close_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -251,7 +252,9 @@
             android:layout_centerHorizontal="true"
             android:text="Forgot Pin?  "
             android:textColor="#123365"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
 
         <TextView
             android:id="@+id/text_forgot_pin"
@@ -260,7 +263,9 @@
             android:layout_toEndOf="@id/signin1"
             android:text=" Click here "
             android:textColor="#2D84B7"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
