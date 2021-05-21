@@ -244,10 +244,11 @@ public class WalletHomeActivity extends AppCompatActivity{
                     fragmentContainerView.setPadding(0,0,0,0);
                 }else if(bottom_navigation_shop.getVisibility()==View.VISIBLE || bottomNavigationView.getVisibility()==View.VISIBLE
                         || scanCoordinatorLayout.getVisibility()==View.VISIBLE){
-                    fragmentContainerView.setPadding(0,0,0,232);
-                } else{
                     fragmentContainerView.setPadding(0,0,0,0);
                 }
+//                else{
+//                    fragmentContainerView.setPadding(0,0,0,200);
+//                }
 
 
         }
