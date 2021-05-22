@@ -153,7 +153,7 @@ public class AcceptPaymentFragment extends Fragment {
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
         String service_code = "121518";
         dialogLoader.showProgressDialog();
-        String type="Agent Transfer";
+        String type="Merchant Accept Payment";
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
@@ -198,7 +198,7 @@ public class AcceptPaymentFragment extends Fragment {
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
         Call<InitiateWithdrawResponse> call = apiRequests.
-                confirmAcceptPayment(access_token, amount,customerNumber,receiverPhoneNumber,OTPCode,request_id,category,"confirmAgentPayment",service_code);
+                confirmAcceptPayment(access_token, amount,customerNumber,receiverPhoneNumber,OTPCode,request_id,category,"completeMerchantAcceptPayment",service_code);
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {

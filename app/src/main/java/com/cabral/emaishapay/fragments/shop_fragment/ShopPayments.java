@@ -1050,7 +1050,7 @@ public class ShopPayments extends Fragment implements
 
         /*****RETROFIT IMPLEMENTATION*****/
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<InitiateWithdrawResponse> call = apiRequests.confirmAcceptPayment(access_token, amount,customerNumber,receiverPhoneNumber,OTPCode,request_id,category,"confirmAgentPayment",service_code);
+        Call<InitiateWithdrawResponse> call = apiRequests.confirmAcceptPayment(access_token, amount,customerNumber,receiverPhoneNumber,OTPCode,request_id,category,"completeMerchantAcceptPayment",service_code);
         call.enqueue(new Callback<InitiateWithdrawResponse>() {
             @Override
             public void onResponse(Call<InitiateWithdrawResponse> call, Response<InitiateWithdrawResponse> response) {
