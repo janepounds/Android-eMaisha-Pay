@@ -14,6 +14,7 @@
     <color name="whiteColor">#ffffff</color>
     <color name="submitBtnColor">#056839</color>
     <color name="hintColor">#8E9B8C</color>
+    <color name="textHintColor">#D8D8D8</color>
     <color name="editTextBorderColor">#ffd3d4d9</color>
     <color name="darkBorderColor">#6B6E77</color>
     <color name="glide_slider_background_color">#DBF2FF</color>

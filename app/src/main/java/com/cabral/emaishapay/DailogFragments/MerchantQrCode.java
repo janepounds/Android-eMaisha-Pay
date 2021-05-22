@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -49,7 +51,15 @@ public class MerchantQrCode extends DialogFragment {
         View view = inflater.inflate(R.layout.layout_view_merchant_qr_code, null);
         ImageView imageView = view.findViewById(R.id.merchant_qr_code);
         ImageView close = view.findViewById(R.id.img_merchant_qr_code_close);
+        TextView title = view.findViewById(R.id.text_view_title_label);
         close.setOnClickListener(v -> dismiss());
+
+         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
+        if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
+            title.setText("AGENT CODE");
+        }else if(role.equalsIgnoreCase("merchant")){
+            title.setText("MERCHANT CODE");
+        }
 
         // below line is for getting
         // the windowmanager service.
