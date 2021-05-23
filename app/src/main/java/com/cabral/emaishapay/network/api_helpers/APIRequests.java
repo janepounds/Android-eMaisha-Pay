@@ -6,6 +6,7 @@ import com.cabral.emaishapay.models.CancelLoanResponse;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.ChangePinResponse;
 import com.cabral.emaishapay.models.BeneficiaryListResponse;
+import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.models.InitiateTransferResponse;
 import com.cabral.emaishapay.models.InitiateWithdrawResponse;
 import com.cabral.emaishapay.models.MomoTransactionResponse;
@@ -306,12 +307,33 @@ public interface APIRequests {
 
     // //voucher deposit
     @FormUrlEncoded
-    @POST("wallet/payment/voucherdeposit")
-    Call<CouponsData> voucherDeposit(@Header("Authorization") String token,
-                                     @Field("codeEntered") String codeEntered,
-                                     @Field("request_id") String request_id,
-                                     @Field("category") String category,
-                                     @Field("action_id")String action_id
+    @POST("wallet/customer/voucher-deposit")
+    Call<GeneralWalletResponse> voucherDepositCustomer(@Header("Authorization") String token,
+                                                       @Field("codeEntered") String codeEntered,
+                                                       @Field("request_id") String request_id,
+                                                       @Field("category") String category,
+                                                       @Field("service_code")String service_code,
+                                                       @Field("action_id")String action_id
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/merchant/voucher-deposit")
+    Call<GeneralWalletResponse> voucherDepositMerchant(@Header("Authorization") String token,
+                                             @Field("codeEntered") String codeEntered,
+                                             @Field("request_id") String request_id,
+                                             @Field("category") String category,
+                                             @Field("service_code")String service_code,
+                                             @Field("action_id")String action_id
+    );
+
+    @FormUrlEncoded
+    @POST("wallet/agent/voucher-deposit")
+    Call<GeneralWalletResponse> voucherDepositAgent(@Header("Authorization") String token,
+                                             @Field("codeEntered") String codeEntered,
+                                             @Field("request_id") String request_id,
+                                             @Field("category") String category,
+                                             @Field("service_code")String service_code,
+                                             @Field("action_id")String action_id
     );
 
     // //loan pay

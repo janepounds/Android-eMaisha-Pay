@@ -253,12 +253,12 @@ public class DepositMoneyMobile extends DialogFragment {
 
             if(response.body().getStatus()==1) {
                 if(response.body().getCode().equalsIgnoreCase("201")){
-                    if(responseCheckCounter==4){
+                    if(responseCheckCounter==6){
                         dialog.setContentView(R.layout.dialog_failure_message);
                         response.body().setMessage("Transaction timeout, please try again later!");
                     }else{
                         try {
-                            Thread.sleep(15000);
+                            Thread.sleep(10000);
                             responseCheckCounter++;
                         } catch (InterruptedException e) {
                             e.printStackTrace();

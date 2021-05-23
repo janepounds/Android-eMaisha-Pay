@@ -26,7 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
-import com.cabral.emaishapay.models.coupons_model.CouponsData;
+import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 
@@ -102,25 +102,48 @@ public class DepositMoneyVoucher extends DialogFragment {
         String request_id = WalletHomeActivity.generateRequestId();
         String codeEntered = voucherTxt.getText().toString();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
 
         APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<CouponsData> call = apiRequests.voucherDeposit(access_token,codeEntered,request_id,category,"initiateVoucherPay");
-        call.enqueue(new Callback<CouponsData>() {
+        Call<GeneralWalletResponse> call;
+        if(category.equalsIgnoreCase("Agent")){
+            call = apiRequests.voucherDepositAgent(access_token,codeEntered,request_id,category,service_code,"agentInitiateVoucherDeposit");
+        }else if(category.equalsIgnoreCase("Merchant")){
+            call = apiRequests.voucherDepositMerchant(access_token,codeEntered,request_id,category,service_code, "merchantInitiateVoucherDeposit");
+        }else {
+            call = apiRequests.voucherDepositCustomer(access_token,codeEntered,request_id,category,service_code, "customerInitiateVoucherDeposit");
+        }
+
+        call.enqueue(new Callback<GeneralWalletResponse>() {
             @Override
-            public void onResponse(Call<CouponsData> call, Response<CouponsData> response) {
+            public void onResponse(Call<GeneralWalletResponse> call, Response<GeneralWalletResponse> response) {
                 if(response.code()== 200){
-                    refreshActivity();
+
+                    dialogLoader.hideProgressDialog();
+                    final Dialog dialog = new Dialog(activity);
+
+                    if (response.body().getStatus().equalsIgnoreCase("1")) {
+                        dialog.setContentView(R.layout.dialog_successful_message);
+                    } else {
+                        dialog.setContentView(R.layout.dialog_failure_message);
+                    }
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
+                    text.setText(response.body().getMessage());
+
+                    dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
+                            startActivity(goToWallet);
+                        }
+                    });
+                    dialog.show();
+
                 }else if(response.code()==401){
                     TokenAuthFragment.startAuth( true);
-
-                }else if(response.code()==500){
-                    if (response.errorBody() != null) {
-                        errorMsgTxt.setText(response.body().getMessage());
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: "+response.code());
-                    }
-                    Log.e("info 500", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
 
                 }else if(response.code() ==400){
                     if (response.errorBody() != null) {
@@ -130,18 +153,6 @@ public class DepositMoneyVoucher extends DialogFragment {
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
                     Log.e("info 500", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
-                    dialogLoader.hideProgressDialog();
-                }else if(response.code() ==406){
-                    if (response.errorBody() != null) {
-
-                            errorMsgTxt.setText(response.errorBody().toString());
-                            errorMsgTxt.setText("Error Occurred Please Check and Try again");
-
-                    }else {
-
-                        Log.e("info", "Something got very very wrong, code: "+response.code());
-                    }
-                    Log.e("info 406", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
                     dialogLoader.hideProgressDialog();
                 }
                 else{
@@ -161,7 +172,7 @@ public class DepositMoneyVoucher extends DialogFragment {
 
 
             @Override
-            public void onFailure(Call<CouponsData> call, Throwable t) {
+            public void onFailure(Call<GeneralWalletResponse> call, Throwable t) {
 
                     errorMsgTxt.setText(t.getMessage());
 
