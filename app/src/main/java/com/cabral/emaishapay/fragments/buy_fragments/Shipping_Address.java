@@ -573,13 +573,19 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         // Address has been added to User's Addresses
                         // Navigate to Addresses fragment
-                        ((WalletBuySellActivity) getContext()).getSupportFragmentManager().popBackStack();
+                        WalletBuySellActivity.navController.navigate(R.id.action_shippingAddress_to_walletAddressesFragment);
+
                         if( my_cart!=null){
 
                             // Navigate to Shipping_Methods Fragment
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("my_cart",my_cart);
-                            WalletBuySellActivity.navController.navigate(R.id.action_shippingAddress_to_nearbyMerchants,bundle);
+                            if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.walletAddressesFragment){
+                                WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_nearbyMerchants,bundle);
+                            }else {
+
+                                WalletBuySellActivity.navController.navigate(R.id.action_shippingAddress_to_nearbyMerchants, bundle);
+                            }
 
                         }else
                             parentFrag.RequestAllAddresses();

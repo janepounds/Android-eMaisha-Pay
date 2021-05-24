@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_shippingAddress_to_nearbyMerchants"
             app:destination="@id/nearbyMerchants" />
+        <action
+            android:id="@+id/action_shippingAddress_to_walletAddressesFragment"
+            app:destination="@id/walletAddressesFragment" />
     </fragment>
 
     <fragment
