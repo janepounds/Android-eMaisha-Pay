@@ -26,6 +26,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.models.GeneralWalletResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
@@ -127,6 +128,7 @@ public class DepositMoneyVoucher extends DialogFragment {
                     } else {
                         dialog.setContentView(R.layout.dialog_failure_message);
                     }
+
                     dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog.setCancelable(false);
                     TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
@@ -144,7 +146,8 @@ public class DepositMoneyVoucher extends DialogFragment {
 
                 }else if(response.code()==401){
                     TokenAuthFragment.startAuth( true);
-
+                    DepositMoneyVoucher.this.dismiss();
+                    WalletHomeFragment.depositPaymentsDialog.dismiss();
                 }else if(response.code() ==400){
                     if (response.errorBody() != null) {
                         Toast.makeText(getContext(), "Wrong Voucher code!", Toast.LENGTH_LONG).show();

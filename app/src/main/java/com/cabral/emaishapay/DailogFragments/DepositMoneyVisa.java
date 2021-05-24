@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
+import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.R;
@@ -102,7 +103,6 @@ public class DepositMoneyVisa extends DialogFragment  {
     }
 
     public void initializeForm(View view) {
-
         addMoneyImg = view.findViewById(R.id.button_add_money);
         addMoneyTxt = view.findViewById(R.id.wallet_add_money_amount);
         errorMsgTxt = view.findViewById(R.id.text_view_error_message);
@@ -110,7 +110,6 @@ public class DepositMoneyVisa extends DialogFragment  {
         card_details_layout = view.findViewById(R.id.card_details_layout);
         checkbox_save_card = view.findViewById(R.id.checkbox_save_card);
         addMoneyImg.setText("Top Up");
-
 
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,7 +242,6 @@ public class DepositMoneyVisa extends DialogFragment  {
                 dialogLoader.hideProgressDialog();
 
                 if(response.isSuccessful() && response.body().getStatus()==1){
-
                     //success message
                     final Dialog dialog = new Dialog(getContext());
                     dialog.setContentView(R.layout.dialog_successful_message);
@@ -267,6 +265,11 @@ public class DepositMoneyVisa extends DialogFragment  {
                 }
                 else if(response.isSuccessful()){
                     Snackbar.make(addMoneyTxt,response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                }else if (response.code() == 401) {
+                    dialogLoader.hideProgressDialog();
+                    TokenAuthFragment.startAuth(true);
+                    DepositMoneyVisa.this.dismiss();
+                    WalletHomeFragment.depositPaymentsDialog.dismiss();
                 }
                 else {
 
