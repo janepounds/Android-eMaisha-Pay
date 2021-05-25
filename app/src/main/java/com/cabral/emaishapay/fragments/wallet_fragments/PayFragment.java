@@ -480,7 +480,10 @@ public class PayFragment extends Fragment {
     }
 
     public boolean validateForm(){
-        if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
+        if( TextUtils.isEmpty(totalAmountEdt.getText())){
+            totalAmountEdt.setError("Invalid Amount");
+            return false;
+        }else if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
             if (spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")) {
                 Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
                 return false;

@@ -158,7 +158,7 @@ public class PurchasePreview extends DialogFragment  {
                     String service_code =WalletHomeActivity.PREFERENCES_PREPIN_ENCRYPTION+ pinEdittext.getText().toString() ;
                     dialogLoader.showProgressDialog();
                     if( methodOfPayment.equalsIgnoreCase("wallet") || methodOfPayment.equalsIgnoreCase("eMaisha Pay") ){
-                        processWalletPayment(service_code );
+                        processWalletPayment(service_code,dialog );
                     }
                     else if(methodOfPayment.equalsIgnoreCase("eMaisha Card") || methodOfPayment.equalsIgnoreCase("Bank Cards") ){
 
@@ -344,7 +344,7 @@ public class PurchasePreview extends DialogFragment  {
         }
         }
 
-    private void processWalletPayment(String service_code) {
+    private void processWalletPayment(String service_code, Dialog pinDialog) {
         String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
         String coupon  = WalletTransactionInitiation.getInstance().getCoupon();
@@ -409,6 +409,12 @@ public class PurchasePreview extends DialogFragment  {
                         dialog.show();
                     }
 
+
+                } else if (response.code() == 401) {
+                    dialogLoader.hideProgressDialog();
+                    TokenAuthFragment.startAuth(true);
+                    PurchasePreview.this.dismiss();
+                    pinDialog.dismiss();
 
                 }else{
                     errorTextView.setText(response.errorBody().toString());

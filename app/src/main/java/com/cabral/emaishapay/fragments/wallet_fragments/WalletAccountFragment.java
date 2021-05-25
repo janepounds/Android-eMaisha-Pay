@@ -887,7 +887,7 @@ public class WalletAccountFragment extends Fragment {
 
             });
 
-            String versionCode =  String.valueOf(BuildConfig.VERSION_CODE);
+            String versionCode =  String.valueOf(BuildConfig.VERSION_NAME);
             binding.textAppVersion.setText(versionCode);
 
         return binding.getRoot();

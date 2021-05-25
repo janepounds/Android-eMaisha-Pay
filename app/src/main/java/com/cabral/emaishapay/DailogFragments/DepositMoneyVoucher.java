@@ -152,7 +152,6 @@ public class DepositMoneyVoucher extends DialogFragment {
                     if (response.errorBody() != null) {
                         Toast.makeText(getContext(), "Wrong Voucher code!", Toast.LENGTH_LONG).show();
                     } else {
-
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
                     Log.e("info 500", new String(String.valueOf(response.errorBody()))+", code: "+response.code());

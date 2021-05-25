@@ -60,7 +60,9 @@ public class ConfirmTransfer extends DialogFragment {
     public ConfirmTransfer( String businessName){
         this.businessName=businessName;
     }
+    public ConfirmTransfer( ){
 
+    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
