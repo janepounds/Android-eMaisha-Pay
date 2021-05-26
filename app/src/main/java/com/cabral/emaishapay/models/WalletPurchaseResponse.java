@@ -40,26 +40,15 @@ public class WalletPurchaseResponse {
         @Expose
         private String transactionId;
 
-        @SerializedName("perweek")
-        @Expose
-        private String perweek;
-
-        @SerializedName("total")
-        @Expose
-        private String total;
-
-        @SerializedName("level")
-        @Expose
-        private String level;
 
         @SerializedName("referenceNumber")
         @Expose
         private String referenceNumber;
 
 
-        @SerializedName("amount")
+        @SerializedName("balance")
         @Expose
-        private String amount;
+        private String balance;
 
         public String getStatus() {
             return status;
@@ -77,21 +66,6 @@ public class WalletPurchaseResponse {
             this.transactionId = transactionId;
         }
 
-        public String getPerweek() {
-            return perweek;
-        }
-
-        public String getTotal() {
-            return total;
-        }
-
-        public String getLevel() {
-            return level;
-        }
-
-        public String getAmount() {
-            return amount;
-        }
 
         public String getReferenceNumber() {
             return referenceNumber;
@@ -99,6 +73,14 @@ public class WalletPurchaseResponse {
 
         public void setReferenceNumber(String referenceNumber) {
             this.referenceNumber = referenceNumber;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
         }
     }
 

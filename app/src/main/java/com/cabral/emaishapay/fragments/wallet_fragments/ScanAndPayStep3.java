@@ -58,7 +58,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     private SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private String pin,merchant_id;
-    private double Amount;
+    private double Amount=0;
     DialogLoader dialogLoader;
 
 
@@ -79,7 +79,9 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
             binding.textMerchantName.setText(getArguments().getString("merchant_name"));
             binding.amount.setText("UGX "+getArguments().getString("amount"));
             merchant_id = getArguments().getString("merchant_id");
-            Amount = Double.parseDouble(getArguments().getString("amount"));
+
+            if(!TextUtils.isEmpty(getArguments().getString("amount")))
+                Amount = Double.parseDouble(getArguments().getString("amount"));
 
         }
         setKeyValues();
@@ -390,7 +392,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                         bundle.putString("merchant_id", merchant_id);
                         bundle.putString("trans_id", response.body().getData().getReferenceNumber());
                         bundle.putString("Date", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
-                        //bundle.putString("balance", response.body().getData().getBalance());
+                        bundle.putString("balance", response.body().getData().getBalance());
 
                         WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep3_to_scanAndPayStep4,bundle);
 

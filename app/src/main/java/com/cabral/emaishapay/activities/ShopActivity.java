@@ -93,14 +93,14 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
 
-        AppExecutors.getInstance().NetworkIO().execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        StartAppRequests.SyncProductData();
-                    }
-                }
-        );
+//        AppExecutors.getInstance().NetworkIO().execute(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        StartAppRequests.SyncProductData();
+//                    }
+//                }
+//        );
 
 
     }
