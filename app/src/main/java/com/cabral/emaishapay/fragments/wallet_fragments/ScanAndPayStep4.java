@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import androidx.fragment.app.Fragment;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep4Binding;
+
+import java.text.NumberFormat;
+
 
 public class ScanAndPayStep4 extends Fragment {
     private Context context;
@@ -41,7 +45,15 @@ public class ScanAndPayStep4 extends Fragment {
             binding.textMerchantId.setText(getArguments().getString("merchant_id"));
             binding.textDateTime.setText(getArguments().getString("Date"));
             binding.textTxnId.setText(getArguments().getString("trans_id"));
-            //binding.textUpdatedWalletBalanceAmount.setText(getArguments().getString("balance"));
+            try{
+                String balance=getString(R.string.currency)+" "+ NumberFormat.getInstance().format(getArguments().getString("balance"));
+                binding.textUpdatedWalletBalanceAmount.setText(balance);
+            }catch (NumberFormatException exception){
+                exception.printStackTrace();
+                Log.e("ScanAndPay4Error",exception.getMessage());
+            }
+
+
             binding.textMerchantName2.setText(getArguments().getString("merchant_name"));
 
         }
