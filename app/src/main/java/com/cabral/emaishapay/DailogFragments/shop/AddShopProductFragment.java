@@ -63,6 +63,7 @@ import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
+import com.cabral.emaishapay.services.SyncService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -992,6 +993,9 @@ public class AddShopProductFragment extends DialogFragment {
                                       if (checkAddedProduct>0) {
                                           dialogLoader.hideProgressDialog();
                                           Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
+
+                                          //start product sync
+                                          context.startService(new Intent(context, SyncService.class));
 
                                           AddShopProductFragment.this.dismiss();
                                       } else {

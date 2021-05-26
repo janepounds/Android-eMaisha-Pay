@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerBalanceInquiry;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
@@ -53,7 +55,12 @@ import com.cabral.emaishapay.DailogFragments.DepositMoneyVoucher;
 import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
+import com.cabral.emaishapay.network.Connectivity;
+import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
+import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
+import com.cabral.emaishapay.network.db.entities.EcProduct;
+import com.cabral.emaishapay.services.SyncService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,6 +74,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -265,6 +273,9 @@ public class WalletHomeActivity extends AppCompatActivity{
 //            fragmentContainerView.setPadding(0,0,0,0);
 //        }
 
+
+        //start product sync service
+        startService(new Intent(this, SyncService.class));
 
 
     }
@@ -829,7 +840,100 @@ public class WalletHomeActivity extends AppCompatActivity{
 
     }
 
+    public static  void SyncProductData() {
+        if(context==null){
+            return;
+        }else{
 
-//
+            String category=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE, context);
+            if(category.equalsIgnoreCase("Default") || TextUtils.isEmpty(category)){
+                return;
+            }
+        }
+        if (Connectivity.isConnected(context)) {
+            String sync_status = "0";
+            List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
+
+            //Log.w("unsyncedProducts",productsList.size()+" products");
+            for (int i = 0; i < productsList.size(); i++) {
+                Log.e("WAlletIDError",productsList.get(i).getId()+"");
+
+                String wallet_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
+
+
+                saveProductList(
+                        productsList.get(i).getProduct_id(),
+                        productsList.get(i).getId(),
+                        wallet_id,
+                        productsList.get(i).getManufacturer(),
+                        productsList.get(i).getProduct_name(),
+                        productsList.get(i).getProduct_code(),
+                        productsList.get(i).getProduct_category(),
+                        productsList.get(i).getProduct_buy_price(),
+                        productsList.get(i).getProduct_sell_price(),
+                        productsList.get(i).getProduct_supplier(),
+                        productsList.get(i).getProduct_image(),
+                        productsList.get(i).getProduct_stock(),
+                        productsList.get(i).getProduct_weight()+" "+productsList.get(i).getProduct_weight_unit(),
+                        productsList.get(i).getSync_status()
+
+                );
+            }
+
+        }
+
+    }
+
+
+    public static void saveProductList(String product_id, String unique_product_id, String user_id, String product_manufacturer,
+                                       String product_name, String product_code, String product_category, String product_buy_price, String product_sell_price,
+                                       String product_supplier, String product_image, String product_stock, String product_unit, String sync_status) {
+        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+
+        Call<ResponseBody> call = BuyInputsAPIClient
+                .getInstance()
+                .postProduct(access_token, unique_product_id, user_id, product_id, product_buy_price, product_sell_price,
+                        product_supplier, Integer.parseInt(product_stock), product_manufacturer, product_category, product_name
+                );
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    //update product status
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //update Sync Status
+                            long updateStatus = DataRepository.getOurInstance(context).updateProductSyncStatus(product_id, "1");
+                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (updateStatus > 0) {
+                                        Log.d("SyncStatus", "Product Synced");
+                                    } else {
+
+                                        Log.d("SyncStatus", "Sync Failed");
+
+                                    }
+                                }
+                            });
+
+
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: Sync Failed" + t.getMessage());
+
+            }
+        });
+    }
 
 }
