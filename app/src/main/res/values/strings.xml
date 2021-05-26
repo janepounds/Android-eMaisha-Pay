@@ -683,11 +683,11 @@
     <string name="btn_backspace">Back</string>
     <string name="pay_description">
         You want to pay or get paid?
-        We are fast and safe.</string>
+        We are <b>Fast</b> and <b>Safe</b>.</string>
     <string name="get_credit">GET CREDIT</string>
-    <string name="get_credit_description">You want to get a loan? We are quick and cheap.</string>
+    <string name="get_credit_description">You want to get a loan? We are <b>Quick</b> and <b>Cheap</b>.</string>
     <string name="shop">SHOP</string>
-    <string name="shop_description">You want to buy quality Agro-inputs We are affordable, accessible and reliable</string>
+    <string name="shop_description">You want to buy quality Agro-inputs We are <b>Affordable</b>, <b>Accessible</b> and <b>Reliable</b>.</string>
     <string name="Review">Review</string>
     <string name="AddReview">Add Review</string>
     <string name="create_pin">Create PIN</string>
