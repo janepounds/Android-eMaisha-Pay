@@ -46,7 +46,7 @@ public class PurchasePreview extends DialogFragment  {
 
     Button confirmBtn;
     LinearLayout error_message_layout, discount_layout;
-    TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView,
+    TextView purchase_date_label_TextView,datetimeTextView, totalTextView,mechantIdTextView, serviceTextView,
             mechantNameTextView,errorTextView, discountTextView,merchant_label;
 
     String businessName;
@@ -87,8 +87,8 @@ public class PurchasePreview extends DialogFragment  {
     }
 
     public void initializeView(View view){
-
         purchase_date_label_TextView = view.findViewById(R.id.purchase_date_label);
+        serviceTextView = view.findViewById(R.id.text_view_purchase_service);
         totalTextView = view.findViewById(R.id.txt_view_crop_bill_preview_total);
         errorTextView = view.findViewById(R.id.Comfirmation_Error_textview);
         discountTextView= view.findViewById(R.id.txt_view_discount_preview_total);
@@ -113,6 +113,7 @@ public class PurchasePreview extends DialogFragment  {
         currentDateandTime = localFormat.format(new Date());
         purchase_date_label_TextView.setText(getString(R.string.purchase_date));
         datetimeTextView.setText(currentDateandTime);
+        discount_layout.setVisibility(View.GONE);
 
 
         String key = WalletTransactionInitiation.getInstance().getPayTo();
@@ -142,13 +143,10 @@ public class PurchasePreview extends DialogFragment  {
         //LayoutInflater inflater = requireActivity().getLayoutInflater();
         View pinDialog = View.inflate(activity,R.layout.dialog_enter_pin,null);
 
-
         builder.setView(pinDialog);
         dialog = builder.create();
         builder.setCancelable(false);
-
         EditText pinEdittext =pinDialog.findViewById(R.id.etxt_create_agent_pin);
-
 
 
         pinDialog.findViewById(R.id.txt_custom_add_agent_submit_pin).setOnClickListener(new View.OnClickListener() {

@@ -126,7 +126,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="5dp"
                         android:layout_weight="1.05"
-                        android:text="None"
+                        android:text="Pay Merchant"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>
@@ -230,7 +230,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="5dp"
                         android:layout_weight="1.05"
-                        android:text="None"
+                        android:text="0"
                         android:alpha="1.0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"/>

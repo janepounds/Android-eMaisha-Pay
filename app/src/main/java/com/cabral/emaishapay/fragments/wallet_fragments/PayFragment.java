@@ -256,8 +256,6 @@ public class PayFragment extends Fragment {
         });
 
 
-
-
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -338,48 +336,6 @@ public class PayFragment extends Fragment {
             getMechantName(amount);
         }
 
-
-//        if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
-//            Snackbar.make(saveBtn, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-//            return ;
-  //      }
-//       if(methodOfPayment.equals("Bank Cards") && spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New")){
-//
-//            cardNo = cardNumberEdt.getText().toString();
-//            cvv = cvvEdt.getText().toString();
-//            expiry = expiryEdt.getText().toString();
-//            mobileNo = mobileNumberEdt.getText().toString();
-//        }
-
-
-//
-//        if(amount>0 && !mechantIdEdt.getText().toString().isEmpty()){
-//            WalletTransactionInitiation.getInstance().setMechantId(mechantIdEdt.getText().toString());
-//            WalletTransactionInitiation.getInstance().setAmount(amount);
-//            WalletTransactionInitiation.getInstance().setCardNumber(cardNo);
-//            WalletTransactionInitiation.getInstance().setCardExpiry(expiry);
-//            WalletTransactionInitiation.getInstance().setCvv(cvv);
-//            WalletTransactionInitiation.getInstance().setMobileNumber(mobileNo);
-//            WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
-//            WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
-//
-//
-//            FragmentTransaction ft = this.fm.beginTransaction();
-//            Fragment prev =this.fm.findFragmentByTag("dialog");
-//            if (prev != null) {
-//                ft.remove(prev);
-//            }
-//            ft.addToBackStack(null);
-//            // Create and show the dialog.
-//            Bundle bundle = new Bundle();
-//            bundle.putString("merchant_id",mechantIdEdt.getText().toString());
-//            DialogFragment PreviewDailog =new PurchasePreview(context);
-//            PreviewDailog.setArguments(bundle);
-//            PreviewDailog.show( ft, "dialog");
-//        }
-//        else{
-//            Log.d("ITEMS ", "NO ITEMS");
-//        }
     }
 
     private void navigateToPreviewDialog(float amount, String businessName) {
@@ -418,12 +374,8 @@ public class PayFragment extends Fragment {
 
                 dialogLoader.hideProgressDialog();
                 if(response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("1")){
-
                     navigateToPreviewDialog( amount,response.body().getData().getBusinessName());
-
                 }else if(response.isSuccessful()){
-
-
                     Snackbar snack=Snackbar.make(saveBtn,response.body().getMessage(), Snackbar.LENGTH_LONG);
                     View view = snack.getView();
                     FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
@@ -487,13 +439,10 @@ public class PayFragment extends Fragment {
             if (spPaymentMethod.getSelectedItem().toString().equalsIgnoreCase("select")) {
                 Toast.makeText(context, "Please select mode of payment", Toast.LENGTH_SHORT).show();
                 return false;
-
             } else {
-
                 return true;
             }
         }else{
-
             return  true;
         }
 
