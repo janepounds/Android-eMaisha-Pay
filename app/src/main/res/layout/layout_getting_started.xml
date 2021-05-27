@@ -7,29 +7,31 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         android:elevation="10dp">
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_getting_started"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/ic_new_bg_gradient">
-
-            <ScrollView
+            <ImageView
+                android:src="@drawable/ic_new_bg_pattern"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                android:alpha=".05"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/ic_new_bg_pattern"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:scaleType="fitXY"
-                        android:alpha=".05"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="0dp">
+
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline1"
@@ -82,7 +84,6 @@
                         android:id="@+id/logo"
                         android:src="@drawable/logo_vector"
                         android:layout_width="match_parent"
-                        android:paddingBottom="@dimen/dimen_20dp"
                         android:layout_height="0dp"
                         android:layout_centerHorizontal="true"
                         app:layout_constraintTop_toTopOf="@id/guideline1"
@@ -197,9 +198,9 @@
                             android:gravity="center"/>
                     </RelativeLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
 
 
-        </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
