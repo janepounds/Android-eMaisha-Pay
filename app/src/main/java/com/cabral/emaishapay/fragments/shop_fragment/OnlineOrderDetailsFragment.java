@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class OnlineOrderDetailsFragment extends Fragment {
 
-    String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee;
+    String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee,payment_method;
     double total_price;
     FragmentOnlineOrderDetailsBinding binding;
     private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
@@ -71,6 +71,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
             customer_address = shopOrderDetails.getCustomer_address();
             delivery_fee = shopOrderDetails.getDelivery_fee();
             order_status = shopOrderDetails.getOrder_status();
+            payment_method = shopOrderDetails.getOrder_payment_method();
         }
 
         // Inflate the layout for this fragment
@@ -121,6 +122,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         binding.txtSubTotalPrice.setText(currency + " " + total_price);
         binding.txtOnlineOverallTotalPrice.setText(currency + " " + total);
+        binding.paymentMethod.setText(payment_method);
 
         binding.txtRejectOnline.setOnClickListener(new View.OnClickListener() {
             @Override

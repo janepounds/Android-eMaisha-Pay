@@ -390,7 +390,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             if (eMaishaWallet.isChecked()) {
                 double balance= Double.parseDouble( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_BALANCE, context) );
                 if(balance>=this.total){
-                    selectedPaymentMethod = "eMaisha Wallet";
+                    selectedPaymentMethod = "eMaisha Pay";
                     recordEmaishaPayPurchase(txRef,this.chargeAmount);
                 }else {
                     Toasty.error(context, "Insufficient Balance", Toast.LENGTH_LONG).show();
