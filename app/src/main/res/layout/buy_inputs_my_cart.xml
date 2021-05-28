@@ -206,21 +206,10 @@
                     android:id="@+id/cart_items_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@id/layout_promo"/>
 
-                <Button
-                    android:id="@+id/btn_clear_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_10dp"
-                    android:background="@drawable/rectangular_blue_solid"
-                    android:padding="@dimen/dimen_8dp"
-                    android:text="clear cart"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold"
-                    android:layout_below="@id/cart_items_recycler"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_promo"
@@ -229,7 +218,7 @@
                     android:layout_margin="@dimen/dimen_10dp"
                     android:background="#222222"
                     android:padding="@dimen/dimen_5dp"
-                    android:layout_below="@id/btn_clear_cart">
+                    android:layout_above="@id/btn_clear_cart">
 
                     <TextView
                         android:id="@+id/promo_text"
@@ -239,7 +228,7 @@
                         android:layout_margin="8dp"
                         android:text="Add items worth UGX 200,000 \n \n more for FREE delivery"
                         android:textColor="@color/white"
-                        android:textSize="17sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -258,8 +247,22 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/btn_clear_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_10dp"
+                    android:background="@drawable/rectangular_blue_solid"
+                    android:padding="@dimen/dimen_8dp"
+                    android:text="clear cart"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold"
+                    android:layout_above="@id/checkout_button_layout"/>
 
                 <LinearLayout
+                    android:id="@+id/checkout_button_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
