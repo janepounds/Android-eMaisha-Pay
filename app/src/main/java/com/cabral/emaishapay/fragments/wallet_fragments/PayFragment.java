@@ -101,23 +101,22 @@ public class PayFragment extends Fragment {
 
 
     public void initializeForm(View view) {
+        totalAmountEdt = view.findViewById(R.id.txt_bill_total);
 
-            totalAmountEdt = view.findViewById(R.id.txt_bill_total);
+        cardNumberEdt = view.findViewById(R.id.pay_bank_CardNumber);
+        expiryEdt = view.findViewById(R.id.pay_bank_card_expiry);
+        cvvEdt = view.findViewById(R.id.pay_bank_card_cvv);
+        mobileNumberEdt = view.findViewById(R.id.pay_mobile_no);
 
-            cardNumberEdt = view.findViewById(R.id.pay_bank_CardNumber);
-            expiryEdt = view.findViewById(R.id.pay_bank_card_expiry);
-            cvvEdt = view.findViewById(R.id.pay_bank_card_cvv);
-            mobileNumberEdt = view.findViewById(R.id.pay_mobile_no);
-
-            couponAmout= view.findViewById(R.id.txt_wallet_bill_coupon);
-            layout_coupon= view.findViewById(R.id.layout_coupon);
-            mechantIdEdt = view.findViewById(R.id.edt_purchase_mechant_id);
-            saveBtn = view.findViewById(R.id.btn_save_pay_merchant);
-            text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
-            layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
-            layoutBankCards = view.findViewById(R.id.layout_bank_cards);
-            spPaymentMethod = view.findViewById(R.id.sp_payment_method);
-            layoutPaymentMethod = view.findViewById(R.id.payment_method_layout);
+        couponAmout= view.findViewById(R.id.txt_wallet_bill_coupon);
+        layout_coupon= view.findViewById(R.id.layout_coupon);
+        mechantIdEdt = view.findViewById(R.id.edt_purchase_mechant_id);
+        saveBtn = view.findViewById(R.id.btn_save_pay_merchant);
+        text_coupon= view.findViewById(R.id.txt_bill_by_coupon);
+        layoutMobileMoney = view.findViewById(R.id.layout_mobile_number);
+        layoutBankCards = view.findViewById(R.id.layout_bank_cards);
+        spPaymentMethod = view.findViewById(R.id.sp_payment_method);
+        layoutPaymentMethod = view.findViewById(R.id.payment_method_layout);
 
         spinner_select_card = view.findViewById(R.id.spinner_select_card_wallet_pay);
         card_details_layout = view.findViewById(R.id.card_details_layout);
@@ -308,6 +307,7 @@ public class PayFragment extends Fragment {
                 }
             }
         });
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,10 +324,8 @@ public class PayFragment extends Fragment {
         float amount = Float.parseFloat(totalAmountEdt.getText().toString());
         if( layoutPaymentMethod.getVisibility() == View.VISIBLE) {
             methodOfPayment = spPaymentMethod.getSelectedItem().toString();
-
         }else{
             methodOfPayment = "eMaisha Pay";
-
         }
         if(methodOfPayment.equalsIgnoreCase("eMaisha Pay") && validateWalletPurchase()){
             getMechantName(amount);
@@ -357,7 +355,6 @@ public class PayFragment extends Fragment {
     }
 
     public void getMechantName(float amount){
-
         dialogLoader.showProgressDialog();
 
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
