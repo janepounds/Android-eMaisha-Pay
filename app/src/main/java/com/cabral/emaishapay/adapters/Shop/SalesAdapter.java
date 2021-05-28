@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
+import com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
@@ -36,6 +37,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
     public SalesAdapter(Context context) {
         this.context = context;
+
     }
 
     @Override
@@ -110,6 +112,8 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             }
         });
 
+        //set overall product price
+
         holder.binding.executePendingBindings();
     }
 
@@ -178,6 +182,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
         public void onClick(View view) {
             Bundle args = new Bundle();
             args.putSerializable("salesDetails",orderData.get(getAdapterPosition()));
+            //set total price
             ShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
         }
     }

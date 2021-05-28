@@ -99,8 +99,8 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="15dp"
                     android:paddingBottom="10dp"
-                    android:text="$350000"
-                    android:textColor="@color/creditCardBackground"
+                    android:text="UGX 350000"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>

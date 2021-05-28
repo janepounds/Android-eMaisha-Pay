@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.Shop.SalesDetailsAdapter;
 
+import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
 public class SalesDetailsFragment extends Fragment {
@@ -68,6 +69,16 @@ public class SalesDetailsFragment extends Fragment {
 
         if( getArguments()!=null)
         this.salesDetails=(ShopOrderWithProducts) getArguments().getSerializable("salesDetails");
+        double totalProductPrice=0.0;
+        int totalProductSize=0;
+        String currency=context.getString(R.string.currency);
+        for (ShopOrderProducts product:salesDetails.getOrderProducts()) {
+            totalProductSize+=Integer.parseInt(product.getProduct_qty());
+            double subTotalPrice=Double.parseDouble(product.getProduct_price())*Double.parseDouble(product.getProduct_qty());
+            totalProductPrice+=subTotalPrice;
+        }
+
+        txtTotalPrice.setText(currency+" "+totalProductPrice);
 
         return view;
     }
