@@ -72,6 +72,8 @@ public class OnlineOrderDetailsFragment extends Fragment {
             delivery_fee = shopOrderDetails.getDelivery_fee();
             order_status = shopOrderDetails.getOrder_status();
             payment_method = shopOrderDetails.getOrder_payment_method();
+
+
         }
 
         // Inflate the layout for this fragment
@@ -86,6 +88,78 @@ public class OnlineOrderDetailsFragment extends Fragment {
         if(order_status!=null){
             if(  !order_status.equalsIgnoreCase("Pending")){
                 binding.rejectApproveLayout.setVisibility(View.GONE);
+                //show delivered layout
+                binding.cancelDeliveredLayout.setVisibility(View.VISIBLE);
+                binding.txtCancelOnline.setOnClickListener(v -> {
+                    //cancel order and initiate refund
+
+
+                });
+                binding.txtDeliveredOnline.setOnClickListener(v -> {
+                    //confirm delivered order and initiate payment
+
+                        Call<ResponseBody> call = BuyInputsAPIClient
+                                .getInstance()
+                                .updateOrderStatus(
+                                        order_id,
+                                        " ",
+                                        2
+                                );
+                        dialogLoader.showProgressDialog();
+
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+
+                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            long updateOrder = viewModel.updateOrder(order_id, "Delivered");
+
+                                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (updateOrder>0) {
+                                                        dialogLoader.hideProgressDialog();
+                                                        binding.txtOnlineOrderStatus.setText("Delivered");
+                                                        binding.rejectApproveLayout.setVisibility(View.GONE);
+                                                        binding.cancelDeliveredLayout.setVisibility(View.GONE);
+                                                        dialogLoader.hideProgressDialog();
+                                                        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                        binding.txtApproveOnline.setVisibility(View.GONE);
+                                                        binding.txtDeliveredOnline.setVisibility(View.GONE);
+                                                        Toasty.success(getContext(), "Order Succesfully Delivered", Toast.LENGTH_SHORT).show();
+                                                    } else {
+
+                                                        dialogLoader.hideProgressDialog();
+                                                        Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+
+
+                                } else {
+                                    dialogLoader.hideProgressDialog();
+                                    Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                dialogLoader.hideProgressDialog();
+                                t.printStackTrace();
+                                Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                });
+
+
             }else if( order_status.equalsIgnoreCase("Cancel")){
                 binding.txtOnlineOrderStatus.setText("Cancelled");
             }

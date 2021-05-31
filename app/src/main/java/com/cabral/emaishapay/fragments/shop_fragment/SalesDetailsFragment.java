@@ -80,6 +80,8 @@ public class SalesDetailsFragment extends Fragment {
 
         txtTotalPrice.setText(currency+" "+totalProductPrice);
 
+
+
         return view;
     }
 
