@@ -82,6 +82,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private ImageView imageView;
     private Uri regCertUri, tradeLicenseUri, idFrontUri, idBackUri;
     private String encodedIdFront, encodedIdBack, encodedIdreg_cert, encodedIdtradelicense;
+    String reg_cert, trade_license, id_front, id_back;
     DialogLoader dialogLoader;
 
 
@@ -190,10 +191,10 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String business_location =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION,getContext());
         String reg_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO,getContext());
         String license_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER,getContext());
-        String reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
-        String trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
-        String id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
-        String id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
+        reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
+        trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
+        id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
+        id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -273,6 +274,16 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         });
 
         binding.btnSubmit.setOnClickListener(v -> {
+
+            if(idFrontUri==null && id_front!=null)
+                idFrontUri=Uri.parse(id_front);
+            if(idBackUri==null && id_back!=null)
+                idBackUri=Uri.parse(id_back);
+            if(regCertUri==null && reg_cert!=null)
+                regCertUri=Uri.parse(reg_cert);
+            if(tradeLicenseUri==null && trade_license!=null)
+                tradeLicenseUri=Uri.parse(trade_license);
+            
             if (validateEntries()) {
                 saveInfo();
             }
@@ -304,10 +315,11 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         RequestBody longitude_param = RequestBody.create(mCenterLatLong.longitude+"", MediaType.parse("text/plain"));
         RequestBody category_param = RequestBody.create(category, MediaType.parse("text/plain"));
         RequestBody action_id_param = RequestBody.create("applyForBusinessAccount", MediaType.parse("text/plain"));
-        RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
-        RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
-        RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
-        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
+//        RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
+//        RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
+//        RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
+//        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
+
 
         //dialogLoader.showProgressDialog();
         binding.determinateBar.setVisibility(View.VISIBLE);
@@ -453,12 +465,20 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             binding.proprietorNin.setError("Proprietor Name required");
             return false;
         }
-        else if(TextUtils.isEmpty(regCertUri.getPath())){
+        else if(tradeLicenseUri==null || TextUtils.isEmpty(tradeLicenseUri.getPath())){
+            Toast.makeText(getContext(),"Trade License required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(regCertUri==null || TextUtils.isEmpty(regCertUri.getPath())){
             Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
             return false;
         }
-        else if(TextUtils.isEmpty(idFrontUri.getPath())){
-            Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
+        else if(idFrontUri==null || TextUtils.isEmpty(idFrontUri.getPath())){
+            Toast.makeText(getContext(),"ID Front required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(idBackUri==null || TextUtils.isEmpty(idBackUri.getPath())){
+            Toast.makeText(getContext(),"ID Back required",Toast.LENGTH_LONG).show();
             return false;
         }
 
