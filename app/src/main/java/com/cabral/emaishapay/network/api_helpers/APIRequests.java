@@ -474,13 +474,13 @@ public interface APIRequests {
             @Part("proprietor_nin") RequestBody proprietor_nin,
             @Part("latitude") RequestBody latitude,
             @Part("longitude") RequestBody longitude,
-            @Part("request_id") RequestBody request_id,
-            @Part("category") RequestBody category,
-            @Part("action_id") RequestBody action_id,
-            @Part MultipartBody.Part national_id_front,
-            @Part MultipartBody.Part national_id_back,
-            @Part MultipartBody.Part registration_cert,
-            @Part MultipartBody.Part trade_license
+            @Query("request_id") String request_id,
+            @Query("category") String category,
+            @Query("action_id") String action_id,
+            @Part("national_id_front") RequestBody national_id_front,
+            @Part("national_id_back") RequestBody national_id_back,
+            @Part("registration_cert") RequestBody registration_cert,
+            @Part("trade_license") RequestBody trade_license
     );
 
     // /

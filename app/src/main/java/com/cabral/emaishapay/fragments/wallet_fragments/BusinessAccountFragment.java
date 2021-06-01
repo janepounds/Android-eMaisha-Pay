@@ -299,17 +299,14 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         RequestBody role_param = RequestBody.create(role, MediaType.parse("text/plain"));
         RequestBody proprietor_name_param = RequestBody.create(proprietor_name, MediaType.parse("text/plain"));
         RequestBody proprietor_nin_param = RequestBody.create(proprietor_nin, MediaType.parse("text/plain"));
-        RequestBody request_id_param = RequestBody.create(request_id, MediaType.parse("text/plain"));
         RequestBody latitude_param = RequestBody.create(mCenterLatLong.latitude+"", MediaType.parse("text/plain"));
         RequestBody longitude_param = RequestBody.create(mCenterLatLong.longitude+"", MediaType.parse("text/plain"));
-        RequestBody category_param = RequestBody.create(category, MediaType.parse("text/plain"));
-        RequestBody action_id_param = RequestBody.create("applyForBusinessAccount", MediaType.parse("text/plain"));
         RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
         RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
         RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
         RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
 
-        //dialogLoader.showProgressDialog();
+        dialogLoader.showProgressDialog();
         binding.determinateBar.setVisibility(View.VISIBLE);
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,
@@ -321,13 +318,13 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
                         proprietor_nin_param,
                         latitude_param,
                         longitude_param,
-                        request_id_param,
-                        category_param,
-                        action_id_param,
-                        prepareFilePart("national_id_front", idFrontUri),
-                        prepareFilePart("national_id_back", idBackUri),
-                        prepareFilePart("registration_cert", regCertUri),
-                        prepareFilePart("trade_license", tradeLicenseUri)
+                        request_id,
+                        category,
+                        "applyForBusinessAccount",
+                        encodedIdFront_param,//prepareFilePart("national_id_front", idFrontUri),
+                        encodedIdBack_param,//prepareFilePart("national_id_back", idBackUri),
+                        encodedIdreg_cert_param,//prepareFilePart("registration_cert", regCertUri),
+                        encodedIdtradelicense_param//prepareFilePart("trade_license", tradeLicenseUri)
                         );
 
         call.enqueue(new Callback<AccountResponse>() {
@@ -432,7 +429,6 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public boolean validateEntries(){
-
         if(TextUtils.isEmpty(binding.businessName.getText())){
             binding.businessName.setError("Business name required");
             return false;
@@ -459,6 +455,10 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         }
         else if(TextUtils.isEmpty(idFrontUri.getPath())){
             Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(mCenterLatLong==null ){
+            Toast.makeText(getContext(),"Location required",Toast.LENGTH_LONG).show();
             return false;
         }
 
