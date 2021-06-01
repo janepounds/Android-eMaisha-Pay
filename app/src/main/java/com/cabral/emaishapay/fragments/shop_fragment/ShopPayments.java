@@ -583,66 +583,11 @@ public class ShopPayments extends Fragment implements
     }
 
 
-    public void initiateMobileMoneyCharge(String phoneNumber,double amount) {
+    public void  initiateMobileMoneyCharge(String phoneNumber,double amount) {
 
         dialogLoader.showProgressDialog();
+        /*****************RETROFIT IMPLEMENTATION******************************/
 
-        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.context) + (new Date().getTime());
-        String eMaishaPayServiceMail="info@cabraltech.com";
-
-        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(amount)
-                .setCurrency("UGX")
-                .setEmail(eMaishaPayServiceMail)
-                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.context))
-                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.context))
-                .setPhoneNumber(phoneNumber)
-                .setNarration("eMaisha Pay")
-                .setPublicKey(BuildConfig.PUBLIC_KEY)
-                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
-                .setTxRef(txRef)
-                .onStagingEnv(false)
-                .isPreAuth(true)
-                .initialize();
-
-        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
-            @Override
-            public void showProgressIndicator(boolean active) {
-                try {
-
-                    if (dialogLoader == null) {
-                        dialogLoader = new DialogLoader(getContext());
-                        dialogLoader.showProgressDialog();
-                    }
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage, @Nullable String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-                Log.e("MobileMoneypaymentError", errorMessage);
-            }
-
-            @Override
-            public void onSuccessful(String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Log.e("Success code :", flwRef);
-                Toast.makeText(context, "Transaction Successful", Toast.LENGTH_LONG).show();
-                creditAfterSale(flwRef,amount,phoneNumber);
-            }
-
-            @Override
-            public void showAuthenticationWebPage(String authenticationUrl) {
-                Log.e("Loading auth web page: ", authenticationUrl);
-                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-            }
-        };
-        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
-
-        mobilePayManager.charge();
     }
 
     public void initiateCardCharge(double amount, String expiryDate){
