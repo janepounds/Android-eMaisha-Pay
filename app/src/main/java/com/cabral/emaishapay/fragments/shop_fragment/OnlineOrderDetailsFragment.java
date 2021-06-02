@@ -103,7 +103,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                 .updateOrderStatus(
                                         order_id,
                                         " ",
-                                        2
+                                        5
                                 );
                         dialogLoader.showProgressDialog();
 
