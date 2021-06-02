@@ -482,7 +482,9 @@ public interface APIRequests {
             @Field("longitude") double longitude,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("business_location")String business_location
+
     );
 
 
