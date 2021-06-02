@@ -325,22 +325,22 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         binding.determinateBar.setVisibility(View.VISIBLE);
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,
-                        role_param,
-                        user_Id_param,
-                        business_name_param,
-                        registration_no_param,
-                        proprietor_name_param,
-                        proprietor_nin_param,
-                        latitude_param,
-                        longitude_param,
-                        request_id_param,
-                        category_param,
-                        action_id_param,
-                        prepareFilePart("national_id_front", idFrontUri),
-                        prepareFilePart("national_id_back", idBackUri),
-                        prepareFilePart("registration_cert", regCertUri),
-                        prepareFilePart("trade_license", tradeLicenseUri)
-                        );
+                        role,
+                        user_Id,
+                        business_name,
+                        registration_no,
+                        encodedIdreg_cert,
+                        encodedIdtradelicense,
+                        proprietor_name,
+                        proprietor_nin,
+                        encodedIdFront,
+                        encodedIdBack,
+                        mCenterLatLong.latitude,
+                        mCenterLatLong.longitude,
+                        request_id,
+                        category,
+                        "applyForBusinessAccount");
+
 
         call.enqueue(new Callback<AccountResponse>() {
             @Override

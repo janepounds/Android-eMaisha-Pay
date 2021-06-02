@@ -462,26 +462,29 @@ public interface APIRequests {
 
 
     // / apply for business account
-    @Multipart
+
+    // / apply for business account
+    @FormUrlEncoded
     @POST("apply_for_business")
     Call<AccountResponse> applyForBusiness(
             @Header("Authorization") String token,
-            @Part("role") RequestBody role,
-            @Part("user_id") RequestBody user_id,
-            @Part("business_name") RequestBody business_name,
-            @Part("registration_no") RequestBody reg_no,
-            @Part("proprietor_name") RequestBody proprietor_name,
-            @Part("proprietor_nin") RequestBody proprietor_nin,
-            @Part("latitude") RequestBody latitude,
-            @Part("longitude") RequestBody longitude,
-            @Part("request_id") RequestBody request_id,
-            @Part("category") RequestBody category,
-            @Part("action_id") RequestBody action_id,
-            @Part MultipartBody.Part national_id_front,
-            @Part MultipartBody.Part national_id_back,
-            @Part MultipartBody.Part registration_cert,
-            @Part MultipartBody.Part trade_license
+            @Field("role") String role,
+            @Field("user_id") String user_id,
+            @Field("business_name") String business_name,
+            @Field("registration_no") String reg_no,
+            @Field("registration_cert") String reg_certificate,
+            @Field("trade_license") String trade_license,
+            @Field("proprietor_name") String proprietor_name,
+            @Field("proprietor_nin") String proprietor_nin,
+            @Field("national_id_front") String national_id_front,
+            @Field("national_id_back") String national_id_back,
+            @Field("latitude") double latitude,
+            @Field("longitude") double longitude,
+            @Field("request_id") String request_id,
+            @Field("category") String category,
+            @Field("action_id")String action_id
     );
+
 
     // /
     @FormUrlEncoded
