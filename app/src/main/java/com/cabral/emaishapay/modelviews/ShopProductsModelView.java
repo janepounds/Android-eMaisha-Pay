@@ -38,12 +38,13 @@ public class ShopProductsModelView extends AndroidViewModel {
 
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
-    private MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
-    private LiveData<Resource<List<EcProduct>>> repositorySource;
-    private LiveData<Integer>cartReipositorySource;
+    private final MutableLiveData<List<EcManufacturer>> manufacturers=new MutableLiveData<>();
+    private final LiveData<Resource<List<EcProduct>>> repositorySource;
+    private final LiveData<Integer>cartReipositorySource;
     private UserCart userCartProduct;
 
-    private String wallet_id,product_id;
+    private final String wallet_id;
+    private String product_id;
     public ShopProductsModelView(@NonNull Application application,
                                  @NonNull SavedStateHandle savedStateHandle) {
         super(application);

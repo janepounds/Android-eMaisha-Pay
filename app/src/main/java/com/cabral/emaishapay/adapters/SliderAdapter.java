@@ -16,7 +16,7 @@ import com.cabral.emaishapay.R;
 
 
 public class SliderAdapter extends PagerAdapter {
-    private Context mContext;
+    private final Context mContext;
     LayoutInflater layoutInflater;
 
     public SliderAdapter(Context context){
@@ -24,7 +24,7 @@ public class SliderAdapter extends PagerAdapter {
 
     }
 
-    int images[] ={
+    int[] images ={
 
 
             R.drawable.ic_onboarding_pay_img,
@@ -32,7 +32,7 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.ic_onboarding_shop_img,
             R.drawable.onboarding_2
     };
-    int imagesbg[] ={
+    int[] imagesbg ={
 
 
             R.drawable.city,
@@ -40,7 +40,7 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.city,
             R.drawable.city
     };
-    int titles[]={
+    int[] titles ={
            R.string.pay,
             R.string.get_credit,
             R.string.shop,
@@ -48,7 +48,7 @@ public class SliderAdapter extends PagerAdapter {
 
 
     };
-    int descriptions[]={
+    int[] descriptions ={
             R.string.pay_description,
             R.string.get_credit_description,
             R.string.shop_description,
@@ -71,7 +71,7 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-        layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.slides_layout,container,false);
 
         //to solve svg inflating error

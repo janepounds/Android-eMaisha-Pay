@@ -43,9 +43,9 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 
 public abstract class OtpDialogLoader {
-    private  Context context;
-    private  Fragment fragment;
-    private Dialog otpDialog;
+    private final Context context;
+    private final Fragment fragment;
+    private final Dialog otpDialog;
     private  String otp_code;
     SmsBroadcastReceiver  smsBroadcastReceiver;
     EditText code1, code2, code3, code4, code5, code6;

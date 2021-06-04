@@ -36,8 +36,8 @@ import java.util.List;
 
 public class OrderedProductsListAdapter extends RecyclerView.Adapter<OrderedProductsListAdapter.MyViewHolder> {
 
-    private Context context;
-    private List<OrderProducts> orderProductsList;
+    private final Context context;
+    private final List<OrderProducts> orderProductsList;
     
     private ProductAttributeValuesAdapter attributesAdapter;
 
@@ -125,10 +125,14 @@ public class OrderedProductsListAdapter extends RecyclerView.Adapter<OrderedProd
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private LinearLayout checkout_item;
-        private ImageView checkout_item_cover;
-        private RecyclerView attributes_recycler;
-        private TextView checkout_item_title, checkout_item_quantity, checkout_item_price, checkout_item_price_final, checkout_item_category;
+        private final LinearLayout checkout_item;
+        private final ImageView checkout_item_cover;
+        private final RecyclerView attributes_recycler;
+        private final TextView checkout_item_title;
+        private final TextView checkout_item_quantity;
+        private final TextView checkout_item_price;
+        private final TextView checkout_item_price_final;
+        private final TextView checkout_item_category;
 
 
         public MyViewHolder(final View itemView) {

@@ -322,11 +322,7 @@ public class My_Cart extends Fragment implements Serializable {
 
         ArrayList<CartProduct> user_cart_BuyInputs_db = new User_Cart_BuyInputsDB().checkCartHasProductAndMeasure(cart_item_id);
         for (CartProduct cartProduct : user_cart_BuyInputs_db) {
-            if (cartProduct.getCustomersBasketProduct().getProductsId()==cart_item_id) {
-                result = true;
-            } else {
-                result = false;
-            }
+            result = cartProduct.getCustomersBasketProduct().getProductsId() == cart_item_id;
         }
 
         return result;

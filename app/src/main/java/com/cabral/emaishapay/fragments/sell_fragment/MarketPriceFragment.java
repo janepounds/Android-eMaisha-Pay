@@ -29,10 +29,10 @@ public class MarketPriceFragment extends Fragment {
     private static final String TAG = "MarketPriceFragment";
     private Context context;
 
-    private ArrayList<MarketPrice> marketPriceArrayList = new ArrayList<>();
-    private ArrayList<MarketPriceItem> marketPriceItemArrayList = new ArrayList<>();
-    private ArrayList<MarketPriceItem> marketPriceItemArrayListBackUp = new ArrayList<>();
-    private ArrayList<MarketPriceSubItem> marketPriceSubItemArrayList = new ArrayList<>();
+    private final ArrayList<MarketPrice> marketPriceArrayList = new ArrayList<>();
+    private final ArrayList<MarketPriceItem> marketPriceItemArrayList = new ArrayList<>();
+    private final ArrayList<MarketPriceItem> marketPriceItemArrayListBackUp = new ArrayList<>();
+    private final ArrayList<MarketPriceSubItem> marketPriceSubItemArrayList = new ArrayList<>();
 
     MarketPriceItemAdapter adapter;
 

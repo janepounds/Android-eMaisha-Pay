@@ -45,7 +45,7 @@ public class PosProductAdapter extends RecyclerView.Adapter<PosProductAdapter.My
 
     MediaPlayer player;
     private List<? extends EcProduct> productData;
-    private Context context;
+    private final Context context;
     ProductItemBinding binding;
     String currency;
     WeakReference<ShopPOSFragment> fragmentReference;

@@ -275,7 +275,7 @@ public class DepositMoneyVisa extends DialogFragment  {
 
                     if (response.errorBody() != null) {
 
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very wrong, code: " + response.code());

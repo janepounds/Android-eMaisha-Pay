@@ -55,7 +55,7 @@ import retrofit2.Response;
 public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
     private Context context;
     private LayoutScanAndPayProcessStep3Binding binding;
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private String pin,merchant_id;
     private double Amount=0;
@@ -318,7 +318,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
         }
 
         else {
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
             inputConnection.commitText(value, 1);
 
             pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
@@ -448,7 +448,7 @@ public class ScanAndPayStep3 extends Fragment implements View.OnClickListener {
                 return mSource.subSequence(start, end); // Return default
             }
         }
-    };
+    }
 
 
 }

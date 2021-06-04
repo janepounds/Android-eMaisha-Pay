@@ -42,8 +42,8 @@ import retrofit2.Response;
 
 public class BeneficiariesListAdapter extends RecyclerView.Adapter<BeneficiariesListAdapter.MyViewHolder> {
     private static final String TAG = "BeneficiariesListAdapte";
-    private List<BeneficiaryResponse.Beneficiaries> dataList;
-    private FragmentManager fm;
+    private final List<BeneficiaryResponse.Beneficiaries> dataList;
+    private final FragmentManager fm;
     Context context;
     private DialogLoader dialogLoader;
 

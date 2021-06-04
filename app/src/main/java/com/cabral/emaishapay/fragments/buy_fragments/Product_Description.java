@@ -185,8 +185,7 @@ public class Product_Description extends Fragment  {
         binding.productTagNew.setVisibility(View.GONE);
         binding.productTagDiscount.setVisibility(View.GONE);
         binding.productAttributes.setVisibility(View.VISIBLE);
-       ;
-//        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
+        //        continue_shopping_btn = rootView.findViewById(R.id.continue_shopping_btn);
 
         binding.productAttributesRecycler.setNestedScrollingEnabled(false);
 
@@ -613,11 +612,7 @@ public class Product_Description extends Fragment  {
         binding.productPriceNew.setText(ConstantValues.CURRENCY_SYMBOL +" "+ nf.format(productFinalPrice));
 
         // Check if the User has Liked the Product
-        if (productDetails.getIsLiked().equalsIgnoreCase("1")) {
-            binding.productLikeBtn.setChecked(true);
-        } else {
-            binding.productLikeBtn.setChecked(false);
-        }
+        binding.productLikeBtn.setChecked(productDetails.getIsLiked().equalsIgnoreCase("1"));
 
         // Handle Click event of product_share_btn Button
         binding.productShareBtn.setOnClickListener(view -> {

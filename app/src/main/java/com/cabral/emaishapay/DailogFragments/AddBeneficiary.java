@@ -66,7 +66,7 @@ public class AddBeneficiary extends DialogFragment {
     OtpDialogLoader otpDialogLoader;
     DialogLoader dialogLoader;
     List<String> Banknames = new ArrayList<>();
-    private String type;
+    private final String type;
 
     public AddBeneficiary(String type) {
         this.type=type;

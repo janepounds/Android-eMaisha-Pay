@@ -101,19 +101,22 @@ public class AddShopProductFragment extends DialogFragment {
     private List<Category> categories;
     private List<Product> products;
     private List<String> catNames;
-    private List<EcManufacturer> manufacturers;
+    private final List<EcManufacturer> manufacturers;
     private List<String> productNames;
     private List<String> manufacturersNames;
     private List<String> offlinemanufacturersNames;
     private List<String> offlineCategoryNames;
     private List<String> offlineProductsName;
-    private String measure_id,key,product_id,updateId;
+    private String measure_id;
+    private final String key;
+    private String product_id;
+    private String updateId;
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineCategories = new ArrayList<>();
     private ArrayList<HashMap<String, String>>offlineProductNames;
     DialogLoader dialogLoader;
-    private ShopProductsModelView viewModel;
+    private final ShopProductsModelView viewModel;
 
 
     public AddShopProductFragment(List<EcManufacturer> manufacturers,String key,ShopProductsModelView viewModel) {

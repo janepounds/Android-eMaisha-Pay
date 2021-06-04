@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.LoansListAdapter.MyViewHolder> {
-    private List<LoanApplication> dataList;
+    private final List<LoanApplication> dataList;
     Context context;
 
     public LoansListAdapter(Context context,List<LoanApplication> dataList) {

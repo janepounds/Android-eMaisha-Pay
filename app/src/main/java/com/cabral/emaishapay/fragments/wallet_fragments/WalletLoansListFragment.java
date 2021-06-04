@@ -52,7 +52,7 @@ public class WalletLoansListFragment extends Fragment {
     LoansListAdapter statementAdapter;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
-    private List<LoanApplication> dataList = new ArrayList<>();
+    private final List<LoanApplication> dataList = new ArrayList<>();
     private float interest;
     private String possible_action;
 
@@ -204,7 +204,7 @@ public class WalletLoansListFragment extends Fragment {
             @Override
             public void onFailure(@NotNull Call<LoanListResponse> call, @NotNull Throwable t) {
 
-                Log.e("info : ", new String(String.valueOf(t.getMessage())));
+                Log.e("info : ", String.valueOf(t.getMessage()));
                 Log.e("info : ", "Something got very wrong");
 
                 dialogLoader.hideProgressDialog();

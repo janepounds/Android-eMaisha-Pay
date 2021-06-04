@@ -84,14 +84,14 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     private EditText etFirstQnAnswer,etSecondQnAnswer,etThirdQnAnswer;
 
     public static int ACTION;
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
 
     @Override
     public void onAttach(@NonNull Context context) {
-        this.context=context;
+        PINManagerFragment.context =context;
         super.onAttach(context);
     }
 
@@ -423,7 +423,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             AuthActivity.navController.popBackStack();
         }
         else {
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
             inputConnection.commitText(value, 1);
 
             pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();

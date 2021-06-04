@@ -101,7 +101,7 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
         return exampleFilter;
     }
 
-    private Filter exampleFilter = new Filter() {
+    private final Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CategoryDetails> filteredList = new ArrayList<>();

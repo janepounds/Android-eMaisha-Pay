@@ -28,7 +28,7 @@ import java.util.Objects;
 public class DepositPayments extends DialogFragment {
     private static final String TAG = "DepositPayments";
     private Context context;
-    private double balance;
+    private final double balance;
 
     public DepositPayments(double balance){
         this.balance=balance;

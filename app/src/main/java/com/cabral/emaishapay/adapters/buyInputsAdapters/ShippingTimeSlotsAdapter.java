@@ -24,7 +24,7 @@ import java.util.List;
 public class ShippingTimeSlotsAdapter extends RecyclerView.Adapter<ShippingTimeSlotsAdapter.MyViewHolder> {
     
     Context context;
-    private List<TimeSlotsList> timeSlotsLists;
+    private final List<TimeSlotsList> timeSlotsLists;
     private onItemClickListener mItemClickListener;
     
     public ShippingTimeSlotsAdapter(Context context, List<TimeSlotsList> timeSlotsLists) {

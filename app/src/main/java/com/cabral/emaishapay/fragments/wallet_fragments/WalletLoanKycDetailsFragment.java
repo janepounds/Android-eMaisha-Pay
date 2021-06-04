@@ -62,7 +62,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
     Bitmap selectedImage;
     LoanApplication loanApplication;
-    private String title;
+    private final String title;
 
     private Toolbar toolbar;
     private StateProgressBar loanProgressBarId,loanApplicationStateProgressBar;
@@ -329,7 +329,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             public void onResponse(Call<RequestLoanresponse> call, Response<RequestLoanresponse> response) {
                 if (response.code() == 200) {
                     if (response.body().getData().getLoanApplicationId().equals("0")) {
-                        Log.e("info 200", new String(String.valueOf(response.toString())) + ", code: " + response.code());
+                        Log.e("info 200", response.toString() + ", code: " + response.code());
                         textViewErrorMessage.setText(response.body().getData().getMessage());
                     } else {
                         if (title.equalsIgnoreCase("merchant loan details")) {
@@ -369,17 +369,17 @@ public class WalletLoanKycDetailsFragment extends Fragment {
 
                 } else if (response.code() == 500) {
                     textViewErrorMessage.setText("Error Occurred Try again later");
-                    Log.e("info 500", new String(String.valueOf(response.message())) + ", code: " + response.code());
+                    Log.e("info 500", response.message() + ", code: " + response.code());
                 } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.toString())) + ", code: " + response.code());
+                    Log.e("info 400", response.toString() + ", code: " + response.code());
                     textViewErrorMessage.setText(response.body().getData().getMessage());
                 } else if (response.code() == 406) {
                     textViewErrorMessage.setText(response.errorBody().toString());
-                    Log.e("info 406", new String(String.valueOf(response.toString())) + ", code: " + response.code());
+                    Log.e("info 406", response.toString() + ", code: " + response.code());
                 } else {
                     textViewErrorMessage.setText("Error Occurred Try again later");
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
                     } else {
                         Log.e("info", "Something got very very wrong, code: " + response.code());
                     }
@@ -404,16 +404,11 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     }
 
     private boolean isValid() {
-        if(first_name_edt1.getText().toString().isEmpty() || first_name_edt2.getText().toString().isEmpty() || last_name_edt1.getText().toString().isEmpty()
-         || last_name_edt2.getText().toString().isEmpty()
-         || guarantor_relationship_spn1.getSelectedItem().toString().equalsIgnoreCase("select")
-         || guarantor_relationship_spn2.getSelectedItem().toString().equalsIgnoreCase("select")
-         || guarantor_contact_edt1.getText().toString().isEmpty()  || guarantor_contact_edt2.getText().toString().isEmpty() ){
-            return false;
-        }
-
-
-        return true;
+        return !first_name_edt1.getText().toString().isEmpty() && !first_name_edt2.getText().toString().isEmpty() && !last_name_edt1.getText().toString().isEmpty()
+                && !last_name_edt2.getText().toString().isEmpty()
+                && !guarantor_relationship_spn1.getSelectedItem().toString().equalsIgnoreCase("select")
+                && !guarantor_relationship_spn2.getSelectedItem().toString().equalsIgnoreCase("select")
+                && !guarantor_contact_edt1.getText().toString().isEmpty() && !guarantor_contact_edt2.getText().toString().isEmpty();
     }
 
 

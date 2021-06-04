@@ -48,7 +48,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     private  String pin;
     static FragmentTokenAuthBinding binding;
 
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
 
 
@@ -56,7 +56,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
+        TokenAuthFragment.context = context;
     }
 
     @Nullable
@@ -272,7 +272,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
                     }
                     if (response.errorBody() != null) {
 
-                        Log.e(TAG, new String(response.message()));
+                        Log.e(TAG, response.message());
                     } else {
 //                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Something got very very wrong");
@@ -351,7 +351,7 @@ public class TokenAuthFragment extends Fragment implements View.OnClickListener 
 
         }
        else {
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
             inputConnection.commitText(value, 1);
 
             pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();

@@ -31,8 +31,8 @@ public class LanguagesAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     
-    private Languages languages_fragment;
-    private List<LanguageDetails> languagesList;
+    private final Languages languages_fragment;
+    private final List<LanguageDetails> languagesList;
 
 
     public LanguagesAdapter(Context context, List<LanguageDetails> languagesList, Languages languages_fragment) {

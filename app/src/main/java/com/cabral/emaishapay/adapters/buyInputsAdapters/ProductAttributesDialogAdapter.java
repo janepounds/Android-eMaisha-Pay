@@ -25,10 +25,10 @@ import java.util.List;
 public class ProductAttributesDialogAdapter extends BaseAdapter {
 
 
-    private Context context;
-    private List<Value> attributeValues;
+    private final Context context;
+    private final List<Value> attributeValues;
     
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
 
     public ProductAttributesDialogAdapter(Context context, List<Value> attributeValues) {

@@ -98,7 +98,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-    private static int AUTOCOMPLETE_REQUEST_CODE=12;
+    private static final int AUTOCOMPLETE_REQUEST_CODE=12;
 
     public static Location lastKnownLocation;
     // [START maps_current_place_state_keys]
@@ -491,9 +491,9 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap map) {
-        this.map = map;//pass map to global event listeners
+        BusinessAccountFragment.map = map;//pass map to global event listeners
 
-        final GoogleMap mGoogleMap=this.map;
+        final GoogleMap mGoogleMap= BusinessAccountFragment.map;
         mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {

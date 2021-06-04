@@ -24,14 +24,14 @@ import java.util.List;
 
 public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAdapter.ProductMeasureViewHolder> {
     private static final String TAG = "ProductMeasureAdapter";
-    private Context context;
-    private List<ProductMeasure> productMeasures;
+    private final Context context;
+    private final List<ProductMeasure> productMeasures;
 
     private String measure;
-    private TextView new_price;
-    private Product_Description productDescription;
+    private final TextView new_price;
+    private final Product_Description productDescription;
     private boolean isChecked;
-    private int result = 0;
+    private final int result = 0;
     //create array list to add checked measures
     ArrayList<Boolean> checkedmesure;
 
@@ -139,7 +139,7 @@ public class ProductMeasureAdapter extends RecyclerView.Adapter<ProductMeasureAd
     }
 
     public class ProductMeasureViewHolder extends RecyclerView.ViewHolder {
-        private TextView weight;
+        private final TextView weight;
         private ImageView check;
 
         public ProductMeasureViewHolder(View itemView) {

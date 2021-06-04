@@ -65,7 +65,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
     User_Cart_BuyInputsDB user_cart_BuyInputs_db = new User_Cart_BuyInputsDB();
     List<CartProduct> cartItemsList = new ArrayList<>();
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
 
     @Override
@@ -385,7 +385,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
             }
 
         }else{
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
             inputConnection.commitText(value, 1);
             setInputConnection( binding.posCharge);
         }

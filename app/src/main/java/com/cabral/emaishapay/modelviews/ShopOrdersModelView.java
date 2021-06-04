@@ -24,7 +24,7 @@ public class ShopOrdersModelView extends AndroidViewModel {
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
     private final LiveData<Resource<List<ShopOrder>>> orderList;
-    private String wallet_id;
+    private final String wallet_id;
 
     public ShopOrdersModelView(@NonNull Application application,@NonNull SavedStateHandle savedStateHandle) {
         super(application);

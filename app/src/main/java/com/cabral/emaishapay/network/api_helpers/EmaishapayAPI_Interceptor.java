@@ -18,9 +18,9 @@ public class EmaishapayAPI_Interceptor implements Interceptor {
     private static final String EMAISHAPAY_REQUEST_ID = "request_id";
     private static final String EMAISHAPAY_CATEGORY = "category";
 
-    private String consumerKey;
-    private String requestId;
-    private String category;
+    private final String consumerKey;
+    private final String requestId;
+    private final String category;
 
 
 

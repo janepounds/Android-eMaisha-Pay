@@ -173,8 +173,12 @@ public class OrdersListAdapter extends RecyclerView.Adapter<OrdersListAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView order_id, order_product_count, order_status, order_price, order_date;
-        private RelativeLayout orderStatusBackground;
+        private final TextView order_id;
+        private final TextView order_product_count;
+        private final TextView order_status;
+        private final TextView order_price;
+        private final TextView order_date;
+        private final RelativeLayout orderStatusBackground;
 
         public MyViewHolder(final View itemView) {
             super(itemView);

@@ -51,7 +51,7 @@ public class DepositMoneyMobile extends DialogFragment {
     double balance;
     private String role,phoneNumber;
 
-    private DialogLoader dialogLoader;;
+    private DialogLoader dialogLoader;
     Context activity;
 
     public DepositMoneyMobile(Context context, double balance) {
@@ -193,7 +193,7 @@ public class DepositMoneyMobile extends DialogFragment {
                     if (response.errorBody() != null) {
 
                         Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -304,7 +304,7 @@ public class DepositMoneyMobile extends DialogFragment {
 
             if (response.errorBody() != null) {
                 Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                Log.e("info", response.errorBody() + ", code: " + response.code());
             } else {
                 Log.e("info", "Something got very wrong, code: " + response.code());
             }

@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FilterDialog extends Dialog {
-    private int categoryID;
-    private double maxPrice;
+    private final int categoryID;
+    private final double maxPrice;
 
     private LinearLayout filterDialogAttributes;
     private CrystalRangeSeekbar filter_price_slider;
@@ -37,8 +37,8 @@ public abstract class FilterDialog extends Dialog {
     private RecyclerView filter_attributes_recycler;
     private FilterProductsAdapter filterProductsAdapter;
 
-    private List<FilterDetails> filtersList;
-    private List<FiltersAttributes> filtersAttributesList = new ArrayList<>();
+    private final List<FilterDetails> filtersList;
+    private final List<FiltersAttributes> filtersAttributesList = new ArrayList<>();
 
 
 

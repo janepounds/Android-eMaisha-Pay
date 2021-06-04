@@ -33,9 +33,9 @@ import java.util.Random;
 import java.util.TimeZone;
 
 public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.WalletTransactionsListAdapter.MyViewHolder> {
-     private List<WalletTransactionResponse.TransactionData.Transactions> dataList;
+     private final List<WalletTransactionResponse.TransactionData.Transactions> dataList;
 
-    private FragmentManager fm;
+    private final FragmentManager fm;
     Context context;
 
     public  class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

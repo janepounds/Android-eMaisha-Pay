@@ -18,7 +18,7 @@ public class OnlineOrderProductsAdapter extends RecyclerView.Adapter<OnlineOrder
 
 
     Context context;
-    private List<ShopOrderProducts> orderData;
+    private final List<ShopOrderProducts> orderData;
 
     public OnlineOrderProductsAdapter(Context context, List<ShopOrderProducts> orderData) {
 

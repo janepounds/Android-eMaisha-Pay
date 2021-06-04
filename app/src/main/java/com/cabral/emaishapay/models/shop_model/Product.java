@@ -1,14 +1,14 @@
 package com.cabral.emaishapay.models.shop_model;
 
 public class Product {
-    private Integer products_id;
-    private String products_slug;
-    private String products_name;
-    private double products_weight;
-    private String products_weight_unit;
-    private double products_price;
-    private String measure_id;
-    private String image_url;
+    private final Integer products_id;
+    private final String products_slug;
+    private final String products_name;
+    private final double products_weight;
+    private final String products_weight_unit;
+    private final double products_price;
+    private final String measure_id;
+    private final String image_url;
 
     public Product(Integer products_id, String products_slug, String products_name, double products_weight, String products_weight_unit, double products_price, String measure_id, String imageUrl) {
         this.products_id = products_id;

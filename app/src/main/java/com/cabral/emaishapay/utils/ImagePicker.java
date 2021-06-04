@@ -33,7 +33,7 @@ public class ImagePicker {
     private static final String TEMP_IMG_NAME = "tempImage";
     private static final int DEFAULT_MIN_WIDTH_QUALITY = 400;
 
-    private static int minWidthQuality = DEFAULT_MIN_WIDTH_QUALITY;
+    private static final int minWidthQuality = DEFAULT_MIN_WIDTH_QUALITY;
 
     //*********** Returns Intent with Options of Image Picker Apps like Gallery, Camera etc ********//
     public static Intent getImagePickerIntent(Context context) {

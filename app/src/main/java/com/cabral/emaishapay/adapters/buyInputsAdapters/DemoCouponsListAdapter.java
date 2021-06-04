@@ -23,10 +23,10 @@ import java.util.List;
 public class DemoCouponsListAdapter extends BaseAdapter {
 
     Context context;
-    private CheckoutFinal checkoutFinal;
-    private List<CouponsInfo> couponsList;
+    private final CheckoutFinal checkoutFinal;
+    private final List<CouponsInfo> couponsList;
 
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
 
     public DemoCouponsListAdapter(Context context, List<CouponsInfo> couponsList, CheckoutFinal checkoutFinal) {

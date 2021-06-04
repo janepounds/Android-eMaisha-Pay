@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class ValidateInputs {
 
-    private static String blockCharacters = "[$&+~;=\\\\?@|/'<>^*()%!-]";
+    private static final String blockCharacters = "[$&+~;=\\\\?@|/'<>^*()%!-]";
 
     //*********** Validate Email Address ********//
 

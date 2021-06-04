@@ -404,7 +404,7 @@ public class ConfirmTransfer extends DialogFragment {
                         if (response.errorBody() != null) {
 
                             Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            Log.e("info", response.errorBody() + ", code: " + response.code());
                         } else {
 
                             Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -499,13 +499,13 @@ public class ConfirmTransfer extends DialogFragment {
 
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info 500", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         if (response.errorBody() != null) {
 
                             Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            Log.e("info", response.errorBody() + ", code: " + response.code());
                         } else {
 
                             Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -601,13 +601,13 @@ public class ConfirmTransfer extends DialogFragment {
 
                             Log.e("info", "Something got very very wrong, code: " + response.code());
                         }
-                        Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info 500", response.errorBody() + ", code: " + response.code());
                     }  else {
 
                         if (response.errorBody() != null) {
 
                             Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                            Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                            Log.e("info", response.errorBody() + ", code: " + response.code());
                         } else {
 
                             Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -695,14 +695,14 @@ public class ConfirmTransfer extends DialogFragment {
                 }
                 else if (response.code() == 500) {
                     errorTextView.setText("Error Occurred Try again later");
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else if (response.code() == 400) {
                     errorTextView.setText("Check your input details");
-                    Log.e("info 500", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
                     errorTextView.setText(response.body().getMessage());
 
-                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else {
                     errorTextView.setText("Error Occurred Try again later");
 
@@ -713,7 +713,7 @@ public class ConfirmTransfer extends DialogFragment {
 
             @Override
             public void onFailure(Call<InitiateTransferResponse> call, Throwable t) {
-                Log.e("info : " , new String(String.valueOf(t.getMessage())));
+                Log.e("info : " , String.valueOf(t.getMessage()));
                 errorTextView.setText("Error Occurred Try again later");
                 errorTextView.setVisibility(View.VISIBLE);
                 dialogPIN.dismiss();

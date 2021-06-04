@@ -44,8 +44,8 @@ import static android.content.ContentValues.TAG;
 
 public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdapter.MyProduceListViewHolder> {
     Context context;
-    private ArrayList<MyProduce> myProduceArrayList;
-    private   WeakReference<MyProduceFragment> fragmentReference;
+    private final ArrayList<MyProduce> myProduceArrayList;
+    private final WeakReference<MyProduceFragment> fragmentReference;
     FragmentManager fm;
     Dialog dialog;
     public static class MyProduceListViewHolder extends RecyclerView.ViewHolder {

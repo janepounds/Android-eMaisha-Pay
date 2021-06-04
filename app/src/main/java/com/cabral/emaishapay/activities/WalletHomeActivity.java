@@ -147,7 +147,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     private static final int PERMISSION_CODE = 1;
 
 
-    private boolean doubleBackToExitPressedOnce = false;
+    private final boolean doubleBackToExitPressedOnce = false;
     Toolbar toolbar;
 
 
@@ -215,7 +215,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         navController = navHostFragment.getNavController();
 
-        this.fm=getSupportFragmentManager();
+        fm=getSupportFragmentManager();
         setUpNavigation();
 
         toolbar = findViewById(R.id.main_Toolbar);
@@ -528,7 +528,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -821,7 +821,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // this method is called when user
         // allows the permission to use camera.
         try {

@@ -132,7 +132,7 @@ public class CardListFragment extends Fragment {
                     TokenAuthFragment.startAuth( true);
                     //
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -142,7 +142,7 @@ public class CardListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                dialogLoader.hideProgressDialog();;
+                dialogLoader.hideProgressDialog();
             }
         });
 
