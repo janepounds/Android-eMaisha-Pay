@@ -131,7 +131,7 @@ public class EnterPin extends DialogFragment {
                                                 dialog.dismiss();
 
                                                 final Dialog dialog = new Dialog(getContext());
-                                                dialog.setContentView(R.layout.dialog_failure_message);
+                                                dialog.setContentView(R.layout.dialog_successful_message);
                                                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                                 dialog.setCancelable(false);
                                                 TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
