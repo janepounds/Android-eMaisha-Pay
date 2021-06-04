@@ -294,6 +294,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public void saveInfo(){
+        dialogLoader.showProgressDialog();
 
         String user_Id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String business_name = binding.businessName.getText().toString();
@@ -303,6 +304,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String business_location = binding.shopLocation.getText().toString();
 
         RequestBody user_Id_param = RequestBody.create(user_Id, MediaType.parse("text/plain"));
         RequestBody business_name_param = RequestBody.create(business_name, MediaType.parse("text/plain"));
@@ -339,13 +341,15 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
                         mCenterLatLong.longitude,
                         request_id,
                         category,
-                        "applyForBusinessAccount");
+                        "applyForBusinessAccount",
+                        business_location);
 
 
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
                     String message = response.body().getMessage();
 
                     //call success dialog

@@ -82,7 +82,8 @@ public class OrdersListAdapter extends RecyclerView.Adapter<OrdersListAdapter.My
                 break;
             case "Approved":
                 holder.orderStatusBackground.setBackgroundResource(R.drawable.order_status_approved_background);
-            case "Completed":
+                break;
+            case "Delivered":
                 holder.orderStatusBackground.setBackgroundResource(R.drawable.order_status_completed_background);
                 break;
             case "Pending":
