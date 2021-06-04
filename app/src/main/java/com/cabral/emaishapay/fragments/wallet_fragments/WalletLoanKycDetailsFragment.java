@@ -277,8 +277,6 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         }
     }
 
-
-
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;

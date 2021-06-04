@@ -166,8 +166,12 @@ public class CheckoutFinal extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.buy_inputs_checkout, container, false);
 
-        // Set the Title of Toolbarshipping_address
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.checkout));
+
+        // Set the Title of Toolbar
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarCheckout);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.checkout));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if(getArguments()!=null){
             my_cart= (My_Cart) getArguments().getSerializable("my_cart");

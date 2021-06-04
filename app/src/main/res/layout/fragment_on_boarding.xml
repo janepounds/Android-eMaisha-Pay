@@ -15,200 +15,230 @@
             android:layout_height="match_parent"
             android:visibility="gone"
             android:elevation="10dp">
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_getting_started"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/ic_new_bg_gradient">
-
-                <ScrollView
+                <ImageView
+                    android:src="@drawable/ic_new_bg_pattern"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY"
+                    android:alpha=".05"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="0dp">
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.07" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.27" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.39" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.69" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.75" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline55"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.78" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.85" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline66"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.87" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.9" />
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:src="@drawable/logo_vector"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:src="@drawable/ic_new_bg_pattern"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:scaleType="fitXY"
-                            android:alpha=".05"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="0dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintTop_toTopOf="@id/guideline1"
+                        app:layout_constraintBottom_toTopOf="@id/guideline2"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_app_emaisha_pay"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/guideline2"
+                        app:layout_constraintBottom_toTopOf="@id/guideline3">
 
                         <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline1"
+                            android:id="@+id/guideline10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.06" />
-
-
+                            app:layout_constraintGuide_percent="0"/>
                         <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline2"
+                            android:id="@+id/guideline11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.23" />
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.35" />
-
-
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.65" />
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.71" />
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.81" />
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintGuide_percent="0.86" />
-
-                        <ImageView
-                            android:id="@+id/logo"
-                            android:src="@drawable/logo_vector"
-                            android:layout_width="match_parent"
-                            android:paddingBottom="@dimen/dimen_20dp"
-                            android:layout_height="0dp"
-                            android:layout_centerHorizontal="true"
-                            app:layout_constraintTop_toTopOf="@id/guideline1"
-                            app:layout_constraintBottom_toTopOf="@id/guideline2"/>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/layout_app_emaisha_pay"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintTop_toBottomOf="@id/guideline2"
-                            app:layout_constraintBottom_toTopOf="@id/guideline3">
-
-                            <TextView
-                                android:id="@+id/logo_title1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:text="W E L C O M E   T O"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="18sp"
-                                android:gravity="bottom"
-                                app:layout_constraintBottom_toTopOf="@id/logo_title"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"/>
-                            <TextView
-                                android:id="@+id/logo_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:text="eMaisha Pay"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="30sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/logo_title1"/>
-
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            app:layout_constraintGuide_percent="0.4"/>
                         <TextView
-                            android:id="@+id/title2"
-                            android:layout_width="match_parent"
+                            android:id="@+id/logo_title1"
+                            android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:text="Pay \nManage \nGrow..."
+                            android:text="W E L C O M E   T O "
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textAlignment="center"
+                            app:autoSizeTextType="uniform"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintBottom_toTopOf="@id/guideline11"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/guideline10"/>
+                        <TextView
+                            android:id="@+id/logo_title"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text="eMaisha Pay"
+                            android:textAlignment="center"
+                            app:autoSizeTextType="uniform"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/guideline11"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/title2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="Pay \nManage \nGrow..."
+                        android:textColor="#fff"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="uniform"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="25dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/guideline3"
+                        app:layout_constraintBottom_toTopOf="@id/guideline4"/>
+
+                    <TextView
+                        android:id="@+id/title3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="A simple, swift and secure way to make payments, and access quick and affordable working capital"
+                        android:textColor="@color/colorPrimary"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintTop_toBottomOf="@id/guideline4"
+                        app:layout_constraintBottom_toTopOf="@id/guideline5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="25dp"/>
+
+                    <Button
+                        android:id="@+id/get_started_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="25dp"
+                        android:background="@drawable/round_button_dark_green"
+                        android:text="Sign Up"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        app:layout_constraintTop_toBottomOf="@id/guideline55"
+                        app:layout_constraintBottom_toTopOf="@id/guideline6"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_signin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/guideline66"
+                        app:layout_constraintBottom_toTopOf="@id/guideline7"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+                        <TextView
+                            android:id="@+id/signin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:text="Already have account? "
+                            android:textAlignment="viewEnd"
+                            app:autoSizeTextType="uniform"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                        <TextView
+                            android:id="@+id/signin2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:text=" Sign in "
+                            app:autoSizeTextType="uniform"
                             android:textColor="#fff"
                             android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginEnd="25dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/guideline3"
-                            app:layout_constraintBottom_toTopOf="@id/guideline4"/>
-
-                        <TextView
-                            android:id="@+id/title3"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:text="A simple, swift and secure way to make payments, and access quick and affordable working capital"
-                            android:textColor="@color/colorPrimary"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintTop_toBottomOf="@id/guideline4"
-                            app:layout_constraintBottom_toTopOf="@id/guideline5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginEnd="25dp"/>
-
-                        <Button
-                            android:id="@+id/get_started_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginEnd="25dp"
-                            android:background="@drawable/round_button_dark_green"
-                            android:text="Sign Up"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            app:layout_constraintTop_toBottomOf="@id/guideline5"
-                            app:layout_constraintBottom_toTopOf="@id/guideline6"/>
-
-                        <RelativeLayout
-                            android:id="@+id/layout_signin"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintTop_toBottomOf="@id/guideline6"
-                            app:layout_constraintBottom_toTopOf="@id/guideline7"
-                            android:gravity="center"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginTop="15dp">
-                            <TextView
-                                android:id="@+id/signin1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="Already have account? "
-                                android:textSize="14sp"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textStyle="bold"
-                                android:gravity="center"/>
-                            <TextView
-                                android:id="@+id/signin2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text=" Sign in "
-                                android:textSize="14sp"
-                                android:textColor="#fff"
-                                android:textStyle="bold"
-                                android:layout_toEndOf="@id/signin1"
-                                android:gravity="center"/>
-                        </RelativeLayout>
+                            android:layout_toEndOf="@id/signin1"
+                            app:layout_constraintStart_toEndOf="@id/signin1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </ScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
         <RelativeLayout
             android:id="@+id/top_items_layout"

@@ -30,6 +30,9 @@ import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.models.WalletTransaction;
 
 import org.json.JSONObject;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,7 +41,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -457,6 +462,8 @@ public interface APIRequests {
 
 
     // / apply for business account
+
+    // / apply for business account
     @FormUrlEncoded
     @POST("apply_for_business")
     Call<AccountResponse> applyForBusiness(
@@ -475,8 +482,11 @@ public interface APIRequests {
             @Field("longitude") double longitude,
             @Field("request_id") String request_id,
             @Field("category") String category,
-            @Field("action_id")String action_id
+            @Field("action_id")String action_id,
+            @Field("business_location")String business_location
+
     );
+
 
     // /
     @FormUrlEncoded

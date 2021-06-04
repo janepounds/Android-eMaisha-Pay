@@ -25,16 +25,15 @@
             android:id="@+id/toolbar_nearby_merchants"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:navigationIcon="@drawable/ic_chevron_left_white"/>
 
     </com.google.android.material.appbar.AppBarLayout>
-<TextView
+<ImageView
     android:id="@+id/no_nearby_merchant"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="NO NEARBY MERCHANT FOUND"
-    android:textSize="18sp"
-    android:textColor="@color/colorPrimary"
+    android:src="@drawable/no_merchant_placeholder"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@id/appbar"
@@ -47,7 +46,9 @@
         android:layout_weight="1"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/merchants_list"

@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class OnlineOrderDetailsFragment extends Fragment {
 
-    String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee;
+    String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee,payment_method;
     double total_price;
     FragmentOnlineOrderDetailsBinding binding;
     private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
@@ -71,6 +71,9 @@ public class OnlineOrderDetailsFragment extends Fragment {
             customer_address = shopOrderDetails.getCustomer_address();
             delivery_fee = shopOrderDetails.getDelivery_fee();
             order_status = shopOrderDetails.getOrder_status();
+            payment_method = shopOrderDetails.getOrder_payment_method();
+
+
         }
 
         // Inflate the layout for this fragment
@@ -85,6 +88,78 @@ public class OnlineOrderDetailsFragment extends Fragment {
         if(order_status!=null){
             if(  !order_status.equalsIgnoreCase("Pending")){
                 binding.rejectApproveLayout.setVisibility(View.GONE);
+                //show delivered layout
+                binding.cancelDeliveredLayout.setVisibility(View.VISIBLE);
+                binding.txtCancelOnline.setOnClickListener(v -> {
+                    //cancel order and initiate refund
+
+
+                });
+                binding.txtDeliveredOnline.setOnClickListener(v -> {
+                    //confirm delivered order and initiate payment
+
+                        Call<ResponseBody> call = BuyInputsAPIClient
+                                .getInstance()
+                                .updateOrderStatus(
+                                        order_id,
+                                        " ",
+                                        5
+                                );
+                        dialogLoader.showProgressDialog();
+
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+
+                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            long updateOrder = viewModel.updateOrder(order_id, "Delivered");
+
+                                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (updateOrder>0) {
+                                                        dialogLoader.hideProgressDialog();
+                                                        binding.txtOnlineOrderStatus.setText("Delivered");
+                                                        binding.rejectApproveLayout.setVisibility(View.GONE);
+                                                        binding.cancelDeliveredLayout.setVisibility(View.GONE);
+                                                        dialogLoader.hideProgressDialog();
+                                                        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                        binding.txtApproveOnline.setVisibility(View.GONE);
+                                                        binding.txtDeliveredOnline.setVisibility(View.GONE);
+                                                        Toasty.success(getContext(), "Order Succesfully Delivered", Toast.LENGTH_SHORT).show();
+                                                    } else {
+
+                                                        dialogLoader.hideProgressDialog();
+                                                        Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+
+
+                                } else {
+                                    dialogLoader.hideProgressDialog();
+                                    Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                dialogLoader.hideProgressDialog();
+                                t.printStackTrace();
+                                Toasty.error(getContext(), "Order Delivery failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                });
+
+
             }else if( order_status.equalsIgnoreCase("Cancel")){
                 binding.txtOnlineOrderStatus.setText("Cancelled");
             }
@@ -121,6 +196,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         binding.txtSubTotalPrice.setText(currency + " " + total_price);
         binding.txtOnlineOverallTotalPrice.setText(currency + " " + total);
+        binding.paymentMethod.setText(payment_method);
 
         binding.txtRejectOnline.setOnClickListener(new View.OnClickListener() {
             @Override

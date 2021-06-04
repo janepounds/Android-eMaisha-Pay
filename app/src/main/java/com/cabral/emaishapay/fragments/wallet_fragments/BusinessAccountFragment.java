@@ -1,11 +1,14 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -22,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +41,7 @@ import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;
+import com.cabral.emaishapay.network.ProgressRequestBody;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,10 +61,14 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,21 +76,19 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
-public class BusinessAccountFragment extends Fragment implements  OnMapReadyCallback  {
+public class BusinessAccountFragment extends Fragment implements  OnMapReadyCallback, ProgressRequestBody.UploadCallbacks  {
     private FragmentBusinessAccountBinding binding;
     private String role;
-    private String encodedIdFront;
-    private String encodedIdBack;
     private ImageView imageView;
-    private String encodedIdreg_cert;
-    private String encodedIdtradelicense;
+    private Uri regCertUri, tradeLicenseUri, idFrontUri, idBackUri;
+    private String encodedIdFront, encodedIdBack, encodedIdreg_cert, encodedIdtradelicense;
+    String reg_cert, trade_license, id_front, id_back;
     DialogLoader dialogLoader;
 
 
     private static final String TAG ="Maps Error";
     public static GoogleMap map;
     private CameraPosition cameraPosition;
-
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -183,10 +191,10 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String business_location =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION,getContext());
         String reg_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO,getContext());
         String license_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER,getContext());
-        String reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
-        String trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
-        String id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
-        String id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
+        reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
+        trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
+        id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
+        id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -266,6 +274,16 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         });
 
         binding.btnSubmit.setOnClickListener(v -> {
+
+            if(idFrontUri==null && id_front!=null)
+                idFrontUri=Uri.parse(id_front);
+            if(idBackUri==null && id_back!=null)
+                idBackUri=Uri.parse(id_back);
+            if(regCertUri==null && reg_cert!=null)
+                regCertUri=Uri.parse(reg_cert);
+            if(tradeLicenseUri==null && trade_license!=null)
+                tradeLicenseUri=Uri.parse(trade_license);
+            
             if (validateEntries()) {
                 saveInfo();
             }
@@ -277,6 +295,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
     public void saveInfo(){
         dialogLoader.showProgressDialog();
+
         String user_Id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String business_name = binding.businessName.getText().toString();
         String registration_no = binding.registrationNumber.getText().toString();
@@ -285,8 +304,27 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String business_location = binding.shopLocation.getText().toString();
 
-        //**************RETROFIT IMPLEMENTATION******************//
+        RequestBody user_Id_param = RequestBody.create(user_Id, MediaType.parse("text/plain"));
+        RequestBody business_name_param = RequestBody.create(business_name, MediaType.parse("text/plain"));
+        RequestBody registration_no_param = RequestBody.create(registration_no, MediaType.parse("text/plain"));
+        RequestBody role_param = RequestBody.create(role, MediaType.parse("text/plain"));
+        RequestBody proprietor_name_param = RequestBody.create(proprietor_name, MediaType.parse("text/plain"));
+        RequestBody proprietor_nin_param = RequestBody.create(proprietor_nin, MediaType.parse("text/plain"));
+        RequestBody request_id_param = RequestBody.create(request_id, MediaType.parse("text/plain"));
+        RequestBody latitude_param = RequestBody.create(mCenterLatLong.latitude+"", MediaType.parse("text/plain"));
+        RequestBody longitude_param = RequestBody.create(mCenterLatLong.longitude+"", MediaType.parse("text/plain"));
+        RequestBody category_param = RequestBody.create(category, MediaType.parse("text/plain"));
+        RequestBody action_id_param = RequestBody.create("applyForBusinessAccount", MediaType.parse("text/plain"));
+//        RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
+//        RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
+//        RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
+//        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
+
+
+        //dialogLoader.showProgressDialog();
+        binding.determinateBar.setVisibility(View.VISIBLE);
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,
                         role,
@@ -303,12 +341,15 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
                         mCenterLatLong.longitude,
                         request_id,
                         category,
-                        "applyForBusinessAccount");
+                        "applyForBusinessAccount",
+                        business_location);
+
 
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
                     String message = response.body().getMessage();
 
                     //call success dialog
@@ -340,6 +381,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
+                dialogLoader.hideProgressDialog();
                 Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_LONG);
 
             }
@@ -367,17 +409,21 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             byte[] b = byteArrayOutputStream.toByteArray();
 
             if (imageView == binding.imgNidFront) {
+                idFrontUri = getImageUri(getContext(), imageBitmap, "IdFront");
                 encodedIdFront = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedIdFront, Base64.DEFAULT)).placeholder(R.drawable.add_default_image).into(binding.imgNidFront);
+                Glide.with(requireContext()).asBitmap().load(imageBitmap).placeholder(R.drawable.add_default_image).into(binding.imgNidFront);
             } else if (imageView == binding.imgNidBack) {
+                idBackUri = getImageUri(getContext(), imageBitmap, "IdBack");
                 encodedIdBack = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedIdBack, Base64.DEFAULT)).placeholder(R.drawable.add_default_image).into(binding.imgNidBack);
+                Glide.with(requireContext()).asBitmap().load(imageBitmap).placeholder(R.drawable.add_default_image).into(binding.imgNidBack);
             }else if(imageView == binding.registrationCertificate){
+                regCertUri = getImageUri(getContext(), imageBitmap, "regCert");
                 encodedIdreg_cert = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedIdreg_cert, Base64.DEFAULT)).placeholder(R.drawable.add_default_image).into(binding.registrationCertificate);
+                Glide.with(requireContext()).asBitmap().load( imageBitmap ).placeholder(R.drawable.add_default_image).into(binding.registrationCertificate);
             }else if(imageView == binding.tradeLicense){
+                tradeLicenseUri = getImageUri(getContext(), imageBitmap, "tradeLicense");
                 encodedIdtradelicense = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedIdtradelicense, Base64.DEFAULT)).placeholder(R.drawable.add_default_image).into(binding.tradeLicense);
+                Glide.with(requireContext()).asBitmap().load( imageBitmap ).placeholder(R.drawable.add_default_image).into(binding.tradeLicense);
 
             }
         }else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -423,14 +469,22 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             binding.proprietorNin.setError("Proprietor Name required");
             return false;
         }
-        else if(TextUtils.isEmpty(encodedIdreg_cert)){
+        else if(tradeLicenseUri==null || TextUtils.isEmpty(tradeLicenseUri.getPath())){
+            Toast.makeText(getContext(),"Trade License required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(regCertUri==null || TextUtils.isEmpty(regCertUri.getPath())){
             Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
             return false;
         }
-//        else if(TextUtils.isEmpty(encodedIdFront)){
-//            Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
-//            return false;
-//        }
+        else if(idFrontUri==null || TextUtils.isEmpty(idFrontUri.getPath())){
+            Toast.makeText(getContext(),"ID Front required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(idBackUri==null || TextUtils.isEmpty(idBackUri.getPath())){
+            Toast.makeText(getContext(),"ID Back required",Toast.LENGTH_LONG).show();
+            return false;
+        }
 
         return true;
     }
@@ -545,5 +599,57 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+        File file= new File(getRealPathFromURI(fileUri));
+        ProgressRequestBody requestFile = new ProgressRequestBody(
+                file,
+                "image",
+                this
+                );
+//                RequestBody.create(
+//                        file,
+//                        MediaType.parse(getContext().getContentResolver().getType(fileUri))
+//                );
+        // MultipartBody.Part is used to send also the actual file name
+        return  MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+
+    }
+
+    // Getting image URI
+    public Uri getImageUri(Context inContext, Bitmap inImage, String title) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, title, null);
+        return Uri.parse(path);
+    }
+
+    // Get absolute image path
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    @Override
+    public void onProgressUpdate(int percentage) {
+        Log.w("ProgressUpdate", "---> "+percentage);
+        binding.determinateBar.setProgress(percentage);
+    }
+
+    @Override
+    public void onError() {
+        Log.e("ProgressUpdate", "Error Occurred");
+    }
+
+    @Override
+    public void onFinish() {
+        // do something on upload finished,
+        // for example, start next uploading at a queue
+        binding.determinateBar.setProgress(100);
+        dialogLoader.showProgressDialog();
     }
 }

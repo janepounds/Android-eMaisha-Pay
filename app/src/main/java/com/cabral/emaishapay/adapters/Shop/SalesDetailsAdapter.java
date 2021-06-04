@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 
+import com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
 
@@ -26,10 +27,10 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
 
     Context context;
     private List<? extends ShopOrderProducts> orderData;
+    SalesDetailsFragment salesDetailsFragment;
 
     public SalesDetailsAdapter(Context context) {
         this.context = context;
-
     }
 
     @Override
@@ -79,6 +80,8 @@ public class SalesDetailsAdapter extends RecyclerView.Adapter<SalesDetailsAdapte
 
             }
         }
+
+
 
     }
 
