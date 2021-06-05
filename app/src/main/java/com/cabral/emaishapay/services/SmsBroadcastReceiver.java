@@ -20,8 +20,13 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             Status smsRetrieverStatus = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
             switch (smsRetrieverStatus.getStatusCode()) {
                 case CommonStatusCodes.SUCCESS:
-                    Intent messageIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
-                    smsBroadcastReceiverListener.onSuccess(messageIntent);
+                    try{
+                        Intent messageIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
+                        smsBroadcastReceiverListener.onSuccess(messageIntent);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
                     break;
                 case CommonStatusCodes.TIMEOUT:
                     smsBroadcastReceiverListener.onFailure();

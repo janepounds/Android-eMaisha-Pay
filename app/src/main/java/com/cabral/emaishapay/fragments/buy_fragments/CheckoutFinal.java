@@ -743,7 +743,7 @@ public class CheckoutFinal extends Fragment {
                             }
                         }
 
-                    } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                    } else if (checkout_coupon_code!=null && response.body().getSuccess().equalsIgnoreCase("0")) {
                         checkout_coupon_code.setError(response.body().getMessage());
 
                     } else {

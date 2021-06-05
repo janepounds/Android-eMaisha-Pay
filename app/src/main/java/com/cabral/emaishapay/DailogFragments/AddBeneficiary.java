@@ -516,7 +516,10 @@ public class AddBeneficiary extends DialogFragment {
                         }
                         dialogLoader.hideProgressDialog();
                     }
-                } else {
+                } else if(response.code()==401){
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+                    TokenAuthFragment.startAuth( true);
+                }else {
                     dialogLoader.hideProgressDialog();
                     //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String message = response.body().getMessage();
@@ -575,7 +578,10 @@ public class AddBeneficiary extends DialogFragment {
 
                         dialogLoader.hideProgressDialog();
                     }
-                } else {
+                } else if(response.code()==401){
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+                    TokenAuthFragment.startAuth( true);
+                }else {
                     dialogLoader.hideProgressDialog();
                     //Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     if(response.body()!=null){

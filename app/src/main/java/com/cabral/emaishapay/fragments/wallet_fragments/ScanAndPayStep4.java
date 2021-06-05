@@ -47,7 +47,8 @@ public class ScanAndPayStep4 extends Fragment {
             binding.textTxnId.setText(getArguments().getString("trans_id"));
             try{
                 String balance=getArguments().getString("balance");
-                balance=getString(R.string.currency)+" "+ NumberFormat.getInstance().format(Double.parseDouble(balance));
+                double balanceDouble=Double.parseDouble(balance);
+                balance=getString(R.string.currency)+" "+ NumberFormat.getInstance().format(balanceDouble);
                 binding.textUpdatedWalletBalanceAmount.setText(balance);
             }catch (NumberFormatException exception){
                 exception.printStackTrace();
