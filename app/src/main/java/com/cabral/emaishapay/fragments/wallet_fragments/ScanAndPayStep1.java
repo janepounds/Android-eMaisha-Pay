@@ -75,7 +75,7 @@ public class ScanAndPayStep1 extends Fragment {
             @Override
             public void onScannerError(Throwable err) {
                 // method is called when scanner gives some error.
-                Toast.makeText(context, "Scanner Error: " + err.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Scanner Error: " + err.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override

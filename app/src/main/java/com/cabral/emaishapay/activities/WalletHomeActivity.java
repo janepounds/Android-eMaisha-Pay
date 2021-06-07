@@ -831,7 +831,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                 if (cameraaccepted && vibrateaccepted) {
 //                    Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show();
                 }
             }
         }catch (IndexOutOfBoundsException e){
