@@ -671,6 +671,8 @@ public class CheckoutFinal extends Fragment {
         orderDetails.setOrder_payment_id(getOrderID());
 
         orderDetails.setCurrency(PAYMENT_CURRENCY);
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
+        orderDetails.setService_code(service_code);
 
         PlaceOrderNow(orderDetails);
     }
@@ -773,7 +775,7 @@ public class CheckoutFinal extends Fragment {
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .addToOrder
                         (access_token,
-                                postOrder
+                         postOrder
                         );
 
         call.enqueue(new Callback<OrderData>() {

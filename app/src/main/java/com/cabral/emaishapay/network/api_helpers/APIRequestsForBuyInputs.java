@@ -345,10 +345,9 @@ public interface APIRequestsForBuyInputs {
                                    @Field("currency_code") String currency_code);
 
     //******************** Order Data ********************//
-
     @POST("addtoorder")
     Call<OrderData> addToOrder(
-            @Header("Authorization") String token,
+            @Header("ePAuthorization") String token,
             @Body PostOrder postOrder);
 
     @FormUrlEncoded
