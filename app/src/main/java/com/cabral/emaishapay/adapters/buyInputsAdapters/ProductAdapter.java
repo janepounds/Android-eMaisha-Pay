@@ -57,16 +57,16 @@ import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
     private static final String TAG = "ProductAdapter";
-    private Activity context;
-    private String customerID;
+    private final Activity context;
+    private final String customerID;
     private Boolean isGridView;
-    private Boolean isHorizontal;
+    private final Boolean isHorizontal;
     private Boolean isFlash;
     public Fragment currentFragment;
     private FragmentManager fragmentManager;
 
-    private User_Recents_BuyInputsDB recents_db;
-    private List<ProductDetails> productList;
+    private final User_Recents_BuyInputsDB recents_db;
+    private final List<ProductDetails> productList;
 
     long start;
     long end;

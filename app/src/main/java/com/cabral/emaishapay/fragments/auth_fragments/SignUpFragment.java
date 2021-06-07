@@ -63,8 +63,8 @@ public class SignUpFragment  extends Fragment {
     // Firebase auth object
     private int pickedDistrictId;
     private int pickedSubCountyId;
-    private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
-    private ArrayList<SpinnerItem> villageList = new ArrayList<>();
+    private final ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
+    private final ArrayList<SpinnerItem> villageList = new ArrayList<>();
     
     @Override
     public void onAttach(@NonNull Context context) {
@@ -287,7 +287,6 @@ public class SignUpFragment  extends Fragment {
                     args.putString("subCounty",binding.subCountySpinner.getText().toString());
                     args.putString("district",binding.districtSpinner.getText().toString());
                     args.putString("idNo",binding.idNumber.getText().toString());
-                    ;
                     args.putString("firstSecurityQn",binding.spFirstSecurityQn.getSelectedItem().toString());
                     args.putString("secondSecurityQn",binding.spSecondSecurityQn.getSelectedItem().toString());
                     args.putString("thirdSecurityQn",binding.spThirdSecurityQn.getSelectedItem().toString());

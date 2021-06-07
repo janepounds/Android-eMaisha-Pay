@@ -24,11 +24,11 @@ public class API_Interceptor implements Interceptor {
     private static final String ECOMMERCE_CONSUMER_DEVICE_ID = "consumer-device-id";
     private static final String ECOMMERCE_COMSUMER_IP = "consumer-ip";
 
-    private String consumerKey;
-    private String consumerSecret;
+    private final String consumerKey;
+    private final String consumerSecret;
     private String consumerNonce;
     private String consumerDeviceID;
-    private String consumerIP;
+    private final String consumerIP;
 
     
     

@@ -33,14 +33,14 @@ import java.util.List;
 
 public class ProductAttributesAdapter extends RecyclerView.Adapter<ProductAttributesAdapter.MyViewHolder> {
     
-    private Context context;
-    private String[] attributeIDs;
-    private String[] attributePrices;
+    private final Context context;
+    private final String[] attributeIDs;
+    private final String[] attributePrices;
     private List<Value> attributeValuesList;
     
-    private Product_Description product_description;
-    private List<Attribute> productAttributesList;
-    private List<CartProductAttributes> selectedAttributesList;
+    private final Product_Description product_description;
+    private final List<Attribute> productAttributesList;
+    private final List<CartProductAttributes> selectedAttributesList;
     
     
     public ProductAttributesAdapter(Context context, Product_Description product_description, List<Attribute> productAttributesList, List<CartProductAttributes> selectedAttributesList) {

@@ -135,7 +135,7 @@ public class PayLoan extends DialogFragment {
 
                 @Override
                 public void onFailure(Call<LoanPayResponse> call, Throwable t) {
-                    Log.e("info 1A: ", new String(String.valueOf(t.getMessage())));
+                    Log.e("info 1A: ", String.valueOf(t.getMessage()));
 
                     Log.e("info 1A: ", "Something got very wrong");
                 }

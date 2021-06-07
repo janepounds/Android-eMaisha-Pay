@@ -38,9 +38,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class ProductDealsAdapter extends RecyclerView.Adapter<ProductDealsAdapter.MyViewHolder>{
-    private Context context;
-    private String customerID;
-    private List<ProductDetails> productList;
+    private final Context context;
+    private final String customerID;
+    private final List<ProductDetails> productList;
     public ProductDealsAdapter(List<ProductDetails> productList,Context context){
         this.productList = productList;
         this.context = context;

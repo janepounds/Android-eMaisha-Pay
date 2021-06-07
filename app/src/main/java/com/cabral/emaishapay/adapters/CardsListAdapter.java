@@ -29,8 +29,8 @@ import java.util.List;
 
 public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.MyViewHolder> {
     private static final String TAG = "CardsListAdapter";
-    private List<CardResponse.Cards> dataList;
-    private FragmentManager fm;
+    private final List<CardResponse.Cards> dataList;
+    private final FragmentManager fm;
     Context context;
     private String account_name, card_number,cvv,expiry_date,id;
 

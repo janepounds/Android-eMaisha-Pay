@@ -32,7 +32,7 @@ public class SalesDetailsFragment extends Fragment {
     String longText, shortText;
     private RecyclerView recyclerView;
     private SalesDetailsAdapter salesDetailsAdapter;
-    private String[] header = {"Description", "Price"};
+    private final String[] header = {"Description", "Price"};
 
     private Context context;
     Toolbar toolbar;

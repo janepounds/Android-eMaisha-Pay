@@ -1,4 +1,4 @@
-package com.cabral.emaishapay.adapters.buyInputsAdapters;;
+package com.cabral.emaishapay.adapters.buyInputsAdapters;
 
 
 import android.content.Context;
@@ -50,17 +50,17 @@ import java.util.List;
 
 public class ProductAdapterRemovable extends RecyclerView.Adapter<ProductAdapterRemovable.MyViewHolder> {
 
-    private Context context;
+    private final Context context;
 
-    private String customerID;
-    private TextView emptyText;
+    private final String customerID;
+    private final TextView emptyText;
 
-    private boolean isRecents;
-    private boolean isHorizontal;
+    private final boolean isRecents;
+    private final boolean isHorizontal;
 
-    private List<ProductDetails> productList;
+    private final List<ProductDetails> productList;
 
-    private User_Recents_BuyInputsDB recents_db;
+    private final User_Recents_BuyInputsDB recents_db;
     int defaultSmLayoutId;
     int defaultLgLayoutId;
 

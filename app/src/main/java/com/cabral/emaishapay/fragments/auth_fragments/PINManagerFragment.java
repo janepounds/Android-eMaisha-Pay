@@ -13,11 +13,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +31,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cabral.emaishapay.DailogFragments.ChangePassword;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -81,17 +87,17 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
     ArrayList<String> securityQnsSubList2 = new ArrayList<>();
     ArrayList<String> securityQnsSubList3 = new ArrayList<>();
     private Spinner spFirstSecurityQn,spSecondSecurityQn,spThirdSecurityQn;
-    private EditText etFirstQnAnswer,etSecondQnAnswer,etThirdQnAnswer;
+    private EditText etFirstQnAnswer,etSecondQnAnswer,etThirdQnAnswer,phone_number;
 
     public static int ACTION;
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private String userFirstname, userLastname, village, subCounty, district,idType,idNo,firstSecurityQn,secondSecurityQn,thirdSecurityQn,firstQnAnswer,secondQnAnswer,thirdQnAnswer;
 
 
     @Override
     public void onAttach(@NonNull Context context) {
-        this.context=context;
+        PINManagerFragment.context =context;
         super.onAttach(context);
     }
 
@@ -150,42 +156,10 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             }
             else{
                 binding.pinTitle.setText(getString(R.string.enter_pin));
-                binding.layoutSignin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Go to security qns
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
-                        View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
-                        dialog.setView(dialogView);
-                        dialog.setCancelable(true);
 
-                        //            RequestUserQns(user_id);
-                        //display security qns and
-                        Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
-                        submit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                validateSecurityQns();
-                            }
-                        });
-                        Spinner firstSecurityQn,secondSecurityQn,thirdSecurityQn;
-                        EditText firstQnAnswer,secondQnAnswer,thirdQnAnswer,phoneNumber;
-
-                        //calling security qns form
-                        phoneNumber =dialogView.findViewById(R.id.phone_no);
-                        firstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
-                        secondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
-                        thirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
-                        firstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
-                        secondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
-                        thirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
-                        RequestSecurityQns();
-
-                        final AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-                    }
-                });
             }
+
+
         }
 
 
@@ -203,6 +177,72 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         binding.tvKeyClear.setOnClickListener(this);
         binding.textForgotPin.setOnClickListener(this);
         binding.tokenAuthClose.setOnClickListener(this);
+        binding.textForgotPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
+                View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
+                dialog.setView(dialogView);
+                dialog.setCancelable(true);
+
+                //display security qns and
+                Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        validateSecurityQns();
+                    }
+                });
+
+                //calling security qns form
+                phone_number =dialogView.findViewById(R.id.phone_no);
+                spFirstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
+                spSecondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
+                spThirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
+                etFirstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
+                etSecondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
+                etThirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+
+                spFirstSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                spSecondSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                spThirdSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                RequestSecurityQns();
+
+                final AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+            }
+        });
 
 //        binding.pinCode1Edt.setRawInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 //        binding.pinCode1Edt.setTextIsSelectable(true);
@@ -365,53 +405,62 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
 
         else if(v.getId() == R.id.text_forgot_pin){
             AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.DialogFullscreen);
-            View dialogView = getLayoutInflater().inflate(R.layout.buy_inputs_dialog_input, null);
+            View dialogView = getLayoutInflater().inflate(R.layout.new_forgot_pin, null);
             dialog.setView(dialogView);
             dialog.setCancelable(true);
 
-//            RequestUserQns(user_id);
             //display security qns and
             Button submit = dialogView.findViewById(R.id.btn_submit_security_qn);
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean validSecurityQns = validateSecurityQns();
-                    if(validSecurityQns){
-                        //enter new pin
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
-                        dialog.setView(dialogView);
-                        dialog.setCancelable(true);
-                        final EditText current_pin = dialogView.findViewById(R.id.current_pin);
-                        current_pin.setVisibility(View.GONE);
-                        final EditText new_pin = dialogView.findViewById(R.id.new_pin);
-                        final EditText confirm_new_pin = dialogView.findViewById(R.id.confirm_new_pin);
-                        final TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-                        final Button submit = dialogView.findViewById(R.id.update);
-                        final Button cancel = dialogView.findViewById(R.id.cancel);
-                        dialog_title.setText("Create New Pin");
-
-
-                        final AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                alertDialog.dismiss();
-                            }
-                        });
-                    }
-
+                    validateSecurityQns();
                 }
             });
 
             //calling security qns form
+            phone_number =dialogView.findViewById(R.id.phone_no);
             spFirstSecurityQn = dialogView.findViewById(R.id.sp_first_security_qn);
             spSecondSecurityQn = dialogView.findViewById(R.id.sp_second_security_qn);
             spThirdSecurityQn = dialogView.findViewById(R.id.sp_third_security_qn);
             etFirstQnAnswer = dialogView.findViewById(R.id.etxt_first_security_qn);
             etSecondQnAnswer = dialogView.findViewById(R.id.etxt_second_security_qn);
             etThirdQnAnswer = dialogView.findViewById(R.id.etxt_third_security_qn);
+
+            spFirstSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spSecondSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spThirdSecurityQn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             RequestSecurityQns();
 
             final AlertDialog alertDialog = dialog.create();
@@ -423,7 +472,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
             AuthActivity.navController.popBackStack();
         }
         else {
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
             inputConnection.commitText(value, 1);
 
             pin = binding.pinCode1Edt.getText().toString() + binding.pinCode2Edt.getText().toString() + binding.pinCode3Edt.getText().toString() + binding.pinCode4Edt.getText().toString();
@@ -712,9 +761,66 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         });
     }
 
-    private boolean validateSecurityQns() {
-        //load answered security Qns(locally or from an endpoint)
-        return true;
+    private void validateSecurityQns() {
+        dialogLoader.showProgressDialog();
+        String access_token =  WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String request_id = WalletHomeActivity.generateRequestId();
+
+
+        Call<SecurityQnsResponse> call = APIClient.getWalletInstance(getContext()).
+                validateSecurityQns(access_token,
+                        getString(R.string.phone_number_code)+phone_number.getText().toString(),
+                        spFirstSecurityQn.getSelectedItem().toString(),
+                        spSecondSecurityQn.getSelectedItem().toString(),
+                        spThirdSecurityQn.getSelectedItem().toString(),
+                        etFirstQnAnswer.getText().toString(),
+                        etSecondQnAnswer.getText().toString(),
+                        etThirdQnAnswer.getText().toString(),
+                        request_id,
+                        "validateSecurityQns");
+
+        call.enqueue(new Callback<SecurityQnsResponse>() {
+            @Override
+            public void onResponse(Call<SecurityQnsResponse> call, Response<SecurityQnsResponse> response) {
+                if(response.isSuccessful()){
+
+                    if(response.body().getStatus().equalsIgnoreCase("1")){
+                        //call change password dialog
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        Fragment prev =fm.findFragmentByTag("dialog");
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
+                        // Create and show the dialog.
+                        DialogFragment changePassword =new ChangePassword(getString(R.string.forgot_pin));
+                        changePassword.show( ft, "dialog");
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+
+                    }else{
+                        Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                    }
+                    dialogLoader.hideProgressDialog();
+
+
+                }else if (response.code() == 401) {
+                    Toast.makeText(context,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    dialogLoader.hideProgressDialog();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SecurityQnsResponse> call, Throwable t){
+                dialogLoader.hideProgressDialog();
+            }
+        });
+
+
     }
 
     public void RequestSecurityQns(){

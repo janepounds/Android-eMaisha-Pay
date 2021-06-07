@@ -31,7 +31,7 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
     TextView serviceTextView, receiptNumberTextView, statusTextView,totalTextView,
             merchantNameTextView,errorTextView,dateTextView,referenceNoTextView;
     private Context context;
-    private WalletTransactionResponse.TransactionData.Transactions  transaction;
+    private final WalletTransactionResponse.TransactionData.Transactions  transaction;
 
    public WalletTransactionsReceiptDialog(WalletTransactionResponse.TransactionData.Transactions transaction){
        this.transaction =transaction;

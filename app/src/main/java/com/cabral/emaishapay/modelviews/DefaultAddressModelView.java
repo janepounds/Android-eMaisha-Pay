@@ -21,7 +21,7 @@ import java.util.List;
 public class DefaultAddressModelView extends AndroidViewModel {
     private final DataRepository mRepository;
     private final SavedStateHandle mSavedStateHandler;
-    private LiveData<List<DefaultAddress>> repositorySource;
+    private final LiveData<List<DefaultAddress>> repositorySource;
     String customer_id;
 
     public DefaultAddressModelView(@NonNull Application application, SavedStateHandle savedStateHandle) {

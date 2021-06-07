@@ -17,9 +17,9 @@ import com.cabral.emaishapay.models.marketplace.MarketPriceItem;
 import java.util.ArrayList;
 
 public class MarketPriceItemAdapter extends RecyclerView.Adapter<MarketPriceItemAdapter.MarketPriceItemViewHolder> {
-    private Context context;
-    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-    private ArrayList<MarketPriceItem> marketPriceItemArrayList;
+    private final Context context;
+    private final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+    private final ArrayList<MarketPriceItem> marketPriceItemArrayList;
 
     public static class MarketPriceItemViewHolder extends RecyclerView.ViewHolder {
         public TextView name;

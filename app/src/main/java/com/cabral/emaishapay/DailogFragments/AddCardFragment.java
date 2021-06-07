@@ -267,13 +267,13 @@ public class AddCardFragment extends DialogFragment {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("MM");
         DateFormat yearDateFormat = new SimpleDateFormat("yy");
-
+        String expMonth = null,expYear = null;
         int mm = Integer.parseInt(dateFormat.format(date));
         int yy = Integer.parseInt(yearDateFormat.format(date));
-        String expMonth = binding.addMoneyCardExpiry.getText().toString().substring(0,2);
-        String expYear = binding.addMoneyCardExpiry.getText().toString().substring(binding.addMoneyCardExpiry.getText().toString().length() - 2);
-
-
+        if(!binding.addMoneyCardExpiry.getText().toString().isEmpty()){
+            expMonth = binding.addMoneyCardExpiry.getText().toString().substring(0,2);
+            expYear = binding.addMoneyCardExpiry.getText().toString().substring(binding.addMoneyCardExpiry.getText().toString().length() - 2);
+        }
         boolean check = true;
 
 

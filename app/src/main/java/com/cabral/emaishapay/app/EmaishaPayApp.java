@@ -36,7 +36,7 @@ public class EmaishaPayApp extends MultiDexApplication {
     private List<PagesDetails> staticPagesDetails = new ArrayList<>();
     private List<BannerDetails> bannersList = new ArrayList<>();
     private List<CategoryDetails> categoriesList = new ArrayList<>();
-    private List<ProductDetails> productList = new ArrayList<>();
+    private final List<ProductDetails> productList = new ArrayList<>();
 
     private ShippingService shippingService = null;
     private AddressDetails shippingAddress = new AddressDetails();

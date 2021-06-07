@@ -114,20 +114,11 @@ public class DepositMoneyVisa extends DialogFragment  {
         addMoneyImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
-                    Snackbar.make(addMoneyImg, getString(R.string.invalid_payment_token), Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if( spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Add New") ){
-
+                if(validateEntries()){
+                    initiateDepositWithExistingCard(card_id);
 
                 }
-                else{
-                    if(!addMoneyTxt.getText().toString().isEmpty() )
-                        initiateDepositWithExistingCard(card_id);
 
-                }
 
             }
         });
@@ -168,6 +159,25 @@ public class DepositMoneyVisa extends DialogFragment  {
         };
 
         spinner_select_card.setOnItemSelectedListener(onItemSelectedListener);
+
+
+    }
+
+    private boolean validateEntries() {
+
+        if(spinner_select_card.getSelectedItem().toString().equalsIgnoreCase("Select Card")){
+            Snackbar.make(addMoneyImg, "Please Select card", Snackbar.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        else if(addMoneyTxt.getText().toString().isEmpty()){
+            Snackbar.make(addMoneyImg, "Please Enter amount", Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+            return  true;
+        }
+
 
 
     }
@@ -275,7 +285,7 @@ public class DepositMoneyVisa extends DialogFragment  {
 
                     if (response.errorBody() != null) {
 
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very wrong, code: " + response.code());

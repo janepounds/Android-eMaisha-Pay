@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class UserProductReviewsAdapter extends RecyclerView.Adapter<UserProductReviewsAdapter.MyViewHolder> {
 
     Context context;
-    private List<ProductReviews> reviewsList;
+    private final List<ProductReviews> reviewsList;
 
 
     public UserProductReviewsAdapter(Context context, List<ProductReviews> reviewsList) {

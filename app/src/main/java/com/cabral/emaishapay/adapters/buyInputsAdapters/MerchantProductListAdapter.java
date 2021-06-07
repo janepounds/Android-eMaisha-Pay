@@ -58,7 +58,8 @@ public class MerchantProductListAdapter  extends RecyclerView.Adapter<MerchantPr
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView productName, productPrice;
+        private final TextView productName;
+        private final TextView productPrice;
 
         public MyViewHolder(final View itemView) {
             super(itemView);

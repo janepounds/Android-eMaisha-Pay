@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedPreferenceHelper {
-    private SharedPreferences sharedPreferences;
-    private String animal = "selectedAnimal";
-    private String latitude = "defaultLatitude";
-    private String longitude = "defaultLongitude";
+    private final SharedPreferences sharedPreferences;
+    private final String animal = "selectedAnimal";
+    private final String latitude = "defaultLatitude";
+    private final String longitude = "defaultLongitude";
 
     public SharedPreferenceHelper(Context context) {
         String preferenceName = "SharedPreference";

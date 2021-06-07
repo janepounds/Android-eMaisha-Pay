@@ -51,7 +51,7 @@ public class DataRepository {
     private static final String TAG = "DataRepository";
 
     private static DataRepository ourInstance;
-    private EmaishapayDb dbInstance;
+    private final EmaishapayDb dbInstance;
     private final DefaultAddressDao mDefaultAddressDao;
     private final EcManufacturerDao mEcManufacturerDao;
     private final ShopOrderProductsDao mShopOrderProductDao;
@@ -397,11 +397,7 @@ public class DataRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<EcProduct> data) {
-                if (TextUtils.isEmpty(key)) {
-                    return true;
-                }
-
-                return false;
+                return TextUtils.isEmpty(key);
             }
 
             @NonNull
@@ -453,10 +449,7 @@ public class DataRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<ShopOrder> data) {
-                if (TextUtils.isEmpty(key)) {
-                    return true;
-                }
-                return false;
+                return TextUtils.isEmpty(key);
             }
 
             @NonNull

@@ -17,10 +17,10 @@ import okhttp3.RequestBody;
 import okio.BufferedSink;
 
 public class ProgressRequestBody extends RequestBody {
-    private File mFile;
+    private final File mFile;
     private String mPath;
-    private UploadCallbacks mListener;
-    private String content_type;
+    private final UploadCallbacks mListener;
+    private final String content_type;
 
     private static final int DEFAULT_BUFFER_SIZE = 2048;
 
@@ -73,8 +73,8 @@ public class ProgressRequestBody extends RequestBody {
 
 
     private class ProgressUpdater implements Runnable {
-        private long mUploaded;
-        private long mTotal;
+        private final long mUploaded;
+        private final long mTotal;
         public ProgressUpdater(long uploaded, long total) {
             mUploaded = uploaded;
             mTotal = total;

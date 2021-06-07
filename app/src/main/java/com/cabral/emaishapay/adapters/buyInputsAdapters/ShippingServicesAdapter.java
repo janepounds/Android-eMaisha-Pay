@@ -27,8 +27,8 @@ import java.util.List;
 public class ShippingServicesAdapter extends RecyclerView.Adapter<ShippingServicesAdapter.MyViewHolder> {
 
     Context context;
-    private Nearby_Merchants nearby_merchant_fragment;
-    private List<ShippingService> shippingServicesList;
+    private final Nearby_Merchants nearby_merchant_fragment;
+    private final List<ShippingService> shippingServicesList;
 
     
     public ShippingServicesAdapter(Context context, List<ShippingService> shippingServicesList, Nearby_Merchants nearby_merchant_fragment) {

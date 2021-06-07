@@ -18,7 +18,7 @@ import com.cabral.emaishapay.models.marketplace.MarketPriceSubItem;
 import java.util.ArrayList;
 
 public class MarketPriceSubItemAdapter extends RecyclerView.Adapter<MarketPriceSubItemAdapter.MarketPriceSubItemViewHolder> {
-    private ArrayList<MarketPriceSubItem> marketPriceSubItemArrayList;
+    private final ArrayList<MarketPriceSubItem> marketPriceSubItemArrayList;
 
     public static class MarketPriceSubItemViewHolder extends RecyclerView.ViewHolder {
         public TextView market, retail, wholesale;

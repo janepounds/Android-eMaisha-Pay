@@ -24,7 +24,7 @@ import java.util.List;
 public class ProductAttributeValuesAdapter extends RecyclerView.Adapter<ProductAttributeValuesAdapter.MyViewHolder> {
 
     Context context;
-    private List<Value> attributeValues;
+    private final List<Value> attributeValues;
 
 
     public ProductAttributeValuesAdapter(Context context, List<Value> attributeValues) {

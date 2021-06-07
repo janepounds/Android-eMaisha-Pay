@@ -322,7 +322,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         autoCompleteTextView.setAdapter(adapter);*/
     }
 
-    private TextWatcher filterTextWatcher = new TextWatcher() {
+    private final TextWatcher filterTextWatcher = new TextWatcher() {
         public void afterTextChanged(Editable s) {
             if (!s.toString().equals("")) {
                 mAutoCompleteAdapter.getFilter().filter(s.toString());

@@ -68,7 +68,7 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private NewEmaishaPayHomeBinding binding;
     private Context context;
-    private List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
+    private final List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
@@ -487,14 +487,14 @@ public class WalletHomeFragment extends Fragment {
                     //Omitted to avoid current Destination conflicts
                     TokenAuthFragment.startAuth(true);
                 } else {
-                    Log.e("info", new String(String.valueOf(response.body().getMessage())));
+                    Log.e("info", String.valueOf(response.body().getMessage()));
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<WalletTransactionSummary> call, @NotNull Throwable t) {
                 dialog.hideProgressDialog();
-                Log.e("info : ", new String(String.valueOf(t.getMessage())));
+                Log.e("info : ", String.valueOf(t.getMessage()));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
 
             }
@@ -531,14 +531,14 @@ public class WalletHomeFragment extends Fragment {
                     //Omitted to avoid current Destination conflicts
                     TokenAuthFragment.startAuth(true);
                 } else {
-                    Log.e("info", new String(String.valueOf(response.body().getMessage())));
+                    Log.e("info", String.valueOf(response.body().getMessage()));
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<BalanceResponse> call, @NotNull Throwable t) {
                 dialog.hideProgressDialog();
-                Log.e("info : ", new String(String.valueOf(t.getMessage())));
+                Log.e("info : ", String.valueOf(t.getMessage()));
                 Toast.makeText(context, "An error occurred Try again Later", Toast.LENGTH_LONG).show();
 
             }

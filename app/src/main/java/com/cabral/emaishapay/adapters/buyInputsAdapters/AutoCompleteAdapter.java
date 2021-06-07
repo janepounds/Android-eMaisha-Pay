@@ -56,9 +56,9 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
     private static final String TAG = "PlacesAutoAdapter";
     private ArrayList<PlaceAutocomplete> mResultList = new ArrayList<>();
 
-    private Context mContext;
-    private CharacterStyle STYLE_BOLD;
-    private CharacterStyle STYLE_NORMAL;
+    private final Context mContext;
+    private final CharacterStyle STYLE_BOLD;
+    private final CharacterStyle STYLE_NORMAL;
     private final PlacesClient placesClient;
     private ClickListener clickListener;
 
@@ -190,8 +190,9 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
     }
 
     public class PredictionHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView address, area;
-        private LinearLayout mRow;
+        private final TextView address;
+        private final TextView area;
+        private final LinearLayout mRow;
 
         PredictionHolder(View itemView) {
             super(itemView);

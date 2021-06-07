@@ -202,9 +202,12 @@ public class MerchantsListAdapter extends RecyclerView.Adapter<MerchantsListAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView merchants_businessName, merchant_location, order_price;
-        private RecyclerView order_products_list;
-        private Button select_btn, ignore_btn;
+        private final TextView merchants_businessName;
+        private final TextView merchant_location;
+        private final TextView order_price;
+        private final RecyclerView order_products_list;
+        private final Button select_btn;
+        private final Button ignore_btn;
 
 
         public MyViewHolder(final View itemView) {

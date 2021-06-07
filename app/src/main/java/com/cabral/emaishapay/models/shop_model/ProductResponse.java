@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ProductResponse {
-    private List<Product> Products;
+    private final List<Product> Products;
 
     public ProductResponse(List<Product> products) {
         Products = products;

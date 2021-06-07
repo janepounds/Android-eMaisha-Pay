@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
     private Context context;
     private String merchantId,merchant_name;
-    private SparseArray<String> keyValues = new SparseArray<>();
+    private final SparseArray<String> keyValues = new SparseArray<>();
     private static InputConnection inputConnection;
     private LayoutScanAndPayProcessStep2Binding binding;
     DialogLoader dialogLoader;
@@ -232,7 +232,7 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
             WalletHomeActivity.navController.navigate(R.id.action_scanAndPayStep2_to_scanAndPayStep3,bundle);
 
         }else{
-            String value = keyValues.get(v.getId()).toString();
+            String value = keyValues.get(v.getId());
 //            inputConnection.commitText(value, 1);
 //            setInputConnection( binding.txtBillTotal);
 

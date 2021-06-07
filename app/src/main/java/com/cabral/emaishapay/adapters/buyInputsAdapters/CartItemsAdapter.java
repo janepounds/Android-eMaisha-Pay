@@ -45,12 +45,12 @@ import java.util.Locale;
 
 public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyViewHolder> {
 
-    private Context context;
-    private My_Cart cartFragment;
+    private final Context context;
+    private final My_Cart cartFragment;
     private List<CartProduct> cartItemsList = new ArrayList<>();
 
-    private User_Cart_BuyInputsDB user_cart_BuyInputs_db;
-    private User_Recents_BuyInputsDB recents_db;
+    private final User_Cart_BuyInputsDB user_cart_BuyInputs_db;
+    private final User_Recents_BuyInputsDB recents_db;
     
     private ProductAttributeValuesAdapter attributesAdapter;
 
@@ -328,13 +328,19 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
     /********** Custom ViewHolder provides a direct reference to each of the Views within a Data_Item *********/
     public class MyViewHolder extends RecyclerView.ViewHolder {
     
-        private Button custom_button;
-        private LinearLayout cart_item_viewBtn;
-        private ImageView cart_item_cover;
-        private RecyclerView attributes_recycler;
-        private ImageButton cart_item_quantity_minusBtn, cart_item_quantity_plusBtn;
-        private ImageView cart_item_removeBtn;
-        private TextView cart_item_title, cart_item_category, cart_item_base_price, cart_item_sub_price, cart_item_quantity,cart_item_measure;
+        private final Button custom_button;
+        private final LinearLayout cart_item_viewBtn;
+        private final ImageView cart_item_cover;
+        private final RecyclerView attributes_recycler;
+        private final ImageButton cart_item_quantity_minusBtn;
+        private final ImageButton cart_item_quantity_plusBtn;
+        private final ImageView cart_item_removeBtn;
+        private final TextView cart_item_title;
+        private TextView cart_item_category;
+        private final TextView cart_item_base_price;
+        private TextView cart_item_sub_price;
+        private final TextView cart_item_quantity;
+        private final TextView cart_item_measure;
 
 
         public MyViewHolder(final View itemView) {

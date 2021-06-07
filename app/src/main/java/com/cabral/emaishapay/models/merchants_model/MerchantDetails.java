@@ -12,46 +12,46 @@ import java.util.Map;
 public class MerchantDetails {
     @SerializedName("shop_id")
     @Expose
-    private long merchantId;
+    private final long merchantId;
     @SerializedName("shop_name")
     @Expose
-    private String businessName;
+    private final String businessName;
     @SerializedName("shop_contact")
     @Expose
-    private String phoneNumber;
+    private final String phoneNumber;
     @SerializedName("shop_email")
     @Expose
-    private String email;
+    private final String email;
     @SerializedName("shop_address")
     @Expose
-    private String address;
+    private final String address;
     @SerializedName("shop_currency")
     @Expose
-    private String currency;
+    private final String currency;
     @SerializedName("latitude")
     @Expose
-    private String latitude;
+    private final String latitude;
     @SerializedName("longitude")
     @Expose
-    private String longitude;
+    private final String longitude;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private final String created_at;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private final String updated_at;
     @SerializedName("distance")
     @Expose
-    private String distance;
+    private final String distance;
     @SerializedName("productPrices")
     @Expose
-    private Map<String, String[]> productPrices;
+    private final Map<String, String[]> productPrices;
     @SerializedName("emaisha_wallet")
     @Expose
-    private String merchant_wallet_id;
+    private final String merchant_wallet_id;
     @SerializedName("emaisha_wallet_business_id")
     @Expose
-    private String merchant_id;
+    private final String merchant_id;
 
     public final static Parcelable.Creator<MerchantDetails> CREATOR = new Parcelable.Creator<MerchantDetails>() {
 
