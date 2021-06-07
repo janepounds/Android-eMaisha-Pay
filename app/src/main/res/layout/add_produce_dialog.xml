@@ -131,7 +131,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.7"
                             android:background="@android:color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:paddingLeft="@dimen/dimen_10dp"
                             android:textSize="14sp" />
                     </RelativeLayout>
@@ -219,7 +218,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.7"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@font/josefin_sans"
                     android:inputType="numberDecimal"
                     android:paddingLeft="@dimen/dimen_10dp"
                     android:textSize="14sp" />
@@ -230,7 +228,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:background="@drawable/edittext_right_corners_green"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center"
                     android:text="Kg"
                     android:textColor="@color/white"
@@ -261,7 +258,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.7"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@font/josefin_sans"
                     android:inputType="numberDecimal"
                     android:paddingLeft="@dimen/dimen_10dp"
                     android:textSize="14sp" />
@@ -271,7 +267,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:background="@drawable/edittext_right_corners_green"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center"
                     android:text="UGX"
                     android:textColor="@color/white"

@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
+import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
 
@@ -403,8 +404,11 @@ public class TransferMoney extends Fragment {
                 if (response.code() == 200 && response.body().getStatus().equalsIgnoreCase("1")) {
                   navigateToComfirmDialog(response.body().getData().getBusinessName());
 
-                } else {
+                } else if(response.body()!=null) {
                     Snackbar.make(context,addMoneyImg, response.body().getMessage(),Snackbar.LENGTH_LONG).show();
+                }else if(response.code()==401){
+                    Toast.makeText(context, "session expired", Toast.LENGTH_LONG).show();
+                    TokenAuthFragment.startAuth( true);
                 }
 
                 if (response.errorBody() != null) {

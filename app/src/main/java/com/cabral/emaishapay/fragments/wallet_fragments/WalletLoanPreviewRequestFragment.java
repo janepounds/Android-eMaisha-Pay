@@ -75,11 +75,11 @@ public class WalletLoanPreviewRequestFragment extends Fragment {
             loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
             loanProgressBarId.setVisibility(View.GONE);
             loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 
         }else{
             loanProgressBarId.setStateDescriptionData(descriptionData);
-            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanProgressBarId.setStateDescriptionTypeface("font/nunito.ttf");
         }
 
        if(getArguments() != null){

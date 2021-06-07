@@ -86,7 +86,7 @@ public class WalletLoanDetailsFragment extends Fragment {
         //Second hidden progress bar for loan application with 5 states
 
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-//        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+//        loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 //
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -99,12 +99,12 @@ public class WalletLoanDetailsFragment extends Fragment {
            loanProgressBarId.setVisibility(View.GONE);
            layoutPreviousBtn.setVisibility(View.VISIBLE);
            loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-           loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+           loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
            loanApplication= (LoanApplication) getArguments().getSerializable("loanApplication");
 
         }else {
             loanProgressBarId.setStateDescriptionData(descriptionData);
-            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanProgressBarId.setStateDescriptionTypeface("font/nunito.ttf");
             layoutPreviousBtn.setVisibility(View.GONE);
         }
 

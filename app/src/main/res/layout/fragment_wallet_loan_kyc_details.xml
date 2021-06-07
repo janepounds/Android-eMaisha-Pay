@@ -42,7 +42,6 @@
                 android:id="@+id/text_view_loan_photos_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:gravity="left"
                 android:text="Enter KYC Details"
                 android:textColor="@color/colorPrimary"
@@ -108,7 +107,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="Upload National ID Front :"
@@ -154,7 +152,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:text="Upload National ID Back :"
@@ -201,7 +198,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:text="Upload Photo holding ID :"
@@ -247,7 +243,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefin_sans"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:text="Upload Your Farm Photo :"
@@ -310,7 +305,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="@string/first_name" />
 
                             <EditText
@@ -318,7 +312,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
-                                android:fontFamily="@font/josefin_sans"
                                 android:gravity="start|center_vertical"
                                 android:inputType="text"
                                 android:padding="10dp"
@@ -341,7 +334,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="Second Name" />
 
                             <EditText
@@ -349,7 +341,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
-                                android:fontFamily="@font/josefin_sans"
                                 android:inputType="text"
                                 android:paddingStart="10dp"
                                 android:textAlignment="viewStart"
@@ -426,7 +417,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="Contact" />
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -448,7 +438,6 @@
                                     android:id="@+id/guarantor_contact_edt1"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:fontFamily="@font/josefin_sans"
                                     android:inputType="phone"
                                     android:paddingStart="@dimen/dimen_10dp"
                                     android:tag="+256 "
@@ -493,7 +482,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="@string/first_name" />
 
                             <EditText
@@ -501,7 +489,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
-                                android:fontFamily="@font/josefin_sans"
                                 android:gravity="start|center_vertical"
                                 android:inputType="text"
                                 android:padding="10dp"
@@ -524,7 +511,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="Second Name" />
 
                             <EditText
@@ -532,7 +518,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:background="@drawable/edittext_corner"
-                                android:fontFamily="@font/josefin_sans"
                                 android:inputType="text"
                                 android:paddingStart="10dp"
                                 android:textAlignment="viewStart"
@@ -609,7 +594,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
-                                android:fontFamily="@font/josefin_sans"
                                 android:text="Contact" />
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -631,7 +615,6 @@
                                     android:id="@+id/guarantor_contact_edt2"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:fontFamily="@font/josefin_sans"
                                     android:inputType="phone"
                                     android:paddingStart="@dimen/dimen_10dp"
                                     android:tag="+256 "

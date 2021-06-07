@@ -536,7 +536,10 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                         dialog.show();
 
 
-                    } else {
+                    } else if(response.code()==401){
+                        Toast.makeText(getContext(), "session expired", Toast.LENGTH_LONG).show();
+                        TokenAuthFragment.startAuth( true);
+                    }else {
 
                         dialogLoader.hideProgressDialog();
                         final Dialog dialog = new Dialog(getContext());
@@ -618,6 +621,9 @@ public class AgentCustomerConfirmDetails extends DialogFragment {
                         dialog.show();
 
 
+                    }else if(response.code()==401){
+                        Toast.makeText(getContext(), "session expired", Toast.LENGTH_LONG).show();
+                        TokenAuthFragment.startAuth( true);
                     } else {
 
                         dialogLoader.hideProgressDialog();

@@ -115,12 +115,12 @@ public class WalletLoanKycDetailsFragment extends Fragment {
             loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
             loanProgressBarId.setVisibility(View.GONE);
             loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 
 
         }else{
             loanProgressBarId.setStateDescriptionData(descriptionData);
-            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanProgressBarId.setStateDescriptionTypeface("font/nunito.ttf");
 
         }
         dialogLoader = new DialogLoader(context);
@@ -128,7 +128,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
         //Second hidden progress bar for loan application with 5 states
 
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-//        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+//        loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
         assert getArguments() != null;
          if (getArguments().getSerializable("loanApplication") != null) {
             loanApplication = (LoanApplication) getArguments().getSerializable("loanApplication");
@@ -276,8 +276,6 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 break;
         }
     }
-
-
 
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/
