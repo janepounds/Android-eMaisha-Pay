@@ -50,7 +50,11 @@
         android:id="@+id/walletOrdersFragment"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.My_Orders"
         android:label="MyOrdersFragment"
-        tools:layout="@layout/buy_inputs_orders"/>
+        tools:layout="@layout/buy_inputs_orders">
+        <action
+            android:id="@+id/action_walletOrdersFragment_to_walletBuyFragment"
+            app:destination="@id/walletBuyFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/viewAllPopularProducts"

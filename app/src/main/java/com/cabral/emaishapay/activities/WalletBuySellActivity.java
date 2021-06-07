@@ -184,6 +184,12 @@ public class WalletBuySellActivity extends AppCompatActivity {
             Intent intent = new Intent(this, WalletHomeActivity.class);
             startActivity(intent);
         }
+
+        if(navController.getCurrentDestination().getId()==R.id.walletOrdersFragment){
+
+            Intent intent = new Intent(this, WalletHomeActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
