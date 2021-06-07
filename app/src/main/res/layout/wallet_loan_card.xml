@@ -137,7 +137,6 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:text="Status"
-                    android:fontFamily="@font/josefin_sans"
                     android:textColor="@color/black"/>
 
                 <TextView
@@ -146,7 +145,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Pending Correction"
-                    android:fontFamily="@font/josefin_sans"
                     android:textColor="@color/black"
                     />
 

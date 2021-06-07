@@ -26,7 +26,6 @@
         android:id="@+id/heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:gravity="left"
         android:padding="10dp"
         android:text="Enter User Details"
@@ -99,7 +98,6 @@
                 android:layout_marginTop="4dp"
                 android:padding="10dp"
                 android:background="@drawable/edittext_corner"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="text"
                 android:textColor="#000" />
             <LinearLayout
@@ -114,7 +112,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/josefin_sans"
                     android:text="eMaisha Account"
                     android:layout_marginBottom="5dp"/>
 
@@ -144,7 +141,6 @@
                             android:id="@+id/etxt_emaisha_account"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="phone"
                             android:paddingStart="@dimen/dimen_10dp"
                             android:tag="+256 "

@@ -56,7 +56,6 @@
                         android:id="@+id/text_title_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:text="Customer"
                         android:textColor="#929292"
                         android:textSize="20sp" />
@@ -65,9 +64,8 @@
                         android:id="@+id/text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:paddingTop="5dp"
-                        android:text="John Zimula"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -93,8 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Receiver Account"
+                       android:text="Receiver Account"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -102,8 +99,7 @@
                         android:id="@+id/text_receiver_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
+                       android:paddingTop="5dp"
                         android:text="0112378934459034"
                         android:textColor="@color/colorPrimary"
                         android:textSize="22sp"
@@ -130,8 +126,7 @@
                         android:id="@+id/text_title_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Phone Number"
+                       android:text="Phone Number"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -139,9 +134,8 @@
                         android:id="@+id/text_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
-                        android:text="0750532902"
+                       android:paddingTop="5dp"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -168,8 +162,7 @@
                         android:id="@+id/text_title_sender_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Sender"
+                       android:text="Sender"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -177,8 +170,7 @@
                         android:id="@+id/text_sender_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
+                       android:paddingTop="5dp"
                         android:text="John Zimula"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
@@ -206,8 +198,7 @@
                         android:id="@+id/text_title_sender_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Sender Mobile"
+                       android:text="Sender Mobile"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -215,8 +206,7 @@
                         android:id="@+id/text_sender_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
+                       android:paddingTop="5dp"
                         android:text="0750532902"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
@@ -243,8 +233,7 @@
                         android:id="@+id/text_title_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Deposit Amount"
+                       android:text="Deposit Amount"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -252,9 +241,8 @@
                         android:id="@+id/text_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
-                        android:text="UGX 750,000"
+                       android:paddingTop="5dp"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -281,8 +269,7 @@
                         android:id="@+id/text_title_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Transaction Charge"
+                       android:text="Transaction Charge"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -290,9 +277,8 @@
                         android:id="@+id/text_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
-                        android:text="UGX 0"
+                       android:paddingTop="5dp"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -319,8 +305,7 @@
                         android:id="@+id/text_title_total_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:text="Total Amount"
+                       android:text="Total Amount"
                         android:textColor="#929292"
                         android:textSize="20sp" />
 
@@ -328,9 +313,8 @@
                         android:id="@+id/txtTotalAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
-                        android:paddingTop="5dp"
-                        android:text="UGX 750,000"
+                       android:paddingTop="5dp"
+                        android:text="None"
                         android:textColor="@color/colorPrimary"
                         android:textSize="25sp"
                         android:textStyle="bold" />

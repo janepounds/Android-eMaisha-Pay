@@ -194,12 +194,12 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             loanApplicationStateProgressBar.setVisibility(View.VISIBLE);
             loanProgressBarId.setVisibility(View.GONE);
             loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-            loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 
 
         }else {
             loanProgressBarId.setStateDescriptionData(descriptionData);
-            loanProgressBarId.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+            loanProgressBarId.setStateDescriptionTypeface("font/nunito.ttf");
 
         }
 
@@ -207,7 +207,7 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
         //Second hidden progress bar for loan application with 5 states
 
 //        loanApplicationStateProgressBar.setStateDescriptionData(descriptionData2);
-//        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+//        loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("Apply for Loan");

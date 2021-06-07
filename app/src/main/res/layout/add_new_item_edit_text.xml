@@ -8,7 +8,6 @@
         android:layout_height="45dp"
         android:background="@drawable/rounded_corners_edittext_light"
         android:drawablePadding="5dp"
-        android:fontFamily="@font/josefin_sans"
         android:imeOptions="actionSearch"
         android:inputType="textNoSuggestions"
         android:padding="5dp"
