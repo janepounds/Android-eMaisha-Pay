@@ -1,11 +1,15 @@
 package com.cabral.emaishapay.models.order_model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderProducts {
+public class OrderProducts implements Parcelable {
 
     @SerializedName("orders_products_id")
     @Expose
@@ -43,6 +47,43 @@ public class OrderProducts {
     @SerializedName("attributes")
     @Expose
     private List<PostProductsAttributes> attributes = null;
+
+    protected OrderProducts(Parcel in) {
+        if (in.readByte() == 0) {
+            ordersProductsId = null;
+        } else {
+            ordersProductsId = in.readInt();
+        }
+        ordersId = in.readString();
+        if (in.readByte() == 0) {
+            productsId = null;
+        } else {
+            productsId = in.readInt();
+        }
+        productsName = in.readString();
+        productsPrice = in.readString();
+        finalPrice = in.readString();
+        productsTax = in.readString();
+        if (in.readByte() == 0) {
+            productsQuantity = null;
+        } else {
+            productsQuantity = in.readInt();
+        }
+        image = in.readString();
+        attributes = in.createTypedArrayList(PostProductsAttributes.CREATOR);
+    }
+
+    public static final Creator<OrderProducts> CREATOR = new Creator<OrderProducts>() {
+        @Override
+        public OrderProducts createFromParcel(Parcel in) {
+            return new OrderProducts(in);
+        }
+
+        @Override
+        public OrderProducts[] newArray(int size) {
+            return new OrderProducts[size];
+        }
+    };
 
     public Integer getOrdersProductsId() {
         return ordersProductsId;
@@ -138,5 +179,39 @@ public class OrderProducts {
 
     public void setAttributes(List<PostProductsAttributes> attributes) {
         this.attributes = attributes;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (ordersProductsId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(ordersProductsId);
+        }
+        dest.writeString(ordersId);
+        if (productsId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(productsId);
+        }
+        dest.writeString(productsName);
+        dest.writeString(productsPrice);
+        dest.writeString(finalPrice);
+        dest.writeString(productsTax);
+        if (productsQuantity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(productsQuantity);
+        }
+        dest.writeString(image);
+        dest.writeTypedList(attributes);
     }
 }
