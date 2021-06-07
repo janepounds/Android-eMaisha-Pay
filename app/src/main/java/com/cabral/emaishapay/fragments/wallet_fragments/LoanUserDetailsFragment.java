@@ -76,7 +76,7 @@ public class LoanUserDetailsFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_user_details, container, false);
         loanApplicationStateProgressBar = view.findViewById(R.id.loan_application_state_progress_bar_loan_details);
         loanApplicationStateProgressBar.setStateDescriptionData(descriptionData);
-        loanApplicationStateProgressBar.setStateDescriptionTypeface("fonts/JosefinSans-SemiBold.ttf");
+        loanApplicationStateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
 
         toolbar = view.findViewById(R.id.toolbar_loan_application_user_details);
         nextBtn = view.findViewById(R.id.txt_next_two);
