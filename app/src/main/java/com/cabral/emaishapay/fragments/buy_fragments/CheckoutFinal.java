@@ -105,7 +105,6 @@ import retrofit2.Call;
 public class CheckoutFinal extends Fragment {
     private static final String TAG = "CheckoutFinal";
 
-    View rootView;
     AlertDialog demoCouponsDialog;
     boolean disableOtherCoupons = false;
 
@@ -814,11 +813,11 @@ public class CheckoutFinal extends Fragment {
                             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
                         }
                     } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(binding.paymentMethod, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     } else {
                         // Unable to get Success status
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(binding.paymentMethod, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -1271,7 +1270,7 @@ public class CheckoutFinal extends Fragment {
     //*********** Show SnackBar with given Message  ********//
 
     private void showSnackBarForCoupon(String msg) {
-        final Snackbar snackbar = Snackbar.make(rootView, msg, Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(binding.paymentMethod, msg, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("OK", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
