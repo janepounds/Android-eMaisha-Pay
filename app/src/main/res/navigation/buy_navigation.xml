@@ -23,7 +23,12 @@
         <action
             android:id="@+id/action_walletBuyFragment_to_myCart"
             app:destination="@id/myCart" />
+        <action
+            android:id="@+id/action_walletBuyFragment_to_categories"
+            app:destination="@id/categories" />
     </fragment>
+
+
 
 
     <fragment
@@ -74,6 +79,17 @@
         <action
             android:id="@+id/action_viewAllTopDeals_to_productDescription"
             app:destination="@id/productDescription" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categories"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Category_Products"
+        android:label="categories"
+        tools:layout="@layout/buy_inputs_f_products_vertical">
+
+        <action
+            android:id="@+id/action_categories_to_walletBuyFragment"
+            app:destination="@id/walletBuyFragment" />
     </fragment>
 
     <fragment

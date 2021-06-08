@@ -569,7 +569,7 @@ public class WalletHomeFragment extends Fragment {
 
         // Put Image's Name and URL to the HashMap slider_covers
         if (itemThumbnail.equalsIgnoreCase("")) {
-            slider_covers.put("a", "" + R.drawable.banner_placeholder);
+            slider_covers.put("a", R.drawable.banner_placeholder+"" );
 
         } else if (images.length == 0) {
             slider_covers.put("a",  itemThumbnail);
@@ -590,9 +590,7 @@ public class WalletHomeFragment extends Fragment {
 
             RequestOptions requestOptions = new RequestOptions();
 
-            requestOptions.centerCrop()
-                    .error(R.drawable.banner_placeholder)
-                    .placeholder(R.drawable.banner_placeholder);
+            requestOptions.centerCrop();
 
             // Set Attributes(Name, Placeholder, Image, Type etc) to DefaultSliderView
             defaultSliderView
@@ -607,7 +605,7 @@ public class WalletHomeFragment extends Fragment {
         // Set PresetTransformer type of the SliderLayout
         binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
-        binding.productCoverSlider.setDuration(2500);
+        binding.productCoverSlider.setDuration(4000);
         //binding.productCoverSlider.setBackgroundColor(getResources().getColor(R.color.glide_slider_background_color));
         binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
             @Override
