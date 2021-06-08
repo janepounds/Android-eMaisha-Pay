@@ -210,11 +210,11 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         // [START maps_current_place_map_fragment]
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        //MapView mapView = (MapView) rootView.findViewById(R.id.map);
-
-        mapFragment.getMapAsync(this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+//                .findFragmentById(R.id.map);
+//        //MapView mapView = (MapView) rootView.findViewById(R.id.map);
+//
+//        mapFragment.getMapAsync(this);
 
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
