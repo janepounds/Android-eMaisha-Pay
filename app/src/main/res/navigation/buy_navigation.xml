@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_walletBuyFragment_to_categories"
             app:destination="@id/categories" />
+        <action
+            android:id="@+id/action_walletBuyFragment_to_sub_categories"
+            app:destination="@id/sub_categories" />
     </fragment>
 
 
@@ -176,4 +179,10 @@
             android:id="@+id/action_thankYou_to_walletBuyFragment"
             app:destination="@id/walletBuyFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/sub_categories"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.SubCategories_3"
+        android:label="SubCategories"
+        tools:layout="@layout/buy_inputs_categories"></fragment>
 </navigation>
