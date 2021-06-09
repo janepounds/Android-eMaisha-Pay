@@ -297,18 +297,7 @@ public interface APIRequests {
                                                  @Field("category") String category,
                                                  @Field("action_id")String action_id
     );
-    // //create user credit
-    @FormUrlEncoded
-    @POST("wallet/payment/eMaishaPayPayment")
-    Call<WalletTransaction> eMaishaPayUserPayment(@Header("Authorization") String token,
-                                       @Field("merchant_wallet_id") String receiver_id,
-                                       @Field("amount") Double amount,
-                                       @Field("referenceNumber") String referenceNumber,
-                                       @Field("isPending") Boolean isPending,
-                                       @Field("request_id") String request_id,
-                                        @Field("category") String category,
-                                        @Field("action_id")String action_id
-    );
+
 
     // //voucher deposit
     @FormUrlEncoded

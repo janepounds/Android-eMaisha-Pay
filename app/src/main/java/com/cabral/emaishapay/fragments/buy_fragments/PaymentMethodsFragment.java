@@ -388,13 +388,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
-                double balance= Double.parseDouble( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_BALANCE, context) );
-                if(balance>=this.total){
-                    selectedPaymentMethod = "eMaisha Pay";
-                    proceedOrder(false);
-                }else {
-                    Toasty.error(context, "Insufficient Balance", Toast.LENGTH_LONG).show();
-                }
+                selectedPaymentMethod = "eMaisha Pay";
+                proceedOrder(false);
             }else if (COD.isChecked()) {
                 //
                 selectedPaymentMethod = "cod";
@@ -809,77 +804,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                     proceedOrder(true);
                 } else if(response.code() == 401){
-
-                    TokenAuthFragment.startAuth( true);
-
-                } else if (response.code() == 500) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
-                } else if (response.code() == 400) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
-                } else if (response.code() == 406) {
-                    if (response.errorBody() != null) {
-
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                    Log.e("info 406", response.errorBody() + ", code: " + response.code());
-                } else {
-
-                    if (response.errorBody() != null) {
-
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", response.errorBody() + ", code: " + response.code());
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                }
-                dialogLoader.hideProgressDialog();
-            }
-
-
-            @Override
-            public void onFailure(Call<WalletTransaction> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-    public void recordEmaishaPayPurchase(String txRef, double amount) {
-        /******************RETROFIT IMPLEMENTATION**************************/
-        dialogLoader.showProgressDialog();
-
-        String referenceNumber = txRef;
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-
-        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id,category,"userEmaishaPayPaymentment");
-        call.enqueue(new Callback<WalletTransaction>() {
-            @Override
-            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
-                if(response.code() == 200){
-
-                    dialogLoader.hideProgressDialog();
-                    proceedOrder(true);
-                }else if(response.code() == 401){
 
                     TokenAuthFragment.startAuth( true);
 
