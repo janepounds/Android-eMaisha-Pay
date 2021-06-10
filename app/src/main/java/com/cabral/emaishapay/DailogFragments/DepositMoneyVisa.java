@@ -40,9 +40,9 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.flutterwave.raveandroid.RaveUiManager;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
-import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.card.Card;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentManager;
@@ -333,7 +333,7 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
 
 
         String eMaishaPayServiceMail="info@cabraltech.com";
-        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().
+        RaveUiManager raveNonUIManager = new RaveUiManager(requireActivity()).
                  setAmount(amount)
                 .setCurrency("UGX")
                 .setEmail( eMaishaPayServiceMail )
@@ -351,8 +351,8 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
 
 
 
-        cardPayManager = new CardPaymentManager(
-                raveNonUIManager, this, this);
+//        cardPayManager = new CardPaymentManager(
+//                raveNonUIManager, this, this);
 
         Card card = new Card(
                 card_no,
@@ -479,7 +479,7 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
                     break;
             }
         } else {
-            Log.w("UnkownResult",".......Unkown Result ");
+            Log.w("UnknownResult",".......Unknown Result ");
             super.onActivityResult(requestCode, resultCode, data);
         }
 
