@@ -96,7 +96,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     CardType cardType;
     private BraintreeFragment braintreeFragment;
     SupportedCardTypesView brainTreeSupportedCards;
-    private String selectedPaymentMethod, merchantWalletId, shipping, orderId;
+    private String selectedPaymentMethod, mobileMoneyNumber, merchantWalletId, shipping, orderId;
     private CardBuilder brainTreeCard;
     private List couponList, productList;
     private Double subtotal, total, tax, shipping_cost, discount;
@@ -471,11 +471,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             }
             else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
-
-                String mobileNumber=getString(R.string.phone_number_code)+mobilePhonenumber.getText().toString();
-                if(mobileNumber.length()>9){
-                    mobileMoneyChargePayment(mobileNumber);
-                }
+                mobileMoneyNumber=getString(R.string.phone_number_code)+mobilePhonenumber.getText().toString();
+                proceedOrder(false);
 
             }
         });
@@ -559,6 +556,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         orderDetails.setCustomersId(Integer.parseInt(userInfo.getId()));
         orderDetails.setCustomersName(userInfo.getFirstName());
         orderDetails.setCustomersTelephone(shippingAddress.getPhone());
+        if(mobileMoneyNumber!=null)
+            orderDetails.setCustomersTelephone(mobileMoneyNumber);
         orderDetails.setEmail(userInfo.getEmail());
 
         // Set Shipping  Info
@@ -718,70 +717,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     public void showAuthenticationWebPage(String authenticationUrl) {
          //Log.w("Loading auth web page: ",authenticationUrl);
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-    }
-
-    public void mobileMoneyChargePayment(String phoneNumber) {
-
-        dialogLoader.showProgressDialog();
-
-        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.context) + (new Date().getTime());
-        String eMaishaPayServiceMail="info@cabraltech.com";
-
-        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(this.chargeAmount)
-                .setCurrency("UGX")
-                .setEmail(eMaishaPayServiceMail)
-                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.context))
-                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.context))
-                .setPhoneNumber(phoneNumber)
-                .setNarration("eMaisha Pay")
-                .setPublicKey(BuildConfig.PUBLIC_KEY)
-                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
-                .setTxRef(txRef)
-                .onStagingEnv(false)
-                .isPreAuth(true)
-                .initialize();
-
-        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
-            @Override
-            public void showProgressIndicator(boolean active) {
-                try {
-
-                    if (dialogLoader == null) {
-                        dialogLoader = new DialogLoader(getContext());
-                        dialogLoader.showProgressDialog();
-                    }
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage, @Nullable String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-                Log.e("MobileMoneypaymentError", errorMessage);
-            }
-
-            @Override
-            public void onSuccessful(String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Log.e("Success code :", "Mobile Money Payment "+flwRef);
-                Toast.makeText(context, "Transaction Successful", Toast.LENGTH_LONG).show();
-
-                recordPurchase(flwRef,chargeAmount,cardNumber.getText().toString());
-
-            }
-
-            @Override
-            public void showAuthenticationWebPage(String authenticationUrl) {
-                Log.e("Loading auth web page: ", authenticationUrl);
-                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-            }
-        };
-        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
-
-        mobilePayManager.charge();
     }
 
     public void recordPurchase(String txRef, double amount, String thirdParty_id) {

@@ -40,7 +40,6 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.flutterwave.raveandroid.RaveUiManager;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
@@ -335,7 +334,7 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
 
         String eMaishaPayServiceMail="info@cabraltech.com";
         RaveNonUIManager raveNonUIManager = new RaveNonUIManager().
-                 setAmount(amount)
+                setAmount(amount)
                 .setCurrency("UGX")
                 .setEmail( eMaishaPayServiceMail )
                 .setfName( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME,this.activity) )
@@ -480,7 +479,7 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
                     break;
             }
         } else {
-            Log.w("UnknownResult",".......Unknown Result ");
+            Log.w("UnkownResult",".......Unkown Result ");
             super.onActivityResult(requestCode, resultCode, data);
         }
 
