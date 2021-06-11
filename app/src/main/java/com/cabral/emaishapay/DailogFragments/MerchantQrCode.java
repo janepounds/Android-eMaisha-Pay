@@ -54,12 +54,6 @@ public class MerchantQrCode extends DialogFragment {
         TextView title = view.findViewById(R.id.text_view_title_label);
         close.setOnClickListener(v -> dismiss());
 
-         String role = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,context);
-        if(role.equalsIgnoreCase(getString(R.string.role_master_agent)) ){
-            title.setText("AGENT CODE");
-        }else if(role.equalsIgnoreCase("merchant")){
-            title.setText("MERCHANT CODE");
-        }
 
         // below line is for getting
         // the windowmanager service.
