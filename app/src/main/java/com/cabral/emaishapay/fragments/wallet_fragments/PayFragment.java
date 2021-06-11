@@ -64,10 +64,10 @@ public class PayFragment extends Fragment {
 
     private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key=null;
 
-    LinearLayout card_details_layout,layout_pay_to;
+    LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
     LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID,layoutPaymentMethod;
-    Spinner spPaymentMethod,sp_payment_pay_to;
+    Spinner spPaymentMethod;
     Button saveBtn;
     FragmentManager fm;
     Toolbar toolbar;
@@ -125,7 +125,6 @@ public class PayFragment extends Fragment {
         layoutMerchantID = view.findViewById(R.id.layout_pay_merchant_id);
         layoutAmount = view.findViewById(R.id.layout_pay_merchant_amount);
 
-        layout_pay_to = view.findViewById(R.id.layout_pay_to);
         text_pay_to_title = view.findViewById(R.id.text_pay_to_title);
 
 
@@ -182,7 +181,7 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.GONE);
                     layoutMerchantID.setVisibility(View.GONE);
-                    layout_pay_to.setVisibility(View.GONE);
+
                 }
 
                 else if(selectedItem.equalsIgnoreCase("eMaisha Pay")){
@@ -190,14 +189,14 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.VISIBLE);
                     layoutMerchantID.setVisibility(View.VISIBLE);
-                    layout_pay_to.setVisibility(View.GONE);
+
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
-                    layoutMobileMoney.setVisibility(View.GONE);
+                    layoutMobileMoney.setVisibility(View.VISIBLE);
                     layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.GONE);
-                    layoutMerchantID.setVisibility(View.GONE);
-                    layout_pay_to.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutMerchantID.setVisibility(View.VISIBLE);
+
                 }
 //                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
 //                    layoutMobileMoney.setVisibility(View.GONE);
