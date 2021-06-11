@@ -162,55 +162,7 @@
                         </RelativeLayout>
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/layout_pay_to"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:visibility="gone">
 
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="Pay To"
-                            android:textSize="16sp"
-                            android:textColor="@color/textColor"/>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_weight="1"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/rectangular_blue_solid"
-                            android:orientation="horizontal">
-
-                            <Spinner
-                                android:id="@+id/sp_payment_pay_to"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:background="@android:color/transparent"
-                                android:gravity="center"
-                                android:entries="@array/pay_to"
-                                android:spinnerMode="dropdown"
-                                android:padding="5dp"/>
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/ic_right_chevron_arrow_white"
-                                android:rotation="90"/>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layout_pay_merchant_id"
