@@ -116,10 +116,7 @@ public class PurchasePreview extends DialogFragment  {
         discount_layout.setVisibility(View.GONE);
 
 
-        String key = WalletTransactionInitiation.getInstance().getPayTo();
-        if(key!=null && key.equalsIgnoreCase("agent")){
-            merchant_label.setText("AgentID");
-        }
+
         mechantIdTextView.setText(WalletTransactionInitiation.getInstance().getMechantId());
 
         dialogLoader = new DialogLoader(activity);
@@ -186,84 +183,6 @@ public class PurchasePreview extends DialogFragment  {
         String mobileNumber=getString(R.string.phone_number_code)+ WalletTransactionInitiation.getInstance().getMobileNumber();
         String merchant_id= WalletTransactionInitiation.getInstance().getMechantId();
         double amount = WalletTransactionInitiation.getInstance().getAmount();
-        String key = WalletTransactionInitiation.getInstance().getPayTo();
-
-        if(key.equalsIgnoreCase("agent")){
-            //call agent endpoint
-            /******************RETROFIT IMPLEMENTATION***********************/
-            Call<WalletPurchaseResponse> call = APIClient.getWalletInstance(activity).customerPayAgentMobile(
-                    access_token, amount, mobileNumber,
-                    request_id,
-                    category, "customerPayAgentViaMobileMoney", service_code, merchant_id);
-            call.enqueue(new Callback<WalletPurchaseResponse>() {
-                @Override
-                public void onResponse(Call<WalletPurchaseResponse> call, Response<WalletPurchaseResponse> response) {
-                    if (response.isSuccessful()) {
-                        dialogLoader.hideProgressDialog();
-                        if (response.body().getStatus().equalsIgnoreCase("1")) {
-                            //call success dialog
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_successful_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText(response.body().getMessage());
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.show();
-
-                        } else {
-                            dialogLoader.hideProgressDialog();
-
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_failure_message);
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.setCancelable(false);
-                            TextView text = dialog.findViewById(R.id.dialog_success_txt_message);
-                            text.setText(response.body().getMessage());
-
-
-                            dialog.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    Intent goToWallet = new Intent(activity, WalletHomeActivity.class);
-                                    startActivity(goToWallet);
-                                }
-                            });
-                            dialog.show();
-
-
-                        }
-
-                    } else if (response.code() == 401) {
-
-                        TokenAuthFragment.startAuth(true);
-
-                        if (response.errorBody() != null) {
-                            Log.e("info", String.valueOf(response.errorBody()));
-                        } else {
-                            Log.e("info", "Something got very very wrong");
-                        }
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<WalletPurchaseResponse> call, Throwable t) {
-                    dialogLoader.hideProgressDialog();
-                }
-            });
-
-        }else {
 
 
             /******************RETROFIT IMPLEMENTATION***********************/
@@ -340,7 +259,7 @@ public class PurchasePreview extends DialogFragment  {
             });
 
         }
-        }
+
 
     private void processWalletPayment(String service_code, Dialog pinDialog) {
         String merchantId =WalletTransactionInitiation.getInstance().getMechantId();
