@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -55,7 +54,6 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
-import com.cabral.emaishapay.models.coupons_model.CouponsInfo;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
 import com.cabral.emaishapay.models.user_model.UserDetails;
@@ -66,8 +64,6 @@ import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.card.Card;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentManager;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -79,7 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -340,47 +335,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });
-
-        cardExpiry.setOnTouchListener((v, event) -> {
-
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                // Get Calendar instance
-                final Calendar calendar = Calendar.getInstance();
-
-                // Initialize DateSetListener of DatePickerDialog
-                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        // Set the selected Date Info to Calendar instance
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-
-                        // Set Date Format
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy", Locale.US);
-
-                        // Set Date in input_dob EditText
-                        cardExpiry.setText(dateFormat.format(calendar.getTime()));
-                    }
-                };
-
-
-                // Initialize DatePickerDialog
-                DatePickerDialog datePicker = new DatePickerDialog
-                        (
-                                getContext(),
-                                date,
-                                calendar.get(Calendar.YEAR),
-                                calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)
-                        );
-
-                // Show datePicker Dialog
-                datePicker.show();
-            }
-
-            return false;
         });
 
         this.context=getContext();

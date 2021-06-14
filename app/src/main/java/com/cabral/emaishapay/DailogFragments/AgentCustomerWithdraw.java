@@ -2,7 +2,6 @@ package com.cabral.emaishapay.DailogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,16 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -40,7 +34,6 @@ import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.models.ConfirmationDataResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
-import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -49,13 +42,12 @@ public class AgentCustomerWithdraw extends DialogFragment implements View.OnClic
     LinearLayout layoutCustomerNumber,layoutAccountNumber,layoutPhoneNumber;
     FrameLayout layoutSubmit;
     private Button txt_withdraw_submit;
-    private EditText customerPhoneNumber,amount,customer;
+    private EditText customerPhoneNumber,amount;
     DialogLoader dialogLoader;
     private String  business_name = "";
 
 
-    public AgentCustomerWithdraw() {
-    }
+    public AgentCustomerWithdraw() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
