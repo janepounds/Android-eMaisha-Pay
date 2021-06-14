@@ -319,7 +319,7 @@ public class CheckoutFinal extends Fragment {
             if (binding.paymentMethod.getText().toString().equals("Payment Method")) {
                 binding.paymentMethod.setError("Required");
             } else {
-                if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Mobile Money") ){
+                if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa")  ){
                     //check whether payment is made
                     if(PaymentOrderDetails.getPaymentMade()){
                         proceedOrder();
@@ -618,7 +618,7 @@ public class CheckoutFinal extends Fragment {
         // Set Customer Info
         orderDetails.setCustomersId(Integer.parseInt(userInfo.getId()));
         orderDetails.setCustomersName(userInfo.getFirstName());
-        orderDetails.setCustomersTelephone(shippingAddress.getPhone());
+        orderDetails.setCustomersTelephone( PaymentOrderDetails.getCustomersTelephone() );
         orderDetails.setEmail(userInfo.getEmail());
         orderDetails.setShopId(this.shop_id);
 
@@ -812,8 +812,12 @@ public class CheckoutFinal extends Fragment {
                         }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.checkOutFinal) {
                             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
                         }
-                    } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                    }
+                    else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(binding.paymentMethod, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        if(  response.body().getMessage().equalsIgnoreCase("token_expired")){
+                            getActivity().finish();
+                        }
 
                     } else {
                         // Unable to get Success status
