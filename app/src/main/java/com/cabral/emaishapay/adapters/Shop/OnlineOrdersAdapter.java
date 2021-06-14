@@ -38,10 +38,11 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
     @Override
     public void onBindViewHolder(@NonNull com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter.MyViewHolder holder, int position) {
         String customer_name = orderData.get(position).getCustomer_name();
+        String orderId = orderData.get(position).getOrder_id();
         String order_status = orderData.get(position).getOrder_status();
         String customer_address = orderData.get(position).getCustomer_address();
 
-        holder.txt_customer_name.setText(customer_name);
+        holder.txt_customer_name.setText(customer_name+" "+orderId);
         holder.txt_order_status.setText(order_status);
         holder.txt_customer_address.setText(customer_address);
     }
@@ -56,38 +57,38 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
             this.orderData =  shopOrderLists;
             notifyItemRangeInserted(0, shopOrderLists.size());
         }
-        else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return orderData.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return shopOrderLists.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return orderData.get(oldItemPosition).getOrder_id() ==
-                            shopOrderLists.get(newItemPosition).getOrder_id();
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ShopOrder newProduct = shopOrderLists.get(newItemPosition);
-                    ShopOrder oldProduct = orderData.get(oldItemPosition);
-                    return newProduct.getOrder_id() == oldProduct.getOrder_id()
-                            && TextUtils.equals(newProduct.getCustomer_address(), oldProduct.getCustomer_address())
-                            && TextUtils.equals(newProduct.getCustomer_name(), oldProduct.getCustomer_name())
-                            && TextUtils.equals(newProduct.getOrder_status(), oldProduct.getOrder_status())
-                            && newProduct.getDelivery_fee() == oldProduct.getDelivery_fee();
-                }
-            });
-            orderData = shopOrderLists;
-            result.dispatchUpdatesTo(this);
-        }
+//        else {
+//            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+//                @Override
+//                public int getOldListSize() {
+//                    return orderData.size();
+//                }
+//
+//                @Override
+//                public int getNewListSize() {
+//                    return shopOrderLists.size();
+//                }
+//
+//                @Override
+//                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+//                    return orderData.get(oldItemPosition).getOrder_id() ==
+//                            shopOrderLists.get(newItemPosition).getOrder_id();
+//                }
+//
+//                @Override
+//                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+//                    ShopOrder newProduct = shopOrderLists.get(newItemPosition);
+//                    ShopOrder oldProduct = orderData.get(oldItemPosition);
+//                    return newProduct.getOrder_id() == oldProduct.getOrder_id()
+//                            && TextUtils.equals(newProduct.getCustomer_address(), oldProduct.getCustomer_address())
+//                            && TextUtils.equals(newProduct.getCustomer_name(), oldProduct.getCustomer_name())
+//                            && TextUtils.equals(newProduct.getOrder_status(), oldProduct.getOrder_status())
+//                            && newProduct.getDelivery_fee() == oldProduct.getDelivery_fee();
+//                }
+//            });
+//            orderData = shopOrderLists;
+//            result.dispatchUpdatesTo(this);
+//        }
         Log.d("AdapterSize","########"+this.getItemCount());
     }
 
