@@ -68,6 +68,33 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
                         android:layout_gravity="bottom"
+                        android:src="@drawable/ic_hashtag" />
+
+                    <TextView
+                        android:id="@+id/txt_online_order_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8.8"
+                        android:text="@string/none"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:layout_gravity="bottom"
                         android:src="@drawable/ic_pending__1_" />
 
                     <TextView
@@ -75,7 +102,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8.8"
-                        android:text="Pending"
+                        android:text="@string/none"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -103,7 +130,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8.8"
-                        android:text="Zimula John"
+                        android:text="@string/none"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -132,7 +159,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8.8"
-                        android:text="0704843426"
+                        android:text="@string/none"
                         android:textColor="#123365"
                         android:textStyle="bold"
                         android:textSize="16sp" />
@@ -161,7 +188,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8.8"
-                        android:text="Zimula@gmail.com"
+                        android:text="@string/none"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold"
                         android:textSize="16sp" />

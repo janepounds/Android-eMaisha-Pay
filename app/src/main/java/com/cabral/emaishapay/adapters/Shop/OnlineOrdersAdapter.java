@@ -42,7 +42,7 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
         String order_status = orderData.get(position).getOrder_status();
         String customer_address = orderData.get(position).getCustomer_address();
 
-        holder.txt_customer_name.setText(customer_name+" "+orderId);
+        holder.txt_customer_name.setText(customer_name);
         holder.txt_order_status.setText(order_status);
         holder.txt_customer_address.setText(customer_address);
     }
