@@ -203,7 +203,7 @@
     <string name="order_id_value" translatable="false">1235678934</string>
     <string name="order_type_value" translatable="false">Home Delivery</string>
     <string name="todo" translatable="false">order item image</string>
-    <string name="order_date" translatable="false">06-09-2020 12:04 AM</string>
+    <string name="order_date" translatable="false">Order Date</string>
     <string name="supplier_value" translatable="false">Supplier Name</string>
     <string name="buy_price_value" translatable="false">UGX 1000</string>
     <string name="buy_sell_value" translatable="false">UGX 3000</string>
@@ -922,6 +922,7 @@ Before you use eMaisha Pay’s web/app payment and credit service, you must read
     <string name="click_here_text">Click <b>here</b> to view the complete Terms of Service and Privacy Policy</string>
     <string name="forgot_pin">forgot pin</string>
     <string name="change_pin">change pin</string>
+    <string name="none">None</string>
 
 
 </resources>

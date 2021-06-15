@@ -163,8 +163,8 @@
         android:label="PaymentMethods"
         tools:layout="@layout/fragment_payment_methods">
         <action
-            android:id="@+id/action_paymentMethods_to_thankYou"
-            app:destination="@id/thankYou" />
+            android:id="@+id/action_paymentMethods_to_checkOutFinal"
+            app:destination="@id/checkOutFinal" />
     </fragment>
 
     <fragment

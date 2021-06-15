@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Dao
 public interface ShopOrderProductsDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertShopProduct(ShopOrderProducts shopOrderProduct);
 
     //get order details list
