@@ -6,18 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,7 +23,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -63,13 +58,11 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.services.SyncService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -147,7 +140,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     private static final int PERMISSION_CODE = 1;
 
 
-    private boolean doubleBackToExitPressedOnce = false;
+    private final boolean doubleBackToExitPressedOnce = false;
     Toolbar toolbar;
 
 
@@ -215,7 +208,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
         navController = navHostFragment.getNavController();
 
-        this.fm=getSupportFragmentManager();
+        fm=getSupportFragmentManager();
         setUpNavigation();
 
         toolbar = findViewById(R.id.main_Toolbar);
@@ -528,7 +521,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -821,7 +814,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // this method is called when user
         // allows the permission to use camera.
         try {
@@ -831,7 +824,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                 if (cameraaccepted && vibrateaccepted) {
 //                    Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show();
                 }
             }
         }catch (IndexOutOfBoundsException e){

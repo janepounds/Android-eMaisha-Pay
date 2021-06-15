@@ -23,10 +23,10 @@ import java.util.List;
 
 public class PaymentMethodAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<PaymentMethodsInfo> paymentMethods;
+    private final Context context;
+    private final List<PaymentMethodsInfo> paymentMethods;
     
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
 
     public PaymentMethodAdapter(Context context, List<PaymentMethodsInfo> paymentMethods) {

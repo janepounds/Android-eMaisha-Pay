@@ -82,6 +82,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private ImageView imageView;
     private Uri regCertUri, tradeLicenseUri, idFrontUri, idBackUri;
     private String encodedIdFront, encodedIdBack, encodedIdreg_cert, encodedIdtradelicense;
+    String reg_cert, trade_license, id_front, id_back;
     DialogLoader dialogLoader;
 
 
@@ -97,7 +98,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-    private static int AUTOCOMPLETE_REQUEST_CODE=12;
+    private static final int AUTOCOMPLETE_REQUEST_CODE=12;
 
     public static Location lastKnownLocation;
     // [START maps_current_place_state_keys]
@@ -190,10 +191,10 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String business_location =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_BUSINESS_LOCATION,getContext());
         String reg_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_NO,getContext());
         String license_no =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_LICENSE_NUMBER,getContext());
-        String reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
-        String trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
-        String id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
-        String id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
+        reg_cert =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_REG_CERTIFICATE,getContext());
+        trade_license =WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_TRADE_LICENSE,getContext());
+        id_front = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_FRONT,getContext());
+        id_back = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCE_ACCOUNT_ID_BACK,getContext());
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -273,6 +274,16 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         });
 
         binding.btnSubmit.setOnClickListener(v -> {
+
+            if(idFrontUri==null && id_front!=null)
+                idFrontUri=Uri.parse(id_front);
+            if(idBackUri==null && id_back!=null)
+                idBackUri=Uri.parse(id_back);
+            if(regCertUri==null && reg_cert!=null)
+                regCertUri=Uri.parse(reg_cert);
+            if(tradeLicenseUri==null && trade_license!=null)
+                tradeLicenseUri=Uri.parse(trade_license);
+            
             if (validateEntries()) {
                 saveInfo();
             }
@@ -283,6 +294,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public void saveInfo(){
+        dialogLoader.showProgressDialog();
 
         String user_Id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
         String business_name = binding.businessName.getText().toString();
@@ -292,6 +304,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
         String request_id = WalletHomeActivity.generateRequestId();
         String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
+        String business_location = binding.shopLocation.getText().toString();
 
         RequestBody user_Id_param = RequestBody.create(user_Id, MediaType.parse("text/plain"));
         RequestBody business_name_param = RequestBody.create(business_name, MediaType.parse("text/plain"));
@@ -301,36 +314,41 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         RequestBody proprietor_nin_param = RequestBody.create(proprietor_nin, MediaType.parse("text/plain"));
         RequestBody latitude_param = RequestBody.create(mCenterLatLong.latitude+"", MediaType.parse("text/plain"));
         RequestBody longitude_param = RequestBody.create(mCenterLatLong.longitude+"", MediaType.parse("text/plain"));
-        RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
-        RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
-        RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
-        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
+        RequestBody category_param = RequestBody.create(category, MediaType.parse("text/plain"));
+        RequestBody action_id_param = RequestBody.create("applyForBusinessAccount", MediaType.parse("text/plain"));
+//        RequestBody encodedIdFront_param = RequestBody.create(encodedIdFront, MediaType.parse("text/plain"));
+//        RequestBody encodedIdBack_param = RequestBody.create(encodedIdBack, MediaType.parse("text/plain"));
+//        RequestBody encodedIdreg_cert_param = RequestBody.create(encodedIdreg_cert, MediaType.parse("text/plain"));
+//        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
+
 
         dialogLoader.showProgressDialog();
         binding.determinateBar.setVisibility(View.VISIBLE);
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,
-                        role_param,
-                        user_Id_param,
-                        business_name_param,
-                        registration_no_param,
-                        proprietor_name_param,
-                        proprietor_nin_param,
-                        latitude_param,
-                        longitude_param,
+                        role,
+                        user_Id,
+                        business_name,
+                        registration_no,
+                        encodedIdreg_cert,
+                        encodedIdtradelicense,
+                        proprietor_name,
+                        proprietor_nin,
+                        encodedIdFront,
+                        encodedIdBack,
+                        mCenterLatLong.latitude,
+                        mCenterLatLong.longitude,
                         request_id,
                         category,
                         "applyForBusinessAccount",
-                        encodedIdFront_param,//prepareFilePart("national_id_front", idFrontUri),
-                        encodedIdBack_param,//prepareFilePart("national_id_back", idBackUri),
-                        encodedIdreg_cert_param,//prepareFilePart("registration_cert", regCertUri),
-                        encodedIdtradelicense_param//prepareFilePart("trade_license", tradeLicenseUri)
-                        );
+                        business_location);
+
 
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
                 if(response.isSuccessful()){
+                    dialogLoader.hideProgressDialog();
                     String message = response.body().getMessage();
 
                     //call success dialog
@@ -449,16 +467,20 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
             binding.proprietorNin.setError("Proprietor Name required");
             return false;
         }
-        else if(TextUtils.isEmpty(regCertUri.getPath())){
+        else if(tradeLicenseUri==null || TextUtils.isEmpty(tradeLicenseUri.getPath())){
+            Toast.makeText(getContext(),"Trade License required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(regCertUri==null || TextUtils.isEmpty(regCertUri.getPath())){
             Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
             return false;
         }
-        else if(TextUtils.isEmpty(idFrontUri.getPath())){
-            Toast.makeText(getContext(),"registration Certificate required",Toast.LENGTH_LONG).show();
+        else if(idFrontUri==null || TextUtils.isEmpty(idFrontUri.getPath())){
+            Toast.makeText(getContext(),"ID Front required",Toast.LENGTH_LONG).show();
             return false;
         }
-        else if(mCenterLatLong==null ){
-            Toast.makeText(getContext(),"Location required",Toast.LENGTH_LONG).show();
+        else if(idBackUri==null || TextUtils.isEmpty(idBackUri.getPath())){
+            Toast.makeText(getContext(),"ID Back required",Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -467,9 +489,9 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap map) {
-        this.map = map;//pass map to global event listeners
+        BusinessAccountFragment.map = map;//pass map to global event listeners
 
-        final GoogleMap mGoogleMap=this.map;
+        final GoogleMap mGoogleMap= BusinessAccountFragment.map;
         mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {

@@ -1,17 +1,17 @@
 package com.cabral.emaishapay.models.shop_model;
 
 public class Shop {
-    private Integer shop_id;
-    private String Shop_name;
-    private String shop_contact;
-    private String password;
-    private String shop_email;
-    private String shop_address;
-    private String shop_currency;
-    private String latitude;
-    private String longitude;
-    private String created_at;
-    private String updated_at;
+    private final Integer shop_id;
+    private final String Shop_name;
+    private final String shop_contact;
+    private final String password;
+    private final String shop_email;
+    private final String shop_address;
+    private final String shop_currency;
+    private final String latitude;
+    private final String longitude;
+    private final String created_at;
+    private final String updated_at;
 
     public Shop(Integer shop_id, String shop_name, String shop_contact, String password, String shop_email, String shop_address, String shop_currency, String latitude, String longitude, String created_at, String updated_at) {
         this.shop_id = shop_id;

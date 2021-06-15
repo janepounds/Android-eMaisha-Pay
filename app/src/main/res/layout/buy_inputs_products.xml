@@ -19,7 +19,6 @@
             android:id="@+id/txt_category_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_30dp"
-            android:fontFamily="@font/josefin_sans_semibold"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_20dp"
             android:text="Insectcides"

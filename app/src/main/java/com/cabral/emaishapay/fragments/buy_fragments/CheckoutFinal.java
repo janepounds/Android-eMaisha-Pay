@@ -105,7 +105,6 @@ import retrofit2.Call;
 public class CheckoutFinal extends Fragment {
     private static final String TAG = "CheckoutFinal";
 
-    View rootView;
     AlertDialog demoCouponsDialog;
     boolean disableOtherCoupons = false;
 
@@ -256,6 +255,9 @@ public class CheckoutFinal extends Fragment {
         setCheckoutTotal();
 
         binding.paymentMethod.setOnClickListener(v -> {
+            if(WalletBuySellActivity.navController.getCurrentDestination().getId()!=R.id.checkOutFinal)
+            Log.w("CurrentDestination", WalletBuySellActivity.navController.getCurrentDestination().getLabel()+"" );
+
             //go to payment method
             Bundle bundle = new Bundle();
             bundle.putSerializable("my_cart",my_cart);
@@ -270,6 +272,7 @@ public class CheckoutFinal extends Fragment {
             bundle.putSerializable("order_product_list", (ArrayList) orderProductList);
             bundle.putString("order_id",orderID);
             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_paymentMethods,bundle);
+
 //            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
 //                    checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 //
@@ -320,7 +323,7 @@ public class CheckoutFinal extends Fragment {
             if (binding.paymentMethod.getText().toString().equals("Payment Method")) {
                 binding.paymentMethod.setError("Required");
             } else {
-                if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Mobile Money") ){
+                if(PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("eMaisha Card") || PaymentOrderDetails.getPaymentMethod().equalsIgnoreCase("Visa")  ){
                     //check whether payment is made
                     if(PaymentOrderDetails.getPaymentMade()){
                         proceedOrder();
@@ -619,7 +622,7 @@ public class CheckoutFinal extends Fragment {
         // Set Customer Info
         orderDetails.setCustomersId(Integer.parseInt(userInfo.getId()));
         orderDetails.setCustomersName(userInfo.getFirstName());
-        orderDetails.setCustomersTelephone(shippingAddress.getPhone());
+        orderDetails.setCustomersTelephone( PaymentOrderDetails.getCustomersTelephone() );
         orderDetails.setEmail(userInfo.getEmail());
         orderDetails.setShopId(this.shop_id);
 
@@ -671,6 +674,8 @@ public class CheckoutFinal extends Fragment {
         orderDetails.setOrder_payment_id(getOrderID());
 
         orderDetails.setCurrency(PAYMENT_CURRENCY);
+        String service_code = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_PASSWORD,requireContext());
+        orderDetails.setService_code(service_code);
 
         PlaceOrderNow(orderDetails);
     }
@@ -743,7 +748,7 @@ public class CheckoutFinal extends Fragment {
                             }
                         }
 
-                    } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                    } else if (checkout_coupon_code!=null && response.body().getSuccess().equalsIgnoreCase("0")) {
                         checkout_coupon_code.setError(response.body().getMessage());
 
                     } else {
@@ -773,7 +778,7 @@ public class CheckoutFinal extends Fragment {
         Call<OrderData> call = BuyInputsAPIClient.getInstance()
                 .addToOrder
                         (access_token,
-                                postOrder
+                         postOrder
                         );
 
         call.enqueue(new Callback<OrderData>() {
@@ -806,17 +811,17 @@ public class CheckoutFinal extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("my_cart",my_cart);
                         bundle.putString("order_number",orderNumber);
-                        if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.paymentMethods){
-                            WalletBuySellActivity.navController.navigate(R.id.action_paymentMethods_to_thankYou,bundle);
-                        }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.checkOutFinal) {
-                            WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
+                        WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
+                    }
+                    else if (response.body().getSuccess().equalsIgnoreCase("0")) {
+                        Snackbar.make(binding.paymentMethod, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
+                        if(  response.body().getMessage().equalsIgnoreCase("token_expired")){
+                            getActivity().finish();
                         }
-                    } else if (response.body().getSuccess().equalsIgnoreCase("0")) {
-                        Snackbar.make(rootView, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
 
                     } else {
                         // Unable to get Success status
-                        Snackbar.make(rootView, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(binding.paymentMethod, getString(R.string.unexpected_response), Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -1269,7 +1274,7 @@ public class CheckoutFinal extends Fragment {
     //*********** Show SnackBar with given Message  ********//
 
     private void showSnackBarForCoupon(String msg) {
-        final Snackbar snackbar = Snackbar.make(rootView, msg, Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(binding.paymentMethod, msg, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("OK", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

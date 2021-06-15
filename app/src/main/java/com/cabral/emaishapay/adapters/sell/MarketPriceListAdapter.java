@@ -36,7 +36,7 @@ public class MarketPriceListAdapter extends RecyclerView.Adapter<MarketPriceList
     Context mContext;
     ArrayList<MarketPriceItem> marketPriceArrayList = new ArrayList<>();
 
-    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+    private final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
     public MarketPriceListAdapter(Context context, List<MarketPriceItem> marketPrices) {
         marketPriceArrayList.addAll(marketPrices);

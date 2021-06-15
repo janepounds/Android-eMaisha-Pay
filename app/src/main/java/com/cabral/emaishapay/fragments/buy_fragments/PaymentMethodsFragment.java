@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -55,7 +54,6 @@ import com.cabral.emaishapay.models.CardResponse;
 import com.cabral.emaishapay.models.CardSpinnerItem;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.address_model.AddressDetails;
-import com.cabral.emaishapay.models.coupons_model.CouponsInfo;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
 import com.cabral.emaishapay.models.user_model.UserDetails;
@@ -66,8 +64,6 @@ import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.card.Card;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentManager;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -79,7 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,11 +91,11 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
     CardType cardType;
     private BraintreeFragment braintreeFragment;
     SupportedCardTypesView brainTreeSupportedCards;
-    private String selectedPaymentMethod, merchantWalletId, shipping, orderId;
+    private String selectedPaymentMethod, mobileMoneyNumber, merchantWalletId, shipping, orderId;
     private CardBuilder brainTreeCard;
     private List couponList, productList;
     private Double subtotal, total, tax, shipping_cost, discount;
-    private String paymentNonceToken = "";
+    private final String paymentNonceToken = "";
     private UserDetails userInfo;
     private My_Cart my_cart;
     private String brainTreeToken;
@@ -172,7 +167,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         cancel = rootView.findViewById(R.id.payments_cancel_btn);
         // Handle the Click event of checkout_cancel_btn Button
-        cancel.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
+        cancel.setOnClickListener(view -> WalletBuySellActivity.navController.popBackStack());
 
         if(getArguments()!=null){
             my_cart = (My_Cart) getArguments().getSerializable("my_cart");
@@ -196,9 +191,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
         });
 
         ePayLayout.setOnClickListener(v -> {
@@ -207,44 +202,44 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
         });
 
         eCardLayout.setOnClickListener(v -> {
-            merchantCard.setVisibility(v.VISIBLE);
+            merchantCard.setVisibility(View.VISIBLE);
             eMaishaCard.setChecked(true);
             eMaishaWallet.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
 
         bankLayout.setOnClickListener(v -> {
-            VisaCard.setVisibility(v.VISIBLE);
+            VisaCard.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(true);
-            MobileM.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
 
         mmLayout.setOnClickListener(v -> {
 
-            MobileM.setVisibility(v.VISIBLE);
+            MobileM.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
             MobileMoney.setChecked(true);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
@@ -256,9 +251,9 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
         });
 
         eMaishaWallet.setOnClickListener(v -> {
@@ -267,44 +262,44 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
         });
 
         eMaishaCard.setOnClickListener(v -> {
-            merchantCard.setVisibility(v.VISIBLE);
+            merchantCard.setVisibility(View.VISIBLE);
            // eMaishaCard.setChecked(true);
             eMaishaWallet.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
 
         Visa.setOnClickListener(v -> {
-            VisaCard.setVisibility(v.VISIBLE);
+            VisaCard.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             MobileMoney.setChecked(false);
             //Visa.setChecked(true);
-            MobileM.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
 
         MobileMoney.setOnClickListener(v -> {
 
-            MobileM.setVisibility(v.VISIBLE);
+            MobileM.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
            // MobileMoney.setChecked(true);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
             COD.setChecked(false);
 
         });
@@ -342,59 +337,13 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             }
         });
 
-        cardExpiry.setOnTouchListener((v, event) -> {
-
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                // Get Calendar instance
-                final Calendar calendar = Calendar.getInstance();
-
-                // Initialize DateSetListener of DatePickerDialog
-                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        // Set the selected Date Info to Calendar instance
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-
-                        // Set Date Format
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy", Locale.US);
-
-                        // Set Date in input_dob EditText
-                        cardExpiry.setText(dateFormat.format(calendar.getTime()));
-                    }
-                };
-
-
-                // Initialize DatePickerDialog
-                DatePickerDialog datePicker = new DatePickerDialog
-                        (
-                                getContext(),
-                                date,
-                                calendar.get(Calendar.YEAR),
-                                calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)
-                        );
-
-                // Show datePicker Dialog
-                datePicker.show();
-            }
-
-            return false;
-        });
-
         this.context=getContext();
         txRef= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID,this.context)+(new Date().getTime());
 
         continuePayment.setOnClickListener(v -> {
             if (eMaishaWallet.isChecked()) {
-                double balance= Double.parseDouble( WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_USER_BALANCE, context) );
-                if(balance>=this.total){
-                    selectedPaymentMethod = "eMaisha Pay";
-                    recordEmaishaPayPurchase(txRef,this.chargeAmount);
-                }else {
-                    Toasty.error(context, "Insufficient Balance", Toast.LENGTH_LONG).show();
-                }
+                selectedPaymentMethod = "eMaisha Pay";
+                proceedOrder(false);
             }else if (COD.isChecked()) {
                 //
                 selectedPaymentMethod = "cod";
@@ -476,14 +425,12 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
             }
             else if (MobileMoney.isChecked()) {
                 selectedPaymentMethod = "Mobile Money";
-
-                String mobileNumber=getString(R.string.phone_number_code)+mobilePhonenumber.getText().toString();
-                if(mobileNumber.length()>9){
-                    mobileMoneyChargePayment(mobileNumber);
-                }
+                mobileMoneyNumber=getString(R.string.phone_number_code)+mobilePhonenumber.getText().toString();
+                proceedOrder(false);
 
             }
         });
+
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -564,6 +511,8 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         orderDetails.setCustomersId(Integer.parseInt(userInfo.getId()));
         orderDetails.setCustomersName(userInfo.getFirstName());
         orderDetails.setCustomersTelephone(shippingAddress.getPhone());
+        if(mobileMoneyNumber!=null)
+            orderDetails.setCustomersTelephone(mobileMoneyNumber);
         orderDetails.setEmail(userInfo.getEmail());
 
         // Set Shipping  Info
@@ -725,70 +674,6 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
         verificationUtils.showWebpageVerificationScreen(authenticationUrl);
     }
 
-    public void mobileMoneyChargePayment(String phoneNumber) {
-
-        dialogLoader.showProgressDialog();
-
-        txRef = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, this.context) + (new Date().getTime());
-        String eMaishaPayServiceMail="info@cabraltech.com";
-
-        RaveNonUIManager raveNonUIManager = new RaveNonUIManager().setAmount(this.chargeAmount)
-                .setCurrency("UGX")
-                .setEmail(eMaishaPayServiceMail)
-                .setfName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_FIRST_NAME, this.context))
-                .setlName(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_LAST_NAME, this.context))
-                .setPhoneNumber(phoneNumber)
-                .setNarration("eMaisha Pay")
-                .setPublicKey(BuildConfig.PUBLIC_KEY)
-                .setEncryptionKey(BuildConfig.ENCRYPTION_KEY)
-                .setTxRef(txRef)
-                .onStagingEnv(false)
-                .isPreAuth(true)
-                .initialize();
-
-        UgandaMobileMoneyPaymentCallback mobileMoneyPaymentCallback = new UgandaMobileMoneyPaymentCallback() {
-            @Override
-            public void showProgressIndicator(boolean active) {
-                try {
-
-                    if (dialogLoader == null) {
-                        dialogLoader = new DialogLoader(getContext());
-                        dialogLoader.showProgressDialog();
-                    }
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage, @Nullable String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-                Log.e("MobileMoneypaymentError", errorMessage);
-            }
-
-            @Override
-            public void onSuccessful(String flwRef) {
-                dialogLoader.hideProgressDialog();
-                Log.e("Success code :", "Mobile Money Payment "+flwRef);
-                Toast.makeText(context, "Transaction Successful", Toast.LENGTH_LONG).show();
-
-                recordPurchase(flwRef,chargeAmount,cardNumber.getText().toString());
-
-            }
-
-            @Override
-            public void showAuthenticationWebPage(String authenticationUrl) {
-                Log.e("Loading auth web page: ", authenticationUrl);
-                verificationUtils.showWebpageVerificationScreen(authenticationUrl);
-            }
-        };
-        UgandaMobileMoneyPaymentManager mobilePayManager = new UgandaMobileMoneyPaymentManager(raveNonUIManager, (UgandaMobileMoneyPaymentCallback) mobileMoneyPaymentCallback);
-
-        mobilePayManager.charge();
-    }
-
     public void recordPurchase(String txRef, double amount, String thirdParty_id) {
         /******************RETROFIT IMPLEMENTATION**************************/
         dialogLoader.showProgressDialog();
@@ -819,7 +704,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 400) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
@@ -827,7 +712,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
                     if (response.errorBody() != null) {
 
@@ -836,84 +721,13 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
                     }
-                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 406", response.errorBody() + ", code: " + response.code());
                 } else {
 
                     if (response.errorBody() != null) {
 
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                }
-                dialogLoader.hideProgressDialog();
-            }
-
-
-            @Override
-            public void onFailure(Call<WalletTransaction> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-    public void recordEmaishaPayPurchase(String txRef, double amount) {
-        /******************RETROFIT IMPLEMENTATION**************************/
-        dialogLoader.showProgressDialog();
-
-        String referenceNumber = txRef;
-        String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
-        String request_id = WalletHomeActivity.generateRequestId();
-        String category = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_ACCOUNT_ROLE,requireContext());
-
-        APIRequests apiRequests = APIClient.getWalletInstance(getContext());
-        Call<WalletTransaction> call = apiRequests.eMaishaPayUserPayment(access_token,merchantWalletId,amount,referenceNumber,true,request_id,category,"userEmaishaPayPaymentment");
-        call.enqueue(new Callback<WalletTransaction>() {
-            @Override
-            public void onResponse(Call<WalletTransaction> call, Response<WalletTransaction> response) {
-                if(response.code() == 200){
-
-                    dialogLoader.hideProgressDialog();
-                    proceedOrder(true);
-                }else if(response.code() == 401){
-
-                    TokenAuthFragment.startAuth( true);
-
-                } else if (response.code() == 500) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(context,response.body().getRecepient(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else if (response.code() == 400) {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very wrong, code: " + response.code());
-                    }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else if (response.code() == 406) {
-                    if (response.errorBody() != null) {
-
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Log.e("info", "Something got very very wrong, code: " + response.code());
-                    }
-                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
-                } else {
-
-                    if (response.errorBody() != null) {
-
-                        Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -1140,7 +954,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
                     TokenAuthFragment.startAuth( true);
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }

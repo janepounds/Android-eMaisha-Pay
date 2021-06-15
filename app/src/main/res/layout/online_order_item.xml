@@ -41,7 +41,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="7.5"
-                    android:text="Zimula John"
+                    android:text="@string/none"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -54,7 +54,6 @@
                     app:tint="@color/colorPrimaryDark" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8.5"
-                    android:text="Nansana, Wakiso"
+                    android:text="@string/none"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"/>
@@ -100,7 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8.5"
-                    android:text="Pending"
+                    android:text="None"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:layout_gravity="center_vertical"/>

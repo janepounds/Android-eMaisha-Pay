@@ -82,7 +82,8 @@ public class OrdersListAdapter extends RecyclerView.Adapter<OrdersListAdapter.My
                 break;
             case "Approved":
                 holder.orderStatusBackground.setBackgroundResource(R.drawable.order_status_approved_background);
-            case "Completed":
+                break;
+            case "Delivered":
                 holder.orderStatusBackground.setBackgroundResource(R.drawable.order_status_completed_background);
                 break;
             case "Pending":
@@ -172,8 +173,12 @@ public class OrdersListAdapter extends RecyclerView.Adapter<OrdersListAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView order_id, order_product_count, order_status, order_price, order_date;
-        private RelativeLayout orderStatusBackground;
+        private final TextView order_id;
+        private final TextView order_product_count;
+        private final TextView order_status;
+        private final TextView order_price;
+        private final TextView order_date;
+        private final RelativeLayout orderStatusBackground;
 
         public MyViewHolder(final View itemView) {
             super(itemView);

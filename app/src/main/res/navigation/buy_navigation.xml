@@ -23,7 +23,15 @@
         <action
             android:id="@+id/action_walletBuyFragment_to_myCart"
             app:destination="@id/myCart" />
+        <action
+            android:id="@+id/action_walletBuyFragment_to_categories"
+            app:destination="@id/categories" />
+        <action
+            android:id="@+id/action_walletBuyFragment_to_sub_categories"
+            app:destination="@id/sub_categories" />
     </fragment>
+
+
 
 
     <fragment
@@ -50,7 +58,11 @@
         android:id="@+id/walletOrdersFragment"
         android:name="com.cabral.emaishapay.fragments.buy_fragments.My_Orders"
         android:label="MyOrdersFragment"
-        tools:layout="@layout/buy_inputs_orders"/>
+        tools:layout="@layout/buy_inputs_orders">
+        <action
+            android:id="@+id/action_walletOrdersFragment_to_walletBuyFragment"
+            app:destination="@id/walletBuyFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/viewAllPopularProducts"
@@ -70,6 +82,17 @@
         <action
             android:id="@+id/action_viewAllTopDeals_to_productDescription"
             app:destination="@id/productDescription" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categories"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.Category_Products"
+        android:label="categories"
+        tools:layout="@layout/buy_inputs_f_products_vertical">
+
+        <action
+            android:id="@+id/action_categories_to_walletBuyFragment"
+            app:destination="@id/walletBuyFragment" />
     </fragment>
 
     <fragment
@@ -140,8 +163,8 @@
         android:label="PaymentMethods"
         tools:layout="@layout/fragment_payment_methods">
         <action
-            android:id="@+id/action_paymentMethods_to_thankYou"
-            app:destination="@id/thankYou" />
+            android:id="@+id/action_paymentMethods_to_checkOutFinal"
+            app:destination="@id/checkOutFinal" />
     </fragment>
 
     <fragment
@@ -156,4 +179,10 @@
             android:id="@+id/action_thankYou_to_walletBuyFragment"
             app:destination="@id/walletBuyFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/sub_categories"
+        android:name="com.cabral.emaishapay.fragments.buy_fragments.SubCategories_3"
+        android:label="SubCategories"
+        tools:layout="@layout/buy_inputs_categories"></fragment>
 </navigation>

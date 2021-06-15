@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:fontFamily="@font/josefin_sans"
             android:gravity="center|start"
             android:text="Ginger (Kg)"
             android:textColor="@color/black"
@@ -39,7 +38,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center|start"
                     android:paddingStart="@dimen/dimen_10dp"
                     android:paddingTop="@dimen/dimen_5dp"
@@ -57,7 +55,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center|start"
                     android:paddingTop="@dimen/dimen_5dp"
                     android:paddingBottom="@dimen/dimen_5dp"
@@ -73,7 +70,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:gravity="center|start"
                     android:paddingTop="@dimen/dimen_5dp"
                     android:paddingBottom="@dimen/dimen_5dp"

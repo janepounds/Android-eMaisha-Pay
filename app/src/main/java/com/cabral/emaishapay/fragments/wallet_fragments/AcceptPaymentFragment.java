@@ -171,14 +171,14 @@ public class AcceptPaymentFragment extends Fragment {
                     getActivity().finish();
                 }
                 else {
-                    Log.e("info404", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info404", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 }
                 dialogLoader.hideProgressDialog();
             }
 
             @Override
             public void onFailure(Call<InitiateTransferResponse> call, Throwable t) {
-                Log.e("info : " , new String(String.valueOf(t.getMessage())));
+                Log.e("info : " , String.valueOf(t.getMessage()));
 
                 dialogLoader.hideProgressDialog();
             }
@@ -248,14 +248,14 @@ public class AcceptPaymentFragment extends Fragment {
 
                 }
                 else if (response.code() == 500) {
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                    Log.e("info 400", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
 
-                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else {
-                    Log.e("info 406", new String("Error Occurred Try again later"));
+                    Log.e("info 406", "Error Occurred Try again later");
 
                 }
                 dialogLoader.hideProgressDialog();
@@ -263,7 +263,7 @@ public class AcceptPaymentFragment extends Fragment {
 
             @Override
             public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
-                Log.e("info 406", new String("Error Occurred Try again later"));
+                Log.e("info 406", "Error Occurred Try again later");
                 dialogLoader.hideProgressDialog();
             }
         });
@@ -476,7 +476,7 @@ public class AcceptPaymentFragment extends Fragment {
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 400) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
@@ -484,7 +484,7 @@ public class AcceptPaymentFragment extends Fragment {
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
                     if (response.errorBody() != null) {
 
@@ -493,13 +493,13 @@ public class AcceptPaymentFragment extends Fragment {
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
                     }
-                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 406", response.errorBody() + ", code: " + response.code());
                 } else {
 
                     if (response.errorBody() != null) {
 
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());

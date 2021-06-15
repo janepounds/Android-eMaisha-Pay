@@ -171,7 +171,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.7"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@font/josefin_sans"
                         android:inputType="phone"
                         android:maxLength="9"
                         android:paddingStart="@dimen/dimen_10dp"
@@ -312,7 +311,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="@string/card_expiry"
                             android:textColor="#515C6F"
                             android:textSize="@dimen/dimen_16sp" />
@@ -323,7 +321,6 @@
                             android:layout_height="50dp"
                             android:background="@drawable/edittext_corner"
                             android:drawableEnd="@drawable/ic_calendar"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="start|center_vertical"
                             android:padding="10dp"
                             android:textAlignment="viewStart" />
@@ -342,7 +339,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:fontFamily="@font/josefin_sans"
                             android:text="@string/card_cvv"
                             android:textColor="#515C6F"
                             android:textSize="@dimen/dimen_16sp" />
@@ -352,7 +348,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@drawable/edittext_corner"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
                             android:maxLength="3"
                             android:paddingStart="10dp"
@@ -431,8 +426,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Select Card"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/josefin_sans" />
+                        android:textSize="16sp" />
 
 
 
@@ -491,8 +485,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Holder Name"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/josefin_sans" />
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/visa_holder_name"
@@ -516,8 +509,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Card Number"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/josefin_sans" />
+                            android:textSize="16sp"/>
 
                         <EditText
                             android:id="@+id/visa_card_number"
@@ -551,8 +543,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Card Expiry"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/josefin_sans" />
+                                android:textSize="16sp" />
 
                             <EditText
                                 android:id="@+id/visa_card_expiry"
@@ -578,8 +569,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Card CVV"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/josefin_sans" />
+                                android:textSize="16sp" />
 
                             <EditText
                                 android:id="@+id/visa_card_cvv"
@@ -701,7 +691,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.7"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@font/josefin_sans"
                         android:inputType="phone"
                         android:maxLength="9"
                         android:paddingStart="@dimen/dimen_10dp"

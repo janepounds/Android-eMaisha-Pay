@@ -36,9 +36,9 @@ import java.util.List;
 public class SubCategoryListAdapter extends BaseAdapter {
 
     Context context;
-    private List<CategoryDetails> subCategoriesList;
+    private final List<CategoryDetails> subCategoriesList;
     
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
 
     public SubCategoryListAdapter(Context context, List<CategoryDetails> subCategoriesList) {

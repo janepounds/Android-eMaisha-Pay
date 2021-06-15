@@ -64,10 +64,10 @@ public class PayFragment extends Fragment {
 
     private String cardNo,cvv,expiry,mobileNo,methodOfPayment,key=null;
 
-    LinearLayout card_details_layout,layout_pay_to;
+    LinearLayout card_details_layout;
     CheckBox checkbox_save_card;
     LinearLayout layout_coupon,layoutMobileMoney,layoutBankCards,layoutAmount,layoutMerchantID,layoutPaymentMethod;
-    Spinner spPaymentMethod,sp_payment_pay_to;
+    Spinner spPaymentMethod;
     Button saveBtn;
     FragmentManager fm;
     Toolbar toolbar;
@@ -125,8 +125,6 @@ public class PayFragment extends Fragment {
         layoutMerchantID = view.findViewById(R.id.layout_pay_merchant_id);
         layoutAmount = view.findViewById(R.id.layout_pay_merchant_amount);
 
-        layout_pay_to = view.findViewById(R.id.layout_pay_to);
-        sp_payment_pay_to = view.findViewById(R.id.sp_payment_pay_to);
         text_pay_to_title = view.findViewById(R.id.text_pay_to_title);
 
 
@@ -183,7 +181,7 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.GONE);
                     layoutMerchantID.setVisibility(View.GONE);
-                    layout_pay_to.setVisibility(View.GONE);
+
                 }
 
                 else if(selectedItem.equalsIgnoreCase("eMaisha Pay")){
@@ -191,14 +189,14 @@ public class PayFragment extends Fragment {
                     layoutBankCards.setVisibility(View.GONE);
                     layoutAmount.setVisibility(View.VISIBLE);
                     layoutMerchantID.setVisibility(View.VISIBLE);
-                    layout_pay_to.setVisibility(View.GONE);
+
                 }
                 else if(selectedItem.equalsIgnoreCase("Mobile Money")){
-                    layoutMobileMoney.setVisibility(View.GONE);
+                    layoutMobileMoney.setVisibility(View.VISIBLE);
                     layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.GONE);
-                    layoutMerchantID.setVisibility(View.GONE);
-                    layout_pay_to.setVisibility(View.VISIBLE);
+                    layoutAmount.setVisibility(View.VISIBLE);
+                    layoutMerchantID.setVisibility(View.VISIBLE);
+
                 }
 //                else if(selectedItem.equalsIgnoreCase("Bank Cards") || selectedItem.equalsIgnoreCase("eMaisha Card")){
 //                    layoutMobileMoney.setVisibility(View.GONE);
@@ -216,43 +214,6 @@ public class PayFragment extends Fragment {
         });
 
 
-        sp_payment_pay_to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Change selected text color
-                ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-
-                if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Select")){
-                    layoutMobileMoney.setVisibility(View.GONE);
-                    layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.GONE);
-                    layoutMerchantID.setVisibility(View.GONE);
-
-                }else if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Agent")){
-
-                    toolbar.setTitle("Pay Agent");
-                    text_pay_to_title.setText("Agent ID");
-                    layoutMerchantID.setVisibility(View.VISIBLE);
-                    layoutMobileMoney.setVisibility(View.VISIBLE);
-                    layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                }else if(sp_payment_pay_to.getSelectedItem().toString().equalsIgnoreCase("Merchant")){
-                    toolbar.setTitle("Pay Merchant");
-                    text_pay_to_title.setText("Merchant ID");
-                    layoutMerchantID.setVisibility(View.VISIBLE);
-                    layoutMobileMoney.setVisibility(View.VISIBLE);
-                    layoutBankCards.setVisibility(View.GONE);
-                    layoutAmount.setVisibility(View.VISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -342,7 +303,7 @@ public class PayFragment extends Fragment {
         WalletTransactionInitiation.getInstance().setMethodOfPayment(methodOfPayment);
         WalletTransactionInitiation.getInstance().setCoupon(couponAmout.getText().toString());
         WalletTransactionInitiation.getInstance().setAmount(amount);
-        WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
+//        WalletTransactionInitiation.getInstance().setPayTo(sp_payment_pay_to.getSelectedItem().toString());
         FragmentTransaction ft = this.fm.beginTransaction();
         Fragment prev =this.fm.findFragmentByTag("dialog");
         if (prev != null) {
@@ -580,7 +541,7 @@ public class PayFragment extends Fragment {
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }

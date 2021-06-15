@@ -119,8 +119,11 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageButton coupon_delete;
-        private TextView coupon_code, coupon_type, coupon_amount, coupon_discount;
+        private final ImageButton coupon_delete;
+        private final TextView coupon_code;
+        private final TextView coupon_type;
+        private final TextView coupon_amount;
+        private final TextView coupon_discount;
 
 
         public MyViewHolder(final View itemView) {

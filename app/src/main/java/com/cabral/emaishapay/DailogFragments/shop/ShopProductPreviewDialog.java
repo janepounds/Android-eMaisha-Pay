@@ -53,12 +53,12 @@ public class ShopProductPreviewDialog extends DialogFragment {
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     TextView product_units;
     private Context context;
-    private EcProduct  productData;
+    private final EcProduct  productData;
     DialogLoader dialogLoader;
     Button delete_button,update_button,re_stock;
     EditText qty;
     ShopProductsModelView viewModel;
-    private List<EcManufacturer> manufacturers=new ArrayList<>();
+    private final List<EcManufacturer> manufacturers=new ArrayList<>();
 
     public ShopProductPreviewDialog(EcProduct productData, ShopProductsModelView viewModel) {
        this.viewModel=viewModel;

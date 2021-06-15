@@ -8,9 +8,9 @@ import android.content.SharedPreferences;
  **/
 
 public class MyAppPrefsManager {
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
-    private int PRIVATE_MODE = 0;
+    private final int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "AndroidShopApp_Prefs";
 
     private static final String USER_LANGUAGE_ID = "language_ID";

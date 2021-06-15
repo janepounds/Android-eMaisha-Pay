@@ -1,6 +1,7 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,8 +87,8 @@ public class My_Orders extends Fragment {
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbarOrders);
         binding.toolbarOrders.setTitle(getString(R.string.actionOrders));
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(enable_back);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(enable_back);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
         //noInternetDialog.show();
@@ -265,5 +266,8 @@ public class My_Orders extends Fragment {
     public void onResume() {
         super.onResume();
     }
+
+
+    
 }
 

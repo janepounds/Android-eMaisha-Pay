@@ -44,7 +44,7 @@ public class StartAppRequests {
     private static BuyInputsDB_Handler db_handler;
     private static Context context;
 
-    private EmaishaPayApp emaishaPayApp;
+    private final EmaishaPayApp emaishaPayApp;
 
 
 
@@ -53,7 +53,7 @@ public class StartAppRequests {
         emaishaPayApp = ((EmaishaPayApp) EmaishaPayApp.getContext());
         db_handler = new BuyInputsDB_Handler();
         BuyInputsDB_Manager.initializeInstance(db_handler);
-        this.context = context;
+        StartAppRequests.context = context;
     }
 
 

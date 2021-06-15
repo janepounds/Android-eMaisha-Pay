@@ -774,7 +774,7 @@ public class WalletAccountFragment extends Fragment {
 
                 }
                 //rate app
-               // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)));
             });
 
             binding.btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -887,7 +887,7 @@ public class WalletAccountFragment extends Fragment {
 
             });
 
-            String versionCode =  String.valueOf(BuildConfig.VERSION_NAME);
+            String versionCode = BuildConfig.VERSION_NAME;
             binding.textAppVersion.setText(versionCode);
 
         return binding.getRoot();

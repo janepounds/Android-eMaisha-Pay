@@ -172,41 +172,41 @@ public class ShopPayments extends Fragment implements
             MobileMoney.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
-            eMaishaPayLayout.setVisibility(v.VISIBLE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
+            eMaishaPayLayout.setVisibility(View.VISIBLE);
         });
 
         eMaishaCard.setOnClickListener(v -> {
-            merchantCard.setVisibility(v.VISIBLE);
+            merchantCard.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             MobileMoney.setChecked(false);
             Visa.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            VisaCard.setVisibility(v.GONE);
-            eMaishaPayLayout.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            VisaCard.setVisibility(View.GONE);
+            eMaishaPayLayout.setVisibility(View.GONE);
         });
 
         Visa.setOnClickListener(v -> {
-            VisaCard.setVisibility(v.VISIBLE);
+            VisaCard.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             MobileMoney.setChecked(false);
-            MobileM.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
-            eMaishaPayLayout.setVisibility(v.GONE);
+            MobileM.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
+            eMaishaPayLayout.setVisibility(View.GONE);
             getCards();
         });
 
         MobileMoney.setOnClickListener(v -> {
-            MobileM.setVisibility(v.VISIBLE);
+            MobileM.setVisibility(View.VISIBLE);
             eMaishaWallet.setChecked(false);
             eMaishaCard.setChecked(false);
             Visa.setChecked(false);
-            VisaCard.setVisibility(v.GONE);
-            merchantCard.setVisibility(v.GONE);
-            eMaishaPayLayout.setVisibility(v.GONE);
+            VisaCard.setVisibility(View.GONE);
+            merchantCard.setVisibility(View.GONE);
+            eMaishaPayLayout.setVisibility(View.GONE);
         });
         cancel.setOnClickListener(v -> {
             ShopActivity.navController.popBackStack();});
@@ -542,7 +542,7 @@ public class ShopPayments extends Fragment implements
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -662,7 +662,7 @@ public class ShopPayments extends Fragment implements
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 400) {
                     if (response.errorBody() != null) {
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
@@ -670,7 +670,7 @@ public class ShopPayments extends Fragment implements
 
                         Log.e("info", "Something got very wrong, code: " + response.code());
                     }
-                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 500", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
                     if (response.errorBody() != null) {
 
@@ -679,13 +679,13 @@ public class ShopPayments extends Fragment implements
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
                     }
-                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                    Log.e("info 406", response.errorBody() + ", code: " + response.code());
                 } else {
 
                     if (response.errorBody() != null) {
 
                         Toast.makeText(context, response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        Log.e("info", String.valueOf(response.errorBody()) + ", code: " + response.code());
+                        Log.e("info", response.errorBody() + ", code: " + response.code());
                     } else {
 
                         Log.e("info", "Something got very very wrong, code: " + response.code());
@@ -922,14 +922,14 @@ public class ShopPayments extends Fragment implements
 
                 }
                 else if (response.code() == 500) {
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                    Log.e("info 400", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
 
-                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else {
-                    Log.e("info 406", new String("Error Occurred Try again later"));
+                    Log.e("info 406", "Error Occurred Try again later");
 
                 }
                 dialogLoader.hideProgressDialog();
@@ -937,7 +937,7 @@ public class ShopPayments extends Fragment implements
 
             @Override
             public void onFailure(Call<InitiateTransferResponse> call, Throwable t) {
-                Log.e("info : " , new String(String.valueOf(t.getMessage())));
+                Log.e("info : " , String.valueOf(t.getMessage()));
 
                 dialogLoader.hideProgressDialog();
             }
@@ -1044,14 +1044,14 @@ public class ShopPayments extends Fragment implements
 
                 }
                 else if (response.code() == 500) {
-                    Log.e("info 500", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 500", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else if (response.code() == 400) {
-                    Log.e("info 400", new String(String.valueOf(response.errorBody()) + ", code: " + response.code()));
+                    Log.e("info 400", response.errorBody() + ", code: " + response.code());
                 } else if (response.code() == 406) {
 
-                    Log.e("info 406", new String(String.valueOf(response.errorBody())) + ", code: " + response.code());
+                    Log.e("info 406", String.valueOf(response.errorBody()) + ", code: " + response.code());
                 } else {
-                    Log.e("info 406", new String("Error Occurred Try again later"));
+                    Log.e("info 406", "Error Occurred Try again later");
 
                 }
                 dialogLoader.hideProgressDialog();
@@ -1059,7 +1059,7 @@ public class ShopPayments extends Fragment implements
 
             @Override
             public void onFailure(Call<InitiateWithdrawResponse> call, Throwable t) {
-                Log.e("info 406", new String("Error Occurred Try again later"));
+                Log.e("info 406", "Error Occurred Try again later");
                 dialogLoader.hideProgressDialog();
             }
         });

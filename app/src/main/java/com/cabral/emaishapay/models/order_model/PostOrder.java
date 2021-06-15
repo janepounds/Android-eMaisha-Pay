@@ -157,7 +157,9 @@ public class PostOrder implements Serializable
     @SerializedName("is_payment_made")
     @Expose
     private Boolean isPaymentMade;
-
+    @SerializedName("service_code")
+    @Expose
+    private String service_code;
 
     private final static long serialVersionUID = -2721986212560631035L;
 
@@ -575,5 +577,13 @@ public class PostOrder implements Serializable
 
     public void setPaymentMade(Boolean paymentMade) {
         isPaymentMade = paymentMade;
+    }
+
+    public String getService_code() {
+        return service_code;
+    }
+
+    public void setService_code(String service_code) {
+        this.service_code = service_code;
     }
 }

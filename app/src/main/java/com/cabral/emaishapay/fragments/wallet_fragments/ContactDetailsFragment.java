@@ -47,8 +47,8 @@ public class ContactDetailsFragment extends Fragment {
     String firstname, lastname, middlename, customer_gender, date_of_birth;
     private int pickedDistrictId;
     private int pickedSubCountyId;
-    private ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
-    private ArrayList<SpinnerItem> villageList = new ArrayList<>();
+    private final ArrayList<SpinnerItem> subCountyList = new ArrayList<>();
+    private final ArrayList<SpinnerItem> villageList = new ArrayList<>();
     private Context context;
     private AutoCompleteTextView act_districts,act_sub_counties,act_villages;
 

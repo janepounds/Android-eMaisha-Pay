@@ -154,14 +154,14 @@ public class DepositMoneyVoucher extends DialogFragment {
                     } else {
                         Log.e("info", "Something got very very wrong, code: "+response.code());
                     }
-                    Log.e("info 500", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
+                    Log.e("info 500", String.valueOf(response.errorBody()) +", code: "+response.code());
                     dialogLoader.hideProgressDialog();
                 }
                 else{
                     errorMsgTxt.setText("Error Occurred Try again later");
                     if (response.errorBody() != null) {
                         errorMsgTxt.setText(response.errorBody().toString());
-                        Log.e("info", new String(String.valueOf(response.errorBody()))+", code: "+response.code());
+                        Log.e("info", String.valueOf(response.errorBody()) +", code: "+response.code());
                     } else {
 
                         Log.e("info", "Something got very very wrong, code: "+response.code());

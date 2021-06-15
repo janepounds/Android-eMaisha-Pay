@@ -38,8 +38,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private static final String TAG = "ProductAdapter";
 
     private List<? extends EcProduct> productData;
-    private Context context;
-    private FragmentManager fm;
+    private final Context context;
+    private final FragmentManager fm;
     ProductItemBinding binding;
     ShopProductsModelView viewModel;
     //private List<EcManufacturer> manufacturers;

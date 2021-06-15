@@ -42,7 +42,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     List<AddressDetails> addressList;
     My_Addresses my_addresses;
 
-    private int selectedPosition;
+    private final int selectedPosition;
 
     // To keep track of Checked Radio Button
     private RadioButton lastChecked_RB;
@@ -96,11 +96,11 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
             Log.d(TAG, "onBindViewHolder: DefaultLatitude = " + preferenceHelper.getDefaultLatitude());
             Log.d(TAG, "onBindViewHolder: DefaultLongitude = " + preferenceHelper.getDefaultLongitude());
 
-            if (parentFrag.my_cart != null) {
+            if (My_Addresses.my_cart != null) {
                 ((EmaishaPayApp) context.getApplicationContext()).setShippingAddress(addressDetails);
                 //got to near by merchant
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("my_cart",parentFrag.my_cart);
+                bundle.putSerializable("my_cart", My_Addresses.my_cart);
                WalletBuySellActivity.navController.navigate(R.id.action_walletAddressesFragment_to_nearbyMerchants,bundle);
             } else {
                 // Request the Server to Change Default Address

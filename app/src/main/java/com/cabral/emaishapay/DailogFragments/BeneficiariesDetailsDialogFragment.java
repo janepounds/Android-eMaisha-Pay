@@ -49,7 +49,7 @@ public class BeneficiariesDetailsDialogFragment extends DialogFragment {
     LinearLayout layout_name,layout_mobile,layout_bank,layout_bank_branch,layout_city,layout_country,layout_account_name,layout_account_number;
 
     private Context context;
-    private List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
+    private final List<BeneficiaryResponse.Beneficiaries> dataList =new ArrayList<>();
     String benficiary_id;
     public  int currentFragment;
     DialogLoader dialogLoader;

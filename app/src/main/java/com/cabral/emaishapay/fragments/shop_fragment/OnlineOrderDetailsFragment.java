@@ -85,6 +85,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(ShopOrdersModelView.class);
         binding.txtOnlineOrderStatus.setText(order_status);
+
         if(order_status!=null){
             if(  !order_status.equalsIgnoreCase("Pending")){
                 binding.rejectApproveLayout.setVisibility(View.GONE);
@@ -103,7 +104,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                 .updateOrderStatus(
                                         order_id,
                                         " ",
-                                        2
+                                        5
                                 );
                         dialogLoader.showProgressDialog();
 
@@ -173,6 +174,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
         binding.txtOnlineOrderCustomerEmail.setText(customer_email);
         binding.txtOnlineOrderCustomerPhone.setText(customer_cell);
         binding.txtOnlineDeliveryPrice.setText(delivery_fee);
+        binding.txtOnlineOrderId.setText(order_id);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recycler.setLayoutManager(linearLayoutManager); // set LayoutManager to binding.recycler

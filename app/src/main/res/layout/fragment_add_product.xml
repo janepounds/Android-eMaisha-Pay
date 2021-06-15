@@ -106,7 +106,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="Name"
                         android:textColor="@color/textColorSecondaryLight"
@@ -133,7 +132,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="@string/product_code"
                         android:textColor="@color/textColorSecondaryLight"
@@ -155,7 +153,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_weight="2"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
                             android:padding="10dp"
                             android:background="@color/transparent" />
@@ -188,7 +185,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefin_sans"
                     android:layout_marginBottom="5dp"
                     android:text="Measurement"
                     android:textColor="@color/textColorSecondaryLight"
@@ -201,7 +197,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/edittext_corner"
-                    android:fontFamily="@font/josefin_sans"
                     android:inputType="number"
                     android:padding="10dp"/>
 
@@ -266,7 +261,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="Purchase Price"
                         android:textColor="@color/textColorSecondaryLight"
@@ -282,7 +276,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight=".4"
                             android:background="@drawable/edittext_left_corners_green"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="UGX"
@@ -295,7 +288,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight=".6"
                             android:background="@color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
                             android:padding="8dp" />
 
@@ -314,7 +306,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="Selling price"
                         android:textColor="@color/textColorSecondaryLight"
@@ -331,7 +322,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="3"
                             android:background="@drawable/edittext_left_corners_green"
-                            android:fontFamily="@font/josefin_sans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="UGX"
@@ -344,7 +334,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4"
                             android:background="@color/transparent"
-                            android:fontFamily="@font/josefin_sans"
                             android:inputType="text"
                             android:padding="8dp" />
 
@@ -369,7 +358,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefin_sans"
                         android:layout_marginBottom="5dp"
                         android:text="In-Stock"
                         android:textColor="@color/textColorSecondaryLight"
@@ -382,7 +370,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/edittext_corner"
-                        android:fontFamily="@font/josefin_sans"
                         android:inputType="number"
                         android:padding="10dp"
                         android:layout_marginBottom="10dp"/>
@@ -427,7 +414,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_sans"
                 android:layout_marginBottom="5dp"
                 android:text="@string/select_supplier"
                 android:textColor="@color/textColorSecondaryLight"
@@ -440,7 +426,6 @@
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_corner"
                 android:drawableRight="@drawable/drop_down"
-                android:fontFamily="@font/josefin_sans"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/creditCardBackground"

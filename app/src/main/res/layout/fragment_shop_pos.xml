@@ -267,7 +267,6 @@
                     android:text="@string/no_product_found"
                     android:textColor="@color/colorPrimary"
                     android:textSize="24sp"
-                    app:fontFamily="@font/josefin_sans"
                     android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>

@@ -130,7 +130,7 @@ public class Category_Products extends Fragment {
         // Binding Layout Views
         TopBar = rootView.findViewById(R.id.topBar);
         sortList = rootView.findViewById(R.id.sort_list);
-        sortListText = rootView.findViewById(R.id.sort_text);;
+        sortListText = rootView.findViewById(R.id.sort_text);
         emptyRecord = rootView.findViewById(R.id.empty_record);
         progressBar = rootView.findViewById(R.id.loading_bar);
         resetFiltersBtn = rootView.findViewById(R.id.resetFiltersBtn);

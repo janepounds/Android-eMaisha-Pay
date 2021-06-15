@@ -30,8 +30,8 @@ import java.util.List;
 
 public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdapter.MyViewHolder> {
 
-    private Context context;
-    private List<CartProduct> checkoutItemsList;
+    private final Context context;
+    private final List<CartProduct> checkoutItemsList;
     
     private ProductAttributeValuesAdapter attributesAdapter;
 
@@ -110,10 +110,14 @@ public class CheckoutItemsAdapter extends RecyclerView.Adapter<CheckoutItemsAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
     
-        private ImageView checkout_item_cover;
-        private RecyclerView attributes_recycler;
-        private TextView checkout_item_title, checkout_item_quantity, checkout_item_price, checkout_item_price_final, checkout_item_category;
-        private AppBarLayout appBarLayout;
+        private final ImageView checkout_item_cover;
+        private final RecyclerView attributes_recycler;
+        private final TextView checkout_item_title;
+        private final TextView checkout_item_quantity;
+        private final TextView checkout_item_price;
+        private final TextView checkout_item_price_final;
+        private final TextView checkout_item_category;
+        private final AppBarLayout appBarLayout;
 
 
         public MyViewHolder(final View itemView) {

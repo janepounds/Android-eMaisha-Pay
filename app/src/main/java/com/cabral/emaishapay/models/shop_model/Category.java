@@ -1,8 +1,8 @@
 package com.cabral.emaishapay.models.shop_model;
 
 public class Category {
-    private Integer categories_id;
-    private String categories_slug;
+    private final Integer categories_id;
+    private final String categories_slug;
 
     public Category(Integer categories_id, String categories_slug) {
         this.categories_id = categories_id;

@@ -24,8 +24,10 @@ public class NotificationBadger extends Drawable {
 
     private boolean draw1;
     private String count1 = "";
-    private Rect rect1 = new Rect();
-    private Paint badgePaint1, badgePaint2, textPaint;
+    private final Rect rect1 = new Rect();
+    private final Paint badgePaint1;
+    private final Paint badgePaint2;
+    private final Paint textPaint;
 
 
     public NotificationBadger(Context context) {

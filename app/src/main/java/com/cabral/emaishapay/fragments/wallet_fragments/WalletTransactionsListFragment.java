@@ -175,7 +175,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -208,12 +208,12 @@ public class WalletTransactionsListFragment extends Fragment {
                     try {
                         WalletTransactionResponse.TransactionData walletTransactionResponseData = response.body().getData();
                         dataList = walletTransactionResponseData.getTransactions();
+                        walletCashOut.setText( getString(R.string.currency)+" "+walletTransactionResponseData.getBankTotal() );
+                        walletCashIn.setText( getString(R.string.currency)+" "+walletTransactionResponseData.getMobileMoneyTotal() );
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }finally {
-                         //Log.w("Settlements",dataList.size()+"**********");
-
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         statementAdapter = new WalletTransactionsListAdapter(dataList, requireActivity().getSupportFragmentManager());
                         recyclerView.setAdapter(statementAdapter);
@@ -227,7 +227,7 @@ public class WalletTransactionsListFragment extends Fragment {
                     TokenAuthFragment.startAuth( true);
 
                     if (response.errorBody() != null) {
-                        Log.e("info", new String(String.valueOf(response.errorBody())));
+                        Log.e("info", String.valueOf(response.errorBody()));
                     } else {
                         Log.e("info", "Something got very very wrong");
                     }
@@ -241,4 +241,5 @@ public class WalletTransactionsListFragment extends Fragment {
             }
         });
     }
+
 }

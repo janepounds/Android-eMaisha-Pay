@@ -400,9 +400,9 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
     @Override
     public void onMapReady(GoogleMap map) {
-        this.map = map;//pass map to global event listeners
+        Shipping_Address.map = map;//pass map to global event listeners
 
-        final GoogleMap mGoogleMap=this.map;
+        final GoogleMap mGoogleMap= Shipping_Address.map;
         mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
@@ -526,7 +526,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
         }
     }
 
-    private String JoinStrings( String stringArray[]){
+    private String JoinStrings(String[] stringArray){
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < stringArray.length; i++) {
             sb.append(stringArray[i]);

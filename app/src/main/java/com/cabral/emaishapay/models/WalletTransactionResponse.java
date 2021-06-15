@@ -39,6 +39,28 @@ public class WalletTransactionResponse {
         @SerializedName("cashout")
         @Expose
         private double cashout;
+        @SerializedName("bank")
+        @Expose
+        private double bankTotal;
+        @SerializedName("mobileMoney")
+        @Expose
+        private double mobileMoneyTotal;
+
+        public double getBankTotal() {
+            return bankTotal;
+        }
+
+        public void setBankTotal(double bankTotal) {
+            this.bankTotal = bankTotal;
+        }
+
+        public double getMobileMoneyTotal() {
+            return mobileMoneyTotal;
+        }
+
+        public void setMobileMoneyTotal(double mobileMoneyTotal) {
+            this.mobileMoneyTotal = mobileMoneyTotal;
+        }
 
         public double getCashin() {
             return cashin;

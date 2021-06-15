@@ -101,7 +101,7 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
         return exampleFilter;
     }
 
-    private Filter exampleFilter = new Filter() {
+    private final Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CategoryDetails> filteredList = new ArrayList<>();
@@ -165,19 +165,15 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
                 // Navigate to Products Fragment
                 //fragment = new Products();
                 // Initialize Category_Products Fragment with specified arguments
-                fragment = new Category_Products();
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_categories,categoryInfo);
+
 
             } else {
                 // Navigate to SubCategories Fragment
-                fragment = new SubCategories_3();
+                WalletBuySellActivity.navController.navigate(R.id.action_walletBuyFragment_to_sub_categories,categoryInfo);
             }
 
-            fragment.setArguments(categoryInfo);
-            FragmentManager fragmentManager = ((WalletBuySellActivity) context).getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment2, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .addToBackStack(null).commit();
+
         }
     }
 }

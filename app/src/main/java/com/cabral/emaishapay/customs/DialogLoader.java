@@ -17,10 +17,10 @@ import com.cabral.emaishapay.R;
 
 public class DialogLoader {
 
-    private Context context;
+    private final Context context;
     private AlertDialog alertDialog;
     private AlertDialog.Builder dialog;
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
     public DialogLoader(Context context) {
         this.context = context;

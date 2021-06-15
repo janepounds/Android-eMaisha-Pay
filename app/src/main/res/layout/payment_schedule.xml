@@ -121,7 +121,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/josefin_sans"
                             android:paddingBottom="5dp"
                             android:text="UGX 0.0"
                             android:textAllCaps="true"
