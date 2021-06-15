@@ -167,7 +167,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
         cancel = rootView.findViewById(R.id.payments_cancel_btn);
         // Handle the Click event of checkout_cancel_btn Button
-        cancel.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
+        cancel.setOnClickListener(view -> WalletBuySellActivity.navController.popBackStack());
 
         if(getArguments()!=null){
             my_cart = (My_Cart) getArguments().getSerializable("my_cart");
@@ -430,6 +430,7 @@ public class PaymentMethodsFragment extends Fragment implements CardPaymentCallb
 
             }
         });
+
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

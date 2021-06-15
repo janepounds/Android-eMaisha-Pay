@@ -255,6 +255,9 @@ public class CheckoutFinal extends Fragment {
         setCheckoutTotal();
 
         binding.paymentMethod.setOnClickListener(v -> {
+            if(WalletBuySellActivity.navController.getCurrentDestination().getId()!=R.id.checkOutFinal)
+            Log.w("CurrentDestination", WalletBuySellActivity.navController.getCurrentDestination().getLabel()+"" );
+
             //go to payment method
             Bundle bundle = new Bundle();
             bundle.putSerializable("my_cart",my_cart);
@@ -269,6 +272,7 @@ public class CheckoutFinal extends Fragment {
             bundle.putSerializable("order_product_list", (ArrayList) orderProductList);
             bundle.putString("order_id",orderID);
             WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_paymentMethods,bundle);
+
 //            Fragment fragment = new PaymentMethodsFragment(my_cart, merchant_wallet_id, binding.checkoutShippingCharge.getText().toString(), checkoutTax, checkoutShipping,
 //                    checkoutDiscount, couponsList, checkoutSubtotal, checkoutTotal, orderProductList, orderID);
 //
@@ -807,11 +811,7 @@ public class CheckoutFinal extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("my_cart",my_cart);
                         bundle.putString("order_number",orderNumber);
-                        if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.paymentMethods){
-                            WalletBuySellActivity.navController.navigate(R.id.action_paymentMethods_to_thankYou,bundle);
-                        }else if(WalletBuySellActivity.navController.getCurrentDestination().getId()==R.id.checkOutFinal) {
-                            WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
-                        }
+                        WalletBuySellActivity.navController.navigate(R.id.action_checkOutFinal_to_thankYou, bundle);
                     }
                     else if (response.body().getSuccess().equalsIgnoreCase("0")) {
                         Snackbar.make(binding.paymentMethod, response.body().getMessage(), Snackbar.LENGTH_LONG).show();
