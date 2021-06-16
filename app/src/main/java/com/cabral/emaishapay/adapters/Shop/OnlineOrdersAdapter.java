@@ -115,8 +115,6 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("order_details", orderData.get(getAdapterPosition()));
-
-
             ShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment,bundle);
 
         }

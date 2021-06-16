@@ -2,28 +2,21 @@ package com.cabral.emaishapay.fragments.shop_fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
@@ -38,16 +31,15 @@ import java.util.List;
 
 public class ShopOrdersFragment extends Fragment {
 
-    private OnlineOrdersAdapter orderAdapter;
-    private Context context;
     FragmentShopOrdersBinding binding;
-    private ShopOrdersModelView viewModel;
     DialogLoader dialogLoader;
-
+    private Context context;
+    private OnlineOrdersAdapter orderAdapter;
+    private ShopOrdersModelView viewModel;
 
     @Override
     public void onAttach(@NonNull Context context) {
-        this.context=context;
+        this.context = context;
         super.onAttach(context);
     }
 
@@ -55,7 +47,7 @@ public class ShopOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding=DataBindingUtil.inflate(inflater,R.layout.fragment_shop_orders,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_orders, container, false);
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbarOrders);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setHomeButtonEnabled(false);
@@ -63,7 +55,7 @@ public class ShopOrdersFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.orders);
 
         dialogLoader = new DialogLoader(getContext());
-        return  binding.getRoot();
+        return binding.getRoot();
     }
 
     @Override
@@ -81,28 +73,18 @@ public class ShopOrdersFragment extends Fragment {
         subscribeToOrderList(viewModel.getOrderList());
 
         binding.etxtSearchOrder.addTextChangedListener(new TextWatcher() {
-
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 viewModel.setQuery(s);
-
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
+            public void afterTextChanged(Editable s) {}
 
         });
 
     }
-
 
 
     private void subscribeToOrderList(LiveData<Resource<List<ShopOrder>>> orders) {
@@ -112,7 +94,7 @@ public class ShopOrdersFragment extends Fragment {
                 binding.ordersRecycler.setVisibility(View.VISIBLE);
                 binding.imageNoProduct.setVisibility(View.GONE);
                 binding.txtNoProducts.setVisibility(View.GONE);
-                Log.d("debug", "Orders------->>>>"+myOrders.data.size());
+                Log.d("debug", "Orders------->>>>" + myOrders.data.size());
                 orderAdapter.setOrderList(myOrders.data);
             } else {
                 binding.imageNoProduct.setImageResource(R.drawable.ic_delivery_bike);
@@ -126,4 +108,4 @@ public class ShopOrdersFragment extends Fragment {
     }
 
 
-    }
+}

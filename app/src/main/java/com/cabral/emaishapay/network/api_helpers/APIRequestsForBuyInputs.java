@@ -359,6 +359,16 @@ public interface APIRequestsForBuyInputs {
                             @Field("currency_code") String currency_code);
 
     @FormUrlEncoded
+    @POST("getorders")
+    OrderData getPagedOrders(
+            @Header("Authorization") String token,
+            @Field("customers_id") String customers_id,
+            @Field("language_id") int language_id,
+            @Field("currency_code") String currency_code,
+            @Field("position") int position,
+            @Field("page_number") int page_number);
+
+    @FormUrlEncoded
     @POST("updatestatus")
     Call<OrderData> updatestatus(
                                 @Header("Authorization") String token,

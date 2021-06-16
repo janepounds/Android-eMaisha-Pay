@@ -63,7 +63,7 @@
                     app:layout_constraintGuide_percent="0.18" />
 
                 <ImageView
-                    android:id="@+id/buy_inputs_search_icon"
+                    android:id="@+id/order_search_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:padding="10dp"
