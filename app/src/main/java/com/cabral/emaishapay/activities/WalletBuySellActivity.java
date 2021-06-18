@@ -20,7 +20,6 @@ import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Orders;
 import com.cabral.emaishapay.fragments.buy_fragments.Shipping_Address;
 import com.cabral.emaishapay.fragments.buy_fragments.WalletBuyFragment;
-import com.cabral.emaishapay.fragments.sell_fragment.SellFragment;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
