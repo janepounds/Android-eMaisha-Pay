@@ -2,6 +2,7 @@ package com.cabral.emaishapay.network;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -380,14 +381,15 @@ public class DataRepository {
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
             @Override
             protected void saveCallResult(@NonNull List<EcProduct> productList) {
-
-               mEcProductsDao.addProduct(productList);
+                Log.w("SaveLocalProduct", "---->"+productList.get(0).getId()+productList.get(0).getProduct_id());
+                mEcProductsDao.addProduct(productList);
             }
 
             @NonNull
             @Override
             protected LiveData<List<EcProduct>> loadFromDb() {
                 if (TextUtils.isEmpty(key)) {
+                   // Log.w("loadLocalProduct", "---->"+mEcProductsDao.getProducts().getValue().size());
                     return mEcProductsDao.getProducts();
                 }
                 LiveData<List<EcProduct>> results = mEcProductsDao.getSearchProducts("*" + key + "*");

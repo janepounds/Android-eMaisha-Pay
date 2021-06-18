@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.LayoutScanAndPayProcessStep2Binding;

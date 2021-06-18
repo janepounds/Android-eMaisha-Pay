@@ -149,7 +149,7 @@ public class ShopProductsFragment extends Fragment {
             if(myProducts.data!=null && myProducts.data.size()!=0){
                 binding.imageNoProduct.setVisibility(View.GONE);
                 binding.shopProductRecyclerview.setVisibility(View.VISIBLE);
-                Log.d("debug","------->>>>"+myProducts.data.size());
+                Log.d("debugMJ","------->>>>"+myProducts.data.size());
                 productAdapter.setProductList( myProducts.data);
 
 

@@ -53,7 +53,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
