@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.MerchantShopActivity;
 import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
 import com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
@@ -90,10 +90,10 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 //                                if (delete_order) {
 //                                    Toasty.error(context, "Order Deleted", Toast.LENGTH_SHORT).show();
 //
-//                                    orderData.remove(holder.getAdapterPosition());
+//                                    orderData.remove(holder.getBindingAdapterPosition());
 //
 //                                    // Notify that item at position has been removed
-//                                    notifyItemRemoved(holder.getAdapterPosition());
+//                                    notifyItemRemoved(holder.getBindingAdapterPosition());
 //
 //                                } else {
 //                                    Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -181,9 +181,9 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
         @Override
         public void onClick(View view) {
             Bundle args = new Bundle();
-            args.putSerializable("salesDetails",orderData.get(getAdapterPosition()));
+            args.putSerializable("salesDetails",orderData.get(getBindingAdapterPosition()));
             //set total price
-            ShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
+            MerchantShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
         }
     }
 

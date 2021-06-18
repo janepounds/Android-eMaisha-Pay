@@ -1,6 +1,8 @@
+@file:JvmName("MerchantOrdersFragment")
 package com.cabral.emaishapay.fragments.shop_fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +28,7 @@ import kotlinx.coroutines.launch
 
 //MerchantOrdersFragment
 
-class MerchantOrdersFragment: Fragment() {
+class MerchantOrdersFragment : Fragment() {
     private lateinit var binding: FragmentShopOrdersBinding
     var dialogLoader: DialogLoader? = null
     private lateinit var viewModel: MerchantOrdersViewModel
@@ -39,22 +41,29 @@ class MerchantOrdersFragment: Fragment() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchOrders(query).collectLatest {
-                adapter.submitData(it)
+                if(it.javaClass.fields.size>0){
+                    binding.imageNoProduct.visibility = View.GONE
+                    binding.txtNoProducts.visibility = View.GONE
+                    adapter.submitData(it)
+                }
             }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentShopOrdersBinding.inflate(layoutInflater)
-        val wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
+        val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
         // get the view model
-        viewModel = ViewModelProvider(this, MerchantOrdersViewModel.ViewModelFactory( MerchantOrderRepository( Integer.parseInt(wallet_id)) ))
+        viewModel = ViewModelProvider(this, MerchantOrdersViewModel.ViewModelFactory( MerchantOrderRepository( Integer.parseInt(walletId)) ))
                 .get(MerchantOrdersViewModel::class.java)
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -64,10 +73,7 @@ class MerchantOrdersFragment: Fragment() {
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         search(query)
         initSearch(query)
-
-        return binding.root
     }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

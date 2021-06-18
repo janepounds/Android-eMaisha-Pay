@@ -41,6 +41,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
@@ -92,7 +93,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCES_USER_BALANCE = "0";
     public static final String PREFERENCES_WALLET_BUSINESS_ID = "business_id";
 
-    public static final String PREFERENCES_FILE_NAME = "UserInfo";
+    public static final String PREFERENCES_FILE_NAME = MyAppPrefsManager.PREF_NAME;
     public static final String PREFERENCES_FIRST_NAME = "firstname";
     public static final String PREFERENCES_LAST_NAME = "lastname";
     public static final String PREFERENCES_USER_EMAIL = "email";
@@ -402,7 +403,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     case R.id.walletShopFragment:
 
-                        Intent shop = new Intent(context, ShopActivity.class);
+                        Intent shop = new Intent(context, MerchantShopActivity.class);
                         shop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(shop);
 
@@ -778,9 +779,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     //select spinner by value
     public static void selectSpinnerItemByValue(Spinner spnr, String value) {
 
-        if (value == null) {
-            return;
-        }
+        if (value == null) return;
 
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) spnr.getAdapter();
         for (int position = 1; position < adapter.getCount(); position++) {
@@ -817,6 +816,7 @@ public class WalletHomeActivity extends AppCompatActivity{
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // this method is called when user
         // allows the permission to use camera.
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         try {
             if (grantResults.length > 0) {
                 boolean cameraaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
@@ -827,7 +827,7 @@ public class WalletHomeActivity extends AppCompatActivity{
                     Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show();
                 }
             }
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 

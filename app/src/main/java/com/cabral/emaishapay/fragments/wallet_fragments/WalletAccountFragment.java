@@ -526,13 +526,10 @@ public class WalletAccountFragment extends Fragment {
             layout_merchant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     alertDialog.dismiss();
                     Bundle bundle = new Bundle();
                     label_details = "Merchant Details";
                     bundle.putString("Merchant", label_details);
-
-
                     WalletHomeActivity.navController.navigate(R.id.action_walletAccountFragment2_to_businessAccountFragment,bundle);
                 }
             });
@@ -785,13 +782,11 @@ public class WalletAccountFragment extends Fragment {
                     if (binding.layoutEmploymentInfo.getVisibility() == View.VISIBLE) {
                         binding.chevronEmploymentDetails.setRotation(0);
                         binding.layoutEmploymentInfo.setVisibility(View.GONE);
-
                     }
 
                     if (binding.layoutBusinessInfo.getVisibility() == View.VISIBLE) {
                         binding.chevronBusinessInformation.setRotation(0);
                         binding.layoutBusinessInfo.setVisibility(View.GONE);
-
                     }
 
                     if (binding.layoutEmploymentBusinessInfoDetails.getVisibility() == View.VISIBLE) {
@@ -802,13 +797,10 @@ public class WalletAccountFragment extends Fragment {
                     if (binding.layoutIdInfoDetails.getVisibility() == View.VISIBLE) {
                         binding.chevronIdInformation.setRotation(0);
                         binding.layoutIdInfoDetails.setVisibility(View.GONE);
-
-
                     }
                     if(binding.layoutSecurityInfoDetails.getVisibility() == View.VISIBLE){
                         binding.chevronSecurity.setRotation(0);
                         binding.layoutSecurityInfoDetails.setVisibility(View.GONE);
-
                     }
 
                     logoutUser();

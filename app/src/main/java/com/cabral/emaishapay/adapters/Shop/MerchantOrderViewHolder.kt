@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cabral.emaishapay.R
 import com.cabral.emaishapay.activities.ShopActivity
 import com.cabral.emaishapay.models.order_model.OrderDetails
+import com.cabral.emaishapay.network.db.entities.ShopOrder
 
 /**
  * View Holder for an Order RecyclerView list item.
@@ -35,7 +36,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val txt_customer_address = view.findViewById<TextView?>(R.id.txt_order_customer_address)
     private val txt_order_status = view.findViewById<TextView?>(R.id.txt_order_status)
 
-    private var orderDetails: OrderDetails? = null
+    private var orderDetails: ShopOrder? = null
 
     init {
         view.setOnClickListener {
@@ -45,7 +46,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun bind(orderDetails: OrderDetails?) {
+    fun bind(orderDetails: ShopOrder?) {
         if (orderDetails == null) {
             val resources = itemView.resources
             if (txt_customer_name != null) {
@@ -62,17 +63,17 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    private fun showOrderData(orderDetails: OrderDetails) {
+    private fun showOrderData(orderDetails: ShopOrder) {
         this.orderDetails = orderDetails
 
         if (txt_customer_name != null) {
-            txt_customer_name.text = orderDetails.customersName.toString()
+            txt_customer_name.text = orderDetails.customer_name.toString()
         }
         if (txt_customer_address != null) {
-            txt_customer_address.text = orderDetails.customersStreetAddress.toString()
+            txt_customer_address.text = orderDetails.customer_address.toString()
         }
         if (txt_order_status != null) {
-            txt_order_status.text = orderDetails.ordersStatus
+            txt_order_status.text = orderDetails.order_status
         }
     }
 

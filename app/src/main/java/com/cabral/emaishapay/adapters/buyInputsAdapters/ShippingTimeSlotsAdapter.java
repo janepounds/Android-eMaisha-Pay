@@ -73,7 +73,7 @@ public class ShippingTimeSlotsAdapter extends RecyclerView.Adapter<ShippingTimeS
             @Override
             public void onClick(View view) {
                 if (mItemClickListener != null) {
-                    mItemClickListener.onItemClickListener(view, holder.getAdapterPosition(), timeSlotsLists.get(holder.getAdapterPosition()));
+                    mItemClickListener.onItemClickListener(view, holder.getBindingAdapterPosition(), timeSlotsLists.get(holder.getBindingAdapterPosition()));
 
 
                 }

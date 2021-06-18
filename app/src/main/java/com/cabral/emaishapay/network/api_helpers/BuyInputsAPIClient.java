@@ -82,10 +82,7 @@ public class BuyInputsAPIClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-
-            apiRequests = retrofit.create(APIRequestsForBuyInputs.class);
-
-            return apiRequests;
+            return retrofit.create(APIRequestsForBuyInputs.class);
         }
         else {
             return apiRequests;

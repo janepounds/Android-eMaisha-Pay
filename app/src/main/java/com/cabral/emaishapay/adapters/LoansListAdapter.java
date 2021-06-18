@@ -135,7 +135,7 @@ public class LoansListAdapter extends RecyclerView.Adapter<com.cabral.emaishapay
 
         @Override
         public void onClick(View v) {
-            LoanApplication transaction = dataList.get(getAdapterPosition());
+            LoanApplication transaction = dataList.get(getBindingAdapterPosition());
 
           //  NavController navController = Navigation.findNavController(v);
 

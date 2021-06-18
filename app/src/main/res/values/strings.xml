@@ -887,7 +887,7 @@
     <string-array name="spinner_accept_payments_methods">
         <item>Select</item>
         <item>eMaisha Pay</item>
-<!--        <item>Mobile Money</item>-->
+        <!--        <item>Mobile Money</item>-->
     </string-array>
 
     <string-array name="spinner_first_security_questions">
@@ -924,8 +924,8 @@ Before you use eMaisha Pay’s web/app payment and credit service, you must read
     <string name="change_pin">change pin</string>
     <string name="none">None</string>
 
-        <string name="loading">Loading</string>
-        <string name="no_results">No results 😓</string>
-        <string name="unknown">\?</string>
+    <string name="loading">Loading</string>
+    <string name="no_results">No results 😓</string>
+    <string name="unknown">\?</string>
 
 </resources>

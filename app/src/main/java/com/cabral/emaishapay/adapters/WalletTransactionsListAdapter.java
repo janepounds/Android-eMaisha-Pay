@@ -60,7 +60,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
         @Override
         public void onClick(View v) {
-            WalletTransactionResponse.TransactionData.Transactions transaction = dataList.get(getAdapterPosition());
+            WalletTransactionResponse.TransactionData.Transactions transaction = dataList.get(getBindingAdapterPosition());
             //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
             if (fm!=null ){
                 WalletTransactionsReceiptDialog walletTransactionsReceiptDialog = new WalletTransactionsReceiptDialog(transaction);

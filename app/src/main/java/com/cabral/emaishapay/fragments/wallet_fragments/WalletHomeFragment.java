@@ -35,6 +35,7 @@ import com.cabral.emaishapay.DailogFragments.DepositPayments;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
@@ -85,7 +86,7 @@ public class WalletHomeFragment extends Fragment {
         dialog = new DialogLoader(getContext());
 
         fm = requireActivity().getSupportFragmentManager();
-        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(MyAppPrefsManager.PREF_NAME, MODE_PRIVATE);
         NavHostFragment navHostFragment =
                 (NavHostFragment) fm.findFragmentById(R.id.wallet_home_container);
 

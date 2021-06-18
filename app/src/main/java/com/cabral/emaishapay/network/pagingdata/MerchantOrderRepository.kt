@@ -20,6 +20,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.cabral.emaishapay.models.order_model.OrderDetails
+import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
+import com.cabral.emaishapay.network.db.entities.ShopOrder
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -31,10 +33,10 @@ class MerchantOrderRepository(private val wallet_id: Int) {
      * fetch merchant orders, exposed as a stream of data that will emit
      * every time we get more data from the network.
      */
-    fun getMerchantOrdersResultStream(): Flow<PagingData<OrderDetails>> {
+    fun getMerchantOrdersResultStream(): Flow<PagingData<ShopOrder>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { MerchantOrderPagingSource(wallet_id) }
+            pagingSourceFactory = { MerchantOrderPagingSource(EmaishaShopAPIService.create(),wallet_id) }
         ).flow
     }
 

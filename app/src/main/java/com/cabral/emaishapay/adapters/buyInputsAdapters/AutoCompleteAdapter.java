@@ -204,7 +204,7 @@ public class AutoCompleteAdapter extends RecyclerView.Adapter<AutoCompleteAdapte
 
         @Override
         public void onClick(View v) {
-            PlaceAutocomplete item = mResultList.get(getAdapterPosition());
+            PlaceAutocomplete item = mResultList.get(getBindingAdapterPosition());
             if (v.getId() == R.id.place_item_view) {
 
                 String placeId = String.valueOf(item.placeId);

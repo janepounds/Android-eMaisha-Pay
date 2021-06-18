@@ -165,7 +165,7 @@ public class ProductAttributesAdapter extends RecyclerView.Adapter<ProductAttrib
         public void onClick(View v) {
             
             
-            Attribute productsAttribute = productAttributesList.get(getAdapterPosition());
+            Attribute productsAttribute = productAttributesList.get(getBindingAdapterPosition());
             
             final Option option = productsAttribute.getOption();
             final List<Value> attributeValuesList = productsAttribute.getValues();
@@ -235,20 +235,20 @@ public class ProductAttributesAdapter extends RecyclerView.Adapter<ProductAttrib
                     
                     
                     // Check if the Attribute is already exists in the SelectedAttributesList
-                    if (getAdapterPosition() < selectedAttributesList.size()) {
+                    if (getBindingAdapterPosition() < selectedAttributesList.size()) {
                         // Remove the Attribute from SelectedAttributesList
-                        selectedAttributesList.remove(getAdapterPosition());
+                        selectedAttributesList.remove(getBindingAdapterPosition());
                     }
                     
                     // Add the Attribute to the SelectedAttributesList
-                    selectedAttributesList.add(getAdapterPosition(), cartProductAttributes);
+                    selectedAttributesList.add(getBindingAdapterPosition(), cartProductAttributes);
                     
                     
                     // Add the Attribute's Price to the AttributePrices
-                    attributePrices[getAdapterPosition()] = valuePrefix + valuePrice;
+                    attributePrices[getBindingAdapterPosition()] = valuePrefix + valuePrice;
                     
                     // Add the Attribute's ID to the AttributeIDs
-                    attributeIDs[getAdapterPosition()] = valueID;
+                    attributeIDs[getBindingAdapterPosition()] = valueID;
                     
                     // Update Product's final Price in Product_Description Fragment from the method of Product_Description
                     product_description.updateProductPrice();

@@ -217,9 +217,9 @@ public class ProductAdapterRemovable extends RecyclerView.Adapter<ProductAdapter
                 }
             
                 // Remove Product from productList List
-                productList.remove(holder.getAdapterPosition());
+                productList.remove(holder.getBindingAdapterPosition());
             
-                notifyItemRemoved(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getBindingAdapterPosition());
             
                 // Update View
                 updateView(isRecents);

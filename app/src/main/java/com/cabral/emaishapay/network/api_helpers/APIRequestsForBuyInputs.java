@@ -66,82 +66,12 @@ import retrofit2.http.Query;
 
 public interface APIRequestsForBuyInputs {
 
-    //******************** User Data ********************//
-    @FormUrlEncoded
-    @POST("allnewscategories")
-    Call<NewsCategoryData> allNewsCategories(@Field("language_id") int language_id,
-                                             @Field("page_number") int page_number);
-
-    @FormUrlEncoded
-    @POST("getallnews")
-    Call<NewsData> getAllNews(@Field("language_id") int language_id,
-                              @Field("page_number") int page_number,
-                              @Field("is_feature") int is_feature,
-                              @Field("categories_id") String categories_id);
-
-    @Multipart
-    @POST("processregistration")
-    Call<UserData> processRegistration(
-            @Part("customers_firstname") RequestBody firstName,
-            @Part("customers_lastname") RequestBody lastName,
-            @Part("email") RequestBody email,
-            @Part("password") RequestBody password,
-            @Part("country_code") RequestBody countryCode,
-            @Part("customers_telephone") RequestBody phoneNumber,
-            @Part("addressStreet") RequestBody addressStreet,
-            @Part("addressCityOrTown") RequestBody addressCityOrTown,
-            @Part("address_district") RequestBody addressDistrict);
-
-    @FormUrlEncoded
-    @POST("processlogin")
-    Call<UserData> processLogin(@Field("email") String customers_email_address,
-                                @Field("password") String customers_password);
-
-    @FormUrlEncoded
-    @POST("facebookregistration")
-    Call<UserData> facebookRegistration(@Field("access_token") String access_token);
-
-    @FormUrlEncoded
-    @POST("googleregistration")
-    Call<UserData> googleRegistration(@Field("idToken") String idToken,
-                                      @Field("customers_id") String userId,
-                                      @Field("givenName") String givenName,
-                                      @Field("familyName") String familyName,
-                                      @Field("email") String email,
-                                      @Field("imageUrl") String imageUrl);
-
-    @FormUrlEncoded
-    @POST("processforgotpassword")
-    Call<UserData> processForgotPassword(@Field("email") String customers_email_address);
-
-    @FormUrlEncoded
-    @POST("updatecustomerinfo")
-    Call<UserData> updateCustomerInfo(@Field("customers_id") String customers_id,
-                                      @Field("customers_firstname") String customers_firstname,
-                                      @Field("customers_lastname") String customers_lastname,
-                                      @Field("customers_gender") String customers_gender,
-                                      @Field("customers_telephone") String customers_telephone,
-                                      @Field("customers_dob") String customers_dob,
-                                      @Field("image_id") String image_id);
-
-    //******************** Address Data ********************//
-    @POST("getcountries")
-    Call<Countries> getCountries();
-
-    @FormUrlEncoded
-    @POST("getzones")
-    Call<Zones> getZones(@Field("zone_country_id") String zone_country_id);
-
     @FormUrlEncoded
     @POST("getalladdress")
     Call<AddressData> getAllAddress(
             @Header("Authorization") String token,
             @Field("customers_id") String customers_id);
 
-
-    @FormUrlEncoded
-    @POST("getregions")
-    Call<Regions> getAllRegions(@Field("latest_id") int latest_id);
 
     @FormUrlEncoded
     @POST("addshippingaddress")
@@ -189,61 +119,6 @@ public interface APIRequestsForBuyInputs {
                                         @Header("Authorization") String token,
                                         @Field("customers_id") String customers_id,
                                         @Field("address_book_id") String address_book_id
-    );
-//Merchant shop methods from
-
-    @FormUrlEncoded
-    @POST("registerMerchant")
-    Call<ResponseBody> registerShop(
-            @Field("shop_name") String shop_name,
-            @Field("shop_contact") String shop_contact,
-            @Field("shop_email") String shop_email,
-            @Field("shop_address") String shop_address,
-            @Field("shop_currency") String shop_currency,
-            @Field("latitude") String latitude,
-            @Field("longitude") String longitude,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("loginMerchant")
-    Call<ResponseBody> loginShop(
-            @Field("shop_contact") String shop_contact,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
-    @POST("postCustomer")
-    Call<ResponseBody> postCustomer(
-            @Field("shop_id") Integer shop_id,
-            @Field("customer_id") String customer_id,
-            @Field("customer_name") String customer_name,
-            @Field("customer_cell") String customer_cell,
-            @Field("customer_email") String customer_email,
-            @Field("customer_address") String customer_address,
-            @Field("customer_address_two") String customer_address_two,
-            @Field("customer_image") String customer_image
-    );
-
-
-    @FormUrlEncoded
-    @POST("postExpenses")
-    Call<ResponseBody> postExpense(
-            @Field("shop_id") Integer shop_id,
-            @Field("expense_id") String expense_id,
-            @Field("expense_name") String expense_name,
-            @Field("expense_note") String expense_note,
-            @Field("expense_amount") String expense_amount,
-            @Field("expense_date") String expense_date,
-            @Field("expense_time") String expense_time
-    );
-
-    @FormUrlEncoded
-    @POST("postProductCategories")
-    Call<ResponseBody> postCategory(
-            @Field("shop_id") Integer shop_id,
-            @Field("category_id") String category_id,
-            @Field("category_name") String category_name
     );
 
     @FormUrlEncoded
@@ -382,56 +257,12 @@ public interface APIRequestsForBuyInputs {
             @Field("code") String code
     );
 
-    @FormUrlEncoded
-    @POST("getpaymentmethods")
-    Call<PaymentMethodsData> getPaymentMethods(@Field("language_id") int language_id);
-
-    @GET("getbanners")
-    Call<BannerData> getBanners(  @Header("Authorization") String token);
-
-    //******************** Tax & Shipping Data ********************//
-
-    @POST("getrate")
-    Call<ShippingRateData> getShippingMethodsAndTax(@Body PostTaxAndShippingData postTaxAndShippingData);
-
-    //******************** Contact Us Data ********************//
-
-    @FormUrlEncoded
-    @POST("contactus")
-    Call<ContactUsData> contactUs(@Field("name") String name,
-                                  @Field("email") String email,
-                                  @Field("message") String message);
-
     //******************** Languages Data ********************//
 
     @GET("getlanguages")
     Call<LanguageData> getLanguages(  @Header("Authorization") String token);
 
-    //******************** App Settings Data ********************//
 
-    @GET("sitesetting")
-    Call<AppSettingsData> getAppSetting();
-
-
-    //******************** Static Pages Data ********************//
-
-    @FormUrlEncoded
-    @POST("getallpages")
-    Call<PagesData> getStaticPages(@Field("language_id") int language_id);
-
-    //******************** Notifications Data ********************//
-
-    @FormUrlEncoded
-    @POST("registerdevices")
-    Call<UserData> registerDeviceToFCM(@Field("device_id") String device_id,
-                                       @Field("device_type") String device_type,
-                                       @Field("ram") String ram,
-                                       @Field("processor") String processor,
-                                       @Field("device_os") String device_os,
-                                       @Field("location") String location,
-                                       @Field("device_model") String device_model,
-                                       @Field("manufacturer") String manufacturer,
-                                       @Field("customers_id") String customers_id);
 
     @FormUrlEncoded
     @POST("notify_me")

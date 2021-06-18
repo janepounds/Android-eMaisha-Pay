@@ -32,6 +32,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.BuyInputsAddressBinding;
@@ -163,7 +164,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
         // Get the customersID and defaultAddressID from SharedPreferences
 
-        pref = requireContext().getSharedPreferences("UserInfo", requireContext().MODE_PRIVATE);
+        pref = requireContext().getSharedPreferences(MyAppPrefsManager.PREF_NAME, requireContext().MODE_PRIVATE);
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
 
 
@@ -541,7 +542,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
     public void addUserAddress(AddressDetails addressDetails, View v) {
 
 
-        final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
+        final String customers_default_address_id = getActivity().getSharedPreferences(MyAppPrefsManager.PREF_NAME, getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         String[] names = binding.name.getText().toString().trim().split(" ");
@@ -619,7 +620,7 @@ public class Shipping_Address extends Fragment implements GoogleApiClient.OnConn
 
     public void updateUserAddress(String addressID, AddressDetails addressDetails) {
 
-        final String customers_default_address_id = getActivity().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
+        final String customers_default_address_id = getActivity().getSharedPreferences(MyAppPrefsManager.PREF_NAME, getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
 
         String[] names = binding.name.getText().toString().trim().split(" ");
