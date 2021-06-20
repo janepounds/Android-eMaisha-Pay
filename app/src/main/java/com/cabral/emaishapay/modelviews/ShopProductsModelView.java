@@ -107,7 +107,6 @@ public class ShopProductsModelView extends AndroidViewModel {
 
 
     public LiveData<Resource<List<EcProduct>>> getMerchantProducts() {
-
         return repositorySource;
     }
 

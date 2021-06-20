@@ -1,5 +1,8 @@
 package com.cabral.emaishapay.activities;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.databinding.ActivityShopBinding;
 
 import com.cabral.emaishapay.network.StartAppRequests;
+import com.cabral.emaishapay.services.SyncJobService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +36,7 @@ public class ShopActivity extends AppCompatActivity {
     ActivityShopBinding binding;
     public  static NavController navController;
     public  static BottomNavigationView bottomNavigationView;
+    private String TAG ="ShopActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,5 +131,7 @@ public class ShopActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 
 }

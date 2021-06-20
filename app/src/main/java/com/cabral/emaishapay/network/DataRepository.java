@@ -389,7 +389,7 @@ public class DataRepository {
             @Override
             protected LiveData<List<EcProduct>> loadFromDb() {
                 if (TextUtils.isEmpty(key)) {
-                   // Log.w("loadLocalProduct", "---->"+mEcProductsDao.getProducts().getValue().size());
+
                     return mEcProductsDao.getProducts();
                 }
                 LiveData<List<EcProduct>> results = mEcProductsDao.getSearchProducts("*" + key + "*");
