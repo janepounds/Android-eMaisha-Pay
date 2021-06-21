@@ -163,7 +163,7 @@
                         android:hint="e.g 40,000"
                         android:background="@drawable/edittext_corner"
                         android:textSize="14dp"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:inputType="numberDecimal"
                         android:paddingLeft="@dimen/dimen_15sp"
                         />
@@ -185,8 +185,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_marginRight="@dimen/margin_10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_corners_button"
             android:gravity="right"

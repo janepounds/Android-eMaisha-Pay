@@ -32,12 +32,12 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="?actionBarSize"
                     android:orientation="vertical"
-                    android:padding="@dimen/margin_15">
+                    android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="start"
                         android:text="Business Name"
                         android:textColor="@color/textColor"
@@ -73,7 +73,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:text="Registration No."
                         android:textColor="@color/textColor"
@@ -202,7 +202,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="start"
                         android:text="Proprietor Name"
                         android:textColor="@color/textColor"
@@ -238,7 +238,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:text="Proprietor NIN"
                         android:textColor="@color/textColor"
@@ -358,7 +358,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:text="Shop Location"
                         android:textColor="@color/textColor"

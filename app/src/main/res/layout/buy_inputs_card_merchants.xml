@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginStart="@dimen/margin_10dp"
     android:layout_marginTop="@dimen/dimen_5dp"
-    android:layout_marginEnd="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_10dp"
     android:layout_marginBottom="@dimen/dimen_5dp"
     android:background="@color/White"
     app:cardCornerRadius="3dp">
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Home"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Kampala, 9B Kawaala Rd, Kampala"
@@ -89,14 +89,14 @@
             android:id="@+id/product_order_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_10" />
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginEnd="@dimen/margin_10dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginEnd="@dimen/margin_10dp"
             android:background="@android:color/white"
             android:orientation="horizontal"
             android:padding="@dimen/dimen_10dp">

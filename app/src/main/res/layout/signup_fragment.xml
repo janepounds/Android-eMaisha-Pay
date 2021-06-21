@@ -796,7 +796,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_signin"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_marginTop="@dimen/margin_15dp"
                     android:gravity="center"
                     android:visibility="gone">
 

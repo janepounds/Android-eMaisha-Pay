@@ -134,7 +134,7 @@
                     android:id="@+id/txtv_maximum"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10dp"
                     android:layout_weight="0.5"
                     android:gravity="end"
                     android:text="UGX 80000"
