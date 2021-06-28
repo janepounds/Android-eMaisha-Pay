@@ -17,6 +17,51 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:fontFamily">@font/nunito</item>
     </style>
+    <style name="buttonsInFrameLayout" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textAppearance_text_views" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+    </style>
+
+    <style name="titleTextViews" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/dimen_18sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="dialogTitleTextViews" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="rightUnitsTextViews" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/edittext_right_corners_green</item>
+        <item name="android:layout_weight">0.2</item>
+    </style>
+
+    <style name="editTextViews" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:background">@drawable/outline_primary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">@dimen/dimen_10dp</item>
+    </style>
+    <style name="spinnerWithinLayout" parent="Widget.AppCompat.Spinner">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:spinnerMode">dropdown</item>
+    </style>
 
     <style name="MyPopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="android:fontFamily">@font/nunito</item>
@@ -299,4 +344,5 @@
     </style>
 
 
+    <dimen name="dimen_18sp">18sp</dimen>
 </resources>

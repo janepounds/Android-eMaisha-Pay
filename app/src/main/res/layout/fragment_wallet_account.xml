@@ -1349,7 +1349,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_20dp"
-                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:layout_marginEnd="@dimen/dimen_20dp"
                         android:layout_marginBottom="@dimen/dimen_20dp"
                         app:cardCornerRadius="@dimen/dimen_10dp"

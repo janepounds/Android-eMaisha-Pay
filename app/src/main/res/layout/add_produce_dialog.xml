@@ -32,12 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight=".1"
-                    android:gravity="center"
                     android:text="Add Produce"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"/>
+                    style="@style/dialogTitleTextViews"/>
                 <ImageView
                     android:id="@+id/produce_close"
                     android:layout_width="match_parent"
@@ -68,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/crop"
-                        android:textSize="@dimen/dimen_16sp" />
+                        style="@style/textAppearance_text_views"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -82,12 +78,8 @@
                             android:id="@+id/produce_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center"
-                            android:background="@android:color/transparent"
                             android:entries="@array/crop_add_produce"
-                            android:gravity="center"
-                            android:spinnerMode="dropdown" />
+                            style="@style/spinnerWithinLayout"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -114,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/variety"
-                        android:textSize="@dimen/dimen_16sp" />
+                        style="@style/textAppearance_text_views"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -142,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:orientation="horizontal">
 
@@ -156,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/units"
-                        android:textSize="@dimen/dimen_16sp" />
+                        style="@style/textAppearance_text_views"/>
 
 
                     <RelativeLayout
@@ -171,12 +163,8 @@
                             android:id="@+id/produce_quantity_unit"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center"
-                            android:background="@android:color/transparent"
                             android:entries="@array/crop_quantity_unit"
-                            android:gravity="center"
-                            android:spinnerMode="dropdown" />
+                            style="@style/spinnerWithinLayout"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -202,8 +190,8 @@
                         android:text="Quantity Available"
                         android:layout_marginStart="@dimen/dimen_20dp"
                         android:layout_marginEnd="@dimen/dimen_20dp"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:textSize="@dimen/dimen_16sp" />
+                        android:layout_marginTop="@dimen/margin_15dp"
+                        style="@style/textAppearance_text_views"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -225,14 +213,10 @@
                 <TextView
                     android:id="@+id/produce_quantity_measure"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:background="@drawable/edittext_right_corners_green"
-                    android:gravity="center"
-                    android:text="Kg"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:text="@string/units"
+                    style="@style/rightUnitsTextViews"/>
 
             </LinearLayout>
             <TextView
@@ -242,8 +226,8 @@
                 android:text="Price Per Unit"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/margin_15"
-                android:textSize="@dimen/dimen_16sp" />
+                android:layout_marginTop="@dimen/margin_15dp"
+                style="@style/textAppearance_text_views" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -266,12 +250,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:background="@drawable/edittext_right_corners_green"
-                    android:gravity="center"
-                    android:text="UGX"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/currency"
+                    style="@style/rightUnitsTextViews"/>
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -304,7 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/dimen_20dp"
                 android:paddingStart="20dp"
@@ -315,15 +295,11 @@
 
                 <Button
                     android:id="@+id/produce_submit_button"
-                    style="@style/Button"
+                    style="@style/buttonsInFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
                     android:text="@string/submit"
-                    android:textAllCaps="true"
-                    android:textColor="#ffffff"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                     />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/edit_buttons"
