@@ -381,7 +381,7 @@ public class DataRepository {
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
             @Override
             protected void saveCallResult(@NonNull List<EcProduct> productList) {
-                Log.w("SaveLocalProduct", "---->"+productList.get(0).getId()+productList.get(0).getProduct_id());
+                //  Log.w("SaveLocalProduct", "---->"+productList.get(0).getId()+productList.get(0).getProduct_id());
                 mEcProductsDao.addProduct(productList);
             }
 
