@@ -423,7 +423,7 @@ public class WalletHomeActivity extends AppCompatActivity{
 
                     case R.id.walletShopFragment:
 
-                        Intent shop = new Intent(context, ShopActivity.class);
+                        Intent shop = new Intent(context, MerchantShopActivity.class);
                         shop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(shop);
 

@@ -135,7 +135,7 @@ interface EmaishaShopAPIService {
             @Path("wallet_id") id: Int,
             @Path("page") page: Int,
             @Path("per_page") per_page: Int
-    ): MerchantOdersResponse
+    ): List<ShopOrder> = emptyList()
 
     @FormUrlEncoded
     @POST("updatestatus_merchant")

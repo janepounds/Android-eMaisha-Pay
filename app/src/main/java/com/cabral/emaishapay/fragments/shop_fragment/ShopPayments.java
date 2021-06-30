@@ -24,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,7 +46,7 @@ import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.AuthActivity;
-import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.MerchantShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.OtpDialogLoader;
@@ -132,7 +131,7 @@ public class ShopPayments extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View rootView = inflater.inflate(R.layout.fragment_payment_methods, container, false);
-        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
         this.chargeAmount=getArguments().getDouble("Charge");
         toolbar = rootView.findViewById(R.id.toolbar_payment_methods);
 
@@ -209,7 +208,7 @@ public class ShopPayments extends Fragment implements
             eMaishaPayLayout.setVisibility(View.GONE);
         });
         cancel.setOnClickListener(v -> {
-            ShopActivity.navController.popBackStack();});
+            MerchantShopActivity.navController.popBackStack();});
 
 
         spinner_select_card.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

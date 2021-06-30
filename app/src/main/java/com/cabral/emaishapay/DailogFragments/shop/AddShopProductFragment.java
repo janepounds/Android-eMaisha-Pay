@@ -990,7 +990,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                 AddShopProductFragment.this.dismiss();
                                                 Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
-                                                //Intent intent = new Intent(getContext(), ShopActivity.class);
+                                                //Intent intent = new Intent(getContext(), MerchantShopActivity.class);
                                                 //startActivity(intent);
                                                 // finish();
                                             } else {
