@@ -176,7 +176,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
 
         holder.binding.executePendingBindings();
-        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
+        //Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
 
     }
 

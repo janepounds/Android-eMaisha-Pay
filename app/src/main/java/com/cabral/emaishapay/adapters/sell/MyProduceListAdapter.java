@@ -44,7 +44,7 @@ import static android.content.ContentValues.TAG;
 
 public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdapter.MyProduceListViewHolder> {
     Context context;
-    private final ArrayList<MyProduce> myProduceArrayList;
+//    private final ArrayList<MyProduce> myProduceArrayList;
     private final WeakReference<MyProduceFragment> fragmentReference;
     FragmentManager fm;
     Dialog dialog;
@@ -71,7 +71,7 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
 
     public MyProduceListAdapter(Context context, WeakReference<MyProduceFragment> fragmentReference) {
         this.context = context;
-        this.myProduceArrayList = fragmentReference.get().produceList;
+//        this.myProduceArrayList = fragmentReference.get().produceList;
         this.fragmentReference=fragmentReference;
     }
 
@@ -85,29 +85,29 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyProduceListViewHolder holder, int position) {
-        MyProduce myProduce = myProduceArrayList.get(position);
+//        MyProduce myProduce = myProduceArrayList.get(position);
 
-        holder.name.setText(myProduce.getName());
-        holder.variety.setText(myProduce.getVariety());
-        holder.quantity.setText(myProduce.getQuantity());
-        holder.price.setText(myProduce.getPrice());
-        holder.date.setText(myProduce.getDate());
-
-        Glide.with(context).load(Base64.decode(myProduce.getImage(), Base64.DEFAULT)).into(holder.image);
-
-        holder.produceCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editMyProduce(myProduce);
-            }
-        });
+//        holder.name.setText(myProduce.getName());
+//        holder.variety.setText(myProduce.getVariety());
+//        holder.quantity.setText(myProduce.getQuantity());
+//        holder.price.setText(myProduce.getPrice());
+//        holder.date.setText(myProduce.getDate());
+//
+//        Glide.with(context).load(Base64.decode(myProduce.getImage(), Base64.DEFAULT)).into(holder.image);
+//
+//        holder.produceCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                editMyProduce(myProduce);
+//            }
+//        });
 
 
     }
 
     @Override
     public int getItemCount() {
-        return myProduceArrayList.size();
+        return 0;
     }
 
     private void editMyProduce(MyProduce myProduce) {
@@ -240,7 +240,7 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
                         Toast.makeText(context, ""+exception.getMessage(), Toast.LENGTH_SHORT).show();
                     }finally {
                         dialog.dismiss();
-                        fragmentReference.get().getAllProduce();
+//                        fragmentReference.get().getAllProduce();
                     }
                 }
             }

@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
@@ -60,7 +60,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
         ((AppCompatActivity)requireActivity()). getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.order_details);
-        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
 
         if (getArguments() != null) {
             this.shopOrderDetails= (ShopOrder) getArguments().getSerializable("order_details");
@@ -127,7 +127,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                         binding.rejectApproveLayout.setVisibility(View.GONE);
                                                         binding.cancelDeliveredLayout.setVisibility(View.GONE);
                                                         dialogLoader.hideProgressDialog();
-                                                        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                         binding.txtApproveOnline.setVisibility(View.GONE);
                                                         binding.txtDeliveredOnline.setVisibility(View.GONE);
                                                         Toasty.success(getContext(), "Order Succesfully Delivered", Toast.LENGTH_SHORT).show();
@@ -251,7 +251,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                                 binding.txtOnlineOrderStatus.setText("Cancelled");
                                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
                                                                 alertDialog.cancel();
-                                                                MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                                 Toasty.success(getContext(), "Order Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                             } else {
 
@@ -315,7 +315,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                 binding.txtOnlineOrderStatus.setText("Approved");
                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
                                                 dialogLoader.hideProgressDialog();
-                                                MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                 binding.txtApproveOnline.setVisibility(View.GONE);
                                                 Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
                                             } else {
@@ -359,7 +359,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
         super.onResume();
     }
 }

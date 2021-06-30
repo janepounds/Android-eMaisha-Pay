@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
 import com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
@@ -183,7 +183,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             Bundle args = new Bundle();
             args.putSerializable("salesDetails",orderData.get(getBindingAdapterPosition()));
             //set total price
-            MerchantShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
+            ShopActivity.navController.navigate(R.id.action_shopSalesFragment_to_salesDetailsFragment,args);
         }
     }
 

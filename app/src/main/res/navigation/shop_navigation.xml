@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/shopOrdersFragment"
-        android:name="com.cabral.emaishapay.fragments.shop_fragment.MerchantOrdersFragment"
-        android:label="MerchantOrdersFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopOrdersFragment"
+        android:label="ShopOrdersFragment"
         tools:layout="@layout/fragment_shop_orders" >
         <action
             android:id="@+id/action_shopOrdersFragment_to_onlineOrderDetailsFragment"

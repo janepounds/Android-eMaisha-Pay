@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cabral.emaishapay">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -23,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".activities.MerchantShopActivity"></activity>
+        <activity android:name=".activities.MerchantShopActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -84,8 +85,10 @@
             </intent-filter>
         </service>
         <service
-            android:name=".services.SyncService"
-            android:enabled="true"></service>
+            android:name=".services.SyncJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
+
     </application>
 
 </manifest>

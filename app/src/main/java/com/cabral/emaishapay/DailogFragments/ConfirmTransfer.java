@@ -60,9 +60,8 @@ public class ConfirmTransfer extends DialogFragment {
     public ConfirmTransfer( String businessName){
         this.businessName=businessName;
     }
-    public ConfirmTransfer( ){
+    public ConfirmTransfer(){ }
 
-    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -137,7 +136,12 @@ public class ConfirmTransfer extends DialogFragment {
         currentDateandTime = localFormat.format(new Date());
 
         datetimeTextView.setText(currentDateandTime);
-        receiverPhoneNumber.setText(phoneNumber);
+        if( methodOfTransfer.equalsIgnoreCase("Bank") ){
+            receiverPhoneNumber.setText(account_number);
+            receiverLabel.setText(getString(R.string.account_number));
+        }else{
+            receiverPhoneNumber.setText(phoneNumber);
+        }
 
         dialogLoader=new DialogLoader(context);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +210,6 @@ public class ConfirmTransfer extends DialogFragment {
         }else if(methodOfTransfer.equalsIgnoreCase("Bank")) {
             receiverNameTextView.setText(beneficiary_name);
             receiverPhoneNumber.setText(beneficiary_bank_phone_number);
-//            receiverPhoneNumber.setVisibility(View.GONE);
         }
 
     }
@@ -282,7 +285,7 @@ public class ConfirmTransfer extends DialogFragment {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                Intent goToWallet = new Intent(context, WalletHomeActivity.class);
+                                Intent goToWallet = new Intent(getActivity(), WalletHomeActivity.class);
                                 startActivity(goToWallet);
                             }
                         });
@@ -292,6 +295,7 @@ public class ConfirmTransfer extends DialogFragment {
                     }
 
                 } else if (response.code() == 401) {
+                    ConfirmTransfer.this.dismiss();
                     TokenAuthFragment.startAuth(true);
                     dialogPIN.dismiss();
 

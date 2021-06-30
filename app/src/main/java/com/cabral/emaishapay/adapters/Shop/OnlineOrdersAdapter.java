@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.activities.ShopActivity;
 import com.cabral.emaishapay.network.db.entities.ShopOrder;
 
 import java.util.List;
@@ -115,7 +115,7 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("order_details", orderData.get(getBindingAdapterPosition()));
-            MerchantShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment,bundle);
+            ShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment,bundle);
 
         }
             

@@ -157,7 +157,7 @@ public interface APIRequestsForBuyInputs {
             @Path("wallet_id") String id
     );
 
-    @GET("getEMaishaAppOrders/{wallet_id}")
+    @GET("getMerchantOrders/{wallet_id}")
     Call<List<ShopOrder>> getOrders(
             @Path("wallet_id") String id
     );

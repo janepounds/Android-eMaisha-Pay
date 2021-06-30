@@ -1,11 +1,16 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +55,7 @@ public class BusinessInformationFragment extends Fragment {
     private String encodedTradeLicence;
     private ImageView imageView;
     DialogLoader dialogLoader;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     public BusinessInformationFragment(){}
 
@@ -68,6 +74,41 @@ public class BusinessInformationFragment extends Fragment {
         dialogLoader = new DialogLoader(getContext());
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        // There are no request codes
+                        showActivityResult(result);
+
+                    }
+                });
+    }
+
+    private void showActivityResult(ActivityResult result) {
+
+        Intent data = result.getData();
+        Bitmap imageBitmap;
+
+        imageBitmap = BitmapFactory.decodeFile(data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH));
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] b = byteArrayOutputStream.toByteArray();
+
+        if (imageView == binding.registrationCertificate) {
+            encodedRegistrationCertificate = Base64.encodeToString(b, Base64.DEFAULT);
+            Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedRegistrationCertificate, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.registrationCertificate);
+        } else if (imageView == binding.tradeLicense) {
+            encodedTradeLicence = Base64.encodeToString(b, Base64.DEFAULT);
+            Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedTradeLicence, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.tradeLicense);
+        }
+
     }
 
     @Override
@@ -126,30 +167,10 @@ public class BusinessInformationFragment extends Fragment {
         intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
-        startActivityForResult(intent, 1);
+        activityResultLauncher.launch(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
-            Bitmap imageBitmap;
-
-            imageBitmap = BitmapFactory.decodeFile(data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH));
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte[] b = byteArrayOutputStream.toByteArray();
-
-            if (imageView == binding.registrationCertificate) {
-                encodedRegistrationCertificate = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedRegistrationCertificate, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.registrationCertificate);
-            } else if (imageView == binding.tradeLicense) {
-                encodedTradeLicence = Base64.encodeToString(b, Base64.DEFAULT);
-                Glide.with(requireContext()).asBitmap().load(Base64.decode(encodedTradeLicence, Base64.DEFAULT)).placeholder(R.drawable.user).into(binding.tradeLicense);
-            }
-        }
-    }
 
     public void saveInfo() {
         dialogLoader.showProgressDialog();
