@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cabral.emaishapay.R
-import com.cabral.emaishapay.activities.ShopActivity
+import com.cabral.emaishapay.activities.MerchantShopActivity
 import com.cabral.emaishapay.network.db.entities.MerchantOrder
 
 /**
@@ -41,7 +41,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         view.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("order_details", orderDetails)
-            ShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment, bundle)
+            MerchantShopActivity.navController.navigate(R.id.action_shopOrdersFragment_to_onlineOrderDetailsFragment, bundle)
         }
     }
 

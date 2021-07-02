@@ -49,7 +49,7 @@ class MerchantShopActivity : AppCompatActivity() {
             }
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (ShopActivity.bottomNavigationView != null) {
+            if (bottomNavigationView != null) {
                 if (destination.id == R.id.shopPOSFragment || destination.id == R.id.shopProductsFragment || destination.id == R.id.shopOrdersFragment || destination.id == R.id.shopSalesFragment) {
                     bottomNavigationView.visibility = View.VISIBLE
                 } else {

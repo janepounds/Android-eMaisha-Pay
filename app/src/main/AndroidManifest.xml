@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".activities.MerchantShopActivity" />
+
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -70,7 +70,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ShopActivity"
+            android:name=".activities.MerchantShopActivity"
             android:configChanges="orientation"
             android:label="Shop"
             android:screenOrientation="portrait"
