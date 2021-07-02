@@ -27,7 +27,7 @@ import com.cabral.emaishapay.models.shop_model.ProductResponse
 import com.cabral.emaishapay.models.uploadimage.UploadImageModel
 import com.cabral.emaishapay.models.user_model.UserData
 import com.cabral.emaishapay.network.db.entities.EcProduct
-import com.cabral.emaishapay.network.db.entities.ShopOrder
+import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import com.cabral.emaishapay.utils.Utilities
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -135,7 +135,7 @@ interface EmaishaShopAPIService {
             @Path("wallet_id") id: Int,
             @Path("page") page: Int,
             @Path("per_page") per_page: Int
-    ): List<ShopOrder> = emptyList()
+    ): List<MerchantOrder> = emptyList()
 
     @FormUrlEncoded
     @POST("updatestatus_merchant")

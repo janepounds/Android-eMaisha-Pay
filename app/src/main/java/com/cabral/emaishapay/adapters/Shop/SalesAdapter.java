@@ -20,7 +20,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.MerchantShopActivity;
 import com.cabral.emaishapay.databinding.OrderSalesItemBinding;
 import com.cabral.emaishapay.fragments.shop_fragment.SalesDetailsFragment;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
 
@@ -147,8 +147,8 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ShopOrder newOrder = orderSales.get(newItemPosition).shopOrder;
-                    ShopOrder oldOrder = orderData.get(oldItemPosition).shopOrder;
+                    MerchantOrder newOrder = orderSales.get(newItemPosition).shopOrder;
+                    MerchantOrder oldOrder = orderData.get(oldItemPosition).shopOrder;
                     return newOrder.getOrder_id() == oldOrder.getOrder_id()
                             && TextUtils.equals(newOrder.getCustomer_name(), oldOrder.getCustomer_name())
                             && TextUtils.equals(newOrder.getOrder_type(), oldOrder.getOrder_type())

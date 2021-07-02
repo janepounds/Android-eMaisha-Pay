@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.MerchantShopActivity;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 
 import java.util.List;
 
 public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapter.MyViewHolder> {
     Context context;
-    private List<ShopOrder> orderData;
+    private List<MerchantOrder> orderData;
 
     public OnlineOrdersAdapter(Context context) {
         this.context = context;
@@ -52,7 +52,7 @@ public class OnlineOrdersAdapter extends RecyclerView.Adapter<OnlineOrdersAdapte
         return orderData==null? 0 : orderData.size();
     }
 
-    public void setOrderList(List<ShopOrder> shopOrderLists) {
+    public void setOrderList(List<MerchantOrder> shopOrderLists) {
         if ( this.orderData== null) {
             this.orderData =  shopOrderLists;
             notifyItemRangeInserted(0, shopOrderLists.size());

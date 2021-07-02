@@ -24,8 +24,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cabral.emaishapay.R
 import com.cabral.emaishapay.activities.ShopActivity
-import com.cabral.emaishapay.models.order_model.OrderDetails
-import com.cabral.emaishapay.network.db.entities.ShopOrder
+import com.cabral.emaishapay.network.db.entities.MerchantOrder
 
 /**
  * View Holder for an Order RecyclerView list item.
@@ -36,7 +35,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val txt_customer_address = view.findViewById<TextView?>(R.id.txt_order_customer_address)
     private val txt_order_status = view.findViewById<TextView?>(R.id.txt_order_status)
 
-    private var orderDetails: ShopOrder? = null
+    private var orderDetails: MerchantOrder? = null
 
     init {
         view.setOnClickListener {
@@ -46,7 +45,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun bind(orderDetails: ShopOrder?) {
+    fun bind(orderDetails: MerchantOrder?) {
         if (orderDetails == null) {
             val resources = itemView.resources
             if (txt_customer_name != null) {
@@ -63,7 +62,7 @@ class MerchantOrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    private fun showOrderData(orderDetails: ShopOrder) {
+    private fun showOrderData(orderDetails: MerchantOrder) {
         this.orderDetails = orderDetails
 
         if (txt_customer_name != null) {

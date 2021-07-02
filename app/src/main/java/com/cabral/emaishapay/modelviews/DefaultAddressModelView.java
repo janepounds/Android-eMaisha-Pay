@@ -5,16 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.db.entities.DefaultAddress;
-import com.cabral.emaishapay.network.db.entities.EcManufacturer;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
-import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
 

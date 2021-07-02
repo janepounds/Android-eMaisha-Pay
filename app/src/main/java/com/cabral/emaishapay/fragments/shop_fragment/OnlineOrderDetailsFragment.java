@@ -27,10 +27,9 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
-import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -45,7 +44,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
     double total_price;
     FragmentOnlineOrderDetailsBinding binding;
     private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
-    ShopOrder shopOrderDetails;
+    MerchantOrder shopOrderDetails;
     private ShopOrdersModelView viewModel;
     DialogLoader dialogLoader;
 
@@ -63,7 +62,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
         MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
 
         if (getArguments() != null) {
-            this.shopOrderDetails= (ShopOrder) getArguments().getSerializable("order_details");
+            this.shopOrderDetails= (MerchantOrder) getArguments().getSerializable("order_details");
             order_id =shopOrderDetails.getOrder_id();
             customer_name = shopOrderDetails.getCustomer_name();
             customer_email = shopOrderDetails.getCustomer_email();

@@ -23,7 +23,7 @@ import com.cabral.emaishapay.adapters.Shop.OnlineOrdersAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentShopOrdersBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
@@ -87,7 +87,7 @@ public class ShopOrdersFragment extends Fragment {
     }
 
 
-    private void subscribeToOrderList(LiveData<Resource<List<ShopOrder>>> orders) {
+    private void subscribeToOrderList(LiveData<Resource<List<MerchantOrder>>> orders) {
         orders.observe(getViewLifecycleOwner(), myOrders -> {
 
             if (myOrders.data != null && myOrders.data.size() > 0) {

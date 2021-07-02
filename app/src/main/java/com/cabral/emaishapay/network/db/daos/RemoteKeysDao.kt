@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.codelabs.paging.db
+package com.cabral.emaishapay.network.db.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.cabral.emaishapay.network.db.entities.RemoteKeys
 
 @Dao
 interface RemoteKeysDao {
@@ -27,8 +28,8 @@ interface RemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKey: List<RemoteKeys>)
 
-    @Query("SELECT * FROM remote_keys WHERE repoId = :repoId")
-    suspend fun remoteKeysRepoId(repoId: Long): RemoteKeys?
+    @Query("SELECT * FROM remote_keys WHERE id = :orderId")
+    suspend fun remoteKeysOrderId(orderId: Int): RemoteKeys?
 
     @Query("DELETE FROM remote_keys")
     suspend fun clearRemoteKeys()

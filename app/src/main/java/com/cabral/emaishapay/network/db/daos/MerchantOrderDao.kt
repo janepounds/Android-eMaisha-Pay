@@ -14,29 +14,23 @@
  * limitations under the License.
  */
 
-package com.example.android.codelabs.paging.db
+package com.cabral.emaishapay.network.db.daos
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.android.codelabs.paging.model.Repo
+import androidx.room.*
+import com.cabral.emaishapay.network.db.entities.MerchantOrder
 
 @Dao
-interface RepoDao {
+interface MerchantOrderDao {
+
+    @Query("SELECT * FROM ShopOrder ORDER BY order_id DESC")
+    fun getOrderList(): PagingSource< Int, MerchantOrder>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(repos: List<Repo>)
+    suspend fun insertAll(orderList: List<MerchantOrder>)
 
-    @Query(
-        "SELECT * FROM repos WHERE " +
-            "name LIKE :queryString OR description LIKE :queryString " +
-            "ORDER BY stars DESC, name ASC"
-    )
-    fun reposByName(queryString: String): PagingSource<Int, Repo>
 
-    @Query("DELETE FROM repos")
-    suspend fun clearRepos()
+    @Query("DELETE  FROM ShopOrder")
+    suspend fun clearOrders()
 
 }

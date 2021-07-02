@@ -7,10 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
-import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
-import com.cabral.emaishapay.utils.Resource;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public interface ShopOrderDao {
 
     //insert order
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addOrder(ShopOrder orderList);
+    void addOrder(MerchantOrder orderList);
 
     //get order id
     @Query("SELECT order_id FROM ShopOrder WHERE order_id=:id")
@@ -36,7 +34,7 @@ public interface ShopOrderDao {
 
     //search order
     @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
-    LiveData<List<ShopOrder>> searchOrderList(String s);
+    LiveData<List<MerchantOrder>> searchOrderList(String s);
 
     //get all sales item
     //get order list

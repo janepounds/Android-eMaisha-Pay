@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package com.example.android.codelabs.paging.data
+package com.cabral.emaishapay.network.pagingdata
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.android.codelabs.paging.api.GithubService
-import com.example.android.codelabs.paging.api.IN_QUALIFIER
-import com.example.android.codelabs.paging.db.RemoteKeys
-import com.example.android.codelabs.paging.db.RepoDatabase
-import com.example.android.codelabs.paging.model.Repo
+import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
+import com.cabral.emaishapay.network.db.EmaishapayDb
+import com.cabral.emaishapay.network.db.entities.MerchantOrder
+import com.cabral.emaishapay.network.db.entities.RemoteKeys
 import retrofit2.HttpException
 import java.io.IOException
 
 // GitHub page API is 1 based: https://developer.github.com/v3/#pagination
-private const val GITHUB_STARTING_PAGE_INDEX = 1
+private const val STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
-class GithubRemoteMediator(
-    private val query: String,
-    private val service: GithubService,
-    private val repoDatabase: RepoDatabase
-) : RemoteMediator<Int, Repo>() {
+class MerchantOrderRemoteMediator(
+        private val wallet_id: Int,
+        private val service: EmaishaShopAPIService,
+        private val emaishapayDb: EmaishapayDb
+) : RemoteMediator<Int, MerchantOrder>() {
 
     override suspend fun initialize(): InitializeAction {
         // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
@@ -47,12 +46,12 @@ class GithubRemoteMediator(
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, Repo>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, MerchantOrder>): MediatorResult {
 
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: GITHUB_STARTING_PAGE_INDEX
+                remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -82,26 +81,26 @@ class GithubRemoteMediator(
             }
         }
 
-        val apiQuery = query + IN_QUALIFIER
+        //val apiQuery = query + IN_QUALIFIER
 
         try {
-            val apiResponse = service.searchRepos(apiQuery, page, state.config.pageSize)
+            val apiResponse = service.getpagedMerchantOrders(wallet_id, page, state.config.pageSize)
 
-            val repos = apiResponse.items
-            val endOfPaginationReached = repos.isEmpty()
-            repoDatabase.withTransaction {
+            val merchantOrders = apiResponse
+            val endOfPaginationReached = merchantOrders.isEmpty()
+            emaishapayDb.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    repoDatabase.remoteKeysDao().clearRemoteKeys()
-                    repoDatabase.reposDao().clearRepos()
+                    emaishapayDb.remoteKeysDao()?.clearRemoteKeys()
+                    emaishapayDb.merchantOrderDao()?.clearOrders()
                 }
-                val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
+                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = repos.map {
-                    RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
+                val keys = merchantOrders.map {
+                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                repoDatabase.remoteKeysDao().insertAll(keys)
-                repoDatabase.reposDao().insertAll(repos)
+                emaishapayDb.remoteKeysDao()?.insertAll(keys)
+                emaishapayDb.merchantOrderDao()?.insertAll(merchantOrders)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
@@ -111,34 +110,34 @@ class GithubRemoteMediator(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Repo>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MerchantOrder>): RemoteKeys? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { repo ->
                 // Get the remote keys of the last item retrieved
-                repoDatabase.remoteKeysDao().remoteKeysRepoId(repo.id)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repo.id)
             }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Repo>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MerchantOrder>): RemoteKeys? {
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { repo ->
                 // Get the remote keys of the first items retrieved
-                repoDatabase.remoteKeysDao().remoteKeysRepoId(repo.id)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repo.id)
             }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, Repo>
+        state: PagingState<Int, MerchantOrder>
     ): RemoteKeys? {
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
-                repoDatabase.remoteKeysDao().remoteKeysRepoId(repoId)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repoId)
             }
         }
     }

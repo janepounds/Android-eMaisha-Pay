@@ -21,23 +21,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.cabral.emaishapay.models.order_model.OrderDetails
-import com.cabral.emaishapay.network.db.entities.ShopOrder
+import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import com.cabral.emaishapay.network.pagingdata.MerchantOrderRepository
 import kotlinx.coroutines.flow.Flow
 
 class MerchantOrdersViewModel(private val repository: MerchantOrderRepository) : ViewModel() {
     private var currentQueryValue: String? = null
 
-    private var currentSearchResult: Flow<PagingData<ShopOrder>>? = null
+    private var currentSearchResult: Flow<PagingData<MerchantOrder>>? = null
 
-    fun searchOrders(queryString: String): Flow<PagingData<ShopOrder>> {
+    fun searchOrders(queryString: String): Flow<PagingData<MerchantOrder>> {
         val lastResult = currentSearchResult
         if (queryString == currentQueryValue && lastResult != null) {
             return lastResult
         }
         currentQueryValue = queryString
-        val newResult: Flow<PagingData<ShopOrder>> = repository.getMerchantOrdersResultStream()
+        val newResult: Flow<PagingData<MerchantOrder>> = repository.getMerchantOrdersResultStream()
             .cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult

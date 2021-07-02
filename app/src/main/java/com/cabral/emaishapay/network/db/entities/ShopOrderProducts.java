@@ -10,7 +10,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {
-        @ForeignKey(entity = ShopOrder.class,
+        @ForeignKey(entity = MerchantOrder.class,
                 parentColumns = "order_id",
                 childColumns = "product_order_id",
                 onDelete = ForeignKey.CASCADE)},

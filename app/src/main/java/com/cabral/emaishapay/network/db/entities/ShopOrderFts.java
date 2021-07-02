@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 
 @Entity(tableName = "ShopOrderFts")
-@Fts4(contentEntity = ShopOrder.class)
+@Fts4(contentEntity = MerchantOrder.class)
 public class ShopOrderFts {
     @PrimaryKey
     @ColumnInfo(name = "rowid")

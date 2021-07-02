@@ -2,26 +2,17 @@ package com.cabral.emaishapay.network.api_helpers;
 
 
 import com.cabral.emaishapay.models.address_model.AddressData;
-import com.cabral.emaishapay.models.address_model.Countries;
-import com.cabral.emaishapay.models.address_model.Regions;
-import com.cabral.emaishapay.models.address_model.Zones;
-import com.cabral.emaishapay.models.banner_model.BannerData;
 import com.cabral.emaishapay.models.category_model.CategoryData;
 import com.cabral.emaishapay.models.contact_model.ContactUsData;
 import com.cabral.emaishapay.models.coupons_model.CouponsData;
 import com.cabral.emaishapay.models.currency_model.CurrencyModel;
-import com.cabral.emaishapay.models.device_model.AppSettingsData;
 import com.cabral.emaishapay.models.filter_model.get_filters.FilterData;
 import com.cabral.emaishapay.models.googleMap.GoogleAPIResponse;
 import com.cabral.emaishapay.models.language_model.LanguageData;
 import com.cabral.emaishapay.models.merchants_model.MerchantData;
-import com.cabral.emaishapay.models.news_model.all_news.NewsData;
-import com.cabral.emaishapay.models.news_model.news_categories.NewsCategoryData;
 import com.cabral.emaishapay.models.order_model.OrderData;
 import com.cabral.emaishapay.models.order_model.PostOrder;
-import com.cabral.emaishapay.models.pages_model.PagesData;
 import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
-import com.cabral.emaishapay.models.payment_model.PaymentMethodsData;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.GetStock;
 import com.cabral.emaishapay.models.product_model.ProductData;
@@ -29,22 +20,19 @@ import com.cabral.emaishapay.models.product_model.ProductStock;
 import com.cabral.emaishapay.models.ratings.GetRatings;
 import com.cabral.emaishapay.models.ratings.GiveRating;
 import com.cabral.emaishapay.models.search_model.SearchData;
-import com.cabral.emaishapay.models.shipping_model.PostTaxAndShippingData;
-import com.cabral.emaishapay.models.shipping_model.ShippingRateData;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.ManufacturersResponse;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
 import com.cabral.emaishapay.models.uploadimage.UploadImageModel;
 import com.cabral.emaishapay.models.user_model.UserData;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 
 
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -158,7 +146,7 @@ public interface APIRequestsForBuyInputs {
     );
 
     @GET("getMerchantOrders/{wallet_id}")
-    Call<List<ShopOrder>> getOrders(
+    Call<List<MerchantOrder>> getOrders(
             @Path("wallet_id") String id
     );
 
