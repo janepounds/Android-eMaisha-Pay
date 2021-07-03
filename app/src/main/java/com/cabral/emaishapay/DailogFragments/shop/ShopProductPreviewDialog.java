@@ -36,13 +36,11 @@ import com.cabral.emaishapay.network.db.entities.EcProduct;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +51,7 @@ public class ShopProductPreviewDialog extends DialogFragment {
     TextView produce_title_txt, product_manufacturer_txt, product_category_txt, product_code_txt, product_sell_price_txt, product_purchase_price_txt, product_stock_txt;
     TextView product_units;
     private Context context;
-    private final EcProduct  productData;
+    private final EcProduct productData;
     DialogLoader dialogLoader;
     Button delete_button,update_button,re_stock;
     EditText qty;

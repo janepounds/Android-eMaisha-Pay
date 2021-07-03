@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.MerchantShopActivity;
-import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
+import com.cabral.emaishapay.adapters.Shop.OrderDetailProductsAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
@@ -43,7 +43,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
     String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee,payment_method;
     double total_price;
     FragmentOnlineOrderDetailsBinding binding;
-    private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
+    private OrderDetailProductsAdapter onlineOrderDetailsAdapter;
     MerchantOrder shopOrderDetails;
     private ShopOrdersModelView viewModel;
     DialogLoader dialogLoader;
@@ -181,7 +181,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         binding.recycler.setHasFixedSize(true);
 
-        onlineOrderDetailsAdapter = new OnlineOrderProductsAdapter(getContext(), shopOrderDetails.getProducts());
+        onlineOrderDetailsAdapter = new OrderDetailProductsAdapter(getContext(), shopOrderDetails.getProducts());
 
         binding.recycler.setAdapter(onlineOrderDetailsAdapter);
 

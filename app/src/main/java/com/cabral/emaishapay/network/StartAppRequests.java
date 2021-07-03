@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.database.BuyInputsDB_Handler;
 import com.cabral.emaishapay.database.BuyInputsDB_Manager;
@@ -15,7 +14,6 @@ import com.cabral.emaishapay.models.pages_model.PagesDetails;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.api_helpers.ExternalAPIClient;
-import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.gson.Gson;
 import com.cabral.emaishapay.R;
@@ -29,7 +27,6 @@ import com.cabral.emaishapay.utils.Utilities;
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

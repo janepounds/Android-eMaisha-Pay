@@ -820,7 +820,8 @@ public class AddShopProductFragment extends DialogFragment {
                         "",
                         "",
                         "",
-                        ""
+                        "",
+                        "0"
                 ));
 
 
@@ -1045,7 +1046,8 @@ public class AddShopProductFragment extends DialogFragment {
                                 product_stock,
                                 selected_weight_units,
                                 selected_weight + "",
-                                manufacturer_name
+                                manufacturer_name,
+                                "0"
                         ));
 
                         AppExecutors.getInstance().mainThread().execute(new Runnable() {

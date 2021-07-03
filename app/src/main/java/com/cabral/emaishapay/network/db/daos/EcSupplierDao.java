@@ -3,11 +3,8 @@ package com.cabral.emaishapay.network.db.daos;
 import androidx.room.Dao;
 import androidx.room.Query;
 
-import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcSupplier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Dao

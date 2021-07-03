@@ -12,7 +12,8 @@ import com.cabral.emaishapay.network.db.relations.CartItem
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts
 
 
-@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, ShopOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 2, exportSchema = false)
+@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, ShopOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 2,
+        exportSchema = false)
 abstract class EmaishapayDb : RoomDatabase() {
     abstract fun defaultAddressDao(): DefaultAddressDao?
     abstract fun ecManufacturerDao(): EcManufacturerDao?

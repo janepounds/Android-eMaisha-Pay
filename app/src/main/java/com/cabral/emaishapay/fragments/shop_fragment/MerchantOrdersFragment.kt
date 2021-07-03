@@ -57,7 +57,6 @@ class MerchantOrdersFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentShopOrdersBinding.inflate(layoutInflater)
 
@@ -90,14 +89,12 @@ class MerchantOrdersFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, binding.etxtSearchOrder.text.trim().toString())
     }
-
-
+    
     private fun initAdapter() {
         binding.ordersRecycler.adapter = adapter
-        val mLinearLayoutManager =  LinearLayoutManager(context)
-        binding.ordersRecycler.layoutManager= mLinearLayoutManager
+        binding.ordersRecycler.layoutManager= LinearLayoutManager(context)
+        
         adapter.addLoadStateListener { loadState ->
-
             // show empty list
             val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
             showEmptyList(isListEmpty)
@@ -137,22 +134,22 @@ class MerchantOrdersFragment : Fragment() {
             binding.ordersRecycler.visibility = View.VISIBLE
         }
     }
-
-
+    
     private fun initSearch(query: String) {
         binding.etxtSearchOrder.setText(query)
 
         binding.etxtSearchOrder.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
-                updateRepoListFromInput()
+                updateListFromInput()
                 true
             } else {
                 false
             }
         }
+
         binding.etxtSearchOrder.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                updateRepoListFromInput()
+                updateListFromInput()
                 true
             } else {
                 false
@@ -170,7 +167,7 @@ class MerchantOrdersFragment : Fragment() {
         }
     }
 
-    private fun updateRepoListFromInput() {
+    private fun updateListFromInput() {
         binding.etxtSearchOrder.text.trim().let {
             if (it.isNotEmpty()) {
                 search(it.toString())
@@ -182,6 +179,5 @@ class MerchantOrdersFragment : Fragment() {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
     }
-
 
 }
