@@ -16,7 +16,6 @@
 
 package com.cabral.emaishapay.network.pagingdata
 
-import android.util.Log
 import androidx.paging.*
 import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
 import com.cabral.emaishapay.network.db.EmaishapayDb
@@ -38,11 +37,11 @@ class MerchantOrderRepository(private val wallet_id: Int, private val database: 
 //            pagingSourceFactory = { MerchantOrderPagingSource(EmaishaShopAPIService.create(),wallet_id) }
 //        ).flow
 //    }
-    fun getMerchantOrdersResultStream(): Flow<PagingData<MerchantOrder>> {
+    fun getMerchantOrdersResultStream(query: String): Flow<PagingData<MerchantOrder>> {
 
         // appending '%' so we can allow other characters to be before and after the query string
         ///val dbQuery = "%${query.replace(' ', '%')}%"
-        val pagingSourceFactory = { database.merchantOrderDao()?.getOrderList() }
+        val pagingSourceFactory = { if(query.isEmpty()) database.merchantOrderDao()?.getOrderList() /*else database.merchantOrderDao()?.searchOders(query)*/ }
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(

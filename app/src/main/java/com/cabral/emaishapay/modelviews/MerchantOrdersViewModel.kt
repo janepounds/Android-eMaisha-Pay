@@ -36,7 +36,7 @@ class MerchantOrdersViewModel(private val repository: MerchantOrderRepository) :
             return lastResult
         }
         currentQueryValue = queryString
-        val newResult: Flow<PagingData<MerchantOrder>> = repository.getMerchantOrdersResultStream()
+        val newResult: Flow<PagingData<MerchantOrder>> = repository.getMerchantOrdersResultStream(queryString)
             .cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult

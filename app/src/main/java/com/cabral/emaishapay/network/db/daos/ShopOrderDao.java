@@ -33,7 +33,7 @@ public interface ShopOrderDao {
     int updateOrder(String id, String status);
 
     //search order
-    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrderFts MATCH :s  ORDER BY order_id DESC")
+    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN MerchantOrderFts ON (ShopOrder.id=MerchantOrderFts.rowid) WHERE MerchantOrderFts MATCH :s  ORDER BY order_id DESC")
     LiveData<List<MerchantOrder>> searchOrderList(String s);
 
     //get all sales item
@@ -43,6 +43,6 @@ public interface ShopOrderDao {
     LiveData<List<ShopOrderWithProducts>> getAllSalesItems();
 
     @Transaction
-    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrder.id=ShopOrderFts.rowid) WHERE ShopOrder.order_status='Approved' AND  ShopOrderFts MATCH :query ORDER BY ShopOrder.order_id DESC")
+    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN MerchantOrderFts ON (ShopOrder.id=MerchantOrderFts.rowid) WHERE ShopOrder.order_status='Approved' AND  MerchantOrderFts MATCH :query ORDER BY ShopOrder.order_id DESC")
     LiveData<List<ShopOrderWithProducts>> searchOrderSales(String query);
 }

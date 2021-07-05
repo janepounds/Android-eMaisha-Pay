@@ -24,5 +24,5 @@ data class EcProduct(
         @field:SerializedName("product_weight_unit") val product_weight_unit: String? = null,
         @field:SerializedName("product_weight") val product_weight: String? = null,
         @field:SerializedName("manufacturer") val manufacturer: String? = null,
-        @ColumnInfo(name = "sync_status", defaultValue = "0") var sync_status: String = "0"
+        @ColumnInfo(name = "sync_status", defaultValue = "0") var sync_status: String? = null
 ) : Serializable

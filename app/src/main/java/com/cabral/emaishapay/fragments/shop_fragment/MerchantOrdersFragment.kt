@@ -41,7 +41,7 @@ class MerchantOrdersFragment : Fragment() {
 
     private var searchJob: Job? = null
 
-    private fun search(query: String) {
+    private fun loadOrders(query: String) {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
@@ -81,7 +81,7 @@ class MerchantOrdersFragment : Fragment() {
 
         initAdapter()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
-        search(query)
+        loadOrders(query)
         initSearch(query)
     }
 
@@ -101,7 +101,7 @@ class MerchantOrdersFragment : Fragment() {
             Log.w("AdpterItemCount", adapter.itemCount.toString())
 
             // Only show the list if refresh succeeds.
-            binding.ordersRecycler.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
+           // binding.ordersRecycler.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
             binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
@@ -170,14 +170,14 @@ class MerchantOrdersFragment : Fragment() {
     private fun updateListFromInput() {
         binding.etxtSearchOrder.text.trim().let {
             if (it.isNotEmpty()) {
-                search(it.toString())
+                loadOrders(it.toString())
             }
         }
     }
 
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
-        private const val DEFAULT_QUERY = ""
+        private const val DEFAULT_QUERY = "Jane"
     }
 
 }

@@ -12,7 +12,7 @@ import com.cabral.emaishapay.network.db.relations.CartItem
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts
 
 
-@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, ShopOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 2,
+@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, MerchantOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 2,
         exportSchema = false)
 abstract class EmaishapayDb : RoomDatabase() {
     abstract fun defaultAddressDao(): DefaultAddressDao?
@@ -42,13 +42,26 @@ abstract class EmaishapayDb : RoomDatabase() {
                 Room.databaseBuilder(
                         context.applicationContext,
                         EmaishapayDb::class.java, "emaishapayDb"
-                ).addMigrations(MIGRATION_1_2)
+                ).addMigrations(MIGRATION_1_2)//.addMigrations(MIGRATION_2_3)
                  .build()
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE `RemoteKeys` (`id` INTEGER, "
                         + "`prevKey` INTEGER,`nextKey` INTEGER, PRIMARY KEY(`id`))")
+            }
+        }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE ShopOrderFts ADD COLUMN customer_name TEXT,"+
+                                    " ADD COLUMN customer_address TEXT,"+
+                                    " ADD COLUMN customer_cell TEXT,"+
+                                    " ADD COLUMN customer_email TEXT ; "
+                )
+                database.execSQL("CREATE TABLE `EcProductFts` (`rowid` INTEGER, "
+                        + "`product_id` TEXT,`product_name` TEXT,`product_code` TEXT,`product_category` TEXT,`product_description` TEXT," +
+                        " `product_supplier` TEXT, `product_image` TEXT, `product_stock` TEXT, `product_weight_unit` TEXT, `product_weight` TEXT, `manufacturer` TEXT, PRIMARY KEY(`rowid`))")
+
             }
         }
 

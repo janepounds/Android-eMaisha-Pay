@@ -26,6 +26,9 @@ interface MerchantOrderDao {
     @Query("SELECT * FROM ShopOrder ORDER BY order_id DESC")
     fun getOrderList(): PagingSource< Int, MerchantOrder>
 
+//    @Query("SELECT ShopOrder.* FROM ShopOrder JOIN ShopOrderFts ON (ShopOrderFts.rowid=ShopOrder.id) WHERE ShopOrderFts MATCH :searchKey ORDER BY ShopOrder.order_id DESC")
+//    fun searchOders(searchKey : String): PagingSource< Int, MerchantOrder>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(orderList: List<MerchantOrder>)
 
