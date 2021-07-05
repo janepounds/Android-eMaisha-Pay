@@ -177,7 +177,7 @@ class MerchantOrdersFragment : Fragment() {
 
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
-        private const val DEFAULT_QUERY = "Jane"
+        private const val DEFAULT_QUERY = ""
     }
 
 }

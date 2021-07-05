@@ -41,7 +41,7 @@ class MerchantOrderRepository(private val wallet_id: Int, private val database: 
 
         // appending '%' so we can allow other characters to be before and after the query string
         ///val dbQuery = "%${query.replace(' ', '%')}%"
-        val pagingSourceFactory = { if(query.isEmpty()) database.merchantOrderDao()?.getOrderList() /*else database.merchantOrderDao()?.searchOders(query)*/ }
+        val pagingSourceFactory = { if(query.isEmpty() || query==null) database.merchantOrderDao()?.getOrderList() else database.merchantOrderDao()?.searchOders(query) }
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
