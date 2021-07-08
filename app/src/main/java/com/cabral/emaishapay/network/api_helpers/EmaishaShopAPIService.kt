@@ -126,9 +126,11 @@ interface EmaishaShopAPIService {
     fun getManufacturers(@Header("Authorization") token: String?): Call<ManufacturersResponse?>?
 
     @GET("getMerchantProducts/{wallet_id}")
-    fun getMerchantProducts(
-            @Path("wallet_id") id: String?
-    ): Call<List<EcProduct?>?>?
+    suspend fun getMerchantProducts(
+            @Path("wallet_id") id: Int,
+            @Path("page") page: Int,
+            @Path("per_page") per_page: Int
+    ): List<EcProduct> = emptyList()
 
     @GET("getMerchantOrders/{wallet_id}/{page}/{per_page}")
     suspend fun getpagedMerchantOrders(

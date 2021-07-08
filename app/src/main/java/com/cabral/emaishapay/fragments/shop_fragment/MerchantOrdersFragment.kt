@@ -23,7 +23,7 @@ import com.cabral.emaishapay.customs.DialogLoader
 import com.cabral.emaishapay.databinding.FragmentShopOrdersBinding
 import com.cabral.emaishapay.modelviews.MerchantOrdersViewModel
 import com.cabral.emaishapay.network.db.EmaishapayDb
-import com.cabral.emaishapay.network.pagingdata.MerchantOrderRepository
+import com.cabral.emaishapay.network.pagingdata.MerchantRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -64,7 +64,7 @@ class MerchantOrdersFragment : Fragment() {
         if(context!=null){
             val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
             // get the view model
-            viewModel = ViewModelProvider(this, MerchantOrdersViewModel.ViewModelFactory( MerchantOrderRepository( Integer.parseInt(walletId), EmaishapayDb.getDatabase(context)) ))
+            viewModel = ViewModelProvider(this, MerchantOrdersViewModel.ViewModelFactory( MerchantRepository( Integer.parseInt(walletId), EmaishapayDb.getDatabase(context)) ))
                     .get(MerchantOrdersViewModel::class.java)
 
         }

@@ -28,6 +28,7 @@ abstract class EmaishapayDb : RoomDatabase() {
     abstract fun supplierDao(): EcSupplierDao?
     abstract fun merchantOrderDao(): MerchantOrderDao?
     abstract fun remoteKeysDao(): RemoteKeysDao?
+    abstract fun merchantProductDao(): MerchantProductDao?
 
     companion object {
         var INSTANCE: EmaishapayDb? = null

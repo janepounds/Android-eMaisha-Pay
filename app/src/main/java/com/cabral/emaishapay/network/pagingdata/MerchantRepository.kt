@@ -19,24 +19,20 @@ package com.cabral.emaishapay.network.pagingdata
 import androidx.paging.*
 import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
 import com.cabral.emaishapay.network.db.EmaishapayDb
+import com.cabral.emaishapay.network.db.entities.EcProduct
 import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Repository class that works with local and remote data sources.
  */
-class MerchantOrderRepository(private val wallet_id: Int, private val database: EmaishapayDb) {
+class MerchantRepository(private val wallet_id: Int, private val database: EmaishapayDb) {
 
     /**
      * fetch merchant orders, exposed as a stream of data that will emit
      * every time we get more data from the network.
      */
-//    fun getMerchantOrdersResultStream(): Flow<PagingData<MerchantOrder>> {
-//        return Pager(
-//            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-//            pagingSourceFactory = { MerchantOrderPagingSource(EmaishaShopAPIService.create(),wallet_id) }
-//        ).flow
-//    }
+
     fun getMerchantOrdersResultStream(query: String): Flow<PagingData<MerchantOrder>> {
 
         // appending '%' so we can allow other characters to be before and after the query string
@@ -52,6 +48,23 @@ class MerchantOrderRepository(private val wallet_id: Int, private val database: 
                         database
                 ),
                 pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, MerchantOrder>
+        ).flow
+    }
+    fun getMerchantProductsResultStream(query: String): Flow<PagingData<EcProduct>> {
+
+        // appending '%' so we can allow other characters to be before and after the query string
+        ///val dbQuery = "%${query.replace(' ', '%')}%"
+        val pagingSourceFactory = { if(query.isEmpty() || query==null) database.merchantProductDao()?.getProducts() else database.merchantProductDao()?.searchProducts(query) }
+
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+                remoteMediator = MerchantProductRemoteMediator(
+                        wallet_id,
+                        EmaishaShopAPIService.create(),
+                        database
+                ),
+                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, EcProduct>
         ).flow
     }
 

@@ -22,10 +22,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.cabral.emaishapay.network.db.entities.MerchantOrder
-import com.cabral.emaishapay.network.pagingdata.MerchantOrderRepository
+import com.cabral.emaishapay.network.pagingdata.MerchantRepository
 import kotlinx.coroutines.flow.Flow
 
-class MerchantOrdersViewModel(private val repository: MerchantOrderRepository) : ViewModel() {
+class MerchantOrdersViewModel(private val repository: MerchantRepository) : ViewModel() {
     private var currentQueryValue: String? = null
 
     private var currentSearchResult: Flow<PagingData<MerchantOrder>>? = null
@@ -42,7 +42,7 @@ class MerchantOrdersViewModel(private val repository: MerchantOrderRepository) :
         return newResult
     }
 
-    class ViewModelFactory(private val repository: MerchantOrderRepository) : ViewModelProvider.Factory {
+    class ViewModelFactory(private val repository: MerchantRepository) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MerchantOrdersViewModel::class.java)) {
