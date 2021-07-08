@@ -817,6 +817,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // this method is called when user
         // allows the permission to use camera.
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         try {
             if (grantResults.length > 0) {
                 boolean cameraaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
@@ -827,7 +828,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
                     Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show();
                 }
             }
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
