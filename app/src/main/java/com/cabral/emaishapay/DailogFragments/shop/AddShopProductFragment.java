@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -19,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.LiveData;
 
 import es.dmoral.toasty.Toasty;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
@@ -53,7 +51,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.constants.ConstantValues;
@@ -67,15 +64,9 @@ import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 import com.cabral.emaishapay.network.db.entities.EcProductCategory;
-import com.cabral.emaishapay.services.SyncService;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -829,7 +820,8 @@ public class AddShopProductFragment extends DialogFragment {
                         "",
                         "",
                         "",
-                        ""
+                        "",
+                        "0"
                 ));
 
 
@@ -999,7 +991,7 @@ public class AddShopProductFragment extends DialogFragment {
                                                 AddShopProductFragment.this.dismiss();
                                                 Toasty.success(getContext(), R.string.product_successfully_updated, Toast.LENGTH_SHORT).show();
 
-                                                //Intent intent = new Intent(getContext(), ShopActivity.class);
+                                                //Intent intent = new Intent(getContext(), MerchantShopActivity.class);
                                                 //startActivity(intent);
                                                 // finish();
                                             } else {
@@ -1054,7 +1046,8 @@ public class AddShopProductFragment extends DialogFragment {
                                 product_stock,
                                 selected_weight_units,
                                 selected_weight + "",
-                                manufacturer_name
+                                manufacturer_name,
+                                "0"
                         ));
 
                         AppExecutors.getInstance().mainThread().execute(new Runnable() {
@@ -1065,7 +1058,7 @@ public class AddShopProductFragment extends DialogFragment {
                                     Toasty.success(getContext(), R.string.product_successfully_added, Toast.LENGTH_SHORT).show();
 
                                     //start product sync
-                                    context.startService(new Intent(context, SyncService.class));
+                                    initiateSnc();
 
                                     AddShopProductFragment.this.dismiss();
                                 } else {
@@ -1086,6 +1079,20 @@ public class AddShopProductFragment extends DialogFragment {
 
         }
     }
+
+    public  void initiateSnc() {
+        AppExecutors.getInstance().NetworkIO().execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "run: product sync started");
+                        WalletHomeActivity.SyncProductData();
+
+                    }
+                }
+        );
+    }
+
     public void showActivityResult(ActivityResult result){
         Intent data = result.getData();
         try {

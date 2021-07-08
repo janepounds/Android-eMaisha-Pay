@@ -1,17 +1,14 @@
 package com.cabral.emaishapay.network.db.daos;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.cabral.emaishapay.network.db.entities.EcProduct;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Dao

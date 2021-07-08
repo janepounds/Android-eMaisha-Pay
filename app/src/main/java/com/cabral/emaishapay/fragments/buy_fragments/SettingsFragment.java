@@ -88,7 +88,7 @@ public class SettingsFragment extends Fragment {
 
         dialogLoader = new DialogLoader(getContext());
         appPrefs = new MyAppPrefsManager(getContext());
-        sharedPreferences = getContext().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        sharedPreferences = getContext().getSharedPreferences(MyAppPrefsManager.PREF_NAME, MODE_PRIVATE);
 
         //MainActivity.actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.actionSettings));

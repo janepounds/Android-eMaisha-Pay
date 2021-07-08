@@ -31,7 +31,7 @@ import com.cabral.emaishapay.network.db.entities.EcProductCategory;
 import com.cabral.emaishapay.network.db.entities.EcProductWeight;
 import com.cabral.emaishapay.network.db.entities.EcSupplier;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 import com.cabral.emaishapay.network.db.entities.UserCart;
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts;
@@ -380,14 +380,15 @@ public class DataRepository {
         return new NetworkBoundResource<List<EcProduct>, List<EcProduct>>() {
             @Override
             protected void saveCallResult(@NonNull List<EcProduct> productList) {
-
-               mEcProductsDao.addProduct(productList);
+                //  Log.w("SaveLocalProduct", "---->"+productList.get(0).getId()+productList.get(0).getProduct_id());
+                mEcProductsDao.addProduct(productList);
             }
 
             @NonNull
             @Override
             protected LiveData<List<EcProduct>> loadFromDb() {
                 if (TextUtils.isEmpty(key)) {
+
                     return mEcProductsDao.getProducts();
                 }
                 LiveData<List<EcProduct>> results = mEcProductsDao.getSearchProducts("*" + key + "*");
@@ -413,13 +414,13 @@ public class DataRepository {
 
 
     //********************GET ORDER LIST *************************//
-    public LiveData<Resource<List<ShopOrder>>> getOrderList(String wallet_id, CharSequence key) {
+    public LiveData<Resource<List<MerchantOrder>>> getOrderList(String wallet_id, CharSequence key) {
 
-        return new NetworkBoundResource<List<ShopOrder>, List<ShopOrder>>() {
+        return new NetworkBoundResource<List<MerchantOrder>, List<MerchantOrder>>() {
             @Override
-            protected void saveCallResult(@NonNull List<ShopOrder> orderList) {
+            protected void saveCallResult(@NonNull List<MerchantOrder> orderList) {
 
-                for (ShopOrder shopOrder : orderList) {
+                for (MerchantOrder shopOrder : orderList) {
 
                     ShopOrderWithProducts orderData = new ShopOrderWithProducts();
                     orderData.setShopOrder(shopOrder);
@@ -432,12 +433,12 @@ public class DataRepository {
 
             @NonNull
             @Override
-            protected LiveData<List<ShopOrder>> loadFromDb() {
+            protected LiveData<List<MerchantOrder>> loadFromDb() {
                 if (TextUtils.isEmpty(key)) {
                     LiveData<List<ShopOrderWithProducts>> load = mShopOrderDao.getOrderList();
 
 
-                    LiveData<List<ShopOrder>> resultantOrderData =
+                    LiveData<List<MerchantOrder>> resultantOrderData =
                             Transformations.switchMap(load, myOrderData -> changeToShopOrderFormat(myOrderData));
 
 
@@ -448,15 +449,15 @@ public class DataRepository {
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<ShopOrder> data) {
+            protected boolean shouldFetch(@Nullable List<MerchantOrder> data) {
                 return TextUtils.isEmpty(key);
             }
 
             @NonNull
             @Override
-            protected Call<List<ShopOrder>> createCall() {
+            protected Call<List<MerchantOrder>> createCall() {
 
-                Call<List<ShopOrder>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
+                Call<List<MerchantOrder>> call = BuyInputsAPIClient.getInstance().getOrders(wallet_id);
                 return call;
             }
         }.getAsLiveData();
@@ -478,13 +479,13 @@ public class DataRepository {
         return mShopOrderProductDao.getOrderDetailsList(order_id);
     }
 
-    private LiveData<List<ShopOrder>> changeToShopOrderFormat(List<ShopOrderWithProducts> myOrderData) {
-        MutableLiveData<List<ShopOrder>> results = new MutableLiveData<>();
-        List<ShopOrder> oderList = new ArrayList<>();
+    private LiveData<List<MerchantOrder>> changeToShopOrderFormat(List<ShopOrderWithProducts> myOrderData) {
+        MutableLiveData<List<MerchantOrder>> results = new MutableLiveData<>();
+        List<MerchantOrder> oderList = new ArrayList<>();
 
         for (ShopOrderWithProducts order : myOrderData) {
 
-            ShopOrder mShopOrder = order.shopOrder;
+            MerchantOrder mShopOrder = order.shopOrder;
             mShopOrder.setProducts(order.getOrderProducts());
             oderList.add(mShopOrder);
         }

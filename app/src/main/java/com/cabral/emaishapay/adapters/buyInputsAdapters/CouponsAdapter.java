@@ -91,8 +91,8 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.MyViewHo
 
                     checkoutFinal.removeCoupon(coupon);
 
-                    notifyItemRemoved(holder.getAdapterPosition());
-                    notifyItemRangeRemoved(holder.getAdapterPosition(), getItemCount());
+                    notifyItemRemoved(holder.getBindingAdapterPosition());
+                    notifyItemRangeRemoved(holder.getBindingAdapterPosition(), getItemCount());
                     notifyDataSetChanged();
                 }
             });

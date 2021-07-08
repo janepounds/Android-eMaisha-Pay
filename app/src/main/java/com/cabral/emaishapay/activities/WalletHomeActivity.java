@@ -1,6 +1,9 @@
 package com.cabral.emaishapay.activities;
 
 import android.Manifest;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +44,7 @@ import com.cabral.emaishapay.DailogFragments.AgentCustomerDeposits;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerFundsTransfer;
 import com.cabral.emaishapay.DailogFragments.AgentCustomerWithdraw;
 import com.cabral.emaishapay.R;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
 import com.cabral.emaishapay.fragments.wallet_fragments.WalletHomeFragment;
@@ -55,7 +59,7 @@ import com.cabral.emaishapay.network.DataRepository;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
-import com.cabral.emaishapay.services.SyncService;
+import com.cabral.emaishapay.services.SyncJobService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
@@ -92,7 +96,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
     public static final String PREFERENCES_USER_BALANCE = "0";
     public static final String PREFERENCES_WALLET_BUSINESS_ID = "business_id";
 
-    public static final String PREFERENCES_FILE_NAME = "UserInfo";
+    public static final String PREFERENCES_FILE_NAME = MyAppPrefsManager.PREF_NAME;
     public static final String PREFERENCES_FIRST_NAME = "firstname";
     public static final String PREFERENCES_LAST_NAME = "lastname";
     public static final String PREFERENCES_USER_EMAIL = "email";
@@ -268,11 +272,28 @@ public class   WalletHomeActivity extends AppCompatActivity{
 
 
         //start product sync service
-        startService(new Intent(this, SyncService.class));
+        //startService(new Intent(this, SyncJobService.class));
+        scheduleJob();
 
 
     }
 
+    public  void scheduleJob() {
+        ComponentName componentName = new ComponentName(context, SyncJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiresCharging(false)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.w(TAG, "Job scheduled");
+        } else {
+            Log.w(TAG, "Job scheduling failed");
+        }
+    }
 
     public void setUpNavigation() {
         bottomNavigationView.setItemIconTintList(null);
@@ -402,7 +423,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
 
                     case R.id.walletShopFragment:
 
-                        Intent shop = new Intent(context, ShopActivity.class);
+                        Intent shop = new Intent(context, MerchantShopActivity.class);
                         shop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(shop);
 
@@ -778,9 +799,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
     //select spinner by value
     public static void selectSpinnerItemByValue(Spinner spnr, String value) {
 
-        if (value == null) {
-            return;
-        }
+        if (value == null) return;
 
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) spnr.getAdapter();
         for (int position = 1; position < adapter.getCount(); position++) {
@@ -848,30 +867,10 @@ public class   WalletHomeActivity extends AppCompatActivity{
             String sync_status = "0";
             List<EcProduct> productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status);
 
-            //Log.w("unsyncedProducts",productsList.size()+" products");
+            Log.w("unsyncedProducts",productsList.size()+" products");
             for (int i = 0; i < productsList.size(); i++) {
-                Log.e("WAlletIDError",productsList.get(i).getId()+"");
-
-                String wallet_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context);
-
-
-                saveProductList(
-                        productsList.get(i).getProduct_id(),
-                        productsList.get(i).getId(),
-                        wallet_id,
-                        productsList.get(i).getManufacturer(),
-                        productsList.get(i).getProduct_name(),
-                        productsList.get(i).getProduct_code(),
-                        productsList.get(i).getProduct_category(),
-                        productsList.get(i).getProduct_buy_price(),
-                        productsList.get(i).getProduct_sell_price(),
-                        productsList.get(i).getProduct_supplier(),
-                        productsList.get(i).getProduct_image(),
-                        productsList.get(i).getProduct_stock(),
-                        productsList.get(i).getProduct_weight()+" "+productsList.get(i).getProduct_weight_unit(),
-                        productsList.get(i).getSync_status()
-
-                );
+                Log.e("WAlletIDError",productsList.get(i).getSync_status()+"");
+                saveProductList( WalletHomeActivity.context, productsList.get(i) );
             }
 
         }
@@ -879,16 +878,15 @@ public class   WalletHomeActivity extends AppCompatActivity{
     }
 
 
-    public static void saveProductList(String product_id, String unique_product_id, String user_id, String product_manufacturer,
-                                       String product_name, String product_code, String product_category, String product_buy_price, String product_sell_price,
-                                       String product_supplier, String product_image, String product_stock, String product_unit, String sync_status) {
+    public static void saveProductList(Context context, EcProduct product) {
         String access_token = WalletHomeActivity.WALLET_ACCESS_TOKEN;
+        String user_id=WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context );
         String request_id = WalletHomeActivity.generateRequestId();
 
         Call<ResponseBody> call = BuyInputsAPIClient
                 .getInstance()
-                .postProduct(access_token, unique_product_id, user_id, product_id, product_buy_price, product_sell_price,
-                        product_supplier, Integer.parseInt(product_stock), product_manufacturer, product_category, product_name
+                .postProduct(access_token, product.getId(), user_id, product.getProduct_id(), product.getProduct_buy_price(), product.getProduct_sell_price(),
+                        product.getProduct_supplier(), Integer.parseInt(product.getProduct_stock()), product.getManufacturer(), product.getProduct_category(), product.getProduct_name()
                 );
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -900,7 +898,7 @@ public class   WalletHomeActivity extends AppCompatActivity{
                         @Override
                         public void run() {
                             //update Sync Status
-                            long updateStatus = DataRepository.getOurInstance(context).updateProductSyncStatus(product_id, "1");
+                            long updateStatus = DataRepository.getOurInstance(WalletHomeActivity.context).updateProductSyncStatus(product.getId(), "1");
                             AppExecutors.getInstance().mainThread().execute(new Runnable() {
                                 @Override
                                 public void run() {

@@ -109,7 +109,7 @@ public class ShippingServicesAdapter extends RecyclerView.Adapter<ShippingServic
         public void onClick(View view) {
             
             RadioButton currentChecked_RB = view.findViewById(R.id.shipping_method_selector);
-            ShippingService selectedShippingMethod = shippingServicesList.get(getAdapterPosition());
+            ShippingService selectedShippingMethod = shippingServicesList.get(getBindingAdapterPosition());
     
     
             // UnCheck last Checked CheckBox

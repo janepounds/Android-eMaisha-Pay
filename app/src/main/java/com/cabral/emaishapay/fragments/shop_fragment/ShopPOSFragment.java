@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.shop_fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,17 +22,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
+import com.cabral.emaishapay.activities.MerchantShopActivity;
 import com.cabral.emaishapay.adapters.Shop.PosProductAdapter;
 
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -103,7 +99,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
 
                     args.putDouble("Charge", chargeAmount );
 
-                    ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+                    MerchantShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
                 }else{
                     Toast.makeText(context,"First add Items to cart",Toast.LENGTH_LONG).show();
@@ -128,7 +124,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
                 chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
                 Bundle args=new Bundle();
                 args.putDouble("Charge", chargeAmount );
-                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+                MerchantShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
 
             }
         });
@@ -379,7 +375,7 @@ public class ShopPOSFragment extends Fragment implements View.OnClickListener {
                 chargeAmount=Double.parseDouble(binding.posCharge.getText().toString());
                 Bundle args=new Bundle();
                 args.putDouble("Charge", chargeAmount );
-                ShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
+                MerchantShopActivity.navController.navigate(R.id.action_shopPOSFragment_to_shopPayments,args);
             }catch (NumberFormatException e){
                 e.printStackTrace();
             }

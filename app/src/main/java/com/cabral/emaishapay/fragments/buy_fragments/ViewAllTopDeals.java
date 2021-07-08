@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -51,7 +52,6 @@ public class ViewAllTopDeals extends Fragment {
     private ProductAdapter topDealsAdapter;
     Toolbar toolbar;
     ProgressBar progressBar,mainProgress;
-    LoadMoreTask loadMoreTask;
     PostFilterData filters = null;
     Call<ProductData> productsCall;
     int pageNo = 0;
@@ -97,11 +97,13 @@ public class ViewAllTopDeals extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
 
                 // Initialize LoadMoreTask to Load More Products from Server without Filters
-                loadMoreTask = new ViewAllTopDeals.LoadMoreTask(current_page, filters);
-
-
-                // Execute AsyncTask LoadMoreTask to Load More Products from Server
-                loadMoreTask.execute();
+                //loadMoreTask = new ViewAllTopDeals.LoadMoreTask(current_page, filters);
+                AppExecutors.getInstance().NetworkIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        RequestSpecialDeals(current_page);
+                    }
+                });
             }
         });
 
@@ -168,52 +170,7 @@ public class ViewAllTopDeals extends Fragment {
         });
     }
 
-    /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
 
-    private class LoadMoreTask extends AsyncTask<String, Void, String> {
-
-        int page_number;
-        PostFilterData postFilters;
-
-
-        private LoadMoreTask(int page_number, PostFilterData postFilterData) {
-            this.page_number = page_number;
-            this.postFilters = postFilterData;
-        }
-
-
-        //*********** Runs on the UI thread before #doInBackground() ********//
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-
-        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-            // Request for Products of given OrderProductCategory, based on PageNo.
-            //check internet connection
-
-                RequestSpecialDeals(page_number);
-
-
-
-            return "All Done!";
-        }
-
-
-        //*********** Runs on the UI thread after #doInBackground() ********//
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
-    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Hide Cart Icon in the Toolbar

@@ -157,7 +157,7 @@ public class OrderedProductsListAdapter extends RecyclerView.Adapter<OrderedProd
         public void onClick(View v) {
 
             Bundle categoryInfo = new Bundle();
-            categoryInfo.putInt("itemID", Integer.parseInt(orderProductsList.get(getAdapterPosition()).getProductsId()+""));
+            categoryInfo.putInt("itemID", Integer.parseInt(orderProductsList.get(getBindingAdapterPosition()).getProductsId()+""));
 
             Fragment fragment = new Product_Description();
             fragment.setArguments(categoryInfo);

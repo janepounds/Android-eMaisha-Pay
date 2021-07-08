@@ -49,7 +49,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="vertical"
-            android:paddingTop="@dimen/margin_10">
+            android:paddingTop="@dimen/margin_10dp">
 
             <TextView
                 android:id="@+id/text_view_error_message"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Account Number"
-                    android:textSize="@dimen/margin_16" />
+                    android:textSize="@dimen/margin_16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Phone Number"
-                    android:textSize="@dimen/margin_16" />
+                    android:textSize="@dimen/margin_16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -254,7 +254,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/rectangular_blue_solid"
                 android:layout_gravity="center"
@@ -282,7 +282,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginBottom="5dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"

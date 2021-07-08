@@ -184,7 +184,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
                         // Calculate Cart's Total Price Again
                         setCartTotal();
                 
-                        notifyItemChanged(holder.getAdapterPosition());
+                        notifyItemChanged(holder.getBindingAdapterPosition());
                     }
                 }
             });
@@ -217,7 +217,7 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
                         // Calculate Cart's Total Price Again
                         setCartTotal();
                 
-                        notifyItemChanged(holder.getAdapterPosition());
+                        notifyItemChanged(holder.getBindingAdapterPosition());
                     }
                 }
             });
@@ -270,10 +270,10 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.MyVi
                     setCartTotal();
             
                     // Remove CartItem from Cart List
-                    cartItemsList.remove(holder.getAdapterPosition());
+                    cartItemsList.remove(holder.getBindingAdapterPosition());
             
                     // Notify that item at position has been removed
-                    notifyItemRemoved(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getBindingAdapterPosition());
             
                     // Update Cart View from Local Database using static method of My_Cart
                     cartFragment.updateCartView(getItemCount());

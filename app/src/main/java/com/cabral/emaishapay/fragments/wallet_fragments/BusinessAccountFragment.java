@@ -312,7 +312,6 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         RequestBody role_param = RequestBody.create(role, MediaType.parse("text/plain"));
         RequestBody proprietor_name_param = RequestBody.create(proprietor_name, MediaType.parse("text/plain"));
         RequestBody proprietor_nin_param = RequestBody.create(proprietor_nin, MediaType.parse("text/plain"));
-        RequestBody request_id_param = RequestBody.create(request_id, MediaType.parse("text/plain"));
         RequestBody latitude_param = RequestBody.create(mCenterLatLong.latitude+"", MediaType.parse("text/plain"));
         RequestBody longitude_param = RequestBody.create(mCenterLatLong.longitude+"", MediaType.parse("text/plain"));
         RequestBody category_param = RequestBody.create(category, MediaType.parse("text/plain"));
@@ -323,7 +322,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
 //        RequestBody encodedIdtradelicense_param = RequestBody.create(encodedIdtradelicense, MediaType.parse("text/plain"));
 
 
-        //dialogLoader.showProgressDialog();
+        dialogLoader.showProgressDialog();
         binding.determinateBar.setVisibility(View.VISIBLE);
         Call<AccountResponse> call = APIClient.getWalletInstance(getContext())
                 .applyForBusiness(access_token,
@@ -448,7 +447,6 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     }
 
     public boolean validateEntries(){
-
         if(TextUtils.isEmpty(binding.businessName.getText())){
             binding.businessName.setError("Business name required");
             return false;

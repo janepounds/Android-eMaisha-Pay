@@ -107,7 +107,7 @@ public class PINManagerFragment  extends  Fragment  implements View.OnClickListe
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_token_auth, container, false);
         setKeyValues();
 
-        sharedPreferences = getActivity().getSharedPreferences("UserInfo", MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(MyAppPrefsManager.PREF_NAME, MODE_PRIVATE);
         userInfoDB = new User_Info_DB();
         dialogLoader = new DialogLoader(context);
         apiRequests = APIClient.getWalletInstance(getContext());

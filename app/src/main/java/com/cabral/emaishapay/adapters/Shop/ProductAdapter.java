@@ -134,10 +134,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                                     viewModel.deleteProduct( productData.get(position) );
                                     Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show();
 
-                                    productData.remove(holder.getAdapterPosition());
+                                    productData.remove(holder.getBindingAdapterPosition());
 
                                     // Notify that item at position has been removed
-                                    notifyItemRemoved(holder.getAdapterPosition());
+                                    notifyItemRemoved(holder.getBindingAdapterPosition());
 
                                 } catch (Exception e){
                                     e.printStackTrace();
@@ -176,7 +176,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
 
         holder.binding.executePendingBindings();
-        Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
+        //Log.d(TAG, "onBindViewHolder: product_image"+productData.get(position).getProduct_image());
 
     }
 

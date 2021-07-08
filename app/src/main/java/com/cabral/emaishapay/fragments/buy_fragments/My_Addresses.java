@@ -30,6 +30,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.AddressListAdapter;
+import com.cabral.emaishapay.app.MyAppPrefsManager;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.BuyInputsMyAddressesBinding;
 import com.cabral.emaishapay.models.address_model.AddressData;
@@ -87,7 +88,7 @@ public class My_Addresses extends Fragment implements Serializable {
 
         // Get the CustomerID and DefaultAddressID from SharedPreferences
         customerID = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, requireContext());
-        defaultAddressID = this.getContext().getSharedPreferences("UserInfo", getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
+        defaultAddressID = this.getContext().getSharedPreferences(MyAppPrefsManager.PREF_NAME, getContext().MODE_PRIVATE).getString("userDefaultAddressID", "");
 
 
         dialogLoader = new DialogLoader(getContext());
@@ -297,7 +298,7 @@ public class My_Addresses extends Fragment implements Serializable {
                         // Notify that items from specified position have changed.
 
                         // Change the value of userDefaultAddressID in the SharedPreferences
-                        SharedPreferences.Editor editor = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE).edit();
+                        SharedPreferences.Editor editor = context.getSharedPreferences(MyAppPrefsManager.PREF_NAME, Context.MODE_PRIVATE).edit();
                         editor.putString("userDefaultAddressID", addressID);
                         editor.apply();
 

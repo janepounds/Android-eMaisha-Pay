@@ -21,16 +21,15 @@ import android.widget.Toast;
 
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.activities.ShopActivity;
-import com.cabral.emaishapay.adapters.Shop.OnlineOrderProductsAdapter;
+import com.cabral.emaishapay.activities.MerchantShopActivity;
+import com.cabral.emaishapay.adapters.Shop.OrderDetailProductsAdapter;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentOnlineOrderDetailsBinding;
 import com.cabral.emaishapay.modelviews.ShopOrdersModelView;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
-import com.cabral.emaishapay.network.db.entities.ShopOrder;
+import com.cabral.emaishapay.network.db.entities.MerchantOrder;
 import com.cabral.emaishapay.network.db.entities.ShopOrderProducts;
 
-import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -44,8 +43,8 @@ public class OnlineOrderDetailsFragment extends Fragment {
     String order_id, customer_name, order_status, currency, customer_email, customer_cell, customer_address, delivery_fee,payment_method;
     double total_price;
     FragmentOnlineOrderDetailsBinding binding;
-    private OnlineOrderProductsAdapter onlineOrderDetailsAdapter;
-    ShopOrder shopOrderDetails;
+    private OrderDetailProductsAdapter onlineOrderDetailsAdapter;
+    MerchantOrder shopOrderDetails;
     private ShopOrdersModelView viewModel;
     DialogLoader dialogLoader;
 
@@ -60,10 +59,10 @@ public class OnlineOrderDetailsFragment extends Fragment {
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setHomeButtonEnabled(true); //for back button
         ((AppCompatActivity)requireActivity()). getSupportActionBar().setDisplayHomeAsUpEnabled(true);//for back button
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(R.string.order_details);
-        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
 
         if (getArguments() != null) {
-            this.shopOrderDetails= (ShopOrder) getArguments().getSerializable("order_details");
+            this.shopOrderDetails= (MerchantOrder) getArguments().getSerializable("order_details");
             order_id =shopOrderDetails.getOrder_id();
             customer_name = shopOrderDetails.getCustomer_name();
             customer_email = shopOrderDetails.getCustomer_email();
@@ -127,7 +126,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                         binding.rejectApproveLayout.setVisibility(View.GONE);
                                                         binding.cancelDeliveredLayout.setVisibility(View.GONE);
                                                         dialogLoader.hideProgressDialog();
-                                                        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                         binding.txtApproveOnline.setVisibility(View.GONE);
                                                         binding.txtDeliveredOnline.setVisibility(View.GONE);
                                                         Toasty.success(getContext(), "Order Succesfully Delivered", Toast.LENGTH_SHORT).show();
@@ -182,7 +181,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
         binding.recycler.setHasFixedSize(true);
 
-        onlineOrderDetailsAdapter = new OnlineOrderProductsAdapter(getContext(), shopOrderDetails.getProducts());
+        onlineOrderDetailsAdapter = new OrderDetailProductsAdapter(getContext(), shopOrderDetails.getProducts());
 
         binding.recycler.setAdapter(onlineOrderDetailsAdapter);
 
@@ -251,7 +250,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                                 binding.txtOnlineOrderStatus.setText("Cancelled");
                                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
                                                                 alertDialog.cancel();
-                                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                                MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                                 Toasty.success(getContext(), "Order Successfully Rejected", Toast.LENGTH_SHORT).show();
                                                             } else {
 
@@ -315,7 +314,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
                                                 binding.txtOnlineOrderStatus.setText("Approved");
                                                 binding.rejectApproveLayout.setVisibility(View.GONE);
                                                 dialogLoader.hideProgressDialog();
-                                                ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+                                                MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
                                                 binding.txtApproveOnline.setVisibility(View.GONE);
                                                 Toasty.success(getContext(), "Order Succesfully Approved", Toast.LENGTH_SHORT).show();
                                             } else {
@@ -359,7 +358,7 @@ public class OnlineOrderDetailsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        ShopActivity.bottomNavigationView.setVisibility(View.GONE);
+        MerchantShopActivity.bottomNavigationView.setVisibility(View.GONE);
         super.onResume();
     }
 }

@@ -34,9 +34,7 @@
         android:paddingBottom="10sp"
         android:layout_marginTop="15dp"
         android:text="Enter Card Details"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        style="@style/titleTextViews"
         android:layout_below="@id/appbar_account_opening"/>
 
 
@@ -82,17 +80,13 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="Account Number"
-                android:textSize="16sp" />
+                style="@style/textAppearance_text_views" />
 
             <EditText
                 android:id="@+id/etxt_card_account_number"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/outline_primary"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textSize="14sp" />
+                style="@style/editTextViews"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,18 +95,15 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="Card Number"
-                android:textSize="16sp" />
+                style="@style/textAppearance_text_views" />
 
             <EditText
                 android:id="@+id/etxt_card_number"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/outline_primary"
                 android:inputType="number"
                 android:maxLength="19"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textSize="14sp" />
+                style="@style/editTextViews" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -132,7 +123,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:text="Expiry Date"
-                        android:textSize="16sp" />
+                        style="@style/textAppearance_text_views" />
 
                     <EditText
                         android:id="@+id/etxt_card_expiry_date"
@@ -140,12 +131,9 @@
                         android:layout_height="45dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/outline_primary"
-                        android:inputType="date"
+                         android:inputType="date"
                         android:maxLength="5"
-                        android:padding="10dp"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
+                        style="@style/editTextViews" />
 
                 </LinearLayout>
 
@@ -162,7 +150,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:text="CVV"
-                        android:textSize="16sp" />
+                        style="@style/textAppearance_text_views"  />
 
                     <EditText
                         android:id="@+id/etxt_card_cvv"
@@ -170,12 +158,9 @@
                         android:layout_height="45dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/outline_primary"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:padding="10dp"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
+                        style="@style/editTextViews" />
 
                 </LinearLayout>
 
@@ -189,18 +174,15 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="Enter Pin"
-                android:textSize="16sp" />
+                style="@style/textAppearance_text_views"  />
 
             <EditText
                 android:id="@+id/etxt_card_enter_pin"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/outline_primary"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textSize="14sp" />
+                style="@style/editTextViews" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -209,18 +191,15 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="Confirm Pin"
-                android:textSize="16sp" />
+                style="@style/textAppearance_text_views"  />
 
             <EditText
                 android:id="@+id/etxt_card_confirm_pin"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/outline_primary"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:padding="10dp"
-                android:textColor="#000"
-                android:textSize="14sp" />
+                style="@style/editTextViews" />
 
             <LinearLayout
                 android:id="@+id/layout_button"
@@ -244,12 +223,9 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:background="@color/transparent"
                         android:drawableLeft="@drawable/ic_chevron_left_white"
                         android:text="@string/previous"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        style="@style/buttonsInFrameLayout" />
 
 
                 </FrameLayout>
@@ -267,13 +243,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="@color/transparent"
-                        android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
+                        android:layout_weight="1" android:drawableEnd="@drawable/ic_right_chevron_arrow_white"
                         android:text="@string/submit"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        style="@style/buttonsInFrameLayout" />
 
 
                 </FrameLayout>

@@ -154,9 +154,9 @@ public class CategoryListAdapter_3 extends RecyclerView.Adapter<CategoryListAdap
         public void onClick(View view) {
             // Get OrderProductCategory Info
             Bundle categoryInfo = new Bundle();
-            categoryInfo.putInt("CategoryID", Integer.parseInt(categoriesList.get(getAdapterPosition()).getId()));
-            categoryInfo.putString("CategoryName", categoriesList.get(getAdapterPosition()).getName());
-            categoryInfo.putString("TotalProducts", categoriesList.get(getAdapterPosition()).getTotalProducts());
+            categoryInfo.putInt("CategoryID", Integer.parseInt(categoriesList.get(getBindingAdapterPosition()).getId()));
+            categoryInfo.putString("CategoryName", categoriesList.get(getBindingAdapterPosition()).getName());
+            categoryInfo.putString("TotalProducts", categoriesList.get(getBindingAdapterPosition()).getTotalProducts());
             String sortBy = "Newest";
             categoryInfo.putString("sortBy", sortBy);
             Fragment fragment;

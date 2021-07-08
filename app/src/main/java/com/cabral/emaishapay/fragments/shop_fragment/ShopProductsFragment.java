@@ -102,9 +102,6 @@ public class ShopProductsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
-
         productAdapter = new ProductAdapter(getActivity(),viewModel,getActivity().getSupportFragmentManager());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.shopProductRecyclerview.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
@@ -149,7 +146,7 @@ public class ShopProductsFragment extends Fragment {
             if(myProducts.data!=null && myProducts.data.size()!=0){
                 binding.imageNoProduct.setVisibility(View.GONE);
                 binding.shopProductRecyclerview.setVisibility(View.VISIBLE);
-                Log.d("debug","------->>>>"+myProducts.data.size());
+                Log.d("debugMJ","------->>>>"+myProducts.data.size());
                 productAdapter.setProductList( myProducts.data);
 
 

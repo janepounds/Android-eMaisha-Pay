@@ -11,7 +11,7 @@ public class MyAppPrefsManager {
     private final SharedPreferences sharedPreferences;
 
     private final int PRIVATE_MODE = 0;
-    private static final String PREF_NAME = "AndroidShopApp_Prefs";
+    public static final String PREF_NAME = "AndroidShopApp_Prefs";
 
     private static final String USER_LANGUAGE_ID = "language_ID";
     private static final String USER_LANGUAGE_CODE = "language_Code";
@@ -87,6 +87,7 @@ public class MyAppPrefsManager {
     public void logOutUser() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_USER_LOGGED_IN, false);
+        editor.clear();
         editor.apply();
         setFirstTimeLaunch(false);
     }
