@@ -75,7 +75,7 @@ import retrofit2.Response;
 import static android.Manifest.permission.VIBRATE;
 import static android.Manifest.permission_group.CAMERA;
 
-public class WalletHomeActivity extends AppCompatActivity{
+public class   WalletHomeActivity extends AppCompatActivity{
 
     public static String WALLET_ACCESS_TOKEN =null;
     private static final String TAG = "WalletHomeActivity";
