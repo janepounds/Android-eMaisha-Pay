@@ -20,6 +20,7 @@ import android.util.AttributeSet;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 
 import com.cabral.emaishapay.R;
 
@@ -161,7 +162,7 @@ public class CircularImageView extends AppCompatImageView {
 
     
     public void setBorderColorResource(@ColorRes int borderColorRes) {
-        setBorderColor(getContext().getResources().getColor(borderColorRes));
+        setBorderColor(ContextCompat.getColor(getContext(),borderColorRes));
     }
 
     

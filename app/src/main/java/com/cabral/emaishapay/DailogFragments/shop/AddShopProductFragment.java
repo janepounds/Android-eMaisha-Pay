@@ -108,15 +108,12 @@ public class AddShopProductFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                            // There are no request codes
-                           showActivityResult(result);
-
-                    }
+                result -> {
+                        // There are no request codes
+                       showActivityResult(result);
                 });
 
     }

@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -72,11 +75,47 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     private TextView textViewErrorMessage,front_id_photo_browse_tv, front_id_photo_tv,back_id_photo_tv, back_id_photo_browse_tv,
             selfie_id_photo_tv, selfie_id_photo_browse_tv,farm_photo_browse_tv, farm_photo_tv;
     private Spinner guarantor_relationship_spn1, guarantor_relationship_spn2;
+    ActivityResultLauncher<Intent> ninFrontActivityResultLauncher, ninBackActivityResultLauncher, selfieActivityResultLauncher, farmPhotoActivityResultLauncher;
 
     public WalletLoanKycDetailsFragment(String title){
         this.title = title;
 
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+
+        ninFrontActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,GALLERY_REQUESTED_NID_FRONT);
+                });
+
+        ninBackActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,GALLERY_REQUESTED_NID_BACK);
+                });
+
+        selfieActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,GALLERY_REQUESTED_SELFIE);
+                });
+        farmPhotoActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,GALLERY_REQUESTED_FARM_PHOTO);
+                });
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,12 +189,6 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
     public void initializeActivity() {
 
         loanProgressBarId.setStateDescriptionData(descriptionData);
@@ -201,7 +234,8 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, GALLERY_REQUESTED_NID_FRONT);
+
+                ninFrontActivityResultLauncher.launch(intent);
             } //front_id_photo_tv
         });
         back_id_photo_browse_tv.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +245,9 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, GALLERY_REQUESTED_NID_BACK);
+                ninBackActivityResultLauncher.launch(intent);
+
+
             }
         });
         selfie_id_photo_browse_tv.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +257,8 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, GALLERY_REQUESTED_SELFIE);
+
+                selfieActivityResultLauncher.launch(intent);
             }
         });
         farm_photo_browse_tv.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +268,7 @@ public class WalletLoanKycDetailsFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, GALLERY_REQUESTED_FARM_PHOTO);
+                farmPhotoActivityResultLauncher.launch(intent);
             }
         });
 
@@ -244,38 +281,42 @@ public class WalletLoanKycDetailsFragment extends Fragment {
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    private void showActivityResult(ActivityResult result, int requestCode) {
+        int resultCode = result.getResultCode();
+        Intent data= result.getData();
+
         if(resultCode == Activity.RESULT_OK)
-        switch (requestCode) {
-            case GALLERY_REQUESTED_NID_BACK:
-                filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-                selectedImage = BitmapFactory.decodeFile(filePath);
-                encodedBackIdImageID = encodeImage(selectedImage);
-                back_id_photo_tv.setText(filePath);
-                break;
-            case GALLERY_REQUESTED_NID_FRONT:
-                filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-                selectedImage = BitmapFactory.decodeFile(filePath);
-                encodedFrontIdImageID = encodeImage(selectedImage);
-                front_id_photo_tv.setText(filePath);
-                break;
-            case GALLERY_REQUESTED_SELFIE:
-                filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-                selectedImage = BitmapFactory.decodeFile(filePath);
-                encodedSelfieIdImageID = encodeImage(selectedImage);
-                selfie_id_photo_tv.setText(filePath);
-                break;
-            case GALLERY_REQUESTED_FARM_PHOTO:
-                filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-                selectedImage = BitmapFactory.decodeFile(filePath);
-                encodedlfarmImage = encodeImage(selectedImage);
-                farm_photo_tv.setText(filePath);
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
-        }
+            switch (requestCode) {
+                case GALLERY_REQUESTED_NID_BACK:
+                    filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
+                    selectedImage = BitmapFactory.decodeFile(filePath);
+                    encodedBackIdImageID = encodeImage(selectedImage);
+                    back_id_photo_tv.setText(filePath);
+                    break;
+                case GALLERY_REQUESTED_NID_FRONT:
+                    filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
+                    selectedImage = BitmapFactory.decodeFile(filePath);
+                    encodedFrontIdImageID = encodeImage(selectedImage);
+                    front_id_photo_tv.setText(filePath);
+                    break;
+                case GALLERY_REQUESTED_SELFIE:
+                    filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
+                    selectedImage = BitmapFactory.decodeFile(filePath);
+                    encodedSelfieIdImageID = encodeImage(selectedImage);
+                    selfie_id_photo_tv.setText(filePath);
+                    break;
+                case GALLERY_REQUESTED_FARM_PHOTO:
+                    filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
+                    selectedImage = BitmapFactory.decodeFile(filePath);
+                    encodedlfarmImage = encodeImage(selectedImage);
+                    farm_photo_tv.setText(filePath);
+                    break;
+                default:
+                    break;
+            }
     }
+
+
 
     public void initiateApplication() {
         /*****************RETROFIT IMPLEMENTATION*******************/

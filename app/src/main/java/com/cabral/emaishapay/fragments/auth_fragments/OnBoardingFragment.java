@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -93,7 +94,7 @@ public class OnBoardingFragment  extends Fragment {
             //•
             dots[i].setText(Html.fromHtml("●"));
             dots[i].setTextSize(20);
-            dots[i].setTextColor((getResources().getColor(R.color.whiteColor)));
+            dots[i].setTextColor((ContextCompat.getColor(context,R.color.whiteColor)));
 
             binding.dotsLayout.addView(dots[i]);
         }
@@ -101,7 +102,7 @@ public class OnBoardingFragment  extends Fragment {
         if (dots.length > 0) {
             dots[position].setText(Html.fromHtml("○"));
             dots[position].setTextSize(20);
-            dots[position].setTextColor((getResources().getColor(R.color.whiteColor)));
+            dots[position].setTextColor((ContextCompat.getColor(context,R.color.whiteColor)));
         }
 
     }

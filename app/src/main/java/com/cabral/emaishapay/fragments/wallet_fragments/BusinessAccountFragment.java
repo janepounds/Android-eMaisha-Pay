@@ -11,6 +11,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -26,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,6 +107,31 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
     public static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     private LatLng mCenterLatLong;
+    ActivityResultLauncher<Intent> imageChooserActivityLauncher, autocompleteActivityResultLauncher;
+    private  Context context;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+        imageChooserActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,1);
+
+                });
+        autocompleteActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,AUTOCOMPLETE_REQUEST_CODE);
+
+                });
+
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,7 +179,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setHint(getString(R.string.search_shop_location)).setCountry("UG") //UGANDA
                         .build(getContext());
-                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+                autocompleteActivityResultLauncher.launch(intent);
             }
         });
 
@@ -392,12 +419,14 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
-        startActivityForResult(intent, 1);
+        imageChooserActivityLauncher.launch(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
+    private void showActivityResult(ActivityResult result,int requestCode) {
+
+        int resultCode=result.getResultCode();
+        Intent data= result.getData();
 
         if (resultCode == RESULT_OK && requestCode == 1) {
             Bitmap imageBitmap;
@@ -428,7 +457,7 @@ public class BusinessAccountFragment extends Fragment implements  OnMapReadyCall
         }else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                 //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
+                //Log.w(TAG, "Place: " + place.getName() + ", " +place.getAddress() + ", " + place.getId());
                 binding.shopLocation.setText(place.getName());
                 LatLng selectedLocation= place.getLatLng();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(

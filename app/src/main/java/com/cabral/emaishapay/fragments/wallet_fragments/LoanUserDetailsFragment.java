@@ -120,13 +120,6 @@ public class LoanUserDetailsFragment extends Fragment {
 
     }
 
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.wallet_home_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
 
     public void getReceiverName(String receiverPhoneNumber){
         /***************RETROFIT IMPLEMENTATION***********************/

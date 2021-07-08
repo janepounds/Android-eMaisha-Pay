@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,8 +101,8 @@ public class WalletTransactionsListFragment extends Fragment {
             arrowCashOut.setImageResource(R.drawable.ic_account_opening);
             cashInText.setText("Mobile Money");
             cashOutText.setText("Bank");
-            walletCashIn.setTextColor(getResources().getColor(R.color.textRed));
-            walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
+            walletCashIn.setTextColor(ContextCompat.getColor(context,R.color.textRed));
+            walletCashOut.setTextColor(ContextCompat.getColor(context,R.color.textRed));
             fabAddSettle.setVisibility(View.VISIBLE);
             getSettlements();
         }else{
@@ -114,8 +115,8 @@ public class WalletTransactionsListFragment extends Fragment {
             arrowCashOut.setImageResource(R.drawable.ic_cashin);
             cashInText.setText("Cash In");
             cashOutText.setText("Cash Out");
-            walletCashIn.setTextColor(getResources().getColor(R.color.colorPrimary));
-            walletCashOut.setTextColor(getResources().getColor(R.color.textRed));
+            walletCashIn.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+            walletCashOut.setTextColor(ContextCompat.getColor(context,R.color.textRed));
             fabAddSettle.setVisibility(View.GONE);
             actualStatementData();
         }

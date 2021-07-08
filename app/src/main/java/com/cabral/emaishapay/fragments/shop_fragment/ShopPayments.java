@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,10 +45,7 @@ import com.braintreepayments.api.models.CardBuilder;
 import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.SupportedCardTypesView;
 import com.cabral.emaishapay.BuildConfig;
-import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.R;
-
-import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.MerchantShopActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
@@ -59,18 +59,11 @@ import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.flutterwave.raveandroid.rave_core.models.SavedCard;
-import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.flutterwave.raveandroid.rave_presentation.RaveNonUIManager;
 import com.flutterwave.raveandroid.rave_presentation.card.Card;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentCallback;
 import com.flutterwave.raveandroid.rave_presentation.card.CardPaymentManager;
 import com.flutterwave.raveandroid.rave_presentation.card.SavedCardsListener;
-import com.flutterwave.raveandroid.rave_presentation.data.AddressDetails;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentCallback;
-import com.flutterwave.raveandroid.rave_presentation.ugmobilemoney.UgandaMobileMoneyPaymentManager;
-import com.flutterwave.raveutils.verification.AVSVBVFragment;
-import com.flutterwave.raveutils.verification.OTPFragment;
-import com.flutterwave.raveutils.verification.PinFragment;
 import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -85,9 +78,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShopPayments extends Fragment implements
-
-        SavedCardsListener, CardPaymentCallback {
+public class ShopPayments extends Fragment implements   SavedCardsListener, CardPaymentCallback {
     private static final String TAG = "ShopPayments";
 
     private Context context;
@@ -97,7 +88,7 @@ public class ShopPayments extends Fragment implements
     private LinearLayout merchantCard, VisaCard, MobileM,eMaishaPayLayout,cardDetails;
     private EditText cardNumber, cardExpiry, cvv, monileMoneyPhoneEdtx,emaishapay_phone_number,account_name;
     Button continuePayment,cancel;
-    TextView  resendtxtview, tvTimer;
+
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.UNIONPAY};//,  CardType.MAESTRO,CardType.AMEX
     CardType cardType;
@@ -112,18 +103,26 @@ public class ShopPayments extends Fragment implements
     private OtpDialogLoader otpDialogLoader;
 
     private RaveVerificationUtils verificationUtils;
-    private Dialog dialog;
+
     private Spinner spinner_select_card;
     private List<CardResponse.Cards> cardlists = new ArrayList();
     String card_number,decripted_expiryDate,acc_name;
     ArrayList<CardSpinnerItem> cardItems = new ArrayList<>();
     private CheckBox checkbox_save_card;
+    ActivityResultLauncher<Intent> someActivityLauncher;
 
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+        someActivityLauncher= registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result, 1);
+
+                });
     }
 
     @Override
@@ -709,46 +708,14 @@ public class ShopPayments extends Fragment implements
         startActivity(goToWallet);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RaveConstants.RESULT_SUCCESS) {
-            switch (requestCode) {
-                case RaveConstants.PIN_REQUEST_CODE:
-                    String pin = data.getStringExtra(PinFragment.EXTRA_PIN);
-                    // Use the collected PIN
-                    cardPayManager.submitPin(pin);
-                    break;
-                case RaveConstants.ADDRESS_DETAILS_REQUEST_CODE:
-                    String streetAddress = data.getStringExtra(AVSVBVFragment.EXTRA_ADDRESS);
-                    String state = data.getStringExtra(AVSVBVFragment.EXTRA_STATE);
-                    String city = data.getStringExtra(AVSVBVFragment.EXTRA_CITY);
-                    String zipCode = data.getStringExtra(AVSVBVFragment.EXTRA_ZIPCODE);
-                    String country = data.getStringExtra(AVSVBVFragment.EXTRA_COUNTRY);
-                    AddressDetails address = new AddressDetails(streetAddress, city, state, zipCode, country);
+    private void showActivityResult(ActivityResult result, int requestCode) {
 
-                    // Use the address details
-                    cardPayManager.submitAddress(address);
-                    break;
-                case RaveConstants.WEB_VERIFICATION_REQUEST_CODE:
-                    // Web authentication complete, proceed
-
-                     //Log.w("UnkownResult",".......Web authentication complete ");
-                    cardPayManager.onWebpageAuthenticationComplete();
-                    break;
-                case RaveConstants.OTP_REQUEST_CODE:
-                    String otp = data.getStringExtra(OTPFragment.EXTRA_OTP);
-                    // Use OTP
-                    cardPayManager.submitOtp(otp);
-                    break;
-            }
-        } else {
-             //Log.w("UnkownResult",".......Unkown Result ");
-            super.onActivityResult(requestCode, resultCode, data);
-            otpDialogLoader.onActivityResult(requestCode, resultCode, data);
-        }
-
+        int resultCode = result.getResultCode();
+        Intent data = result.getData();
+        otpDialogLoader.onActivityResult(requestCode, resultCode, data);
 
     }
+
 
 
     @Override

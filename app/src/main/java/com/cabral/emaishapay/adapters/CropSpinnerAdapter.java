@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
+import androidx.core.content.ContextCompat;
+
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.SpinnerItem;
 
@@ -91,7 +93,7 @@ public class CropSpinnerAdapter extends ArrayAdapter<SpinnerItem> {
 
             }
             else {
-                label.setTextColor(context.getResources().getColor(R.color.colorPrimary)); //Change selected text color
+                label.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary)); //Change selected text color
             }
             label.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);//Change selected text size
         }catch (Exception e){

@@ -12,7 +12,7 @@ import com.cabral.emaishapay.network.db.relations.CartItem
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts
 
 
-@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, MerchantOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 3,
+@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, MerchantOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 4,
         exportSchema = false)
 abstract class EmaishapayDb : RoomDatabase() {
     abstract fun defaultAddressDao(): DefaultAddressDao?
@@ -43,7 +43,7 @@ abstract class EmaishapayDb : RoomDatabase() {
                 Room.databaseBuilder(
                         context.applicationContext,
                         EmaishapayDb::class.java, "emaishapayDb"
-                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3)
+                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4)
                  .build()
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
@@ -69,6 +69,11 @@ abstract class EmaishapayDb : RoomDatabase() {
 
             }
         }
+        val MIGRATION_3_4: Migration = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE `remote_keys` ADD COLUMN `type` TEXT NOT NULL DEFAULT 'order' ")
+            }
+        }
 
         @JvmStatic fun insertShopOrderWithProducts(database: EmaishapayDb,
                                         orderWithProducts: ShopOrderWithProducts) {
@@ -85,31 +90,5 @@ abstract class EmaishapayDb : RoomDatabase() {
             }
         }
 
-        fun insertCartItem(database: EmaishapayDb,
-                           cartItem: CartItem) {
-            database.runInTransaction {
-                database.userCartDao().addCartItem(cartItem.userCart)
-
-                //Log.d("OrderProducts","==="+orderWithProducts.getOrderProducts().size());
-                if (cartItem.userCartAttributesList != null) {
-                    for (cartProductAttributes in cartItem.userCartAttributesList) {
-                        database.userCartAttributesDao().addCartAttributes(cartProductAttributes)
-                    }
-                }
-            }
-        }
-
-        fun updateCartItem(database: EmaishapayDb, cartItem: CartItem) {
-            database.runInTransaction {
-                database.userCartDao().updateCartItem(cartItem.userCart)
-
-                //Log.d("OrderProducts","==="+orderWithProducts.getOrderProducts().size());
-                if (cartItem.userCartAttributesList != null) {
-                    for (cartProductAttributes in cartItem.userCartAttributesList) {
-                        database.userCartAttributesDao().updateCartAttributes(cartProductAttributes)
-                    }
-                }
-            }
-        }
     }
 }

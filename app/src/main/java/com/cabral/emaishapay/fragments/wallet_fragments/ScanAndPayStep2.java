@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -151,7 +152,7 @@ public class ScanAndPayStep2 extends Fragment implements View.OnClickListener{
                 }else if(response.code()==412) {
 //                    businessName = response.body().getMessage();
                     binding.merchantName.setText("Unknown Merchant");
-                    binding.merchantName.setTextColor( getResources().getColor(R.color.textRed));
+                    binding.merchantName.setTextColor( ContextCompat.getColor(context,R.color.textRed));
 
 
                     // confirmBtn.setEnabled(true);

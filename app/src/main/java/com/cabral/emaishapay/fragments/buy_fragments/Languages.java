@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -110,8 +110,23 @@ public class Languages extends Fragment {
                     ConstantValues.LANGUAGE_ID = appPrefs.getUserLanguageId();
                     ConstantValues.LANGUAGE_CODE = appPrefs.getUserLanguageCode();
 
-                    ChangeLocaleTask changeLocaleTask = new ChangeLocaleTask();
-                    changeLocaleTask.execute();
+                    dialogLoader.showProgressDialog();
+                    AppExecutors.getInstance().NetworkIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            StartAppRequests startAppRequests = new StartAppRequests(getContext());
+                            startAppRequests.StartRequests();
+
+                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialogLoader.hideProgressDialog();
+                                    recreateActivity();
+                                }
+                            });
+
+                        }
+                    });
                     
                 }
             }
@@ -245,31 +260,5 @@ public class Languages extends Fragment {
     }
     
 
-    private class ChangeLocaleTask extends AsyncTask<Void, Void, Void> {
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialogLoader.showProgressDialog();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-    
-            // Recall some Network Requests
-            StartAppRequests startAppRequests = new StartAppRequests(getContext());
-            startAppRequests.StartRequests();
-            
-            return null;
-        }
-    
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            dialogLoader.hideProgressDialog();
-            recreateActivity();
-        }
-    }
 }
 

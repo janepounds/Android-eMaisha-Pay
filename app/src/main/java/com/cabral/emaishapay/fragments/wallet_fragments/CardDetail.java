@@ -183,7 +183,7 @@ public class CardDetail extends Fragment {
         expiry.setOnClickListener(view3 ->  addDatePicker2(expiry, getActivity()));
 
         Button previous = view.findViewById(R.id.previous_button);
-        previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
+        previous.setOnClickListener(view2 -> getActivity().getSupportFragmentManager().popBackStack());
 
 
 

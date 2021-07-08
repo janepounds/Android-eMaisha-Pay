@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -79,7 +80,7 @@ public class Categories_3 extends Fragment {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 binding.categoriesHeader.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_categories, 0, 0, 0);
             } else {
-                binding.categoriesHeader.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_categories), null, null, null);
+                binding.categoriesHeader.setCompoundDrawables(ContextCompat.getDrawable(context,R.drawable.ic_categories), null, null, null);
             }
         }
 
