@@ -494,8 +494,6 @@ public class DataRepository {
     }
 
     public void deleteProductStock(EcProduct product) {
-        //product_id
-
         mEcProductsDao.deleteProduct(product);
     }
 

@@ -40,8 +40,8 @@ public class SplashScreenFragment extends Fragment implements Animation.Animatio
 
     @Override
     public void onAttach(@NonNull Context context) {
-        this.context=context;
         super.onAttach(context);
+        this.context=context;
     }
 
     @Nullable

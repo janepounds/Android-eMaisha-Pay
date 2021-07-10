@@ -28,7 +28,7 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
-import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.modelviews.MerchantProductViewModel;
 
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
@@ -55,10 +55,10 @@ public class ShopProductPreviewDialog extends DialogFragment {
     DialogLoader dialogLoader;
     Button delete_button,update_button,re_stock;
     EditText qty;
-    ShopProductsModelView viewModel;
+    MerchantProductViewModel viewModel;
     private final List<EcManufacturer> manufacturers=new ArrayList<>();
 
-    public ShopProductPreviewDialog(EcProduct productData, ShopProductsModelView viewModel) {
+    public ShopProductPreviewDialog(EcProduct productData, MerchantProductViewModel viewModel) {
        this.viewModel=viewModel;
         this.productData =productData;
     }
@@ -117,8 +117,8 @@ public class ShopProductPreviewDialog extends DialogFragment {
                         .setCancelable(false)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
-                                viewModel.deleteProduct(productData);
+                               String wallet_id= WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context.getApplicationContext());
+                                viewModel.deleteProduct(productData, wallet_id);
                                 ShopProductPreviewDialog.this.dismiss();
                             }
                         })

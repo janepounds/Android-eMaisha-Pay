@@ -91,13 +91,13 @@ class MerchantOrderRemoteMediator(
             emaishapayDb.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    emaishapayDb.remoteKeysDao()?.clearRemoteKeys()
+                    emaishapayDb.remoteKeysDao()?.clearOrderRemoteKeys()
                     emaishapayDb.merchantOrderDao()?.clearOrders()
                 }
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = merchantOrders.map {
-                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeys(id = it.id.toString(), prevKey = prevKey, nextKey = nextKey)
                 }
                 emaishapayDb.remoteKeysDao()?.insertAll(keys)
                 emaishapayDb.merchantOrderDao()?.insertAll(merchantOrders)
@@ -116,7 +116,7 @@ class MerchantOrderRemoteMediator(
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { order ->
                 // Get the remote keys of the last item retrieved
-                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(order.id)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(order.id.toString())
             }
     }
 
@@ -126,7 +126,7 @@ class MerchantOrderRemoteMediator(
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { repo ->
                 // Get the remote keys of the first items retrieved
-                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repo.id)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repo.id.toString())
             }
     }
 
@@ -137,7 +137,7 @@ class MerchantOrderRemoteMediator(
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
-                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repoId)
+                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repoId.toString())
             }
         }
     }

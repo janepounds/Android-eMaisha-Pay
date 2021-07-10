@@ -48,7 +48,7 @@ abstract class EmaishapayDb : RoomDatabase() {
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `RemoteKeys` (`id` INTEGER, "
+                database.execSQL("CREATE TABLE `RemoteKeys` (`id` TEXT, "
                         + "`prevKey` INTEGER,`nextKey` INTEGER, PRIMARY KEY(`id`))")
             }
         }
