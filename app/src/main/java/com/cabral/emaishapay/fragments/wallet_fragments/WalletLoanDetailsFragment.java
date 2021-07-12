@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -122,7 +123,7 @@ public class WalletLoanDetailsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.textColor));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.textColor));
                     ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 

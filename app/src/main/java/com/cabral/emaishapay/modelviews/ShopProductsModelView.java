@@ -112,7 +112,6 @@ public class ShopProductsModelView extends AndroidViewModel {
 
     public LiveData<Integer> addToCart() {
 
-
         return cartReipositorySource;
     }
 

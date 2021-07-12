@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -144,7 +145,7 @@ public class DepositMoneyVisa extends DialogFragment   implements  SavedCardsLis
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(getContext(),R.color.white));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

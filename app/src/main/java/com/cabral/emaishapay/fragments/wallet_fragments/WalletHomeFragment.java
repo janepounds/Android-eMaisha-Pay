@@ -607,7 +607,7 @@ public class WalletHomeFragment extends Fragment {
         binding.productCoverSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         binding.productCoverSlider.setCustomAnimation(new DescriptionAnimation());
         binding.productCoverSlider.setDuration(4000);
-        //binding.productCoverSlider.setBackgroundColor(getResources().getColor(R.color.glide_slider_background_color));
+        //binding.productCoverSlider.setBackgroundColor(ContextCompat.getColor(context,R.color.glide_slider_background_color));
         binding.productCoverSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

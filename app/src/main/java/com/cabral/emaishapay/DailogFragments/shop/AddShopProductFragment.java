@@ -59,7 +59,7 @@ import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;
 import com.cabral.emaishapay.models.shop_model.Product;
 import com.cabral.emaishapay.models.shop_model.ProductResponse;
-import com.cabral.emaishapay.modelviews.ShopProductsModelView;
+import com.cabral.emaishapay.modelviews.MerchantProductViewModel;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.db.entities.EcManufacturer;
 import com.cabral.emaishapay.network.db.entities.EcProduct;
@@ -93,11 +93,11 @@ public class AddShopProductFragment extends DialogFragment {
     private ImageView produce_image;
     private ArrayList<HashMap<String, String>>offlineManufacturers=new ArrayList<>(),offlineCategories= new ArrayList<>(),offlineProductNames = new ArrayList<>();
     DialogLoader dialogLoader;
-    private final ShopProductsModelView viewModel;
+    private final MerchantProductViewModel viewModel;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
 
-    public AddShopProductFragment(List<EcManufacturer> manufacturers,String key,ShopProductsModelView viewModel) {
+    public AddShopProductFragment(List<EcManufacturer> manufacturers, String key, MerchantProductViewModel viewModel) {
         this.manufacturers=manufacturers;
         this.key = key;
         this.viewModel = viewModel;
@@ -108,15 +108,12 @@ public class AddShopProductFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                            // There are no request codes
-                           showActivityResult(result);
-
-                    }
+                result -> {
+                        // There are no request codes
+                       showActivityResult(result);
                 });
 
     }

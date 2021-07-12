@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -155,7 +156,7 @@ public class AccountPersonalInformationFragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        ((TextView) view).setTextColor(ContextCompat.getColor(getContext(),R.color.white));
                         //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                     } catch (Exception e) {
 

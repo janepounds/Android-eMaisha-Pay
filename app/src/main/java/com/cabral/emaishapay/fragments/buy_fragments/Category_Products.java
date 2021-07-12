@@ -1,7 +1,6 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 import android.app.AlertDialog;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
@@ -46,8 +46,6 @@ import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
 import com.cabral.emaishapay.network.Connectivity;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,7 @@ public class Category_Products extends Fragment {
     View rootView;
     int pageNo = 0;
     double maxPrice = 0;
-    boolean isVisible;
+    boolean isVisible=false;
     boolean isGridView;
     boolean isFilterApplied;
 
@@ -80,7 +78,6 @@ public class Category_Products extends Fragment {
 
     RecyclerView category_products_recycler;
 
-    LoadMoreTask loadMoreTask;
     FilterDialog filterDialog;
     PostFilterData filters = null;
 
@@ -95,12 +92,13 @@ public class Category_Products extends Fragment {
     Call<ProductData> productsCall;
     Toolbar toolbar;
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
 
-        isVisible = isVisibleToUser;
+    @Override
+    public void onResume() {
+        super.onResume();
+        isVisible = false;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -162,7 +160,7 @@ public class Category_Products extends Fragment {
 
         // Request for Products of given OrderProductCategory based on PageNo.
         //check internet connection
-       if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+       if(Connectivity.isConnected( EmaishaPayApp.getContext()) ){
             RequestCategoryProducts(pageNo, sortBy);
         }else {
            Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
@@ -193,14 +191,13 @@ public class Category_Products extends Fragment {
 
                 if (isFilterApplied) {
                     // Initialize LoadMoreTask to Load More Products from Server against some Filters
-                    loadMoreTask = new LoadMoreTask(current_page, filters);
+                    loadMoreTask(current_page, filters);
                 } else {
                     // Initialize LoadMoreTask to Load More Products from Server without Filters
-                    loadMoreTask = new LoadMoreTask(current_page, filters);
+                    loadMoreTask(current_page, filters);
+                
                 }
 
-                // Execute AsyncTask LoadMoreTask to Load More Products from Server
-                loadMoreTask.execute();
             }
         });
 
@@ -215,7 +212,7 @@ public class Category_Products extends Fragment {
 //                layout_filter.setChecked(false);
                 filters = null;
                 categoryProductsList.clear();
-                new LoadMoreTask(pageNo, filters).execute();
+                loadMoreTask(pageNo, filters);
             }
 
             @Override
@@ -225,7 +222,7 @@ public class Category_Products extends Fragment {
 //                layout_filter.setChecked(true);
                 filters = postFilterData;
                 categoryProductsList.clear();
-                new LoadMoreTask(pageNo, filters).execute();
+                loadMoreTask(pageNo, filters);
             }
         };
 
@@ -245,7 +242,7 @@ public class Category_Products extends Fragment {
 //                            layout_filter.setChecked(false);
                         filters = null;
                         categoryProductsList.clear();
-                        new LoadMoreTask(pageNo, filters).execute();
+                        loadMoreTask(pageNo, filters);
                     }
 
                     @Override
@@ -254,7 +251,7 @@ public class Category_Products extends Fragment {
 //                            layout_filter.setChecked(true);
                         filters = postFilterData;
                         categoryProductsList.clear();
-                        new LoadMoreTask(pageNo, filters).execute();
+                        loadMoreTask(pageNo, filters);
                     }
                 };
                 filterDialog.show();
@@ -325,14 +322,12 @@ public class Category_Products extends Fragment {
 
                         if (isFilterApplied) {
                             // Initialize LoadMoreTask to Load More Products from Server against some Filters
-                            loadMoreTask = new LoadMoreTask(current_page, filters);
+                            loadMoreTask(current_page, filters);
                         } else {
                             // Initialize LoadMoreTask to Load More Products from Server without Filters
-                            loadMoreTask = new LoadMoreTask(current_page, filters);
+                            loadMoreTask(current_page, filters);
                         }
 
-                        // Execute AsyncTask LoadMoreTask to Load More Products from Server
-                        loadMoreTask.execute();
                     }
                 });
 
@@ -345,7 +340,7 @@ public class Category_Products extends Fragment {
 //                layout_filter.setChecked(false);
             filters = null;
             categoryProductsList.clear();
-            new LoadMoreTask(pageNo, filters).execute();
+            loadMoreTask(pageNo, filters);
         });
 
         return rootView;
@@ -581,69 +576,39 @@ public class Category_Products extends Fragment {
         });
     }
 
-    /*********** LoadMoreTask Used to Load more Products from the Server in the Background Thread using AsyncTask ********/
+    private void loadMoreTask(int page_number, PostFilterData postFilters) {
+        
+        AppExecutors.getInstance().NetworkIO().execute(
+                (Runnable) () -> {
+                    if (isFilterApplied) {
+                        // Request for Products against specified Filters, based on PageNo.
+                        //check internet connection
+                        if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                            RequestFilteredProducts(page_number, sortBy, postFilters);
+                        }else {
+                            Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+                        }
 
-    private class LoadMoreTask extends AsyncTask<String, Void, String> {
+                    } else {
+                        // Request for Products of given OrderProductCategory, based on PageNo.
+                        //check internet connection
+                        if(Connectivity.isConnected(EmaishaPayApp.getContext())){
+                            RequestCategoryProducts(page_number, sortBy);
+                        }else {
+                            Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+                        }
 
-        int page_number;
-        PostFilterData postFilters;
-
-
-        private LoadMoreTask(int page_number, PostFilterData postFilterData) {
-            this.page_number = page_number;
-            this.postFilters = postFilterData;
-        }
-
-
-        //*********** Runs on the UI thread before #doInBackground() ********//
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-
-        //*********** Performs some Processes on Background Thread and Returns a specified Result  ********//
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            // Check if any of the Filter is applied
-            if (isFilterApplied) {
-                // Request for Products against specified Filters, based on PageNo.
-                //check internet connection
-                if(Connectivity.isConnected(EmaishaPayApp.getContext())){
-                    RequestFilteredProducts(page_number, sortBy, postFilters);
-                }else {
-                    Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
+                    }
+                    
+                 
                 }
-
-            } else {
-                // Request for Products of given OrderProductCategory, based on PageNo.
-                //check internet connection
-                if(Connectivity.isConnected(EmaishaPayApp.getContext())){
-                    RequestCategoryProducts(page_number, sortBy);
-                }else {
-                    Snackbar.make(emptyRecord,getString(R.string.internet_connection_error),Snackbar.LENGTH_LONG).show();
-                }
-
-            }
-
-            return "All Done!";
-        }
-
-
-        //*********** Runs on the UI thread after #doInBackground() ********//
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
+        );
     }
-
+    
     @Override
     public void onPause() {
         super.onPause();
+        isVisible = true;
         if (productsCall.isExecuted())
             productsCall.cancel();
         if (filterCAll.isExecuted())

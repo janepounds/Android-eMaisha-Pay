@@ -261,7 +261,7 @@ public class SignUpFragment  extends Fragment {
                 binding.selectedSignUp.setVisibility(View.INVISIBLE);
                 binding.selectedSecurityQns.setVisibility(View.VISIBLE);
                 binding.textUserInfo.setAlpha((float) 0.6);
-                binding.textSecurityQnsLabel.setTextColor(getResources().getColor(R.color.colorPrimary));
+                binding.textSecurityQnsLabel.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
                 binding.layoutSignUp.setVisibility(View.GONE);
                 binding.layoutSecurityQns.setVisibility(View.VISIBLE);
 
@@ -307,7 +307,7 @@ public class SignUpFragment  extends Fragment {
             binding.selectedSignUp.setVisibility(View.VISIBLE);
             binding.selectedSecurityQns.setVisibility(View.INVISIBLE);
             binding.textSecurityQnsLabel.setAlpha((float) 0.6);
-            binding.textUserInfo.setTextColor(getResources().getColor(R.color.colorPrimary));
+            binding.textUserInfo.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
             binding.layoutSignUp.setVisibility(View.VISIBLE);
             binding.layoutSecurityQns.setVisibility(View.GONE);
         });

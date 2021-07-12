@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorRes;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -373,7 +374,7 @@ public class Utilities {
     public static void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
         Drawable normalDrawable = item.getIcon();
         Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
+        DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(context,color));
 
         item.setIcon(wrapDrawable);
     }

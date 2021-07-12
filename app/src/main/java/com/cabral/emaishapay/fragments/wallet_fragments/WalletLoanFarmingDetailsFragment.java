@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -66,8 +67,14 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
 
     private String title;
     final String applicantType="Applicant_Type";
-
+    Context context;
     public WalletLoanFarmingDetailsFragment() {
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -322,8 +329,8 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ColorStateList oldColors =  txtExperiencePoultryMonths.getTextColors();
-                txtExperiencePoultryMonths.setTextColor(getResources().getColor(R.color.white));
-                txtExperiencePoultryMonths.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                txtExperiencePoultryMonths.setTextColor(ContextCompat.getColor(context,R.color.white));
+                txtExperiencePoultryMonths.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary));
                 txtExperiencePoultryYears.setTextColor(oldColors);
                 txtExperiencePoultryYears.setBackgroundResource(0);
             }
@@ -333,10 +340,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ColorStateList oldColors =  txtExperiencePoultryYears.getTextColors();
-                txtExperiencePoultryYears.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePoultryYears.setTextColor(ContextCompat.getColor(context,R.color.white));
                 txtExperiencePoultryYears.setBackgroundResource(R.drawable.edittext_right_corners_green);
                 txtExperiencePoultryMonths.setTextColor(oldColors);
-                txtExperiencePoultryMonths.setBackgroundColor(getResources().getColor(R.color.transparent));
+                txtExperiencePoultryMonths.setBackgroundColor(ContextCompat.getColor(context,R.color.transparent));
             }
         });
 
@@ -345,8 +352,8 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ColorStateList oldColors =  txtExperiencePiggeryMonths.getTextColors();
-                txtExperiencePiggeryMonths.setTextColor(getResources().getColor(R.color.white));
-                txtExperiencePiggeryMonths.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                txtExperiencePiggeryMonths.setTextColor(ContextCompat.getColor(context,R.color.white));
+                txtExperiencePiggeryMonths.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary));
                 txtExperiencePiggeryYears.setTextColor(oldColors);
                 txtExperiencePiggeryYears.setBackgroundResource(0);
             }
@@ -356,10 +363,10 @@ public class WalletLoanFarmingDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ColorStateList oldColors =  txtExperiencePoultryYears.getTextColors();
-                txtExperiencePiggeryYears.setTextColor(getResources().getColor(R.color.white));
+                txtExperiencePiggeryYears.setTextColor(ContextCompat.getColor(context,R.color.white));
                 txtExperiencePiggeryYears.setBackgroundResource(R.drawable.edittext_right_corners_green);
                 txtExperiencePiggeryMonths.setTextColor(oldColors);
-                txtExperiencePiggeryMonths.setBackgroundColor(getResources().getColor(R.color.transparent));
+                txtExperiencePiggeryMonths.setBackgroundColor(ContextCompat.getColor(context,R.color.transparent));
             }
         });
 

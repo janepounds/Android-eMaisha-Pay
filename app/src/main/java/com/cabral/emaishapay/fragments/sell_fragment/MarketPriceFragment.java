@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,10 +69,10 @@ public class MarketPriceFragment extends Fragment {
 
                 try {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary));
+                        ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
 
                     } else {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.colorPrimary)); //Change selected text color
+                        ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.colorPrimary)); //Change selected text color
                     }
                     ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//Change selected text size
                 } catch (Exception e) {

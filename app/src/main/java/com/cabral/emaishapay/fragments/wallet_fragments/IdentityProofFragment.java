@@ -7,10 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -50,6 +54,33 @@ public class IdentityProofFragment extends Fragment {
     String firstname, lastname, middlename, gender, date_of_birth, district, village, sub_county, landmark, phone_number, email, next_of_kin_name, next_of_kin_second_name, next_of_kin_relationship, next_of_kin_contact;
     EditText etxt_nin;
     Spinner id_type;
+    ActivityResultLauncher<Intent> nationalIdActivityResultLauncher, customerPhotoActivityResultLauncher, customerWithPhotoActivityResultLauncher;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        nationalIdActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                // There are no request codes
+                showActivityResult(result,1231);
+            });
+        customerPhotoActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,1232);
+                });
+
+        customerWithPhotoActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,1233);
+                });
+    }
+
+
 
     @Nullable
     @Override
@@ -114,7 +145,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1231);
+                nationalIdActivityResultLauncher.launch(intent);
             }
         });
         etxt_national_id.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +155,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1231);
+                nationalIdActivityResultLauncher.launch(intent);
             }
         });
         txt_upload_customer_photo.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +165,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1232);
+                customerPhotoActivityResultLauncher.launch(intent);
             }
         });
         etxt_customer_photo.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +175,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1232);
+                customerPhotoActivityResultLauncher.launch(intent);
             }
         });
 
@@ -155,7 +186,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1233);
+                customerWithPhotoActivityResultLauncher.launch(intent);
             }
         });
         etxt_photo_with_id.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +196,7 @@ public class IdentityProofFragment extends Fragment {
                 intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
                 intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                startActivityForResult(intent, 1233);
+                customerWithPhotoActivityResultLauncher.launch(intent);
             }
         });
 
@@ -183,7 +214,7 @@ public class IdentityProofFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(getContext(),R.color.white));
                     ((TextView) view).setTextSize(14);
 
                 } catch (Exception e) {
@@ -199,7 +230,7 @@ public class IdentityProofFragment extends Fragment {
         });
 
         Button previous = view.findViewById(R.id.previous_button_two);
-        previous.setOnClickListener(view2 -> getFragmentManager().popBackStack());
+        previous.setOnClickListener(view2 -> getActivity().getSupportFragmentManager().popBackStack());
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,12 +277,13 @@ public class IdentityProofFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
 
+    private void showActivityResult(ActivityResult result, int requestCode) {
+        try {
             // When an Image is picked
+            int resultCode= result.getResultCode();
+            Intent data = result.getData();
+
             if (resultCode == RESULT_OK && null != data) {
                 if (requestCode == 1231) {
 
@@ -290,7 +322,6 @@ public class IdentityProofFragment extends Fragment {
         } catch (Exception e) {
             Toast.makeText(getActivity(), R.string.something_went_wrong, Toast.LENGTH_LONG).show();
         }
-
     }
 
     private String encodeImage(Bitmap bm) {

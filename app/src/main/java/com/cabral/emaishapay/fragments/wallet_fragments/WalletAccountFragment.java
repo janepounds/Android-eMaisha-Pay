@@ -611,7 +611,7 @@ public class WalletAccountFragment extends Fragment {
         binding.layoutChangePassword.setOnClickListener(view13 -> {
             // Create and show the dialog.
             DialogFragment depositDialog = new ChangePassword(getString(R.string.change_pin));
-            depositDialog.show(getFragmentManager(), "dialog");
+            depositDialog.show(getActivity().getSupportFragmentManager(), "dialog");
 
         });
 

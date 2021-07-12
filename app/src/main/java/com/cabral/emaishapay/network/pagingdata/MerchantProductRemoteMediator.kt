@@ -8,7 +8,6 @@ import androidx.room.withTransaction
 import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
 import com.cabral.emaishapay.network.db.EmaishapayDb
 import com.cabral.emaishapay.network.db.entities.EcProduct
-import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import com.cabral.emaishapay.network.db.entities.RemoteKeys
 import retrofit2.HttpException
 import java.io.IOException
@@ -76,13 +75,13 @@ class MerchantProductRemoteMediator(
             emaishapayDb.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    emaishapayDb.remoteKeysDao()?.clearRemoteKeys()
-                    emaishapayDb.merchantOrderDao()?.clearOrders()
+                    emaishapayDb.remoteKeysDao()?.clearProductRemoteKeys()
+                    emaishapayDb.merchantProductDao()?.clear()
                 }
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = merchantProducts.map {
-                    RemoteKeys(id = it.id.toInt(), prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey, type = "product")
                 }
                 emaishapayDb.remoteKeysDao()?.insertAll(keys)
                 emaishapayDb.merchantProductDao()?.insertAll(merchantProducts)
@@ -101,7 +100,7 @@ class MerchantProductRemoteMediator(
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
                 ?.let { product ->
                     // Get the remote keys of the last item retrieved
-                    emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(product.id.toInt())
+                    emaishapayDb.remoteKeysDao()?.remoteKeysProductId(product.id)
                 }
     }
 
@@ -111,7 +110,7 @@ class MerchantProductRemoteMediator(
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
                 ?.let { repo ->
                     // Get the remote keys of the first items retrieved
-                    emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repo.id.toInt())
+                    emaishapayDb.remoteKeysDao()?.remoteKeysProductId(repo.id.toString())
                 }
     }
 
@@ -122,7 +121,7 @@ class MerchantProductRemoteMediator(
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
-                emaishapayDb.remoteKeysDao()?.remoteKeysOrderId(repoId.toInt())
+                emaishapayDb.remoteKeysDao()?.remoteKeysProductId(repoId)
             }
         }
     }

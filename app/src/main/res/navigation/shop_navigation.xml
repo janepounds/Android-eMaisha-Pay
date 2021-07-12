@@ -25,8 +25,8 @@
     </fragment>
     <fragment
         android:id="@+id/shopProductsFragment"
-        android:name="com.cabral.emaishapay.fragments.shop_fragment.ShopProductsFragment"
-        android:label="ShopProductsFragment"
+        android:name="com.cabral.emaishapay.fragments.shop_fragment.MerchantProductsFragment"
+        android:label="MerchantProductsFragment"
         tools:layout="@layout/fragment_shop_products"/>
     <fragment
         android:id="@+id/shopPayments"

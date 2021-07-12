@@ -209,7 +209,7 @@ public class Nearby_Merchants extends Fragment {
         }
 
         // Initialize the merchantsListAdapter for RecyclerView
-        this.merchantsListAdapter = new MerchantsListAdapter(getContext(), merchantList,this.my_cart, getFragmentManager());
+        this.merchantsListAdapter = new MerchantsListAdapter(getContext(), merchantList,this.my_cart, getActivity().getSupportFragmentManager());
         // Set the Adapter and LayoutManager to the RecyclerView
         this.binding.merchantsList.setAdapter(merchantsListAdapter);
 

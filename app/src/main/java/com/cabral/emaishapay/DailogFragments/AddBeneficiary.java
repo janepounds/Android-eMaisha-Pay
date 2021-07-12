@@ -8,8 +8,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
@@ -61,12 +64,14 @@ public class AddBeneficiary extends DialogFragment {
     EditText beneficiary_name_mm,account_name,beneficiary_no,account_number,etCity;
     String beneficiary_name,beneficiary_number,city,country,street_address_1,street_address_2,beneficiary_bank_phone_number;
     Bank[] BankList; BankBranch[] bankBranches;
-    String selected_bank_code,selected_branch_code,bankk,branch,id,sSpCountry;
+    String selected_bank_code,selected_branch_code,bankk,branch;
     TextView title;
     OtpDialogLoader otpDialogLoader;
     DialogLoader dialogLoader;
     List<String> Banknames = new ArrayList<>();
     private final String type;
+    //ActivityResultLauncher<Intent> someActivityResultLauncher;
+    
 
     public AddBeneficiary(String type) {
         this.type=type;
@@ -76,6 +81,13 @@ public class AddBeneficiary extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+
+//        someActivityResultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    // There are no request codes
+//                    showActivityResult(result);
+//                });
     }
 
     @Override
@@ -124,7 +136,7 @@ public class AddBeneficiary extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
@@ -162,7 +174,7 @@ public class AddBeneficiary extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
@@ -190,7 +202,7 @@ public class AddBeneficiary extends DialogFragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                         //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                     } catch (Exception e) {
 
@@ -215,7 +227,7 @@ public class AddBeneficiary extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
@@ -659,5 +671,6 @@ public class AddBeneficiary extends DialogFragment {
 
         otpDialogLoader.onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

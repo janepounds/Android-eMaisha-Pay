@@ -1,14 +1,18 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -59,6 +63,20 @@ public class IdInformationFragment extends Fragment {
     private String encodedIdBack;
     private ImageView imageView;
     DialogLoader dialogLoader;
+    ActivityResultLauncher<Intent> imageChooserActivityResultLauncher;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        imageChooserActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // There are no request codes
+                    showActivityResult(result,1);
+                });
+    }
+
+
 
     public IdInformationFragment() {
     }
@@ -100,17 +118,14 @@ public class IdInformationFragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         //Change selected text color
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                        ((TextView) view).setTextColor(ContextCompat.getColor(getContext(),R.color.white));
                         //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
-                    } catch (Exception e) {
-
-                    }
+                    } catch (Exception e) { }
 
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
                 }
             });
 
@@ -201,16 +216,17 @@ public class IdInformationFragment extends Fragment {
         intent.putExtra(ImageSelectActivity.FLAG_COMPRESS, true); // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_CAMERA, true);   // Default is true
         intent.putExtra(ImageSelectActivity.FLAG_GALLERY, true);  // Default is true
-        startActivityForResult(intent, 1);
+        imageChooserActivityResultLauncher.launch(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
+    private void showActivityResult(ActivityResult result, int requestCode) {
+
+        int resultCode = result.getResultCode();
+        Intent data = result.getData();
 
         if (resultCode == Activity.RESULT_OK && requestCode == 1) {
             Bitmap imageBitmap;
-
             imageBitmap = BitmapFactory.decodeFile(data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH));
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -148,7 +149,7 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(context.getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
@@ -169,7 +170,7 @@ public class MyProduceListAdapter extends RecyclerView.Adapter<MyProduceListAdap
                 String selectedItem=quantityUnit.getSelectedItem().toString();
                 try {
                     //Change selected text color
-                    ((TextView) view).setTextColor(context.getResources().getColor(R.color.white));
+                    ((TextView) view).setTextColor(ContextCompat.getColor(context,R.color.white));
                     //((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);//Change selected text size
                 } catch (Exception e) {
 
