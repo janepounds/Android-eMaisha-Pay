@@ -61,9 +61,7 @@ class MerchantOrderRemoteMediator(
                 // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
                 // the end of pagination for prepend.
                 val prevKey = remoteKeys?.prevKey
-                if (prevKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
@@ -74,9 +72,7 @@ class MerchantOrderRemoteMediator(
                 // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
                 // the end of pagination for append.
                 val nextKey = remoteKeys?.nextKey
-                if (nextKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
             }
         }
@@ -94,8 +90,8 @@ class MerchantOrderRemoteMediator(
                     emaishapayDb.remoteKeysDao()?.clearOrderRemoteKeys()
                     emaishapayDb.merchantOrderDao()?.clearOrders()
                 }
-                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
+                val prevKey = if (page == STARTING_PAGE_INDEX) null else page.minus(1)
+                val nextKey = if (endOfPaginationReached) null else page.plus(1)
                 val keys = merchantOrders.map {
                     RemoteKeys(id = it.id.toString(), prevKey = prevKey, nextKey = nextKey)
                 }

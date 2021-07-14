@@ -35,27 +35,12 @@ import kotlinx.coroutines.launch
 
 class MerchantOrdersFragment : Fragment() {
     private lateinit var binding: FragmentShopOrdersBinding
-    var dialogLoader: DialogLoader? = null
     private lateinit var viewModel: MerchantOrdersViewModel
     private val adapter = MerchantOrdersAdapter()
 
     private var searchJob: Job? = null
 
-    private fun loadOrders(query: String) {
-        // Make sure we cancel the previous job before creating a new one
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
-            viewModel.searchOrders(query).collectLatest {
-                //Log.w("OrderSizeWarning",it.javaClass.fields.size.toString())
 
-                if(it.javaClass.fields.size>0){
-
-                    adapter.submitData(it)
-                }
-
-            }
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentShopOrdersBinding.inflate(layoutInflater)
@@ -89,7 +74,23 @@ class MerchantOrdersFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, binding.etxtSearchOrder.text.trim().toString())
     }
-    
+
+    private fun loadOrders(query: String) {
+        // Make sure we cancel the previous job before creating a new one
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.searchOrders(query).collectLatest {
+                //Log.w("OrderSizeWarning",it.javaClass.fields.size.toString())
+
+                if(it.javaClass.fields.size>0){
+
+                    adapter.submitData(it)
+                }
+
+            }
+        }
+    }
+
     private fun initAdapter() {
         binding.ordersRecycler.adapter = adapter
         binding.ordersRecycler.layoutManager= LinearLayoutManager(context)
