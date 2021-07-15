@@ -20,10 +20,7 @@ import androidx.paging.*
 import com.cabral.emaishapay.network.api_helpers.EmaishaShopAPIService
 import com.cabral.emaishapay.network.db.EmaishapayDb
 import com.cabral.emaishapay.network.db.daos.*
-import com.cabral.emaishapay.network.db.entities.EcManufacturer
-import com.cabral.emaishapay.network.db.entities.EcProduct
-import com.cabral.emaishapay.network.db.entities.EcProductCategory
-import com.cabral.emaishapay.network.db.entities.MerchantOrder
+import com.cabral.emaishapay.network.db.entities.*
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -74,6 +71,41 @@ class MerchantRepository(private val wallet_id: Int, private val database: Emais
                         database
                 ),
                 pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, EcProduct>
+        ).flow
+    }
+
+    fun getTransactionsResultStream(query: String): Flow<PagingData<Transactions>> {
+
+        // appending '%' so we can allow other characters to be before and after the query string
+        ///val dbQuery = "%${query.replace(' ', '%')}%"
+        val pagingSourceFactory = { if(query.isEmpty() || query==null) database.transactionsDao()?.getTransactionList() else database.transactionsDao()?.searchTransactions(query) }
+
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+                remoteMediator = TransactionsRemoteMediator(
+                        wallet_id,
+                        EmaishaShopAPIService.create(),
+                        database
+                ),
+                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, Transactions>
+        ).flow
+    }
+    fun getSettlementsResultStream(query: String): Flow<PagingData<Transactions>> {
+
+        // appending '%' so we can allow other characters to be before and after the query string
+        ///val dbQuery = "%${query.replace(' ', '%')}%"
+        val pagingSourceFactory = { if(query.isEmpty() || query==null) database.transactionsDao()?.getTransactionList() else database.transactionsDao()?.searchTransactions(query) }
+
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+                remoteMediator = SettlementsRemoteMediator(
+                        wallet_id,
+                        EmaishaShopAPIService.create(),
+                        database
+                ),
+                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, Transactions>
         ).flow
     }
 

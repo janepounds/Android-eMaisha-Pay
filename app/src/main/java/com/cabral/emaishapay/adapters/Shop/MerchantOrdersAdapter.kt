@@ -9,7 +9,7 @@ import com.cabral.emaishapay.network.db.entities.MerchantOrder
 /**
  * Adapter for the list of Orders.
  */
-class MerchantOrdersAdapter : PagingDataAdapter<MerchantOrder, MerchantOrderViewHolder>(ORDER_COMPARATOR) {
+class  MerchantOrdersAdapter : PagingDataAdapter<MerchantOrder, MerchantOrderViewHolder>(ORDER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MerchantOrderViewHolder {
         Log.w("OncreateViewHolder"," OcreateViewHolder")

@@ -29,6 +29,7 @@ abstract class EmaishapayDb : RoomDatabase() {
     abstract fun merchantOrderDao(): MerchantOrderDao?
     abstract fun remoteKeysDao(): RemoteKeysDao?
     abstract fun merchantProductDao(): MerchantProductDao?
+    abstract fun transactionsDao(): TransactionsDao?
 
     companion object {
         var INSTANCE: EmaishapayDb? = null
@@ -43,7 +44,7 @@ abstract class EmaishapayDb : RoomDatabase() {
                 Room.databaseBuilder(
                         context.applicationContext,
                         EmaishapayDb::class.java, "emaishapayDb"
-                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4)
+                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4).addMigrations(MIGRATION_4_5)
                  .build()
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
@@ -72,6 +73,13 @@ abstract class EmaishapayDb : RoomDatabase() {
         val MIGRATION_3_4: Migration = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE `remote_keys` ADD COLUMN `type` TEXT NOT NULL DEFAULT 'order' ")
+            }
+        }
+        val MIGRATION_4_5: Migration = object : Migration(4, 5){
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE VIRTUAL TABLE `TransactionsFts` USING fts4("
+                        + "`cashin`,`cashout`,`bank`, `mobileMoney`," +
+                        " content=`Transactions`  )")
             }
         }
 

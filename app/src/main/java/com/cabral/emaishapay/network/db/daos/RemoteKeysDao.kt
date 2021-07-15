@@ -34,6 +34,9 @@ interface RemoteKeysDao {
     @Query("SELECT * FROM remote_keys WHERE id = :orderId AND type='product' ")
     suspend fun remoteKeysProductId(orderId: String): RemoteKeys?
 
+    @Query("SELECT * FROM remote_keys WHERE id = :orderId AND type='transaction' ")
+    suspend fun remoteKeysTransactionsId(orderId: String): RemoteKeys?
+
     @Query("DELETE FROM remote_keys WHERE type='order'  ")
     suspend fun clearOrderRemoteKeys()
 

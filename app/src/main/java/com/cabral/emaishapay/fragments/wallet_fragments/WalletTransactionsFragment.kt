@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.wallet_fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,25 +11,29 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cabral.emaishapay.R
 import com.cabral.emaishapay.activities.WalletHomeActivity
 import com.cabral.emaishapay.adapters.WalletTransactionsAdapter
 import com.cabral.emaishapay.databinding.TransactionListBinding
-import com.cabral.emaishapay.modelviews.TranscationsViewModel
+import com.cabral.emaishapay.modelviews.TransactionsViewModel
 import com.cabral.emaishapay.network.db.EmaishapayDb
 import com.cabral.emaishapay.network.pagingdata.MerchantRepository
 import kotlinx.android.synthetic.main.transaction_list.*
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class WalletTransactionsFragment:Fragment() {
     private lateinit var binding:TransactionListBinding
-    private lateinit var viewmodel:TranscationsViewModel
+    private lateinit var viewmodel:TransactionsViewModel
     private  val adapter = WalletTransactionsAdapter()
     private var searchJob: Job? = null
     private lateinit var appTitle:String
     var keyTitle = "KEY_TITLE"
+    val query = DEFAULT_QUERY
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,8 +44,8 @@ class WalletTransactionsFragment:Fragment() {
         val context:Context? = context
         if(context!=null){
             val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
-            viewmodel = ViewModelProvider(this, TranscationsViewModel.ViewModelFactory(MerchantRepository(Integer.parseInt(walletId), EmaishapayDb.getDatabase(context))))
-                    .get(TranscationsViewModel::class.java)
+            viewmodel = ViewModelProvider(this, TransactionsViewModel.ViewModelFactory(MerchantRepository(Integer.parseInt(walletId), EmaishapayDb.getDatabase(context))))
+                    .get(TransactionsViewModel::class.java)
         }
         return binding.root
     }
@@ -63,7 +66,7 @@ class WalletTransactionsFragment:Fragment() {
             binding.walletCashOut.setTextColor(ContextCompat.getColor(requireContext(), R.color.textRed))
             binding.btnAddSettlement.visibility = View.VISIBLE
             initAdapter()
-            getSettlements()
+            getSettlements(query)
         } else {
             (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbarWalletTransactionsList)
             binding.toolbarWalletTransactionsList.setTitle(appTitle)
@@ -77,7 +80,7 @@ class WalletTransactionsFragment:Fragment() {
             binding.walletCashOut.setTextColor(ContextCompat.getColor(requireContext(), R.color.textRed))
             binding.btnAddSettlement.visibility = View.GONE
             initAdapter()
-            actualStatementData()
+            actualStatementData(query)
         }
         binding.btnAddSettlement.setOnClickListener(View.OnClickListener {
 
@@ -123,13 +126,41 @@ class WalletTransactionsFragment:Fragment() {
 
     }
 
-    private fun actualStatementData() {
-        TODO("Not yet implemented")
+    private fun actualStatementData(query: String) {
+        // Make sure we cancel the previous job before creating a new one
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewmodel.searchTransactions(query).collectLatest {
+                //Log.w("OrderSizeWarning",it.javaClass.fields.size.toString())
+
+                if(it.javaClass.fields.size>0){
+
+                    adapter.submitData(it)
+                }
+
+            }
+        }
+
     }
 
-    private fun getSettlements() {
-        TODO("Not yet implemented")
-    }
+    private fun getSettlements(query: String) {
+        // Make sure we cancel the previous job before creating a new one
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewmodel.searchSettlements(query).collectLatest {
+                //Log.w("OrderSizeWarning",it.javaClass.fields.size.toString())
 
+                if(it.javaClass.fields.size>0){
+
+                    adapter.submitData(it)
+                }
+
+            }
+        }
+
+    }
+    companion object {
+        private const val DEFAULT_QUERY = ""
+    }
 
 }
