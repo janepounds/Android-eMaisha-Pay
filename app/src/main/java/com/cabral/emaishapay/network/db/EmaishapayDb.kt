@@ -44,7 +44,7 @@ abstract class EmaishapayDb : RoomDatabase() {
                 Room.databaseBuilder(
                         context.applicationContext,
                         EmaishapayDb::class.java, "emaishapayDb"
-                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4).addMigrations(MIGRATION_4_5)
+                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4).addMigrations(MIGRATION_4_5).addMigrations(MIGRATION_5_6)
                  .build()
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
@@ -80,6 +80,16 @@ abstract class EmaishapayDb : RoomDatabase() {
                 database.execSQL("CREATE VIRTUAL TABLE `TransactionsFts` USING fts4("
                         + "`cashin`,`cashout`,`bank`, `mobileMoney`," +
                         " content=`Transactions`  )")
+            }
+        }
+
+        val MIGRATION_5_6:Migration = object :Migration(5,6){
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE 'Transactions' (`id` TEXT, " +
+                        " `cashin` DOUBLE,`cashout` DOUBLE,'bank' DOUBLE,'mobileMoney' DOUBLE, 'transactions' ARRAY, PRIMARY KEY(`id`))")
+                database.execSQL("CREATE TABLE 'UserTransactions' (`id` TEXT, " +
+                        " `user_transaction_id` TEXT,`type` TEXT,'amount' DOUBLE,'ft_discount' DOUBLE, 'charge' DOUBLE, 'created_at' TEXT, 'trans_message' TEXT,'referenceNumber' TEXT,'phoneNumber' TEXT, 'date' TEXT, " +
+                        "'receiver' TEXT, 'sender' TEXT, 'receiptNumber' TEXT, 'trans_currency' TEXT,'senderUserId' TEXT, 'receiverUserId' TEXT, PRIMARY KEY(`id`))")
             }
         }
 
