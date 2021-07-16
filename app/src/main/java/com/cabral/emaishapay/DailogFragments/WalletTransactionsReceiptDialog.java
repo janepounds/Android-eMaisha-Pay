@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.network.db.entities.UserTransactions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,9 +32,9 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
     TextView serviceTextView, receiptNumberTextView, statusTextView,totalTextView,
             merchantNameTextView,errorTextView,dateTextView,referenceNoTextView;
     private Context context;
-    private final WalletTransactionResponse.TransactionData.Transactions  transaction;
+    private final UserTransactions  transaction;
 
-   public WalletTransactionsReceiptDialog(WalletTransactionResponse.TransactionData.Transactions transaction){
+   public WalletTransactionsReceiptDialog(UserTransactions transaction){
        this.transaction =transaction;
    }
     @NotNull
@@ -81,7 +82,7 @@ public class WalletTransactionsReceiptDialog extends DialogFragment {
         actualStatementData(this.transaction);
     }
 
-    private void actualStatementData(WalletTransactionResponse.TransactionData.Transactions transaction) {
+    private void actualStatementData(UserTransactions transaction) {
         try {
 
             totalTextView.setText("UGX "+ NumberFormat.getInstance().format(transaction.getAmount()));
