@@ -13,38 +13,36 @@ import androidx.navigation.ui.NavigationUI
 import com.cabral.emaishapay.R
 import com.cabral.emaishapay.databinding.ActivityShopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_shop.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 class MerchantShopActivity : AppCompatActivity() {
 
-    var actionBar: ActionBar? = null
-    private lateinit var binding: ActivityShopBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@MerchantShopActivity, R.layout.activity_shop)
-        //setContentView(R.layout.activity_shop);
-        bottomNavigationView = binding.navView
-        setSupportActionBar(binding.toolbarMain)
-        actionBar = supportActionBar
+        setContentView( R.layout.activity_shop)
+        setSupportActionBar(toolBarMain)
+
         actionBar!!.setDisplayShowTitleEnabled(true)
         actionBar!!.setHomeButtonEnabled(false)
         actionBar!!.setDisplayHomeAsUpEnabled(false)
-        binding.navView.itemIconTintList = null
+        bottomNavigationView=navView
+        navView.itemIconTintList = null
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.shop_navigation_container) as NavHostFragment?
         navController = navHostFragment!!.navController
-        NavigationUI.setupWithNavController(binding.navView, navController)
+
+        NavigationUI.setupWithNavController(navView, navController)
         KeyboardVisibilityEvent.setEventListener(
                 this
         ) { isOpen ->
             Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard visibility changed")
             if (isOpen) {
                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is open")
-                binding.navView.visibility = View.INVISIBLE
+                navView.visibility = View.INVISIBLE
                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Invisible")
             } else {
                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: Keyboard is closed")
-                binding.navView.visibility = View.VISIBLE
+                navView.visibility = View.VISIBLE
                 Log.d("SHOP ACTIVITY", "onVisibilityChanged: NavBar got Visible")
             }
         }
@@ -58,14 +56,6 @@ class MerchantShopActivity : AppCompatActivity() {
             }
         }
 
-//        AppExecutors.getInstance().NetworkIO().execute(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        StartAppRequests.SyncProductData();
-//                    }
-//                }
-//        );
     }
 
 
@@ -75,8 +65,6 @@ class MerchantShopActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
-        // Check if BackStack has some Fragments
         if (navController.currentDestination!!.id != R.id.shopProductsFragment) {
             // Pop previous Fragment
             navController.popBackStack()
