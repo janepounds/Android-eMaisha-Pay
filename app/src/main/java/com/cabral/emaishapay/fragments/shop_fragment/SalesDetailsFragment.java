@@ -89,14 +89,14 @@ public class SalesDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        salesDetailsAdapter = new SalesDetailsAdapter(context);
+        salesDetailsAdapter = new SalesDetailsAdapter(context,salesDetails.getOrderProducts());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(salesDetailsAdapter);
 
-        salesDetailsAdapter.setProductList(salesDetails.getOrderProducts());
+        //salesDetailsAdapter.setProductList(salesDetails.getOrderProducts());
 
     }
 

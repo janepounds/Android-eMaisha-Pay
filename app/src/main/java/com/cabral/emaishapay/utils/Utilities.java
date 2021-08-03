@@ -187,8 +187,6 @@ public class Utilities {
                     @Override
                     public void onLocationChanged(Location loc) {}
                     @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {}
-                    @Override
                     public void onProviderEnabled(String provider) {}
                     @Override
                     public void onProviderDisabled(String provider) {}
@@ -223,7 +221,11 @@ public class Utilities {
         device.setDeviceUser(Build.USER);
         device.setDeviceModel(Build.BRAND +" "+ Build.MODEL);
         device.setDeviceBrand(Build.BRAND);
-        device.setDeviceSerial(Build.SERIAL);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            device.setDeviceSerial(Build.getSerial());
+        }else{
+            device.setDeviceSerial(Build.SERIAL);
+        }
         device.setDeviceSystemOS(System.getProperty("os.name"));
         device.setDeviceAndroidOS("Android "+ Build.VERSION.RELEASE);
         device.setDeviceManufacturer(Build.MANUFACTURER);
