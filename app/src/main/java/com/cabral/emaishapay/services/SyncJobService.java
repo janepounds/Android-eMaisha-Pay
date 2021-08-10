@@ -36,7 +36,7 @@ public class SyncJobService extends JobService {
                     @Override
                     public void run() {
                         Log.d(TAG, "run: product sync started");
-                        WalletHomeActivity.SyncProductData();
+                        WalletHomeActivity.syncProductData();
                         Log.d(TAG, "Job finished");
                         jobFinished(params, false);
                     }

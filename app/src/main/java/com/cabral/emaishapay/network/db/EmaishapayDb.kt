@@ -86,7 +86,7 @@ abstract class EmaishapayDb : RoomDatabase() {
         val MIGRATION_5_6:Migration = object :Migration(5,6){
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE 'Transactions' (`id` TEXT, " +
-                        " `cashin` DOUBLE,`cashout` DOUBLE,'bank' DOUBLE,'mobileMoney' DOUBLE, 'transactions' ARRAY, PRIMARY KEY(`id`))")
+                        " `cashin` DOUBLE,`cashout` DOUBLE,'bank' DOUBLE,'mobileMoney', PRIMARY KEY(`id`))")
                 database.execSQL("CREATE TABLE 'UserTransactions' (`id` TEXT, " +
                         " `user_transaction_id` TEXT,`type` TEXT,'amount' DOUBLE,'ft_discount' DOUBLE, 'charge' DOUBLE, 'created_at' TEXT, 'trans_message' TEXT,'referenceNumber' TEXT,'phoneNumber' TEXT, 'date' TEXT, " +
                         "'receiver' TEXT, 'sender' TEXT, 'receiptNumber' TEXT, 'trans_currency' TEXT,'senderUserId' TEXT, 'receiverUserId' TEXT, PRIMARY KEY(`id`))")

@@ -1083,7 +1083,7 @@ public class AddShopProductFragment extends DialogFragment {
                     @Override
                     public void run() {
                         Log.d(TAG, "run: product sync started");
-                        WalletHomeActivity.SyncProductData();
+                        WalletHomeActivity.syncProductData();
 
                     }
                 }
