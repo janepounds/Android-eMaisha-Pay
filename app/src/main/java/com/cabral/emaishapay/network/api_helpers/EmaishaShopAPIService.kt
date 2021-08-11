@@ -359,13 +359,13 @@ interface EmaishaShopAPIService {
             val apiInterceptor = API_Interceptor.Builder()
                     .consumerKey(Utilities.getMd5Hash(ConstantValues.ECOMMERCE_CONSUMER_KEY))
                     .consumerSecret(Utilities.getMd5Hash(ConstantValues.ECOMMERCE_CONSUMER_SECRET))
-                    .consumerIP(ConstantValues.getLocalIpAddress())
+                    .consumerIP(ConstantValues.localIpAddress)
                     .build()
 
             val basicOAuthWoocommerce = BasicOAuth.Builder()
                     .consumerKey(ConstantValues.ECOMMERCE_CONSUMER_KEY)
                     .consumerSecret(ConstantValues.ECOMMERCE_CONSUMER_SECRET)
-                    .consumerIP(ConstantValues.getLocalIpAddress())
+                    .consumerIP(ConstantValues.localIpAddress)
                     .build()
 
             val okHttpClient = OkHttpClient().newBuilder()

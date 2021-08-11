@@ -17,7 +17,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_shop_products"
+                android:id="@+id/toolbarShopProducts"
                 android:layout_width="match_parent"
                 app:navigationIcon="@drawable/ic_chevron_left_white"
                 android:layout_height="?actionBarSize"
@@ -43,7 +43,7 @@
                 android:elevation="5dp">
 
                 <EditText
-                    android:id="@+id/etxt_search"
+                    android:id="@+id/etxtSearch"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -66,7 +66,7 @@
                     app:layout_constraintGuide_percent="0.18" />
 
                 <ImageView
-                    android:id="@+id/buy_inputs_search_icon"
+                    android:id="@+id/buyInputsSearchIcon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:padding="10dp"
@@ -79,7 +79,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shop_product_recyclerview"
+                android:id="@+id/shopProductRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground">
@@ -87,14 +87,14 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
 
             <Button
-                android:id="@+id/retry_button"
+                android:id="@+id/retryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/retry"
@@ -102,7 +102,7 @@
                 android:layout_gravity="center" />
 
             <ImageView
-                android:id="@+id/image_no_product"
+                android:id="@+id/imageNoProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="center"/>
@@ -117,7 +117,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add"
+                android:id="@+id/fabAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
