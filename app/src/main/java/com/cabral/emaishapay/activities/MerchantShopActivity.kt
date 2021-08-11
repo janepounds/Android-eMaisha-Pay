@@ -20,9 +20,12 @@ class MerchantShopActivity : AppCompatActivity() {
         setContentView( R.layout.activity_shop)
         setSupportActionBar(toolBarMain)
 
-        actionBar!!.setDisplayShowTitleEnabled(true)
-        actionBar!!.setHomeButtonEnabled(false)
-        actionBar!!.setDisplayHomeAsUpEnabled(false)
+        actionBar?.let {
+            it.setDisplayShowTitleEnabled(true)
+            it.setHomeButtonEnabled(false)
+            it.setDisplayHomeAsUpEnabled(false)
+        }
+
         bottomNavigationView =navView
         navView.itemIconTintList = null
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.shop_navigation_container) as NavHostFragment

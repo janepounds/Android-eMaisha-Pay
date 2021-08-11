@@ -1,7 +1,6 @@
 @file:JvmName("MerchantProductsFragment")
 package com.cabral.emaishapay.fragments.shop_fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -25,22 +24,23 @@ import com.cabral.emaishapay.R
 import com.cabral.emaishapay.activities.WalletHomeActivity
 import com.cabral.emaishapay.adapters.Shop.MerchantProductsAdapter
 import com.cabral.emaishapay.customs.DialogLoader
-import com.cabral.emaishapay.databinding.FragmentShopProductsBinding
 import com.cabral.emaishapay.modelviews.MerchantProductViewModel
 import com.cabral.emaishapay.network.db.EmaishapayDb
 import com.cabral.emaishapay.network.db.entities.EcManufacturer
 import com.cabral.emaishapay.network.pagingdata.MerchantRepository
+import kotlinx.android.synthetic.main.fragment_shop_products.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import java.util.*
 
 class MerchantProductsFragment : Fragment() {
-    private lateinit var binding: FragmentShopProductsBinding
-    var dialogLoader: DialogLoader? = null
+
+    val dialogLoader: DialogLoader by lazy {  DialogLoader(context) }
     private lateinit var viewModel: MerchantProductViewModel
     private lateinit var adapter : MerchantProductsAdapter
 
@@ -64,19 +64,17 @@ class MerchantProductsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentShopProductsBinding.inflate(layoutInflater)
 
-        val context : Context? =context
-        if(context!=null  ){
-            val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
-            // get the view model
-            viewModel = ViewModelProvider(this, MerchantProductViewModel.ViewModelFactory( MerchantRepository( Integer.parseInt(walletId), EmaishapayDb.getDatabase(context)) ))
+        context?.let {
+            val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, it)
+            viewModel = ViewModelProvider(this, MerchantProductViewModel.ViewModelFactory( MerchantRepository( Integer.parseInt(walletId), EmaishapayDb.getDatabase(it)) ))
                     .get(MerchantProductViewModel::class.java)
-            adapter = MerchantProductsAdapter(viewModel, requireActivity().supportFragmentManager, context)
+            adapter = MerchantProductsAdapter(viewModel, requireActivity().supportFragmentManager, it)
         }
 
 
-        binding.fabAdd.setOnClickListener {
+
+        fabAdd.setOnClickListener {
             val ft = requireActivity().supportFragmentManager.beginTransaction()
             val prev = requireActivity().supportFragmentManager.findFragmentByTag("dialog")
             if (prev != null) {
@@ -89,16 +87,15 @@ class MerchantProductsFragment : Fragment() {
             addProductDialog.show(ft, "dialog")
         }
 
-        return binding.root
+        return inflater.inflate(R.layout.fragment_shop_products, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialogLoader= DialogLoader(context)
         subscribeToManufacturer(viewModel.getOnlineManufacturers())
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        binding.shopProductRecyclerview.addItemDecoration(decoration)
+        shopProductRecyclerview.addItemDecoration(decoration)
 
         initAdapter()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
@@ -108,12 +105,12 @@ class MerchantProductsFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(LAST_SEARCH_QUERY, binding.etxtSearch.text.trim().toString())
+        outState.putString(LAST_SEARCH_QUERY, etxtSearch.text.trim().toString())
     }
     
     private fun initAdapter() {
-        binding.shopProductRecyclerview.adapter = adapter
-        binding.shopProductRecyclerview.layoutManager= LinearLayoutManager(context)
+        shopProductRecyclerview.adapter = adapter
+        shopProductRecyclerview.layoutManager= LinearLayoutManager(context)
         
         adapter.addLoadStateListener { loadState ->
             // show empty list
@@ -122,11 +119,11 @@ class MerchantProductsFragment : Fragment() {
             Log.w("AdpterItemCount", adapter.itemCount.toString())
 
             // Only show the list if refresh succeeds.
-           // binding.ordersRecycler.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
+           // ordersRecycler.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
-            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+            progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
-            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
+            retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
 
 
             // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
@@ -146,18 +143,18 @@ class MerchantProductsFragment : Fragment() {
 
     private fun showEmptyList(show: Boolean) {
         if (show) {
-            binding.imageNoProduct.visibility = View.VISIBLE
-            binding.shopProductRecyclerview.visibility = View.GONE
+            imageNoProduct.visibility = View.VISIBLE
+            shopProductRecyclerview.visibility = View.GONE
         } else {
-            binding.imageNoProduct.visibility = View.GONE
-            binding.shopProductRecyclerview.visibility = View.VISIBLE
+            imageNoProduct.visibility = View.GONE
+            shopProductRecyclerview.visibility = View.VISIBLE
         }
     }
     
     private fun initSearch(query: String) {
-        binding.etxtSearch.setText(query)
+        etxtSearch.setText(query)
 
-        binding.etxtSearch.setOnEditorActionListener { _, actionId, _ ->
+        etxtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 updateListFromInput()
                 true
@@ -166,7 +163,7 @@ class MerchantProductsFragment : Fragment() {
             }
         }
 
-        binding.etxtSearch.setOnKeyListener { _, keyCode, event ->
+        etxtSearch.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 updateListFromInput()
                 true
@@ -182,12 +179,12 @@ class MerchantProductsFragment : Fragment() {
                     .distinctUntilChangedBy { it.refresh }
                     // Only react to cases where Remote REFRESH completes i.e., NotLoading.
                     .filter { it.refresh is LoadState.NotLoading }
-                    .collect { binding.shopProductRecyclerview.scrollToPosition(0) }
+                    .collect { shopProductRecyclerview.scrollToPosition(0) }
         }
     }
 
     private fun updateListFromInput() {
-        binding.etxtSearch.text.trim().let {
+        etxtSearch.text.trim().let {
             if (it.isNotEmpty()) {
                 loadProducts(it.toString())
             }
