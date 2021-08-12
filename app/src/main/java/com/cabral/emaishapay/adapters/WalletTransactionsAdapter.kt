@@ -5,23 +5,22 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.cabral.emaishapay.network.db.entities.Transactions
 import com.cabral.emaishapay.network.db.entities.UserTransactions
 
-abstract class WalletTransactionsAdapter : PagingDataAdapter<UserTransactions, TransactionsViewHolder>(ORDER_COMPARATOR) {
+ class WalletTransactionsAdapter(val context: Context) : PagingDataAdapter<UserTransactions, TransactionsViewHolder>(ORDER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionsViewHolder {
 
         return TransactionsViewHolder.create(parent)
     }
 
-    abstract val context : Context?
-
 
     override fun onBindViewHolder(holder: TransactionsViewHolder, position: Int) {
         val transactionItem = getItem(position)
 
         if (transactionItem != null) {
-            context?.let { holder.bind(transactionItem,context = it) }
+            context?.let { holder.bind(transactionItem, context = it) }
         }
     }
 

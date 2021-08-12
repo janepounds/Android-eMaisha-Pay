@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 class WalletTransactionsFragment:Fragment() {
     private lateinit var binding:TransactionListBinding
     private lateinit var viewmodel:TransactionsViewModel
-    private  val adapter = WalletTransactionsAdapter()
+    private  val adapter = context?.let { WalletTransactionsAdapter(it) }
     private var searchJob: Job? = null
     private lateinit var appTitle:String
     var keyTitle = "KEY_TITLE"
@@ -38,9 +38,9 @@ class WalletTransactionsFragment:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = TransactionListBinding.inflate(layoutInflater)
-        WalletHomeActivity.bottom_navigation_shop.visibility = View.GONE
-        WalletHomeActivity.bottomNavigationView.visibility = View.GONE
-        WalletHomeActivity.scanCoordinatorLayout.visibility = View.GONE
+        WalletHomeActivity.bottomNavigationShop!!.visibility = View.GONE
+        WalletHomeActivity.bottomNavigationView!!.visibility = View.GONE
+        WalletHomeActivity.scanCoordinatorLayout!!.visibility = View.GONE
         val context:Context? = context
         if(context!=null){
             val walletId = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
@@ -87,7 +87,7 @@ class WalletTransactionsFragment:Fragment() {
             //To TransferMoney
             val args = Bundle()
             args.putString("KEY_ACTION", getString(R.string.settlements))
-            WalletHomeActivity.navController.navigate(R.id.action_walletTransactionsListFragment_to_transferMoney, args)
+            WalletHomeActivity.navController!!.navigate(R.id.action_walletTransactionsListFragment_to_transferMoney, args)
         })
     }
 
@@ -96,33 +96,23 @@ class WalletTransactionsFragment:Fragment() {
             binding.statementRecyclerView.adapter = adapter
             binding.statementRecyclerView.layoutManager= LinearLayoutManager(context)
 
-            adapter.addLoadStateListener { loadState ->
-                // show empty list
-//                val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
-//                showEmptyList(isListEmpty)
-//                Log.w("AdpterItemCount", adapter.itemCount.toString())
-
-                // Only show the list if refresh succeeds.
-                // binding.ordersRecycler.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
-                // Show loading spinner during initial load or refresh.
-                binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                // Show the retry state if initial load or refresh fails.
-                binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
-
-
-                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-                val errorState = loadState.source.append as? LoadState.Error
-                        ?: loadState.source.prepend as? LoadState.Error
-                        ?: loadState.append as? LoadState.Error
-                        ?: loadState.prepend as? LoadState.Error
-                errorState?.let {
-                    Toast.makeText(
-                            context,
-                            "\uD83D\uDE28 Wooops ${it.error}",
-                            Toast.LENGTH_LONG
-                    ).show()
-                }
+        adapter?.addLoadStateListener { loadState ->
+            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+            // Show the retry state if initial load or refresh fails.
+            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
+            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+            val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+            errorState?.let {
+                Toast.makeText(
+                        context,
+                        "\uD83D\uDE28 Wooops ${it.error}",
+                        Toast.LENGTH_LONG
+                ).show()
             }
+        }
 
     }
 

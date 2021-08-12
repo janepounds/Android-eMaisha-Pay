@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.ArrayList
 
-@Entity(tableName = "Transactions", indices = arrayOf(Index(value = ["transaction_id"], unique = true)))
+@Entity(tableName = "Transactions")
 data class Transactions (
         @PrimaryKey(autoGenerate = true) @field:SerializedName("id") var id: Int=0,
         @field:SerializedName("cashin") var cashin: Double?=null,

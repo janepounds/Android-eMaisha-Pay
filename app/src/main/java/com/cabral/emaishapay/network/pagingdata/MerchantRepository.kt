@@ -91,7 +91,7 @@ class MerchantRepository(private val wallet_id: Int, private val database: Emais
                 pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, Transactions>
         ).flow
     }
-    fun getSettlementsResultStream(query: String): Flow<PagingData<Transactions>> {
+    fun getSettlementsResultStream(query: String): Flow<PagingData<UserTransactions>> {
 
         // appending '%' so we can allow other characters to be before and after the query string
         ///val dbQuery = "%${query.replace(' ', '%')}%"

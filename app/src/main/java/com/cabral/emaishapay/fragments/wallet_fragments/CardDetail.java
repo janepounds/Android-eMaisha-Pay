@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.cabral.emaishapay.BuildConfig;
-
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.AccountCreation;
@@ -133,7 +131,7 @@ public class CardDetail extends Fragment {
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_card_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
 
          account_no = view.findViewById(R.id.etxt_card_account_number);
          card_no = view.findViewById(R.id.etxt_card_number);

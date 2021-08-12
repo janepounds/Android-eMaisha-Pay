@@ -82,14 +82,9 @@ class MerchantProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     .setCancelable(false)
                     .setPositiveButton(R.string.yes) { dialog, which ->
                         try {
-                            val wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context.applicationContext)
-
-                            if (product != null) {
-                                viewModel.deleteProduct(product, wallet_id)
-                            }
+                            val wallet_id = WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context)
+                            viewModel.deleteProduct(product!!, wallet_id!!)
                             Toasty.error(context, R.string.product_deleted, Toast.LENGTH_SHORT).show()
-//                            productData.removeAt(getBindingAdapterPosition())
-//                            notifyItemRemoved(getBindingAdapterPosition())
                         } catch (e: Exception) {
                             e.printStackTrace()
                             Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show()

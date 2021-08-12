@@ -79,7 +79,7 @@ public class ContactDetailsFragment extends Fragment {
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_contact_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
 
         Button next = view.findViewById(R.id.txt_next_three);
 

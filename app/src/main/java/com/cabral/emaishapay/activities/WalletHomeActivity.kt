@@ -1,14 +1,11 @@
 package com.cabral.emaishapay.activities
 
-import com.cabral.emaishapay.network.db.entities.*
 import com.cabral.emaishapay.customs.DialogLoader
 import kotlinx.android.synthetic.main.wallet_home.*
 import android.os.Bundle
 import com.cabral.emaishapay.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import android.widget.FrameLayout
 import android.Manifest.permission
 import android.os.Build
 import androidx.navigation.fragment.NavHostFragment
@@ -43,14 +40,11 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import com.cabral.emaishapay.network.Connectivity
 import com.cabral.emaishapay.network.db.entities.EcProduct
@@ -58,6 +52,7 @@ import com.cabral.emaishapay.network.DataRepository
 import okhttp3.ResponseBody
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient
 import com.cabral.emaishapay.AppExecutors
+import kotlinx.android.synthetic.main.layout_scan_and_pay_process_step_1.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,24 +62,18 @@ import java.math.BigInteger
 import java.sql.Timestamp
 import java.util.*
 
-class WalletHomeActivity() : AppCompatActivity() {
+class WalletHomeActivity : AppCompatActivity() {
 
     var currentFragment = 0
-    lateinit  var dialogLoader: DialogLoader
-    private val doubleBackToExitPressedOnce = false
-    var toolbar: Toolbar? = null
+    val dialogLoader: DialogLoader? by lazy { DialogLoader(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_home)
 
-        /*******scan button is clicked***********************/
-        fab.setOnClickListener(View.OnClickListener { //request permissions
-            //check runtime permission
-            if (checkPermission()) {
-
-            } else {
+        fab.setOnClickListener(View.OnClickListener {
+            if (!checkPermission()) {
                 val permissions = arrayOf(permission.CAMERA, permission.VIBRATE)
-                //show popup to request runtime permission
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(permissions, PERMISSION_CODE)
                 }
@@ -105,43 +94,35 @@ class WalletHomeActivity() : AppCompatActivity() {
                 }
             }
         })
-        context = applicationContext
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.wallet_home_container) as NavHostFragment?
-        navController = navHostFragment!!.navController
-        fm = supportFragmentManager
+
+        val navHostFragment = walletHomeContainer as NavHostFragment
+
+        Companion.fm = supportFragmentManager
+        Companion.bottomNavigationShop = bottomNavigationShop
+        Companion.bottomNavigationView = bottomNavigation
+        Companion.scanCoordinatorLayout = coordinatorLayoutForScanner
+        Companion.navController=navHostFragment.navController
+        Companion.context= context
         setUpNavigation()
         setSupportActionBar(main_Toolbar)
-        Companion.actionBar = supportActionBar
-        Companion.actionBar!!.setDisplayShowTitleEnabled(false)
-        Companion.actionBar!!.setHomeButtonEnabled(false)
-        Companion.actionBar!!.setDisplayHomeAsUpEnabled(false)
-        navController!!.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (bottom_navigation != null && bottom_navigation_shop != null) {
-                if ((destination.id == R.id.walletHomeFragment2) || (destination.id == R.id.walletAccountFragment2
-                                ) || (destination.id == R.id.cardListFragment) || (destination.id == R.id.acceptPaymentFragment)) {
-                    val role = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, context)
-                    if (role.equals("DEFAULT", ignoreCase = true)) {
-                        bottom_navigation!!.visibility = View.VISIBLE
-                        scanCoordinatorLayout?.visibility = View.VISIBLE
-                        bottom_navigation_shop!!.visibility = View.GONE
-                    } else {
-                        setUpMasterAgentNav()
-                    }
+
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar!!.setHomeButtonEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+
+            if ((destination.id == R.id.walletHomeFragment2) || (destination.id == R.id.walletAccountFragment2  ) || (destination.id == R.id.cardListFragment) || (destination.id == R.id.acceptPaymentFragment)) {
+                val role = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, this)
+                if (role.equals("DEFAULT", ignoreCase = true)) {
+                    bottomNavigation.visibility = View.VISIBLE
+                    coordinatorLayoutForScanner.visibility = View.VISIBLE
+                    bottomNavigationShop.visibility = View.GONE
+                } else {
+                    setUpMasterAgentNav()
                 }
             }
-            if (Objects.requireNonNull(navController!!.currentDestination)!!.id  == R.id.tokenAuthFragment) {
-                fragmentContainerView?.paddingLeft ?:  0
-                fragmentContainerView?.paddingTop?:0
-                fragmentContainerView?.paddingRight?:0
-                fragmentContainerView?.paddingBottom?:0
-            } else if ((bottom_navigation_shop.visibility == View.VISIBLE) || (bottom_navigation.visibility == View.VISIBLE
-                            ) || (scanCoordinatorLayout?.visibility) == View.VISIBLE) {
-                fragmentContainerView?.paddingLeft ?:  0
-                fragmentContainerView?.paddingTop?:0
-                fragmentContainerView?.paddingRight?:0
-                fragmentContainerView?.paddingBottom?:0
 
-            }
 
         }
         if (getPreferences(PREFERENCES_FIREBASE_TOKEN_SUBMITTED, this@WalletHomeActivity) != "yes") {
@@ -151,7 +132,7 @@ class WalletHomeActivity() : AppCompatActivity() {
     }
 
     private fun scheduleJob() {
-        val componentName = ComponentName((context)!!, SyncJobService::class.java)
+        val componentName = ComponentName(context, SyncJobService::class.java)
         val info = JobInfo.Builder(123, componentName)
                 .setRequiresCharging(false)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
@@ -168,8 +149,8 @@ class WalletHomeActivity() : AppCompatActivity() {
     }
 
     private fun setUpNavigation() {
-        bottom_navigation!!.itemIconTintList = null
-        bottom_navigation!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        bottomNavigation.itemIconTintList = null
+        bottomNavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             //walletAccountFragment
             val currentDestination: Int
             when (item.itemId) {
@@ -189,27 +170,33 @@ class WalletHomeActivity() : AppCompatActivity() {
                 }
                 R.id.walletAccountFragment -> {
                     currentDestination = navController!!.currentDestination!!.id
-                    if (currentDestination == R.id.walletHomeFragment2) {
-                        navController!!.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2)
-                    } else if (currentDestination == R.id.walletAccountFragment2) {
-                        // navController.navigate(R.id.action_walletAccountFragment2_to_cardListFragment);
-                    } else if (currentDestination == R.id.walletRewardsFragment2) {
-                        navController!!.navigate(R.id.action_walletRewardsFragment2_to_navigation)
+                    when (currentDestination) {
+                        R.id.walletHomeFragment2 -> {
+                            navController!!.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2)
+                        }
+                        R.id.walletRewardsFragment2 -> {
+                            navController!!.navigate(R.id.action_walletRewardsFragment2_to_navigation)
+                        }
                     }
                     true
                 }
                 R.id.walletHomeFragment -> {
                     currentDestination = navController!!.currentDestination!!.id
-                    if (currentDestination == R.id.walletHomeFragment2) {
-                    } else if (currentDestination == R.id.walletAccountFragment2) {
-                        navController!!.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2)
-                    } else if (currentDestination == R.id.walletRewardsFragment2) {
-                        navController!!.navigate(R.id.action_walletRewardsFragment2_to_walletHomeFragment2)
+                    when (currentDestination) {
+                        R.id.walletAccountFragment2 -> {
+                            navController!!.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2)
+                        }
+                        R.id.walletRewardsFragment2 -> {
+                            navController!!.navigate(R.id.action_walletRewardsFragment2_to_walletHomeFragment2)
+                        }
                     }
                     true
                 }
                 R.id.WalletBuyFragment -> {
-                    bottom_navigation!!.postDelayed({ startActivity(Intent(this@WalletHomeActivity, WalletBuySellActivity::class.java)) }, 300)
+                    bottomNavigation.postDelayed(
+                            Runnable { startActivity(Intent(this@WalletHomeActivity, WalletBuySellActivity::class.java)) },
+                            300
+                    )
                     true
                 }
                 else -> false
@@ -217,10 +204,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         })
     }
 
-    fun openAddMobileMoney(view: View?) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
+    fun openAddMobileMoney() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -228,13 +212,11 @@ class WalletHomeActivity() : AppCompatActivity() {
         }
         ft.addToBackStack(null)
 
-        // Create and show the dialog.
         val depositDialog: DialogFragment = DepositMoneyMobile(this, WalletHomeFragment.balance)
         depositDialog.show(ft, "dialog")
     }
 
-    fun openAddMoneyVisa(view: View?) {
-        dialogLoader = DialogLoader(this)
+    fun openAddMoneyVisa() {
         cards
     }
 
@@ -252,26 +234,20 @@ class WalletHomeActivity() : AppCompatActivity() {
     }
 
     private val cards: Unit
-        private get() {
-            val access_token = WALLET_ACCESS_TOKEN
-            val request_id = generateRequestId()
+        get() {
             val category = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, this)
-            dialogLoader.showProgressDialog()
+            dialogLoader!!.showProgressDialog()
             val call = APIClient.getWalletInstance(this)
-                    .getCards(access_token, request_id, category, "getCards")
+                    .getCards(WALLET_ACCESS_TOKEN, generateRequestId(), category, "getCards")
             call.enqueue(object : Callback<CardResponse> {
                 override fun onResponse(call: Call<CardResponse>, response: Response<CardResponse>) {
-                    dialogLoader.hideProgressDialog()
+                    dialogLoader!!.hideProgressDialog()
                     if (response.isSuccessful) {
-                        var cardItems = ArrayList<CardSpinnerItem?>()
-                        try {
-                            /********safe call with let**************/
-                            val cardlists = response.body()!!.cardsList
-                            cardItems = populateCardItemsList(cardlists)
+                        response.body()?.let {
+                            val cardItems = populateCardItemsList(it.cardsList)
                             navigateToAddMoneyVisa(cardItems)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
                         }
+
                     } else if (response.code() == 401) {
                         TokenAuthFragment.startAuth(true)
                         if (response.errorBody() != null) {
@@ -283,7 +259,7 @@ class WalletHomeActivity() : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<CardResponse>, t: Throwable) {
-                    dialogLoader.hideProgressDialog()
+                    dialogLoader!!.hideProgressDialog()
                 }
             })
         }
@@ -313,30 +289,30 @@ class WalletHomeActivity() : AppCompatActivity() {
         })
         for (i in cardlists.indices) {
             if (cardlists[i].card_number.length > 4) {
-                val card_number = cardlists[i].card_number
-                val first_four_digits = (card_number.substring(0, 4))
-                val last_four_digits = (card_number.substring(card_number.length - 4))
-                val masked_card_number = "$first_four_digits*******$last_four_digits"
-                val finalI = i
+                val cardNumber = cardlists[i].card_number
+                val firstFourDigits = (cardNumber.substring(0, 4))
+                val lastFourDigits = (cardNumber.substring(cardNumber.length - 4))
+                val maskedCardNumber = "$firstFourDigits*******$lastFourDigits"
+
                 cardItems.add(object : CardSpinnerItem {
                     override fun getId(): String {
-                        return cardlists[finalI].getId()
+                        return cardlists[i].getId()
                     }
 
                     override fun getCardNumber(): String {
-                        return cardlists[finalI].card_number
+                        return cardlists[i].card_number
                     }
 
                     override fun getExpiryDate(): String {
-                        return cardlists[finalI].expiry
+                        return cardlists[i].expiry
                     }
 
                     override fun getCvv(): String {
-                        return cardlists[finalI].cvv
+                        return cardlists[i].cvv
                     }
 
                     override fun toString(): String {
-                        return masked_card_number
+                        return maskedCardNumber
                     }
                 })
             }
@@ -365,7 +341,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         return cardItems
     }
 
-    fun openAddMoneyVoucher(view: View?) {
+    fun openAddMoneyVoucher() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -378,7 +354,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         depositDialog.show(ft, "dialog")
     }
 
-    fun openAgentCustomerDeposit(view: View?) {
+    fun openAgentCustomerDeposit() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -391,7 +367,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         depositDialog.show(ft, "dialog")
     }
 
-    fun openAgentCustomerBalanceInquiry(view: View?) {
+    fun openAgentCustomerBalanceInquiry() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -404,7 +380,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         balanceInquiryDialog.show(ft, "dialog")
     }
 
-    fun openAgentCustomerFundsTransfer(view: View?) {
+    fun openAgentCustomerFundsTransfer() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -417,7 +393,7 @@ class WalletHomeActivity() : AppCompatActivity() {
         fundsTransferDialog.show(ft, "dialog")
     }
 
-    fun openAgentCustomerWithdraw(view: View?) {
+    fun openAgentCustomerWithdraw() {
         val ft = fm!!.beginTransaction()
         val prev = fm!!.findFragmentByTag("dialog")
         if (prev != null) {
@@ -430,12 +406,12 @@ class WalletHomeActivity() : AppCompatActivity() {
         customerWithdrawDialog.show(ft, "dialog")
     }
 
-    fun openAgentCustomerAccountOpening(view: View?) {
+    fun openAgentCustomerAccountOpening() {
         // To PersonalDetailsFragment
         navController!!.navigate(R.id.action_walletHomeFragment2_to_personalDetailsFragment)
     }
 
-    fun openAgentCustomerLoanApplication(view: View?) {
+    fun openAgentCustomerLoanApplication() {
         //   navController.navigate(R.id.action_walletHomeFragment2_to_loanUserDetailsFragment);
     }
 
@@ -445,58 +421,43 @@ class WalletHomeActivity() : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController!!.currentDestination != null) {
-            currentFragment = navController!!.currentDestination!!.id
-            if (currentFragment == R.id.walletHomeFragment2 || currentFragment == R.id.tokenAuthFragment) AlertDialog.Builder(this)
-                    .setMessage("Are you sure you want to exit?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
-                        override fun onClick(dialog: DialogInterface, id: Int) {
-                            finishAffinity()
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show() else navController!!.popBackStack()
-        } else  /*if (doubleBackToExitPressedOnce)*/ {
-            super.onBackPressed()
-            finish()
+        navController?.let {
+            if (it.currentDestination != null) {
+                currentFragment = it.currentDestination!!.id
+                if (currentFragment == R.id.walletHomeFragment2 || currentFragment == R.id.tokenAuthFragment) AlertDialog.Builder(this)
+                        .setMessage("Are you sure you want to exit?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes") { _, _ -> finishAffinity() }
+                        .setNegativeButton("No", null)
+                        .show() else it.popBackStack()
+            } else  {
+                super.onBackPressed()
+                finish()
+            }
         }
     }
 
-    val appToken: Unit
+     private val appToken: Unit
         get() {
             FirebaseApp.initializeApp(this@WalletHomeActivity)
         }
 
     private fun checkPermission(): Boolean {
-        // here we are checking two permission that is vibrate
-        // and camera which is granted by user and not.
-        // if permission is granted then we are returning
-        // true otherwise false.
-        val camera_permission = ContextCompat.checkSelfPermission(applicationContext, permission_group.CAMERA)
-        val vibrate_permission = ContextCompat.checkSelfPermission(applicationContext, permission.VIBRATE)
-        return camera_permission == PackageManager.PERMISSION_GRANTED && vibrate_permission == PackageManager.PERMISSION_GRANTED
+        val cameraPermission = ContextCompat.checkSelfPermission(applicationContext, permission_group.CAMERA)
+        val vibratePermission = ContextCompat.checkSelfPermission(applicationContext, permission.VIBRATE)
+        return cameraPermission == PackageManager.PERMISSION_GRANTED && vibratePermission == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermission() {
-        // this method is to request
-        // the runtime permission.
-        val PERMISSION_REQUEST_CODE = 200
-        ActivityCompat.requestPermissions(this, arrayOf(permission_group.CAMERA, permission.VIBRATE), PERMISSION_REQUEST_CODE)
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        // this method is called when user
-        // allows the permission to use camera.
+        // this method is called when user allows the permission to use camera.
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         try {
-            if (grantResults.size > 0) {
+            if (grantResults.isNotEmpty()) {
                 val cameraaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
                 val vibrateaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-                if (cameraaccepted && vibrateaccepted) {
-//                    Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show()
+                if (!cameraaccepted || !vibrateaccepted) {
+                     Toast.makeText(this, "Permission Denied \n You cannot use app without providing permission", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: IndexOutOfBoundsException) {
@@ -508,11 +469,11 @@ class WalletHomeActivity() : AppCompatActivity() {
         @JvmField
         var WALLET_ACCESS_TOKEN: String? = null
         private val TAG = WalletHomeActivity::class.java.simpleName
+        private lateinit var context:Context
+
         @JvmField
         var Banners: List<BannerDetails> = ArrayList()
-        private var context: Context? = null
         var fm: FragmentManager? = null
-        var actionBar: ActionBar? = null
         const val PREFERENCES_WALLET_USER_ID = "walletuserId"
         const val PREFERENCES_PREPIN_ENCRYPTION = "12"
         const val PREFERENCES_USER_BALANCE = "0"
@@ -551,63 +512,72 @@ class WalletHomeActivity() : AppCompatActivity() {
         @JvmField
         var navController: NavController? = null
         @JvmField
-        var bottomNavigationView: BottomNavigationView? = null
-        @JvmField
-        var bottom_navigation_shop: BottomNavigationView? = null
-        @JvmField
         var scanCoordinatorLayout: CoordinatorLayout? = null
-        var scanFAB: FloatingActionButton? = null
-        var frameLayout: FrameLayout? = null
-        var fragmentContainerView: FragmentContainerView? = null
         private const val PERMISSION_CODE = 1
+        @JvmField
+        var bottomNavigationShop: BottomNavigationView? = null
+        @JvmField
+        var bottomNavigationView: BottomNavigationView? = null
         fun setUpMasterAgentNav() {
-            bottomNavigationView!!.visibility = View.GONE
+            bottomNavigationShop!!.visibility = View.GONE
             scanCoordinatorLayout!!.visibility = View.VISIBLE
-            bottom_navigation_shop!!.visibility = View.VISIBLE
-            bottom_navigation_shop!!.itemIconTintList = null
-            bottom_navigation_shop!!.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
+            bottomNavigationShop!!.visibility = View.VISIBLE
+            bottomNavigationShop!!.itemIconTintList = null
+
+            bottomNavigationShop!!.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
                 override fun onNavigationItemSelected(item: MenuItem): Boolean { //walletAccountFragment
                     val currentDestination: Int
                     when (item.itemId) {
                         R.id.walletAccountFragment_agent -> {
                             currentDestination = navController!!.currentDestination!!.id
-                            if (currentDestination == R.id.walletHomeFragment2) {
-                                navController!!.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2)
-                            } else if (currentDestination == R.id.walletAccountFragment2) {
-                            } else if (currentDestination == R.id.acceptPaymentFragment) {
-                                navController!!.navigate(R.id.action_acceptPaymentFragment_to_walletAccountFragment2)
-                            } else if (currentDestination == R.id.walletTransactionsListFragment) {
-                                navController!!.navigate(R.id.action_walletTransactionsListFragment_to_walletAccountFragment2)
+                            when (currentDestination) {
+                                R.id.walletHomeFragment2 -> {
+                                    navController!!.navigate(R.id.action_walletHomeFragment2_to_walletAccountFragment2)
+                                }
+                                R.id.walletAccountFragment2 -> {
+                                }
+                                R.id.acceptPaymentFragment -> {
+                                    navController!!.navigate(R.id.action_acceptPaymentFragment_to_walletAccountFragment2)
+                                }
+                                R.id.walletTransactionsListFragment -> {
+                                    navController!!.navigate(R.id.action_walletTransactionsListFragment_to_walletAccountFragment2)
+                                }
                             }
                             return true
                         }
                         R.id.walletHomeFragment -> {
                             currentDestination = navController!!.currentDestination!!.id
-                            if (currentDestination == R.id.walletHomeFragment2) {
-                            } else if (currentDestination == R.id.walletAccountFragment2) {
-                                navController!!.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2)
-                            } else if (currentDestination == R.id.acceptPaymentFragment) {
-                                navController!!.navigate(R.id.action_acceptPaymentFragment_to_walletHomeFragment2)
-                            } else if (currentDestination == R.id.walletTransactionsListFragment) {
-                                navController!!.navigate(R.id.action_walletTransactionsListFragment_to_walletHomeFragment2)
+                            when (currentDestination) {
+                                R.id.walletAccountFragment2 -> {
+                                    navController!!.navigate(R.id.action_walletAccountFragment2_to_walletHomeFragment2)
+                                }
+                                R.id.acceptPaymentFragment -> {
+                                    navController!!.navigate(R.id.action_acceptPaymentFragment_to_walletHomeFragment2)
+                                }
+                                R.id.walletTransactionsListFragment -> {
+                                    navController!!.navigate(R.id.action_walletTransactionsListFragment_to_walletHomeFragment2)
+                                }
                             }
                             return true
                         }
                         R.id.walletShopFragment -> {
                             val shop = Intent(context, MerchantShopActivity::class.java)
                             shop.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            context!!.startActivity(shop)
+                            context.startActivity(shop)
                             return true
                         }
                         R.id.walletAcceptPaymentFragment -> {
                             currentDestination = navController!!.currentDestination!!.id
-                            if (currentDestination == R.id.walletHomeFragment2) {
-                                navController!!.navigate(R.id.action_walletHomeFragment2_to_acceptPaymentFragment)
-                            } else if (currentDestination == R.id.walletAccountFragment2) {
-                                navController!!.navigate(R.id.action_walletAccountFragment2_to_acceptPaymentFragment)
-                            } else if (currentDestination == R.id.acceptPaymentFragment) {
-                            } else if (currentDestination == R.id.walletTransactionsListFragment) {
-                                navController!!.navigate(R.id.action_walletTransactionsListFragment_to_acceptPaymentFragment)
+                            when (currentDestination) {
+                                R.id.walletHomeFragment2 -> {
+                                    navController!!.navigate(R.id.action_walletHomeFragment2_to_acceptPaymentFragment)
+                                }
+                                R.id.walletAccountFragment2 -> {
+                                    navController!!.navigate(R.id.action_walletAccountFragment2_to_acceptPaymentFragment)
+                                }
+                                R.id.walletTransactionsListFragment -> {
+                                    navController!!.navigate(R.id.action_walletTransactionsListFragment_to_acceptPaymentFragment)
+                                }
                             }
                             return true
                         }
@@ -640,39 +610,33 @@ class WalletHomeActivity() : AppCompatActivity() {
                     0)
             val editor = sharedPreferences.edit()
             editor.putString(key, value)
-            editor.commit()
+            editor.apply()
         }
 
         @JvmStatic
         fun disableNavigation() {
             bottomNavigationView!!.visibility = View.GONE
-            bottom_navigation_shop!!.visibility = View.GONE
+            bottomNavigationShop!!.visibility = View.GONE
             scanCoordinatorLayout!!.visibility = View.GONE
         }
 
         //generate unique request id
         @JvmStatic
         fun generateRequestId(): String {
-            var request_id: String = ""
-            val rand = Random()
-
-            // Generate random integers in range 0 to 9999
-            val rand_int = rand.nextInt(10000)
-            val timestamp = Timestamp(System.currentTimeMillis())
-            val timestamp_ = timestamp.toString()
-            val result = timestamp_.replace("\\p{Punct}|\\s".toRegex(), "")
-            val formatted_rand_int = String.format("%021d", BigInteger(result + rand_int))
-            request_id = "E$formatted_rand_int"
-            return request_id
+            val randInt = (Random()).nextInt(10000)// Generate random integers in range 0 to 9999
+            val timestamp = Timestamp(System.currentTimeMillis()).toString()
+            val result = timestamp.replace("\\p{Punct}|\\s".toRegex(), "")
+            val formattedRandInt = String.format("%021d", BigInteger(result + randInt))
+            return "E$formattedRandInt"
         }
 
         //select spinner by value
         @JvmStatic
         fun selectSpinnerItemByValue(spnr: Spinner, value: String?) {
             if (value == null) return
-            val adapter = spnr.adapter as ArrayAdapter<String>
+            val adapter = spnr.adapter as ArrayAdapter<*>
             for (position in 1 until adapter.count) {
-                val item = spnr.adapter.getItem(position).toString() + ""
+                val item = spnr.adapter.getItem(position).toString()
                 if ((item.equals(value, ignoreCase = true))) {
                     spnr.setSelection(position)
                     return
@@ -682,53 +646,43 @@ class WalletHomeActivity() : AppCompatActivity() {
 
         @JvmStatic
         fun syncProductData() {
-            if (context == null) {
-                return
-            } else {
-                val category = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, context)
-                if (category.equals("Default", ignoreCase = true) || TextUtils.isEmpty(category)) {
-                    return
+            context?.let {
+                val category = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, it)
+
+                if (!category.equals("Default", ignoreCase = true) && !TextUtils.isEmpty(category) && Connectivity.isConnected(it)) {
+                    val syncStatus = "0"
+                    val productsList = DataRepository.getOurInstance(it).getUnsyncedProducts(syncStatus)
+                    Log.w("unsyncedProducts", productsList.size.toString() + " products")
+                    for (i in productsList.indices) {
+                        Log.e("WAlletIDError", productsList[i].sync_status + "")
+                        saveProductList(it, productsList[i])
+                    }
                 }
-            }
-            if (Connectivity.isConnected(context)) {
-                val sync_status = "0"
-                val productsList = DataRepository.getOurInstance(context).getUnsyncedProducts(sync_status)
-                Log.w("unsyncedProducts", productsList.size.toString() + " products")
-                for (i in productsList.indices) {
-                    Log.e("WAlletIDError", productsList[i].sync_status + "")
-                    saveProductList(context, productsList[i])
-                }
+
             }
         }
 
         private fun saveProductList(context: Context?, product: EcProduct) {
-            val access_token = WALLET_ACCESS_TOKEN
-            val user_id = getPreferences(PREFERENCES_WALLET_USER_ID, context)
-            val request_id = generateRequestId()
+            val userId = getPreferences(PREFERENCES_WALLET_USER_ID, context)
+
             val call = BuyInputsAPIClient
                     .getInstance()
-                    .postProduct(access_token, product.id, user_id, product.product_id, product.product_buy_price, product.product_sell_price,
+                    .postProduct(WALLET_ACCESS_TOKEN, product.id, userId, product.product_id, product.product_buy_price, product.product_sell_price,
                             product.product_supplier, product.product_stock!!.toInt(), product.manufacturer, product.product_category, product.product_name
                     )
             call.enqueue(object : Callback<ResponseBody?> {
                 override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                     if (response.isSuccessful) {
-                        //update product status
-                        AppExecutors.getInstance().diskIO().execute(object : Runnable {
-                            override fun run() {
-                                //update Sync Status
-                                val updateStatus = DataRepository.getOurInstance(Companion.context).updateProductSyncStatus(product.id, "1")
-                                AppExecutors.getInstance().mainThread().execute(object : Runnable {
-                                    override fun run() {
-                                        if (updateStatus > 0) {
-                                            Log.d("SyncStatus", "Product Synced")
-                                        } else {
-                                            Log.d("SyncStatus", "Sync Failed")
-                                        }
-                                    }
-                                })
+                        AppExecutors.getInstance().diskIO().execute {
+                            val updateStatus = DataRepository.getOurInstance(Companion.context).updateProductSyncStatus(product.id, "1")
+                            AppExecutors.getInstance().mainThread().execute {
+                                if (updateStatus > 0) {
+                                    Log.d("SyncStatus", "Product Synced")
+                                } else {
+                                    Log.d("SyncStatus", "Sync Failed")
+                                }
                             }
-                        })
+                        }
                     }
                 }
 

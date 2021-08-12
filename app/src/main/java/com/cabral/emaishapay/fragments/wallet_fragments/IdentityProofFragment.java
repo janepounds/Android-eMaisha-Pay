@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.InputType;
 import android.util.Base64;
@@ -110,7 +109,7 @@ public class IdentityProofFragment extends Fragment {
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_identity_proof);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
 
         Button next = view.findViewById(R.id.txt_next_submit);
         TextView finger_print = view.findViewById(R.id.txt_next_finger_print);

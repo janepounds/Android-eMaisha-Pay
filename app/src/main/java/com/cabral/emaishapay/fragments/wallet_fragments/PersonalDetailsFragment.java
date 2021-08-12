@@ -9,8 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,7 +27,6 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class PersonalDetailsFragment extends Fragment {
@@ -51,7 +47,7 @@ public class PersonalDetailsFragment extends Fragment {
         StateProgressBar stateProgressBar = view.findViewById(R.id.your_state_progress_bar_personal_details);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setStateDescriptionTypeface("font/nunito.ttf");
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
 
         EditText first_name = view.findViewById(R.id.etxt_fullname);
         EditText middle_name = view.findViewById(R.id.etxt_middlename);

@@ -13,7 +13,7 @@ interface TransactionsDao {
     @Query("SELECT * FROM Transactions ORDER BY id DESC")
     fun getTransactionList(): PagingSource<Int, Transactions>
 
-    @Query("SELECT Transactions.* FROM Transactions JOIN TransactionsFts ON (TransactionsFts.id=Transactions.id) WHERE TransactionsFts MATCH :searchKey ORDER BY Transactions.id DESC")
+    @Query("SELECT Transactions.* FROM Transactions JOIN TransactionsFts ON (TransactionsFts.rowid=Transactions.id) WHERE TransactionsFts MATCH :searchKey ORDER BY Transactions.id DESC")
     fun searchTransactions(searchKey : String): PagingSource<Int, Transactions>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

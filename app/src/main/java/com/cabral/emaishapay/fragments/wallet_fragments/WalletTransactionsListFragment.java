@@ -62,7 +62,7 @@ public class WalletTransactionsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.transaction_list, container, false);
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
         dialogLoader = new DialogLoader(context);

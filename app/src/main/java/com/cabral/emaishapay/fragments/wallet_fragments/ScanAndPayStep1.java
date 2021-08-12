@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
@@ -46,7 +45,7 @@ public class ScanAndPayStep1 extends Fragment {
         binding= DataBindingUtil.inflate(inflater,R.layout.layout_scan_and_pay_process_step_1,container,false);
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
         dialogLoader = new DialogLoader(context);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarScanPayProcess1);

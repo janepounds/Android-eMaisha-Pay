@@ -2,7 +2,6 @@
     android:id="@+id/frameLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,10 +20,11 @@
         android:visibility="gone"/>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/wallet_home_container"
+        android:id="@+id/walletHomeContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="0dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/wallet_home_navigation"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         android:elevation="0dp"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout_for_scanner"
+        android:id="@+id/coordinatorLayoutForScanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
@@ -57,7 +57,7 @@
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
+                android:id="@+id/bottomNavigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -70,7 +70,7 @@
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_navigation_menu" />
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_shop"
+                android:id="@+id/bottomNavigationShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

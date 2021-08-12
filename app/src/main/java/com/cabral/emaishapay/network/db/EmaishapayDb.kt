@@ -12,7 +12,9 @@ import com.cabral.emaishapay.network.db.relations.CartItem
 import com.cabral.emaishapay.network.db.relations.ShopOrderWithProducts
 
 
-@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, MerchantOrderFts::class, EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class, UserCartAttributes::class, RegionDetails::class, RemoteKeys::class], version = 4,
+@Database(entities = [DefaultAddress::class, EcManufacturer::class, ShopOrderProducts::class, MerchantOrder::class, MerchantOrderFts::class,
+    EcProductCategory::class, EcProductWeight::class, EcProduct::class, EcProductFts::class, EcSupplier::class, UserCart::class,
+    UserCartAttributes::class, RegionDetails::class, RemoteKeys::class, Transactions::class, TransactionsFts::class], version = 6,
         exportSchema = false)
 abstract class EmaishapayDb : RoomDatabase() {
     abstract fun defaultAddressDao(): DefaultAddressDao?
@@ -44,17 +46,18 @@ abstract class EmaishapayDb : RoomDatabase() {
                 Room.databaseBuilder(
                         context.applicationContext,
                         EmaishapayDb::class.java, "emaishapayDb"
-                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4).addMigrations(MIGRATION_4_5).addMigrations(MIGRATION_5_6)
+                ).addMigrations(MIGRATION_1_2).addMigrations(MIGRATION_2_3).addMigrations(MIGRATION_3_4).addMigrations(MIGRATION_4_5)
+                        .addMigrations(MIGRATION_5_6)
                  .build()
 
-        val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+        private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE `RemoteKeys` (`id` TEXT, "
                         + "`prevKey` INTEGER,`nextKey` INTEGER, PRIMARY KEY(`id`))")
             }
         }
 
-        val MIGRATION_2_3 = object : Migration(2, 3) {
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("DROP TABLE ShopOrderFts")
                 database.execSQL("DROP TABLE EcProductFts")
@@ -70,12 +73,12 @@ abstract class EmaishapayDb : RoomDatabase() {
 
             }
         }
-        val MIGRATION_3_4: Migration = object : Migration(3, 4) {
+        private val MIGRATION_3_4: Migration = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE `remote_keys` ADD COLUMN `type` TEXT NOT NULL DEFAULT 'order' ")
             }
         }
-        val MIGRATION_4_5: Migration = object : Migration(4, 5){
+        private val MIGRATION_4_5: Migration = object : Migration(4, 5){
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE VIRTUAL TABLE `TransactionsFts` USING fts4("
                         + "`cashin`,`cashout`,`bank`, `mobileMoney`," +
@@ -83,7 +86,7 @@ abstract class EmaishapayDb : RoomDatabase() {
             }
         }
 
-        val MIGRATION_5_6:Migration = object :Migration(5,6){
+        private val MIGRATION_5_6:Migration = object :Migration(5,6){
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE 'Transactions' (`id` TEXT, " +
                         " `cashin` DOUBLE,`cashout` DOUBLE,'bank' DOUBLE,'mobileMoney', PRIMARY KEY(`id`))")

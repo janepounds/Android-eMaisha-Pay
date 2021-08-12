@@ -2,7 +2,6 @@ package com.cabral.emaishapay.fragments.wallet_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.DailogFragments.AddBeneficiary;
-import com.cabral.emaishapay.DailogFragments.AddCardFragment;
 import com.cabral.emaishapay.DailogFragments.ConfirmTransfer;
 import com.cabral.emaishapay.R;
 
@@ -101,7 +99,7 @@ public class TransferMoney extends Fragment {
 
         WalletHomeActivity.bottomNavigationView.setVisibility(View.GONE);
         WalletHomeActivity.scanCoordinatorLayout.setVisibility(View.GONE);
-        WalletHomeActivity.bottom_navigation_shop.setVisibility(View.GONE);
+        WalletHomeActivity.bottomNavigationShop.setVisibility(View.GONE);
         initializeForm(view);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
