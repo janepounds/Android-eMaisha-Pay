@@ -74,7 +74,7 @@ class MerchantRepository(private val wallet_id: Int, private val database: Emais
         ).flow
     }
 
-    fun getTransactionsResultStream(query: String): Flow<PagingData<Transactions>> {
+    fun getTransactionsResultStream(query: String): Flow<PagingData<UserTransactions>> {
 
         // appending '%' so we can allow other characters to be before and after the query string
         ///val dbQuery = "%${query.replace(' ', '%')}%"
@@ -88,7 +88,7 @@ class MerchantRepository(private val wallet_id: Int, private val database: Emais
                         EmaishaShopAPIService.create(),
                         database
                 ),
-                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, Transactions>
+                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, UserTransactions>
         ).flow
     }
     fun getSettlementsResultStream(query: String): Flow<PagingData<UserTransactions>> {
@@ -105,7 +105,7 @@ class MerchantRepository(private val wallet_id: Int, private val database: Emais
                         EmaishaShopAPIService.create(),
                         database
                 ),
-                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, Transactions>
+                pagingSourceFactory = pagingSourceFactory as () -> PagingSource<Int, UserTransactions>
         ).flow
     }
 
