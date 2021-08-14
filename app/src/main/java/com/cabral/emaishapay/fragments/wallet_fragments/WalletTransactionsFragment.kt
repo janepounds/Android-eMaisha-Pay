@@ -125,7 +125,7 @@ class WalletTransactionsFragment:Fragment() {
 
                 if(it.javaClass.fields.size>0){
 
-                    adapter.submitData(it)
+                    adapter?.submitData(it)
                 }
 
             }
@@ -142,7 +142,7 @@ class WalletTransactionsFragment:Fragment() {
 
                 if(it.javaClass.fields.size>0){
 
-                    adapter.submitData(it)
+                    adapter?.submitData(it)
                 }
 
             }

@@ -10,6 +10,7 @@ import com.cabral.emaishapay.network.db.EmaishapayDb
 import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import com.cabral.emaishapay.network.db.entities.RemoteKeys
 import com.cabral.emaishapay.network.db.entities.Transactions
+import com.cabral.emaishapay.network.db.entities.UserTransactions
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -21,7 +22,7 @@ class SettlementsRemoteMediator(
         private val wallet_id: Int,
         private val service: EmaishaShopAPIService,
         private val emaishapayDb: EmaishapayDb
-) : RemoteMediator<Int, Transactions>() {
+) : RemoteMediator<Int, UserTransactions>() {
 
     override suspend fun initialize(): InitializeAction {
         // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
@@ -33,7 +34,7 @@ class SettlementsRemoteMediator(
 
 
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, Transactions>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, UserTransactions>): MediatorResult {
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -92,7 +93,7 @@ class SettlementsRemoteMediator(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Transactions>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, UserTransactions>): RemoteKeys? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
@@ -102,7 +103,7 @@ class SettlementsRemoteMediator(
                 }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Transactions>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, UserTransactions>): RemoteKeys? {
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
@@ -113,7 +114,7 @@ class SettlementsRemoteMediator(
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-            state: PagingState<Int, Transactions>
+            state: PagingState<Int, UserTransactions>
     ): RemoteKeys? {
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position

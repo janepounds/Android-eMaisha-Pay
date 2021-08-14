@@ -63,7 +63,8 @@
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_sort"
-                android:tint="@color/black" />
+                app:tint="@color/black"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:id="@+id/sort_text"
@@ -95,7 +96,7 @@
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/toggle_ic_filter"
                 android:tint="@color/black"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="UseAppTint,VectorDrawableCompat" />
 
             <TextView
                 android:layout_width="match_parent"

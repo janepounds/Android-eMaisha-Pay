@@ -15,13 +15,13 @@ class TransactionsViewModel(private val repository: MerchantRepository) : ViewMo
 
     private var currentSearchResult: Flow<PagingData<UserTransactions>>? = null
 
-    fun searchTransactions(queryString: String): Flow<PagingData<Transactions>> {
+    fun searchTransactions(queryString: String): Flow<PagingData<UserTransactions>> {
         val lastResult = currentSearchResult
         if (queryString == currentQueryValue && lastResult != null) {
             return lastResult
         }
         currentQueryValue = queryString
-        val newResult: Flow<PagingData<Transactions>> = repository.getTransactionsResultStream(queryString)
+        val newResult: Flow<PagingData<UserTransactions>> = repository.getTransactionsResultStream(queryString)
                 .cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
