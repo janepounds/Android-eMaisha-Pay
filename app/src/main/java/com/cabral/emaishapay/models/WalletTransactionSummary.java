@@ -1,5 +1,6 @@
 package com.cabral.emaishapay.models;
 
+import com.cabral.emaishapay.network.db.entities.UserTransactions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,24 +20,24 @@ public class WalletTransactionSummary {
     public class ResponseData {
         @SerializedName("lastDebit")
         @Expose
-        private WalletTransactionResponse.TransactionData.Transactions lastDebit;
+        private UserTransactions lastDebit;
         @SerializedName("lastCredit")
         @Expose
-        private WalletTransactionResponse.TransactionData.Transactions lastCredit;
+        private UserTransactions lastCredit;
 
-        public WalletTransactionResponse.TransactionData.Transactions getLastDebit() {
+        public UserTransactions getLastDebit() {
             return lastDebit;
         }
 
-        public void setLastDebit(WalletTransactionResponse.TransactionData.Transactions lastDebit) {
+        public void setLastDebit(UserTransactions lastDebit) {
             this.lastDebit = lastDebit;
         }
 
-        public WalletTransactionResponse.TransactionData.Transactions getLastCredit() {
+        public UserTransactions getLastCredit() {
             return lastCredit;
         }
 
-        public void setLastCredit(WalletTransactionResponse.TransactionData.Transactions lastCredit) {
+        public void setLastCredit(UserTransactions lastCredit) {
             this.lastCredit = lastCredit;
         }
     }

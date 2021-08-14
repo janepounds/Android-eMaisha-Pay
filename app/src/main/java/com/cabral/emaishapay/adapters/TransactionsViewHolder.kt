@@ -31,11 +31,11 @@ class TransactionsViewHolder(v: View, fm:FragmentManager) : RecyclerView.ViewHol
     init {
                 v.setOnClickListener {
                     //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
-                    if (fm != null) {
+                    fm?.let {
                         val walletTransactionsReceiptDialog = WalletTransactionsReceiptDialog(transactionDetails)
 
                         walletTransactionsReceiptDialog.show(fm, "walletTransactionsReceiptDialog")
-                }
+                    }
             }
         }
 
@@ -47,69 +47,40 @@ class TransactionsViewHolder(v: View, fm:FragmentManager) : RecyclerView.ViewHol
 
         var currentDate: String = ""
         var currentTime: String = ""
-        val prevDate: String
         try {
             val incomingFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             incomingFormat.timeZone = TimeZone.getTimeZone("UTC+3")
-            if (transaction != null) {
-                currentDate = localFormat1.format(incomingFormat.parse(transaction.date))
-            }
-            if (transaction != null) {
-                currentTime = localFormat2.format(incomingFormat.parse(transaction.date))
-            }
+            currentDate = localFormat1.format(incomingFormat.parse(transaction?.date))
+            currentTime = localFormat2.format(incomingFormat.parse(transaction?.date))
 //            if (position != 0) prevDate = localFormat1.format(incomingFormat.parse(dataList.get(position - 1).getDate()))
-            binding.date?.text = currentDate+" ,"+currentTime
+            binding.date.text = currentDate+" ,"+currentTime
             if (transaction != null) {
                 binding.userName?.text = transaction.receiver
-            }
 
-            //Log.w("TransactionType",data.getType());
-            if (transaction != null) {
                 if (!TextUtils.isEmpty(transaction.receiverUserId) && transaction.receiverUserId.equals(WalletHomeActivity.getPreferences(WalletHomeActivity.PREFERENCES_WALLET_USER_ID, context), ignoreCase = true)) {
-                    if (transaction != null) {
-                        binding.amount?.text = "+ UGX " + NumberFormat.getInstance().format(transaction.amount) + ""
-                    }
-                    binding.amount?.setTextColor(Color.parseColor("#2E84BE"))
-                    binding.initials?.setBackgroundResource(R.drawable.rectangular_blue_solid)
-                    if (transaction != null) {
-                        if (transaction.sender != null && !transaction.sender.isEmpty()) {
-                            if (binding.initials != null) {
-                                if (transaction != null) {
-                                    binding.initials.text = getNameInitials(transaction.sender)
-                                }
-                            }
-                            if (binding.userName != null) {
-                                if (transaction != null) {
-                                    binding.userName.text = transaction.sender
-                                }
-                            }
-                        } else {
-                            if (binding.initials != null) {
-                                if (transaction != null) {
-                                    binding.initials.text = getNameInitials(transaction.receiver)
-                                }
-                            }
-                            if (transaction != null) {
-                                binding.userName?.text =transaction.receiver
-                            }
-                        }
+                    binding.amount.text = "+ UGX " + NumberFormat.getInstance().format(transaction.amount) + ""
+                    binding.amount.setTextColor(Color.parseColor("#2E84BE"))
+                    binding.initials.setBackgroundResource(R.drawable.rectangular_blue_solid)
+
+                    if (transaction.sender.isEmpty()) {
+                        binding.initials.text = getNameInitials(transaction.sender)
+                        binding.userName.text = transaction.sender
+                    } else {
+                        binding.initials.text = getNameInitials(transaction.receiver)
+                        binding.userName.text =transaction.receiver
                     }
                 } else {
-                    if ( binding.amount != null) {
-                        if (transaction != null) {
-                            binding.amount.text = "- UGX " + NumberFormat.getInstance().format(0 - transaction.amount) + ""
-                        }
-                    }
-                    binding.amount?.setTextColor(Color.parseColor("#dc4436"))
-                    binding.initials?.setBackgroundResource(R.drawable.rectangular_red_solid)
-                    if (transaction != null) {
-                        binding.initials?.text = getNameInitials(transaction.receiver)
-                    }
-                    if (binding.userName != null) {
-                        binding.userName.text = transaction.receiver
-                    }
+
+                    binding.amount.text = "- UGX " + NumberFormat.getInstance().format(0 - transaction.amount) + ""
+                    binding.amount.setTextColor(Color.parseColor("#dc4436"))
+                    binding.initials.setBackgroundResource(R.drawable.rectangular_red_solid)
+                    binding.initials.text = getNameInitials(transaction.receiver)
+                    binding.userName.text = transaction.receiver
                 }
+
             }
+
+
         } catch (e: ParseException) {
             e.printStackTrace()
             Log.e("TransactionError", e.message!!)

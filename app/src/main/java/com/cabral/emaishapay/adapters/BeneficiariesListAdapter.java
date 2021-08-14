@@ -199,7 +199,7 @@ public class BeneficiariesListAdapter extends RecyclerView.Adapter<Beneficiaries
                         Fragment fragment = new BeneficiariesListFragment();
                         fm.beginTransaction()
 //                                .hide(((WalletHomeActivity) fm.g).currentFragment)
-                                .replace(R.id.wallet_home_container, fragment)
+                                .replace(R.id.walletHomeContainer, fragment)
                                 .addToBackStack(null).commit();
 
                     }

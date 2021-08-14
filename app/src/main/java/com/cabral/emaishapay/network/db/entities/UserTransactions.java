@@ -8,13 +8,14 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.RewriteQueriesToDropUnusedColumns;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(foreignKeys = {
         @ForeignKey(entity = Transactions.class,
-                parentColumns = "transaction_id",
+                parentColumns = "id",
                 childColumns = "user_transaction_id",
                 onDelete = ForeignKey.CASCADE)},
         indices = {@Index(value = "user_transaction_id")

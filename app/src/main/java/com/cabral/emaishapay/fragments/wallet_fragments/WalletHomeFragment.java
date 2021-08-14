@@ -46,6 +46,7 @@ import com.cabral.emaishapay.models.banner_model.BannerDetails;
 import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.cabral.emaishapay.network.db.entities.UserTransactions;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.animations.DescriptionAnimation;
 import com.glide.slider.library.indicators.PagerIndicator;
@@ -69,7 +70,7 @@ public class WalletHomeFragment extends Fragment {
     private static final String TAG = "WalletHomeFragment";
     private NewEmaishaPayHomeBinding binding;
     private Context context;
-    private final List<WalletTransactionResponse.TransactionData.Transactions> models = new ArrayList<>();
+    private final List<UserTransactions> models = new ArrayList<>();
     public static double balance = 0, commisionbalance=0,totalBalance=0;
     public static FragmentManager fm;
     DialogLoader dialog;
@@ -88,7 +89,7 @@ public class WalletHomeFragment extends Fragment {
         fm = requireActivity().getSupportFragmentManager();
         sharedPreferences = getActivity().getSharedPreferences(MyAppPrefsManager.PREF_NAME, MODE_PRIVATE);
         NavHostFragment navHostFragment =
-                (NavHostFragment) fm.findFragmentById(R.id.wallet_home_container);
+                (NavHostFragment) fm.findFragmentById(R.id.walletHomeContainer);
 
         navController = navHostFragment.getNavController();
 //        getTransactionsData();
@@ -552,7 +553,7 @@ public class WalletHomeFragment extends Fragment {
     //*********** Setup the ImageSlider with the given List of Product Images ********//
 
     @SuppressLint("CheckResult")
-    private void ImageSlider(String itemThumbnail, List<BannerDetails> banner) {
+    private void ImageSlider(String itemThumbnail, List<? extends BannerDetails> banner) {
          //Log.w(TAG, banner.size()+" ads");
         // Initialize new HashMap<ImageName, ImagePath>
         final HashMap<String, String> slider_covers = new HashMap<>();

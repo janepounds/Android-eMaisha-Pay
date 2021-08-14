@@ -26,6 +26,7 @@ import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
+import com.cabral.emaishapay.network.db.entities.UserTransactions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +46,7 @@ public class WalletTransactionsListFragment extends Fragment {
 
 
     RecyclerView.Adapter statementAdapter;
-    private List<WalletTransactionResponse.TransactionData.Transactions> dataList = new ArrayList<>();
+    private List<UserTransactions> dataList = new ArrayList<>();
     private String appTitle;
     Toolbar toolbar;
     RecyclerView recyclerView;

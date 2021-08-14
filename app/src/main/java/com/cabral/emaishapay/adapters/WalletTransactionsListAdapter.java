@@ -23,6 +23,7 @@ import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.models.WalletTransaction;
 import com.cabral.emaishapay.models.WalletTransactionReceiptResponse;
 import com.cabral.emaishapay.models.WalletTransactionResponse;
+import com.cabral.emaishapay.network.db.entities.UserTransactions;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -33,7 +34,7 @@ import java.util.Random;
 import java.util.TimeZone;
 
 public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cabral.emaishapay.adapters.WalletTransactionsListAdapter.MyViewHolder> {
-     private final List<WalletTransactionResponse.TransactionData.Transactions> dataList;
+     private final List<UserTransactions> dataList;
 
     private final FragmentManager fm;
     Context context;
@@ -60,7 +61,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
 
         @Override
         public void onClick(View v) {
-            WalletTransactionResponse.TransactionData.Transactions transaction = dataList.get(getBindingAdapterPosition());
+            UserTransactions transaction = dataList.get(getBindingAdapterPosition());
             //Log.e("Reference Number", transaction.getReferenceNumber()+" is "+transaction.isPurchase());
             if (fm!=null ){
                 WalletTransactionsReceiptDialog walletTransactionsReceiptDialog = new WalletTransactionsReceiptDialog(transaction);
@@ -71,7 +72,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
         }
     }
 
-    public WalletTransactionsListAdapter(List<WalletTransactionResponse.TransactionData.Transactions> dataList, FragmentManager supportFragmentManager) {
+    public WalletTransactionsListAdapter(List<UserTransactions> dataList, FragmentManager supportFragmentManager) {
         this.dataList = dataList;
         fm=supportFragmentManager;
     }
@@ -89,7 +90,7 @@ public class WalletTransactionsListAdapter  extends RecyclerView.Adapter<com.cab
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        WalletTransactionResponse.TransactionData.Transactions data = dataList.get(position);
+        UserTransactions data = dataList.get(position);
 
         SimpleDateFormat localFormat1 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         SimpleDateFormat localFormat2 = new SimpleDateFormat("HH:mm a", Locale.ENGLISH);
