@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.CircularImageView;
 import com.cabral.emaishapay.fragments.buy_fragments.Products;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;

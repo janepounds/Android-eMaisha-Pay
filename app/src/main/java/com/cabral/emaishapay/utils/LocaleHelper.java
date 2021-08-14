@@ -10,6 +10,7 @@ import android.os.LocaleList;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
 
 import java.util.Locale;

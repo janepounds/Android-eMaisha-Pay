@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CouponsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.OrderedProductsListAdapter;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.coupons_model.CouponsInfo;
 import com.cabral.emaishapay.models.order_model.OrderDetails;
 import com.cabral.emaishapay.models.order_model.OrderProducts;

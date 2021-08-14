@@ -48,6 +48,7 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
+import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 
 import java.io.ByteArrayOutputStream;
