@@ -97,6 +97,7 @@ class WalletHomeActivity : AppCompatActivity() {
 
         val navHostFragment = walletHomeContainer as NavHostFragment
 
+        context = applicationContext
         Companion.fm = supportFragmentManager
         Companion.bottomNavigationShop = bottomNavigationShop
         Companion.bottomNavigationView = bottomNavigation
