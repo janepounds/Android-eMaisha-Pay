@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.product_model.Value;
 
 import java.util.List;

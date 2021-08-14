@@ -18,7 +18,6 @@ import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.google.gson.Gson;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.address_model.Regions;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 import com.cabral.emaishapay.models.user_model.UserData;

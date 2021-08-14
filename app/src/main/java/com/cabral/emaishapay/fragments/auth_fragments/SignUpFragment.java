@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,25 +29,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 
 import com.cabral.emaishapay.databinding.SignupFragmentBinding;
 import com.cabral.emaishapay.models.SpinnerItem;
-import com.cabral.emaishapay.models.SecurityQnsResponse;
 import com.cabral.emaishapay.modelviews.SignUpModelView;
-import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.db.entities.RegionDetails;
 import com.cabral.emaishapay.utils.ValidateInputs;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUpFragment  extends Fragment {
     private static final String TAG = "SignUp";

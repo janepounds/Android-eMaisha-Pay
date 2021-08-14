@@ -1,9 +1,7 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,19 +23,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
-import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapterRemovable;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.app.MyAppPrefsManager;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.models.product_model.GetAllProducts;
 import com.cabral.emaishapay.models.product_model.ProductData;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient;
-import com.cabral.emaishapay.utils.Utilities;
 import com.google.android.material.snackbar.Snackbar;
 
 

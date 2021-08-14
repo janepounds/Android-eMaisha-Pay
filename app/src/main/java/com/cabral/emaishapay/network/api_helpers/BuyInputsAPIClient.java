@@ -4,7 +4,6 @@ package com.cabral.emaishapay.network.api_helpers;
 import android.util.Log;
 
 
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.utils.Utilities;
 
 import java.io.IOException;

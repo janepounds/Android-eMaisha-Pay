@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,9 +22,6 @@ import com.bumptech.glide.request.RequestOptions;
 
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
-import com.cabral.emaishapay.fragments.buy_fragments.Category_Products;
-import com.cabral.emaishapay.fragments.buy_fragments.SubCategories_3;
 import com.cabral.emaishapay.models.category_model.CategoryDetails;
 
 

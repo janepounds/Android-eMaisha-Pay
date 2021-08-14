@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.wallet_fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +31,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentBusinessInformationBinding;
 import com.cabral.emaishapay.models.AccountResponse;

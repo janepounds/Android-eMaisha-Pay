@@ -22,7 +22,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -49,7 +48,6 @@ import com.cabral.emaishapay.BuildConfig;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.device_model.DeviceInfo;
 
 import java.io.ByteArrayOutputStream;

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.cabral.emaishapay.R;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.fragments.buy_fragments.Nearby_Merchants;
 import com.cabral.emaishapay.models.shipping_model.ShippingService;
 

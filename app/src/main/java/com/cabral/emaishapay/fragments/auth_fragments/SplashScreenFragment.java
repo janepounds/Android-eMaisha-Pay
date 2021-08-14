@@ -22,7 +22,6 @@ import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.databinding.SplashBinding;
 import com.cabral.emaishapay.models.device_model.AppSettingsDetails;
 import com.cabral.emaishapay.network.StartAppRequests;

@@ -39,7 +39,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.FragmentBusinessAccountBinding;
 import com.cabral.emaishapay.models.AccountResponse;

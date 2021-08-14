@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.network.StartAppRequests;
 import com.cabral.emaishapay.utils.NotificationHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;

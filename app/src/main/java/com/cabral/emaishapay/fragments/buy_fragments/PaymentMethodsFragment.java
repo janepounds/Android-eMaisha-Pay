@@ -1,6 +1,5 @@
 package com.cabral.emaishapay.fragments.buy_fragments;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -20,14 +19,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -46,7 +43,6 @@ import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
 import com.cabral.emaishapay.fragments.wallet_fragments.TokenAuthFragment;
@@ -68,12 +64,9 @@ import com.flutterwave.raveutils.verification.RaveVerificationUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;

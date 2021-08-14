@@ -32,7 +32,6 @@ import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.ProductAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.EndlessRecyclerViewScroll;
 import com.cabral.emaishapay.customs.FilterDialog;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
@@ -50,7 +49,6 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-import am.appwise.components.ni.NoInternetDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 

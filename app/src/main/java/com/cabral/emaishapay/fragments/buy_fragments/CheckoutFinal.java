@@ -17,7 +17,6 @@ import com.braintreepayments.api.Card;
 import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.exceptions.BraintreeError;
 import com.braintreepayments.api.exceptions.ErrorWithResponse;
-import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.interfaces.BraintreeCancelListener;
 import com.braintreepayments.api.interfaces.BraintreeErrorListener;
 import com.braintreepayments.api.interfaces.ConfigurationListener;
@@ -34,7 +33,6 @@ import com.cabral.emaishapay.adapters.buyInputsAdapters.CheckoutItemsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.CouponsAdapter;
 import com.cabral.emaishapay.adapters.buyInputsAdapters.DemoCouponsListAdapter;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.database.User_Info_BuyInputsDB;
@@ -48,7 +46,6 @@ import com.cabral.emaishapay.models.order_model.OrderData;
 import com.cabral.emaishapay.models.order_model.PostOrder;
 import com.cabral.emaishapay.models.order_model.PostProducts;
 import com.cabral.emaishapay.models.order_model.PostProductsAttributes;
-import com.cabral.emaishapay.models.payment_model.GetBrainTreeToken;
 import com.cabral.emaishapay.models.payment_model.PaymentMethodsInfo;
 import com.cabral.emaishapay.models.product_model.Option;
 import com.cabral.emaishapay.models.product_model.Value;
@@ -61,16 +58,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,8 +71,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +78,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 
-import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -95,9 +85,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
-
-import am.appwise.components.ni.NoInternetDialog;
 
 import retrofit2.Callback;
 import retrofit2.Call;

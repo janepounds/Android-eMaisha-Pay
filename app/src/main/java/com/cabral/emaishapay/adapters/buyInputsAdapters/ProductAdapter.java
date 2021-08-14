@@ -21,7 +21,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -38,14 +37,11 @@ import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.EmaishaPayApp;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Recents_BuyInputsDB;
-import com.cabral.emaishapay.fragments.buy_fragments.Product_Description;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;

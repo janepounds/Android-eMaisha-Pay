@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.WalletBuySellActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.database.User_Cart_BuyInputsDB;
 import com.cabral.emaishapay.database.User_Recents_BuyInputsDB;
 import com.cabral.emaishapay.fragments.buy_fragments.My_Cart;
@@ -32,7 +31,6 @@ import com.cabral.emaishapay.models.cart_model.CartProduct;
 import com.cabral.emaishapay.models.cart_model.CartProductAttributes;
 import com.cabral.emaishapay.models.product_model.Value;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;

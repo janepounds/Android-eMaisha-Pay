@@ -12,7 +12,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -53,7 +52,6 @@ import com.cabral.emaishapay.AppExecutors;
 import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.models.shop_model.CategoriesResponse;
 import com.cabral.emaishapay.models.shop_model.Category;

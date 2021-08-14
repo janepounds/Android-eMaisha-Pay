@@ -29,7 +29,6 @@ import com.bumptech.glide.request.target.Target;
 import com.cabral.emaishapay.R;
 import com.cabral.emaishapay.activities.AuthActivity;
 import com.cabral.emaishapay.activities.WalletHomeActivity;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.models.product_model.ProductDetails;
 import com.cabral.emaishapay.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;

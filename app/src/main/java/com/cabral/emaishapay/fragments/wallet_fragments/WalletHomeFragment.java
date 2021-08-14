@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,14 +33,11 @@ import com.cabral.emaishapay.R;
 
 import com.cabral.emaishapay.activities.WalletHomeActivity;
 import com.cabral.emaishapay.app.MyAppPrefsManager;
-import com.cabral.emaishapay.constants.ConstantValues;
 import com.cabral.emaishapay.customs.DialogLoader;
 import com.cabral.emaishapay.databinding.NewEmaishaPayHomeBinding;
 import com.cabral.emaishapay.models.BalanceResponse;
-import com.cabral.emaishapay.models.WalletTransactionResponse;
 import com.cabral.emaishapay.models.WalletTransactionSummary;
 import com.cabral.emaishapay.models.banner_model.BannerDetails;
-import com.cabral.emaishapay.models.product_model.Image;
 import com.cabral.emaishapay.network.api_helpers.APIClient;
 import com.cabral.emaishapay.network.api_helpers.APIRequests;
 import com.cabral.emaishapay.network.db.entities.UserTransactions;
