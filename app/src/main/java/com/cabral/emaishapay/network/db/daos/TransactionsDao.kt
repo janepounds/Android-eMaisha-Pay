@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.cabral.emaishapay.network.db.entities.MerchantOrder
 import com.cabral.emaishapay.network.db.entities.Transactions
+import com.cabral.emaishapay.network.db.entities.UserTransactions
 
 @Dao
 interface TransactionsDao {
@@ -22,4 +23,8 @@ interface TransactionsDao {
 
     @Query("DELETE  FROM Transactions")
     suspend fun clearTransactions()
+
+    @Query("SELECT * FROM UserTransactions ORDER BY id DESC")
+    fun getUserTransactionList(): PagingSource<Int, UserTransactions>
+
 }
