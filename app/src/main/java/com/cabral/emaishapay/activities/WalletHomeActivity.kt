@@ -42,7 +42,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -52,7 +51,6 @@ import com.cabral.emaishapay.network.DataRepository
 import okhttp3.ResponseBody
 import com.cabral.emaishapay.network.api_helpers.BuyInputsAPIClient
 import com.cabral.emaishapay.AppExecutors
-import kotlinx.android.synthetic.main.layout_scan_and_pay_process_step_1.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,14 +62,14 @@ import java.util.*
 
 class WalletHomeActivity : AppCompatActivity() {
 
-    var currentFragment = 0
+    private var currentFragment = 0
     val dialogLoader: DialogLoader? by lazy { DialogLoader(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_home)
 
-        fab.setOnClickListener(View.OnClickListener {
+        fab.setOnClickListener {
             if (!checkPermission()) {
                 val permissions = arrayOf(permission.CAMERA, permission.VIBRATE)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -93,17 +91,16 @@ class WalletHomeActivity : AppCompatActivity() {
                     navController!!.navigate(R.id.action_acceptPaymentFragment_to_scanAndPayDialog)
                 }
             }
-        })
+        }
 
         val navHostFragment = walletHomeContainer as NavHostFragment
 
-        context = applicationContext
-        Companion.fm = supportFragmentManager
-        Companion.bottomNavigationShop = bottomNavigationShop
-        Companion.bottomNavigationView = bottomNavigation
-        Companion.scanCoordinatorLayout = coordinatorLayoutForScanner
-        Companion.navController=navHostFragment.navController
-        Companion.context= context
+        fm = supportFragmentManager
+        bottomNavigationShop = bottomNavShop
+        bottomNavigationView = bottomNavigation
+        scanCoordinatorLayout = coordinatorLayoutForScanner
+        navController=navHostFragment.navController
+        myContext= applicationContext
         setUpNavigation()
         setSupportActionBar(main_Toolbar)
 
@@ -118,7 +115,7 @@ class WalletHomeActivity : AppCompatActivity() {
                 if (role.equals("DEFAULT", ignoreCase = true)) {
                     bottomNavigation.visibility = View.VISIBLE
                     coordinatorLayoutForScanner.visibility = View.VISIBLE
-                    bottomNavigationShop.visibility = View.GONE
+                    bottomNavShop.visibility = View.GONE
                 } else {
                     setUpMasterAgentNav()
                 }
@@ -133,7 +130,7 @@ class WalletHomeActivity : AppCompatActivity() {
     }
 
     private fun scheduleJob() {
-        val componentName = ComponentName(context, SyncJobService::class.java)
+        val componentName = ComponentName(myContext, SyncJobService::class.java)
         val info = JobInfo.Builder(123, componentName)
                 .setRequiresCharging(false)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
@@ -151,7 +148,7 @@ class WalletHomeActivity : AppCompatActivity() {
 
     private fun setUpNavigation() {
         bottomNavigation.itemIconTintList = null
-        bottomNavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
             //walletAccountFragment
             val currentDestination: Int
             when (item.itemId) {
@@ -195,14 +192,14 @@ class WalletHomeActivity : AppCompatActivity() {
                 }
                 R.id.WalletBuyFragment -> {
                     bottomNavigation.postDelayed(
-                            Runnable { startActivity(Intent(this@WalletHomeActivity, WalletBuySellActivity::class.java)) },
+                            { startActivity(Intent(this@WalletHomeActivity, WalletBuySellActivity::class.java)) },
                             300
                     )
                     true
                 }
                 else -> false
             }
-        })
+        }
     }
 
     fun openAddMobileMoney() {
@@ -470,7 +467,7 @@ class WalletHomeActivity : AppCompatActivity() {
         @JvmField
         var WALLET_ACCESS_TOKEN: String? = null
         private val TAG = WalletHomeActivity::class.java.simpleName
-        private lateinit var context:Context
+        private lateinit var myContext:Context
 
         @JvmField
         var Banners: List<BannerDetails> = ArrayList()
@@ -562,9 +559,9 @@ class WalletHomeActivity : AppCompatActivity() {
                             return true
                         }
                         R.id.walletShopFragment -> {
-                            val shop = Intent(context, MerchantShopActivity::class.java)
+                            val shop = Intent(myContext, MerchantShopActivity::class.java)
                             shop.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            context.startActivity(shop)
+                            myContext.startActivity(shop)
                             return true
                         }
                         R.id.walletAcceptPaymentFragment -> {
@@ -647,7 +644,7 @@ class WalletHomeActivity : AppCompatActivity() {
 
         @JvmStatic
         fun syncProductData() {
-            context?.let {
+            myContext.let {
                 val category = getPreferences(PREFERENCES_WALLET_ACCOUNT_ROLE, it)
 
                 if (!category.equals("Default", ignoreCase = true) && !TextUtils.isEmpty(category) && Connectivity.isConnected(it)) {
@@ -675,7 +672,7 @@ class WalletHomeActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                     if (response.isSuccessful) {
                         AppExecutors.getInstance().diskIO().execute {
-                            val updateStatus = DataRepository.getOurInstance(Companion.context).updateProductSyncStatus(product.id, "1")
+                            val updateStatus = DataRepository.getOurInstance(myContext).updateProductSyncStatus(product.id, "1")
                             AppExecutors.getInstance().mainThread().execute {
                                 if (updateStatus > 0) {
                                     Log.d("SyncStatus", "Product Synced")
