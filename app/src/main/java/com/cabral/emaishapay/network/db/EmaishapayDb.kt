@@ -95,7 +95,13 @@ abstract class EmaishapayDb : RoomDatabase() {
                         "'receiver' TEXT, 'sender' TEXT, 'receiptNumber' TEXT, 'trans_currency' TEXT,'senderUserId' TEXT, 'receiverUserId' TEXT, PRIMARY KEY(`id`))")
             }
         }
-
+//        private val MIGRATION_6_7: Migration = object :Migration(6,7)
+//        {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        }
         @JvmStatic fun insertShopOrderWithProducts(database: EmaishapayDb,
                                         orderWithProducts: ShopOrderWithProducts) {
             database.runInTransaction {
