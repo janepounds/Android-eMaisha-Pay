@@ -211,6 +211,7 @@ class WalletBuySellActivity : AppCompatActivity() {
         var currentFragment: Fragment? = null
         @JvmField
         var postOrder = PostOrder()
+        @SuppressLint("StaticFieldLeak")
         @JvmField
         var navController: NavController? = null
     }
